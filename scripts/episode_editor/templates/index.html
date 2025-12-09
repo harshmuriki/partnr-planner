@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARTNR Episode Editor</title>
+    <style>
+        :root {
+            --bg-primary: #1a1b26;
+            --bg-secondary: #24283b;
+            --bg-tertiary: #414868;
+            --text-primary: #c0caf5;
+            --text-secondary: #9aa5ce;
+            --accent: #7aa2f7;
+            --accent-hover: #89b4fa;
+            --success: #9ece6a;
+            --warning: #e0af68;
+            --error: #f7768e;
+            --border: #414868;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        header .actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--bg-primary);
+        }
+
+        main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 350px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-section {
+            border-bottom: 1px solid var(--border);
+            padding: 1rem;
+        }
+
+        .sidebar-section h2 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .object-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .object-item {
+            background: var(--bg-tertiary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .object-item:hover {
+            background: var(--border);
+        }
+
+        .object-item.selected {
+            border: 2px solid var(--accent);
+        }
+
+        .object-item .name {
+            font-weight: 500;
+        }
+
+        .object-item .location {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .object-item .delete-btn {
+            background: var(--error);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .object-item:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+
+        #scene-map {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            cursor: crosshair;
+            display: block;
+        }
+
+        .grid rect:hover {
+            fill: var(--bg-tertiary);
+            cursor: crosshair;
+        }
+
+        .object-marker {
+            cursor: pointer;
+        }
+
+        .object-marker circle {
+            stroke: var(--bg-primary);
+            stroke-width: 0.1;
+        }
+
+        .object-marker text {
+            fill: white;
+            font-size: 0.5px;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .room-overlay rect {
+            outline: none;
+        }
+
+        .room-overlay rect:hover {
+            /* No hover effect */
+        }
+
+        .room-overlay rect:focus {
+            outline: none;
+        }
+
+        .room-overlay text {
+            pointer-events: none;
+        }
+
+        /* Right Sidebar styles */
+        .sidebar-right {
+            width: 280px;
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            flex-shrink: 0;
+        }
+
+        .modal-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-header h3 {
+            font-size: 1rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1rem 1.25rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.875rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-top: 0.5rem;
+        }
+
+        .search-result-item {
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-result-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .search-result-item.selected {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .search-result-item .category {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .search-result-item .obj-info {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .search-result-item .obj-name {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.85rem;
+        }
+
+        .search-result-item .obj-id {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .search-result-item .category-badges {
+            display: flex;
+            gap: 0.25rem;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        .modal-footer {
+            padding: 0.75rem 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error);
+        }
+
+        .toast.info {
+            background: #3b82f6;
+        }
+
+        .info-panel {
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .info-panel .label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .info-panel .value {
+            font-weight: 500;
+        }
+
+        .map-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .zoom-btn {
+            width: 32px;
+            height: 32px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-btn:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .coords-display {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: var(--bg-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .legend {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .receptacle-select-item {
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .receptacle-select-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .receptacle-select-item .recep-name {
+            font-weight: 500;
+        }
+
+        .receptacle-select-item .recep-info {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏠 PARTNR Episode Editor</h1>
+        <div class="actions">
+            <button class="btn btn-secondary" onclick="refreshData()">↻ Refresh</button>
+            <button class="btn btn-secondary" onclick="quickSave()" title="Save to original file">💾 Quick Save</button>
+            <button class="btn btn-success" onclick="saveEpisode()" title="Save As...">📁 Save As</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h2>Episode Info</h2>
+                <div class="info-panel">
+                    <div class="label">Scene ID</div>
+                    <div class="value" id="scene-id">Loading...</div>
+                </div>
+                <div class="info-panel">
+                    <div class="label">File Path</div>
+                    <div class="value" id="file-path" style="font-size: 0.75rem; word-break: break-all;">Loading...</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h2>Objects (<span id="object-count">0</span>)</h2>
+                <p style="color: var(--text-secondary); font-size: 0.75rem; text-align: center;">Click on map to set position →</p>
+            </div>
+
+            <div class="object-list" id="object-list">
+                <!-- Objects will be populated here -->
+            </div>
+        </div>
+
+        <div class="map-container">
+            <svg id="scene-map" viewBox="-15 -10 20 15" preserveAspectRatio="xMidYMid meet">
+                <!-- Scene will be rendered here -->
+            </svg>
+            <div class="map-controls">
+                <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">+</button>
+                <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">−</button>
+                <button class="zoom-btn" onclick="resetZoom()" title="Reset View">⟲</button>
+            </div>
+            <div class="coords-display">
+                Click to add | Scroll to zoom | Drag to pan | <span id="coords">x: 0, z: 0</span>
+            </div>
+            <div class="legend" id="legend">
+                <div id="map-status" style="font-size: 0.7rem; margin-bottom: 0.5rem; padding: 0.25rem 0.5rem; background: var(--bg-tertiary); border-radius: 4px;">
+                    Loading map...
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f7768e;"></div>
+                    <span>Candle</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e0af68;"></div>
+                    <span>Candle Holder</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #9ece6a;"></div>
+                    <span>Plant</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #7aa2f7;"></div>
+                    <span>Bowl</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff9e64;"></div>
+                    <span>Orange/Fruit</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #bb9af7;"></div>
+                    <span>Other</span>
+                </div>
+                <hr style="border-color: var(--border); margin: 0.5rem 0;">
+                <div style="font-size: 0.65rem; color: var(--text-secondary);">
+                    Click map to add object<br>
+                    Hover markers for details
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - Add Object -->
+        <div class="sidebar-right" id="add-modal">
+            <div class="sidebar-section" style="border-bottom: 1px solid var(--border); padding-bottom: 0.75rem;">
+                <h2>Add Object</h2>
+            </div>
+            <div class="sidebar-section" style="flex: 1; overflow-y: auto;">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="category-filter" onchange="searchObjects()">
+                        <option value="">All</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Search</label>
+                    <input type="text" id="object-search" placeholder="Name or ID..." oninput="searchObjects()">
+                    <div class="search-results" id="search-results"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Selected</label>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <div id="object-thumbnail" style="width: 40px; height: 40px; border-radius: 4px; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                            <span style="font-size: 1rem; color: var(--text-secondary);">?</span>
+                        </div>
+                        <input type="text" id="selected-object" readonly placeholder="Select above" style="flex: 1; font-size: 0.8rem;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Class</label>
+                    <input type="text" id="object-class" placeholder="bowl, candle...">
+                </div>
+
+                <div class="form-group">
+                    <label>Room</label>
+                    <select id="room-select">
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Receptacle</label>
+                    <select id="receptacle-select">
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Position</label>
+                    <div style="display: flex; gap: 0.25rem;">
+                        <input type="number" id="pos-x" placeholder="X" step="0.1" style="font-size: 0.8rem;">
+                        <input type="number" id="pos-y" placeholder="Y" step="0.1" value="0.8" style="font-size: 0.8rem;">
+                        <input type="number" id="pos-z" placeholder="Z" step="0.1" style="font-size: 0.8rem;">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="addObject()" style="width: 100%; margin-top: 0.5rem;">Add Object</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let episodeData = null;
+        let metadata = null;
+        let selectedObjectId = null;
+        let clickedPosition = { x: 0, z: 0 };
+        let mapCalibration = null;
+        let hasMap = false;
+        let roomBoundsGlobal = {};  // Store room bounds for click detection
+
+        // Color mapping for object types
+        const colorMap = {
+            'candle': '#f7768e',
+            'candle_holder': '#e0af68',
+            'plant': '#9ece6a',
+            'plant_container': '#9ece6a',
+            'bowl': '#7aa2f7',
+            'orange': '#ff9e64',
+            'fruit': '#ff9e64',
+            'default': '#bb9af7'
+        };
+
+        function getObjectColor(className) {
+            for (const [key, color] of Object.entries(colorMap)) {
+                if (className.toLowerCase().includes(key)) {
+                    return color;
+                }
+            }
+            return colorMap.default;
+        }
+
+        async function fetchData() {
+            const response = await fetch('/api/episode');
+            const data = await response.json();
+            episodeData = data.episode;
+            metadata = data.metadata;
+            mapCalibration = data.map_calibration;
+            hasMap = data.has_map;
+
+            document.getElementById('scene-id').textContent = episodeData.scene_id;
+            document.getElementById('file-path').textContent = data.path;
+            document.getElementById('object-count').textContent = episodeData.objects.length;
+
+            // Update map status
+            const mapStatus = document.getElementById('map-status');
+            if (hasMap) {
+                mapStatus.innerHTML = '🗺️ <span style="color: var(--success);">Top-down map loaded</span>';
+            } else {
+                mapStatus.innerHTML = '📊 <span style="color: var(--warning);">Simplified view</span>';
+            }
+
+            renderObjectList();
+            renderMap();
+            populateRooms();
+        }
+
+        function renderObjectList() {
+            const list = document.getElementById('object-list');
+            list.innerHTML = '';
+
+            episodeData.objects.forEach((obj, idx) => {
+                const item = document.createElement('div');
+                item.className = 'object-item';
+                item.innerHTML = `
+                    <div>
+                        <div class="name" style="color: ${getObjectColor(obj.class)};">${obj.name}</div>
+                        <div class="location">${obj.furniture} • ${obj.room}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteObject(${idx}, event)">✕</button>
+                `;
+                item.onclick = () => highlightObject(idx);
+                list.appendChild(item);
+            });
+        }
+
+        function renderMap() {
+            const svg = document.getElementById('scene-map');
+
+            // Clear existing content
+            svg.innerHTML = '';
+
+            // Check if we have a real top-down map with valid calibration
+            const hasValidCalibration = hasMap && mapCalibration &&
+                mapCalibration.origin_x !== undefined &&
+                !isNaN(mapCalibration.origin_x) &&
+                !isNaN(mapCalibration.origin_z) &&
+                !isNaN(mapCalibration.world_width) &&
+                !isNaN(mapCalibration.world_height);
+
+            if (hasValidCalibration) {
+                // Use the actual top-down map
+                renderWithTopdownMap(svg);
+            } else {
+                // Fall back to simplified room-based rendering
+                console.log('Using simplified map (no valid calibration)', mapCalibration);
+                renderSimplifiedMap(svg);
+            }
+        }
+
+        function renderWithTopdownMap(svg) {
+            const cal = mapCalibration;
+
+            // Compute room bounds for click detection
+            const roomBounds = {};
+            episodeData.objects.forEach(obj => {
+                const room = obj.room || 'unknown';
+                if (!roomBounds[room]) {
+                    roomBounds[room] = { minX: Infinity, maxX: -Infinity, minZ: Infinity, maxZ: -Infinity, objects: [] };
+                }
+                roomBounds[room].minX = Math.min(roomBounds[room].minX, obj.position.x);
+                roomBounds[room].maxX = Math.max(roomBounds[room].maxX, obj.position.x);
+                roomBounds[room].minZ = Math.min(roomBounds[room].minZ, obj.position.z);
+                roomBounds[room].maxZ = Math.max(roomBounds[room].maxZ, obj.position.z);
+                roomBounds[room].objects.push(obj);
+            });
+            roomBoundsGlobal = roomBounds;
+
+            // Set viewBox based on calibration (world coordinates)
+            const minX = cal.origin_x;
+            const minZ = cal.origin_z;
+            const width = cal.world_width;
+            const height = cal.world_height;
+
+            svg.setAttribute('viewBox', `${minX} ${minZ} ${width} ${height}`);
+
+            // Add the top-down map as background image
+            const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+            image.setAttribute('href', '/api/map?' + Date.now()); // Cache bust
+            image.setAttribute('x', minX);
+            image.setAttribute('y', minZ);
+            image.setAttribute('width', width);
+            image.setAttribute('height', height);
+            image.setAttribute('preserveAspectRatio', 'none');
+            image.onclick = (e) => handleMapClick(e, '');
+            image.style.cursor = 'crosshair';
+            svg.appendChild(image);
+
+            // Room colors for overlay (subtle, semi-transparent)
+            const roomOverlayColors = {
+                'living_room': 'rgba(76, 175, 80, 0.25)',      // Green
+                'kitchen': 'rgba(255, 152, 0, 0.25)',          // Orange
+                'bedroom': 'rgba(33, 150, 243, 0.25)',         // Blue
+                'bathroom': 'rgba(156, 39, 176, 0.25)',        // Purple
+                'hallway': 'rgba(158, 158, 158, 0.25)',        // Gray
+                'entryway': 'rgba(121, 85, 72, 0.25)',         // Brown
+                'laundry': 'rgba(0, 188, 212, 0.25)',          // Cyan
+                'other': 'rgba(96, 125, 139, 0.25)',           // Blue-gray
+                'default': 'rgba(100, 100, 100, 0.2)'
+            };
+
+            function getRoomOverlayColor(roomName) {
+                const name = roomName.toLowerCase();
+                for (const [key, color] of Object.entries(roomOverlayColors)) {
+                    if (name.includes(key)) return color;
+                }
+                return roomOverlayColors.default;
+            }
+
+            // Draw room overlays from semantic scene data
+            // Sort rooms by area (largest first) so smaller rooms render on top
+            if (cal.room_bounds) {
+                const sortedRooms = Object.entries(cal.room_bounds).sort((a, b) => {
+                    const areaA = (a[1].max_x - a[1].min_x) * (a[1].max_z - a[1].min_z);
+                    const areaB = (b[1].max_x - b[1].min_x) * (b[1].max_z - b[1].min_z);
+                    return areaB - areaA;  // Largest first, smallest last (on top)
+                });
+
+                sortedRooms.forEach(([roomName, bounds]) => {
+                    const roomGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                    roomGroup.setAttribute('class', 'room-overlay');
+
+                    // Room rectangle
+                    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    rect.setAttribute('x', bounds.min_x);
+                    rect.setAttribute('y', bounds.min_z);
+                    rect.setAttribute('width', bounds.max_x - bounds.min_x);
+                    rect.setAttribute('height', bounds.max_z - bounds.min_z);
+                    rect.setAttribute('fill', getRoomOverlayColor(roomName));
+                    rect.setAttribute('stroke', 'rgba(255,255,255,0.3)');
+                    rect.setAttribute('stroke-width', '0.05');
+                    rect.onclick = (e) => handleMapClick(e, roomName);
+                    rect.style.cursor = 'crosshair';
+                    rect.style.pointerEvents = 'all';
+                    roomGroup.appendChild(rect);
+
+                    // Room label - calculate appropriate font size
+                    const roomWidth = bounds.max_x - bounds.min_x;
+                    const roomHeight = bounds.max_z - bounds.min_z;
+                    const labelFontSize = Math.min(roomWidth, roomHeight) * 0.15;
+
+                    // Clean up room name for display
+                    const displayName = roomName
+                        .replace(/_/g, ' ')
+                        .replace(/(\d+)$/, '')
+                        .replace('/', ' / ')
+                        .trim();
+
+                    // Background for text readability (more transparent)
+                    const textBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    const textWidth = displayName.length * labelFontSize * 0.5;
+                    const textHeight = labelFontSize * 1.4;
+                    textBg.setAttribute('x', bounds.center_x - textWidth / 2);
+                    textBg.setAttribute('y', bounds.center_z - textHeight / 2);
+                    textBg.setAttribute('width', textWidth);
+                    textBg.setAttribute('height', textHeight);
+                    textBg.setAttribute('fill', 'rgba(0,0,0,0.4)');
+                    textBg.setAttribute('rx', labelFontSize * 0.2);
+                    roomGroup.appendChild(textBg);
+
+                    // Room label text (semi-transparent)
+                    const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    label.setAttribute('x', bounds.center_x);
+                    label.setAttribute('y', bounds.center_z + labelFontSize * 0.35);
+                    label.setAttribute('text-anchor', 'middle');
+                    label.setAttribute('font-size', labelFontSize);
+                    label.setAttribute('fill', 'rgba(255,255,255,0.7)');
+                    label.setAttribute('font-weight', 'bold');
+                    label.setAttribute('font-family', 'Arial, sans-serif');
+                    label.textContent = displayName;
+                    roomGroup.appendChild(label);
+
+                    svg.appendChild(roomGroup);
+                });
+            }
+
+            // Calculate marker size based on view (smaller markers)
+            const markerRadius = Math.min(width, height) * 0.008;
+            const fontSize = markerRadius * 0.8;
+
+            // Draw objects on top of map
+            episodeData.objects.forEach((obj, idx) => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'object-marker');
+                g.setAttribute('transform', `translate(${obj.position.x}, ${obj.position.z})`);
+
+                // Glow effect
+                const glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                glow.setAttribute('r', markerRadius * 1.5);
+                glow.setAttribute('fill', 'rgba(0,0,0,0.5)');
+                g.appendChild(glow);
+
+                // Main circle
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('r', markerRadius);
+                circle.setAttribute('fill', getObjectColor(obj.class));
+                circle.setAttribute('stroke', '#fff');
+                circle.setAttribute('stroke-width', markerRadius * 0.15);
+                g.appendChild(circle);
+
+                // Letter
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('y', fontSize * 0.35);
+                text.setAttribute('font-size', fontSize);
+                text.setAttribute('fill', '#fff');
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-weight', 'bold');
+                text.textContent = obj.class[0].toUpperCase();
+                g.appendChild(text);
+
+                // Object name label below marker
+                const nameLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                nameLabel.setAttribute('y', markerRadius + fontSize * 0.8);
+                nameLabel.setAttribute('font-size', fontSize * 0.6);
+                nameLabel.setAttribute('fill', '#fff');
+                nameLabel.setAttribute('text-anchor', 'middle');
+                nameLabel.setAttribute('stroke', '#000');
+                nameLabel.setAttribute('stroke-width', fontSize * 0.1);
+                nameLabel.setAttribute('paint-order', 'stroke');
+                nameLabel.textContent = obj.name;
+                g.appendChild(nameLabel);
+
+                // Tooltip
+                const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                title.textContent = `${obj.name}\n📍 ${obj.furniture}\n🏠 ${obj.room}\n📐 x:${obj.position.x.toFixed(2)}, z:${obj.position.z.toFixed(2)}`;
+                g.appendChild(title);
+
+                g.onclick = () => highlightObject(idx);
+                svg.appendChild(g);
+            });
+
+            // Add coordinate display
+            const coordLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            coordLabel.setAttribute('x', minX + width * 0.02);
+            coordLabel.setAttribute('y', minZ + height - height * 0.02);
+            coordLabel.setAttribute('font-size', height * 0.02);
+            coordLabel.setAttribute('fill', '#fff');
+            coordLabel.setAttribute('stroke', '#000');
+            coordLabel.setAttribute('stroke-width', height * 0.003);
+            coordLabel.setAttribute('paint-order', 'stroke');
+            coordLabel.textContent = `Click to add object | World coords visible`;
+            svg.appendChild(coordLabel);
+
+            // Save viewBox for zoom/pan
+            saveCurrentViewBox();
+        }
+
+        function renderSimplifiedMap(svg) {
+            // Room colors for visual distinction
+            const roomColors = {
+                'living_room': '#3d4f6f',
+                'hallway': '#4a5568',
+                'bedroom': '#4c566a',
+                'kitchen': '#3b5249',
+                'bathroom': '#4a4e69',
+                'laundryroom': '#3d405b',
+                'entryway': '#4a4a4a',
+                'other': '#3a3a3a'
+            };
+
+            function getRoomColor(roomName) {
+                for (const [key, color] of Object.entries(roomColors)) {
+                    if (roomName.toLowerCase().includes(key)) return color;
+                }
+                return roomColors.other;
+            }
+
+            // Group objects by room to calculate room bounds
+            const roomBounds = {};
+            episodeData.objects.forEach(obj => {
+                const room = obj.room || 'unknown';
+                if (!roomBounds[room]) {
+                    roomBounds[room] = { minX: Infinity, maxX: -Infinity, minZ: Infinity, maxZ: -Infinity, objects: [] };
+                }
+                roomBounds[room].minX = Math.min(roomBounds[room].minX, obj.position.x);
+                roomBounds[room].maxX = Math.max(roomBounds[room].maxX, obj.position.x);
+                roomBounds[room].minZ = Math.min(roomBounds[room].minZ, obj.position.z);
+                roomBounds[room].maxZ = Math.max(roomBounds[room].maxZ, obj.position.z);
+                roomBounds[room].objects.push(obj);
+            });
+
+            // Store globally for click detection
+            roomBoundsGlobal = roomBounds;
+
+            // Calculate overall viewBox
+            let minX = -25, maxX = 5, minZ = -15, maxZ = 5;
+
+            if (episodeData.objects.length > 0) {
+                const xs = episodeData.objects.map(o => o.position.x);
+                const zs = episodeData.objects.map(o => o.position.z);
+                minX = Math.min(...xs) - 5;
+                maxX = Math.max(...xs) + 5;
+                minZ = Math.min(...zs) - 5;
+                maxZ = Math.max(...zs) + 5;
+            }
+
+            const width = Math.max(maxX - minX, 15);
+            const height = Math.max(maxZ - minZ, 15);
+            svg.setAttribute('viewBox', `${minX} ${minZ} ${width} ${height}`);
+
+            // Draw background
+            const bgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            bgRect.setAttribute('x', minX);
+            bgRect.setAttribute('y', minZ);
+            bgRect.setAttribute('width', width);
+            bgRect.setAttribute('height', height);
+            bgRect.setAttribute('fill', '#1a1b26');
+            bgRect.onclick = (e) => handleMapClick(e, '');
+            svg.appendChild(bgRect);
+
+            // Draw room rectangles based on object positions
+            const roomPadding = 1.5;
+            Object.entries(roomBounds).forEach(([roomName, bounds]) => {
+                if (bounds.objects.length === 0) return;
+
+                const roomGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                roomGroup.setAttribute('class', 'room-group');
+
+                const x = bounds.minX - roomPadding;
+                const z = bounds.minZ - roomPadding;
+                const w = Math.max(bounds.maxX - bounds.minX + roomPadding * 2, 3);
+                const h = Math.max(bounds.maxZ - bounds.minZ + roomPadding * 2, 3);
+
+                // Room background
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', x);
+                rect.setAttribute('y', z);
+                rect.setAttribute('width', w);
+                rect.setAttribute('height', h);
+                rect.setAttribute('fill', getRoomColor(roomName));
+                rect.setAttribute('stroke', '#6b7280');
+                rect.setAttribute('stroke-width', '0.08');
+                rect.setAttribute('rx', '0.3');
+                rect.onclick = (e) => handleMapClick(e, roomName);
+                rect.style.cursor = 'crosshair';
+                roomGroup.appendChild(rect);
+
+                // Room label
+                const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                label.setAttribute('x', x + w / 2);
+                label.setAttribute('y', z + 0.6);
+                label.setAttribute('text-anchor', 'middle');
+                label.setAttribute('font-size', '0.5');
+                label.setAttribute('fill', '#9ca3af');
+                label.setAttribute('font-weight', 'bold');
+                label.textContent = roomName.replace(/_/g, ' ').replace(/(\d+)$/, '');
+                roomGroup.appendChild(label);
+
+                svg.appendChild(roomGroup);
+            });
+
+            // Draw grid lines
+            const gridGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            const gridSize = 2;
+            for (let x = Math.floor(minX / gridSize) * gridSize; x <= maxX; x += gridSize) {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', x);
+                line.setAttribute('y1', minZ);
+                line.setAttribute('x2', x);
+                line.setAttribute('y2', maxZ);
+                line.setAttribute('stroke', '#374151');
+                line.setAttribute('stroke-width', '0.02');
+                line.setAttribute('stroke-opacity', '0.4');
+                gridGroup.appendChild(line);
+            }
+            for (let z = Math.floor(minZ / gridSize) * gridSize; z <= maxZ; z += gridSize) {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', minX);
+                line.setAttribute('y1', z);
+                line.setAttribute('x2', maxX);
+                line.setAttribute('y2', z);
+                line.setAttribute('stroke', '#374151');
+                line.setAttribute('stroke-width', '0.02');
+                line.setAttribute('stroke-opacity', '0.4');
+                gridGroup.appendChild(line);
+            }
+            svg.appendChild(gridGroup);
+
+            // Calculate marker size based on view
+            const markerRadius = Math.min(width, height) * 0.025;
+            const fontSize = markerRadius * 0.9;
+
+            // Draw objects
+            episodeData.objects.forEach((obj, idx) => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'object-marker');
+                g.setAttribute('transform', `translate(${obj.position.x}, ${obj.position.z})`);
+
+                // Shadow
+                const shadow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                shadow.setAttribute('r', markerRadius * 1.1);
+                shadow.setAttribute('fill', 'rgba(0,0,0,0.3)');
+                shadow.setAttribute('cx', '0.05');
+                shadow.setAttribute('cy', '0.05');
+                g.appendChild(shadow);
+
+                // Main circle
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('r', markerRadius);
+                circle.setAttribute('fill', getObjectColor(obj.class));
+                circle.setAttribute('stroke', '#fff');
+                circle.setAttribute('stroke-width', '0.04');
+                g.appendChild(circle);
+
+                // Letter
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('y', fontSize * 0.35);
+                text.setAttribute('font-size', fontSize);
+                text.setAttribute('fill', '#fff');
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-weight', 'bold');
+                text.textContent = obj.class[0].toUpperCase();
+                g.appendChild(text);
+
+                // Tooltip
+                const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                title.textContent = `${obj.name}\n📍 ${obj.furniture}\n🏠 ${obj.room}`;
+                g.appendChild(title);
+
+                g.onclick = () => highlightObject(idx);
+                svg.appendChild(g);
+            });
+
+            // Coordinates display
+            const coordLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            coordLabel.setAttribute('x', minX + 0.3);
+            coordLabel.setAttribute('y', maxZ - 0.3);
+            coordLabel.setAttribute('font-size', '0.4');
+            coordLabel.setAttribute('fill', '#6b7280');
+            coordLabel.textContent = `Coords: X[${minX.toFixed(0)}, ${maxX.toFixed(0)}] Z[${minZ.toFixed(0)}, ${maxZ.toFixed(0)}]`;
+            svg.appendChild(coordLabel);
+
+            // Save viewBox for zoom/pan
+            saveCurrentViewBox();
+        }
+
+        function handleMapClick(e, roomId) {
+            const svg = document.getElementById('scene-map');
+            const pt = svg.createSVGPoint();
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+            const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+            clickedPosition = { x: svgPt.x, z: svgPt.y };
+            document.getElementById('coords').textContent = `x: ${svgPt.x.toFixed(2)}, z: ${svgPt.y.toFixed(2)}`;
+
+            // If no room provided, find the closest room
+            let closestRoom = roomId;
+            if (!closestRoom) {
+                closestRoom = findClosestRoom(svgPt.x, svgPt.y);
+            }
+
+            // Open add modal with position and room pre-filled
+            setPositionFromMap(clickedPosition.x, clickedPosition.z, closestRoom);
+        }
+
+        function findClosestRoom(x, z) {
+            let closestRoom = '';
+            let minDistance = Infinity;
+
+            // Method 1: Use actual room bounds from semantic scene (most accurate)
+            if (mapCalibration && mapCalibration.room_bounds) {
+                const roomBounds = mapCalibration.room_bounds;
+
+                // First check if point is inside any room
+                for (const [roomName, bounds] of Object.entries(roomBounds)) {
+                    if (x >= bounds.min_x && x <= bounds.max_x &&
+                        z >= bounds.min_z && z <= bounds.max_z) {
+                        console.log(`Point (${x.toFixed(2)}, ${z.toFixed(2)}) is inside ${roomName}`);
+                        return roomName;
+                    }
+                }
+
+                // If not inside any room, find the closest room by center distance
+                for (const [roomName, bounds] of Object.entries(roomBounds)) {
+                    const dist = Math.sqrt(
+                        (x - bounds.center_x) ** 2 +
+                        (z - bounds.center_z) ** 2
+                    );
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestRoom = roomName;
+                    }
+                }
+
+                if (closestRoom) {
+                    console.log(`Closest room to (${x.toFixed(2)}, ${z.toFixed(2)}) is ${closestRoom} (dist: ${minDistance.toFixed(2)})`);
+                    return closestRoom;
+                }
+            }
+
+            // Method 2: Fall back to object-based room detection
+            if (episodeData && episodeData.objects) {
+                episodeData.objects.forEach(obj => {
+                    const dist = Math.sqrt((x - obj.position.x) ** 2 + (z - obj.position.z) ** 2);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestRoom = obj.room;
+                    }
+                });
+            }
+
+            // Method 3: Fall back to inferred room bounds
+            if (!closestRoom && Object.keys(roomBoundsGlobal).length > 0) {
+                Object.entries(roomBoundsGlobal).forEach(([roomName, bounds]) => {
+                    if (bounds.objects.length === 0) return;
+
+                    const centerX = (bounds.minX + bounds.maxX) / 2;
+                    const centerZ = (bounds.minZ + bounds.maxZ) / 2;
+                    const dist = Math.sqrt((x - centerX) ** 2 + (z - centerZ) ** 2);
+
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestRoom = roomName;
+                    }
+                });
+            }
+
+            // Method 4: Use recep_to_room from metadata as last resort
+            if (!closestRoom && metadata && metadata.recep_to_room) {
+                const rooms = [...new Set(Object.values(metadata.recep_to_room))];
+                if (rooms.length > 0) {
+                    closestRoom = rooms[0];
+                }
+            }
+
+            return closestRoom;
+        }
+
+        function highlightObject(idx) {
+            const items = document.querySelectorAll('.object-item');
+            items.forEach((item, i) => {
+                item.classList.toggle('selected', i === idx);
+            });
+        }
+
+        async function deleteObject(idx, event) {
+            event.stopPropagation();
+            if (!confirm('Are you sure you want to delete this object?')) return;
+
+            const response = await fetch('/api/remove_object', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ index: idx })
+            });
+
+            if (response.ok) {
+                showToast('Object removed', 'success');
+                fetchData();
+            } else {
+                showToast('Failed to remove object', 'error');
+            }
+        }
+
+        function setPositionFromMap(x = 0, z = 0, room = '') {
+            // Update position fields when clicking on map
+            document.getElementById('pos-x').value = x.toFixed(2);
+            document.getElementById('pos-z').value = z.toFixed(2);
+
+            if (room) {
+                document.getElementById('room-select').value = room;
+                updateReceptacles();
+            }
+        }
+
+        function clearAddForm() {
+            // Clear form after adding object
+            document.getElementById('object-search').value = '';
+            document.getElementById('selected-object').value = '';
+            document.getElementById('object-class').value = '';
+            document.getElementById('object-thumbnail').innerHTML = '<span style="font-size: 1rem; color: var(--text-secondary);">?</span>';
+            document.getElementById('search-results').innerHTML = '';
+            selectedObjectId = null;
+        }
+
+        async function searchObjects() {
+            const query = document.getElementById('object-search').value;
+            const category = document.getElementById('category-filter').value;
+
+            let url = `/api/objects?q=${encodeURIComponent(query)}`;
+            if (category) {
+                url += `&category=${encodeURIComponent(category)}`;
+            }
+
+            const response = await fetch(url);
+            const objects = await response.json();
+
+            const results = document.getElementById('search-results');
+            results.innerHTML = '';
+
+            if (objects.length === 0) {
+                results.innerHTML = '<div style="padding: 0.5rem; color: var(--text-secondary);">No objects found</div>';
+                return;
+            }
+
+            objects.slice(0, 50).forEach(obj => {
+                const item = document.createElement('div');
+                item.className = 'search-result-item';
+                const displayName = obj.name || obj.id;
+                const shortId = obj.id.length > 30 ? obj.id.substring(0, 27) + '...' : obj.id;
+                item.innerHTML = `
+                    <div class="obj-info">
+                        <span class="obj-name" title="${displayName}">${displayName}</span>
+                        <span class="obj-id" title="${obj.id}">${shortId}</span>
+                    </div>
+                    <div class="category-badges">
+                        <span class="category">${obj.category}</span>
+                    </div>
+                `;
+                item.onclick = () => selectObject(obj);
+                results.appendChild(item);
+            });
+        }
+
+        async function populateCategories() {
+            const response = await fetch('/api/categories');
+            const categories = await response.json();
+
+            const select = document.getElementById('category-filter');
+            select.innerHTML = '<option value="">All categories</option>';
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function selectObject(obj) {
+            selectedObjectId = obj.id;
+            // Show name if available, otherwise ID
+            const displayName = obj.name || obj.id;
+            document.getElementById('selected-object').value = displayName;
+            document.getElementById('selected-object').title = obj.id;  // Full ID on hover
+            document.getElementById('object-class').value = obj.category !== 'other' ? obj.category : obj.id.split('_')[0];
+
+            // Load thumbnail
+            const thumbnailDiv = document.getElementById('object-thumbnail');
+            const categoryEmoji = getCategoryEmoji(obj.category);
+
+            // Try to load thumbnail image
+            const img = new Image();
+            img.onload = () => {
+                thumbnailDiv.innerHTML = '';
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                thumbnailDiv.appendChild(img);
+            };
+            img.onerror = () => {
+                // Show category emoji as fallback
+                thumbnailDiv.innerHTML = `<span style="font-size: 1.8rem;">${categoryEmoji}</span>`;
+            };
+            img.src = `/api/thumbnail/${encodeURIComponent(obj.id)}`;
+
+            // Show loading state
+            thumbnailDiv.innerHTML = '<span style="font-size: 0.7rem; color: var(--text-secondary);">Loading...</span>';
+
+            // Highlight selected item
+            document.querySelectorAll('.search-result-item').forEach(item => {
+                item.classList.toggle('selected', item.textContent.includes(obj.id));
+            });
+        }
+
+        function getCategoryEmoji(category) {
+            const emojiMap = {
+                'bowl': '🥣',
+                'cup': '☕',
+                'plate': '🍽️',
+                'bottle': '🍾',
+                'candle': '🕯️',
+                'book': '📚',
+                'box': '📦',
+                'cushion': '🛋️',
+                'vase': '🏺',
+                'clock': '🕐',
+                'lamp': '💡',
+                'plant': '🌿',
+                'fruit': '🍊',
+                'orange': '🍊',
+                'apple': '🍎',
+                'banana': '🍌',
+                'shoe': '👟',
+                'statue': '🗿',
+                'toy': '🧸',
+                'stuffed_toy': '🧸',
+                'action_figure': '🦸',
+                'dumbbell': '🏋️',
+                'laptop': '💻',
+                'phone': '📱',
+                'basket': '🧺',
+                'pan': '🍳',
+                'kettle': '🫖',
+                'knife': '🔪',
+                'spoon': '🥄',
+                'fork': '🍴',
+                'egg': '🥚',
+                'bread': '🍞',
+                'tomato': '🍅',
+                'potato': '🥔',
+            };
+            return emojiMap[category?.toLowerCase()] || '📦';
+        }
+
+        function populateRooms() {
+            const select = document.getElementById('room-select');
+            select.innerHTML = '<option value="">Select room...</option>';
+
+            const rooms = metadata.recep_to_room || {};
+            const uniqueRooms = [...new Set(Object.values(rooms))].sort();
+
+            uniqueRooms.forEach(room => {
+                const option = document.createElement('option');
+                option.value = room;
+                option.textContent = room;
+                select.appendChild(option);
+            });
+
+            select.onchange = updateReceptacles;
+        }
+
+        function updateReceptacles() {
+            const room = document.getElementById('room-select').value;
+            const select = document.getElementById('receptacle-select');
+            select.innerHTML = '<option value="">Select receptacle...</option>';
+
+            const recepToRoom = metadata.recep_to_room || {};
+            const recepToDesc = metadata.recep_to_description || {};
+            const recepToHandle = metadata.recep_to_handle || {};
+
+            Object.entries(recepToRoom)
+                .filter(([_, r]) => !room || r === room)
+                .sort(([a], [b]) => a.localeCompare(b))
+                .forEach(([name, r]) => {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = `${name} - ${recepToDesc[name] || ''}`;
+                    option.dataset.handle = recepToHandle[name] || '';
+                    select.appendChild(option);
+                });
+        }
+
+        async function addObject() {
+            if (!selectedObjectId) {
+                showToast('Please select an object', 'error');
+                return;
+            }
+
+            const room = document.getElementById('room-select').value;
+            const recepSelect = document.getElementById('receptacle-select');
+            const furniture = recepSelect.value;
+            const receptacleHandle = recepSelect.selectedOptions[0]?.dataset?.handle || '';
+            const objectClass = document.getElementById('object-class').value;
+
+            if (!room || !furniture || !objectClass) {
+                showToast('Please fill all required fields', 'error');
+                return;
+            }
+
+            const position = {
+                x: parseFloat(document.getElementById('pos-x').value) || 0,
+                y: parseFloat(document.getElementById('pos-y').value) || 0.8,
+                z: parseFloat(document.getElementById('pos-z').value) || 0
+            };
+
+            const response = await fetch('/api/add_object', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    object_id: selectedObjectId,
+                    object_class: objectClass,
+                    room: room,
+                    furniture: furniture,
+                    receptacle_handle: receptacleHandle,
+                    position: position
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showToast(`Added ${result.object_name}`, 'success');
+                clearAddForm();
+                fetchData();
+            } else {
+                showToast(result.error || 'Failed to add object', 'error');
+            }
+        }
+
+        async function saveEpisode() {
+            // Generate default filename with timestamp
+            const originalPath = document.getElementById('file-path').textContent;
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+            const originalFilename = originalPath.split('/').pop();
+
+            // Create default filename with timestamp
+            let defaultFilename = originalFilename;
+            if (originalFilename.endsWith('.json')) {
+                defaultFilename = originalFilename.replace('.json', `_${timestamp}.json`);
+            } else {
+                defaultFilename = `${originalFilename}_${timestamp}.json`;
+            }
+
+            // Try native File System Access API (Chrome/Edge)
+            if ('showSaveFilePicker' in window) {
+                try {
+                    const handle = await window.showSaveFilePicker({
+                        suggestedName: defaultFilename,
+                        types: [{
+                            description: 'JSON Files',
+                            accept: { 'application/json': ['.json'] }
+                        }]
+                    });
+
+                    // Get the episode data from server
+                    const dataResponse = await fetch('/api/episode/export');
+                    const episodeJson = await dataResponse.text();
+
+                    // Write to file
+                    const writable = await handle.createWritable();
+                    await writable.write(episodeJson);
+                    await writable.close();
+
+                    showToast(`Saved to: ${handle.name}`, 'success');
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') {
+                        showToast('Save cancelled', 'info');
+                        return;
+                    }
+                    // Fall through to download method
+                    console.log('File picker failed, using download:', err);
+                }
+            }
+
+            // Fallback: Download file (works in all browsers)
+            try {
+                const response = await fetch('/api/episode/export');
+                const blob = await response.blob();
+
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = defaultFilename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                showToast(`Downloaded: ${defaultFilename}`, 'success');
+            } catch (err) {
+                showToast('Failed to save: ' + err.message, 'error');
+            }
+        }
+
+        async function quickSave() {
+            // Save directly to the original file (overwrite)
+            const response = await fetch('/api/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                showToast('Saved!', 'success');
+            } else {
+                showToast(result.error || 'Failed to save', 'error');
+            }
+        }
+
+        function refreshData() {
+            fetchData();
+            showToast('Refreshed', 'success');
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Track mouse position on map
+        document.getElementById('scene-map').addEventListener('mousemove', (e) => {
+            const svg = e.currentTarget;
+            const pt = svg.createSVGPoint();
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+            const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+            document.getElementById('coords').textContent = `x: ${svgPt.x.toFixed(2)}, z: ${svgPt.y.toFixed(2)}`;
+        });
+
+        // Zoom and pan functionality
+        let currentViewBox = { x: -15, y: -10, w: 20, h: 15 };
+        let originalViewBox = { ...currentViewBox };
+        let isPanning = false;
+        let panStart = { x: 0, y: 0 };
+
+        function saveCurrentViewBox() {
+            // Call this after rendering to save the initial viewBox
+            const svg = document.getElementById('scene-map');
+            const vb = svg.getAttribute('viewBox').split(' ').map(Number);
+            currentViewBox = { x: vb[0], y: vb[1], w: vb[2], h: vb[3] };
+            originalViewBox = { ...currentViewBox };
+        }
+
+        function updateViewBox() {
+            const svg = document.getElementById('scene-map');
+            svg.setAttribute('viewBox', `${currentViewBox.x} ${currentViewBox.y} ${currentViewBox.w} ${currentViewBox.h}`);
+        }
+
+        function zoomIn() {
+            const factor = 0.8;
+            const cx = currentViewBox.x + currentViewBox.w / 2;
+            const cy = currentViewBox.y + currentViewBox.h / 2;
+            currentViewBox.w *= factor;
+            currentViewBox.h *= factor;
+            currentViewBox.x = cx - currentViewBox.w / 2;
+            currentViewBox.y = cy - currentViewBox.h / 2;
+            updateViewBox();
+        }
+
+        function zoomOut() {
+            const factor = 1.25;
+            const cx = currentViewBox.x + currentViewBox.w / 2;
+            const cy = currentViewBox.y + currentViewBox.h / 2;
+            currentViewBox.w *= factor;
+            currentViewBox.h *= factor;
+            currentViewBox.x = cx - currentViewBox.w / 2;
+            currentViewBox.y = cy - currentViewBox.h / 2;
+            updateViewBox();
+        }
+
+        function resetZoom() {
+            currentViewBox = { ...originalViewBox };
+            updateViewBox();
+        }
+
+        // Mouse wheel zoom
+        document.getElementById('scene-map').addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const svg = e.currentTarget;
+            const pt = svg.createSVGPoint();
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+            const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+            const factor = e.deltaY > 0 ? 1.15 : 0.87;
+            const newW = currentViewBox.w * factor;
+            const newH = currentViewBox.h * factor;
+
+            // Zoom towards mouse position
+            const dx = (svgPt.x - currentViewBox.x) / currentViewBox.w;
+            const dy = (svgPt.y - currentViewBox.y) / currentViewBox.h;
+
+            currentViewBox.x = svgPt.x - dx * newW;
+            currentViewBox.y = svgPt.y - dy * newH;
+            currentViewBox.w = newW;
+            currentViewBox.h = newH;
+
+            updateViewBox();
+        }, { passive: false });
+
+        // Pan with middle mouse or shift+drag
+        document.getElementById('scene-map').addEventListener('mousedown', (e) => {
+            if (e.button === 1 || (e.button === 0 && e.shiftKey)) {
+                e.preventDefault();
+                isPanning = true;
+                panStart = { x: e.clientX, y: e.clientY };
+                document.getElementById('scene-map').style.cursor = 'grabbing';
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+
+            const svg = document.getElementById('scene-map');
+            const scale = currentViewBox.w / svg.clientWidth;
+
+            currentViewBox.x -= (e.clientX - panStart.x) * scale;
+            currentViewBox.y -= (e.clientY - panStart.y) * scale;
+
+            panStart = { x: e.clientX, y: e.clientY };
+            updateViewBox();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isPanning) {
+                isPanning = false;
+                document.getElementById('scene-map').style.cursor = 'crosshair';
+            }
+        });
+
+        // Initialize
+        fetchData();
+        populateCategories();
+        searchObjects();  // Populate initial search results
+    </script>
+</body>
+</html>
