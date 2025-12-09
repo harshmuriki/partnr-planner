@@ -118,3 +118,7 @@ dmypy.json
 
 # ignore rlm logs
 rlm/
+visualizations
+metadata_output
+scripts/episode_editor/static/maps/topdown_map_calibration.json
+scripts/episode_editor/static/maps/*.png
