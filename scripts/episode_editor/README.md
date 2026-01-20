@@ -27,7 +27,8 @@ A visual GUI tool for editing Habitat partnr-planner episode files. Add, view, a
 
 ### Data Persistence
 
-- **Save** - Save changes back to the episode JSON file
+- **Save** - Save changes back to the episode JSON or JSON.gz file
+- **Dataset mode** - Load from .json.gz dataset files and save edited episode as .json.gz
 - **Proper ordering** - Maintains correct object ordering for metadata extraction
 
 ## Usage
@@ -38,11 +39,17 @@ A visual GUI tool for editing Habitat partnr-planner episode files. Add, view, a
 # Activate habitat environment
 conda activate habitat
 
-# Run the editor with an episode file
+# Option 1: Load from dataset file (recommended)
+# Loads a specific episode from a .json.gz dataset file
+python scripts/episode_editor/app.py --dataset data/datasets/partnr_episodes/v0_0/val.json.gz --episode-id 0
+
+# Option 2: Load single episode file (legacy mode)
 python scripts/episode_editor/app.py --episode path/to/episode.json
 ```
 
 The editor will start at `http://localhost:5000`
+
+**Note:** When loading from a dataset file, the edited episode will be saved as a separate `.json.gz` file containing only that episode (e.g., `val_episode_0.json.gz`).
 
 ### Adding an Object
 
@@ -54,11 +61,14 @@ The editor will start at `http://localhost:5000`
 
 ### Saving Changes
 
-Click the "Save Episode" button in the left sidebar to save changes to the JSON file.
+Click the "Save Episode" button in the left sidebar to save changes to the file.
+
+- **Dataset mode**: Saves as `.json.gz` file containing only the edited episode
+- **Legacy mode**: Saves as `.json` file (or `.json.gz` if the original file was compressed)
 
 ## File Structure
 
-```
+```text
 scripts/episode_editor/
 ├── app.py                 # Flask backend
 ├── requirements.txt       # Python dependencies
@@ -69,10 +79,14 @@ scripts/episode_editor/
     └── maps/              # Generated map images
 ```
 
+## Important Note
+
+- You should add the new object to **partnr-planner/habitat_llm/utils/semantic_constants.py** file so that the panoptic sensor detects the objects
+
 ## API Endpoints
 
-| Endpoint                 | Method | Description                   |
-| ------------------------ | ------ | ----------------------------- |
+| Endpoint               | Method | Description                   |
+| ---------------------- | ------ | ----------------------------- |
 | `/`                    | GET    | Main editor page              |
 | `/api/episode`         | GET    | Get episode data and metadata |
 | `/api/map`             | GET    | Get top-down map image        |
@@ -89,9 +103,9 @@ scripts/episode_editor/
 | Action     | Shortcut                         |
 | ---------- | -------------------------------- |
 | Zoom in    | Scroll up / Click +              |
-| Zoom out   | Scroll down / Click −           |
+| Zoom out   | Scroll down / Click −            |
 | Pan        | Shift + Drag / Middle mouse drag |
-| Reset view | Click ⟲                         |
+| Reset view | Click ⟲                          |
 
 ## Requirements
 

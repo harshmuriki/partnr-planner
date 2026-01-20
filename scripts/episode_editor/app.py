@@ -8,18 +8,31 @@ Then open http://localhost:5000 in your browser.
 """
 
 import argparse
+import gzip
 import json
 import os
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+import subprocess
+import time
 
 import numpy as np
+import yaml
 from flask import Flask, jsonify, render_template, request, send_file
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
+
+# Import visualization components
+try:
+    from scripts.episode_editor.viz_components import Object, Receptacle, Room, Scene
+    from scripts.episode_editor.viz_components.constants import color_palette
+    VIZ_AVAILABLE = True
+except ImportError as e:
+    VIZ_AVAILABLE = False
+    print(f"Warning: Visualization components not available: {e}")
 
 # Try to import habitat for top-down map generation
 try:
@@ -27,6 +40,8 @@ try:
     import magnum as mn
     from habitat.datasets.rearrange.run_episode_generator import get_config_defaults
     from habitat_sim.nav import NavMeshSettings
+    from habitat_llm.sims.metadata_interface import MetadataInterface, default_metadata_dict
+    from habitat_llm.utils.sim import find_receptacles
 
     HABITAT_AVAILABLE = True
 except ImportError:
@@ -38,6 +53,7 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 # Global state
 episode_data: Dict[str, Any] = {}
 episode_path: str = ""
+original_dataset_path: str = ""  # Store original dataset path for saving
 metadata_cache: Dict[str, Any] = {}
 object_database: List[Dict[str, str]] = []
 map_image_path: str = ""
@@ -50,10 +66,61 @@ def load_episode(path: str) -> Dict[str, Any]:
         return json.load(f)
 
 
+def load_dataset_file(path: str) -> Dict[str, Any]:
+    """Load dataset from JSON or JSON.gz file."""
+    if path.endswith('.gz'):
+        with gzip.open(path, 'rt') as f:
+            return json.load(f)
+    else:
+        with open(path, 'r') as f:
+            return json.load(f)
+
+
+def extract_episode_from_dataset(dataset_path: str, episode_id: str) -> Optional[Dict[str, Any]]:
+    """Extract a specific episode from a dataset file."""
+    dataset = load_dataset_file(dataset_path)
+    episodes = dataset.get('episodes', [])
+
+    # Find episode by ID (can be string or int)
+    for episode in episodes:
+        ep_id = episode.get('episode_id')
+        # Handle both string and int comparisons
+        if str(ep_id) == str(episode_id) or ep_id == episode_id:
+            # Return in the same format as load_episode expects
+            return {
+                "episodes": [episode],
+                "config": dataset.get("config", {})
+            }
+
+    return None
+
+
+def save_episode_gz(path: str, episode_data: Dict[str, Any]) -> None:
+    """Save episode to JSON.gz file (single episode only)."""
+    # Ensure the episode data is in the correct format
+    # Extract just the single episode we're editing
+    if "episodes" in episode_data and len(episode_data["episodes"]) > 0:
+        # Save only the first (and only) episode
+        single_episode_data = {
+            "episodes": [episode_data["episodes"][0]],
+            "config": episode_data.get("config", {})
+        }
+    else:
+        # If it's just a single episode dict, wrap it
+        single_episode_data = {"episodes": [episode_data], "config": {}}
+
+    # Save as gzip
+    with gzip.open(path, 'wt') as f:
+        json.dump(single_episode_data, f, indent=2)
+
+
 def save_episode(path: str, data: Dict[str, Any]) -> None:
-    """Save episode to JSON file."""
-    with open(path, "w") as f:
-        json.dump(data, f, indent=2)
+    """Save episode to JSON or JSON.gz file."""
+    if path.endswith('.gz'):
+        save_episode_gz(path, data)
+    else:
+        with open(path, "w") as f:
+            json.dump(data, f, indent=2)
 
 
 def scan_object_database() -> List[Dict[str, str]]:
@@ -124,7 +191,7 @@ def generate_topdown_map(
     Generate a top-down map of the scene using habitat-sim.
     Returns the path to the saved image and calibration data for coordinate mapping.
     """
-    global map_calibration
+    global map_calibration, metadata_cache
 
     if not HABITAT_AVAILABLE:
         return None, {}
@@ -385,6 +452,127 @@ def generate_topdown_map(
         plt.savefig(map_path, dpi=100, bbox_inches="tight", pad_inches=0)
         plt.close()
 
+        # Extract ALL furniture and receptacles from the simulator using MetadataInterface
+        try:
+            # default_metadata_dict may be a dict or a callable depending on habitat_llm version
+            metadata_source = (
+                default_metadata_dict() if callable(default_metadata_dict) else default_metadata_dict
+            )
+            mi = MetadataInterface(metadata_source)
+            mi.refresh_scene_caches(sim)
+
+            # Get all furniture organized by room
+            region_contents = mi.get_region_rec_contents(sim)
+
+            # Populate metadata_cache with all furniture and receptacles
+            recep_to_room = {}
+            recep_to_handle = {}
+            recep_to_description = {}
+            rooms = list(region_contents.keys())
+
+            for room_name, furniture_list in region_contents.items():
+                for furniture_name in furniture_list:
+                    # Each furniture name becomes a receptacle entry
+                    recep_to_room[furniture_name] = room_name
+                    # Get handle from MetadataInterface
+                    if furniture_name in mi.recobj_semname_to_handle:
+                        recep_to_handle[furniture_name] = mi.recobj_semname_to_handle[furniture_name]
+                    # Get description if available
+                    recep_to_description[furniture_name] = furniture_name.replace("_", " ").title()
+
+            # Also add individual receptacles from find_receptacles
+            receptacles = find_receptacles(sim, filter_receptacles=True)
+            for rec in receptacles:
+                parent_handle = rec.parent_object_handle
+                # Get semantic name for parent
+                if parent_handle in mi.recobj_handle_to_semname:
+                    parent_sem_name = mi.recobj_handle_to_semname[parent_handle]
+                    # Create receptacle name
+                    rec_name = f"{parent_sem_name}"
+                    if rec_name not in recep_to_room:
+                        # Find room for this receptacle
+                        for room_name, furniture_list in region_contents.items():
+                            if parent_sem_name in furniture_list:
+                                recep_to_room[rec_name] = room_name
+                                recep_to_handle[rec_name] = rec.unique_name
+                                recep_to_description[rec_name] = parent_sem_name.replace("_", " ").title()
+                                break
+
+            # Update metadata_cache
+            metadata_cache["recep_to_room"] = recep_to_room
+            metadata_cache["recep_to_handle"] = recep_to_handle
+            metadata_cache["recep_to_description"] = recep_to_description
+            metadata_cache["rooms"] = rooms
+
+            # Extract object metadata from episode
+            object_metadata = extract_object_metadata_from_episode(episode, recep_to_room)
+            metadata_cache.update(object_metadata)
+
+            # Create room_to_id mapping
+            metadata_cache["room_to_id"] = {room: room.replace("_", " ") for room in rooms}
+            metadata_cache["object_to_states"] = {}
+
+            print(f"Extracted {len(recep_to_room)} furniture/receptacles from {len(rooms)} rooms")
+            print(f"Extracted {len(object_metadata['objects'])} objects")
+            print(f"Rooms: {rooms}")
+            print(f"Furniture: {list(recep_to_room.keys())[:10]}...")
+
+            # Fallback: if metadata interface didn't populate, use receptacle positions + room bounds
+            if not recep_to_room:
+                try:
+                    import habitat.sims.habitat_simulator.sim_utilities as sutils
+
+                    def room_for_position(x: float, z: float) -> str:
+                        # Try containment first
+                        for room_name, bounds in room_bounds.items():
+                            if (
+                                bounds["min_x"] <= x <= bounds["max_x"]
+                                and bounds["min_z"] <= z <= bounds["max_z"]
+                            ):
+                                return room_name
+                        # Fallback to closest center
+                        closest_room = "unknown"
+                        min_dist = float("inf")
+                        for room_name, bounds in room_bounds.items():
+                            dx = x - bounds["center_x"]
+                            dz = z - bounds["center_z"]
+                            dist = dx * dx + dz * dz
+                            if dist < min_dist:
+                                min_dist = dist
+                                closest_room = room_name
+                        return closest_room
+
+                    receptacles = find_receptacles(sim, filter_receptacles=True)
+                    for rec in receptacles:
+                        parent_handle = rec.parent_object_handle
+                        obj = sutils.get_obj_from_handle(sim, parent_handle)
+                        if obj is None:
+                            continue
+                        pos = obj.translation
+                        room_name = room_for_position(float(pos.x), float(pos.z))
+                        recep_name = (
+                            mi.recobj_handle_to_semname.get(parent_handle, parent_handle)
+                            if hasattr(mi, "recobj_handle_to_semname")
+                            else parent_handle
+                        )
+                        if recep_name not in recep_to_room:
+                            recep_to_room[recep_name] = room_name
+                            recep_to_handle[recep_name] = rec.unique_name
+                            recep_to_description[recep_name] = recep_name.replace("_", " ").title()
+
+                    if recep_to_room:
+                        metadata_cache["recep_to_room"] = recep_to_room
+                        metadata_cache["recep_to_handle"] = recep_to_handle
+                        metadata_cache["recep_to_description"] = recep_to_description
+                        metadata_cache["rooms"] = sorted(set(recep_to_room.values()))
+                except Exception as fallback_error:
+                    print(f"Warning: Fallback furniture extraction failed: {fallback_error}")
+
+        except Exception as e:
+            print(f"Warning: Could not extract furniture from simulator: {e}")
+            import traceback
+            traceback.print_exc()
+
         sim.close()
         del sim
 
@@ -414,6 +602,64 @@ def load_metadata(scene_id: str) -> Dict[str, Any]:
         "recep_to_room": {},
         "recep_to_handle": {},
         "recep_to_description": {},
+    }
+
+
+def extract_object_metadata_from_episode(episode: Dict, recep_to_room: Dict) -> Dict[str, Any]:
+    """
+    Extract object-related metadata from episode data.
+    Returns dict with: objects, object_to_recep, object_to_room, object_to_handle, room_to_id
+    """
+    ep = episode["episodes"][0]
+    initial_state = ep.get("info", {}).get("initial_state", [])
+    name_to_recep = ep.get("name_to_receptacle", {})
+    rigid_objs = ep.get("rigid_objs", [])
+
+    objects = []
+    object_to_recep = {}
+    object_to_room = {}
+    object_to_handle = {}
+
+    obj_idx = 0
+    for state in initial_state:
+        # Skip non-object entries
+        if "name" in state or "template_task_number" in state:
+            continue
+        if not state.get("object_classes"):
+            continue
+
+        obj_class = state["object_classes"][0]
+        obj_name = f"{obj_class}_{obj_idx}"
+        objects.append(obj_name)
+
+        # Get handle
+        handle_key = f"{obj_name}_:0000"
+        if handle_key in name_to_recep:
+            recep_value = name_to_recep[handle_key]
+            # Extract receptacle name
+            recep_handle = recep_value.split("|")[0] if "|" in recep_value else recep_value
+            recep_name = recep_handle.split("_:")[0] if "_:" in recep_handle else recep_handle
+
+            object_to_recep[obj_name] = recep_name
+            object_to_handle[obj_name] = handle_key
+
+            # Get room from receptacle
+            if recep_name in recep_to_room:
+                object_to_room[obj_name] = recep_to_room[recep_name]
+            else:
+                # Fallback to allowed_regions
+                object_to_room[obj_name] = state.get("allowed_regions", ["unknown"])[0]
+        else:
+            # Object on floor or no receptacle
+            object_to_room[obj_name] = state.get("allowed_regions", ["unknown"])[0]
+
+        obj_idx += 1
+
+    return {
+        "objects": objects,
+        "object_to_recep": object_to_recep,
+        "object_to_room": object_to_room,
+        "object_to_handle": object_to_handle,
     }
 
 
@@ -746,9 +992,17 @@ def save():
         data = request.get_json(silent=True) or {}
         save_path = data.get("path", episode_path)
 
+        # If no path provided and we loaded from a dataset, use original dataset path
+        if not save_path:
+            save_path = episode_path
+
         # Ensure path is absolute
         if not os.path.isabs(save_path):
             save_path = str(project_root / save_path)
+
+        # If original was .json.gz, save as .json.gz
+        if episode_path.endswith('.gz') and not save_path.endswith('.gz'):
+            save_path = save_path + '.gz'
 
         # Create directory if it doesn't exist
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -795,12 +1049,326 @@ def export():
         return jsonify({"error": str(e)}), 500
 
 
+def build_scene_visualization(
+    episode_data: Dict[str, Any], metadata_cache: Dict[str, Any]
+) -> Optional[Scene]:
+    """Build a Scene visualization from episode data."""
+    if not VIZ_AVAILABLE:
+        return None
+
+    try:
+        # Load configuration
+        config_path = project_root / "scripts/episode_editor/viz_config.yaml"
+        with open(config_path) as f:
+            viz_config = yaml.safe_load(f)
+
+        # Get data from metadata cache (preferred)
+        recep_to_room = metadata_cache.get("recep_to_room", {}).copy()
+        object_to_recep = metadata_cache.get("object_to_recep", {}).copy()
+        object_to_room = metadata_cache.get("object_to_room", {}).copy()
+        rooms_list = list(metadata_cache.get("rooms", []))
+        objects_list = list(metadata_cache.get("objects", []))
+
+        # Always merge in episode layout to ensure all objects and furniture are shown
+        layout = extract_scene_layout(episode_data)
+        layout_objects = layout.get("objects", [])
+
+        if not objects_list:
+            objects_list = [obj.get("name") for obj in layout_objects]
+        else:
+            layout_names = {obj.get("name") for obj in layout_objects}
+            for name in layout_names:
+                if name and name not in objects_list:
+                    objects_list.append(name)
+
+        # Ensure rooms list includes all rooms from layout and receptacles
+        layout_rooms = {obj.get("room", "unknown") for obj in layout_objects}
+        recep_rooms = set(recep_to_room.values())
+        for room_name in sorted(layout_rooms.union(recep_rooms)):
+            if room_name and room_name not in rooms_list:
+                rooms_list.append(room_name)
+
+        # Build object mappings from layout when missing
+        for obj in layout_objects:
+            obj_name = obj.get("name")
+            room = obj.get("room", "unknown")
+            furniture = obj.get("furniture", "floor") or "floor"
+
+            if obj_name and obj_name not in object_to_room:
+                object_to_room[obj_name] = room
+
+            # Only map to receptacle if it's a known piece of furniture
+            if furniture and furniture not in ("floor", "unknown"):
+                if obj_name and obj_name not in object_to_recep:
+                    object_to_recep[obj_name] = furniture
+                if furniture not in recep_to_room:
+                    recep_to_room[furniture] = room
+            else:
+                if obj_name and obj_name not in object_to_recep:
+                    object_to_recep[obj_name] = "floor"
+
+        # Assign colors to objects
+        object_colors = {}
+        for idx, obj_id in enumerate(objects_list):
+            color = color_palette[idx % len(color_palette)]
+            object_colors[obj_id] = color
+
+        # Build rooms with receptacles and objects
+        rooms = []
+        for room_id in rooms_list:
+            # Find receptacles in this room
+            room_receptacles = []
+            for recep_id, recep_room in recep_to_room.items():
+                if recep_room == room_id:
+                    receptacle = Receptacle(recep_id, viz_config["receptacle"], str(project_root))
+                    room_receptacles.append(receptacle)
+
+            # Find objects in this room
+            room_objects = []
+            for obj_id in objects_list:
+                if object_to_room.get(obj_id) == room_id:
+                    obj = Object(obj_id, object_colors.get(obj_id, "#FFFFFF"), viz_config["object"])
+                    room_objects.append(obj)
+
+            # Create room
+            room = Room(
+                room_id,
+                room_receptacles,
+                room_objects,
+                object_to_recep,
+                viz_config["room"],
+            )
+            rooms.append(room)
+
+        # Create scene
+        scene = Scene(rooms, viz_config["scene"])
+        return scene
+
+    except Exception as e:
+        print(f"Error building scene visualization: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
+
+
+@app.route("/api/generate_tree_viz", methods=["POST"])
+def generate_tree_viz():
+    """Generate hierarchical tree visualization of episode structure."""
+    if not VIZ_AVAILABLE:
+        return jsonify({"error": "Visualization not available"}), 500
+
+    try:
+        # Export current in-memory episode to a temp dataset file
+        temp_dir = project_root / "scripts/episode_editor/static/tmp"
+        os.makedirs(temp_dir, exist_ok=True)
+        episode_id = episode_data.get("episodes", [{}])[0].get("episode_id", "0")
+        timestamp = int(time.time())
+        temp_dataset_path = temp_dir / f"episode_{episode_id}_{timestamp}.json.gz"
+
+        save_episode_gz(str(temp_dataset_path), episode_data)
+
+        # Run metadata extraction on the temp dataset
+        metadata_dir = project_root / "data/versioned_data/partnr_episodes/v0_0/metadata_editing"
+        os.makedirs(metadata_dir, exist_ok=True)
+        metadata_cmd = [
+            sys.executable,
+            "dataset_generation/benchmark_generation/metadata_extractor.py",
+            "--dataset-path",
+            str(temp_dataset_path),
+            "--save-dir",
+            str(metadata_dir),
+        ]
+        metadata_result = subprocess.run(
+            metadata_cmd, cwd=str(project_root), capture_output=True, text=True
+        )
+        if metadata_result.returncode != 0:
+            return jsonify(
+                {
+                    "error": "Metadata extraction failed",
+                    "details": metadata_result.stderr or metadata_result.stdout,
+                }
+            ), 500
+
+        # Patch metadata with current in-memory episode objects
+        metadata_file = metadata_dir / f"{episode_id}.json"
+        if metadata_file.exists():
+            try:
+                update_metadata_for_episode(str(metadata_file), episode_data)
+            except Exception as meta_update_error:
+                return jsonify(
+                    {
+                        "error": "Failed to update metadata with current episode",
+                        "details": str(meta_update_error),
+                    }
+                ), 500
+
+        # Run PrediViz using the generated metadata
+        save_path = project_root / "scripts/episode_editor/static"
+        viz_cmd = [
+            sys.executable,
+            "scripts/prediviz/viz.py",
+            "--dataset",
+            str(temp_dataset_path),
+            "--metadata-dir",
+            str(metadata_dir),
+            "--save-path",
+            str(save_path),
+            "--episode-id",
+            str(episode_id),
+        ]
+        viz_result = subprocess.run(
+            viz_cmd, cwd=str(project_root), capture_output=True, text=True
+        )
+        if viz_result.returncode != 0:
+            return jsonify(
+                {
+                    "error": "PrediViz generation failed",
+                    "details": viz_result.stderr or viz_result.stdout,
+                }
+            ), 500
+
+        image_rel_path = f"/static/viz_{episode_id}/step_0.png"
+        image_url = f"{image_rel_path}?t={timestamp}"
+
+        return jsonify({"success": True, "image_url": image_url})
+
+    except Exception as e:
+        print(f"Error generating tree visualization: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+def update_metadata_for_episode(metadata_path: str, episode_data: Dict[str, Any]) -> None:
+    """Update metadata JSON with the current in-memory episode objects."""
+    with open(metadata_path, "r") as f:
+        metadata = json.load(f)
+
+    episode = episode_data["episodes"][0]
+
+    recep_to_handle = metadata.get("recep_to_handle", {})
+    handle_to_recep = {v: k for k, v in recep_to_handle.items()}
+    handle_to_recep["floor"] = "floor"
+
+    recep_to_room = metadata.get("recep_to_room", {})
+
+    # Rebuild objects list from initial_state
+    object_handles = list(episode.get("name_to_receptacle", {}).keys())
+    objects = []
+    object_cat_to_count: Dict[str, int] = {}
+    object_to_room: Dict[str, str] = {}
+    for state_element in episode.get("info", {}).get("initial_state", []):
+        if (
+            "name" in state_element
+            or "template_task_number" in state_element
+            or len(state_element.get("object_classes", [])) == 0
+        ):
+            continue
+
+        obj_name = state_element["object_classes"][0]
+        for _ in range(state_element.get("number", 1)):
+            idx = object_cat_to_count.get(obj_name, 0)
+            object_cat_to_count[obj_name] = idx + 1
+            o = f"{obj_name}_{idx}"
+            object_to_room[o] = state_element.get("allowed_regions", ["unknown"])[0]
+            objects.append(o)
+
+    # Map objects to handles based on name_to_receptacle order
+    object_to_handle = {
+        objects[i]: object_handles[i] for i in range(min(len(objects), len(object_handles)))
+    }
+
+    # Build object_to_recep and override object_to_room if receptacle is known
+    object_to_recep: Dict[str, str] = {}
+    for obj, handle in object_to_handle.items():
+        recep_handle = episode["name_to_receptacle"][handle].split("|")[0]
+        recep = handle_to_recep.get(recep_handle, "floor")
+        object_to_recep[obj] = recep
+        if recep != "floor" and recep in recep_to_room:
+            object_to_room[obj] = recep_to_room[recep]
+
+    # Update metadata object fields
+    metadata["objects"] = objects
+    metadata["object_to_handle"] = object_to_handle
+    metadata["object_to_recep"] = object_to_recep
+    metadata["object_to_room"] = object_to_room
+
+    with open(metadata_path, "w") as f:
+        json.dump(metadata, f, indent=2)
+
+
+def refresh_metadata_from_episode() -> None:
+    """Rebuild object/room metadata from the current episode state."""
+    global metadata_cache
+
+    try:
+        layout = extract_scene_layout(episode_data)
+        layout_objects = layout.get("objects", [])
+
+        # Build fresh mappings based on current episode content
+        object_to_room: Dict[str, str] = {}
+        object_to_recep: Dict[str, str] = {}
+        recep_to_room: Dict[str, str] = {}
+        objects: List[str] = []
+        rooms: set[str] = set()
+
+        # Start with existing receptacles so furniture without objects stays visible
+        existing_recep_to_room = metadata_cache.get("recep_to_room", {})
+        if existing_recep_to_room:
+            recep_to_room.update(existing_recep_to_room)
+            rooms.update(existing_recep_to_room.values())
+
+        for obj in layout_objects:
+            obj_name = obj.get("name")
+            room = obj.get("room", "unknown")
+            furniture = obj.get("furniture", "floor") or "floor"
+
+            if not obj_name:
+                continue
+
+            objects.append(obj_name)
+            rooms.add(room)
+            object_to_room[obj_name] = room
+            object_to_recep[obj_name] = furniture if furniture else "floor"
+
+            if furniture and furniture not in ("floor", "unknown"):
+                recep_to_room[furniture] = room
+
+        # Preserve existing metadata fields when available
+        existing_recep_desc = metadata_cache.get("recep_to_description", {})
+        existing_recep_handle = metadata_cache.get("recep_to_handle", {})
+
+        metadata_cache["objects"] = objects
+        metadata_cache["rooms"] = sorted(rooms)
+        metadata_cache["object_to_room"] = object_to_room
+        metadata_cache["object_to_recep"] = object_to_recep
+        metadata_cache["recep_to_room"] = recep_to_room
+        metadata_cache["recep_to_description"] = existing_recep_desc
+        metadata_cache["recep_to_handle"] = existing_recep_handle
+
+        if "room_to_id" not in metadata_cache or not metadata_cache.get("room_to_id"):
+            metadata_cache["room_to_id"] = {
+                room: room.replace("_", " ") for room in metadata_cache["rooms"]
+            }
+        if "object_to_states" not in metadata_cache:
+            metadata_cache["object_to_states"] = {}
+
+    except Exception as e:
+        print(f"Warning: Could not refresh metadata from episode: {e}")
+
+
 def main():
-    global episode_data, episode_path, metadata_cache, object_database, map_image_path, map_calibration
+    global episode_data, episode_path, original_dataset_path, metadata_cache, object_database, map_image_path, map_calibration
 
     parser = argparse.ArgumentParser(description="Episode Editor GUI")
     parser.add_argument(
-        "--episode", type=str, required=True, help="Path to episode JSON file"
+        "--episode", type=str, default="", help="Path to episode JSON file (legacy mode)"
+    )
+    parser.add_argument(
+        "--dataset", type=str, default="", help="Path to dataset JSON.gz file"
+    )
+    parser.add_argument(
+        "--episode-id", type=str, default="", help="Episode ID to load from dataset"
     )
     parser.add_argument(
         "--metadata", type=str, default="", help="Path to metadata JSON file (optional)"
@@ -819,10 +1387,44 @@ def main():
 
     args = parser.parse_args()
 
-    # Load episode
-    episode_path = args.episode
-    print(f"Loading episode from: {episode_path}")
-    episode_data = load_episode(episode_path)
+    # Load episode - support both legacy mode (single episode file) and new mode (dataset + episode_id)
+    if args.dataset and args.episode_id:
+        # New mode: load from dataset file
+        dataset_path = args.dataset
+        if not os.path.isabs(dataset_path):
+            dataset_path = str(project_root / dataset_path)
+
+        print(f"Loading episode {args.episode_id} from dataset: {dataset_path}")
+        episode_data = extract_episode_from_dataset(dataset_path, args.episode_id)
+
+        if episode_data is None:
+            print(f"Error: Episode {args.episode_id} not found in dataset")
+            sys.exit(1)
+
+        # Store original dataset path and set episode_path for saving
+        original_dataset_path = dataset_path
+        # Default save path: same directory as dataset, with episode_id in filename
+        episode_id_str = str(args.episode_id)
+        dataset_dir = os.path.dirname(dataset_path)
+        dataset_basename = os.path.basename(dataset_path)
+        # Remove .json.gz extension and add episode_id
+        if dataset_basename.endswith('.json.gz'):
+            base_name = dataset_basename[:-8]
+        elif dataset_basename.endswith('.json'):
+            base_name = dataset_basename[:-5]
+        else:
+            base_name = dataset_basename
+        episode_path = os.path.join(dataset_dir, f"{base_name}_episode_{episode_id_str}.json.gz")
+    elif args.episode:
+        # Legacy mode: load single episode file
+        episode_path = args.episode
+        if not os.path.isabs(episode_path):
+            episode_path = str(project_root / episode_path)
+        print(f"Loading episode from: {episode_path}")
+        episode_data = load_episode(episode_path)
+        original_dataset_path = ""
+    else:
+        parser.error("Either --episode (legacy) or both --dataset and --episode-id must be provided")
 
     # Load metadata
     scene_id = episode_data["episodes"][0].get("scene_id", "0")
@@ -838,6 +1440,23 @@ def main():
             with open(metadata_path) as f:
                 metadata_cache = json.load(f)
             print(f"Loaded metadata from: {metadata_path}")
+
+    # Extract object metadata from episode if not already in metadata_cache
+    if "object_to_room" not in metadata_cache or not metadata_cache.get("object_to_room"):
+        recep_to_room = metadata_cache.get("recep_to_room", {})
+        object_metadata = extract_object_metadata_from_episode(episode_data, recep_to_room)
+        metadata_cache.update(object_metadata)
+
+        # Create room_to_id mapping from rooms list
+        if "room_to_id" not in metadata_cache:
+            rooms = metadata_cache.get("rooms", [])
+            metadata_cache["room_to_id"] = {room: room.replace("_", " ") for room in rooms}
+
+        # Add empty object_to_states if not present
+        if "object_to_states" not in metadata_cache:
+            metadata_cache["object_to_states"] = {}
+
+        print(f"Extracted metadata for {len(object_metadata['objects'])} objects")
 
     # Scan object database
     print("Scanning object database...")

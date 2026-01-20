@@ -489,12 +489,95 @@
             font-size: 0.75rem;
             color: var(--text-secondary);
         }
+
+        /* Tree View Modal */
+        .tree-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .tree-modal.show {
+            display: flex;
+        }
+
+        .tree-modal-content {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            max-width: 95vw;
+            max-height: 95vh;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .tree-modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tree-modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .tree-modal-body {
+            flex: 1;
+            overflow: auto;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+        }
+
+        .tree-modal-body img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .tree-loading {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .tree-loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
     </style>
 </head>
 <body>
     <header>
         <h1>🏠 PARTNR Episode Editor</h1>
         <div class="actions">
+            <button class="btn btn-secondary" onclick="showTreeView()" title="Show tree visualization">🌳 Tree View</button>
+            <button class="btn btn-secondary" onclick="window.open('/graph', '_blank')" title="Show hierarchical scene graph in new tab">📊 Scene Graph</button>
             <button class="btn btn-secondary" onclick="refreshData()">↻ Refresh</button>
             <button class="btn btn-secondary" onclick="quickSave()" title="Save to original file">💾 Quick Save</button>
             <button class="btn btn-success" onclick="saveEpisode()" title="Save As...">📁 Save As</button>
@@ -637,6 +720,22 @@
 
     <!-- Toast notification -->
     <div class="toast" id="toast"></div>
+
+    <!-- Tree View Modal -->
+    <div class="tree-modal" id="tree-modal">
+        <div class="tree-modal-content">
+            <div class="tree-modal-header">
+                <h2>🌳 Episode Structure - Tree View</h2>
+                <button class="modal-close" onclick="closeTreeView()">✕</button>
+            </div>
+            <div class="tree-modal-body" id="tree-modal-body">
+                <div class="tree-loading">
+                    <div class="spinner"></div>
+                    <p>Generating tree visualization...</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         let episodeData = null;
@@ -1247,7 +1346,7 @@
 
             if (room) {
                 document.getElementById('room-select').value = room;
-                updateReceptacles();
+                updateReceptacles(true);
             }
         }
 
@@ -1394,8 +1493,10 @@
             const select = document.getElementById('room-select');
             select.innerHTML = '<option value="">Select room...</option>';
 
-            const rooms = metadata.recep_to_room || {};
-            const uniqueRooms = [...new Set(Object.values(rooms))].sort();
+            const roomsFromRecep = Object.values(metadata?.recep_to_room || {});
+            const roomsFromObjects = (episodeData?.objects || []).map(obj => obj.room).filter(Boolean);
+            const roomsFromBounds = Object.keys(mapCalibration?.room_bounds || {});
+            const uniqueRooms = [...new Set([...roomsFromRecep, ...roomsFromObjects, ...roomsFromBounds])].sort();
 
             uniqueRooms.forEach(room => {
                 const option = document.createElement('option');
@@ -1404,28 +1505,39 @@
                 select.appendChild(option);
             });
 
-            select.onchange = updateReceptacles;
+            select.onchange = () => updateReceptacles(false);
         }
 
-        function updateReceptacles() {
+        function updateReceptacles(autoSelectFirst = false) {
             const room = document.getElementById('room-select').value;
             const select = document.getElementById('receptacle-select');
             select.innerHTML = '<option value="">Select receptacle...</option>';
+            const floorOption = document.createElement('option');
+            floorOption.value = 'floor';
+            floorOption.textContent = 'floor';
+            floorOption.dataset.handle = '';
+            select.appendChild(floorOption);
 
-            const recepToRoom = metadata.recep_to_room || {};
-            const recepToDesc = metadata.recep_to_description || {};
-            const recepToHandle = metadata.recep_to_handle || {};
+            const recepToRoom = metadata?.recep_to_room || {};
+            const recepToDesc = metadata?.recep_to_description || {};
+            const recepToHandle = metadata?.recep_to_handle || {};
 
-            Object.entries(recepToRoom)
+            const recepNames = Object.entries(recepToRoom)
                 .filter(([_, r]) => !room || r === room)
+                .map(([name]) => name)
                 .sort(([a], [b]) => a.localeCompare(b))
-                .forEach(([name, r]) => {
-                    const option = document.createElement('option');
-                    option.value = name;
-                    option.textContent = `${name} - ${recepToDesc[name] || ''}`;
-                    option.dataset.handle = recepToHandle[name] || '';
-                    select.appendChild(option);
-                });
+            
+            recepNames.forEach((name) => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = `${name} - ${recepToDesc[name] || ''}`;
+                option.dataset.handle = recepToHandle[name] || '';
+                select.appendChild(option);
+            });
+
+            if (autoSelectFirst) {
+                select.value = 'floor';
+            }
         }
 
         async function addObject() {
@@ -1680,10 +1792,80 @@
             }
         });
 
+
+        // Tree View Functions
+        async function showTreeView() {
+            const modal = document.getElementById('tree-modal');
+            const body = document.getElementById('tree-modal-body');
+            
+            // Show modal with loading state
+            modal.classList.add('show');
+            body.innerHTML = `
+                <div class="tree-loading">
+                    <div class="spinner"></div>
+                    <p>Generating tree visualization...</p>
+                    <p style="font-size: 0.75rem; margin-top: 0.5rem;">This may take a moment...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/generate_tree_viz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.image_url) {
+                    body.innerHTML = `<img src="${result.image_url}" alt="Episode Tree Visualization">`;
+                } else {
+                    body.innerHTML = `
+                        <div style="text-align: center; color: var(--error);">
+                            <p style="font-size: 1.5rem; margin-bottom: 1rem;">⚠️</p>
+                            <p>Failed to generate visualization</p>
+                            <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                ${result.error || 'Unknown error'}${result.details ? `<br>${result.details}` : ''}
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                body.innerHTML = `
+                    <div style="text-align: center; color: var(--error);">
+                        <p style="font-size: 1.5rem; margin-bottom: 1rem;">⚠️</p>
+                        <p>Failed to generate visualization</p>
+                        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                            ${error.message}
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        function closeTreeView() {
+            const modal = document.getElementById('tree-modal');
+            modal.classList.remove('show');
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeTreeView();
+            }
+        });
+
+        // Close modal on background click
+        document.getElementById('tree-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'tree-modal') {
+                closeTreeView();
+            }
+        });
+
         // Initialize
         fetchData();
         populateCategories();
         searchObjects();  // Populate initial search results
     </script>
+
 </body>
 </html>

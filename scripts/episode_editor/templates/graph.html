@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hierarchical Scene Graph - PARTNR Episode Editor</title>
+    <style>
+      :root {
+        --bg-primary: #1a1b26;
+        --bg-secondary: #24283b;
+        --bg-tertiary: #414868;
+        --text-primary: #c0caf5;
+        --text-secondary: #9aa5ce;
+        --accent: #7aa2f7;
+        --accent-hover: #89b4fa;
+        --success: #9ece6a;
+        --warning: #e0af68;
+        --error: #f7768e;
+        --border: #414868;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      header h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+
+      .controls {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+      }
+
+      .btn:hover {
+        background: var(--border);
+      }
+
+      .graph-container {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-secondary);
+      }
+
+      .error {
+        color: var(--error);
+        padding: 1rem;
+        background: var(--bg-tertiary);
+        border-radius: 6px;
+        margin: 1rem 0;
+      }
+
+      .graph-tree {
+        list-style: none;
+        padding-left: 0;
+        position: relative;
+      }
+
+      .graph-tree ul {
+        list-style: none;
+        padding-left: 0;
+        margin-left: 1.5rem;
+        position: relative;
+      }
+
+      .graph-tree ul::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--border);
+      }
+
+      .graph-node {
+        margin: 0.5rem 0;
+        padding: 0.25rem 0;
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .graph-node::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.75rem;
+        width: 1rem;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .graph-node.house {
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: var(--accent);
+        padding-left: 0;
+      }
+
+      .graph-node.house::before {
+        display: none;
+      }
+
+      .graph-node.room {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--accent);
+        margin-top: 1.5rem;
+        padding-left: 1.5rem;
+      }
+
+      .graph-node.furniture {
+        color: var(--warning);
+        font-weight: 500;
+      }
+
+      .graph-node.receptacle {
+        color: var(--text-secondary);
+      }
+
+      .graph-node.object {
+        color: var(--success);
+      }
+
+      .graph-node .node-name {
+        font-weight: 500;
+      }
+
+      .graph-node .node-info {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-left: 0.5rem;
+      }
+
+      .empty-room {
+        padding-left: 1.5rem;
+        color: var(--text-secondary);
+        font-style: italic;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>📊 Hierarchical Scene Graph</h1>
+      <div class="controls">
+        <button class="btn" onclick="refreshGraph()">↻ Refresh</button>
+        <button class="btn" onclick="window.close()">✕ Close</button>
+      </div>
+    </header>
+
+    <div class="graph-container">
+      <div id="graphContent" class="loading">Loading graph...</div>
+    </div>
+
+    <script>
+      function renderGraphTree(graph) {
+        if (!graph.house) {
+          return '<div class="error">No graph data available</div>';
+        }
+
+        let html = '<ul class="graph-tree">';
+        html += renderNode(graph.house, "house");
+        html += "</ul>";
+        return html;
+      }
+
+      function renderNode(node, type) {
+        const icon =
+          {
+            house: "🏠",
+            room: "🚪",
+            furniture: "🪑",
+            receptacle: "📦",
+            object: "🔷",
+          }[type] || "•";
+
+        let html = `<li class="graph-node ${type}">`;
+        html += `<span class="node-name">${icon} ${node.name}</span>`;
+
+        if (node.description) {
+          html += `<span class="node-info">(${node.description})</span>`;
+        }
+
+        if (node.position) {
+          const x =
+            typeof node.position.x === "number"
+              ? node.position.x.toFixed(2)
+              : node.position.x;
+          const y =
+            typeof node.position.y === "number"
+              ? node.position.y.toFixed(2)
+              : node.position.y;
+          const z =
+            typeof node.position.z === "number"
+              ? node.position.z.toFixed(2)
+              : node.position.z;
+          html += `<span class="node-info">[x: ${x}, y: ${y}, z: ${z}]</span>`;
+        }
+
+        html += "</li>";
+
+        // Render children
+        if (node.rooms && node.rooms.length > 0) {
+          html += "<ul>";
+          for (const room of node.rooms) {
+            html += renderNode(room, "room");
+            if (room.furniture && room.furniture.length > 0) {
+              html += "<ul>";
+              for (const furniture of room.furniture) {
+                html += renderNode(furniture, "furniture");
+                if (furniture.receptacles && furniture.receptacles.length > 0) {
+                  html += "<ul>";
+                  for (const receptacle of furniture.receptacles) {
+                    html += renderNode(receptacle, "receptacle");
+                    if (receptacle.objects && receptacle.objects.length > 0) {
+                      html += "<ul>";
+                      for (const obj of receptacle.objects) {
+                        html += renderNode(obj, "object");
+                      }
+                      html += "</ul>";
+                    }
+                  }
+                  html += "</ul>";
+                }
+              }
+              html += "</ul>";
+            } else {
+              html += '<ul><li class="empty-room">(no furniture)</li></ul>';
+            }
+          }
+          html += "</ul>";
+        }
+
+        return html;
+      }
+
+      function loadGraph() {
+        const graphContent = document.getElementById("graphContent");
+        graphContent.innerHTML = '<div class="loading">Loading graph...</div>';
+
+        fetch("/api/hierarchical_graph")
+          .then((response) => response.json())
+          .then((data) => {
+            // Debug: print to console
+            console.log("=== HIERARCHICAL GRAPH DATA ===");
+            console.log(JSON.stringify(data, null, 2));
+            console.log("=== END GRAPH DATA ===");
+
+            if (data.error) {
+              graphContent.innerHTML = `<div class="error">Error: ${data.error}</div>`;
+              return;
+            }
+
+            // Debug: count rooms
+            if (data.house && data.house.rooms) {
+              console.log(`Found ${data.house.rooms.length} rooms in graph`);
+              data.house.rooms.forEach((room, idx) => {
+                console.log(
+                  `  Room ${idx + 1}: ${room.name} (${
+                    room.furniture ? room.furniture.length : 0
+                  } furniture)`
+                );
+              });
+            }
+
+            graphContent.innerHTML = renderGraphTree(data);
+          })
+          .catch((error) => {
+            console.error("Error loading graph:", error);
+            graphContent.innerHTML = `<div class="error">Error loading graph: ${error.message}</div>`;
+          });
+      }
+
+      function refreshGraph() {
+        loadGraph();
+      }
+
+      // Load graph on page load
+      loadGraph();
+    </script>
+  </body>
+</html>
