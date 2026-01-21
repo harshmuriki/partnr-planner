@@ -577,9 +577,7 @@
         <h1>🏠 PARTNR Episode Editor</h1>
         <div class="actions">
             <button class="btn btn-secondary" onclick="showTreeView()" title="Show tree visualization">🌳 Tree View</button>
-            <button class="btn btn-secondary" onclick="window.open('/graph', '_blank')" title="Show hierarchical scene graph in new tab">📊 Scene Graph</button>
             <button class="btn btn-secondary" onclick="refreshData()">↻ Refresh</button>
-            <button class="btn btn-secondary" onclick="quickSave()" title="Save to original file">💾 Quick Save</button>
             <button class="btn btn-success" onclick="saveEpisode()" title="Save As...">📁 Save As</button>
         </div>
     </header>
@@ -1593,79 +1591,128 @@
             const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
             const originalFilename = originalPath.split('/').pop();
 
-            // Create default filename with timestamp
-            let defaultFilename = originalFilename;
-            if (originalFilename.endsWith('.json')) {
-                defaultFilename = originalFilename.replace('.json', `_${timestamp}.json`);
-            } else {
-                defaultFilename = `${originalFilename}_${timestamp}.json`;
+            // Create default filename with timestamp (remove .gz extension if present)
+            let baseFilename = originalFilename;
+            if (baseFilename.endsWith('.json.gz')) {
+                baseFilename = baseFilename.replace('.json.gz', '');
+            } else if (baseFilename.endsWith('.json')) {
+                baseFilename = baseFilename.replace('.json', '');
             }
+            
+            const defaultFilename = `${baseFilename}_${timestamp}`;
 
-            // Try native File System Access API (Chrome/Edge)
-            if ('showSaveFilePicker' in window) {
-                try {
-                    const handle = await window.showSaveFilePicker({
-                        suggestedName: defaultFilename,
-                        types: [{
-                            description: 'JSON Files',
-                            accept: { 'application/json': ['.json'] }
-                        }]
-                    });
+            try {
+                let savePath = null;
 
-                    // Get the episode data from server
-                    const dataResponse = await fetch('/api/episode/export');
-                    const episodeJson = await dataResponse.text();
+                // Try native File System Access API (Chrome/Edge/Firefox)
+                // First try showSaveFilePicker (opens file explorer)
+                if ('showSaveFilePicker' in window) {
+                    try {
+                        // Open file explorer to let user navigate and pick save location
+                        const fileHandle = await window.showSaveFilePicker({
+                            suggestedName: `${defaultFilename}.json`,
+                            types: [{
+                                description: 'JSON Files',
+                                accept: { 'application/json': ['.json'] }
+                            }]
+                        });
 
-                    // Write to file
-                    const writable = await handle.createWritable();
-                    await writable.write(episodeJson);
-                    await writable.close();
+                        // Get the file name (remove .json extension, backend will add it)
+                        let fileName = fileHandle.name;
+                        if (fileName.endsWith('.json')) {
+                            fileName = fileName.replace('.json', '');
+                        }
+                        
+                        // Get directory handle
+                        const directoryHandle = await fileHandle.getParent();
+                        
+                        // Prompt for the full directory path (File System Access API doesn't expose full paths for security)
+                        // User can copy the path from the file explorer address bar
+                        const originalDir = originalPath.substring(0, originalPath.lastIndexOf('/'));
+                        const directoryPath = prompt(
+                            `Enter the full directory path where you selected:\n(You can copy it from the file explorer address bar)`,
+                            originalDir
+                        );
+                        
+                        if (!directoryPath) {
+                            showToast('Save cancelled', 'info');
+                            return;
+                        }
 
-                    showToast(`Saved to: ${handle.name}`, 'success');
-                    return;
-                } catch (err) {
-                    if (err.name === 'AbortError') {
+                        // Construct full path (backend will add .json and .json.gz)
+                        savePath = `${directoryPath}/${fileName}`;
+                    } catch (err) {
+                        if (err.name === 'AbortError') {
+                            showToast('Save cancelled', 'info');
+                            return;
+                        }
+                        // Fall through to directory picker or prompt method
+                        console.log('File picker failed, trying directory picker:', err);
+                        
+                        // Try showDirectoryPicker as alternative
+                        if ('showDirectoryPicker' in window) {
+                            try {
+                                const directoryHandle = await window.showDirectoryPicker();
+                                
+                                // Prompt for directory path and filename
+                                const originalDir = originalPath.substring(0, originalPath.lastIndexOf('/'));
+                                const directoryPath = prompt(
+                                    `Enter the full directory path you selected:\n(You can copy it from the file explorer address bar)`,
+                                    originalDir
+                                );
+                                
+                                if (!directoryPath) {
+                                    showToast('Save cancelled', 'info');
+                                    return;
+                                }
+                                
+                                const fileName = prompt('Enter filename (without extension):', defaultFilename);
+                                if (!fileName) {
+                                    showToast('Save cancelled', 'info');
+                                    return;
+                                }
+                                
+                                savePath = `${directoryPath}/${fileName}`;
+                            } catch (dirErr) {
+                                if (dirErr.name !== 'AbortError') {
+                                    console.log('Directory picker also failed:', dirErr);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Fallback: Prompt for full path (works in all browsers)
+                if (!savePath) {
+                    const originalDir = originalPath.substring(0, originalPath.lastIndexOf('/'));
+                    const defaultPath = `${originalDir}/${defaultFilename}.json`;
+                    savePath = prompt('Enter full save path (will save both .json and .json.gz):', defaultPath);
+                    
+                    if (!savePath) {
                         showToast('Save cancelled', 'info');
                         return;
                     }
-                    // Fall through to download method
-                    console.log('File picker failed, using download:', err);
                 }
-            }
 
-            // Fallback: Download file (works in all browsers)
-            try {
-                const response = await fetch('/api/episode/export');
-                const blob = await response.blob();
+                // Call backend to save both .json and .json.gz files
+                const response = await fetch('/api/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path: savePath })
+                });
 
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = defaultFilename;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                const result = await response.json();
 
-                showToast(`Downloaded: ${defaultFilename}`, 'success');
+                if (result.success) {
+                    showToast(`Saved to:\n${result.paths.json}\n${result.paths.gz}`, 'success');
+                    
+                    // Update the file path display
+                    document.getElementById('file-path').textContent = result.paths.gz;
+                } else {
+                    showToast(`Failed to save: ${result.error}`, 'error');
+                }
             } catch (err) {
                 showToast('Failed to save: ' + err.message, 'error');
-            }
-        }
-
-        async function quickSave() {
-            // Save directly to the original file (overwrite)
-            const response = await fetch('/api/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({})
-            });
-            const result = await response.json();
-
-            if (result.success) {
-                showToast('Saved!', 'success');
-            } else {
-                showToast(result.error || 'Failed to save', 'error');
             }
         }
 
@@ -1795,18 +1842,8 @@
 
         // Tree View Functions
         async function showTreeView() {
-            const modal = document.getElementById('tree-modal');
-            const body = document.getElementById('tree-modal-body');
-            
-            // Show modal with loading state
-            modal.classList.add('show');
-            body.innerHTML = `
-                <div class="tree-loading">
-                    <div class="spinner"></div>
-                    <p>Generating tree visualization...</p>
-                    <p style="font-size: 0.75rem; margin-top: 0.5rem;">This may take a moment...</p>
-                </div>
-            `;
+            // Show loading toast
+            showToast('Generating tree visualization... This may take a moment.', 'info');
 
             try {
                 const response = await fetch('/api/generate_tree_viz', {
@@ -1817,28 +1854,17 @@
                 const result = await response.json();
 
                 if (result.success && result.image_url) {
-                    body.innerHTML = `<img src="${result.image_url}" alt="Episode Tree Visualization">`;
+                    // Open image in new tab
+                    const fullImageUrl = window.location.origin + result.image_url;
+                    window.open(fullImageUrl, '_blank');
+                    showToast('Tree visualization opened in new tab', 'success');
                 } else {
-                    body.innerHTML = `
-                        <div style="text-align: center; color: var(--error);">
-                            <p style="font-size: 1.5rem; margin-bottom: 1rem;">⚠️</p>
-                            <p>Failed to generate visualization</p>
-                            <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
-                                ${result.error || 'Unknown error'}${result.details ? `<br>${result.details}` : ''}
-                            </p>
-                        </div>
-                    `;
+                    const errorMsg = result.error || 'Unknown error';
+                    const details = result.details ? `: ${result.details}` : '';
+                    showToast(`Failed to generate visualization: ${errorMsg}${details}`, 'error');
                 }
             } catch (error) {
-                body.innerHTML = `
-                    <div style="text-align: center; color: var(--error);">
-                        <p style="font-size: 1.5rem; margin-bottom: 1rem;">⚠️</p>
-                        <p>Failed to generate visualization</p>
-                        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
-                            ${error.message}
-                        </p>
-                    </div>
-                `;
+                showToast(`Failed to generate visualization: ${error.message}`, 'error');
             }
         }
 

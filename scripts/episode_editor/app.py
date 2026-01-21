@@ -113,6 +113,8 @@ def save_episode_gz(path: str, episode_data: Dict[str, Any]) -> None:
     with gzip.open(path, 'wt') as f:
         json.dump(single_episode_data, f, indent=2)
 
+    print(f"Episode saved to {path}")
+
 
 def save_episode(path: str, data: Dict[str, Any]) -> None:
     """Save episode to JSON or JSON.gz file."""
@@ -982,39 +984,6 @@ def remove_object():
     return jsonify({"success": True})
 
 
-@app.route("/api/save", methods=["POST"])
-def save():
-    """Save the current episode to file."""
-    global episode_path
-
-    try:
-        # Get custom path from request body if provided
-        data = request.get_json(silent=True) or {}
-        save_path = data.get("path", episode_path)
-
-        # If no path provided and we loaded from a dataset, use original dataset path
-        if not save_path:
-            save_path = episode_path
-
-        # Ensure path is absolute
-        if not os.path.isabs(save_path):
-            save_path = str(project_root / save_path)
-
-        # If original was .json.gz, save as .json.gz
-        if episode_path.endswith('.gz') and not save_path.endswith('.gz'):
-            save_path = save_path + '.gz'
-
-        # Create directory if it doesn't exist
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-
-        save_episode(save_path, episode_data)
-
-        # Update the current episode path if saved to new location
-        episode_path = save_path
-
-        return jsonify({"success": True, "path": save_path})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/api/episode/export")
@@ -1033,19 +1002,65 @@ def export_episode():
     )
 
 
-@app.route("/api/export", methods=["POST"])
-def export():
-    """Export to a new file (legacy, use /api/save with path instead)."""
-    data = request.json
-    new_path = data.get("path")
-
-    if not new_path:
-        return jsonify({"error": "Missing path"}), 400
+@app.route("/api/save", methods=["POST"])
+def save():
+    """Save the current episode to file in both .json and .json.gz formats."""
+    global episode_path
 
     try:
-        save_episode(new_path, episode_data)
-        return jsonify({"success": True, "path": new_path})
+        # Get custom path from request body if provided
+        data = request.get_json(silent=True) or {}
+        save_path = data.get("path", episode_path)
+
+        # If no path provided and we loaded from a dataset, use original dataset path
+        if not save_path:
+            save_path = episode_path
+
+        # Ensure path is absolute
+        if not os.path.isabs(save_path):
+            save_path = str(project_root / save_path)
+
+        # Normalize the path to base .json (remove .gz if present)
+        if save_path.endswith('.json.gz'):
+            base_path = save_path[:-3]  # Remove .gz, leaving .json
+        elif save_path.endswith('.gz'):
+            base_path = save_path[:-3] + '.json'  # Remove .gz, add .json
+        elif save_path.endswith('.json'):
+            base_path = save_path
+        else:
+            base_path = save_path + '.json'
+
+        # Create directory if it doesn't exist
+        os.makedirs(os.path.dirname(base_path), exist_ok=True)
+
+        # Save both formats
+        json_path = base_path
+        gz_path = base_path + '.gz'
+
+        # Save uncompressed JSON
+        with open(json_path, "w") as f:
+            json.dump(episode_data, f, indent=2)
+        print(f"Saved JSON to: {json_path}")
+
+        # Save compressed JSON.gz
+        save_episode_gz(gz_path, episode_data)
+        print(f"Saved JSON.gz to: {gz_path}")
+
+        # Update the current episode path to the .gz version
+        episode_path = gz_path
+
+        return jsonify({
+            "success": True,
+            "path": json_path,
+            "paths": {
+                "json": json_path,
+                "gz": gz_path
+            }
+        })
     except Exception as e:
+        print(f"Error saving episode: {e}")
+        import traceback
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
 
