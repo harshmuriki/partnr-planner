@@ -41,11 +41,16 @@ def run_planner():
 
     # setup required overrides
     DATASET_OVERRIDES = [
-        "habitat.dataset.data_path=data/datasets/path/to/val/scenes",
+        "habitat.dataset.data_path=data/datasets/partnr_episodes/v0_0/val.json.gz",
         "habitat.dataset.scenes_dir=data/hssd-hab/",
     ]
+    # Use multi-agent config since EnvironmentInterface expects 2 agents
+    HABITAT_OVERRIDES = [
+        "habitat_conf=oracle_spot_kinematic_multi_agent",
+    ]
     SENSOR_OVERRIDES = [
-        "habitat.simulator.agents.main_agent.sim_sensors.jaw_depth_sensor.normalize_depth=False"
+        # Use agent_0 for multi-agent config (not main_agent)
+        "habitat.simulator.agents.agent_0.sim_sensors.jaw_depth_sensor.normalize_depth=False"
     ]
     LLM_OVERRIDES = [
         "llm@evaluation.planner.plan_config.llm=mock",
@@ -54,7 +59,7 @@ def run_planner():
         "evaluation.save_video=True",
         "evaluation.output_dir=./outputs",
         "trajectory.save=True",
-        "trajectory.agent_names=[main_agent]",
+        "trajectory.agent_names=[agent_0]",  # Use agent_0 for multi-agent config
     ]
 
     EPISODE_OVERRIDES = [
@@ -65,6 +70,7 @@ def run_planner():
     config_base = get_config(
         "examples/single_agent_scene_mapping.yaml",
         overrides=DATASET_OVERRIDES
+        + HABITAT_OVERRIDES
         + SENSOR_OVERRIDES
         + LLM_OVERRIDES
         + TRAJECTORY_OVERRIDES
@@ -152,7 +158,11 @@ def run_planner():
                 observations = env_interface.parse_observations(obs)
                 # Store third person frames for generating video
                 hl_dict = {0: (hl_action_name, hl_action_input)}
-                eval_runner._store_for_video(observations, hl_dict)
+                # Initialize writer with scene_id on first frame
+                if eval_runner.dvu._video_writer is None:
+                    eval_runner.dvu._store_for_video(observations, hl_dict, postfix=scene_id)
+                else:
+                    eval_runner.dvu._store_for_video(observations, hl_dict)
 
                 # figure out how to get completion signal
                 if response:
@@ -162,8 +172,9 @@ def run_planner():
                 f"\tCompleted high-level action: {hl_action_name} on {hl_action_input}"
             )
 
-        if eval_runner.frames:
-            eval_runner._make_video(scene_id)
+        # Make video if any frames were written (check frame_count instead of frames list)
+        if eval_runner.dvu._frame_count > 0 or len(eval_runner.dvu.frames) > 0:
+            eval_runner.dvu._make_video(play=False, postfix=scene_id)
         processed_scenes.add(str(scene_id))
     env_interface.sim.close()
 

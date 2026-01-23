@@ -36,7 +36,45 @@ from habitat_llm.utils.world_graph import (
     print_all_entities,
     print_furniture_entity_handles,
     print_object_entity_handles,
+    print_hierarchical_graph,
 )
+
+
+def print_object_states(world_graph, object_name: str = None):
+    """
+    Print the states of an object or all objects.
+    
+    :param world_graph: The active WorldGraph
+    :param object_name: Optional specific object name. If None, shows all objects.
+    """
+    from habitat_llm.world_model import Object
+
+    if object_name:
+        cprint(f"Object State for: {object_name}", "green")
+    else:
+        cprint("All Object States:", "green")
+
+    objects = world_graph.get_all_objects()
+
+    for obj in objects:
+        if object_name and obj.name != object_name:
+            continue
+
+        # Get states from properties
+        states = obj.properties.get("states", {})
+
+        if states:
+            state_str = ", ".join([f"{k}={v}" for k, v in states.items()])
+            cprint(f"{obj.name}: {state_str}", "yellow")
+        else:
+            # Check for direct state properties (backward compatibility)
+            state_props = {k: v for k, v in obj.properties.items()
+                          if k in ["is_powered_on", "is_filled", "is_clean"]}
+            if state_props:
+                state_str = ", ".join([f"{k}={v}" for k, v in state_props.items()])
+                cprint(f"{obj.name}: {state_str}", "yellow")
+            else:
+                cprint(f"{obj.name}: No states available", "white")
 
 
 # Method to load agent planner from the config
@@ -128,30 +166,44 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     if hasattr(config, "skill_runner_show_topdown"):
         dbv = DebugVisualizer(sim, config.paths.results_dir)
         dbv.create_dbv_agent(resolution=(1000, 1000))
-        top_down_map = dbv.peek("stage")
-        if show_command_videos:
-            top_down_map.show()
-        if config.evaluation.save_video:
-            top_down_map.save(output_path=config.paths.results_dir, prefix="topdown")
-        dbv.remove_dbv_agent()
-        dbv.create_dbv_agent()
-        dbv.remove_dbv_agent()
+        try:
+            top_down_map = dbv.peek("stage")
+            if show_command_videos:
+                top_down_map.show()
+            if config.evaluation.save_video:
+                top_down_map.save(output_path=config.paths.results_dir, prefix="topdown")
+        except (ValueError, RuntimeError) as e:
+            cprint(
+                f"Warning: Could not generate topdown map. Scene bounding box may be invalid. Error: {str(e)}",
+                "yellow",
+            )
+        finally:
+            dbv.remove_dbv_agent()
+            dbv.create_dbv_agent()
+            dbv.remove_dbv_agent()
 
     ############################
     # done with setup, prompt the user and start running skills
 
     # available skills
     skills = {
-        "Navigate": "Navigate <agent_index> <entity_name>",
-        "Open": "Open <agent_index> <entity_name>",
-        "Close": "Close <agent_index> <entity_name>",
-        "Pick": "Pick <agent_index> <entity_name>",
+        "Navigate": "Navigate <agent_index> <entity_name> \n",
+        "Open": "Open <agent_index> <entity_name> \n",
+        "Close": "Close <agent_index> <entity_name> \n",
+        "Pick": "Pick <agent_index> <entity_name> \n",
         # Place skill requires 5 arguments, comma separated, no spaces:
-        "Place": "Place <agent_index> <entity_name_0,relation_0,entity_name_1,relation_1,entity_name_2>",
+        "Place": "Place <agent_index> <entity_name_0,relation_0,entity_name_1,relation_1,entity_name_2>. Eg (Place 0 cup_0,on,counter_22,None,None) \n",
+        "Fill": "Fill <agent_index> <entity_name> \n",
+        "Pour": "Pour <agent_index> <entity_name>. Eg (Pour 0 cup_1) Should pour from the container already held by the agent into cup_1. \n",
+        "Clean": "Clean <agent_index> <entity_name>. Some objects require being near a faucet to clean. \n",
+        "PowerOn": "PowerOn <agent_index> <entity_name> \n",
+        "PowerOff": "PowerOff <agent_index> <entity_name> \n",
     }
     exit_skill = "exit"
     help_skill = "help"
     entity_skill = "entities"
+    graph_skill = "graph"
+    state_skill = "state"
     pdb_skill = "debug"
     cumulative_video_skill = "make_video"
 
@@ -165,7 +217,21 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     print_furniture_entity_handles(env_interface.perception.gt_graph)
     print_object_entity_handles(env_interface.perception.gt_graph)
 
-    help_text = f"Available skills are {skills}. Type a skill to begin.\n alternatively type one of: \n  '{exit_skill}' - exit the program \n  '{help_skill}' - display help text \n  '{entity_skill}' - display all available entities \n  '{pdb_skill}' - enter pdb breakpoint for interactive debugging \n  '{cumulative_video_skill}' - make a single cumulative video out of all individual command clips"
+    skills_str = "Available skills:\n" + "\n".join(
+        [f"  {k}: {v.strip()}" for k, v in skills.items()]
+    )
+    help_text = (
+        f"{skills_str}\n"
+        "Type a skill to begin.\n"
+        "Alternatively, type one of:\n"
+        f"  '{exit_skill}' - exit the program\n"
+        f"  '{help_skill}' - display help text\n"
+        f"  '{entity_skill}' - display all available entities\n"
+        f"  '{graph_skill}' - display hierarchical scene graph (rooms -> furniture -> receptacles -> objects)\n"
+        f"  '{state_skill}' or 'state <object_name>' - display object states (is_filled, is_powered_on, is_clean)\n"
+        f"  '{pdb_skill}' - enter pdb breakpoint for interactive debugging\n"
+        f"  '{cumulative_video_skill}' - make a single cumulative video out of all individual command clips"
+    )
     cprint(help_text, "green")
 
     # setup a sequence of commands to run immediately without manual input
@@ -214,6 +280,13 @@ def run_skills(config: omegaconf.DictConfig) -> None:
             cprint(help_text, "green")
         elif user_input == entity_skill:
             print_all_entities(env_interface.perception.gt_graph)
+        elif user_input == graph_skill:
+            print_hierarchical_graph(env_interface.perception.gt_graph)
+        elif user_input == state_skill:
+            print_object_states(env_interface.perception.gt_graph)
+        elif user_input.startswith(state_skill + " "):
+            object_name = user_input.split(" ", 1)[1].strip()
+            print_object_states(env_interface.perception.gt_graph, object_name)
         elif user_input == pdb_skill:
             # peek an entity
             dbv = DebugVisualizer(sim, config.paths.results_dir)
@@ -239,15 +312,21 @@ def run_skills(config: omegaconf.DictConfig) -> None:
                 cprint("... invalid Agent Index, aborting.", "red")
                 continue
             target_entity_name = input("Target Entity = ")
-        elif user_input.split(" ")[0] in skills:
+        elif user_input.split(" ")[0].rstrip(",") in skills:
             # attempt to parse full skill definition from string
             skill_components = user_input.split(" ")
-            selected_skill = skill_components[0]
-            agent_ix = skill_components[1]
+            if len(skill_components) < 3:
+                cprint("... invalid command. Expected format: <skill> <agent_index> <target_entity>", "red")
+                continue
+            selected_skill = skill_components[0].rstrip(",")
+            agent_ix = skill_components[1].rstrip(",")
             if agent_ix not in ["0", "1"]:
                 cprint("... invalid Agent Index, aborting.", "red")
                 continue
-            target_entity_name = skill_components[2]
+            # Join all remaining components as the target entity name
+            # This handles cases where the target entity contains spaces or is comma-separated
+            # For Place/Rearrange skills, the target_entity should be comma-separated: "object,relation,furniture,constraint,reference"
+            target_entity_name = " ".join(skill_components[2:])
         else:
             cprint("... invalid command.", "red")
 

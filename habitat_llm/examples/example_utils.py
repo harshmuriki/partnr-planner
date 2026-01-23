@@ -6,7 +6,7 @@
 
 import os
 import time
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import cv2
 import imageio
@@ -36,6 +36,8 @@ class DebugVideoUtil:
         self.env_interface = env_interface_arg
 
         # Declare container to store frames used for generating video
+        # NOTE: For memory efficiency, we now write frames incrementally
+        # This list is kept for backward compatibility but should remain empty
         self.frames: List[Any] = []
 
         self.output_dir = output_dir
@@ -43,6 +45,11 @@ class DebugVideoUtil:
         self.num_agents = 0
         for _agent_conf in self.env_interface.conf.evaluation.agents.values():
             self.num_agents += 1
+
+        # Video writer for incremental writing (opened on first frame)
+        self._video_writer = None
+        self._video_file_path = None
+        self._frame_count = 0
 
     def __get_combined_frames(self, batch: Dict[str, Any]) -> np.ndarray:
         """
@@ -74,54 +81,152 @@ class DebugVideoUtil:
         return concat_image
 
     def _store_for_video(
-        self, observations: Dict[str, Any], hl_actions: Dict[int, Any]
+        self,
+        observations: Dict[str, Any],
+        hl_actions: Dict[int, Any],
+        postfix: str = "",
+        responses: Optional[Dict[int, str]] = None,
+        thoughts: Optional[Dict[int, str]] = None,
     ) -> None:
         """
         Store a video with observations and text from an observation dict and an agent to action metadata dict.
         NOTE: Could probably go into utils?
+        
+        This method now writes frames incrementally to disk to avoid memory explosion.
 
         :param observations: A dict mapping observation names to values.
         :param hl_actions: A dict mapping agent action indices to actions.
+        :param postfix: Optional postfix for the video file name (used to initialize writer).
+        :param responses: Optional dict mapping agent indices to skill execution results.
+        :param thoughts: Optional dict mapping agent indices to reasoning/thoughts.
         """
         frames_concat = self.__get_combined_frames(observations)
         frames_concat = np.ascontiguousarray(frames_concat)
 
+        # Get frame dimensions for text placement
+        height, width = frames_concat.shape[:2]
+        y_offset = 30
+        line_height = 25
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = 0.6
+        font_thickness = 2
+        max_y = height - 20  # Leave margin at bottom
+
         for idx, action in hl_actions.items():
-            # text = f"Agent_{id}:{action[0]}[{action[1]}]"
             agent_name = "Human" if str(idx) == "1" else "Robot"
-            text = f"{agent_name}: {action[0]}[{action[1]}]"
+            y_pos = (int(idx) + 1) * y_offset
+
+            # Display action
+            action_text = f"{agent_name}: {action[0]}[{action[1]}]"
             frames_concat = cv2.putText(
                 frames_concat,
-                text,
-                (20, (int(idx) + 1) * 50),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.75,
+                action_text,
+                (20, y_pos),
+                font,
+                font_scale,
                 (255, 255, 255),
-                2,
+                font_thickness,
             )
 
-        self.frames.append(frames_concat)
+            # Display thought if available (truncate if too long)
+            if thoughts and idx in thoughts and thoughts[idx]:
+                thought = thoughts[idx]
+                # Remove "Thought:" prefix if present
+                thought = thought.replace("Thought:", "").strip()
+                # Truncate if too long for display
+                max_chars = min(80, width // 8)  # Approximate chars per line
+                if len(thought) > max_chars:
+                    thought = thought[:max_chars-3] + "..."
+                y_pos += line_height
+                # Check bounds
+                if y_pos < max_y:
+                    frames_concat = cv2.putText(
+                        frames_concat,
+                        f"  {thought}",
+                        (20, y_pos),
+                        font,
+                        font_scale * 0.8,
+                        (200, 200, 255),  # Light blue for thoughts
+                        font_thickness - 1,
+                    )
+
+            # Display result/response if available
+            if responses and idx in responses and responses[idx]:
+                response = responses[idx].strip()
+                # Truncate if too long
+                max_chars = min(60, width // 8)
+                if len(response) > max_chars:
+                    response = response[:max_chars-3] + "..."
+                y_pos += line_height
+                # Check bounds
+                if y_pos < max_y:
+                    # Color based on success/failure
+                    color = (0, 255, 0) if "Successful" in response or "success" in response.lower() else (0, 0, 255)
+                    frames_concat = cv2.putText(
+                        frames_concat,
+                        f"  Result: {response}",
+                        (20, y_pos),
+                        font,
+                        font_scale * 0.7,
+                        color,
+                        font_thickness - 1,
+                    )
+
+        # Initialize video writer on first frame if not already open
+        if self._video_writer is None:
+            # Use postfix if provided, otherwise generate a temporary name
+            if not postfix:
+                import time
+                postfix = f"temp_{int(time.time())}"
+            self._video_file_path = f"{self.output_dir}/videos/video-{postfix}.mp4"
+            os.makedirs(f"{self.output_dir}/videos", exist_ok=True)
+            self._video_writer = imageio.get_writer(
+                self._video_file_path,
+                fps=30,
+                quality=4,
+            )
+
+        # Write frame immediately to disk (incremental writing)
+        self._video_writer.append_data(frames_concat)
+        self._frame_count += 1
+
+        # Keep frames list empty for memory efficiency (backward compatibility)
+        # self.frames.append(frames_concat)  # Commented out to save memory
         return
 
     def _make_video(self, play: bool = True, postfix: str = "") -> None:
         """
         Makes a video from a pre-processed set of frames using imageio and saves it to the output directory.
+        
+        If frames were written incrementally (via _store_for_video), this just closes the writer.
+        Otherwise, it writes all frames from self.frames (backward compatibility).
 
         :param play: Whether or not to play the video immediately.
         :param postfix: An optional postfix for the video file name.
         """
-        out_file = f"{self.output_dir}/videos/video-{postfix}.mp4"
-        print(f"Saving video to {out_file}")
-        os.makedirs(f"{self.output_dir}/videos", exist_ok=True)
-        writer = imageio.get_writer(
-            out_file,
-            fps=30,
-            quality=4,
-        )
-        for frame in self.frames:
-            writer.append_data(frame)
+        # If writer is already open (incremental writing mode), just close it
+        if self._video_writer is not None:
+            self._video_writer.close()
+            self._video_writer = None
+            out_file = self._video_file_path
+            print(f"Saved video to {out_file} ({self._frame_count} frames)")
+            self._frame_count = 0
+            self._video_file_path = None
+        else:
+            # Backward compatibility: write from self.frames if writer wasn't used
+            out_file = f"{self.output_dir}/videos/video-{postfix}.mp4"
+            print(f"Saving video to {out_file}")
+            os.makedirs(f"{self.output_dir}/videos", exist_ok=True)
+            writer = imageio.get_writer(
+                out_file,
+                fps=30,
+                quality=4,
+            )
+            for frame in self.frames:
+                writer.append_data(frame)
+            writer.close()
+            print(f"Saved video to {out_file} ({len(self.frames)} frames)")
 
-        writer.close()
         if play:
             print("     ...playing video, press 'q' to continue...")
             self.play_video(out_file)
@@ -212,7 +317,11 @@ def execute_skill(
         observations = llm_env.env_interface.parse_observations(obs)
 
         if make_video:
-            dvu._store_for_video(observations, high_level_skill_actions)
+            # Initialize writer with postfix on first frame
+            if dvu._video_writer is None:
+                dvu._store_for_video(observations, high_level_skill_actions, postfix=vid_postfix)
+            else:
+                dvu._store_for_video(observations, high_level_skill_actions)
 
         # Increase steps
         skill_steps += 1
