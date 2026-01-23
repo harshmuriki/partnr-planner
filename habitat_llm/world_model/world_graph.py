@@ -201,7 +201,7 @@ class WorldGraph(Graph):
                     objs_info += obj.name + ": " + furniture.name + "\n"
                 elif furniture is None and (
                     (is_human_wg and self.agent_asymmetry)
-                    or (not is_human_wg and self.world_model_type == "concept_graph")
+                    or (not is_human_wg and self.world_model_type in ["concept_graph", "non_privileged"])
                 ):
                     # Objects are allowed to be marooned on unknown furniture under
                     # agent asymmetry condition, since the object may be placed anywhere
