@@ -8,6 +8,18 @@ import os
 from collections import defaultdict
 from typing import Any, DefaultDict, Dict, List, Tuple
 
+import gzip
+import json
+import os
+import sys
+from collections import defaultdict
+from typing import Any, DefaultDict, Dict, List, Tuple
+
+# Add project root to path if not already there
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 import habitat_sim
 from habitat.datasets.rearrange.run_episode_generator import get_config_defaults
 from habitat_sim import Simulator
@@ -19,7 +31,6 @@ from dataset_generation.benchmark_generation.evaluation_generation.metadata_mapp
     get_semantic_object_states,
 )
 from habitat_llm.sims.metadata_interface import MetadataInterface, default_metadata_dict
-
 
 class MetadataExtractor:
     """Extract scene and episode metadata for a dataset."""
@@ -171,7 +182,10 @@ class MetadataExtractor:
             }
         }
 
-        additional_object_paths = self.dataset["episodes"][0]["additional_object_paths"]
+        additional_object_paths = self.dataset["episodes"][0].get(
+            "additional_obj_config_paths", 
+            self.dataset["episodes"][0].get("additional_object_paths", [])
+        )
 
         cfg = get_config_defaults()
 
@@ -229,7 +243,7 @@ class MetadataExtractor:
         receptacle_to_handle = scene_info["receptacle_to_handle"]
         room_to_id = scene_info["room_to_id"]
         recep_to_description = generate_hash_to_text(
-            "data/fphab/metadata/fpmodels-with-decomposed.csv", receptacle_to_handle
+            "data/versioned_data/hssd-hab/metadata/fpmodels-with-decomposed.csv", receptacle_to_handle
         )
         recep_to_room = {}
         for room, recep_list in scene_info["furniture"].items():

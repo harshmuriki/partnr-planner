@@ -376,6 +376,13 @@ def create_sim_for_episode(episode: Dict) -> Optional[habitat_sim.Simulator]:
         sim_cfg = habitat_sim.SimulatorConfiguration()
         sim_cfg.scene_id = episode["scene_id"]
         sim_cfg.scene_dataset_config_file = episode["scene_dataset_config"]
+        sim_cfg.enable_physics = True  # Enable physics for articulated objects
+        
+        # Try to enable Bullet physics if available
+        try:
+            sim_cfg.physics_config_file = "data/default.physics_config.json"
+        except Exception:
+            pass  # Bullet may not be available, will fall back to base physics
 
         # Create agent config (minimal, just for scene loading)
         agent_cfg = habitat_sim.agent.AgentConfiguration()
@@ -561,31 +568,81 @@ def add_object():
     # See docs/ADDING_OBJECTS_TO_EPISODE.md for more details
     #
     # We need to get the actual receptacle name from the simulator, not construct it
-    if receptacle_handle and furniture != "floor":
+    recep_value = None
+    if receptacle_handle and furniture != "floor" and HABITAT_AVAILABLE:
+        # Try to get receptacle from simulator first (most reliable)
+        try:
+            temp_sim = create_sim_for_episode(ep)
+            if temp_sim is not None:
+                from habitat_llm.utils.sim import find_receptacles
+                receptacles = find_receptacles(temp_sim, filter_receptacles=False)
+                
+                parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
+                
+                # Find matching receptacles
+                matching_receptacles = []
+                for rec in receptacles:
+                    if rec.parent_object_handle == parent_handle or parent_handle in rec.parent_object_handle:
+                        matching_receptacles.append(rec)
+                
+                if matching_receptacles:
+                    rec = matching_receptacles[0]
+                    parent_handle_actual = rec.parent_object_handle
+                    if "_:" not in parent_handle_actual:
+                        parent_handle_actual = f"{parent_handle_actual}_:0000"
+                    recep_value = f"{parent_handle_actual}|{rec.name}"
+                    print(f"✓ Validated receptacle exists in simulator: {recep_value}")
+                else:
+                    print(f"⚠ Receptacle not found in simulator for handle: {parent_handle}")
+                
+                temp_sim.close()
+        except Exception as e:
+            print(f"⚠ Could not validate receptacle: {e}")
+    
+    # If simulator validation failed, try URDF fallback
+    if recep_value is None and receptacle_handle and furniture != "floor":
         parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
-        # Ensure parent handle has instance suffix
         parent_handle_with_suffix = parent_handle if "_:" in parent_handle else f"{parent_handle}_:0000"
-
-        # Find the actual receptacle mesh name from URDF directory
+        
         receptacle_mesh_name = find_receptacle_mesh_name(parent_handle)
-
         if receptacle_mesh_name:
-            # Format: "PARENT_HANDLE_:XXXX|receptacle_mesh_name.0000"
-            # Example: "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000|chest_of_drawers0002_receptacle_mesh.0000"
             recep_value = f"{parent_handle_with_suffix}|{receptacle_mesh_name}.0000"
-            print(f"✓ Using receptacle from URDF: {recep_value}")
+            print(f"⚠ Using receptacle from URDF (not validated): {recep_value}")
         else:
-            # Last resort fallback - construct a generic name
+            # Last resort: construct generic receptacle_mesh name from parent handle
             parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
             recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
-            print(f"⚠ WARNING: Could not find receptacle mesh in URDF, using fallback: {recep_value}")
-            print(f"  This will likely cause errors when loading the episode!")
-    else:
+            print(f"⚠ WARNING: Could not validate receptacle, using constructed name: {recep_value}")
+            print(f"  This may cause issues when loading the episode if the receptacle doesn't exist.")
+    
+    # Only use floor if explicitly requested
+    if recep_value is None:
         recep_value = "floor"
+        print(f"✓ Using 'floor' as receptacle")
 
     # Insert at position equal to number of explicit objects (before clutter)
     recep_items = list(ep["name_to_receptacle"].items())
-    new_handle = f"{object_id}_:0000"
+    
+    # Find the next available instance suffix for this object ID
+    # Check existing handles to find the highest instance number
+    existing_instance_nums = []
+    for handle in ep["name_to_receptacle"].keys():
+        if handle.startswith(f"{object_id}_:"):
+            try:
+                # Extract instance number from handle like "object_id_:0001"
+                instance_str = handle.split("_:")[-1]
+                instance_num = int(instance_str)
+                existing_instance_nums.append(instance_num)
+            except (ValueError, IndexError):
+                continue
+    
+    # Use next available instance number
+    if existing_instance_nums:
+        next_instance = max(existing_instance_nums) + 1
+    else:
+        next_instance = 0
+    
+    new_handle = f"{object_id}_:{next_instance:04d}"
     recep_items.insert(explicit_object_count, (new_handle, recep_value))
     ep["name_to_receptacle"] = dict(recep_items)
     print(f"✓ Added to name_to_receptacle at position {explicit_object_count}")

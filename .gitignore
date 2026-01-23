@@ -128,3 +128,6 @@ results/*.png
 results/*.mp4
 scripts/episode_editor/static/*
 scripts/episode_editor/static/run_data.json
+*.json.gz
+*.json
+scripts/episode_editor/static/run_data.json
