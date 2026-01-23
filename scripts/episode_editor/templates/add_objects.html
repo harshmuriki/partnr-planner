@@ -1,647 +1,661 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Objects to Scene</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #f5f5f5;
-            color: #333;
-            overflow: hidden;
-        }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: #f5f5f5;
+        color: #333;
+        overflow: hidden;
+      }
 
-        .header {
-            background: #2c3e50;
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+      .header {
+        background: #2c3e50;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 600;
-        }
+      .header h1 {
+        font-size: 24px;
+        font-weight: 600;
+      }
 
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
+      .header-actions {
+        display: flex;
+        gap: 10px;
+      }
 
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
+      .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
 
-        .btn-primary {
-            background: #3498db;
-            color: white;
-        }
+      .btn-primary {
+        background: #3498db;
+        color: white;
+      }
 
-        .btn-primary:hover {
-            background: #2980b9;
-        }
+      .btn-primary:hover {
+        background: #2980b9;
+      }
 
-        .btn-success {
-            background: #27ae60;
-            color: white;
-        }
+      .btn-success {
+        background: #27ae60;
+        color: white;
+      }
 
-        .btn-success:hover {
-            background: #229954;
-        }
+      .btn-success:hover {
+        background: #229954;
+      }
 
-        .btn-secondary {
-            background: #95a5a6;
-            color: white;
-        }
+      .btn-secondary {
+        background: #95a5a6;
+        color: white;
+      }
 
-        .btn-secondary:hover {
-            background: #7f8c8d;
-        }
+      .btn-secondary:hover {
+        background: #7f8c8d;
+      }
 
-        .container {
-            display: flex;
-            height: calc(100vh - 60px);
-        }
+      .container {
+        display: flex;
+        height: calc(100vh - 60px);
+      }
 
-        .left-panel {
-            flex: 0 0 60%;
-            background: white;
-            padding: 20px;
-            overflow-y: auto;
-            border-right: 1px solid #ddd;
-        }
+      .left-panel {
+        flex: 0 0 60%;
+        background: white;
+        padding: 20px;
+        overflow-y: auto;
+        border-right: 1px solid #ddd;
+      }
 
-        .right-panel {
-            flex: 0 0 40%;
-            background: white;
-            padding: 20px;
-            overflow-y: auto;
-        }
+      .right-panel {
+        flex: 0 0 40%;
+        background: white;
+        padding: 20px;
+        overflow-y: auto;
+      }
 
-        .panel-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
+      .panel-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #2c3e50;
+      }
 
-        .viz-container {
-            width: 100%;
-            background: #fafafa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
+      .viz-container {
+        width: 100%;
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
 
-        .viz-image {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
+      .viz-image {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+      }
 
-        .viz-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
+      .viz-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+      .form-group {
+        margin-bottom: 20px;
+      }
 
-        .form-label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #555;
-        }
+      .form-label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #555;
+      }
 
-        .form-input,
-        .form-select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
+      .form-input,
+      .form-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
 
-        .form-input:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        }
+      .form-input:focus,
+      .form-select:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
 
-        .object-search-container {
-            position: relative;
-        }
+      .object-search-container {
+        position: relative;
+      }
 
-        .object-results {
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: white;
-            margin-top: 10px;
-        }
+      .object-results {
+        max-height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: white;
+        margin-top: 10px;
+      }
 
-        .object-item {
-            padding: 12px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: background 0.2s;
-        }
+      .object-item {
+        padding: 12px;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: background 0.2s;
+      }
 
-        .object-item:hover {
-            background: #f8f9fa;
-        }
+      .object-item:hover {
+        background: #f8f9fa;
+      }
 
-        .object-item.selected {
-            background: #e3f2fd;
-            border-left: 4px solid #3498db;
-        }
+      .object-item.selected {
+        background: #e3f2fd;
+        border-left: 4px solid #3498db;
+      }
 
-        .object-thumbnail {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 4px;
-            background: #f0f0f0;
-        }
+      .object-thumbnail {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 4px;
+        background: #f0f0f0;
+      }
 
-        .object-info {
-            flex: 1;
-        }
+      .object-info {
+        flex: 1;
+      }
 
-        .object-name {
-            font-weight: 500;
-            color: #333;
-        }
+      .object-name {
+        font-weight: 500;
+        color: #333;
+      }
 
-        .object-category {
-            font-size: 12px;
-            color: #888;
-            margin-top: 2px;
-        }
+      .object-category {
+        font-size: 12px;
+        color: #888;
+        margin-top: 2px;
+      }
 
-        .selected-object-display {
-            padding: 15px;
-            background: #e8f5e9;
-            border: 1px solid #4caf50;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            display: none;
-        }
+      .selected-object-display {
+        padding: 15px;
+        background: #e8f5e9;
+        border: 1px solid #4caf50;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        display: none;
+      }
 
-        .selected-object-display.active {
-            display: block;
-        }
+      .selected-object-display.active {
+        display: block;
+      }
 
-        .position-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-        }
+      .position-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+      }
 
-        .toast {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            padding: 15px 20px;
-            background: white;
-            border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            display: none;
-            z-index: 1000;
-            min-width: 250px;
-        }
+      .toast {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        padding: 15px 20px;
+        background: white;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: none;
+        z-index: 1000;
+        min-width: 250px;
+      }
 
-        .toast.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
+      .toast.show {
+        display: block;
+        animation: slideIn 0.3s ease;
+      }
 
-        .toast.success {
-            border-left: 4px solid #27ae60;
-        }
+      .toast.success {
+        border-left: 4px solid #27ae60;
+      }
 
-        .toast.error {
-            border-left: 4px solid #e74c3c;
-        }
+      .toast.error {
+        border-left: 4px solid #e74c3c;
+      }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
         }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
 
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            color: #888;
-        }
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        color: #888;
+      }
 
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-right: 10px;
-        }
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin-right: 10px;
+      }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-        .hierarchy-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
+      .hierarchy-info {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
 
-        .hierarchy-info h3 {
-            font-size: 16px;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
+      .hierarchy-info h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #2c3e50;
+      }
 
-        .hierarchy-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+      .hierarchy-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
 
-        .stat-item {
-            background: white;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
-        }
+      .stat-item {
+        background: white;
+        padding: 10px;
+        border-radius: 4px;
+        text-align: center;
+      }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 600;
-            color: #3498db;
-        }
+      .stat-value {
+        font-size: 24px;
+        font-weight: 600;
+        color: #3498db;
+      }
 
-        .stat-label {
-            font-size: 12px;
-            color: #888;
-            margin-top: 4px;
-        }
+      .stat-label {
+        font-size: 12px;
+        color: #888;
+        margin-top: 4px;
+      }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-        }
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #888;
+      }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-
-        .preposition-hint {
-            font-size: 12px;
-            color: #888;
-            margin-top: 4px;
-            font-style: italic;
-        }
+      .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>Add Objects to Scene</h1>
-        <div class="header-actions">
-            <button class="btn btn-secondary" onclick="refreshViz()">
-                🔄 Refresh Visualization
-            </button>
-            <button class="btn btn-success" onclick="exportEpisode()">
-                💾 Export Episode
-            </button>
-        </div>
+      <h1>Add Objects to Scene</h1>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="refreshViz()">
+          🔄 Refresh Visualization
+        </button>
+        <button class="btn btn-success" onclick="exportEpisode()">
+          💾 Export Episode
+        </button>
+      </div>
     </div>
 
     <div class="container">
-        <!-- Left Panel: PrediViz Images -->
-        <div class="left-panel">
-            <h2 class="panel-title">Scene Hierarchy Visualization</h2>
-            
-            <div class="hierarchy-info" id="hierarchyInfo">
-                <h3>Scene Overview</h3>
-                <div class="hierarchy-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="roomCount">-</div>
-                        <div class="stat-label">Rooms</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="objectCount">-</div>
-                        <div class="stat-label">Objects</div>
-                    </div>
-                </div>
-            </div>
+      <!-- Left Panel: PrediViz Images -->
+      <div class="left-panel">
+        <h2 class="panel-title">Scene Hierarchy Visualization</h2>
 
-            <div class="viz-container" id="vizContainer">
-                <div class="loading" id="vizLoading">
-                    <div class="spinner"></div>
-                    Loading visualization...
-                </div>
-                <img id="vizImage" class="viz-image" style="display: none;" alt="Scene Visualization">
-                <div class="viz-controls" id="vizControls" style="display: none;">
-                    <button class="btn btn-secondary" onclick="prevStep()">← Previous</button>
-                    <span id="stepIndicator">Step 1 of 1</span>
-                    <button class="btn btn-secondary" onclick="nextStep()">Next →</button>
-                </div>
+        <div class="hierarchy-info" id="hierarchyInfo">
+          <h3>Scene Overview</h3>
+          <div class="hierarchy-stats">
+            <div class="stat-item">
+              <div class="stat-value" id="roomCount">-</div>
+              <div class="stat-label">Rooms</div>
             </div>
+            <div class="stat-item">
+              <div class="stat-value" id="objectCount">-</div>
+              <div class="stat-label">Objects</div>
+            </div>
+          </div>
         </div>
 
-        <!-- Right Panel: Add Object Form -->
-        <div class="right-panel">
-            <h2 class="panel-title">Add New Object</h2>
-
-            <!-- Category Selection -->
-            <div class="form-group">
-                <label class="form-label">1. Category</label>
-                <select class="form-select" id="categorySelect" onchange="onCategoryChange()">
-                    <option value="">All Categories</option>
-                </select>
-            </div>
-
-            <!-- Object Search -->
-            <div class="form-group">
-                <label class="form-label">2. Search & Select Object</label>
-                <input 
-                    type="text" 
-                    class="form-input" 
-                    id="objectSearch" 
-                    placeholder="Search by name or ID..."
-                    oninput="onSearchChange()"
-                >
-                <div class="object-results" id="objectResults">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🔍</div>
-                        <div>Search for objects above</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Selected Object Display -->
-            <div class="selected-object-display" id="selectedObjectDisplay">
-                <strong>Selected:</strong> <span id="selectedObjectName"></span>
-            </div>
-
-            <!-- Room Selection -->
-            <div class="form-group">
-                <label class="form-label">3. Room</label>
-                <select class="form-select" id="roomSelect" onchange="onRoomChange()">
-                    <option value="">Select a room...</option>
-                </select>
-            </div>
-
-            <!-- Furniture/Receptacle Selection -->
-            <div class="form-group">
-                <label class="form-label">4. Furniture / Receptacle</label>
-                <select class="form-select" id="furnitureSelect" onchange="onFurnitureChange()">
-                    <option value="">Select furniture first...</option>
-                </select>
-            </div>
-
-            <!-- Preposition Selection -->
-            <div class="form-group">
-                <label class="form-label">5. Preposition</label>
-                <select class="form-select" id="prepositionSelect">
-                    <option value="on">on (on top of surface)</option>
-                    <option value="in">in (inside container)</option>
-                    <option value="next_to">next to (beside furniture)</option>
-                    <option value="on_floor">on floor</option>
-                </select>
-                <div class="preposition-hint" id="prepositionHint"></div>
-            </div>
-
-            <!-- Add Button -->
-            <div class="form-group">
-                <button class="btn btn-primary" onclick="addObject()" style="width: 100%; padding: 12px; font-size: 16px;">
-                    ➕ Add Object to Scene
-                </button>
-            </div>
+        <div class="viz-container" id="vizContainer">
+          <div class="loading" id="vizLoading">
+            <div class="spinner"></div>
+            Loading visualization...
+          </div>
+          <img
+            id="vizImage"
+            class="viz-image"
+            style="display: none"
+            alt="Scene Visualization"
+          />
+          <div class="viz-controls" id="vizControls" style="display: none">
+            <button class="btn btn-secondary" onclick="prevStep()">
+              ← Previous
+            </button>
+            <span id="stepIndicator">Step 1 of 1</span>
+            <button class="btn btn-secondary" onclick="nextStep()">
+              Next →
+            </button>
+          </div>
         </div>
+      </div>
+
+      <!-- Right Panel: Add Object Form -->
+      <div class="right-panel">
+        <h2 class="panel-title">Add New Object</h2>
+
+        <!-- Category Selection -->
+        <div class="form-group">
+          <label class="form-label">1. Category</label>
+          <select
+            class="form-select"
+            id="categorySelect"
+            onchange="onCategoryChange()"
+          >
+            <option value="">All Categories</option>
+          </select>
+        </div>
+
+        <!-- Object Search -->
+        <div class="form-group">
+          <label class="form-label">2. Search & Select Object</label>
+          <input
+            type="text"
+            class="form-input"
+            id="objectSearch"
+            placeholder="Search by name or ID..."
+            oninput="onSearchChange()"
+          />
+          <div class="object-results" id="objectResults">
+            <div class="empty-state">
+              <div class="empty-state-icon">🔍</div>
+              <div>Search for objects above</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Object Display -->
+        <div class="selected-object-display" id="selectedObjectDisplay">
+          <strong>Selected:</strong> <span id="selectedObjectName"></span>
+        </div>
+
+        <!-- Room Selection -->
+        <div class="form-group">
+          <label class="form-label">3. Room</label>
+          <select class="form-select" id="roomSelect" onchange="onRoomChange()">
+            <option value="">Select a room...</option>
+          </select>
+        </div>
+
+        <!-- Furniture/Receptacle Selection -->
+        <div class="form-group">
+          <label class="form-label">4. Furniture / Receptacle</label>
+          <select class="form-select" id="furnitureSelect">
+            <option value="">Select furniture first...</option>
+          </select>
+        </div>
+
+        <!-- Add Button -->
+        <div class="form-group">
+          <button
+            class="btn btn-primary"
+            onclick="addObject()"
+            style="width: 100%; padding: 12px; font-size: 16px"
+          >
+            ➕ Add Object to Scene
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Toast Notification -->
     <div class="toast" id="toast">
-        <div id="toastMessage"></div>
+      <div id="toastMessage"></div>
     </div>
 
     <script>
-        let selectedObjectId = null;
-        let selectedObjectClass = null;
-        let currentStep = 0;
-        let totalSteps = 1;
-        let imageCache = [];
+      let selectedObjectId = null;
+      let selectedObjectClass = null;
+      let currentStep = 0;
+      let totalSteps = 1;
+      let imageCache = [];
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadCategories();
-            await loadRooms();
-            await loadVizImages();
-            await loadHierarchyInfo();
-        });
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadCategories();
+        await loadRooms();
+        await loadVizImages();
+        await loadHierarchyInfo();
+      });
 
-        // Load categories
-        async function loadCategories() {
-            try {
-                const response = await fetch('/api/categories');
-                const categories = await response.json();
-                
-                const select = document.getElementById('categorySelect');
-                categories.forEach(cat => {
-                    const option = document.createElement('option');
-                    option.value = cat;
-                    option.textContent = cat;
-                    select.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading categories:', error);
+      // Load categories
+      async function loadCategories() {
+        try {
+          const response = await fetch("/api/categories");
+          const categories = await response.json();
+
+          const select = document.getElementById("categorySelect");
+          categories.forEach((cat) => {
+            const option = document.createElement("option");
+            option.value = cat;
+            option.textContent = cat;
+            select.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error loading categories:", error);
+        }
+      }
+
+      // Load rooms
+      async function loadRooms() {
+        try {
+          const response = await fetch("/api/rooms");
+          const rooms = await response.json();
+
+          const select = document.getElementById("roomSelect");
+          select.innerHTML = '<option value="">Select a room...</option>';
+          rooms.forEach((room) => {
+            const option = document.createElement("option");
+            option.value = room;
+            option.textContent = room.replace(/_/g, " ");
+            select.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error loading rooms:", error);
+        }
+      }
+
+      // Load visualization images
+      async function loadVizImages(cacheBust = null) {
+        try {
+          const vizImage = document.getElementById("vizImage");
+          const vizLoading = document.getElementById("vizLoading");
+          const vizControls = document.getElementById("vizControls");
+
+          // Add cache busting parameter
+          const timestamp = cacheBust || Date.now();
+
+          // Try to load step_0 with cache busting
+          const response = await fetch(`/api/viz_image/step_0?t=${timestamp}`);
+          if (response.ok) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            imageCache.push(url);
+
+            vizImage.src = url;
+            vizImage.style.display = "block";
+            vizLoading.style.display = "none";
+
+            // Try to load more steps
+            for (let i = 1; i < 10; i++) {
+              const stepResponse = await fetch(
+                `/api/viz_image/step_${i}?t=${timestamp}`,
+              );
+              if (stepResponse.ok) {
+                const stepBlob = await stepResponse.blob();
+                imageCache.push(URL.createObjectURL(stepBlob));
+              } else {
+                break;
+              }
             }
-        }
 
-        // Load rooms
-        async function loadRooms() {
-            try {
-                const response = await fetch('/api/rooms');
-                const rooms = await response.json();
-                
-                const select = document.getElementById('roomSelect');
-                select.innerHTML = '<option value="">Select a room...</option>';
-                rooms.forEach(room => {
-                    const option = document.createElement('option');
-                    option.value = room;
-                    option.textContent = room.replace(/_/g, ' ');
-                    select.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading rooms:', error);
+            totalSteps = imageCache.length;
+            if (totalSteps > 1) {
+              vizControls.style.display = "flex";
+              updateStepIndicator();
             }
+          } else {
+            vizLoading.innerHTML =
+              '<div class="empty-state"><div class="empty-state-icon">📊</div><div>No visualization available</div></div>';
+          }
+        } catch (error) {
+          console.error("Error loading viz images:", error);
+          document.getElementById("vizLoading").innerHTML =
+            '<div class="empty-state"><div class="empty-state-icon">⚠️</div><div>Error loading visualization</div></div>';
         }
+      }
 
-        // Load visualization images
-        async function loadVizImages(cacheBust = null) {
-            try {
-                const vizImage = document.getElementById('vizImage');
-                const vizLoading = document.getElementById('vizLoading');
-                const vizControls = document.getElementById('vizControls');
-                
-                // Add cache busting parameter
-                const timestamp = cacheBust || Date.now();
-                
-                // Try to load step_0 with cache busting
-                const response = await fetch(`/api/viz_image/step_0?t=${timestamp}`);
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const url = URL.createObjectURL(blob);
-                    imageCache.push(url);
-                    
-                    vizImage.src = url;
-                    vizImage.style.display = 'block';
-                    vizLoading.style.display = 'none';
-                    
-                    // Try to load more steps
-                    for (let i = 1; i < 10; i++) {
-                        const stepResponse = await fetch(`/api/viz_image/step_${i}?t=${timestamp}`);
-                        if (stepResponse.ok) {
-                            const stepBlob = await stepResponse.blob();
-                            imageCache.push(URL.createObjectURL(stepBlob));
-                        } else {
-                            break;
-                        }
-                    }
-                    
-                    totalSteps = imageCache.length;
-                    if (totalSteps > 1) {
-                        vizControls.style.display = 'flex';
-                        updateStepIndicator();
-                    }
-                } else {
-                    vizLoading.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><div>No visualization available</div></div>';
-                }
-            } catch (error) {
-                console.error('Error loading viz images:', error);
-                document.getElementById('vizLoading').innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><div>Error loading visualization</div></div>';
+      // Load hierarchy info
+      async function loadHierarchyInfo() {
+        try {
+          const response = await fetch("/api/hierarchy");
+          const hierarchy = await response.json();
+
+          const roomCount = Object.keys(hierarchy).length;
+          let objectCount = 0;
+
+          for (const room in hierarchy) {
+            for (const receptacle in hierarchy[room].receptacles) {
+              objectCount +=
+                hierarchy[room].receptacles[receptacle].objects.length;
             }
+          }
+
+          document.getElementById("roomCount").textContent = roomCount;
+          document.getElementById("objectCount").textContent = objectCount;
+        } catch (error) {
+          console.error("Error loading hierarchy info:", error);
+        }
+      }
+
+      // Navigation
+      function prevStep() {
+        if (currentStep > 0) {
+          currentStep--;
+          document.getElementById("vizImage").src = imageCache[currentStep];
+          updateStepIndicator();
+        }
+      }
+
+      function nextStep() {
+        if (currentStep < totalSteps - 1) {
+          currentStep++;
+          document.getElementById("vizImage").src = imageCache[currentStep];
+          updateStepIndicator();
+        }
+      }
+
+      function updateStepIndicator() {
+        document.getElementById("stepIndicator").textContent =
+          `Step ${currentStep + 1} of ${totalSteps}`;
+      }
+
+      // Category change
+      function onCategoryChange() {
+        onSearchChange();
+      }
+
+      // Search change
+      async function onSearchChange() {
+        const query = document.getElementById("objectSearch").value;
+        const category = document.getElementById("categorySelect").value;
+
+        if (!query && !category) {
+          document.getElementById("objectResults").innerHTML =
+            '<div class="empty-state"><div class="empty-state-icon">🔍</div><div>Search for objects above</div></div>';
+          return;
         }
 
-        // Load hierarchy info
-        async function loadHierarchyInfo() {
-            try {
-                const response = await fetch('/api/hierarchy');
-                const hierarchy = await response.json();
-                
-                const roomCount = Object.keys(hierarchy).length;
-                let objectCount = 0;
-                
-                for (const room in hierarchy) {
-                    for (const receptacle in hierarchy[room].receptacles) {
-                        objectCount += hierarchy[room].receptacles[receptacle].objects.length;
-                    }
-                }
-                
-                document.getElementById('roomCount').textContent = roomCount;
-                document.getElementById('objectCount').textContent = objectCount;
-            } catch (error) {
-                console.error('Error loading hierarchy info:', error);
+        try {
+          const response = await fetch(
+            `/api/objects/search?q=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}`,
+          );
+          const objects = await response.json();
+
+          const resultsDiv = document.getElementById("objectResults");
+
+          if (objects.length === 0) {
+            resultsDiv.innerHTML =
+              '<div class="empty-state"><div class="empty-state-icon">❌</div><div>No objects found</div></div>';
+            return;
+          }
+
+          resultsDiv.innerHTML = "";
+          objects.forEach((obj) => {
+            const item = document.createElement("div");
+            item.className = "object-item";
+            if (obj.id === selectedObjectId) {
+              item.classList.add("selected");
             }
-        }
+            item.onclick = () => selectObject(obj.id, obj.name, obj.category);
 
-        // Navigation
-        function prevStep() {
-            if (currentStep > 0) {
-                currentStep--;
-                document.getElementById('vizImage').src = imageCache[currentStep];
-                updateStepIndicator();
-            }
-        }
-
-        function nextStep() {
-            if (currentStep < totalSteps - 1) {
-                currentStep++;
-                document.getElementById('vizImage').src = imageCache[currentStep];
-                updateStepIndicator();
-            }
-        }
-
-        function updateStepIndicator() {
-            document.getElementById('stepIndicator').textContent = `Step ${currentStep + 1} of ${totalSteps}`;
-        }
-
-        // Category change
-        function onCategoryChange() {
-            onSearchChange();
-        }
-
-        // Search change
-        async function onSearchChange() {
-            const query = document.getElementById('objectSearch').value;
-            const category = document.getElementById('categorySelect').value;
-            
-            if (!query && !category) {
-                document.getElementById('objectResults').innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><div>Search for objects above</div></div>';
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/objects/search?q=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}`);
-                const objects = await response.json();
-                
-                const resultsDiv = document.getElementById('objectResults');
-                
-                if (objects.length === 0) {
-                    resultsDiv.innerHTML = '<div class="empty-state"><div class="empty-state-icon">❌</div><div>No objects found</div></div>';
-                    return;
-                }
-                
-                resultsDiv.innerHTML = '';
-                objects.forEach(obj => {
-                    const item = document.createElement('div');
-                    item.className = 'object-item';
-                    if (obj.id === selectedObjectId) {
-                        item.classList.add('selected');
-                    }
-                    item.onclick = () => selectObject(obj.id, obj.name, obj.category);
-                    
-                    item.innerHTML = `
+            item.innerHTML = `
                         <img class="object-thumbnail" src="/api/thumbnail/${obj.id}" 
                              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 fill=%22%23f0f0f0%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2220%22>📦</text></svg>'"
                              alt="${obj.name}">
@@ -650,320 +664,233 @@
                             <div class="object-category">${obj.category}</div>
                         </div>
                     `;
-                    resultsDiv.appendChild(item);
-                });
-            } catch (error) {
-                console.error('Error searching objects:', error);
-            }
+            resultsDiv.appendChild(item);
+          });
+        } catch (error) {
+          console.error("Error searching objects:", error);
+        }
+      }
+
+      // Select object
+      function selectObject(id, name, category) {
+        selectedObjectId = id;
+        selectedObjectClass = name;
+
+        // Update selected display
+        document
+          .getElementById("selectedObjectDisplay")
+          .classList.add("active");
+        document.getElementById("selectedObjectName").textContent =
+          `${name} (${category})`;
+
+        // Update UI
+        const items = document.querySelectorAll(".object-item");
+        items.forEach((item) => item.classList.remove("selected"));
+        event.currentTarget.classList.add("selected");
+      }
+
+      // Room change
+      async function onRoomChange() {
+        const room = document.getElementById("roomSelect").value;
+        const furnitureSelect = document.getElementById("furnitureSelect");
+
+        if (!room) {
+          furnitureSelect.innerHTML =
+            '<option value="">Select room first...</option>';
+          return;
         }
 
-        // Select object
-        function selectObject(id, name, category) {
-            selectedObjectId = id;
-            selectedObjectClass = name;
-            
-            // Update selected display
-            document.getElementById('selectedObjectDisplay').classList.add('active');
-            document.getElementById('selectedObjectName').textContent = `${name} (${category})`;
-            
-            // Update UI
-            const items = document.querySelectorAll('.object-item');
-            items.forEach(item => item.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
+        try {
+          const response = await fetch(
+            `/api/receptacles/${encodeURIComponent(room)}`,
+          );
+          const receptacles = await response.json();
+
+          furnitureSelect.innerHTML =
+            '<option value="floor" data-handle="">Floor</option>';
+          receptacles.forEach((recep) => {
+            const option = document.createElement("option");
+            option.value = recep.name;
+            option.textContent = `${recep.name} (${recep.description})`;
+            option.dataset.handle = recep.handle;
+            furnitureSelect.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error loading receptacles:", error);
+        }
+      }
+
+      // Add object
+      async function addObject() {
+        if (!selectedObjectId) {
+          showToast("Please select an object", "error");
+          return;
         }
 
-        // Room change
-        async function onRoomChange() {
-            const room = document.getElementById('roomSelect').value;
-            const furnitureSelect = document.getElementById('furnitureSelect');
-            
-            if (!room) {
-                furnitureSelect.innerHTML = '<option value="">Select room first...</option>';
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/receptacles/${encodeURIComponent(room)}`);
-                const receptacles = await response.json();
-                
-                furnitureSelect.innerHTML = '<option value="floor" data-handle="">Floor</option>';
-                receptacles.forEach(recep => {
-                    const option = document.createElement('option');
-                    option.value = recep.name;
-                    option.textContent = `${recep.name} (${recep.description})`;
-                    option.dataset.handle = recep.handle;
-                    furnitureSelect.appendChild(option);
-                });
-                
-                // Auto-suggest preposition for floor
-                document.getElementById('prepositionSelect').value = 'on_floor';
-                document.getElementById('prepositionHint').textContent = 'Object will be placed on the floor';
-            } catch (error) {
-                console.error('Error loading receptacles:', error);
-            }
+        const room = document.getElementById("roomSelect").value;
+        const furnitureSelect = document.getElementById("furnitureSelect");
+        const furniture = furnitureSelect.value;
+        const receptacleHandle =
+          furnitureSelect.selectedOptions[0]?.dataset?.handle || "";
+
+        if (!room || !furniture) {
+          showToast("Please select room and furniture", "error");
+          return;
         }
 
-        // Furniture change
-        async function onFurnitureChange() {
-            const furnitureSelect = document.getElementById('furnitureSelect');
-            const furniture = furnitureSelect.value;
-            
-            if (!furniture) return;
-            
-            try {
-                const response = await fetch('/api/suggest_preposition', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ furniture: furniture })
-                });
-                const result = await response.json();
-                
-                document.getElementById('prepositionSelect').value = result.preposition;
-                
-                // Update hint
-                const hints = {
-                    'on': 'Object will be placed on top of this surface',
-                    'in': 'Object will be placed inside this container',
-                    'next_to': 'Object will be placed next to this furniture',
-                    'on_floor': 'Object will be placed on the floor'
-                };
-                document.getElementById('prepositionHint').textContent = hints[result.preposition] || '';
-            } catch (error) {
-                console.error('Error suggesting preposition:', error);
-            }
-        }
+        // Position will be calculated automatically from furniture/receptacle
+        const position = {
+          x: 0,
+          y: 0.5,
+          z: 0,
+        };
 
-        // Add object
-        async function addObject() {
-            if (!selectedObjectId) {
-                showToast('Please select an object', 'error');
-                return;
-            }
-            
-            const room = document.getElementById('roomSelect').value;
-            const furnitureSelect = document.getElementById('furnitureSelect');
-            const furniture = furnitureSelect.value;
-            const receptacleHandle = furnitureSelect.selectedOptions[0]?.dataset?.handle || '';
-            const preposition = document.getElementById('prepositionSelect').value;
-            
-            if (!room || !furniture) {
-                showToast('Please select room and furniture', 'error');
-                return;
-            }
-            
-            // Position will be calculated automatically from furniture/receptacle
-            const position = {
-                x: 0,
-                y: 0.5,
-                z: 0
-            };
-            
-            try {
-                const response = await fetch('/api/add_object', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        object_id: selectedObjectId,
-                        object_class: selectedObjectClass,
-                        room: room,
-                        furniture: furniture,
-                        receptacle_handle: receptacleHandle,
-                        preposition: preposition,
-                        position: position
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showToast(`✓ Added ${result.object_name} to scene!`, 'success');
-                    
-                    // Update object count immediately
-                    const objectCountElem = document.getElementById('objectCount');
-                    const currentCount = parseInt(objectCountElem.textContent) || 0;
-                    objectCountElem.textContent = currentCount + 1;
-                    
-                    // Ask if user wants to refresh viz
-                    setTimeout(() => {
-                        if (confirm('Object added successfully!\n\nWould you like to refresh the visualization to see the new object?')) {
-                            refreshViz();
-                        }
-                    }, 500);
-                } else {
-                    showToast(result.error || 'Failed to add object', 'error');
-                }
-            } catch (error) {
-                console.error('Error adding object:', error);
-                showToast('Error adding object', 'error');
-            }
-        }
+        try {
+          const response = await fetch("/api/add_object", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              object_id: selectedObjectId,
+              object_class: selectedObjectClass,
+              room: room,
+              furniture: furniture,
+              receptacle_handle: receptacleHandle,
+              position: position,
+            }),
+          });
 
-        // Refresh visualization
-        async function refreshViz() {
-            const vizLoading = document.getElementById('vizLoading');
-            const vizImage = document.getElementById('vizImage');
-            
-            vizImage.style.display = 'none';
-            vizLoading.style.display = 'flex';
-            vizLoading.innerHTML = '<div class="spinner"></div> Regenerating visualization with new objects...';
-            
-            try {
-                const response = await fetch('/api/refresh_viz', {
-                    method: 'POST'
-                });
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Clear old image cache to force reload
-                    imageCache.forEach(url => URL.revokeObjectURL(url));
-                    imageCache = [];
-                    currentStep = 0;
-                    
-                    // Reload images with cache busting
-                    await loadVizImages(result.timestamp);
-                    await loadHierarchyInfo();
-                    showToast('✓ Visualization refreshed with new objects!', 'success');
-                } else {
-                    showToast('Failed to refresh visualization', 'error');
-                    vizLoading.style.display = 'none';
-                    vizImage.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Error refreshing viz:', error);
-                showToast('Error refreshing visualization', 'error');
-                vizLoading.style.display = 'none';
-                vizImage.style.display = 'block';
-            }
-        }
+          const result = await response.json();
 
-        // Export episode with file dialog
-        async function exportEpisode() {
-            try {
-                // Check if File System Access API is supported
-                if ('showSaveFilePicker' in window) {
-                    await exportWithFilePicker();
-                } else {
-                    // Fallback: download directly
-                    await exportWithDownload();
-                }
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    // User cancelled the dialog
-                    showToast('Export cancelled', 'error');
-                } else {
-                    console.error('Error exporting:', error);
-                    showToast('Error exporting episode', 'error');
-                }
-            }
-        }
+          if (result.success) {
+            showToast(`✓ Added ${result.object_name} to scene!`, "success");
 
-        // Export using File System Access API (modern browsers)
-        async function exportWithFilePicker() {
-            try {
-                // Get the episode data
-                const response = await fetch('/api/episode');
-                const data = await response.json();
-                const episodeId = data.episode.scene_id || 'episode';
-                
-                // Show save dialog for JSON file
-                const jsonHandle = await window.showSaveFilePicker({
-                    suggestedName: `episode_${episodeId}_edited.json`,
-                    types: [{
-                        description: 'JSON Files',
-                        accept: { 'application/json': ['.json'] }
-                    }]
-                });
-                
-                // Get the JSON data
-                const jsonResponse = await fetch('/api/export_data');
-                const jsonData = await jsonResponse.json();
-                
-                // Write JSON file
-                const jsonWritable = await jsonHandle.createWritable();
-                await jsonWritable.write(JSON.stringify(jsonData.episode_data, null, 2));
-                await jsonWritable.close();
-                
-                const jsonPath = jsonHandle.name;
-                
-                // Ask if user wants to save .gz version too
-                if (confirm('JSON file saved!\n\nWould you like to also save the compressed .json.gz version?')) {
-                    const gzHandle = await window.showSaveFilePicker({
-                        suggestedName: `episode_${episodeId}_edited.json.gz`,
-                        types: [{
-                            description: 'Compressed JSON Files',
-                            accept: { 'application/gzip': ['.gz', '.json.gz'] }
-                        }]
-                    });
-                    
-                    // Get the GZ data
-                    const gzResponse = await fetch('/api/export_gz');
-                    const gzBlob = await gzResponse.blob();
-                    
-                    // Write GZ file
-                    const gzWritable = await gzHandle.createWritable();
-                    await gzWritable.write(gzBlob);
-                    await gzWritable.close();
-                    
-                    showToast(`✓ Exported successfully!\nJSON: ${jsonPath}\nGZ: ${gzHandle.name}`, 'success');
-                } else {
-                    showToast(`✓ JSON exported successfully!\nFile: ${jsonPath}`, 'success');
-                }
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    showToast('Export cancelled', 'error');
-                } else {
-                    throw error;
-                }
-            }
-        }
+            // Update object count immediately
+            const objectCountElem = document.getElementById("objectCount");
+            const currentCount = parseInt(objectCountElem.textContent) || 0;
+            objectCountElem.textContent = currentCount + 1;
 
-        // Fallback export using download links
-        async function exportWithDownload() {
-            const response = await fetch('/api/episode');
-            const data = await response.json();
-            const episodeId = data.episode.scene_id || 'episode';
-            
-            // Download JSON
-            const jsonResponse = await fetch('/api/export_data');
-            const jsonData = await jsonResponse.json();
-            const jsonBlob = new Blob([JSON.stringify(jsonData.episode_data, null, 2)], { type: 'application/json' });
-            const jsonUrl = URL.createObjectURL(jsonBlob);
-            const jsonLink = document.createElement('a');
-            jsonLink.href = jsonUrl;
-            jsonLink.download = `episode_${episodeId}_edited.json`;
-            jsonLink.click();
-            URL.revokeObjectURL(jsonUrl);
-            
-            // Ask about GZ
-            if (confirm('JSON file downloaded!\n\nWould you like to also download the compressed .json.gz version?')) {
-                const gzResponse = await fetch('/api/export_gz');
-                const gzBlob = await gzResponse.blob();
-                const gzUrl = URL.createObjectURL(gzBlob);
-                const gzLink = document.createElement('a');
-                gzLink.href = gzUrl;
-                gzLink.download = `episode_${episodeId}_edited.json.gz`;
-                gzLink.click();
-                URL.revokeObjectURL(gzUrl);
-                
-                showToast('✓ Both files downloaded!', 'success');
-            } else {
-                showToast('✓ JSON downloaded!', 'success');
-            }
-        }
-
-        // Show toast notification
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toast.className = `toast ${type} show`;
-            toastMessage.textContent = message;
-            
+            // Ask if user wants to refresh viz
             setTimeout(() => {
-                toast.classList.remove('show');
-            }, 5000);
+              if (
+                confirm(
+                  "Object added successfully!\n\nWould you like to refresh the visualization to see the new object?",
+                )
+              ) {
+                refreshViz();
+              }
+            }, 500);
+          } else {
+            showToast(result.error || "Failed to add object", "error");
+          }
+        } catch (error) {
+          console.error("Error adding object:", error);
+          showToast("Error adding object", "error");
         }
-    </script>
-</body>
-</html>
+      }
 
+      // Refresh visualization
+      async function refreshViz() {
+        const vizLoading = document.getElementById("vizLoading");
+        const vizImage = document.getElementById("vizImage");
+
+        vizImage.style.display = "none";
+        vizLoading.style.display = "flex";
+        vizLoading.innerHTML =
+          '<div class="spinner"></div> Regenerating visualization with new objects...';
+
+        try {
+          const response = await fetch("/api/refresh_viz", {
+            method: "POST",
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            // Clear old image cache to force reload
+            imageCache.forEach((url) => URL.revokeObjectURL(url));
+            imageCache = [];
+            currentStep = 0;
+
+            // Reload images with cache busting
+            await loadVizImages(result.timestamp);
+            await loadHierarchyInfo();
+            showToast("✓ Visualization refreshed with new objects!", "success");
+          } else {
+            showToast("Failed to refresh visualization", "error");
+            vizLoading.style.display = "none";
+            vizImage.style.display = "block";
+          }
+        } catch (error) {
+          console.error("Error refreshing viz:", error);
+          showToast("Error refreshing visualization", "error");
+          vizLoading.style.display = "none";
+          vizImage.style.display = "block";
+        }
+      }
+
+      // Export episode with file dialog
+      async function exportEpisode() {
+        try {
+          // Get episode data
+          const jsonResponse = await fetch("/api/export_data");
+          const jsonData = await jsonResponse.json();
+
+          // Get current episode ID from hierarchy (if available)
+          let episodeId = "episode";
+          try {
+            const hierarchyResponse = await fetch("/api/hierarchy");
+            const hierarchyData = await hierarchyResponse.json();
+            if (hierarchyData.scene_id) {
+              episodeId = hierarchyData.scene_id;
+            }
+          } catch (e) {
+            console.log("Could not get episode ID from hierarchy");
+          }
+
+          // Download JSON file
+          const jsonBlob = new Blob(
+            [JSON.stringify(jsonData.episode_data, null, 2)],
+            { type: "application/json" },
+          );
+          const jsonUrl = URL.createObjectURL(jsonBlob);
+          const jsonLink = document.createElement("a");
+          jsonLink.href = jsonUrl;
+          jsonLink.download = `episode_${episodeId}_edited.json`;
+          document.body.appendChild(jsonLink);
+          jsonLink.click();
+          document.body.removeChild(jsonLink);
+          URL.revokeObjectURL(jsonUrl);
+
+          // Download .json.gz file
+          const gzResponse = await fetch("/api/export_gz");
+          const gzBlob = await gzResponse.blob();
+          const gzUrl = URL.createObjectURL(gzBlob);
+          const gzLink = document.createElement("a");
+          gzLink.href = gzUrl;
+          gzLink.download = `episode_${episodeId}_edited.json.gz`;
+          document.body.appendChild(gzLink);
+          gzLink.click();
+          document.body.removeChild(gzLink);
+          URL.revokeObjectURL(gzUrl);
+
+          showToast("✓ Both .json and .json.gz files downloaded!", "success");
+        } catch (error) {
+          console.error("Error exporting:", error);
+          showToast("Error exporting episode: " + error.message, "error");
+        }
+      }
+
+      // Show toast notification
+      function showToast(message, type = "success") {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toastMessage");
+
+        toast.className = `toast ${type} show`;
+        toastMessage.textContent = message;
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>

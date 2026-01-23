@@ -54,8 +54,6 @@ save_dir: str = ""
 hierarchy_data: Dict[str, Any] = {}
 viz_image_paths: Dict[str, str] = {}
 object_database: List[Dict[str, str]] = []
-articulatable_furniture: set = set()  # Set of furniture hashes that are articulatable
-
 
 def load_dataset_file(path: str) -> Dict[str, Any]:
     """Load dataset from JSON or JSON.gz file."""
@@ -185,86 +183,27 @@ def scan_object_database() -> List[Dict[str, str]]:
     objects = []
     seen_ids = set()
 
-    # Load from fpmodels-with-decomposed.csv
-    fpmodels_csv = project_root / "data/hssd-hab/metadata/fpmodels-with-decomposed.csv"
-    if fpmodels_csv.exists():
+    # Load from object_categories_one_per_class.csv
+    fpmodels_csv = "scripts/episode_editor/objects_mapping/object_categories_one_per_class.csv"
+    if Path(fpmodels_csv).exists():
         with open(fpmodels_csv, "r") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 obj_id = row.get("id", "").strip()
-                name = row.get("name", obj_id).strip()
-                category = row.get("main_category", "").strip()
-                super_category = row.get("super_category", "").strip()
-                notes = row.get("notes", "").strip()
+                category = row.get("clean_category", "").strip()
 
-                if obj_id and obj_id not in seen_ids and notes == "pickupable":
+                if obj_id and obj_id not in seen_ids:
                     seen_ids.add(obj_id)
                     objects.append({
                         "id": obj_id,
-                        "name": name if name else obj_id,
+                        "name": category if category else obj_id,
                         "category": category if category else "other",
                         "source": "fpmodels",
-                        "super_category": super_category if super_category else category,
+                        "super_category": category if category else "other",
                     })
 
     print(f"Loaded {len(objects)} objects from metadata CSVs")
     return sorted(objects, key=lambda x: (x.get("category", ""), x["id"]))
-
-
-def load_articulatable_furniture() -> set:
-    """Load set of furniture hashes that are articulatable from CSV (column O)."""
-    import csv
-
-    articulatable = set()
-
-    # Load from fpmodels-with-decomposed.csv
-    fpmodels_csv = project_root / "data/hssd-hab/metadata/fpmodels-with-decomposed.csv"
-    if fpmodels_csv.exists():
-        with open(fpmodels_csv, "r") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                obj_id = row.get("id", "").strip()
-                # Column O is "isArticulatable" - check if it's truthy
-                is_articulated = row.get("isArticulatable", "").strip().lower()
-
-                if obj_id and is_articulated in ["true", "1", "yes", "on"]:
-                    articulatable.add(obj_id)
-
-    print(f"Loaded {len(articulatable)} articulatable furniture from metadata CSV")
-
-    # Save to CSV for debugging/verification
-    debug_csv_path = project_root / "data/hssd-hab/metadata/articulatable_furniture_debug.csv"
-    try:
-        with open(debug_csv_path, "w") as f:
-            f.write("furniture_hash\n")
-            for furn_hash in sorted(articulatable):
-                f.write(f"{furn_hash}\n")
-        print(f"Saved articulatable furniture list to {debug_csv_path}")
-    except Exception as e:
-        print(f"Warning: Could not save articulatable furniture CSV: {e}")
-    return articulatable
-
-
-def suggest_preposition_for_receptacle(receptacle_name: str) -> str:
-    """Suggest appropriate preposition based on receptacle type."""
-    receptacle_lower = receptacle_name.lower()
-
-    # "in" for containers
-    if any(keyword in receptacle_lower for keyword in [
-        'cabinet', 'drawer', 'wardrobe', 'closet', 'box',
-        'container', 'basket', 'bin', 'chest'
-    ]):
-        return "in"
-
-    # "on" for surfaces
-    if any(keyword in receptacle_lower for keyword in [
-        'table', 'counter', 'desk', 'shelf', 'shelves',
-        'bed', 'couch', 'sofa', 'chair', 'stool', 'bench'
-    ]):
-        return "on"
-
-    # Default to "on"
-    return "on"
 
 
 # Flask Routes
@@ -337,14 +276,12 @@ def get_receptacles(room):
         handle = recep_data.get("handle", "")
 
         # Extract base hash from handle to check if it's articulatable
-        base_hash = handle.split('_:')[0] if '_:' in handle else handle
-        if not articulatable_furniture or base_hash in articulatable_furniture:
-            receptacles.append({
-                "name": recep_name,
-                "description": recep_data.get("description", ""),
-                "handle": handle,
-                "objects_count": len(recep_data.get("objects", []))
-            })
+        receptacles.append({
+            "name": recep_name,
+            "description": recep_data.get("description", ""),
+            "handle": handle,
+            "objects_count": len(recep_data.get("objects", []))
+        })
 
     print("*"*40)
 
@@ -387,57 +324,6 @@ def quaternion_to_rotation_matrix(quat: Tuple[float, float, float, float]) -> np
         [r10, r11, r12],
         [r20, r21, r22]
     ], dtype=np.float32)
-
-
-def get_receptacle_position(receptacle_handle: str, sim: habitat_sim.Simulator) -> Optional[Tuple[float, float, float]]:
-    """Get the 3D position of a receptacle from the simulator."""
-    if not HABITAT_AVAILABLE or sim is None:
-        return None
-
-    try:
-        from habitat_llm.utils.sim import find_receptacles
-
-        # Get all receptacles
-        receptacles = find_receptacles(sim, filter_receptacles=False)
-
-        # Find the target receptacle
-        for rec in receptacles:
-            try:
-                if rec.unique_name == receptacle_handle:
-                    # Get receptacle bounds
-                    rec_aabb = rec.get_global_bounds(sim)
-                    if rec_aabb is not None:
-                        # Get the center of the receptacle's top surface
-                        center = rec_aabb.center()
-                        top_y = rec_aabb.max[1]
-                        return (float(center[0]), float(top_y) + 0.05, float(center[2]))
-            except Exception:
-                continue
-
-        # Fallback: try to get position from object managers
-        rom = sim.get_rigid_object_manager()
-        if receptacle_handle in rom.get_object_handles():
-            obj = rom.get_object_by_handle(receptacle_handle)
-            if obj is not None:
-                bb = obj.root_scene_node.cumulative_bb
-                center = bb.center()
-                top_y = bb.max[1]
-                return (float(center[0]), float(top_y) + 0.05, float(center[2]))
-
-        aom = sim.get_articulated_object_manager()
-        if receptacle_handle in aom.get_object_handles():
-            obj = aom.get_object_by_handle(receptacle_handle)
-            if obj is not None:
-                bb = obj.root_scene_node.cumulative_bb
-                center = bb.center()
-                top_y = bb.max[1]
-                return (float(center[0]), float(top_y) + 0.05, float(center[2]))
-
-        return None
-    except Exception as e:
-        print(f"Warning: Could not get receptacle position: {e}")
-        return None
-
 
 def find_receptacle_mesh_name(furniture_handle: str) -> Optional[str]:
     """
@@ -511,20 +397,6 @@ def create_sim_for_episode(episode: Dict) -> Optional[habitat_sim.Simulator]:
     except Exception as e:
         print(f"Warning: Could not create simulator: {e}")
         return None
-
-
-@app.route("/api/suggest_preposition", methods=["POST"])
-def suggest_preposition():
-    """Suggest preposition for furniture type."""
-    data = request.json
-    furniture = data.get("furniture", "")
-
-    if furniture == "floor":
-        suggestion = "on_floor"
-    else:
-        suggestion = suggest_preposition_for_receptacle(furniture)
-
-    return jsonify({"preposition": suggestion})
 
 
 @app.route("/api/add_object", methods=["POST"])
@@ -630,30 +502,16 @@ def add_object():
 
     # Try to get actual receptacle position from simulator (for precise placement)
     obj_position = None
-    if receptacle_handle and furniture != "floor" and HABITAT_AVAILABLE:
-        try:
-            print(f"Creating simulator to get position for receptacle: {receptacle_handle}")
-            sim = create_sim_for_episode(ep)
-            if sim is not None:
-                obj_position = get_receptacle_position(receptacle_handle, sim)
-                sim.close()
-                if obj_position:
-                    print(f"✓ Got receptacle position from simulator: {obj_position}")
-                else:
-                    print(f"⚠ Could not find receptacle in simulator")
-        except Exception as e:
-            print(f"⚠ Warning: Could not get receptacle position: {e}")
-
-    # Use furniture position + height offset if available, otherwise use provided/calculated position
+    # Use furniture position + height offset if available
     if obj_position is None:
         if furniture_info and furniture != "floor":
             # Use furniture position with height offset for top surface
             base_pos = furniture_info['position']
             # Add estimated height for top surface (same logic as scene_utils)
             if abs(base_pos[1]) < 0.1:  # Ground level furniture
-                surface_y = base_pos[1] + 0.45
+                surface_y = base_pos[1]
             else:  # Already elevated
-                surface_y = base_pos[1] + 0.05
+                surface_y = base_pos[1]
             obj_position = (base_pos[0], surface_y, base_pos[2])
             print(f"Using furniture position with surface offset: {obj_position}")
         else:
@@ -704,64 +562,24 @@ def add_object():
     #
     # We need to get the actual receptacle name from the simulator, not construct it
     if receptacle_handle and furniture != "floor":
-        # Try to get the actual receptacle name from simulator
-        recep_value = None
-        if HABITAT_AVAILABLE:
-            try:
-                sim = create_sim_for_episode(ep)
-                if sim is not None:
-                    from habitat_llm.utils.sim import find_receptacles
-                    receptacles = find_receptacles(sim, filter_receptacles=False)
+        parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
+        # Ensure parent handle has instance suffix
+        parent_handle_with_suffix = parent_handle if "_:" in parent_handle else f"{parent_handle}_:0000"
 
-                    # Extract parent handle from receptacle_handle (format: "PARENT_HANDLE|receptacle_name" or just "PARENT_HANDLE")
-                    parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
+        # Find the actual receptacle mesh name from URDF directory
+        receptacle_mesh_name = find_receptacle_mesh_name(parent_handle)
 
-                    # CRITICAL FIX: Match the EXACT parent handle (including instance suffix)
-                    # Don't just match the base - there may be multiple furniture pieces with same base
-                    matching_receptacles = []
-                    for rec in receptacles:
-                        if rec.parent_object_handle == parent_handle:
-                            matching_receptacles.append(rec)
-
-                    # Use the first matching receptacle (typically the top surface or first drawer)
-                    # In the future, we could add logic to pick the best receptacle based on preposition
-                    if matching_receptacles:
-                        rec = matching_receptacles[0]
-                        parent_handle_actual = rec.parent_object_handle
-                        # Ensure it has instance suffix for consistency
-                        if "_:" not in parent_handle_actual:
-                            parent_handle_actual = f"{parent_handle_actual}_:0000"
-                        recep_value = f"{parent_handle_actual}|{rec.name}"
-                        print(f"✓ Found receptacle in simulator: {recep_value}")
-                        if len(matching_receptacles) > 1:
-                            print(f"  Note: {len(matching_receptacles)} receptacles found for this furniture, using first one")
-                    else:
-                        print(f"⚠ No receptacles found for parent handle: {parent_handle}")
-
-                    sim.close()
-            except Exception as e:
-                print(f"⚠ Warning: Could not get receptacle name from simulator: {e}")
-
-        # Fallback: Look up receptacle mesh name from URDF directory
-        if recep_value is None:
-            parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
-            # Ensure parent handle has instance suffix
-            parent_handle_with_suffix = parent_handle if "_:" in parent_handle else f"{parent_handle}_:0000"
-
-            # Find the actual receptacle mesh name from URDF directory
-            receptacle_mesh_name = find_receptacle_mesh_name(parent_handle)
-
-            if receptacle_mesh_name:
-                # Format: "PARENT_HANDLE_:XXXX|receptacle_mesh_name.0000"
-                # Example: "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000|chest_of_drawers0002_receptacle_mesh.0000"
-                recep_value = f"{parent_handle_with_suffix}|{receptacle_mesh_name}.0000"
-                print(f"✓ Using receptacle from URDF: {recep_value}")
-            else:
-                # Last resort fallback - construct a generic name
-                parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
-                recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
-                print(f"⚠ WARNING: Could not find receptacle mesh in URDF, using fallback: {recep_value}")
-                print(f"  This will likely cause errors when loading the episode!")
+        if receptacle_mesh_name:
+            # Format: "PARENT_HANDLE_:XXXX|receptacle_mesh_name.0000"
+            # Example: "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000|chest_of_drawers0002_receptacle_mesh.0000"
+            recep_value = f"{parent_handle_with_suffix}|{receptacle_mesh_name}.0000"
+            print(f"✓ Using receptacle from URDF: {recep_value}")
+        else:
+            # Last resort fallback - construct a generic name
+            parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
+            recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
+            print(f"⚠ WARNING: Could not find receptacle mesh in URDF, using fallback: {recep_value}")
+            print(f"  This will likely cause errors when loading the episode!")
     else:
         recep_value = "floor"
 
@@ -934,7 +752,7 @@ def get_thumbnail(object_id):
 
 def main():
     global episode_data, dataset_path, episode_id, metadata_dir, save_dir
-    global hierarchy_data, viz_image_paths, object_database, articulatable_furniture
+    global hierarchy_data, viz_image_paths, object_database
 
     parser = argparse.ArgumentParser(description="Add Objects to Scene GUI")
     parser.add_argument("--dataset", type=str, required=True, help="Path to dataset JSON.gz file")
@@ -993,10 +811,6 @@ def main():
     print("Scanning object database...")
     object_database = scan_object_database()
     print(f"Found {len(object_database)} objects")
-
-    # Load articulatable furniture filter
-    print("Loading articulatable furniture filter...")
-    articulatable_furniture = load_articulatable_furniture()
 
     print(f"\n🚀 Starting Add Objects to Scene at http://localhost:{args.port}")
     print("Press Ctrl+C to stop\n")

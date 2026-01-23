@@ -122,3 +122,9 @@ visualizations
 metadata_output
 scripts/episode_editor/static/maps/topdown_map_calibration.json
 scripts/episode_editor/static/maps/*.png
+.cursor/rules/conda-environment.mdc
+.cursor/rules.md
+results/*.png
+results/*.mp4
+scripts/episode_editor/static/*
+scripts/episode_editor/static/run_data.json
