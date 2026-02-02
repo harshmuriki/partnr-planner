@@ -137,7 +137,7 @@ def cprint(text: str, color: str = None, end: str = "\n") -> None:
     Wrapper around print to set the text color from a pre-defined list of options.
 
     :param text: The string to print.
-    :param color: The name of the color to use. From ["red", "green", "blue", "gray", "yellow", None]
+    :param color: The name of the color to use. From ["red", "green", "blue", "gray", "yellow", "magenta", "cyan", "white", None]
     :param end: string appended after the last value, default newline.
     """
     if color is None:
@@ -152,6 +152,12 @@ def cprint(text: str, color: str = None, end: str = "\n") -> None:
         print("\033[37m" + text + "\033[0m", end=end)
     elif color == "yellow":
         print("\033[33m" + text + "\033[0m", end=end)
+    elif color == "magenta":
+        print("\033[35m" + text + "\033[0m", end=end)
+    elif color == "cyan":
+        print("\033[36m" + text + "\033[0m", end=end)
+    elif color == "white":
+        print("\033[97m" + text + "\033[0m", end=end)
     else:
         raise NotImplementedError(f"Requested color name '{color}' is not supported.")
 
