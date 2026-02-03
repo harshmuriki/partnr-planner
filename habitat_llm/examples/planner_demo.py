@@ -310,21 +310,74 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
     # Highlight the mode of operation
     cprint("\n---------------------------------------", "blue")
     cprint(f"Planner Mode: {config.evaluation.type.capitalize()}", "blue")
-    # cprint(f"LLM model: {config.planner.llm.llm._target_}", "blue")
+    # Try to get model info from different config structures
+    try:
+        if hasattr(config, "planner") and hasattr(config.planner, "llm"):
+            model_target = config.planner.llm.llm._target_
+        elif hasattr(config, "planner") and hasattr(config.planner, "vlm"):
+            model_target = config.planner.vlm.vlm._target_
+        else:
+            # Decentralized config structure
+            agent_config = config.evaluation.agents.agent_0.planner.plan_config
+            if hasattr(agent_config, "vlm"):
+                model_target = agent_config.vlm.vlm._target_
+            elif hasattr(agent_config, "llm"):
+                model_target = agent_config.llm.llm._target_
+            else:
+                model_target = "Unknown"
+        cprint(f"Model: {model_target}", "blue")
+    except Exception:
+        cprint("Model: Unable to determine planner model", "blue")
     cprint(f"Partial Observability: {config.world_model.partial_obs}", "blue")
+    # Print whether privileged perception (GT) is being used
+    if hasattr(config.evaluation, "use_oracle_actions") and config.evaluation.use_oracle_actions:
+        cprint("Perception: Privileged (using GT/oracle info)", "green")
+    else:
+        cprint("Perception: Not using privileged/GT oracle info. Using observations (RGB-D)", "green")
     cprint("---------------------------------------\n", "blue")
 
     os.makedirs(config.paths.results_dir, exist_ok=True)
 
+    # Set up image save directory for VLM planners
+    vlm_images_dir = os.path.join(config.paths.results_dir, "vlm_images")
+    # Handle both centralized (single planner) and decentralized (dict of planners)
+    planners_to_check = []
+    if hasattr(eval_runner, "planner"):
+        if isinstance(eval_runner.planner, dict):
+            planners_to_check = list(eval_runner.planner.values())
+        else:
+            planners_to_check = [eval_runner.planner]
+    for planner in planners_to_check:
+        if hasattr(planner, "set_image_save_dir"):
+            planner.set_image_save_dir(vlm_images_dir)
+            # cprint(f"VLM images will be saved to: {vlm_images_dir}", "green")
+
     # Run the planner
     if config.mode == "cli":
-        instruction = "Go to the bed" if not config.instruction else config.instruction
+        # Get instruction from config if provided, otherwise use episode instruction
+        if config.instruction:
+            instruction = config.instruction
+        else:
+            # Get instruction from current episode
+            instruction = env_interface.env.env.env._env.current_episode.instruction
+
+        # Ensure videos are saved in CLI mode, even if task fails
+        # if not config.evaluation.save_video:
+        #     config.evaluation.save_video = True
+        #     cprint("Enabling video saving for CLI mode", "yellow")
 
         cprint(f'\nExecuting instruction: "{instruction}"', "blue")
         try:
+            # ! Important call to eval method that runs the planner
             info = eval_runner.run_instruction(instruction)
         except Exception as e:
             print("An error occurred:", e)
+            # Ensure video is saved even if exception occurs
+            if config.evaluation.save_video and hasattr(eval_runner, 'dvu') and len(eval_runner.dvu.frames) > 0:
+                try:
+                    eval_runner.dvu._make_video(play=False, postfix=eval_runner.episode_filename)
+                except Exception as video_error:
+                    print(f"Warning: Failed to save video after exception: {video_error}")
 
     else:
         stats_episodes: Dict[str, Dict] = {
@@ -392,7 +445,9 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
 
                 try:
                     # Reset env_interface (moves onto the next episode in the dataset)
-                    env_interface.reset_environment()
+                    # env_interface.reset_environment()
+                    # ! We never call this because we are only running one episode at a time
+                    pass
                 except Exception as e:
                     # print exception and trace
                     traceback.print_exc()

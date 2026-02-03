@@ -110,6 +110,9 @@ class PerceptionSim(Perception):
         # Cache of object positions.
         self._obj_position_cache: Dict[str, Vector3] = {}
 
+        # Track objects that have been seen (for partial observability logging)
+        self._seen_objects: Set[str] = set()
+
     @property
     def receptacles(self) -> Dict[str, HabReceptacle]:
         """
@@ -395,6 +398,10 @@ class PerceptionSim(Perception):
             # Get object type
             obj_type = self.metadata_interface.get_object_instance_category(sim_obj)
 
+            # Use "unknown" as fallback if object type is not found in metadata
+            if obj_type is None:
+                obj_type = "unknown"
+
             # Get object position
             translation = list(sim_obj.translation)
 
@@ -415,8 +422,33 @@ class PerceptionSim(Perception):
             if "floor" in fur_rec_handle:
                 room_name = self.get_room_name(obj_handle)
                 floor_name = f"floor_{room_name}"
-                floor_node = self.gt_graph.get_node_from_name(floor_name)
-                self.gt_graph.add_edge(obj, floor_node, "on", flip_edge("on"))
+                try:
+                    floor_node = self.gt_graph.get_node_from_name(floor_name)
+                    self.gt_graph.add_edge(obj, floor_node, "on", flip_edge("on"))
+                except ValueError:
+                    # Floor doesn't exist for this room (e.g., unknown_room)
+                    # Try to find the room and create a floor for it, or skip the edge
+                    room_node = None
+                    try:
+                        room_node = self.gt_graph.get_node_from_name(room_name)
+                    except ValueError:
+                        pass
+
+                    if room_node is not None:
+                        # Room exists but floor doesn't - create it
+                        properties = {"type": "floor"}
+                        if "translation" in room_node.properties:
+                            properties["translation"] = room_node.properties["translation"]
+                        floor = Floor(floor_name, properties)
+                        self.gt_graph.add_node(floor)
+                        self.gt_graph.add_edge(floor, room_node, "inside", flip_edge("inside"))
+                        self.gt_graph.add_edge(obj, floor, "on", flip_edge("on"))
+                    else:
+                        # Room doesn't exist - log warning and skip edge
+                        logger.warning(
+                            f"Room '{room_name}' not found in graph for object {obj_handle}. "
+                            f"Cannot create floor connection. Object may be in invalid location."
+                        )
             elif fur_rec_handle in self.sim_handle_to_name:
                 self.gt_graph.add_edge(
                     obj, self.sim_handle_to_name[fur_rec_handle], "on", flip_edge("on")

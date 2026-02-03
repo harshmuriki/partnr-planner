@@ -77,6 +77,113 @@ def print_object_states(world_graph, object_name: str = None):
                 cprint(f"{obj.name}: No states available", "white")
 
 
+def print_articulated_furniture(world_graph):
+    """
+    Print all articulated furniture (furniture that can be opened/closed).
+    
+    :param world_graph: The active WorldGraph
+    """
+    from habitat_llm.world_model import Furniture
+
+    cprint("Articulated Furniture (can be opened/closed):", "green")
+
+    all_furniture = world_graph.get_all_furnitures()
+    print(f"Total furniture pieces in scene: {len(all_furniture)}")
+    articulated_furniture = []
+
+    for furniture in all_furniture:
+        if furniture.is_articulated():
+            articulated_furniture.append(furniture)
+
+    if not articulated_furniture:
+        cprint("  No articulated furniture found in the scene.", "yellow")
+        return
+
+    # Group by furniture type
+    furniture_by_type = {}
+    for furn in articulated_furniture:
+        # Extract furniture type from name (e.g., "chest_of_drawers_1" -> "chest_of_drawers")
+        parts = furn.name.rsplit('_', 1)
+        furn_type = parts[0] if len(parts) > 1 and parts[1].isdigit() else furn.name
+
+        if furn_type not in furniture_by_type:
+            furniture_by_type[furn_type] = []
+        furniture_by_type[furn_type].append(furn.name)
+
+    # Display grouped by type
+    total_count = 0
+    for furn_type, furn_list in sorted(furniture_by_type.items()):
+        cprint(f"\n  {furn_type.upper()} ({len(furn_list)} items):", "cyan")
+        for furn_name in sorted(furn_list):
+            cprint(f"    - {furn_name}", "white")
+            total_count += 1
+
+    cprint(f"\nTotal: {total_count} articulated furniture pieces", "green")
+
+
+def print_gt_graph(env_interface):
+    """
+    Print the Ground Truth (GT) graph structure.
+    
+    :param env_interface: The EnvironmentInterface containing both CG and GT graphs
+    """
+    from habitat_llm.world_model import Room, Furniture, Object
+
+    cprint("\n" + "=" * 80, "cyan")
+    cprint("GROUND TRUTH (GT) GRAPH", "cyan")
+    cprint("=" * 80, "cyan")
+
+    # Get GT graph from perception
+    if not hasattr(env_interface, 'perception') or env_interface.perception is None:
+        cprint("No GT graph available (perception not initialized)", "red")
+        return
+
+    gt_graph = env_interface.perception.gt_graph
+
+    # Print summary
+    rooms = gt_graph.get_all_nodes_of_type(Room)
+    furniture = gt_graph.get_all_nodes_of_type(Furniture)
+    objects = gt_graph.get_all_nodes_of_type(Object)
+
+    cprint(f"\nSummary:", "green")
+    cprint(f"  Rooms: {len(rooms)}", "white")
+    cprint(f"  Furniture: {len(furniture)}", "white")
+    cprint(f"  Objects: {len(objects)}", "white")
+
+    # Print hierarchical structure
+    cprint(f"\nHierarchical Structure:", "green")
+    for room in sorted(rooms, key=lambda r: r.name):
+        cprint(f"\n  {room.name} ({room.properties.get('type', 'unknown')})", "cyan")
+
+        # Get furniture in this room
+        room_furniture = gt_graph.get_neighbors_of_type(room, Furniture)
+        if room_furniture:
+            cprint(f"    Furniture ({len(room_furniture)}):", "yellow")
+            for furn in sorted(room_furniture, key=lambda f: f.name)[:10]:  # Limit to 10 per room
+                furn_type = furn.properties.get('type', 'unknown')
+                is_art = '(articulated)' if furn.is_articulated() else ''
+                cprint(f"      - {furn.name} ({furn_type}) {is_art}", "white")
+            if len(room_furniture) > 10:
+                cprint(f"      ... and {len(room_furniture) - 10} more", "white")
+
+        # Get objects in this room
+        room_objects = gt_graph.get_neighbors_of_type(room, Object)
+        if room_objects:
+            cprint(f"    Objects ({len(room_objects)}):", "yellow")
+            for obj in sorted(room_objects, key=lambda o: o.name)[:10]:  # Limit to 10 per room
+                obj_type = obj.properties.get('type', 'unknown')
+                cprint(f"      - {obj.name} ({obj_type})", "white")
+            if len(room_objects) > 10:
+                cprint(f"      ... and {len(room_objects) - 10} more", "white")
+
+    cprint("\n" + "=" * 80, "cyan")
+
+    # Print full GT graph string representation
+    cprint("\nFull GT Graph String:", "green")
+    cprint(gt_graph.to_string(), "white")
+    cprint("=" * 80 + "\n", "cyan")
+
+
 # Method to load agent planner from the config
 @hydra.main(
     config_path="../conf", config_name="examples/skill_runner_default_config.yaml"
@@ -127,7 +234,8 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     dataset = CollaborationDatasetV0(config.habitat.dataset)
     print(f"Loading EpisodeDataset from: {config.habitat.dataset.data_path}")
     # Initialize the environment interface for the agent
-    env_interface = EnvironmentInterface(config, dataset=dataset)
+    # Note: init_wg=False because reset_environment() will be called below
+    env_interface = EnvironmentInterface(config, dataset=dataset, init_wg=False)
 
     ##########################################
     # select and initialize the desired episode by index or id
@@ -162,6 +270,10 @@ def run_skills(config: omegaconf.DictConfig) -> None:
 
     sim = env_interface.sim
 
+    # Use the robot agent's world graph for displaying entities
+    agent_uid = config.robot_agent_uid
+    active_world_graph = env_interface.world_graph[agent_uid]
+
     # show the topdown map if requested
     if hasattr(config, "skill_runner_show_topdown"):
         dbv = DebugVisualizer(sim, config.paths.results_dir)
@@ -188,6 +300,7 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     # available skills
     skills = {
         "Navigate": "Navigate <agent_index> <entity_name> \n",
+        "Explore": "Explore <agent_index> <room_name> \n",
         "Open": "Open <agent_index> <entity_name> \n",
         "Close": "Close <agent_index> <entity_name> \n",
         "Pick": "Pick <agent_index> <entity_name> \n",
@@ -204,6 +317,8 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     entity_skill = "entities"
     graph_skill = "graph"
     state_skill = "state"
+    articulated_skill = "articulated"
+    gt_graph_skill = "gt"
     pdb_skill = "debug"
     cumulative_video_skill = "make_video"
 
@@ -213,9 +328,9 @@ def run_skills(config: omegaconf.DictConfig) -> None:
         "green",
     )
 
-    print_all_entities(env_interface.perception.gt_graph)
-    print_furniture_entity_handles(env_interface.perception.gt_graph)
-    print_object_entity_handles(env_interface.perception.gt_graph)
+    print_all_entities(active_world_graph)
+    print_furniture_entity_handles(active_world_graph)
+    print_object_entity_handles(active_world_graph)
 
     skills_str = "Available skills:\n" + "\n".join(
         [f"  {k}: {v.strip()}" for k, v in skills.items()]
@@ -229,6 +344,8 @@ def run_skills(config: omegaconf.DictConfig) -> None:
         f"  '{entity_skill}' - display all available entities\n"
         f"  '{graph_skill}' - display hierarchical scene graph (rooms -> furniture -> receptacles -> objects)\n"
         f"  '{state_skill}' or 'state <object_name>' - display object states (is_filled, is_powered_on, is_clean)\n"
+        f"  '{articulated_skill}' - display all articulated furniture (can be opened/closed)\n"
+        f"  '{gt_graph_skill}' - display Ground Truth (GT) graph structure\n"
         f"  '{pdb_skill}' - enter pdb breakpoint for interactive debugging\n"
         f"  '{cumulative_video_skill}' - make a single cumulative video out of all individual command clips"
     )
@@ -279,14 +396,40 @@ def run_skills(config: omegaconf.DictConfig) -> None:
         elif user_input == help_skill:
             cprint(help_text, "green")
         elif user_input == entity_skill:
-            print_all_entities(env_interface.perception.gt_graph)
+            print_all_entities(active_world_graph)
         elif user_input == graph_skill:
-            print_hierarchical_graph(env_interface.perception.gt_graph)
+            print_hierarchical_graph(active_world_graph)
+            # from habitat_llm.llm.instruct.utils import (
+            #     get_world_descr,
+            # )
+            # # Use planner's config if available, otherwise use defaults
+            # add_state_info = False
+            # centralized = True
+            # if hasattr(planner, 'planner_config'):
+            #     add_state_info = planner.planner_config.get('objects_response_include_states', False)
+            #     centralized = planner.planner_config.get('centralized', False)
+
+            # world_description = get_world_descr(
+            #     active_world_graph,
+            #     agent_uid=agent_uid,
+            #     add_state_info=add_state_info,
+            #     include_room_name=True,
+            #     centralized=centralized,
+            # )
+            # print("\n" + "="*60)
+            # print("WORLD DESCRIPTION (as sent to LLM):")
+            # print("="*60)
+            # print(world_description)
+            # print("="*60 + "\n")
         elif user_input == state_skill:
-            print_object_states(env_interface.perception.gt_graph)
+            print_object_states(active_world_graph)
         elif user_input.startswith(state_skill + " "):
             object_name = user_input.split(" ", 1)[1].strip()
-            print_object_states(env_interface.perception.gt_graph, object_name)
+            print_object_states(active_world_graph, object_name)
+        elif user_input == articulated_skill:
+            print_articulated_furniture(active_world_graph)
+        elif user_input == gt_graph_skill:
+            print_gt_graph(env_interface)
         elif user_input == pdb_skill:
             # peek an entity
             dbv = DebugVisualizer(sim, config.paths.results_dir)
