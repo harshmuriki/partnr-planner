@@ -8,10 +8,13 @@ import os
 from typing import Dict, List, Optional
 
 from omegaconf import DictConfig, OmegaConf
-from openai import AzureOpenAI
+from openai import OpenAI
+import httpx
 
 from habitat_llm.llm.base_llm import BaseLLM, Prompt
 
+import dotenv
+dotenv.load_dotenv()
 
 def generate_message(multimodal_prompt, image_detail="auto"):
     # Converts the multimodal prompt to the OpenAI format.
@@ -41,19 +44,13 @@ class OpenAIChat(BaseLLM):
         self.generation_params = self.llm_conf.generation_params
         try:
             api_key = os.getenv("OPENAI_API_KEY")
-            assert len(api_key) > 0, ValueError("No OPENAI_API_KEY keys provided")
+            if api_key is None or len(api_key) == 0:
+                raise ValueError("No OPENAI_API_KEY provided")
         except Exception:
             raise ValueError("No OPENAI API keys provided")
-        try:
-            endpoint = os.getenv("OPENAI_ENDPOINT")
-            assert len(endpoint) > 0, ValueError("No OPENAI_ENDPOINT keys provided")
-        except Exception:
-            raise ValueError("No OPENAI endpoint keys provided")
-        self.client = AzureOpenAI(
-            api_version="2024-06-01",
-            api_key=api_key,
-            azure_endpoint=f"https://{endpoint}",
-        )
+
+        http_client = httpx.Client(timeout=60.0, follow_redirects=True)
+        self.client = OpenAI(api_key=api_key, http_client=http_client)
         self._validate_conf()
         self.verbose = self.llm_conf.verbose
         self.verbose = True
@@ -100,6 +97,18 @@ class OpenAIChat(BaseLLM):
             messages.append({"role": "system", "content": self.llm_conf.system_message})
 
         params["request_timeout"] = request_timeout
+        # Write prompt to file for debugging
+        if True:
+            os.makedirs("logs", exist_ok=True)
+            print("length:", len(prompt) if type(prompt) is str else "multimodal")
+            with open("logs/openai_prompt.txt", "w") as f:
+                if type(prompt) is str:
+                    f.write(prompt)
+                else:
+                    # For multimodal prompts, write text parts
+                    for prompt_type, prompt_value in prompt:
+                        if prompt_type == "text":
+                            f.write(prompt_value + "\n")
         if type(prompt) is str:
             # Add current message
             messages.append({"role": "user", "content": prompt})

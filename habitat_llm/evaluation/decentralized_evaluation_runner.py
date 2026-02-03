@@ -120,6 +120,8 @@ class DecentralizedEvaluationRunner(EvaluationRunner):
         assert isinstance(self.planner, dict)
         # Loop through all available planners
         for planner in self.planner.values():
+            # ! IMPT: Call the child (LLMPlanner or VLMPlanner) method
+            # ! to get {just} the next actions.
             # Get next action for this planner
             (
                 this_planner_low_level_actions,

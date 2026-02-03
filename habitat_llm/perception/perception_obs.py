@@ -78,8 +78,10 @@ class PerceptionObs(PerceptionSim):
             return length / (2.0 * np.tan(hfov / 2.0))
 
         # pad obs with more information about the camera
-        for uid in range(2):  # NOTE: hardcoded to use obs from both agents
-            agent_obs = {}
+        # Determine which agents to process based on mode
+        agent_uids = [0] if single_agent_mode else [0, 1]
+        for uid in agent_uids:
+            agent_obs = {"agent_uid": uid}  # Store actual UID in the observation dict
             if uid == 0:
                 if single_agent_mode:
                     try:
@@ -227,7 +229,9 @@ class PerceptionObs(PerceptionSim):
         known bug in using the RGB-D images for humans.
         """
         object_detections = {}
-        for uid, obs in enumerate(input_obs):
+        for obs in input_obs:
+            # Get actual agent UID from observation dict (not enumerate index!)
+            uid = obs.get("agent_uid", 0)  # Default to 0 for backward compatibility
             # extract RGB from obs and pass it to detectors
             out_img = obs["masks"]
             # in_img = obs["rgb"]
@@ -282,6 +286,7 @@ class PerceptionObs(PerceptionSim):
                 "camera_intrinsics": as_intrinsics_matrix(obs["camera_intrinsics"]),
                 "camera_pose": obs["camera_pose"],
                 "object_locations": locations,
+                "rom": self.rom,  # Pass ROM for GT location retrieval
             }
         self._iteration += 1
         return object_detections

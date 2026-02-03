@@ -688,9 +688,25 @@ class PerceptionSim(Perception):
 
         # Convert handles to names
         names = []
+        new_objects = []
         for handle in handle_set:
             if handle in self.sim_handle_to_name:
-                names.append(self.sim_handle_to_name[handle])
+                name = self.sim_handle_to_name[handle]
+                names.append(name)
+                # Track if this is an object (not furniture/floor/room)
+                try:
+                    node = self.gt_graph.get_node_from_name(name)
+                    if isinstance(node, Object):
+                        # Only track if not seen before
+                        if name not in self._seen_objects:
+                            new_objects.append(name)
+                            self._seen_objects.add(name)
+                except ValueError:
+                    pass
+
+        # Print only newly detected objects
+        if new_objects:
+            logger.info(f"[ROBOT VISION] Newly detected object(s): {', '.join(new_objects)}")
 
         # Forcefully add robot and human node names
         agent_names = [f"agent_{uid}" for uid in agent_uids]

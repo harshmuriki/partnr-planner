@@ -5,8 +5,14 @@
 import gzip
 import json
 import os
+import sys
 from collections import defaultdict
 from typing import Any, DefaultDict, Dict, List, Tuple
+
+# Add project root to path if not already there
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 import habitat_sim
 from habitat.datasets.rearrange.run_episode_generator import get_config_defaults
@@ -171,7 +177,7 @@ class MetadataExtractor:
             }
         }
 
-        additional_object_paths = self.dataset["episodes"][0]["additional_object_paths"]
+        additional_object_paths = self.dataset["episodes"][0].get("additional_object_paths", [])
 
         cfg = get_config_defaults()
 
@@ -228,8 +234,14 @@ class MetadataExtractor:
         rooms = scene_info["room_to_id"].keys()
         receptacle_to_handle = scene_info["receptacle_to_handle"]
         room_to_id = scene_info["room_to_id"]
+
+        # Use metadata_dict to construct the correct path
+        metadata_folder = self.metadata_dict.get("metadata_folder", "data/hssd-hab/metadata/")
+        staticobj_metadata = self.metadata_dict.get("staticobj_metadata", "fpmodels-with-decomposed.csv")
+        metadata_csv_path = os.path.join(metadata_folder, staticobj_metadata)
+
         recep_to_description = generate_hash_to_text(
-            "data/fphab/metadata/fpmodels-with-decomposed.csv", receptacle_to_handle
+            metadata_csv_path, receptacle_to_handle
         )
         recep_to_room = {}
         for room, recep_list in scene_info["furniture"].items():

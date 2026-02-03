@@ -5,6 +5,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import csv
+import os
 from collections import defaultdict
 from typing import Any, DefaultDict, Dict, List, Tuple
 
@@ -18,6 +19,12 @@ def generate_hash_to_text(
     """get a mapping from object/receptacle hash to text description."""
     description_map = defaultdict(str)
     description_map_culled = {}
+
+    # Handle missing metadata file gracefully
+    if not os.path.exists(metadata_csv):
+        # Return empty dict if file doesn't exist
+        return description_map_culled
+
     with open(metadata_csv, "r") as f:
         reader = csv.reader(f)
         next(reader)

@@ -18,6 +18,7 @@ import time
 from typing import Any, Dict, List, Optional, Union
 
 import attr
+import cv2
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
@@ -118,6 +119,13 @@ class EvaluationRunner:
         self.episode_filename = ""
         self.current_instruction = ""
 
+        # Live display window
+        self.live_display = getattr(evaluation_runner_config_arg, 'live_display', False)
+        self.live_window_name = "Habitat Live View"
+        if self.live_display:
+            cv2.namedWindow(self.live_window_name, cv2.WINDOW_NORMAL)
+            cv2.resizeWindow(self.live_window_name, 800, 600)
+
         # Initialize the agents
         self.__initialize_agents()
 
@@ -181,6 +189,12 @@ class EvaluationRunner:
         # Clear the frames to make sure that
         # video for next episode does no have frames from previous run
         self.dvu.frames.clear()
+        # Reset video writer state for new episode
+        if self.dvu._video_writer is not None:
+            self.dvu._video_writer.close()
+            self.dvu._video_writer = None
+        self.dvu._video_file_path = None
+        self.dvu._frame_count = 0
 
         # Clear containers used for top-down video generation
         self.agent_positions.clear()
@@ -434,8 +448,7 @@ class EvaluationRunner:
         else:
             self.current_instruction = instruction
         if self.evaluation_runner_config.do_print:
-            cprint("Instruction:", "yellow")
-            print(self.current_instruction + "\n")
+            cprint(self.current_instruction, "yellow")
         # Make hyphenated instruction for creating a filename
         if len(output_name) == 0:
             self.episode_filename = self.current_instruction.replace(" ", "-")[
@@ -597,24 +610,56 @@ class EvaluationRunner:
         # Plan until required
         while not should_end:
             # Print the llm response
-            if (
-                "print" in planner_info
-                and len(planner_info["print"])
-                and self.evaluation_runner_config.do_print
-            ):
-                rollout_print(planner_info["print"])
+            # if (
+            #     "print" in planner_info
+            #     and len(planner_info["print"])
+            #     and self.evaluation_runner_config.do_print
+            # ):
+            #     rollout_print(planner_info["print"])
             # Execute low level actions
+            # !! IMPT CODE
             if len(low_level_actions) > 0:
                 obs, reward, done, info = self.env_interface.step(low_level_actions)
                 # Refresh observations
                 observations = self.env_interface.parse_observations(obs)
                 if self.evaluation_runner_config.save_video:
-                    # Store third person frames for generating video
-                    self.dvu._store_for_video(
-                        observations, planner_info["high_level_actions"]
-                    )
+                    # Store third person frames for generating video (writes incrementally to disk)
+                    # Pass episode_filename as postfix to initialize writer with correct filename
+                    # Also pass responses and thoughts for richer video annotations
+                    responses = planner_info.get("responses", {})
+                    thoughts = planner_info.get("thought", {})
+                    if self.dvu._video_writer is None:
+                        self.dvu._store_for_video(
+                            observations,
+                            planner_info["high_level_actions"],
+                            postfix=self.episode_filename,
+                            responses=responses,
+                            thoughts=thoughts,
+                        )
+                    else:
+                        self.dvu._store_for_video(
+                            observations,
+                            planner_info["high_level_actions"],
+                            responses=responses,
+                            thoughts=thoughts,
+                        )
 
-            # Get next low level actions
+                # Display live frame if enabled (regardless of save_video)
+                if self.live_display:
+                    if self.evaluation_runner_config.save_video and len(self.dvu.frames) > 0:
+                        # Use frames from video buffer if available
+                        frame = self.dvu.frames[-1]
+                    else:
+                        # Generate frame from current observations using the same method as video generation
+                        frame = self.dvu._DebugVideoUtil__get_combined_frames(observations)
+                    # Convert RGB to BGR for OpenCV display
+                    frame_bgr = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+                    cv2.imshow(self.live_window_name, frame_bgr)
+                    cv2.waitKey(1)  # 1ms delay to update the window
+
+            #! IMPT: Get next low level actions
+            # ? Calls the child (CentralizedEvaluationRunner or DecentralizedEvaluationRunner) method
+            # ? that returns the low level actions, planner info and whether the episode should end
             low_level_actions, planner_info, should_end = self.get_low_level_actions(
                 self.current_instruction, observations, self.env_interface.world_graph
             )
@@ -699,16 +744,20 @@ class EvaluationRunner:
                     print(f"WG written to:\n{filepath}")
 
         # Print
-        if (
-            "print" in planner_info
-            and len(planner_info["print"])
-            and self.evaluation_runner_config.do_print
-        ):
-            rollout_print(planner_info["print"])
+        # if (
+        #     "print" in planner_info
+        #     and len(planner_info["print"])
+        #     and self.evaluation_runner_config.do_print
+        # ):
+        #     rollout_print(planner_info["print"])
 
         # Make video
         if self.evaluation_runner_config.save_video:
             self.dvu._make_video(play=False, postfix=self.episode_filename)
+
+        # Close live display window if it was opened
+        if self.live_display:
+            cv2.destroyWindow(self.live_window_name)
 
         # Log planner information per step
         self._log_planner_data(planner_infos)
