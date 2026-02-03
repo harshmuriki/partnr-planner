@@ -7,7 +7,7 @@ import json
 import os
 from collections import OrderedDict, defaultdict
 from typing import Any, Dict
-
+from termcolor import cprint
 import cv2
 import gym
 import habitat
@@ -19,6 +19,11 @@ from habitat_baselines.common.obs_transformers import (
     apply_obs_transforms_obs_space,
     get_active_obs_transforms,
 )
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 # HABITAT
 from habitat_baselines.utils.common import batch_obs, get_num_actions
@@ -30,7 +35,7 @@ from habitat_llm.sims.metadata_interface import get_metadata_dict_from_config
 from habitat_llm.utils.core import separate_agent_idx
 
 # LOCAL
-from habitat_llm.world_model import DynamicWorldGraph, WorldGraph
+from habitat_llm.world_model import DynamicWorldGraph, WorldGraph, Furniture, Object
 
 if hasattr(torch, "inference_mode"):
     inference_mode = torch.inference_mode
@@ -160,14 +165,25 @@ class EnvironmentInterface:
 
         # each agent has its own world-graph
         self.world_graph: Dict[int, Any] = {}
+        # Concept graphs always require DynamicWorldGraph, regardless of partial_obs
+        if self.partial_obs or self.conf.world_model.type == "concept_graph":
+            # Extract DynamicWorldGraph config parameters
+            cprint("Using Dynamic WorldGraph for both agents", "green")
+            max_detection_distance = getattr(self.conf.world_model, 'max_detection_distance', 0.5)
+            use_gt_object_locations = getattr(self.conf.world_model, 'use_gt_object_locations', False)
 
-        # create world-graphs for both agents
-        if self.partial_obs:
             self.world_graph = {
-                self.robot_agent_uid: DynamicWorldGraph(),
-                self.human_agent_uid: DynamicWorldGraph(),
+                self.robot_agent_uid: DynamicWorldGraph(
+                    max_detection_distance=max_detection_distance,
+                    use_gt_object_locations=use_gt_object_locations
+                ),
+                self.human_agent_uid: DynamicWorldGraph(
+                    max_detection_distance=max_detection_distance,
+                    use_gt_object_locations=use_gt_object_locations
+                ),
             }
         else:
+            cprint("Using static WorldGraph for both agents", "green")
             self.world_graph = {
                 self.robot_agent_uid: WorldGraph(),
                 self.human_agent_uid: WorldGraph(),
@@ -236,10 +252,34 @@ class EnvironmentInterface:
             self.world_graph[self.conf.robot_agent_uid].create_cg_edges(
                 cg_json, include_objects=self.conf.world_model.include_objects
             )
+
+            # Choose between spatial data reassignment or full GT structure replacement
+            use_gt_static = self.conf.world_model.get("use_gt_static_structure", False)
+
+            if use_gt_static:
+                # Replace CG furniture/floors/rooms with GT while keeping objects discoverable
+                # This gives non-privileged planners accurate spatial structure without GT object positions
+                # ~ GT graph but can use observations for object additions
+                cprint("Using GT static structure (furniture/floors/rooms) for non-privileged graph", "green")
+                self.world_graph[self.conf.robot_agent_uid].replace_cg_with_gt_static_structure(
+                    gt_world_graph=self.full_world_graph,
+                    verbose=False
+                )
+            else:
+                # Original behavior: reassign CG furniture using GT room boundaries extracted by the helper method
+                # Extract spatial_data for rooms from the full world graph
+                cprint("Reassigning furniture to rooms using spatial data from full world graph", "green")
+                spatial_data = self._extract_room_spatial_data_from_world_graph(self.full_world_graph)
+                self.world_graph[self.conf.robot_agent_uid].reassign_furniture_to_rooms_from_spatial_data(
+                    spatial_data,
+                    verbose=False
+                )
+
             self.world_graph[self.conf.robot_agent_uid].initialize_agent_nodes(subgraph)
-            self.world_graph[
-                self.robot_agent_uid
-            ]._set_sim_handles_for_non_privileged_graph(self.perception)
+            # ! TODO: Check if we need to set sim handles for non-privileged graph
+            # self.world_graph[
+            #     self.robot_agent_uid
+            # ]._set_sim_handles_for_non_privileged_graph(self.perception)
         elif self.conf.world_model.type == "gt_graph":
             subgraph = self.perception.initialize(self.partial_obs)
             # Get ground truth subgraph from the current observations.
@@ -262,6 +302,7 @@ class EnvironmentInterface:
         return self.batch
 
     def parse_observations(self, obs):
+        # obs: Dict of all observations from everything habitat env
         return self.__parse_observations(obs)
 
     def reset_environment(self, move_to_next_episode=True, episode_id=None):
@@ -340,6 +381,726 @@ class EnvironmentInterface:
     def reset_composite_action_response(self):
         """resets _composite_action_response to empty"""
         self._composite_action_response = {}
+
+    def get_room_bounds_from_simulator(self, room_names: list) -> dict:
+        """
+        Extract un-overlapping room bounding boxes from simulator's semantic scene.
+        Also creates a visualization showing room bounds overlaid on the scene.
+        
+        Args:
+            room_names: List of GT room names from the world graph
+            
+        Returns:
+            Dictionary mapping room names to their bounds, center, and size
+        """
+        try:
+            # Get semantic scene from the simulator
+            semantic_scene = self.sim.semantic_scene
+            if not semantic_scene or len(semantic_scene.regions) == 0:
+                cprint("WARNING: No semantic scene regions found in simulator!", "red")
+                return {}
+
+            room_bounds_data = {}
+
+            # Debug: print all available regions
+            cprint(f"Semantic scene has {len(semantic_scene.regions)} regions", "cyan")
+            for region in semantic_scene.regions:
+                region_full_name = region.category.name()
+                cprint(f"  Region: {region_full_name}", "cyan")
+
+            # Map rooms to semantic regions based on POSITION
+            # Each room in the world graph has a position - find which semantic region contains it
+            from habitat_llm.world_model import Room
+
+            all_rooms = self.full_world_graph.get_all_nodes_of_type(Room)
+            room_dict = {room.name: room for room in all_rooms}
+
+            for room_name in room_names:
+                # Get room position from the world graph (GT)
+                if "other_room" in room_name:
+                    continue
+
+                if room_name not in room_dict:
+                    cprint(f"  WARNING: Room '{room_name}' not found in world graph", "yellow")
+                    continue
+
+                room_node = room_dict[room_name]
+                if 'translation' not in room_node.properties:
+                    cprint(f"  WARNING: Room '{room_name}' has no position in world graph", "yellow")
+                    cprint(f"    Properties: {room_node.properties}", "yellow")
+                    continue
+                room_position = room_node.properties['translation']
+                room_base = room_name.split("_")[0].lower()  # e.g., "bathroom" from "bathroom_1"
+
+                # Find which semantic region contains this position AND has matching name
+                matching_region = None
+                for region in semantic_scene.regions:
+                    aabb = region.aabb
+                    min_pt = aabb.min
+                    max_pt = aabb.max
+
+                    # First check: position must be inside this region's AABB
+                    position_inside = (min_pt[0] <= room_position[0] <= max_pt[0]
+                                      and min_pt[1] <= room_position[1] <= max_pt[1]
+                                      and min_pt[2] <= room_position[2] <= max_pt[2])
+
+                    if not position_inside:
+                        continue  # Skip if position doesn't match
+
+                    # Second check: name must match
+                    region_name = region.category.name().split("/")[0].replace(" ", "_").lower()
+                    name_match = (region_name == room_base
+                                 or region_name in room_base
+                                 or room_base in region_name)
+
+                    if position_inside and name_match:
+                        matching_region = region
+                        break  # Found a match with both conditions
+
+                if matching_region:
+                    aabb = matching_region.aabb
+                    center = aabb.center()
+                    size = aabb.size()
+                    min_pt = aabb.min
+                    max_pt = aabb.max
+
+                    # Create polygon from AABB corners (XZ plane)
+                    polygon_points = [
+                        [float(min_pt[0]), float(min_pt[2])],  # bottom-left
+                        [float(max_pt[0]), float(min_pt[2])],  # bottom-right
+                        [float(max_pt[0]), float(max_pt[2])],  # top-right
+                        [float(min_pt[0]), float(max_pt[2])]   # top-left
+                    ]
+
+                    room_bounds_data[room_name] = {
+                        "bounds": {
+                            "min": [float(min_pt[0]), float(min_pt[1]), float(min_pt[2])],
+                            "max": [float(max_pt[0]), float(max_pt[1]), float(max_pt[2])]
+                        },
+                        "center": [float(center[0]), float(center[1]), float(center[2])],
+                        "size": [float(size[0]), float(size[1]), float(size[2])],
+                        "polygon": polygon_points  # XZ coordinates of AABB as polygon
+                    }
+                    region_name_matched = matching_region.category.name().split("/")[0]
+                    # cprint(f"  Matched '{room_name}' -> semantic region '{region_name_matched}'", "green")
+
+            # Debug: Print which rooms were matched
+            matched_rooms = set(room_bounds_data.keys())
+            unmatched_rooms = set(room_names) - matched_rooms
+
+            # cprint(f"Extracted bounds for {len(room_bounds_data)}/{len(room_names)} rooms from simulator", "green")
+            if unmatched_rooms:
+                cprint(f"WARNING: Could not find bounds for rooms: {unmatched_rooms}", "yellow")
+
+                # Fallback: match unmatched rooms by name only (no position check)
+                cprint(f"Attempting fallback matching for {len(unmatched_rooms)} unmatched rooms...", "cyan")
+                for room_name in unmatched_rooms:
+                    # if "other_room" in room_name:
+                    #     continue
+
+                    room_base = room_name.split("_")[0].lower()
+
+                    # Find semantic region that matches by name
+                    matching_region = None
+                    for region in semantic_scene.regions:
+                        region_name = region.category.name().split("/")[0].replace(" ", "_").lower()
+                        name_match = (region_name == room_base
+                                     or region_name in room_base
+                                     or room_base in region_name)
+
+                        if name_match:
+                            # Check if this region is already assigned
+                            already_used = False
+                            for assigned_room_data in room_bounds_data.values():
+                                if (assigned_room_data["bounds"]["min"] == [float(region.aabb.min[0]), float(region.aabb.min[1]), float(region.aabb.min[2])]
+                                    and assigned_room_data["bounds"]["max"] == [float(region.aabb.max[0]), float(region.aabb.max[1]), float(region.aabb.max[2])]):
+                                    already_used = True
+                                    break
+
+                            if not already_used:
+                                matching_region = region
+                                break
+
+                    if matching_region:
+                        aabb = matching_region.aabb
+                        center = aabb.center()
+                        size = aabb.size()
+                        min_pt = aabb.min
+                        max_pt = aabb.max
+
+                        # Create polygon from AABB corners (XZ plane)
+                        polygon_points = [
+                            [float(min_pt[0]), float(min_pt[2])],  # bottom-left
+                            [float(max_pt[0]), float(min_pt[2])],  # bottom-right
+                            [float(max_pt[0]), float(max_pt[2])],  # top-right
+                            [float(min_pt[0]), float(max_pt[2])]   # top-left
+                        ]
+
+                        room_bounds_data[room_name] = {
+                            "bounds": {
+                                "min": [float(min_pt[0]), float(min_pt[1]), float(min_pt[2])],
+                                "max": [float(max_pt[0]), float(max_pt[1]), float(max_pt[2])]
+                            },
+                            "center": [float(center[0]), float(center[1]), float(center[2])],
+                            "size": [float(size[0]), float(size[1]), float(size[2])],
+                            "polygon": polygon_points  # XZ coordinates of AABB as polygon
+                        }
+                        region_name_matched = matching_region.category.name().split("/")[0]
+                        cprint(f"  Fallback matched '{room_name}' -> semantic region '{region_name_matched}' (name only)", "yellow")
+
+                        # Save properties to the GT world graph
+                        if room_name in room_dict:
+                            room_node = room_dict[room_name]
+                            room_node.properties["translation"] = [float(center[0]), float(center[1]), float(center[2])]
+                            room_node.properties["size"] = [float(size[0]), float(size[1]), float(size[2])]
+                            room_node.properties["bounds_min"] = [float(min_pt[0]), float(min_pt[1]), float(min_pt[2])]
+                            room_node.properties["bounds_max"] = [float(max_pt[0]), float(max_pt[1]), float(max_pt[2])]
+                            cprint(f"    Updated properties for '{room_name}' in world graph", "green")
+
+                cprint(f"After fallback: {len(room_bounds_data)}/{len(room_names)} rooms have bounds", "green")
+
+            # Resolve overlaps between rooms
+            room_bounds_data = self._resolve_room_overlaps(room_bounds_data)
+
+            # Create visualization of room bounds
+            self._visualize_room_bounds(room_bounds_data)
+
+            return room_bounds_data
+
+        except Exception as e:
+            cprint(f"WARNING: Could not extract room bounds from simulator: {e}", "red")
+            import traceback
+            traceback.print_exc()
+            return {}
+
+    def _check_overlap(self, room1_data, room2_data):
+        """
+        Check if two rooms overlap using their polygon representations.
+        
+        Args:
+            room1_data: dict with 'polygon' key (list of [x, z] points)
+            room2_data: dict with 'polygon' key (list of [x, z] points)
+        
+        Returns:
+            bool: True if polygons intersect
+        """
+        try:
+            from shapely.geometry import Polygon
+
+            poly1 = Polygon(room1_data['polygon'])
+            poly2 = Polygon(room2_data['polygon'])
+
+            return poly1.intersects(poly2)
+        except Exception as e:
+            # Fallback to AABB check if polygon fails
+            bounds1 = room1_data['bounds']
+            bounds2 = room2_data['bounds']
+            x_overlap = bounds1['min'][0] < bounds2['max'][0] and bounds1['max'][0] > bounds2['min'][0]
+            z_overlap = bounds1['min'][2] < bounds2['max'][2] and bounds1['max'][2] > bounds2['min'][2]
+            return x_overlap and z_overlap
+
+    def _shrink_room_to_exclude(self, large_room_data, small_room_data):
+        """
+        Shrink the larger room's polygon to exclude the smaller room using geometric difference.
+        
+        Args:
+            large_room_data: dict with 'polygon', 'bounds', 'center', 'size' keys
+            small_room_data: dict with 'polygon', 'bounds', 'center', 'size' keys
+        
+        Returns:
+            dict: Modified large_room_data with updated polygon and bounds
+        """
+        try:
+            from shapely.geometry import Polygon
+            import numpy as np
+
+            large_poly = Polygon(large_room_data['polygon'])
+            small_poly = Polygon(small_room_data['polygon'])
+
+            # Compute geometric difference (large polygon minus small polygon)
+            diff_poly = large_poly.difference(small_poly)
+
+            # Handle multipolygon result (take largest component)
+            if diff_poly.is_empty:
+                return large_room_data
+
+            if diff_poly.geom_type == 'MultiPolygon':
+                # Take the largest polygon
+                diff_poly = max(diff_poly.geoms, key=lambda p: p.area)
+
+            # Extract new polygon vertices
+            if diff_poly.geom_type == 'Polygon':
+                new_polygon = [[float(x), float(z)] for x, z in diff_poly.exterior.coords[:-1]]
+            else:
+                # Fallback if not a polygon
+                return large_room_data
+
+            # Recalculate bounds from new polygon
+            polygon_array = np.array(new_polygon)
+            new_min_x, new_min_z = polygon_array.min(axis=0)
+            new_max_x, new_max_z = polygon_array.max(axis=0)
+
+            # Update room data
+            new_bounds = {
+                'min': [new_min_x, large_room_data['bounds']['min'][1], new_min_z],
+                'max': [new_max_x, large_room_data['bounds']['max'][1], new_max_z]
+            }
+
+            new_center = [
+                (new_min_x + new_max_x) / 2,
+                large_room_data['center'][1],
+                (new_min_z + new_max_z) / 2
+            ]
+
+            new_size = [
+                new_max_x - new_min_x,
+                large_room_data['size'][1],
+                new_max_z - new_min_z
+            ]
+
+            return {
+                'bounds': new_bounds,
+                'center': new_center,
+                'size': new_size,
+                'polygon': new_polygon
+            }
+
+        except Exception as e:
+            cprint(f"WARNING: Polygon shrink failed, keeping original: {e}", "yellow")
+            return large_room_data
+
+    def _resolve_room_overlaps(self, room_bounds_data):
+        """
+        Resolve overlaps between rooms by shrinking larger rooms to exclude smaller ones.
+        Iteratively processes rooms from smallest to largest.
+        
+        Args:
+            room_bounds_data: dict mapping room_name -> {bounds, center, size}
+        
+        Returns:
+            dict: Modified room_bounds_data with non-overlapping rooms
+        """
+        print("\nResolving room overlaps...")
+
+        # Calculate XZ plane area for each room
+        room_areas = {}
+        for room_name, data in room_bounds_data.items():
+            bounds = data['bounds']
+            area = (bounds['max'][0] - bounds['min'][0]) * (bounds['max'][2] - bounds['min'][2])
+            room_areas[room_name] = area
+
+        # Sort rooms by area (smallest first)
+        sorted_rooms = sorted(room_areas.items(), key=lambda x: x[1])
+        room_order = [name for name, _ in sorted_rooms]
+
+        print(f"Room sizes (XZ area): {len(room_order)} rooms")
+
+        # Iteratively resolve overlaps
+        max_iterations = 10  # Arbitrary limit to prevent infinite loops
+        for iteration in range(max_iterations):
+            overlaps_found = 0
+
+            # Check each pair of rooms
+            for i, small_room in enumerate(room_order):
+                for large_room in room_order[i+1:]:
+                    small_data = room_bounds_data[small_room]
+                    large_data = room_bounds_data[large_room]
+
+                    # Check if they overlap (using polygons)
+                    if self._check_overlap(small_data, large_data):
+                        overlaps_found += 1
+
+                        # Shrink larger room to exclude smaller room (polygon difference)
+                        new_large_data = self._shrink_room_to_exclude(large_data, small_data)
+
+                        # Update room_bounds_data with new polygon and bounds
+                        room_bounds_data[large_room] = new_large_data
+
+            print(f"Iteration {iteration + 1}: Found and resolved {overlaps_found} overlaps")
+
+            # If no overlaps found, we're done
+            if overlaps_found == 0:
+                print("All overlaps resolved!")
+                break
+
+        if overlaps_found > 0:
+            print(f"Warning: Some overlaps may remain after {max_iterations} iterations")
+
+        return room_bounds_data
+
+    def _visualize_room_bounds(self, room_bounds_data: dict):
+        """
+        Create a simple visualization showing colored room bounding boxes with labels.
+        
+        Args:
+            room_bounds_data: Dictionary mapping room names to their bounds
+        """
+        try:
+            if not room_bounds_data:
+                return
+
+            # Create figure with white background
+            _, ax = plt.subplots(figsize=(16, 12))
+            ax.set_facecolor('white')
+
+            # Generate distinct colors for each room
+            colors = plt.cm.tab20(np.linspace(0, 1, len(room_bounds_data)))
+
+            # Find overall bounds to set axes limits
+            all_mins = []
+            all_maxs = []
+            for room_name, data in room_bounds_data.items():
+                bounds = data["bounds"]
+                all_mins.append(bounds["min"])
+                all_maxs.append(bounds["max"])
+
+            all_mins = np.array(all_mins)
+            all_maxs = np.array(all_maxs)
+
+            # Get X-Z bounds (top-down view, Y is vertical)
+            x_min, x_max = all_mins[:, 0].min(), all_maxs[:, 0].max()
+            z_min, z_max = all_mins[:, 2].min(), all_maxs[:, 2].max()
+
+            # Add padding
+            padding = 2.0
+            x_min -= padding
+            x_max += padding
+            z_min -= padding
+            z_max += padding
+
+            # Draw each room's polygon or bounding box
+            for idx, (room_name, data) in enumerate(sorted(room_bounds_data.items())):
+                # Get polygon if available, otherwise use AABB
+                polygon = data.get("polygon", [])
+
+                if len(polygon) >= 3:
+                    # Draw polygon
+                    from matplotlib.patches import Polygon as MPLPolygon
+                    poly_patch = MPLPolygon(
+                        polygon,
+                        linewidth=2,
+                        edgecolor=colors[idx],
+                        facecolor=colors[idx],
+                        alpha=0.4,
+                        label=room_name
+                    )
+                    ax.add_patch(poly_patch)
+
+                    # Draw border
+                    border_patch = MPLPolygon(
+                        polygon,
+                        linewidth=2,
+                        edgecolor=colors[idx],
+                        facecolor='none',
+                        alpha=1.0
+                    )
+                    ax.add_patch(border_patch)
+
+                    # Calculate polygon centroid for label
+                    poly_array = np.array(polygon)
+                    center_x = poly_array[:, 0].mean()
+                    center_z = poly_array[:, 1].mean()
+                else:
+                    # Fallback to AABB rectangle
+                    bounds = data["bounds"]
+                    bbox_min = bounds["min"]
+                    bbox_max = bounds["max"]
+
+                    x_min_room = bbox_min[0]
+                    z_min_room = bbox_min[2]
+                    width = bbox_max[0] - bbox_min[0]
+                    depth = bbox_max[2] - bbox_min[2]
+
+                    # Draw filled rectangle
+                    rect = patches.Rectangle(
+                        (x_min_room, z_min_room),
+                        width,
+                        depth,
+                        linewidth=2,
+                        edgecolor=colors[idx],
+                        facecolor=colors[idx],
+                        alpha=0.4,
+                        label=room_name
+                    )
+                    ax.add_patch(rect)
+
+                    # Draw border
+                    border = patches.Rectangle(
+                        (x_min_room, z_min_room),
+                        width,
+                        depth,
+                        linewidth=2,
+                        edgecolor=colors[idx],
+                        facecolor='none',
+                        alpha=1.0
+                    )
+                    ax.add_patch(border)
+
+                    center_x = (bbox_min[0] + bbox_max[0]) / 2
+                    center_z = (bbox_min[2] + bbox_max[2]) / 2
+
+                # Add room label at center
+                ax.text(
+                    center_x,
+                    center_z,
+                    room_name,
+                    ha='center',
+                    va='center',
+                    fontsize=9,
+                    fontweight='bold',
+                    bbox=dict(boxstyle='round,pad=0.4', facecolor='white', alpha=0.9, edgecolor=colors[idx], linewidth=2)
+                )
+
+                print(f"  Added room '{room_name}' at center ({center_x:.2f}, {center_z:.2f})")
+
+            # Add furniture markers from concept graph
+            try:
+
+                # Get concept graph for the robot agent
+                concept_graph = self.world_graph.get(self.conf.robot_agent_uid)
+                if concept_graph is None:
+                    cprint("WARNING: Could not access concept graph for furniture markers", "yellow")
+                else:
+                    all_furniture = concept_graph.get_all_furnitures()
+
+                    cprint(f"\nAdding {len(all_furniture)} furniture markers from concept graph...", "cyan")
+
+                    furniture_count = 0
+                    for fur_node in all_furniture:
+                        fur_pos = fur_node.properties.get('translation')
+                        if fur_pos is not None:
+                            fur_x, fur_z = fur_pos[0], fur_pos[2]
+
+                            # Draw small dot for furniture (red for CG)
+                            ax.plot(fur_x, fur_z, 'o', color='darkred', markersize=5, zorder=10, label='CG Furniture' if furniture_count == 0 else '')
+
+                            # Add furniture name above the dot
+                            ax.text(
+                                fur_x,
+                                fur_z + 0.2,  # Offset above the dot
+                                fur_node.name,
+                                ha='center',
+                                va='bottom',
+                                fontsize=7,
+                                color='darkred',
+                                weight='bold',
+                                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor='darkred', alpha=0.85, linewidth=0.8)
+                            )
+                            furniture_count += 1
+
+                    cprint(f"✓ Added {furniture_count} furniture markers from concept graph", "green")
+
+                # Add GT furniture markers
+                all_gt_furniture = self.full_world_graph.get_all_nodes_of_type(Furniture)
+
+                cprint(f"\nAdding {len(all_gt_furniture)} furniture markers from GT graph...", "cyan")
+
+                gt_furniture_count = 0
+                for fur_node in all_gt_furniture:
+                    fur_pos = fur_node.properties.get('translation')
+                    if fur_pos is not None:
+                        fur_x, fur_z = fur_pos[0], fur_pos[2]
+
+                        # Draw small dot for GT furniture (blue for GT)
+                        ax.plot(fur_x, fur_z, 's', color='darkblue', markersize=5, zorder=10, label='GT Furniture' if gt_furniture_count == 0 else '')
+
+                        # Add furniture name below the dot
+                        ax.text(
+                            fur_x,
+                            fur_z - 0.2,  # Offset below the dot
+                            fur_node.name,
+                            ha='center',
+                            va='top',
+                            fontsize=7,
+                            color='darkblue',
+                            weight='bold',
+                            bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor='darkblue', alpha=0.85, linewidth=0.8)
+                        )
+                        gt_furniture_count += 1
+
+                cprint(f"✓ Added {gt_furniture_count} furniture markers from GT graph", "green")
+
+            except Exception as e:
+                cprint(f"WARNING: Could not add furniture markers: {e}", "yellow")
+                import traceback
+                traceback.print_exc()
+
+            # Set axis limits and labels
+            ax.set_xlim(x_min, x_max)
+            ax.set_ylim(z_min, z_max)
+            ax.set_xlabel('X (meters)', fontsize=12)
+            ax.set_ylabel('Z (meters)', fontsize=12)
+            ax.set_title('Room Bounding Boxes - Top-Down View', fontsize=14, fontweight='bold')
+            ax.set_aspect('equal', adjustable='box')
+            ax.grid(True, alpha=0.3)
+
+            # Add legend (limit to 20 rooms to avoid clutter)
+            if len(room_bounds_data) <= 20:
+                ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+            output_dir = self.conf.paths.results_dir + "/visualizations"
+            os.makedirs(output_dir, exist_ok=True)
+
+            # Get episode ID if available, otherwise use generic name
+            try:
+                episode_id = self.env.env.env._env.current_episode.episode_id
+                output_path_combined = os.path.join(output_dir, f"room_bounds_cg_gt_{episode_id}.png")
+            except:
+                output_path_combined = os.path.join(output_dir, "room_bounds_cg_gt.png")
+
+            plt.tight_layout()
+            plt.savefig(output_path_combined, dpi=150, bbox_inches='tight')
+
+            cprint(f"✓ Saved combined CG+GT visualization to: {output_path_combined}", "green")
+
+            # Create GT-only visualization
+            try:
+                fig_gt, ax_gt = plt.subplots(figsize=(16, 12))
+                ax_gt.set_facecolor('white')
+
+                # Redraw rooms
+                for idx, (room_name, data) in enumerate(sorted(room_bounds_data.items())):
+                    polygon = data.get("polygon", [])
+
+                    if len(polygon) >= 3:
+                        from matplotlib.patches import Polygon as MPLPolygon
+                        poly_patch = MPLPolygon(polygon, linewidth=2, edgecolor=colors[idx], facecolor=colors[idx], alpha=0.4, label=room_name)
+                        ax_gt.add_patch(poly_patch)
+                        border_patch = MPLPolygon(polygon, linewidth=2, edgecolor=colors[idx], facecolor='none', alpha=1.0)
+                        ax_gt.add_patch(border_patch)
+                        poly_array = np.array(polygon)
+                        center_x = poly_array[:, 0].mean()
+                        center_z = poly_array[:, 1].mean()
+                    else:
+                        bounds = data["bounds"]
+                        bbox_min = bounds["min"]
+                        bbox_max = bounds["max"]
+                        x_min_room = bbox_min[0]
+                        z_min_room = bbox_min[2]
+                        width = bbox_max[0] - bbox_min[0]
+                        depth = bbox_max[2] - bbox_min[2]
+                        rect = patches.Rectangle((x_min_room, z_min_room), width, depth, linewidth=2, edgecolor=colors[idx], facecolor=colors[idx], alpha=0.4, label=room_name)
+                        ax_gt.add_patch(rect)
+                        border = patches.Rectangle((x_min_room, z_min_room), width, depth, linewidth=2, edgecolor=colors[idx], facecolor='none', alpha=1.0)
+                        ax_gt.add_patch(border)
+                        center_x = (bbox_min[0] + bbox_max[0]) / 2
+                        center_z = (bbox_min[2] + bbox_max[2]) / 2
+
+                    ax_gt.text(center_x, center_z, room_name, ha='center', va='center', fontsize=9, fontweight='bold', bbox=dict(boxstyle='round,pad=0.4', facecolor='white', alpha=0.9, edgecolor=colors[idx], linewidth=2))
+
+                # Add GT furniture only
+                all_gt_furniture = self.full_world_graph.get_all_nodes_of_type(Furniture)
+                for fur_node in all_gt_furniture:
+                    fur_pos = fur_node.properties.get('translation')
+                    if fur_pos is not None:
+                        fur_x, fur_z = fur_pos[0], fur_pos[2]
+                        ax_gt.plot(fur_x, fur_z, 'o', color='darkblue', markersize=5, zorder=10)
+                        ax_gt.text(fur_x, fur_z + 0.2, fur_node.name, ha='center', va='bottom', fontsize=7, color='darkblue', weight='bold', bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor='darkblue', alpha=0.85, linewidth=0.8))
+
+                # Add GT objects
+                all_gt_objects = self.full_world_graph.get_all_nodes_of_type(Object)
+                for obj_node in all_gt_objects:
+                    obj_pos = obj_node.properties.get('translation')
+                    if obj_pos is not None:
+                        obj_x, obj_z = obj_pos[0], obj_pos[2]
+                        ax_gt.plot(obj_x, obj_z, '^', color='darkgreen', markersize=5, zorder=10)
+                        ax_gt.text(obj_x, obj_z - 0.2, obj_node.name, ha='center', va='top', fontsize=7, color='darkgreen', weight='bold', bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor='darkgreen', alpha=0.85, linewidth=0.8))
+
+                ax_gt.set_xlim(x_min, x_max)
+                ax_gt.set_ylim(z_min, z_max)
+                ax_gt.set_xlabel('X (meters)', fontsize=12)
+                ax_gt.set_ylabel('Z (meters)', fontsize=12)
+                ax_gt.set_title('Room Bounding Boxes with GT Furniture and Objects - Top-Down View', fontsize=14, fontweight='bold')
+                ax_gt.set_aspect('equal', adjustable='box')
+                ax_gt.grid(True, alpha=0.3)
+
+                if len(room_bounds_data) <= 20:
+                    ax_gt.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=8)
+
+                try:
+                    episode_id = self.env.env.env._env.current_episode.episode_id
+                    output_path_gt = os.path.join(output_dir, f"room_bounds_gt_only_{episode_id}.png")
+                except:
+                    output_path_gt = os.path.join(output_dir, "room_bounds_gt_only.png")
+
+                plt.tight_layout()
+                plt.savefig(output_path_gt, dpi=150, bbox_inches='tight')
+                plt.close(fig_gt)
+
+                cprint(f"✓ Saved GT-only visualization to: {output_path_gt}", "green")
+            except Exception as e:
+                cprint(f"WARNING: Could not create GT-only visualization: {e}", "yellow")
+
+            plt.close()
+
+        except Exception as e:
+            cprint(f"WARNING: Could not create room bounds visualization: {e}", "yellow")
+            import traceback
+            traceback.print_exc()
+
+    def _extract_room_spatial_data_from_world_graph(self, world_graph: WorldGraph) -> Dict[str, Any]:
+        """
+        Extract room spatial data (position, size, bbox) from the full world graph.
+        Gets room bounding boxes from the simulator's semantic scene.
+        
+        Args:
+            world_graph: The full world graph with ground truth room information
+            
+        Returns:
+            Dictionary with 'rooms' key containing room spatial data
+        """
+        from habitat_llm.world_model import Room
+
+        spatial_data = {"rooms": {}}
+
+        # Get all rooms from the world graph
+        all_rooms = world_graph.get_all_nodes_of_type(Room)
+        room_names = [room.name for room in all_rooms]
+
+        # Get room bounds from simulator's semantic scene
+        room_bounds_data = self.get_room_bounds_from_simulator(room_names)
+
+        for room_node in all_rooms:
+            room_name = room_node.name
+            room_props = room_node.properties
+
+            # Get position from room properties (fallback)
+            position = room_props.get('translation', [0, 0, 0])
+
+            room_bounds = room_bounds_data.get(room_name, {})
+
+            if room_bounds:
+                # Use simulator-provided bounds
+                bounds = room_bounds.get("bounds", {})
+                bbox_min = bounds.get("min")
+                bbox_max = bounds.get("max")
+                polygon = room_bounds.get("polygon", [])
+
+                if bbox_min and bbox_max:
+                    bbox_min = np.array(bbox_min)
+                    bbox_max = np.array(bbox_max)
+                    size = bbox_max - bbox_min
+                    # Use center from bounds
+                    position = room_bounds.get("center", position)
+                else:
+                    size = [0, 0, 0]
+            else:
+                # No bounds from simulator - use zero size
+                size = [0, 0, 0]
+                polygon = []
+
+            spatial_data["rooms"][room_name] = {
+                "name": room_name,
+                "position": position if isinstance(position, list) else position.tolist(),
+                "size": size if isinstance(size, list) else size.tolist(),
+                "polygon": polygon,  # XZ plane polygon vertices
+                "room_type": room_props.get('type', 'unknown'),
+                "rotation": room_props.get('rotation', [0, 0, 0, 1])
+            }
+
+        if not spatial_data["rooms"]:
+            cprint("WARNING: No rooms found in world graph!", "red")
+
+        return spatial_data
 
     def setup_logging_for_current_episode(self):
         """
@@ -550,11 +1311,10 @@ class EnvironmentInterface:
         # update the world-graph for the human agent
         if self.conf.agent_asymmetry:
             most_recent_human_subgraph = self.perception.get_recent_subgraph(
-                self.sim, [str(self.human_agent_uid)], obs
+                [str(self.human_agent_uid)], obs
             )
         else:
             most_recent_human_subgraph = self.perception.get_recent_subgraph(
-                self.sim,
                 [str(self.robot_agent_uid), str(self.human_agent_uid)],
                 obs,
             )
