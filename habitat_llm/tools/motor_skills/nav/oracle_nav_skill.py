@@ -24,6 +24,7 @@ from habitat.tasks.utils import get_angle
 
 from habitat_llm.agent.env.actions import find_action_range
 from habitat_llm.tools.motor_skills.skill import SkillPolicy
+from habitat_llm.utils import cprint
 from habitat_llm.utils.grammar import NAV_TARGET
 from habitat_llm.utils.sim import (
     check_if_the_object_is_held_by_agent,
@@ -282,8 +283,70 @@ class OracleNavSkill(SkillPolicy):
 
         elif isinstance(entity, (Floor, Room)):
             # NOTE: Floor is Furniture, so this elif must come first
-            # set target position from the world graph (in the room for this floor)
-            self.target_pos = entity.get_property("translation")
+            # Collect multiple candidate positions from furniture in the room
+            # This handles aggregated rooms where average position may not be navigable
+            room = entity if isinstance(entity, Room) else None
+            if isinstance(entity, Floor):
+                # Floor is already connected to its room in the graph
+                room_candidates = self.env.world_graph[self.agent_uid].get_neighbors_of_type(entity, Room)
+                room = room_candidates[0] if room_candidates else None
+                if room:
+                    self._logger.debug(f"Floor '{entity.name}' is in room '{room.name}'")
+
+            # Collect furniture positions as navigation candidates from the room's furniture
+            floor_nav_candidates = []
+            floor_nav_candidate_names = []
+            if room is not None:
+                room_furniture = [
+                    f for f in self.env.world_graph[self.agent_uid].get_neighbors_of_type(room, Furniture)
+                    if not isinstance(f, Floor) and "translation" in f.properties
+                ]
+                floor_nav_candidates = [f.properties["translation"] for f in room_furniture]
+                floor_nav_candidate_names = [f.name for f in room_furniture]
+                self._logger.debug(f"Found {len(floor_nav_candidates)} furniture candidates in room '{room.name}': {floor_nav_candidate_names}")
+
+            # Primary target: use floor's computed translation
+            floor_translation = entity.get_property("translation")
+            if floor_translation is not None:
+                self.target_pos = floor_translation
+                # Sort furniture candidates by distance to floor translation (closest first)
+                if floor_nav_candidates:
+                    candidates_with_dist = [
+                        (name, pos, np.linalg.norm(np.array(pos) - np.array(floor_translation)))
+                        for name, pos in zip(floor_nav_candidate_names, floor_nav_candidates)
+                    ]
+                    candidates_with_dist.sort(key=lambda x: x[2])  # Sort by distance
+                    self.floor_nav_candidate_names = [c[0] for c in candidates_with_dist]
+                    self.floor_nav_candidates = [c[1] for c in candidates_with_dist]
+                    # self._logger.debug(
+                    #     f"Primary target: floor translation {floor_translation}, "
+                    #     f"sorted {len(self.floor_nav_candidates)} backup furniture by distance "
+                    #     f"(closest: '{self.floor_nav_candidate_names[0]}' at {candidates_with_dist[0][2]:.2f}m)"
+                    # )
+                else:
+                    self.floor_nav_candidates = []
+                    self.floor_nav_candidate_names = []
+            elif floor_nav_candidates:
+                # No floor translation, use closest furniture to agent's current position
+                agent_pos = self.articulated_agent.base_pos
+                candidates_with_dist = [
+                    (name, pos, np.linalg.norm(np.array(pos) - np.array(agent_pos)))
+                    for name, pos in zip(floor_nav_candidate_names, floor_nav_candidates)
+                ]
+                candidates_with_dist.sort(key=lambda x: x[2])  # Sort by distance
+                self.target_pos = candidates_with_dist[0][1]
+                self.floor_nav_candidates = [c[1] for c in candidates_with_dist[1:]]
+                self.floor_nav_candidate_names = [c[0] for c in candidates_with_dist[1:]]
+                self._logger.debug(
+                    f"No floor translation, using closest furniture '{candidates_with_dist[0][0]}' "
+                    f"at {candidates_with_dist[0][2]:.2f}m from agent for '{target_name}'"
+                )
+            else:
+                # No candidates at all - this will fail later but proceed anyway
+                self.target_pos = entity.get_property("translation")
+                self.floor_nav_candidates = []
+                self.floor_nav_candidate_names = []
+                self._logger.warning(f"No furniture found in room for floor/room navigation to '{target_name}'")
         elif isinstance(entity, Furniture):
             furniture_parent_handle = entity.sim_handle
             if entity.sim_handle is None:
@@ -377,9 +440,56 @@ class OracleNavSkill(SkillPolicy):
                     mn.Vector3(self.target_base_pos) - mn.Vector3(target_position)
                 ).length()
             attempts += 1
+
+        # If primary target failed, try furniture position candidates
+        max_nav_to_obj_tries = 50
+        if not (success and fur_to_nav_point_dist <= max_fur_to_nav_point_dist):
+            if hasattr(self, 'floor_nav_candidates') and self.floor_nav_candidates:
+                self._logger.info(f"Nav failed to {target_name}, trying {len(self.floor_nav_candidates)} furniture candidates")
+                for candidate_idx, candidate_pos in enumerate(self.floor_nav_candidates):
+                    # Try this candidate position
+                    candidate_name = self.floor_nav_candidate_names[candidate_idx] if hasattr(self, 'floor_nav_candidate_names') else f"candidate_{candidate_idx}"
+                    self._logger.info(f"Trying furniture candidate {candidate_idx}: '{candidate_name}' at position {candidate_pos}")
+                    target_position = candidate_pos
+                    attempts = 0
+                    success = False
+
+                    # Sample navigation point near this furniture
+                    while not success and attempts < max_nav_to_obj_tries:
+                        (
+                            self.target_base_pos,
+                            self.target_base_rot,
+                            success,
+                        ) = embodied_unoccluded_navmesh_snap(
+                            target_position=mn.Vector3(target_position),
+                            height=1.3,
+                            sim=self.env.sim,
+                            target_object_ids=target_object_ids + furniture_parent_object_ids,
+                            ignore_object_ids=agent_object_ids,
+                            ignore_object_collision_ids=other_agent_object_ids,
+                            island_id=self.env.sim._largest_indoor_island_idx,
+                            min_sample_dist=0.25,
+                            agent_embodiment=self.articulated_agent,
+                            orientation_noise=0.1,
+                        )
+                        if success:
+                            candidate_name = self.floor_nav_candidate_names[candidate_idx] if hasattr(self, 'floor_nav_candidate_names') else f"candidate_{candidate_idx}"
+                            self._logger.info(f"OracleNavSkill: succeeded in snapping to furniture '{candidate_name}' (candidate {candidate_idx}) for target '{target_name}'")
+                            cprint(f"✓ Navigation SUCCESS: Using furniture '{candidate_name}' for floor target '{target_name}'", "red")
+                            fur_to_nav_point_dist = (
+                                mn.Vector3(self.target_base_pos) - mn.Vector3(target_position)
+                            ).length()
+                            if fur_to_nav_point_dist <= max_fur_to_nav_point_dist:
+                                self.env.sim.dynamic_target = self.target_base_pos
+                                return
+                        attempts += 1
+
+        # Check final success
         if success and fur_to_nav_point_dist <= max_fur_to_nav_point_dist:
+            cprint(f"✓ Navigation SUCCESS: Moving to target '{target_name}'", "green")
             self.env.sim.dynamic_target = self.target_base_pos
             return
+
         # if we're here, we failed to find a placement
         self.termination_message = f"Could not find a suitable nav target for {target_name}. Possibly inaccessible."
         self.failed = True

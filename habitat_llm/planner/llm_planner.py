@@ -17,6 +17,7 @@ from habitat_llm.llm.instruct.utils import (
     get_world_descr,
 )
 from habitat_llm.planner.planner import Planner
+from habitat_llm.utils.core import cprint
 from habitat_llm.utils.grammar import (
     FREE_TEXT,
     FURNITURE,
@@ -456,6 +457,18 @@ class LLMPlanner(Planner):
         for agent_uid in sorted(responses.keys()):
             # If the response for a given agent is valid, add to the prompt and printout
             if responses[agent_uid]:
+                # Print color-coded result with enhanced formatting
+                cprint("\n" + "="*80, "magenta")
+                if "success" in responses[agent_uid].lower() or responses[agent_uid] == "":
+                    cprint("✓ ACTION RESULT: SUCCESS", "green")
+                    cprint("="*80, "magenta")
+                    cprint(f"Agent {agent_uid}: {responses[agent_uid]}", "white")
+                else:
+                    cprint("✗ ACTION RESULT: FAILURE", "red")
+                    cprint("="*80, "magenta")
+                    cprint(f"Agent {agent_uid}: {responses[agent_uid]}", "white")
+                cprint("="*80 + "\n", "magenta")
+
                 # Update print string
                 print_str += (
                     f"""Agent_{agent_uid}_Observation:{responses[agent_uid]}\n"""
@@ -475,6 +488,12 @@ class LLMPlanner(Planner):
                 responses[
                     agent_uid
                 ] = f"Action {self.last_high_level_actions[agent_uid][0]}[{self.last_high_level_actions[agent_uid][1]}] is still in progress."
+
+                # Print in-progress status
+                cprint("─" * 80, "blue")
+                cprint("⏳ ACTION STATUS: IN PROGRESS", "yellow")
+                cprint(f"Agent {agent_uid}: {responses[agent_uid]}", "white")
+                cprint("─" * 80, "blue")
 
                 # Update print string
                 print_str += (
@@ -525,12 +544,12 @@ class LLMPlanner(Planner):
                         )
                 else:
                     result = f"Objects: {objects}\n"
-                self.curr_obj_states = objects
                 self.curr_prompt += result
                 self.trace += result
                 print_str += result
             self.curr_prompt += self.planner_config.llm.eot_tag
-            print(self.curr_prompt)
+            # Suppress detailed prompt printing (too verbose)
+            # print(self.curr_prompt)
 
         # Force add thought after every observation
         if self.planner_config.planning_mode.lower() == "cot":
@@ -539,6 +558,9 @@ class LLMPlanner(Planner):
                     print_str += "Thought:"
                     prompt_addition = f"{self.planner_config.llm.assistant_tag}Thought:"
                     self.curr_prompt += prompt_addition
+                    # Ensure newline before Thought: if trace doesn't end with one
+                    if not self.trace.endswith('\n'):
+                        self.trace += '\n'
                     self.trace += "Thought:"
                     break
         return print_str
@@ -573,6 +595,8 @@ class LLMPlanner(Planner):
         info = {"llm_response": llm_response}
         return info
 
+
+    # ! IMPT: Method used to get the next actions.
     def get_next_action(
         self,
         instruction: str,
@@ -611,6 +635,7 @@ class LLMPlanner(Planner):
 
         if self.curr_prompt == "":
             # Prepare prompts
+            # Initial prompt is prepared here
             self.curr_prompt, self.params = self.prepare_prompt(
                 instruction, world_graph[self._agents[0].uid], observations=observations
             )
@@ -621,6 +646,7 @@ class LLMPlanner(Planner):
                 add_state_info=self.planner_config.objects_response_include_states,
                 centralized=self.planner_config.centralized,
             )
+            # Eg: [(ball on table_0 in living room), (chair on table_0 in living room), ...]
 
         if self.trace == "":
             self.trace += f"Task: {instruction}\nThought: "
@@ -629,6 +655,10 @@ class LLMPlanner(Planner):
         self.is_done = False
 
         if self.replan_required:
+
+            # This step occurs when the previous high level action has failed and we need
+            # to get new low level actions for the same high level action
+
             planner_info["replanned"] = {agent.uid: True for agent in self.agents}
             if verbose:
                 # calculate the total time of response generation
@@ -636,6 +666,15 @@ class LLMPlanner(Planner):
 
             response_info = self.replan(instruction, observations, world_graph)
             llm_response = response_info["llm_response"]
+            # llm_response: 'Thought: Since there are no objects found yet, I should explore the living room first, as it is the shortest path to locate the white table for placing the candle, candle holder, and plant.\nExplore[living_room_1]'
+
+            # Print LLM thought/response with color coding
+            cprint("\n" + "="*80, "magenta")
+            cprint("🤖 LLM RESPONSE", "cyan")
+            cprint("="*80, "magenta")
+            cprint(llm_response, "white")
+            cprint("="*80 + "\n", "magenta")
+
             # parse thought from the response
             thought = self.parse_thought(llm_response)
 
@@ -651,7 +690,14 @@ class LLMPlanner(Planner):
                 f"""{llm_response}\n{self.stopword}{self.planner_config.llm.eot_tag}"""
             )
             self.curr_prompt += prompt_addition
+            # Ensure newline before adding LLM response if trace doesn't end with one
+            # This prevents "Thought:" from being concatenated to the end of Objects section
+            if not self.trace.endswith('\n') and llm_response.strip().startswith('Thought:'):
+                self.trace += '\n'
             self.trace += prompt_addition
+            # Trace: 'Task: Place the candle and candle holder on the white table in the living room. Move the plant to the same table.
+            # \nThought: Thought: Since there are no objects found yet, I should explore the living room first,
+            # as it is the shortest path to locate the white table for placing the candle, candle holder, and plant.\nExplore[living_room_1]\nAssigned!'
 
             # Check if the planner should stop
             # Stop if the replanning count exceed a certain threshold
@@ -692,12 +738,41 @@ class LLMPlanner(Planner):
                 self.agents, llm_response, self.params
             )
 
-            print(f"\n\n[DEBUG] Now Executing: {high_level_actions}\n\n")
+            # llm_response 'Thought: Since there are no objects found yet, I should explore the living room first,
+            # as it is the shortest path to locate the white table for placing the candle, candle holder, and plant.\nExplore[living_room_1]'
+
+            # self.params.keys: dict_keys(['input', 'tool_list', 'world_graph', 'id', 'rag_examples', 'tool_descriptions', 'system_tag',
+            # 'user_tag', 'assistant_tag', 'eot_tag', 'agent_role_description', 'world_description'])
+
+            # high_level_actions: {0: ('Explore', 'living_room_1', None)} or {0: ('Rearrange', 'candle_0, on, table_10, None, None', None)}
+
+            # Print action being executed with color coding
+            cprint("\n" + "="*80, "cyan")
+            cprint("🎯 EXECUTING ACTION", "yellow")
+            cprint("="*80, "cyan")
+            for agent_id, action_tuple in high_level_actions.items():
+                action_name = action_tuple[0]
+                action_args = action_tuple[1]
+                cprint(f"Agent {agent_id}: {action_name}[{action_args}]", "yellow")
+            cprint("="*80 + "\n", "cyan")
 
             # Get low level actions and/or responses
             low_level_actions, responses = self.process_high_level_actions(
                 high_level_actions, observations
             )
+
+            # low_level_actions: literally a np array of (290, ) 0s with the action so index 10 = -10.
+            # So the actual low-level action is -10 for the movement
+
+            # observations keys: dict_keys(['agent_0_articulated_agent_arm_depth', 'agent_0_articulated_agent_arm_panoptic', 'agent_0_articulated_agent_arm_rgb',
+            # 'agent_0_articulated_agent_jaw_depth', 'agent_0_articulated_agent_jaw_panoptic', 'agent_0_articulated_agent_jaw_rgb', 'agent_0_ee_pos',
+            # 'agent_0_goal_to_agent_gps_compass', 'agent_0_head_depth', 'agent_0_head_rgb', 'agent_0_humanoid_detector_sensor', 'agent_0_is_holding',
+            # 'agent_0_joint', 'agent_0_obj_goal_sensor', 'agent_0_obj_start_sensor', 'agent_0_relative_resting_position', 'agent_0_third_rgb',
+            # 'agent_1_articulated_agent_arm_depth', 'agent_1_articulated_agent_arm_rgb', 'agent_1_ee_pos', 'agent_1_goal_to_agent_gps_compass',
+            # 'agent_1_head_depth', 'agent_1_head_panoptic', 'agent_1_head_rgb', 'agent_1_is_holding', 'agent_1_joint', 'agent_1_obj_goal_sensor',
+            # 'agent_1_obj_start_sensor', 'agent_1_relative_resting_position', 'agent_1_third_rgb'])
+
+            # breakpoint()
 
             # Store last executed high level action
             self.last_high_level_actions = high_level_actions
@@ -705,7 +780,8 @@ class LLMPlanner(Planner):
             planner_info["replanned"] = {agent.uid: False for agent in self.agents}
             # Set thought to None
             thought = None
-
+            # This runs when the state goes to a new step because the previous high level action has been executed and we need to
+            # get the next low level actions for a new high level action
             # Get low level actions and/or responses using last high level actions
             low_level_actions, responses = self.process_high_level_actions(
                 self.last_high_level_actions, observations
@@ -718,8 +794,11 @@ class LLMPlanner(Planner):
 
         # Check if replanning is required
         # Replanning is required when any of the actions being executed
-        # have a response indicating success or failure (and the reason)
-        self.replan_required = any(responses.values())
+        # have a response indicating success or failure (and the reason)??
+        # When it fails, it gives an error {0: 'Unexpected failure! - No valid placements found for entity table_46.'} so should replan
+        # When it succeeds, it gives a success message when there is no error {0: ''} ({0: ('Navigate', 'table_32', None)}) then it will not replan
+
+        self.replan_required = any(responses.values()) # When the values() part have any data so any string
         print_str += self._add_responses_to_prompt(responses)
 
         # Update planner info

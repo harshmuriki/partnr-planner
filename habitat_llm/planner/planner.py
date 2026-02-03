@@ -238,6 +238,7 @@ class Planner:
                         agent_uid,
                         action_and_args,
                         action_results,
+                        drop_placed_object_flag=False,
                     )
                 else:
                     self.env_interface.world_graph[int_agent_uid].update_by_action(

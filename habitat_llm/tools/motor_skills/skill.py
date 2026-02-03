@@ -7,6 +7,7 @@ from abc import abstractmethod
 from typing import List, Tuple
 
 import numpy as np
+from termcolor import cprint
 import torch
 from habitat.tasks.rearrange.rearrange_sensors import IsHoldingSensor
 from habitat_baselines.common.logging import baselines_logger
@@ -14,6 +15,7 @@ from habitat_baselines.rl.ppo.policy import Policy
 from habitat_baselines.utils.common import get_num_actions
 
 from habitat_llm.agent.env.actions import find_action_range
+from habitat_llm.utils.core import cprint
 from habitat_llm.world_model import Furniture, Object, Room
 
 if hasattr(torch, "inference_mode"):
@@ -151,6 +153,12 @@ class SkillPolicy(Policy):
 
             # Reset the skill if its finished
             self.reset([0])
+            
+            cprint("\n" + "="*80, "magenta")
+            cprint("✓ ACTION RESULT: SUCCESS", "green")
+            cprint("="*80, "magenta")
+            cprint(f"{response}", "green")
+            cprint("="*80, "magenta")
 
             return actions[0], response
 
@@ -169,7 +177,11 @@ class SkillPolicy(Policy):
         # Check if the skill failed
         if self.act_failed():
             response = f"Unexpected failure! - {self.termination_message}"
-
+            cprint("\n" + "="*80, "magenta")
+            cprint("✗ ACTION RESULT: FAILED", "red")
+            cprint("="*80, "magenta")
+            cprint(f"{response}", "red")
+            cprint("="*80, "magenta")
             # Reset the skill if it failed
             self.reset([0])
 
