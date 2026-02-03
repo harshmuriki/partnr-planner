@@ -435,9 +435,8 @@ def save_topdown_map(episode_data, run_data, save_path, map_resolution=512):
                             label_x = (x_min + x_max) // 2
                             label_y = (y_min + y_max) // 2
                             if 0 <= label_x < map_width and 0 <= label_y < map_height:
-                                room_display_name = matching_room.replace(
-                                    "_", " "
-                                ).title()
+                                # Show full room name with instance number (e.g., living_room_0)
+                                room_display_name = matching_room
                                 ax.text(
                                     label_x,
                                     label_y,
@@ -619,6 +618,9 @@ def get_episode_data_for_plot(metadata_dir, episode_id, loaded_run_data):
         for receptacle_id in episode_data["recep_to_description"]
     }
     run_data = load_run_data(loaded_run_data, episode_id)
+
+    if run_data is None:
+        raise ValueError(f"Episode {episode_id} not found in run data. Make sure the episode has been evaluated and is present in the dataset.")
 
     propositions = run_data["evaluation_propositions"]
     for proposition in propositions:
@@ -993,6 +995,60 @@ def sample_episodes(loaded_run_data, sample_size, metadata_dir):
     return sampled_eids
 
 
+def build_hierarchy(episode_data):
+    """
+    Build hierarchical structure: room -> furniture/receptacles -> objects
+    
+    :param episode_data: Episode data containing mappings
+    :return: Hierarchical dictionary structure
+    """
+    hierarchy = {}
+
+    # Initialize rooms
+    rooms_list = episode_data.get("rooms", [])
+    room_to_id = episode_data.get("room_to_id", {})
+
+    for room_name in rooms_list:
+        hierarchy[room_name] = {
+            "room_id": room_to_id.get(room_name),
+            "receptacles": {}
+        }
+
+    # Add receptacles to rooms
+    recep_to_room = episode_data.get("recep_to_room", {})
+    recep_to_description = episode_data.get("recep_to_description", {})
+    recep_to_handle = episode_data.get("recep_to_handle", {})
+
+    for recep_name, recep_room in recep_to_room.items():
+        if recep_room in hierarchy:
+            hierarchy[recep_room]["receptacles"][recep_name] = {
+                "description": recep_to_description.get(recep_name, ""),
+                "handle": recep_to_handle.get(recep_name),
+                "objects": []
+            }
+
+    # Add objects to receptacles
+    object_to_recep = episode_data.get("object_to_recep", {})
+    object_to_room = episode_data.get("object_to_room", {})
+    object_to_handle = episode_data.get("object_to_handle", {})
+    object_to_states = episode_data.get("object_to_states", {})
+
+    for obj_name, recep_name in object_to_recep.items():
+        obj_room = object_to_room.get(obj_name)
+
+        # If receptacle exists in hierarchy, add object
+        if obj_room and obj_room in hierarchy:
+            if recep_name in hierarchy[obj_room]["receptacles"]:
+                obj_info = {
+                    "name": obj_name,
+                    "handle": object_to_handle.get(obj_name),
+                    "states": object_to_states.get(obj_name, {})
+                }
+                hierarchy[obj_room]["receptacles"][recep_name]["objects"].append(obj_info)
+
+    return hierarchy
+
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Plot scene")
     parser.add_argument(
@@ -1023,6 +1079,11 @@ def parse_arguments():
         type=int,
         default=0,
         help="If only a random subset of all the episodes is to be visualized, the sample size.",
+    )
+    parser.add_argument(
+        "--save-hierarchy",
+        action="store_true",
+        help="Save hierarchical JSON file with room -> furniture -> object structure",
     )
     return parser.parse_args()
 
@@ -1077,6 +1138,14 @@ def main():
             ep_data_f = os.path.join(args.save_path, f"episode_data_{episode_id}.json")
             with open(ep_data_f, "w") as f:
                 json.dump(episode_data, f, indent=4)
+
+            # Save hierarchical structure if flag is enabled
+            if args.save_hierarchy:
+                hierarchy = build_hierarchy(episode_data)
+                hierarchy_f = os.path.join(args.save_path, f"viz_{episode_id}", f"hierarchy_{episode_id}.json")
+                with open(hierarchy_f, "w") as f:
+                    json.dump(hierarchy, f, indent=4)
+                print(f"Saved hierarchy to {hierarchy_f}")
 
             step_id_to_path_mapping = plot_scene(
                 config,

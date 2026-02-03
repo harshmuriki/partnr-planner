@@ -184,6 +184,21 @@ class Receptacle:
         self.set_placeholder_positions(icon, origin)
         self.plot_placeholders(ax)
         self.plot_state_attributes(ax, origin)
+        
+        # Add furniture name label below the icon
+        label_x = origin[0] + self.width / 2
+        label_y = origin[1] - 5  # Position below the icon
+        ax.text(
+            label_x,
+            label_y,
+            self.receptacle_id,
+            ha="center",
+            va="top",
+            fontsize=8,
+            color="white",
+            weight="normal",
+            alpha=0.8,
+        )
 
         if created_fig:
             ax.axis("off")

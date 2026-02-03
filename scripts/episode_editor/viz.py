@@ -4,6 +4,8 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source
 
+#  python scripts/episode_editor/viz.py   --dataset /home/harshmuriki/Documents/partnr-planner/data/datasets/partnr_episodes/v0_0/val.json.gz   --metadata-dir data/versioned_data/partnr_episodes/v0_0/metadata/   --save-path visualizations/ --episode-id 101
+
 import argparse
 import gzip
 import itertools
@@ -44,6 +46,18 @@ try:
 except ImportError:
     HABITAT_AVAILABLE = False
     print("Warning: Habitat not available. Top-down maps will not be generated.")
+
+# Try to import scene_utils for getting spatial data
+try:
+    from scripts.episode_editor import scene_utils
+    SCENE_UTILS_AVAILABLE = True
+except ImportError:
+    try:
+        import scene_utils
+        SCENE_UTILS_AVAILABLE = True
+    except ImportError:
+        SCENE_UTILS_AVAILABLE = False
+        print("Warning: scene_utils not available. Spatial data will not be included.")
 
 matplotlib.use("Agg")
 
@@ -489,6 +503,448 @@ def load_episode_data(metadata_dir, episode_id):
     """
     with open(os.path.join(metadata_dir, f"{episode_id}.json")) as f:
         return json.load(f)
+
+
+def get_object_dimensions_from_sim(scene_id: str, episode_data: dict) -> tuple:
+    """
+    Load simulator and extract object/furniture dimensions from their bounding boxes.
+
+    Args:
+        scene_id: The scene ID
+        episode_data: Episode data with object and receptacle handles
+
+    Returns:
+        Tuple of (object_dims, receptacle_dims) dictionaries with bounds/size info
+    """
+    if not HABITAT_AVAILABLE:
+        return {}, {}
+
+    try:
+        import habitat_sim
+        from habitat.datasets.rearrange.run_episode_generator import get_config_defaults
+
+        # Create minimal simulator configuration
+        cfg = get_config_defaults()
+        backend_cfg = habitat_sim.SimulatorConfiguration()
+        backend_cfg.scene_dataset_config_file = "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json"
+        backend_cfg.scene_id = scene_id
+        backend_cfg.enable_physics = True  # Need physics for object managers
+        backend_cfg.create_renderer = False
+
+        agent_cfg = habitat_sim.agent.AgentConfiguration()
+        hab_cfg = habitat_sim.Configuration(backend_cfg, [agent_cfg])
+
+        # Initialize simulator
+        sim = habitat_sim.Simulator(hab_cfg)
+
+        object_dims = {}
+        receptacle_dims = {}
+
+        # Get dimensions for regular objects
+        rom = sim.get_rigid_object_manager()
+        if "object_to_handle" in episode_data:
+            for obj_name, obj_handle in episode_data["object_to_handle"].items():
+                try:
+                    obj = rom.get_object_by_handle(obj_handle)
+                    if obj is not None:
+                        aabb = obj.root_scene_node.cumulative_bb
+                        min_pt = aabb.min
+                        max_pt = aabb.max
+                        size = aabb.size()
+
+                        object_dims[obj_name] = {
+                            "bounds": {
+                                "min": [float(min_pt[0]), float(min_pt[1]), float(min_pt[2])],
+                                "max": [float(max_pt[0]), float(max_pt[1]), float(max_pt[2])]
+                            },
+                            "size": [float(size[0]), float(size[1]), float(size[2])]
+                        }
+                except Exception as e:
+                    print(f"Warning: Could not get dimensions for object {obj_name}: {e}")
+
+        # Get dimensions for receptacles (furniture) - check both ROM and AOM
+        if "recep_to_handle" in episode_data:
+            aom = sim.get_articulated_object_manager()
+            for recep_name, recep_handle in episode_data["recep_to_handle"].items():
+                try:
+                    # Try articulated object manager first (furniture with joints)
+                    obj = aom.get_object_by_handle(recep_handle)
+                    if obj is None:
+                        # Try rigid object manager (static furniture)
+                        obj = rom.get_object_by_handle(recep_handle)
+
+                    if obj is not None:
+                        aabb = obj.root_scene_node.cumulative_bb
+                        min_pt = aabb.min
+                        max_pt = aabb.max
+                        size = aabb.size()
+
+                        receptacle_dims[recep_name] = {
+                            "bounds": {
+                                "min": [float(min_pt[0]), float(min_pt[1]), float(min_pt[2])],
+                                "max": [float(max_pt[0]), float(max_pt[1]), float(max_pt[2])]
+                            },
+                            "size": [float(size[0]), float(size[1]), float(size[2])]
+                        }
+                except Exception as e:
+                    print(f"Warning: Could not get dimensions for receptacle {recep_name}: {e}")
+
+        sim.close()
+        return object_dims, receptacle_dims
+
+    except Exception as e:
+        print(f"Warning: Could not load simulator to get object dimensions: {e}")
+        import traceback
+        traceback.print_exc()
+        return {}, {}
+
+
+def get_room_bounds_from_sim(scene_id: str, episode_data: dict) -> dict:
+    """
+    Load simulator and extract room bounds from semantic scene.
+
+    Args:
+        scene_id: The scene ID
+        episode_data: Episode data with room information
+
+    Returns:
+        Dictionary mapping room names to their bounds and centers
+    """
+    if not HABITAT_AVAILABLE:
+        return {}
+
+    try:
+        import habitat_sim
+        from habitat.datasets.rearrange.run_episode_generator import get_config_defaults
+        from habitat_sim.nav import NavMeshSettings
+
+        # Create minimal simulator configuration
+        cfg = get_config_defaults()
+        backend_cfg = habitat_sim.SimulatorConfiguration()
+        backend_cfg.scene_dataset_config_file = "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json"
+        backend_cfg.scene_id = scene_id
+        backend_cfg.enable_physics = False
+        backend_cfg.create_renderer = False  # Don't need renderer for bounds
+
+        agent_cfg = habitat_sim.agent.AgentConfiguration()
+        hab_cfg = habitat_sim.Configuration(backend_cfg, [agent_cfg])
+
+        # Initialize simulator
+        sim = habitat_sim.Simulator(hab_cfg)
+
+        # Get semantic scene
+        semantic_scene = sim.semantic_scene
+        if not semantic_scene or len(semantic_scene.regions) == 0:
+            sim.close()
+            return {}
+
+        room_bounds_data = {}
+        rooms_info = episode_data.get("rooms", [])
+
+        # Map semantic regions to rooms and extract bounds
+        for region in semantic_scene.regions:
+            region_name = region.category.name().split("/")[0].replace(" ", "_").lower()
+
+            # Find matching room name from episode_data
+            matching_room = None
+            for room_name in rooms_info:
+                room_base = room_name.split("_")[0].lower()
+                if (region_name == room_base
+                    or region_name in room_base
+                    or room_base in region_name):
+                    matching_room = room_name
+                    break
+
+            if matching_room:
+                aabb = region.aabb
+                center = aabb.center()
+                size = aabb.size()
+                min_pt = aabb.min
+                max_pt = aabb.max
+
+                room_bounds_data[matching_room] = {
+                    "bounds": {
+                        "min": [float(min_pt[0]), float(min_pt[1]), float(min_pt[2])],
+                        "max": [float(max_pt[0]), float(max_pt[1]), float(max_pt[2])]
+                    },
+                    "center": [float(center[0]), float(center[1]), float(center[2])],
+                    "size": [float(size[0]), float(size[1]), float(size[2])]
+                }
+
+        sim.close()
+        return room_bounds_data
+
+    except Exception as e:
+        print(f"Warning: Could not load simulator to get room bounds: {e}")
+        return {}
+
+
+def get_all_scene_objects_from_file(scene_id: str) -> dict:
+    """
+    Read all objects from the scene_instance.json file.
+
+    Args:
+        scene_id: The scene ID
+
+    Returns:
+        Dictionary mapping object keys to dict with position, rotation, scale
+    """
+    from pathlib import Path
+
+    # Get scene file path
+    project_root = Path(__file__).parent.parent.parent
+    scene_path = project_root / f"data/hssd-hab/scenes-partnr-filtered/{scene_id}.scene_instance.json"
+
+    if not scene_path.exists():
+        print(f"Warning: Scene file not found: {scene_path}")
+        return {}
+
+    try:
+        with open(scene_path, 'r') as f:
+            scene_data = json.load(f)
+
+        all_objects = {}
+
+        # Process object_instances (regular objects/furniture)
+        if 'object_instances' in scene_data:
+            for i, obj in enumerate(scene_data['object_instances']):
+                template_name = obj.get('template_name', '')
+                if template_name:
+                    # Create unique key for each object instance
+                    obj_key = f"{template_name}_{i}"
+
+                    all_objects[obj_key] = {
+                        'template_name': template_name,
+                        'position': obj.get('translation', [0, 0, 0]),
+                        'rotation': obj.get('rotation', [0, 0, 0, 1]),
+                        'scale': obj.get('non_uniform_scale', [1, 1, 1]),
+                        'motion_type': obj.get('motion_type', 'static'),
+                        'object_type': 'object',
+                        'index': i
+                    }
+
+        # Process articulated_object_instances (furniture with movable parts)
+        if 'articulated_object_instances' in scene_data:
+            for i, obj in enumerate(scene_data['articulated_object_instances']):
+                template_name = obj.get('template_name', '')
+                if template_name:
+                    # Create unique key for each articulated object instance
+                    obj_key = f"{template_name}_articulated_{i}"
+
+                    all_objects[obj_key] = {
+                        'template_name': template_name,
+                        'position': obj.get('translation', [0, 0, 0]),
+                        'rotation': obj.get('rotation', [0, 0, 0, 1]),
+                        'scale': obj.get('non_uniform_scale', [1, 1, 1]),
+                        'motion_type': obj.get('motion_type', 'static'),
+                        'object_type': 'articulated_object',
+                        'index': i
+                    }
+
+        print(f"Loaded {len(all_objects)} objects from scene file")
+        return all_objects
+
+    except Exception as e:
+        print(f"Error reading scene file: {e}")
+        import traceback
+        traceback.print_exc()
+        return {}
+
+
+def get_object_bounds_from_sim(scene_id: str, template_data: dict) -> dict:
+    """
+    Load simulator and get bounding box sizes for objects from template data.
+
+    Args:
+        scene_id: The scene ID
+        template_data: Dictionary mapping object keys to their template info
+
+    Returns:
+        Dictionary mapping object keys to bounds/size info
+    """
+    if not HABITAT_AVAILABLE:
+        return {}
+
+    try:
+        import habitat_sim
+        from habitat.datasets.rearrange.run_episode_generator import get_config_defaults
+
+        # Create minimal simulator configuration
+        cfg = get_config_defaults()
+        backend_cfg = habitat_sim.SimulatorConfiguration()
+        backend_cfg.scene_dataset_config_file = "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json"
+        backend_cfg.scene_id = scene_id
+        backend_cfg.enable_physics = False
+        backend_cfg.create_renderer = False
+
+        agent_cfg = habitat_sim.agent.AgentConfiguration()
+        hab_cfg = habitat_sim.Configuration(backend_cfg, [agent_cfg])
+
+        # Initialize simulator
+        sim = habitat_sim.Simulator(hab_cfg)
+
+        object_bounds = {}
+
+        # Get template managers
+        obj_template_mgr = sim.get_object_template_manager()
+
+        # Process each template to get default bounds
+        template_to_bounds = {}
+        for obj_key, obj_data in template_data.items():
+            template_name = obj_data['template_name']
+
+            # Skip if we already processed this template
+            if template_name in template_to_bounds:
+                object_bounds[obj_key] = template_to_bounds[template_name].copy()
+                continue
+
+            try:
+                # Get the template
+                template = obj_template_mgr.get_template_by_handle(template_name)
+                if template:
+                    # Get bounding box from template
+                    bb = template.bounding_box_diagonal
+                    size = [float(bb[0]), float(bb[1]), float(bb[2])]
+
+                    bounds_data = {
+                        "bounds": {
+                            "min": [0, 0, 0],  # Relative to object center
+                            "max": size
+                        },
+                        "size": size
+                    }
+
+                    template_to_bounds[template_name] = bounds_data
+                    object_bounds[obj_key] = bounds_data
+            except Exception as e:
+                # Skip objects that can't be loaded
+                pass
+
+        sim.close()
+        print(f"Got bounds for {len(object_bounds)} objects from simulator")
+        return object_bounds
+
+    except Exception as e:
+        print(f"Warning: Could not load simulator to get object bounds: {e}")
+        import traceback
+        traceback.print_exc()
+        return {}
+
+
+def extract_spatial_data(episode_data: dict) -> dict:
+    """
+    Extract spatial information (position, rotation, bounds) for all entities in the episode.
+
+    Args:
+        episode_data: The episode data dictionary
+
+    Returns:
+        Dictionary containing spatial information for objects, receptacles, and rooms
+    """
+    if not SCENE_UTILS_AVAILABLE:
+        print("Warning: scene_utils not available, skipping spatial information")
+        return None
+
+    # Get scene_id from run_data or episode_data
+    scene_id = '106366386_174226770'  # Hardcoded for testing
+    # if run_data:
+    #     scene_id = run_data.get("scene_id")
+    # if not scene_id and "scene_id" in episode_data:
+    #     scene_id = episode_data["scene_id"]
+
+    # if not scene_id:
+    #     print("Warning: No scene_id found, skipping spatial information")
+    #     return None
+
+    # Initialize spatial data containers
+    spatial_data = {
+        "scene_id": scene_id,
+        "objects": {},
+        "receptacles": {},
+        "rooms": {},
+        "scene_objects": {}  # All objects from scene file
+    }
+
+    # Get spatial data for objects
+    if "object_to_handle" in episode_data:
+        for obj_name, obj_handle in episode_data["object_to_handle"].items():
+            try:
+                obj_info = scene_utils.get_object_position(scene_id, obj_handle)
+                if obj_info:
+                    spatial_data["objects"][obj_name] = {
+                        "handle": obj_handle,
+                        "position": obj_info["position"],
+                        "rotation": obj_info["rotation"],
+                        "template_name": obj_info["template_name"],
+                        "type": obj_info["object_type"]
+                    }
+            except Exception as e:
+                print(f"Warning: Could not get spatial data for object {obj_name}: {e}")
+
+    # Get spatial data for receptacles (furniture)
+    if "recep_to_handle" in episode_data:
+        for recep_name, recep_handle in episode_data["recep_to_handle"].items():
+            try:
+                recep_info = scene_utils.get_object_position(scene_id, recep_handle)
+                if recep_info:
+                    spatial_data["receptacles"][recep_name] = {
+                        "handle": recep_handle,
+                        "position": recep_info["position"],
+                        "rotation": recep_info["rotation"],
+                        "template_name": recep_info["template_name"],
+                        "type": recep_info["object_type"]
+                    }
+            except Exception as e:
+                print(f"Warning: Could not get spatial data for receptacle {recep_name}: {e}")
+
+    # Get spatial data for rooms (bounding boxes from semantic regions)
+    print("Extracting room bounds from simulator...")
+    room_bounds_data = get_room_bounds_from_sim(scene_id, episode_data)
+
+    if "rooms" in episode_data:
+        for room_name in episode_data["rooms"]:
+            room_id = episode_data.get("room_to_id", {}).get(room_name, room_name)
+
+            # Get bounds from simulator if available
+            room_info = room_bounds_data.get(room_name, {})
+
+            spatial_data["rooms"][room_name] = {
+                "name": room_name,
+                "room_id": room_id,
+                "bounds": room_info.get("bounds"),
+                "center": room_info.get("center"),
+                "size": room_info.get("size")
+            }
+
+    # Get object and receptacle dimensions (bounds and sizes)
+    print("Extracting object and receptacle dimensions from simulator...")
+    object_dims, receptacle_dims = get_object_dimensions_from_sim(scene_id, episode_data)
+
+    # Merge dimension data into spatial_data
+    for obj_name in spatial_data["objects"]:
+        if obj_name in object_dims:
+            spatial_data["objects"][obj_name].update(object_dims[obj_name])
+
+    for recep_name in spatial_data["receptacles"]:
+        if recep_name in receptacle_dims:
+            spatial_data["receptacles"][recep_name].update(receptacle_dims[recep_name])
+
+    # Get all scene objects from the scene file
+    print("Extracting all scene objects from scene file...")
+    all_scene_objects = get_all_scene_objects_from_file(scene_id)
+
+    # Get bounds for all scene objects
+    if all_scene_objects:
+        print("Extracting bounds for all scene objects from simulator...")
+        scene_object_bounds = get_object_bounds_from_sim(scene_id, all_scene_objects)
+
+        # Merge bounds into scene objects data
+        for obj_key, obj_data in all_scene_objects.items():
+            spatial_data["scene_objects"][obj_key] = obj_data.copy()
+            if obj_key in scene_object_bounds:
+                spatial_data["scene_objects"][obj_key].update(scene_object_bounds[obj_key])
+
+    return spatial_data
 
 
 def load_run_data(run_data, episode_id):
@@ -999,7 +1455,7 @@ def sample_episodes(loaded_run_data, sample_size, metadata_dir):
 def build_hierarchy(episode_data):
     """
     Build hierarchical structure: room -> furniture/receptacles -> objects
-    
+
     :param episode_data: Episode data containing mappings
     :return: Hierarchical dictionary structure
     """
@@ -1139,6 +1595,14 @@ def main():
             ep_data_f = os.path.join(args.save_path, f"episode_data_{episode_id}.json")
             with open(ep_data_f, "w") as f:
                 json.dump(episode_data, f, indent=4)
+
+            # Extract and save spatial information to separate file
+            spatial_data = extract_spatial_data(episode_data)
+            if spatial_data:
+                spatial_f = os.path.join(args.save_path, f"spatial_data_{episode_id}.json")
+                with open(spatial_f, "w") as f:
+                    json.dump(spatial_data, f, indent=4)
+                print(f"Saved spatial data to {spatial_f}")
 
             # Save hierarchical structure if flag is enabled
             if args.save_hierarchy:

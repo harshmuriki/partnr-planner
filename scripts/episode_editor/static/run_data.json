@@ -1,310 +1,143 @@
 {
-    "config": null,
-    "episodes": [
+  "config": null,
+  "episodes": [
+    {
+      "episode_id": "101",
+      "scene_id": "106366410_174226806",
+      "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json",
+      "additional_obj_config_paths": [
+        "data/objects/ycb/configs/",
+        "data/objects_ovmm/train_val/ai2thorhab/configs/objects",
+        "data/objects_ovmm/train_val/amazon_berkeley/configs",
+        "data/objects_ovmm/train_val/google_scanned/configs",
+        "data/objects_ovmm/train_val/hssd/configs/objects"
+      ],
+      "start_position": [0, 0, 0],
+      "start_rotation": [0, 0, 0, 1],
+      "info": {
+        "object_labels": {},
+        "is_tutorial": false,
+        "is_val_mini": true,
+        "initial_state": [
+          {
+            "number": 1,
+            "object_classes": ["laptop"],
+            "allowed_regions": ["living_room_0"],
+            "furniture_names": ["table_1"]
+          },
+          {
+            "name": "common sense",
+            "excluded_object_classes": [
+              "dumbbell",
+              "tennis_racquet",
+              "basketball"
+            ],
+            "exclude_existing_objects": true,
+            "number": "4",
+            "common_sense_object_classes": true,
+            "location": "on",
+            "furniture_names": []
+          }
+        ],
+        "task_gen": "rearrange"
+      },
+      "ao_states": {},
+      "rigid_objs": [
+        [
+          "Laptop_21.object_config.json",
+          [
+            [-0.09722, 0.0, -0.99526, -10.91845],
+            [0.0, 1.0, 0.0, 0.70491],
+            [0.99526, 0.0, -0.09722, -3.63971],
+            [0.0, 0.0, 0.0, 1.0]
+          ]
+        ],
+        [
+          "bdd5e488098e1e64921b53aacfc8df260e2f898c.object_config.json",
+          [
+            [-0.68823, 0.0, 0.72549, -11.21825],
+            [0.0, 1.0, 0.0, 0.45378],
+            [-0.72549, 0.0, -0.68823, 0.54292],
+            [0.0, 0.0, 0.0, 1.0]
+          ]
+        ],
+        [
+          "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94.object_config.json",
+          [
+            [0.71765, 0.0, 0.6964, -5.42443],
+            [0.0, 1.0, 0.0, 0.43766],
+            [-0.6964, 0.0, 0.71765, 0.42672],
+            [0.0, 0.0, 0.0, 1.0]
+          ]
+        ],
+        [
+          "Towel_Statue_2.object_config.json",
+          [
+            [0.91797, 0.0, -0.39666, 0.30539],
+            [0.0, 1.0, 0.0, 1.12139],
+            [0.39666, 0.0, 0.91797, -2.65046],
+            [0.0, 0.0, 0.0, 1.0]
+          ]
+        ],
+        [
+          "Epson_273XL_Ink_Cartridge_Magenta.object_config.json",
+          [
+            [0.19776, 0.0, -0.98025, 0.41188],
+            [0.0, 1.0, 0.0, 0.9921],
+            [0.98025, 0.0, 0.19776, -3.03551],
+            [0.0, 0.0, 0.0, 1.0]
+          ]
+        ]
+      ],
+      "targets": {},
+      "markers": [],
+      "target_receptacles": [],
+      "goal_receptacles": [],
+      "name_to_receptacle": {
+        "Laptop_21_:0000": "4b1657c70ba522ca82a8cdfa1b19b8239141e9a4_:0000|receptacle_mesh_4b1657c70ba522ca82a8cdfa1b19b8239141e9a4.0000",
+        "bdd5e488098e1e64921b53aacfc8df260e2f898c_:0000": "265b95037433ed097b550c434029af9fb4c0d907_:0000|receptacle_mesh_265b95037433ed097b550c434029af9fb4c0d907.0000",
+        "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94_:0000": "79cfc3d580ec17868ff9f6a06da00169981c2c55_:0005|receptacle_mesh_79cfc3d580ec17868ff9f6a06da00169981c2c55.0000",
+        "Towel_Statue_2_:0000": "3ae355dbebacf0ccf273b4af46e0e640eeb4a87e_:0000|receptacle_mesh_3ae355dbebacf0ccf273b4af46e0e640eeb4a87e.0000",
+        "Epson_273XL_Ink_Cartridge_Magenta_:0000": "3ae355dbebacf0ccf273b4af46e0e640eeb4a87e_:0000|receptacle_mesh_3ae355dbebacf0ccf273b4af46e0e640eeb4a87e.0000"
+      },
+      "instruction": "Bring me the laptop from the living room to the office.",
+      "evaluation_propositions": [
         {
-            "episode_id": "101",
-            "scene_id": "106366410_174226806",
-            "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json",
-            "additional_obj_config_paths": [
-                "data/objects/ycb/configs/",
-                "data/objects_ovmm/train_val/ai2thorhab/configs/objects",
-                "data/objects_ovmm/train_val/amazon_berkeley/configs",
-                "data/objects_ovmm/train_val/google_scanned/configs",
-                "data/objects_ovmm/train_val/hssd/configs/objects"
-            ],
-            "start_position": [
-                0,
-                0,
-                0
-            ],
-            "start_rotation": [
-                0,
-                0,
-                0,
-                1
-            ],
-            "info": {
-                "object_labels": {},
-                "is_tutorial": false,
-                "is_val_mini": true,
-                "initial_state": [
-                    {
-                        "number": 1,
-                        "object_classes": [
-                            "laptop"
-                        ],
-                        "allowed_regions": [
-                            "living_room_0"
-                        ],
-                        "furniture_names": [
-                            "table_1"
-                        ]
-                    },
-                    {
-                        "number": 1,
-                        "object_classes": [
-                            "cup"
-                        ],
-                        "allowed_regions": [
-                            "dining_room_0"
-                        ],
-                        "furniture_names": [
-                            "chair_2"
-                        ]
-                    },
-                    {
-                        "name": "common sense",
-                        "excluded_object_classes": [
-                            "dumbbell",
-                            "tennis_racquet",
-                            "basketball"
-                        ],
-                        "exclude_existing_objects": true,
-                        "number": "4",
-                        "common_sense_object_classes": true,
-                        "location": "on",
-                        "furniture_names": []
-                    }
-                ],
-                "task_gen": "rearrange"
-            },
-            "ao_states": {},
-            "rigid_objs": [
-                [
-                    "Laptop_21.object_config.json",
-                    [
-                        [
-                            -0.09722,
-                            0.0,
-                            -0.99526,
-                            -10.91845
-                        ],
-                        [
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.70491
-                        ],
-                        [
-                            0.99526,
-                            0.0,
-                            -0.09722,
-                            -3.63971
-                        ],
-                        [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ]
-                    ]
-                ],
-                [
-                    "547c0a77b74f52c4e6c4a0a52f14f6c9c7a57b49.object_config.json",
-                    [
-                        [
-                            -1.0,
-                            0.0,
-                            0.0,
-                            -2.9709403
-                        ],
-                        [
-                            0.0,
-                            -1.0,
-                            0.0,
-                            -8.940696716308594e-08
-                        ],
-                        [
-                            0.0,
-                            0.0,
-                            1.0,
-                            1.3643995
-                        ],
-                        [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ]
-                    ]
-                ],
-                [
-                    "bdd5e488098e1e64921b53aacfc8df260e2f898c.object_config.json",
-                    [
-                        [
-                            -0.68823,
-                            0.0,
-                            0.72549,
-                            -11.21825
-                        ],
-                        [
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.45378
-                        ],
-                        [
-                            -0.72549,
-                            0.0,
-                            -0.68823,
-                            0.54292
-                        ],
-                        [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ]
-                    ]
-                ],
-                [
-                    "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94.object_config.json",
-                    [
-                        [
-                            0.71765,
-                            0.0,
-                            0.6964,
-                            -5.42443
-                        ],
-                        [
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.43766
-                        ],
-                        [
-                            -0.6964,
-                            0.0,
-                            0.71765,
-                            0.42672
-                        ],
-                        [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ]
-                    ]
-                ],
-                [
-                    "Towel_Statue_2.object_config.json",
-                    [
-                        [
-                            0.91797,
-                            0.0,
-                            -0.39666,
-                            0.30539
-                        ],
-                        [
-                            0.0,
-                            1.0,
-                            0.0,
-                            1.12139
-                        ],
-                        [
-                            0.39666,
-                            0.0,
-                            0.91797,
-                            -2.65046
-                        ],
-                        [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ]
-                    ]
-                ],
-                [
-                    "Epson_273XL_Ink_Cartridge_Magenta.object_config.json",
-                    [
-                        [
-                            0.19776,
-                            0.0,
-                            -0.98025,
-                            0.41188
-                        ],
-                        [
-                            0.0,
-                            1.0,
-                            0.0,
-                            0.9921
-                        ],
-                        [
-                            0.98025,
-                            0.0,
-                            0.19776,
-                            -3.03551
-                        ],
-                        [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ]
-                    ]
-                ]
-            ],
-            "targets": {},
-            "markers": [],
-            "target_receptacles": [],
-            "goal_receptacles": [],
-            "name_to_receptacle": {
-                "Laptop_21_:0000": "4b1657c70ba522ca82a8cdfa1b19b8239141e9a4_:0000|receptacle_mesh_4b1657c70ba522ca82a8cdfa1b19b8239141e9a4.0000",
-                "547c0a77b74f52c4e6c4a0a52f14f6c9c7a57b49_:0000": "79cfc3d580ec17868ff9f6a06da00169981c2c55_:0000|receptacle_mesh_79cfc3d580ec17868ff9f6a06da00169981c2c55.0000",
-                "bdd5e488098e1e64921b53aacfc8df260e2f898c_:0000": "265b95037433ed097b550c434029af9fb4c0d907_:0000|receptacle_mesh_265b95037433ed097b550c434029af9fb4c0d907.0000",
-                "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94_:0000": "79cfc3d580ec17868ff9f6a06da00169981c2c55_:0005|receptacle_mesh_79cfc3d580ec17868ff9f6a06da00169981c2c55.0000",
-                "Towel_Statue_2_:0000": "3ae355dbebacf0ccf273b4af46e0e640eeb4a87e_:0000|receptacle_mesh_3ae355dbebacf0ccf273b4af46e0e640eeb4a87e.0000",
-                "Epson_273XL_Ink_Cartridge_Magenta_:0000": "3ae355dbebacf0ccf273b4af46e0e640eeb4a87e_:0000|receptacle_mesh_3ae355dbebacf0ccf273b4af46e0e640eeb4a87e.0000"
-            },
-            "instruction": "Bring me the laptop from the living room to the office.",
-            "evaluation_propositions": [
-                {
-                    "function_name": "is_in_room",
-                    "args": {
-                        "object_handles": [
-                            "Laptop_21_:0000"
-                        ],
-                        "room_ids": [
-                            "office"
-                        ],
-                        "number": 1,
-                        "is_same_room": false,
-                        "object_names": [
-                            "laptop_0"
-                        ],
-                        "room_names": [
-                            "office_0"
-                        ]
-                    },
-                    "color": "#FF6F61"
-                }
-            ],
-            "evaluation_proposition_dependencies": [],
-            "evaluation_constraints": [
-                {
-                    "type": "TemporalConstraint",
-                    "args": {
-                        "dag_edges": [],
-                        "n_propositions": 1
-                    },
-                    "toposort": []
-                },
-                {
-                    "type": "TerminalSatisfactionConstraint",
-                    "args": {
-                        "proposition_indices": [
-                            0
-                        ],
-                        "n_propositions": null
-                    }
-                }
-            ],
-            "object_states": {},
-            "viz_paths": {
-                "0": "/home/harshmuriki/Documents/partnr-planner/scripts/episode_editor/static/viz_101/step_0.png"
-            },
-            "topdown_map_path": "/home/harshmuriki/Documents/partnr-planner/scripts/episode_editor/static/viz_101/topdown_map.png"
+          "function_name": "is_in_room",
+          "args": {
+            "object_handles": ["Laptop_21_:0000"],
+            "room_ids": ["office"],
+            "number": 1,
+            "is_same_room": false,
+            "object_names": ["laptop_0"],
+            "room_names": ["office_0"]
+          },
+          "color": "#FF6F61"
         }
-    ]
+      ],
+      "evaluation_proposition_dependencies": [],
+      "evaluation_constraints": [
+        {
+          "type": "TemporalConstraint",
+          "args": {
+            "dag_edges": [],
+            "n_propositions": 1
+          },
+          "toposort": []
+        },
+        {
+          "type": "TerminalSatisfactionConstraint",
+          "args": {
+            "proposition_indices": [0],
+            "n_propositions": null
+          }
+        }
+      ],
+      "object_states": {},
+      "viz_paths": {
+        "0": "scripts/episode_editor/static/viz_101/step_0.png"
+      },
+      "topdown_map_path": "scripts/episode_editor/static/viz_101/topdown_map.png"
+    }
+  ]
 }

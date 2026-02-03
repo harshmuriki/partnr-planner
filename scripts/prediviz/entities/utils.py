@@ -32,7 +32,8 @@ def wrap_text(text: str, max_chars_per_line: int, split_on_period: bool = False)
     if split_on_period:
         text = text.split(".")[0]
     # Remove digits which are preceded by `_`.
-    text = re.sub(r"_(\d+)", "", text)
+    # COMMENTED OUT: Keep instance numbers in room/receptacle/object names
+    # text = re.sub(r"_(\d+)", "", text)
     # Remove underscores and slashes
     text = text.replace("/", "_")
     text = text.replace(" ", "_")

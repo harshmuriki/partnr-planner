@@ -288,6 +288,70 @@ def get_receptacles(room):
     return jsonify(receptacles)
 
 
+@app.route("/api/articulated_furniture")
+def get_articulated_furniture():
+    """Get list of articulated furniture from metadata that can be used as doors."""
+    import csv
+
+    # Best recommended door options (curated list)
+    recommended_doors = [
+        {
+            "hash": "d47861b542c4f2e8fe9adcf86d55e26e12d1a213",
+            "num_doors": 3,
+            "num_drawers": 0,
+            "description": "Wardrobe0097 - 3 doors (RECOMMENDED)",
+            "name": "Wardrobe0097"
+        },
+        {
+            "hash": "00b0d5e167ae6b42666de010025efad4506563f1",
+            "num_doors": 1,
+            "num_drawers": 0,
+            "description": "Oven - 1 door (compact)",
+            "name": "Oven0001"
+        },
+        {
+            "hash": "440aa75617a2db12da11307ccfa049f48f76e554",
+            "num_doors": 4,
+            "num_drawers": 0,
+            "description": "Wardrobe0074 - 4 doors",
+            "name": "Wardrobe0074"
+        }
+    ]
+
+    furniture_list = []
+
+    # Try to load from articulatable_furniture_debug.csv
+    metadata_csv = project_root / "data/hssd-hab/metadata/articulatable_furniture_debug.csv"
+
+    if metadata_csv.exists():
+        try:
+            with open(metadata_csv, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    furniture_hash = row.get("furniture_hash", "").strip()
+                    num_doors = row.get("num_doors", "0")
+
+                    if furniture_hash and int(num_doors) > 0:
+                        furniture_list.append({
+                            "hash": furniture_hash,
+                            "num_doors": int(num_doors),
+                            "num_drawers": int(row.get("num_drawers", 0)),
+                            "description": f"Doors: {num_doors}, Drawers: {row.get('num_drawers', 0)}"
+                        })
+        except Exception as e:
+            print(f"Error loading articulated furniture CSV: {e}")
+
+    # If we got data from CSV, use it; otherwise use recommended list
+    if furniture_list:
+        # Sort by number of doors (prefer single-door furniture for simple doors)
+        furniture_list.sort(key=lambda x: x["num_doors"])
+        return jsonify(furniture_list[:20])  # Return top 20
+    else:
+        print("No CSV data found, using recommended door options")
+        return jsonify(recommended_doors)
+
+
+
 def quaternion_to_rotation_matrix(quat: Tuple[float, float, float, float]) -> np.ndarray:
     """
     Convert quaternion (qx, qy, qz, qw) to 3x3 rotation matrix.
@@ -399,6 +463,230 @@ def create_sim_for_episode(episode: Dict) -> Optional[habitat_sim.Simulator]:
         return None
 
 
+def get_furniture_bounds_from_sim(sim: habitat_sim.Simulator, furniture_handle: str) -> Optional[Dict[str, Any]]:
+    """
+    Get the 3D bounding box and dimensions of furniture from the simulator.
+    
+    Args:
+        sim: Habitat simulator instance
+        furniture_handle: The furniture handle (with or without instance suffix)
+    
+    Returns:
+        Dictionary with:
+            - 'min': (x, y, z) minimum bounds
+            - 'max': (x, y, z) maximum bounds
+            - 'center': (x, y, z) center point
+            - 'size': (width, height, depth) dimensions
+            - 'top_surface_y': Y coordinate of top surface
+    """
+    if sim is None:
+        return None
+
+    try:
+        # Get object managers
+        rom = sim.get_rigid_object_manager()
+        aom = sim.get_articulated_object_manager()
+
+        # Remove instance suffix for matching
+        handle_base = furniture_handle.split('_:')[0] if '_:' in furniture_handle else furniture_handle
+
+        obj = None
+        matched_handle = None
+
+        # Get all handles for debugging
+        rigid_handles = rom.get_object_handles()
+        articulated_handles = aom.get_object_handles()
+
+        print(f"  Looking for furniture with handle: {handle_base}")
+        print(f"  Rigid objects in scene: {len(rigid_handles)}")
+        # Write all handles to a file for debugging
+        debug_file = project_root / "scripts/episode_editor/static/debug_handles.txt"
+        with open(debug_file, 'w') as f:
+            f.write(f"Looking for furniture: {handle_base}\n")
+            f.write(f"Total rigid objects: {len(rigid_handles)}\n")
+            f.write(f"Total articulated objects: {len(articulated_handles)}\n\n")
+            f.write("All rigid handles:\n")
+            for h in rigid_handles:
+                f.write(f"  {h}\n")
+                f.write("\nAll articulated handles:\n")
+            for h in articulated_handles:
+                f.write(f"  {h}\n")
+        print(f"  Debug info written to {debug_file}")
+        print(f"  Articulated objects in scene: {len(articulated_handles)}")
+
+        # Try to find the object by iterating all objects (most robust)
+        print(f"  Starting robust search for {handle_base}...")
+
+        # Method 1: Iterate all objects via substring API to get actual references
+        all_objects_map = rom.get_objects_by_handle_substring("")
+        print(f"  Total accessible objects in ROM: {len(all_objects_map)}")
+
+        for h, o in all_objects_map.items():
+            if handle_base in h:
+                print(f"  ✓ found match in ROM iteration: {h}")
+                obj = o
+                matched_handle = h
+                break
+
+        # Method 2: Check articulated objects if not found in rigid
+        if obj is None:
+            all_ao_map = aom.get_objects_by_handle_substring("")
+            print(f"  Total accessible objects in AOM: {len(all_ao_map)}")
+            for h, o in all_ao_map.items():
+                if handle_base in h:
+                    print(f"  ✓ found match in AOM iteration: {h}")
+                    obj = o
+                    matched_handle = h
+                    break
+
+        # Method 3: Fallback to existing logic if maps were empty (unlikely but possible)
+        if obj is None:
+            # ... existing logic or failure ...
+            pass
+
+        if obj is None:
+            print(f"  ✗ Could not find furniture '{handle_base}' in simulator after robust search")
+            return None
+
+        print(f"  ✓ Successfully matched handle: {matched_handle}")
+
+        # Get axis-aligned bounding box in world coordinates
+        bb = obj.root_scene_node.cumulative_bb
+
+        # Convert Magnum Vector3 to tuples using index access
+        min_pt = (bb.min[0], bb.min[1], bb.min[2])
+        max_pt = (bb.max[0], bb.max[1], bb.max[2])
+        center_pt = bb.center()
+        center = (center_pt[0], center_pt[1], center_pt[2])
+        size_pt = bb.size()
+        size = (size_pt[0], size_pt[1], size_pt[2])
+
+        return {
+            'min': min_pt,
+            'max': max_pt,
+            'center': center,
+            'size': size,
+            'top_surface_y': max_pt[1],
+        }
+
+    except Exception as e:
+        print(f"Error getting furniture bounds from simulator: {e}")
+        return None
+
+
+def calculate_object_placement_on_furniture(
+    furniture_bounds: Dict[str, Any],
+    randomize: bool = True
+) -> Tuple[float, float, float]:
+    """
+    Calculate where to place an object on top of furniture.
+    
+    Args:
+        furniture_bounds: Bounding box info from get_furniture_bounds_from_sim
+        randomize: If True, randomize position within furniture surface bounds
+    
+    Returns:
+        (x, y, z) position for the object
+    """
+    import random
+
+    # Get top surface Y coordinate
+    top_y = furniture_bounds['top_surface_y']
+
+    # Get furniture center for X/Z
+    center_x, _, center_z = furniture_bounds['center']
+
+    if randomize:
+        # Get furniture dimensions
+        width, height, depth = furniture_bounds['size']
+
+        # Place randomly within 70% of the furniture's top surface
+        # (to avoid edges where objects might fall off)
+        margin_factor = 0.7
+        x_range = width * margin_factor / 2
+        z_range = depth * margin_factor / 2
+
+        x = center_x + random.uniform(-x_range, x_range)
+        z = center_z + random.uniform(-z_range, z_range)
+    else:
+        # Place at center of furniture
+        x = center_x
+        z = center_z
+
+    # Add small offset above surface to prevent clipping
+    y = top_y + 0.05
+
+    return (x, y, z)
+
+
+@app.route("/api/add_door", methods=["POST"])
+def add_door():
+    """Add an articulated object (door) to the episode as a piece of furniture."""
+    data = request.json
+
+    door_hash = data.get("door_hash")  # Hash of articulated furniture (e.g., wardrobe)
+    position = data.get("position", {"x": 0, "y": 0, "z": 0})
+    rotation = data.get("rotation", {"qx": 0, "qy": 0, "qz": 0, "qw": 1})
+    motion_type = data.get("motion_type", "static")
+    base_type = data.get("base_type", "fixed")
+
+    if not door_hash:
+        return jsonify({"error": "Missing door_hash"}), 400
+
+    ep = episode_data["episodes"][0]
+    scene_id = ep.get("scene_id", "")
+
+    # Load scene file to add articulated object
+    if not scene_id:
+        return jsonify({"error": "Episode has no scene_id"}), 400
+
+    scene_path = project_root / f"data/hssd-hab/scenes-partnr-filtered/{scene_id}.scene_instance.json"
+
+    if not scene_path.exists():
+        return jsonify({"error": f"Scene file not found: {scene_path}"}), 404
+
+    print(f"\n{'='*60}")
+    print(f"Adding articulated door to scene")
+    print(f"  Door hash: {door_hash}")
+    print(f"  Position: ({position['x']}, {position['y']}, {position['z']})")
+    print(f"  Rotation: (qx={rotation['qx']}, qy={rotation['qy']}, qz={rotation['qz']}, qw={rotation['qw']})")
+    print(f"  Scene: {scene_id}")
+    print(f"{'='*60}\n")
+
+    # Load scene data
+    with open(scene_path, 'r') as f:
+        scene_data = json.load(f)
+
+    # Add to articulated_object_instances in scene file
+    if 'articulated_object_instances' not in scene_data:
+        scene_data['articulated_object_instances'] = []
+
+    new_articulated_obj = {
+        "template_name": door_hash,
+        "translation": [position['x'], position['y'], position['z']],
+        "rotation": [rotation['qx'], rotation['qy'], rotation['qz'], rotation['qw']],
+        "translation_origin": "COM",
+        "motion_type": motion_type,
+        "base_type": base_type,
+        "auto_clamp_joint_limits": False
+    }
+
+    scene_data['articulated_object_instances'].append(new_articulated_obj)
+
+    # Save modified scene file
+    with open(scene_path, 'w') as f:
+        json.dump(scene_data, f, indent=2)
+
+    print(f"✓ Added articulated object to scene file: {scene_path}")
+    print(f"  Total articulated objects in scene: {len(scene_data['articulated_object_instances'])}")
+
+    return jsonify({
+        "success": True,
+        "message": f"Door added to scene at ({position['x']}, {position['y']}, {position['z']})",
+        "door_count": len(scene_data['articulated_object_instances'])
+    })
+
+
 @app.route("/api/add_object", methods=["POST"])
 def add_object():
     """Add a new object to the episode."""
@@ -500,20 +788,52 @@ def add_object():
         except Exception as e:
             print(f"⚠ Warning: Could not get furniture info from scene file: {e}")
 
-    # Try to get actual receptacle position from simulator (for precise placement)
+    # Calculate object position using actual furniture bounding box from simulator
     obj_position = None
-    # Use furniture position + height offset if available
+
+    if furniture != "floor" and HABITAT_AVAILABLE:
+        # Create simulator to get actual furniture dimensions
+        print(f"\nCreating simulator to get furniture bounding box...")
+        sim = create_sim_for_episode(ep)
+
+        if sim:
+            try:
+                # Get furniture bounding box from simulator
+                furniture_handle_base = receptacle_handle.split('|')[0] if receptacle_handle and '|' in receptacle_handle else (receptacle_handle if receptacle_handle else furniture)
+                if '_:' in furniture_handle_base:
+                    furniture_handle_base = furniture_handle_base.split('_:')[0]
+
+                furniture_bounds = get_furniture_bounds_from_sim(sim, furniture_handle_base)
+
+                if furniture_bounds:
+                    width, height, depth = furniture_bounds['size']
+                    print(f"✓ Got furniture bounding box from simulator:")
+                    print(f"  Dimensions: {width:.3f}m × {height:.3f}m × {depth:.3f}m (W×H×D)")
+                    print(f"  Center: ({furniture_bounds['center'][0]:.3f}, {furniture_bounds['center'][1]:.3f}, {furniture_bounds['center'][2]:.3f})")
+                    print(f"  Top surface Y: {furniture_bounds['top_surface_y']:.3f}m")
+
+                    # Calculate object placement on furniture
+                    obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=True)
+                    print(f"✓ Calculated object placement: ({obj_position[0]:.3f}, {obj_position[1]:.3f}, {obj_position[2]:.3f})")
+                else:
+                    print(f"⚠ Could not get furniture bounds from simulator, falling back to scene file position")
+            finally:
+                # Always close simulator to prevent memory leaks
+                sim.close()
+                print(f"✓ Simulator closed\n")
+
+    # Fallback: Use furniture position + height offset if simulator method didn't work
     if obj_position is None:
         if furniture_info and furniture != "floor":
             # Use furniture position with height offset for top surface
             base_pos = furniture_info['position']
             # Add estimated height for top surface (same logic as scene_utils)
             if abs(base_pos[1]) < 0.1:  # Ground level furniture
-                surface_y = base_pos[1]
+                surface_y = base_pos[1] + 0.45  # Estimated height offset
             else:  # Already elevated
-                surface_y = base_pos[1]
+                surface_y = base_pos[1] + 0.05  # Small offset for top surface
             obj_position = (base_pos[0], surface_y, base_pos[2])
-            print(f"Using furniture position with surface offset: {obj_position}")
+            print(f"Using furniture position with estimated height offset: {obj_position}")
         else:
             obj_position = (position.get("x", 0.0), position.get("y", 0.5), position.get("z", 0.0))
             print(f"Using default/provided position: {obj_position}")

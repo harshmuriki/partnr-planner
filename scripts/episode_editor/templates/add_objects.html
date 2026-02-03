@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Objects to Scene</title>
+    <title>META Partnr-Planner Object Adder</title>
     <style>
       * {
         margin: 0;
@@ -339,11 +339,94 @@
         font-size: 48px;
         margin-bottom: 10px;
       }
+
+      .tab-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      .tab {
+        padding: 10px 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        color: #888;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+      }
+
+      .tab:hover {
+        color: #555;
+      }
+
+      .tab.active {
+        color: #3498db;
+        border-bottom-color: #3498db;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .door-list {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 10px;
+      }
+
+      .door-item {
+        padding: 10px;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .door-item:hover {
+        background: #f8f9fa;
+      }
+
+      .door-item.selected {
+        background: #e3f2fd;
+        border-left: 4px solid #3498db;
+      }
+
+      .input-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input-group label {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 4px;
+      }
+
+      .input-group input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
     <div class="header">
-      <h1>Add Objects to Scene</h1>
+      <h1>META Partnr-Planner Object Adder - Scene Object Editor</h1>
       <div class="header-actions">
         <button class="btn btn-secondary" onclick="refreshViz()">
           🔄 Refresh Visualization
@@ -398,68 +481,164 @@
 
       <!-- Right Panel: Add Object Form -->
       <div class="right-panel">
-        <h2 class="panel-title">Add New Object</h2>
+        <h2 class="panel-title">Scene Editor</h2>
 
-        <!-- Category Selection -->
-        <div class="form-group">
-          <label class="form-label">1. Category</label>
-          <select
-            class="form-select"
-            id="categorySelect"
-            onchange="onCategoryChange()"
-          >
-            <option value="">All Categories</option>
-          </select>
+        <!-- Tab Navigation -->
+        <div class="tab-container">
+          <button class="tab active" onclick="switchTab('objects')">
+            📦 Add Objects
+          </button>
+          <button class="tab" onclick="switchTab('doors')">🚪 Add Doors</button>
         </div>
 
-        <!-- Object Search -->
-        <div class="form-group">
-          <label class="form-label">2. Search & Select Object</label>
-          <input
-            type="text"
-            class="form-input"
-            id="objectSearch"
-            placeholder="Search by name or ID..."
-            oninput="onSearchChange()"
-          />
-          <div class="object-results" id="objectResults">
-            <div class="empty-state">
-              <div class="empty-state-icon">🔍</div>
-              <div>Search for objects above</div>
+        <!-- Objects Tab -->
+        <div id="objectsTab" class="tab-content active">
+          <!-- Category Selection -->
+          <div class="form-group">
+            <label class="form-label">1. Category</label>
+            <select
+              class="form-select"
+              id="categorySelect"
+              onchange="onCategoryChange()"
+            >
+              <option value="">All Categories</option>
+            </select>
+          </div>
+
+          <!-- Object Search -->
+          <div class="form-group">
+            <label class="form-label">2. Search & Select Object</label>
+            <input
+              type="text"
+              class="form-input"
+              id="objectSearch"
+              placeholder="Search by name or ID..."
+              oninput="onSearchChange()"
+            />
+            <div class="object-results" id="objectResults">
+              <div class="empty-state">
+                <div class="empty-state-icon">🔍</div>
+                <div>Search for objects above</div>
+              </div>
             </div>
+          </div>
+
+          <!-- Selected Object Display -->
+          <div class="selected-object-display" id="selectedObjectDisplay">
+            <strong>Selected:</strong> <span id="selectedObjectName"></span>
+          </div>
+
+          <!-- Room Selection -->
+          <div class="form-group">
+            <label class="form-label">3. Room</label>
+            <select
+              class="form-select"
+              id="roomSelect"
+              onchange="onRoomChange()"
+            >
+              <option value="">Select a room...</option>
+            </select>
+          </div>
+
+          <!-- Furniture/Receptacle Selection -->
+          <div class="form-group">
+            <label class="form-label">4. Furniture / Receptacle</label>
+            <select class="form-select" id="furnitureSelect">
+              <option value="">Select furniture first...</option>
+            </select>
+          </div>
+
+          <!-- Add Button -->
+          <div class="form-group">
+            <button
+              class="btn btn-primary"
+              onclick="addObject()"
+              style="width: 100%; padding: 12px; font-size: 16px"
+            >
+              ➕ Add Object to Scene
+            </button>
           </div>
         </div>
 
-        <!-- Selected Object Display -->
-        <div class="selected-object-display" id="selectedObjectDisplay">
-          <strong>Selected:</strong> <span id="selectedObjectName"></span>
-        </div>
+        <!-- Doors Tab -->
+        <div id="doorsTab" class="tab-content">
+          <!-- Door Selection -->
+          <div class="form-group">
+            <label class="form-label"
+              >1. Select Door / Articulated Furniture</label
+            >
+            <div class="door-list" id="doorList">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading doors...
+              </div>
+            </div>
+            <div class="selected-object-display" id="selectedDoorDisplay">
+              <strong>Selected:</strong> <span id="selectedDoorName"></span>
+            </div>
+          </div>
 
-        <!-- Room Selection -->
-        <div class="form-group">
-          <label class="form-label">3. Room</label>
-          <select class="form-select" id="roomSelect" onchange="onRoomChange()">
-            <option value="">Select a room...</option>
-          </select>
-        </div>
+          <!-- Position Inputs -->
+          <div class="form-group">
+            <label class="form-label">2. Position (X, Y, Z)</label>
+            <div class="input-grid">
+              <div class="input-group">
+                <label>X</label>
+                <input type="number" id="doorPosX" value="0" step="0.1" />
+              </div>
+              <div class="input-group">
+                <label>Y</label>
+                <input type="number" id="doorPosY" value="0" step="0.1" />
+              </div>
+              <div class="input-group">
+                <label>Z</label>
+                <input type="number" id="doorPosZ" value="0" step="0.1" />
+              </div>
+            </div>
+          </div>
 
-        <!-- Furniture/Receptacle Selection -->
-        <div class="form-group">
-          <label class="form-label">4. Furniture / Receptacle</label>
-          <select class="form-select" id="furnitureSelect">
-            <option value="">Select furniture first...</option>
-          </select>
-        </div>
+          <!-- Rotation Inputs (Quaternion) -->
+          <div class="form-group">
+            <label class="form-label"
+              >3. Rotation (Quaternion: qx, qy, qz, qw)</label
+            >
+            <div
+              class="input-grid"
+              style="grid-template-columns: 1fr 1fr 1fr 1fr"
+            >
+              <div class="input-group">
+                <label>qx</label>
+                <input type="number" id="doorRotX" value="0" step="0.1" />
+              </div>
+              <div class="input-group">
+                <label>qy</label>
+                <input type="number" id="doorRotY" value="0" step="0.1" />
+              </div>
+              <div class="input-group">
+                <label>qz</label>
+                <input type="number" id="doorRotZ" value="0" step="0.1" />
+              </div>
+              <div class="input-group">
+                <label>qw</label>
+                <input type="number" id="doorRotW" value="1" step="0.1" />
+              </div>
+            </div>
+            <div style="font-size: 12px; color: #888; margin-top: 8px">
+              💡 Tip: For Y-axis rotation by θ degrees: qy = sin(θ°×π/360), qw =
+              cos(θ°×π/360), others = 0
+            </div>
+          </div>
 
-        <!-- Add Button -->
-        <div class="form-group">
-          <button
-            class="btn btn-primary"
-            onclick="addObject()"
-            style="width: 100%; padding: 12px; font-size: 16px"
-          >
-            ➕ Add Object to Scene
-          </button>
+          <!-- Add Door Button -->
+          <div class="form-group">
+            <button
+              class="btn btn-primary"
+              onclick="addDoor()"
+              style="width: 100%; padding: 12px; font-size: 16px"
+            >
+              ➕ Add Door to Scene
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -472,6 +651,8 @@
     <script>
       let selectedObjectId = null;
       let selectedObjectClass = null;
+      let selectedDoorHash = null;
+      let selectedDoorInfo = null;
       let currentStep = 0;
       let totalSteps = 1;
       let imageCache = [];
@@ -482,7 +663,140 @@
         await loadRooms();
         await loadVizImages();
         await loadHierarchyInfo();
+        await loadDoors();
       });
+
+      // Switch between tabs
+      function switchTab(tabName) {
+        // Update tab buttons
+        const tabs = document.querySelectorAll(".tab");
+        tabs.forEach((tab) => tab.classList.remove("active"));
+        event.target.classList.add("active");
+
+        // Update tab content
+        const objectsTab = document.getElementById("objectsTab");
+        const doorsTab = document.getElementById("doorsTab");
+
+        if (tabName === "objects") {
+          objectsTab.classList.add("active");
+          doorsTab.classList.remove("active");
+        } else if (tabName === "doors") {
+          objectsTab.classList.remove("active");
+          doorsTab.classList.add("active");
+        }
+      }
+
+      // Load available doors/articulated furniture
+      async function loadDoors() {
+        try {
+          const response = await fetch("/api/articulated_furniture");
+          const doors = await response.json();
+
+          const doorList = document.getElementById("doorList");
+          doorList.innerHTML = "";
+
+          if (doors.length === 0) {
+            doorList.innerHTML =
+              '<div class="empty-state"><div class="empty-state-icon">🚪</div><div>No articulated furniture available</div></div>';
+            return;
+          }
+
+          doors.forEach((door) => {
+            const doorItem = document.createElement("div");
+            doorItem.className = "door-item";
+            doorItem.onclick = () => selectDoor(door);
+
+            const displayName = door.name || door.hash.substring(0, 12) + "...";
+            const badge =
+              door.name && door.name.includes("RECOMMENDED") ? " ⭐" : "";
+
+            doorItem.innerHTML = `
+              <div style="font-weight: 500;">${displayName}${badge}</div>
+              <div style="font-size: 11px; color: #666; font-family: monospace; margin-top: 2px;">${door.hash.substring(0, 30)}...</div>
+              <div style="font-size: 12px; color: #888; margin-top: 4px;">${door.description}</div>
+            `;
+            doorList.appendChild(doorItem);
+          });
+        } catch (error) {
+          console.error("Error loading doors:", error);
+          document.getElementById("doorList").innerHTML =
+            '<div class="empty-state">Error loading doors</div>';
+        }
+      }
+
+      // Select a door
+      function selectDoor(door) {
+        selectedDoorHash = door.hash;
+        selectedDoorInfo = door;
+
+        // Update UI
+        const items = document.querySelectorAll(".door-item");
+        items.forEach((item) => item.classList.remove("selected"));
+        event.target.closest(".door-item").classList.add("selected");
+
+        const display = document.getElementById("selectedDoorDisplay");
+        const nameSpan = document.getElementById("selectedDoorName");
+        display.classList.add("active");
+
+        const displayName = door.name || door.hash.substring(0, 25) + "...";
+        nameSpan.textContent = `${displayName} (${door.description})`;
+      }
+
+      // Add door to scene
+      async function addDoor() {
+        if (!selectedDoorHash) {
+          showToast("Please select a door first", "error");
+          return;
+        }
+
+        const posX = parseFloat(document.getElementById("doorPosX").value);
+        const posY = parseFloat(document.getElementById("doorPosY").value);
+        const posZ = parseFloat(document.getElementById("doorPosZ").value);
+
+        const rotX = parseFloat(document.getElementById("doorRotX").value);
+        const rotY = parseFloat(document.getElementById("doorRotY").value);
+        const rotZ = parseFloat(document.getElementById("doorRotZ").value);
+        const rotW = parseFloat(document.getElementById("doorRotW").value);
+
+        try {
+          const response = await fetch("/api/add_door", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              door_hash: selectedDoorHash,
+              position: { x: posX, y: posY, z: posZ },
+              rotation: { qx: rotX, qy: rotY, qz: rotZ, qw: rotW },
+              motion_type: "static",
+              base_type: "fixed",
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            showToast(
+              `✓ Door added to scene! Total doors: ${result.door_count}`,
+              "success",
+            );
+
+            // Ask if user wants to refresh
+            setTimeout(() => {
+              if (
+                confirm(
+                  "Door added successfully!\n\nNote: Doors are added directly to the scene file.\nWould you like to refresh visualization?",
+                )
+              ) {
+                refreshViz();
+              }
+            }, 500);
+          } else {
+            showToast(result.error || "Failed to add door", "error");
+          }
+        } catch (error) {
+          console.error("Error adding door:", error);
+          showToast("Error adding door: " + error.message, "error");
+        }
+      }
 
       // Load categories
       async function loadCategories() {
