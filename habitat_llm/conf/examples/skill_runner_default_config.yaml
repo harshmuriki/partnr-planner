@@ -18,6 +18,8 @@ defaults:
 
 world_model:
   partial_obs: False
+  use_gt_static_structure: True
+  use_gt_object_locations: True
 
 device      : cpu
 instruction : ''
@@ -26,7 +28,7 @@ env: habitat
 num_runs_per_episode: 1
 num_proc: 1
 dry_run: False
-agent_asymmetry: False
+agent_asymmetry: True
 robot_agent_uid: 0
 human_agent_uid: 1
 paths:

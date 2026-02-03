@@ -1,5 +1,8 @@
 type: concept_graph
 world_model_data_path: data/datasets/partnr_episodes/conceptgraphs
 partial_obs: True
-update_mode: obs  # can be "gt" or "obs"
+update_mode: obs # can be "gt" or "obs"
 include_objects: False
+use_gt_static_structure: False # Replace CG furniture/floors/rooms with GT (keeps objects discoverable)
+max_detection_distance: 0.5 # Maximum distance (meters) from camera to add detected objects (filters far detections likely to be errors)
+use_gt_object_locations: False # Use ground truth object positions from simulator instead of depth-based detection
