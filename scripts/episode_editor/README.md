@@ -41,10 +41,10 @@ conda activate habitat
 
 # Option 1: Load from dataset file (recommended)
 # Loads a specific episode from a .json.gz dataset file
-python scripts/episode_editor/app.py --dataset data/datasets/partnr_episodes/v0_0/val.json.gz --episode-id 0
+python scripts/episode_editor/add_objects_to_scene.py --dataset data/datasets/partnr_episodes/v0_0/val.json.gz --episode-id 0
 
 # Option 2: Load single episode file (legacy mode)
-python scripts/episode_editor/app.py --episode path/to/episode.json
+python scripts/episode_editor/add_objects_to_scene.py --episode path/to/episode.json
 ```
 
 The editor will start at `http://localhost:5000`
@@ -85,8 +85,8 @@ scripts/episode_editor/
 
 ## API Endpoints
 
-| Endpoint               | Method | Description                   |
-| ---------------------- | ------ | ----------------------------- |
+| Endpoint                 | Method | Description                   |
+| ------------------------ | ------ | ----------------------------- |
 | `/`                    | GET    | Main editor page              |
 | `/api/episode`         | GET    | Get episode data and metadata |
 | `/api/map`             | GET    | Get top-down map image        |
@@ -103,9 +103,9 @@ scripts/episode_editor/
 | Action     | Shortcut                         |
 | ---------- | -------------------------------- |
 | Zoom in    | Scroll up / Click +              |
-| Zoom out   | Scroll down / Click −            |
+| Zoom out   | Scroll down / Click −           |
 | Pan        | Shift + Drag / Middle mouse drag |
-| Reset view | Click ⟲                          |
+| Reset view | Click ⟲                         |
 
 ## Requirements
 

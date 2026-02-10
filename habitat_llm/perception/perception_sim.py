@@ -113,6 +113,9 @@ class PerceptionSim(Perception):
         # Track objects that have been seen (for partial observability logging)
         self._seen_objects: Set[str] = set()
 
+        # Track previous furniture open states to detect closed->open transitions
+        self._prev_furniture_open_states: Dict[str, bool] = {}
+
     @property
     def receptacles(self) -> Dict[str, HabReceptacle]:
         """
@@ -608,6 +611,30 @@ class PerceptionSim(Perception):
             # Add new edge
             self.gt_graph.add_edge(obj_name, rec_name, "on", flip_edge("on"))
 
+    def _check_furniture_is_open(self, furniture: Furniture, threshold: float = 0.4) -> bool:
+        """
+        Check if articulated furniture is open using the sim utilities.
+        :param furniture: The Furniture node to check
+        :param threshold: Joint position threshold for considering furniture open
+        :return: True if furniture is open, False otherwise
+        """
+        try:
+            # Get the articulated object from sim
+            ao_obj = self.aom.get_object_by_handle(furniture.sim_handle)
+            if ao_obj is None or not ao_obj.is_articulated:
+                return True  # Non-articulated furniture is always "open"
+
+            # Get the default link to check
+            default_link = sutils.get_ao_default_link(ao_obj, compute_if_not_found=True)
+            if default_link is None:
+                return True  # No link to open means always accessible
+
+            # Use the low-level link_is_open check
+            return sutils.link_is_open(ao_obj, default_link, threshold=threshold)
+        except Exception as e:
+            logger.warning(f"Failed to check is_open state for {furniture.name}: {e}")
+            return False
+
     def update_object_and_furniture_states(self) -> None:
         """
         Updates object states for all objects in the ground truth graph.
@@ -629,6 +656,157 @@ class PerceptionSim(Perception):
                 for state_name, object_state_values in full_state_dict.items():
                     if fur.sim_handle in object_state_values:
                         fur.set_state({state_name: object_state_values[fur.sim_handle]})
+
+                # For articulated furniture, always compute is_open state from joint positions
+                # This ensures the state reflects the current simulator state
+                if fur.is_articulated():
+                    is_open = self._check_furniture_is_open(fur)
+                    fur.set_state({"is_open": is_open})
+                    logger.debug(f"Computed is_open={is_open} for articulated furniture {fur.name} from joint positions")
+
+    def _get_object_detection_details(self, obj_name: str) -> str:
+        """
+        Get formatted detection details for a newly discovered object.
+        
+        :param obj_name: Name of the object to get details for
+        :return: Formatted string with object location details (e.g., "apple_0 (on: table_5, room: kitchen_1)")
+        """
+        try:
+            obj_node = self.gt_graph.get_node_from_name(obj_name)
+            # Get what the object is on (receptacle/floor/furniture)
+            on_neighbors = self.gt_graph.get_neighbors(obj_node, "on")
+            on_name = on_neighbors[0].name if on_neighbors else "unknown"
+
+            # Get the room by traversing up the graph
+            room_name = "unknown"
+            if on_neighbors:
+                parent_node = on_neighbors[0]
+                # If on a floor, get the room directly
+                if isinstance(parent_node, Floor):
+                    room_neighbors = self.gt_graph.get_neighbors(parent_node, "inside")
+                    if room_neighbors and isinstance(room_neighbors[0], Room):
+                        room_name = room_neighbors[0].name
+                # If on a receptacle, get furniture then room
+                elif isinstance(parent_node, Receptacle):
+                    furniture_neighbors = self.gt_graph.get_neighbors(parent_node, "joint")
+                    if furniture_neighbors and isinstance(furniture_neighbors[0], Furniture):
+                        furniture = furniture_neighbors[0]
+                        room_neighbors = self.gt_graph.get_neighbors(furniture, "inside")
+                        if room_neighbors and isinstance(room_neighbors[0], Room):
+                            room_name = room_neighbors[0].name
+                # If directly on furniture
+                elif isinstance(parent_node, Furniture):
+                    room_neighbors = self.gt_graph.get_neighbors(parent_node, "inside")
+                    if room_neighbors and isinstance(room_neighbors[0], Room):
+                        room_name = room_neighbors[0].name
+
+            return f"{obj_name} (on: {on_name}, room: {room_name})"
+        except (ValueError, IndexError) as e:
+            return f"{obj_name} (relationship unknown)"
+
+    def _get_parent_furniture(self, obj_node: Object) -> Optional["Furniture"]:
+        """
+        Get the parent Furniture node for an object by traversing the graph.
+        Handles both objects on Receptacles (via 'joint' edge) and objects
+        directly on Furniture.
+
+        :param obj_node: The Object node to find parent furniture for
+        :return: The parent Furniture node, or None if not found
+        """
+        on_neighbors = self.gt_graph.get_neighbors(obj_node, "on")
+        if not on_neighbors:
+            return None
+        parent = on_neighbors[0]
+        if isinstance(parent, Receptacle):
+            furniture_neighbors = self.gt_graph.get_neighbors(parent, "joint")
+            if furniture_neighbors and isinstance(furniture_neighbors[0], Furniture):
+                return furniture_neighbors[0]
+        elif isinstance(parent, Furniture):
+            return parent
+        return None
+
+    def _add_objects_from_opened_furniture(self) -> List[str]:
+        """
+        Detect furniture that just transitioned from closed to open and proactively
+        add objects inside them to the agent's perception, bypassing the need for
+        the panoptic sensor to see them.
+
+        :return: List of object names to inject into the agent's detected objects,
+                 with [ROBOT VISION] log entries produced for each
+        """
+        injected_objects = []
+        injected_details = []
+
+        # Get all articulated furniture and check for closed->open transitions
+        all_furniture = self.gt_graph.get_all_nodes_of_type(Furniture)
+        for furniture in all_furniture:
+            if not furniture.is_articulated():
+                continue
+
+            states = furniture.properties.get("states", {})
+            current_is_open = states.get("is_open")
+            if current_is_open is None:
+                continue
+
+            prev_is_open = self._prev_furniture_open_states.get(furniture.name)
+
+            # Detect closed -> open transition
+            if prev_is_open is False and current_is_open is True:
+                logger.info(
+                    f"[ROBOT VISION] Furniture {furniture.name} was just opened, "
+                    f"revealing objects inside."
+                )
+
+                # Get "within" receptacles of this furniture
+                within_recs = self.fur_obj_handle_to_recs.get(
+                    furniture.sim_handle, {}
+                ).get("within", [])
+                within_rec_names = [r.unique_name for r in within_recs]
+
+                # Find all objects on these "within" receptacles in GT graph
+                for rec_name in within_rec_names:
+                    try:
+                        rec_node = self.gt_graph.get_node_from_name(
+                            self.sim_handle_to_name.get(rec_name)
+                        )
+                        if not isinstance(rec_node, Receptacle):
+                            continue
+
+                        # Get objects on this receptacle
+                        objects_on_rec = self.gt_graph.get_neighbors(
+                            rec_node, flip_edge("on")
+                        )
+                        for obj in objects_on_rec:
+                            if isinstance(obj, Object) and obj.name not in self._seen_objects:
+                                # Add to injected list
+                                injected_objects.append(obj.name)
+                                self._seen_objects.add(obj.name)
+
+                                # Build detection details
+                                details = self._get_object_detection_details(obj.name)
+                                rel = rec_node.properties.get("type", "within")
+                                details += f" [relation: {rel} {furniture.name}]"
+
+                                fur_states = furniture.properties.get("states", {})
+                                if fur_states:
+                                    state_str = ", ".join(
+                                        f"{k}={v}" for k, v in fur_states.items()
+                                    )
+                                    details += f" [furniture_states: {state_str}]"
+                                else:
+                                    details += " [furniture_states: none]"
+                                details += " [auto-revealed]"
+                                injected_details.append(details)
+                    except (ValueError, KeyError):
+                        continue
+
+        if injected_details:
+            logger.info(
+                f"[ROBOT VISION] Auto-revealed object(s) from opened furniture: "
+                f"{', '.join(injected_details)}"
+            )
+
+        return injected_objects
 
     def get_sim_handles_in_view(
         self,
@@ -712,37 +890,102 @@ class PerceptionSim(Perception):
         self.update_agent_room_associations()
         self.update_object_and_furniture_states()
 
+        # Auto-inject objects from furniture that just opened
+        auto_revealed_objects = self._add_objects_from_opened_furniture()
+
         # Get handles of all objects and receptacles in agent's FOVs
         handles_per_agent = self.get_sim_handles_in_view(obs, agent_uids)
 
         # Unpack handles from all agents and and make union
         handle_set = set.union(*handles_per_agent.values())
 
-        # Convert handles to names
+        # Convert handles to names, filter objects inside closed furniture,
+        # and collect detection details for newly seen objects in a single pass
         names = []
-        new_objects = []
+        detection_details = []
+        objects_outside_fov = {}
         for handle in handle_set:
-            if handle in self.sim_handle_to_name:
-                name = self.sim_handle_to_name[handle]
+            if handle not in self.sim_handle_to_name:
+                continue
+
+            name = self.sim_handle_to_name[handle]
+            should_add = True
+
+            try:
+                node = self.gt_graph.get_node_from_name(name)
+                if isinstance(node, Object) and (name not in self._seen_objects):
+                    furniture = self._get_parent_furniture(node)
+
+                    # Check if object is inside a closed "within" receptacle
+                    if furniture is not None and furniture.is_articulated():
+                        on_neighbors = self.gt_graph.get_neighbors(node, "on")
+                        parent = on_neighbors[0] if on_neighbors else None
+                        within_recs = self.fur_obj_handle_to_recs.get(
+                            furniture.sim_handle, {}
+                        ).get("within", [])
+                        within_rec_names = [r.unique_name for r in within_recs]
+                        if (
+                            isinstance(parent, Receptacle)
+                            and parent.sim_handle in within_rec_names
+                        ):
+                            states = furniture.properties.get("states", {})
+                            is_open = states.get("is_open")
+                            if is_open is not None and not is_open:
+                                should_add = False
+                                objects_outside_fov[name] = furniture.name
+                                # print(f"Furniture {furniture.name} is closed, filtering out {name}.")
+                            else:
+                                should_add = True
+                                # print(
+                                #     f"Furniture {furniture.name} is open, "
+                                #     f"allowing detection of {name}."
+                                # )
+                    # Track newly seen objects and build detection log
+                    if should_add:
+                        self._seen_objects.add(name)
+                        details = self._get_object_detection_details(name)
+                        if furniture:
+                            # Determine relationship: "on" vs "within"
+                            on_neighbors = self.gt_graph.get_neighbors(node, "on")
+                            parent = on_neighbors[0] if on_neighbors else None
+                            if isinstance(parent, Receptacle):
+                                rel = parent.properties.get("type", "on")
+                            else:
+                                rel = "on"
+                            details += f" [relation: {rel} {furniture.name}]"
+
+                            fur_states = furniture.properties.get("states", {})
+                            if fur_states:
+                                state_str = ", ".join(
+                                    f"{k}={v}" for k, v in fur_states.items()
+                                )
+                                details += f" [furniture_states: {state_str}]"
+                            else:
+                                details += " [furniture_states: none]"
+                        detection_details.append(details)
+            except (ValueError, IndexError):
+                pass
+
+            if should_add:
                 names.append(name)
-                # Track if this is an object (not furniture/floor/room)
-                try:
-                    node = self.gt_graph.get_node_from_name(name)
-                    if isinstance(node, Object):
-                        # Only track if not seen before
-                        if name not in self._seen_objects:
-                            new_objects.append(name)
-                            self._seen_objects.add(name)
-                except ValueError:
-                    pass
 
-        # Print only newly detected objects
-        if new_objects:
-            logger.info(f"[ROBOT VISION] Newly detected object(s): {', '.join(new_objects)}")
-
+        if detection_details:
+            logger.info(
+                f"[ROBOT VISION] Newly detected object(s): "
+                f"{', '.join(detection_details)}"
+            )
+        if objects_outside_fov:
+            for obj_name, furniture_name in objects_outside_fov.items():
+                logger.info(
+                    f"[ROBOT VISION] Object {obj_name} is inside closed "
+                    f"furniture {furniture_name}, filtering from detections."
+                )
         # Forcefully add robot and human node names
         agent_names = [f"agent_{uid}" for uid in agent_uids]
         names.extend(agent_names)
+
+        # Add auto-revealed objects from opened furniture
+        names.extend(auto_revealed_objects)
 
         # add held objects to the subgraph because they may not be seen
         # by the observations
@@ -753,6 +996,15 @@ class PerceptionSim(Perception):
                 held_obj = get_obj_from_id(self.sim, held_obj_id)
                 name = self.sim_handle_to_name[held_obj.handle]
                 names.append(name)
+
+        # Update furniture state cache for next iteration
+        all_furniture = self.gt_graph.get_all_nodes_of_type(Furniture)
+        for furniture in all_furniture:
+            if furniture.is_articulated():
+                states = furniture.properties.get("states", {})
+                is_open = states.get("is_open")
+                if is_open is not None:
+                    self._prev_furniture_open_states[furniture.name] = is_open
 
         # Get subgraph with for the objects in view
         subgraph = self.gt_graph.get_subgraph(names)

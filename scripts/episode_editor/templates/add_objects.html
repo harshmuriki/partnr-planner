@@ -153,6 +153,35 @@
         box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
       }
 
+      /* Placement mode toggle for inside/on furniture */
+      .placement-toggle {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .placement-btn {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        background: white;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      .placement-btn:hover {
+        border-color: #3498db;
+        background: #f8f9fa;
+      }
+
+      .placement-btn.active {
+        border-color: #3498db;
+        background: #e3f2fd;
+        font-weight: 500;
+      }
+
       .object-search-container {
         position: relative;
       }
@@ -543,8 +572,25 @@
           <!-- Furniture/Receptacle Selection -->
           <div class="form-group">
             <label class="form-label">4. Furniture / Receptacle</label>
-            <select class="form-select" id="furnitureSelect">
+            <select class="form-select" id="furnitureSelect" onchange="onFurnitureChange()">
               <option value="">Select furniture first...</option>
+            </select>
+          </div>
+
+          <!-- Placement Mode Selection (for articulated furniture) -->
+          <div class="form-group" id="placementModeGroup" style="display: none;">
+            <label class="form-label">5. Placement Type</label>
+            <div class="placement-toggle">
+              <button type="button" class="placement-btn active" data-mode="on" onclick="selectPlacementMode('on')">
+                📦 On Surface
+              </button>
+              <button type="button" class="placement-btn" data-mode="within" onclick="selectPlacementMode('within')">
+                📥 Inside
+              </button>
+            </div>
+            <!-- Drawer selector for "inside" mode -->
+            <select class="form-select" id="drawerSelect" style="display: none; margin-top: 10px;">
+              <option value="0">Top drawer/compartment</option>
             </select>
           </div>
 
@@ -1003,10 +1049,59 @@
         event.currentTarget.classList.add("selected");
       }
 
+      // Placement mode state
+      let selectedPlacementMode = 'on';  // 'on' or 'within'
+
+      // Select placement mode (on surface vs inside)
+      function selectPlacementMode(mode) {
+        selectedPlacementMode = mode;
+        document.querySelectorAll('.placement-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.mode === mode);
+        });
+        // Show drawer selector only for "within" mode
+        document.getElementById('drawerSelect').style.display =
+          mode === 'within' ? 'block' : 'none';
+      }
+
+      // Populate drawer/compartment dropdown
+      function populateDrawerSelect(numDrawers) {
+        const select = document.getElementById('drawerSelect');
+        select.innerHTML = '';
+        for (let i = 0; i < numDrawers; i++) {
+          const option = document.createElement('option');
+          option.value = i;
+          option.textContent = `Drawer ${i + 1}` + (i === 0 ? ' (Top)' : i === numDrawers - 1 ? ' (Bottom)' : '');
+          select.appendChild(option);
+        }
+      }
+
+      // Furniture change - show/hide placement mode toggle
+      function onFurnitureChange() {
+        const furnitureSelect = document.getElementById('furnitureSelect');
+        const selectedOption = furnitureSelect.selectedOptions[0];
+        const isArticulated = selectedOption?.dataset?.articulated === 'true';
+        const numDrawers = parseInt(selectedOption?.dataset?.drawers || '0');
+
+        const placementModeGroup = document.getElementById('placementModeGroup');
+
+        if (isArticulated && numDrawers > 0) {
+          placementModeGroup.style.display = 'block';
+          populateDrawerSelect(numDrawers);
+          selectPlacementMode('on');  // Reset to default
+        } else {
+          placementModeGroup.style.display = 'none';
+          selectedPlacementMode = 'on';
+        }
+      }
+
       // Room change
       async function onRoomChange() {
         const room = document.getElementById("roomSelect").value;
         const furnitureSelect = document.getElementById("furnitureSelect");
+
+        // Reset placement mode when room changes
+        document.getElementById('placementModeGroup').style.display = 'none';
+        selectedPlacementMode = 'on';
 
         if (!room) {
           furnitureSelect.innerHTML =
@@ -1027,6 +1122,8 @@
             option.value = recep.name;
             option.textContent = `${recep.name} (${recep.description})`;
             option.dataset.handle = recep.handle;
+            option.dataset.articulated = recep.is_articulated;
+            option.dataset.drawers = recep.num_drawers;
             furnitureSelect.appendChild(option);
           });
         } catch (error) {
@@ -1059,6 +1156,11 @@
           z: 0,
         };
 
+        // Get placement mode (on surface or inside)
+        const drawerIndex = selectedPlacementMode === 'within'
+          ? parseInt(document.getElementById('drawerSelect').value)
+          : -1;
+
         try {
           const response = await fetch("/api/add_object", {
             method: "POST",
@@ -1070,6 +1172,8 @@
               furniture: furniture,
               receptacle_handle: receptacleHandle,
               position: position,
+              placement_mode: selectedPlacementMode,
+              drawer_index: drawerIndex,
             }),
           });
 

@@ -133,3 +133,4 @@ logs/*
 .cursor/*
 .github/*
 *.gz
+scripts/episode_editor/static/*

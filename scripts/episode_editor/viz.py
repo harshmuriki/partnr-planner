@@ -47,6 +47,27 @@ except ImportError:
     HABITAT_AVAILABLE = False
     print("Warning: Habitat not available. Top-down maps will not be generated.")
 
+# Import habitat_llm components for EnvironmentInterface approach
+try:
+    from habitat_llm.agent.env import (
+        EnvironmentInterface,
+        register_actions,
+        register_measures,
+        register_sensors,
+        remove_visual_sensors,
+    )
+    from habitat_llm.agent.env.dataset import CollaborationDatasetV0
+    from habitat_llm.utils import setup_config, fix_config
+    from habitat_llm.world_model import Room as WMRoom, Furniture, WorldGraph
+    from habitat.sims.habitat_simulator.sim_utilities import get_obj_from_handle
+    from habitat_llm.examples.extract_spatial_data import extract_spatial_data_for_episode
+    import omegaconf
+    HABITAT_LLM_AVAILABLE = True
+except ImportError:
+    HABITAT_LLM_AVAILABLE = False
+    extract_spatial_data_for_episode = None
+    print("Warning: habitat_llm not available. Using legacy sim creation.")
+
 # Try to import scene_utils for getting spatial data
 try:
     from scripts.episode_editor import scene_utils
@@ -71,6 +92,70 @@ def load_configuration():
         os.path.dirname(os.path.realpath(__file__)), "..", "prediviz", "conf", "config.yaml"
     )
     return OmegaConf.load(config_path)
+
+
+def initialize_environment_from_episode(dataset_path, episode_id, metadata_dir):
+    """
+    Initialize EnvironmentInterface for a specific episode using the same pattern as extract_furniture_data.py.
+    
+    Args:
+        dataset_path: Path to the dataset JSON/JSON.gz file
+        episode_id: Episode ID to load
+        metadata_dir: Path to metadata directory (required)
+    
+    Returns:
+        Tuple of (sim, world_graph, env_interface) or None if habitat_llm not available
+    """
+    if not HABITAT_LLM_AVAILABLE:
+        print("Warning: habitat_llm not available, falling back to legacy sim creation")
+        return None
+
+    # Load base config manually without Hydra decorators
+    import omegaconf
+    from pathlib import Path
+
+    config_file = Path(__file__).parent.parent.parent / "habitat_llm/conf/examples/skill_runner_default_config.yaml"
+
+    if not config_file.exists():
+        print(f"Warning: Config file not found: {config_file}")
+        return None
+
+    # Load config from file
+    config = omegaconf.OmegaConf.load(config_file)
+
+    # Apply overrides with open_dict to allow modifications
+    with omegaconf.open_dict(config):
+        config.habitat.dataset.data_path = dataset_path
+        config.habitat.dataset.split = "val"  # Required by CollaborationDatasetV0
+        config.habitat.dataset.content_scenes = ["*"]  # Load all scenes
+        # Update metadata folder
+        if not hasattr(config.habitat.dataset, 'metadata'):
+            config.habitat.dataset.metadata = {}
+        config.habitat.dataset.metadata.metadata_folder = metadata_dir
+
+    seed = 47668090
+    config = setup_config(config, seed)
+
+    # No video needed for visualization extraction
+    # Skip remove_visual_sensors since config may not have gym.obs_keys
+    # Visual sensors aren't needed for spatial data extraction anyway
+
+    # Create dataset and environment
+    dataset = CollaborationDatasetV0(config.habitat.dataset)
+    env_interface = EnvironmentInterface(config, dataset=dataset, init_wg=False)
+
+    # Load specific episode
+    print(f"Loading episode_id = {episode_id}")
+    env_interface.env.habitat_env.episode_iterator.set_next_episode_by_id(str(episode_id))
+    env_interface.reset_environment()
+
+    sim = env_interface.sim
+    agent_uid = config.robot_agent_uid
+    world_graph = env_interface.world_graph[agent_uid]
+
+    print(f"Episode {sim.ep_info.episode_id} loaded in scene {sim.ep_info.scene_id}")
+
+    return sim, world_graph, env_interface
 
 
 def save_topdown_map(episode_data, run_data, save_path, map_resolution=512):
@@ -831,10 +916,216 @@ def get_object_bounds_from_sim(scene_id: str, template_data: dict) -> dict:
         return {}
 
 
+def extract_spatial_data_from_world_graph(sim, world_graph, episode_data: dict) -> dict:
+    """
+    Extract spatial information (position, rotation, bounds) from world_graph and sim.
+    
+    This replaces the old extract_spatial_data() function and uses the EnvironmentInterface
+    pattern like extract_furniture_data.py for better performance and accuracy.
+
+    Args:
+        sim: Habitat simulator instance from EnvironmentInterface
+        world_graph: WorldGraph instance from EnvironmentInterface
+        episode_data: The episode data dictionary (for compatibility)
+
+    Returns:
+        Dictionary containing spatial information for objects, receptacles, and rooms
+    """
+    if sim is None or world_graph is None:
+        print("Warning: sim or world_graph not available, using legacy approach")
+        return extract_spatial_data(episode_data)
+
+    scene_id = sim.ep_info.scene_id if hasattr(sim.ep_info, "scene_id") else ""
+    if "/" in scene_id:
+        scene_id = scene_id.split("/")[-1]
+
+    print(f"Extracting spatial data from world_graph for scene {scene_id}")
+
+    # Initialize spatial data containers
+    spatial_data = {
+        "scene_id": scene_id,
+        "objects": {},
+        "receptacles": {},
+        "rooms": {},
+        "scene_objects": {}
+    }
+
+    # Extract furniture/receptacles from world_graph
+    all_furniture = world_graph.get_all_furnitures()
+    print(f"Found {len(all_furniture)} furniture pieces in world_graph")
+
+    for furn_node in all_furniture:
+        name = furn_node.name
+        sim_handle = furn_node.sim_handle or ""
+        translation = furn_node.properties.get("translation", None)
+        furn_type = furn_node.properties.get("type", "")
+
+        recep_data = {
+            "handle": sim_handle,
+            "position": list(translation) if translation is not None else [0, 0, 0],
+            "rotation": [0, 0, 0, 1],  # World graph doesn't store rotation
+            "type": furn_type,
+        }
+
+        # Get AABB from simulator
+        aabb_data = _get_aabb_from_sim_for_viz(sim, sim_handle, name)
+        if aabb_data:
+            recep_data.update(aabb_data)
+
+        spatial_data["receptacles"][name] = recep_data
+        spatial_data["scene_objects"][name] = recep_data.copy()
+
+    # Extract objects from world_graph
+    all_objects = world_graph.get_all_objects()
+    print(f"Found {len(all_objects)} objects in world_graph")
+
+    for obj_node in all_objects:
+        name = obj_node.name
+        sim_handle = obj_node.sim_handle or ""
+        translation = obj_node.properties.get("translation", None)
+
+        obj_data = {
+            "handle": sim_handle,
+            "position": list(translation) if translation is not None else [0, 0, 0],
+            "rotation": [0, 0, 0, 1],
+        }
+
+        # Get AABB from simulator
+        aabb_data = _get_aabb_from_sim_for_viz(sim, sim_handle, name)
+        if aabb_data:
+            obj_data.update(aabb_data)
+
+        spatial_data["objects"][name] = obj_data
+
+    # Extract rooms from world_graph
+    all_rooms = world_graph.get_all_rooms()
+    print(f"Found {len(all_rooms)} rooms in world_graph")
+
+    # Get room bounds from semantic scene
+    semantic_scene = sim.semantic_scene
+    room_bounds_map = {}
+
+    if semantic_scene and len(semantic_scene.regions) > 0:
+        for region in semantic_scene.regions:
+            region_name = region.category.name().split("/")[0].replace(" ", "_").lower()
+            aabb = region.aabb
+
+            if aabb:
+                bounds = {
+                    "min": [aabb.min[0], aabb.min[1], aabb.min[2]],
+                    "max": [aabb.max[0], aabb.max[1], aabb.max[2]],
+                }
+                center = [
+                    (aabb.min[0] + aabb.max[0]) / 2,
+                    (aabb.min[1] + aabb.max[1]) / 2,
+                    (aabb.min[2] + aabb.max[2]) / 2,
+                ]
+                size = [
+                    aabb.max[0] - aabb.min[0],
+                    aabb.max[1] - aabb.min[1],
+                    aabb.max[2] - aabb.min[2],
+                ]
+
+                room_bounds_map[region_name] = {
+                    "bounds": bounds,
+                    "center": center,
+                    "size": size,
+                }
+
+    for room_node in all_rooms:
+        name = room_node.name
+        room_id = room_node.properties.get("id", name)
+
+        # Match room bounds by name
+        room_info = {}
+        for region_name, bounds_data in room_bounds_map.items():
+            if region_name in name.lower() or name.lower() in region_name:
+                room_info = bounds_data
+                break
+
+        spatial_data["rooms"][name] = {
+            "name": name,
+            "room_id": room_id,
+            "bounds": room_info.get("bounds"),
+            "center": room_info.get("center"),
+            "size": room_info.get("size"),
+        }
+
+    return spatial_data
+
+
+def _get_aabb_from_sim_for_viz(sim, sim_handle, entity_name):
+    """
+    Helper function to get AABB from simulator (reused from extract_furniture_data.py pattern).
+    
+    Args:
+        sim: Habitat simulator
+        sim_handle: Entity's sim handle
+        entity_name: Name for logging
+    
+    Returns:
+        Dictionary with bounds, center, size, top_surface_y, or None
+    """
+    if not sim_handle:
+        return None
+
+    try:
+        entity_obj = get_obj_from_handle(sim, sim_handle)
+    except Exception:
+        return None
+
+    if entity_obj is None:
+        return None
+
+    aabb = None
+
+    # Try .aabb first
+    try:
+        aabb = entity_obj.aabb
+    except Exception:
+        pass
+
+    # Fallback to root_scene_node.cumulative_bb for articulated objects
+    if aabb is None:
+        try:
+            aabb = entity_obj.root_scene_node.cumulative_bb
+        except Exception:
+            pass
+
+    if aabb is None:
+        return None
+
+    # Transform AABB to global coordinates
+    try:
+        transform = entity_obj.transformation
+        global_min = transform.transform_point(aabb.min)
+        global_max = transform.transform_point(aabb.max)
+
+        # Ensure min < max for each axis
+        g_min = [min(global_min[i], global_max[i]) for i in range(3)]
+        g_max = [max(global_min[i], global_max[i]) for i in range(3)]
+
+        center = [(g_min[i] + g_max[i]) / 2.0 for i in range(3)]
+        size = [g_max[i] - g_min[i] for i in range(3)]
+        top_surface_y = g_max[1]
+
+        return {
+            "bounds": {"min": g_min, "max": g_max},
+            "center": center,
+            "size": size,
+            "top_surface_y": top_surface_y,
+        }
+    except Exception:
+        return None
+
+
 def extract_spatial_data(episode_data: dict) -> dict:
     """
-    Extract spatial information (position, rotation, bounds) for all entities in the episode.
-
+    Legacy function for extracting spatial data when habitat_llm is not available.
+    Uses the old approach with multiple simulator instances.
+    
+    DEPRECATED: Use extract_spatial_data_from_world_graph() with EnvironmentInterface instead.
+    
     Args:
         episode_data: The episode data dictionary
 
@@ -1579,7 +1870,25 @@ def main():
 
     os.makedirs(args.save_path, exist_ok=True)
     for episode_id in tqdm(eids, dynamic_ncols=True):
+        env_interface = None
+        sim = None
+        world_graph = None
+
         try:
+            # Try to use EnvironmentInterface approach for better performance
+            if HABITAT_LLM_AVAILABLE:
+                print(f"\nInitializing environment with EnvironmentInterface for episode {episode_id}...")
+                try:
+                    result = initialize_environment_from_episode(
+                        args.dataset, episode_id, args.metadata_dir
+                    )
+                    if result:
+                        sim, world_graph, env_interface = result
+                        print("✓ EnvironmentInterface initialized successfully")
+                except Exception as e:
+                    print(f"Warning: Failed to initialize EnvironmentInterface: {e}")
+                    print("Falling back to legacy sim creation...")
+
             (
                 episode_data,
                 run_data,
@@ -1597,7 +1906,24 @@ def main():
                 json.dump(episode_data, f, indent=4)
 
             # Extract and save spatial information to separate file
-            spatial_data = extract_spatial_data(episode_data)
+            # Try Hydra wrapper first (best performance, single sim)
+            spatial_data = None
+            if HABITAT_LLM_AVAILABLE and extract_spatial_data_for_episode:
+                try:
+                    print("Extracting spatial data using Hydra wrapper...")
+                    spatial_data = extract_spatial_data_for_episode(
+                        args.dataset, episode_id, args.metadata_dir
+                    )
+                    if spatial_data:
+                        print("✓ Spatial data extracted via Hydra wrapper")
+                except Exception as e:
+                    print(f"Warning: Hydra wrapper failed: {e}")
+                    spatial_data = None
+
+            # Fallback to legacy extraction if Hydra wrapper failed
+            if not spatial_data:
+                spatial_data = extract_spatial_data(episode_data)
+
             if spatial_data:
                 spatial_f = os.path.join(args.save_path, f"spatial_data_{episode_id}.json")
                 with open(spatial_f, "w") as f:
@@ -1628,6 +1954,7 @@ def main():
             )
 
             # Generate and save top-down map
+            # If we have sim from EnvironmentInterface, reuse it; otherwise create one in save_topdown_map
             topdown_map_path = save_topdown_map(
                 episode_data,
                 run_data,
@@ -1648,6 +1975,16 @@ def main():
         except Exception:
             print(f"Episode ID: {episode_id}")
             print(traceback.format_exc())
+
+        finally:
+            # Clean up: close environment interface for this episode
+            if env_interface is not None:
+                try:
+                    print(f"Closing EnvironmentInterface for episode {episode_id}...")
+                    env_interface.close()
+                    print("✓ EnvironmentInterface closed")
+                except Exception as e:
+                    print(f"Warning: Error closing EnvironmentInterface: {e}")
 
 
 if __name__ == "__main__":

@@ -43,6 +43,15 @@ except ImportError:
     HABITAT_AVAILABLE = False
     print("Warning: habitat_sim not available. Object positions will be approximate.")
 
+# Import WorldGraph for furniture information
+try:
+    from habitat_llm.world_model import WorldGraph, Furniture
+    from habitat_llm.perception import PerceptionSim
+    WORLDGRAPH_AVAILABLE = True
+except ImportError:
+    WORLDGRAPH_AVAILABLE = False
+    print("Warning: WorldGraph not available. Will use fallback methods.")
+
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 # Global state
@@ -54,6 +63,94 @@ save_dir: str = ""
 hierarchy_data: Dict[str, Any] = {}
 viz_image_paths: Dict[str, str] = {}
 object_database: List[Dict[str, str]] = []
+furniture_data_cache: Dict[str, Any] = {}
+
+
+def load_furniture_data(scene_id: str, episode_id_str: str) -> Optional[Dict[str, Any]]:
+    """
+    Load pre-extracted furniture data from JSON file.
+
+    Searches for furniture data exported by extract_furniture_data.py in the
+    standard location: scripts/episode_editor/static/furniture_data/
+
+    Args:
+        scene_id: Scene ID (e.g., "106366410_174226806")
+        episode_id_str: Episode ID (e.g., "101")
+
+    Returns:
+        Dictionary with furniture data or None if not found.
+    """
+    global furniture_data_cache
+
+    cache_key = f"{scene_id}_{episode_id_str}"
+    if cache_key in furniture_data_cache:
+        return furniture_data_cache[cache_key]
+
+    # Also check scene-only key (different episodes in same scene share furniture)
+    if scene_id in furniture_data_cache:
+        return furniture_data_cache[scene_id]
+
+    search_paths = [
+        project_root / f"scripts/episode_editor/static/furniture_data/furniture_{scene_id}_{episode_id_str}.json",
+        project_root / f"scripts/episode_editor/static/furniture_data/furniture_{scene_id}.json",
+    ]
+
+    for path in search_paths:
+        if path.exists():
+            with open(path, 'r') as f:
+                data = json.load(f)
+            furniture_data_cache[cache_key] = data
+            print(f"Loaded pre-extracted furniture data from: {path}")
+            print(f"  Contains {len(data.get('furniture', {}))} furniture items")
+            return data
+
+    return None
+
+
+def find_furniture_in_data(
+    furniture_data: Dict[str, Any],
+    furniture_handle: str,
+    furniture_name: str = ""
+) -> Optional[Tuple[str, Dict[str, Any]]]:
+    """
+    Find a specific furniture item in the pre-extracted data.
+
+    Matches by sim_handle with instance suffix (e.g., "abc_:0002") first,
+    then falls back to base handle (e.g., "abc"), then name.
+
+    Args:
+        furniture_data: The full pre-extracted data dict
+        furniture_handle: The sim handle to match (e.g., "abc123_:0000")
+        furniture_name: Optional furniture name to match (e.g., "table_1")
+
+    Returns:
+        Tuple of (furniture_name, furniture_entry_dict) or None
+        The furniture_name is the key from the JSON (e.g., "cabinet_65")
+    """
+    # First pass: Try to match the FULL handle with instance suffix
+    # This correctly distinguishes between multiple instances of the same model
+    for furn_name, furn_data in furniture_data.get("furniture", {}).items():
+        furn_handle = furn_data.get("sim_handle", "")
+        if furniture_handle and furn_handle and furniture_handle == furn_handle:
+            return (furn_name, furn_data)
+
+    # Second pass: Fall back to matching base handle (without instance suffix)
+    # This is needed for cases where only the base handle is provided
+    handle_base = furniture_handle.split('_:')[0] if '_:' in furniture_handle else furniture_handle
+
+    for furn_name, furn_data in furniture_data.get("furniture", {}).items():
+        furn_handle = furn_data.get("sim_handle", "")
+        furn_handle_base = furn_handle.split('_:')[0] if '_:' in furn_handle else furn_handle
+
+        if handle_base and furn_handle_base and handle_base == furn_handle_base:
+            return (furn_name, furn_data)
+
+    # Third pass: Fallback to match by name
+    if furniture_name and furniture_name in furniture_data.get("furniture", {}):
+        return (furniture_name, furniture_data["furniture"][furniture_name])
+
+    return None
+
 
 def load_dataset_file(path: str) -> Dict[str, Any]:
     """Load dataset from JSON or JSON.gz file."""
@@ -262,9 +359,99 @@ def get_rooms():
     return jsonify(sorted(rooms))
 
 
+def get_furniture_articulation_info(furniture_handle: str) -> Tuple[bool, int]:
+    """
+    Check if furniture is articulated and count drawers/compartments.
+
+    Args:
+        furniture_handle: Furniture handle (e.g., "abc123_:0000")
+
+    Returns:
+        (is_articulated, num_drawers) tuple
+        Note: num_drawers represents the number of compartments the user can target.
+              For double-sided cabinets, this is divided by 2 since each instance
+              represents one side.
+    """
+    if not furniture_handle:
+        return False, 0
+
+    base_hash = furniture_handle.split('_:')[0] if '_:' in furniture_handle else furniture_handle
+    urdf_dir = project_root / "data" / "versioned_data" / "hssd-hab" / "urdf" / base_hash
+
+    if not urdf_dir.exists():
+        return False, 0
+
+    # Count drawer receptacle meshes
+    drawer_meshes = list(urdf_dir.glob("*drawer*receptacle*.glb"))
+    num_drawers = len(drawer_meshes)
+
+    # Check if this is a double-sided cabinet
+    # Double-sided cabinets have drawers on both sides, but each instance represents one side
+    is_double_sided = any("double_sided" in m.name for m in drawer_meshes)
+    if is_double_sided and num_drawers > 0:
+        num_drawers = num_drawers // 2  # Each side gets half the drawers
+        print(f"  Double-sided cabinet detected: {num_drawers} drawers per side")
+
+    # If no drawer meshes, check for cabinet/fridge (treat as 1 compartment)
+    if num_drawers == 0:
+        ao_config = urdf_dir / f"{base_hash}.ao_config.json"
+        if ao_config.exists():
+            num_drawers = 1  # Treat as single compartment
+
+    return True, num_drawers
+
+
+def get_shelf_info_from_receptacle(receptacle_handle: str) -> Tuple[bool, int, int]:
+    """
+    Extract shelf/drawer info from receptacle handle.
+
+    Parses patterns like:
+    - "fridge0014_shelf_01_receptacle_mesh.0000" → shelf index 0
+    - "cabinet_drawer_02_receptacle_mesh.0000" → drawer index 1
+
+    Args:
+        receptacle_handle: Full receptacle handle string
+
+    Returns:
+        (is_internal, shelf_index, estimated_total_shelves)
+        - is_internal: True if object should be placed inside (shelf/drawer detected)
+        - shelf_index: 0-based index of the shelf/drawer
+        - estimated_total_shelves: Estimated number of shelves (default 4 for fridges)
+    """
+    import re
+
+    if not receptacle_handle:
+        return False, -1, 0
+
+    # Get the receptacle mesh part (after the pipe)
+    receptacle_part = receptacle_handle.split('|')[-1] if '|' in receptacle_handle else receptacle_handle
+
+    # Look for shelf or drawer patterns
+    # Patterns: shelf_01, shelf_02, drawer_01, drawer_02, etc.
+    shelf_match = re.search(r'shelf[_]?(\d+)', receptacle_part, re.IGNORECASE)
+    drawer_match = re.search(r'drawer[_]?(\d+)', receptacle_part, re.IGNORECASE)
+
+    if shelf_match:
+        # shelf_01 → index 0, shelf_02 → index 1, etc.
+        shelf_num = int(shelf_match.group(1))
+        shelf_index = shelf_num - 1 if shelf_num > 0 else 0
+        # Fridges typically have 4-5 shelves
+        estimated_total = 4
+        return True, shelf_index, estimated_total
+
+    if drawer_match:
+        drawer_num = int(drawer_match.group(1))
+        drawer_index = drawer_num - 1 if drawer_num > 0 else 0
+        # Cabinets typically have 2-4 drawers
+        estimated_total = 3
+        return True, drawer_index, estimated_total
+
+    return False, -1, 0
+
+
 @app.route("/api/receptacles/<room>")
 def get_receptacles(room):
-    """Get receptacles in a specific room, filtered to only articulatable furniture."""
+    """Get receptacles in a specific room with articulation info."""
     if room not in hierarchy_data:
         return jsonify([])
 
@@ -275,12 +462,16 @@ def get_receptacles(room):
     for recep_name, recep_data in room_data.get("receptacles", {}).items():
         handle = recep_data.get("handle", "")
 
-        # Extract base hash from handle to check if it's articulatable
+        # Check if furniture is articulated and count drawers
+        is_articulated, num_drawers = get_furniture_articulation_info(handle)
+
         receptacles.append({
             "name": recep_name,
             "description": recep_data.get("description", ""),
             "handle": handle,
-            "objects_count": len(recep_data.get("objects", []))
+            "objects_count": len(recep_data.get("objects", [])),
+            "is_articulated": is_articulated,
+            "num_drawers": num_drawers
         })
 
     print("*"*40)
@@ -389,45 +580,412 @@ def quaternion_to_rotation_matrix(quat: Tuple[float, float, float, float]) -> np
         [r20, r21, r22]
     ], dtype=np.float32)
 
-def find_receptacle_mesh_name(furniture_handle: str) -> Optional[str]:
+def find_receptacle_mesh_name(furniture_handle: str) -> Tuple[Optional[str], bool]:
     """
-    Find the actual receptacle mesh filename from the furniture's URDF directory.
-    
+    Find the actual receptacle mesh name for furniture.
+
     Args:
         furniture_handle: Furniture handle like "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000"
-    
+
     Returns:
-        Receptacle mesh name like "chest_of_drawers0002_receptacle_mesh" or None
+        Tuple of (receptacle_name, is_articulated):
+        - receptacle_name: The exact name to use
+        - is_articulated: Whether this is articulated furniture
+
+    Note:
+        - Articulated furniture (URDF): receptacle value needs .0000 suffix
+        - Non-articulated furniture: receptacle value does NOT need .0000 suffix
     """
     # Extract base hash from furniture handle
     base_hash = furniture_handle.split('_:')[0] if '_:' in furniture_handle else furniture_handle
 
-    # Look in URDF directory for this furniture
-    urdf_dir = project_root / "data" / "hssd-hab" / "urdf" / base_hash
+    # Check for sanitized/placeholder handles
+    if base_hash.startswith('xxxx'):
+        print(f"⚠ Detected sanitized handle: {base_hash}")
+        print(f"  This furniture may not have valid receptacle data")
+        return None, False
 
-    if not urdf_dir.exists():
-        print(f"⚠ URDF directory not found: {urdf_dir}")
+    # Strategy 1: Look in URDF directory (articulated furniture)
+    urdf_dir = project_root / "data" / "versioned_data" / "hssd-hab" / "urdf" / base_hash
+
+    if urdf_dir.exists():
+        # Find receptacle mesh files (they end with _receptacle_mesh.glb)
+        receptacle_files = list(urdf_dir.glob("*_receptacle_mesh.glb"))
+
+        if receptacle_files:
+            # Use the first receptacle mesh file (most furniture has one primary receptacle)
+            receptacle_file = receptacle_files[0]
+            receptacle_mesh_name = receptacle_file.stem
+
+            print(f"✓ Found articulated receptacle mesh: {receptacle_mesh_name}")
+            if len(receptacle_files) > 1:
+                print(f"  Note: {len(receptacle_files)} receptacle meshes found, using first one")
+
+            # Articulated furniture DOES need .0000 suffix
+            return receptacle_mesh_name, True
+
+    # Strategy 2: Look in object config (non-articulated furniture)
+    # These have user_defined receptacles in their .object_config.json
+    for subdir in range(10):  # Objects are in numbered subdirs
+        obj_config = project_root / f"data/versioned_data/hssd-hab/objects/{subdir}/{base_hash}.object_config.json"
+        if obj_config.exists():
+            try:
+                with open(obj_config) as f:
+                    config = json.load(f)
+                user_defined = config.get('user_defined', {})
+                for key in user_defined:
+                    if 'receptacle_mesh' in key:
+                        name = user_defined[key].get('name', key) if isinstance(user_defined[key], dict) else key
+                        print(f"✓ Found non-articulated receptacle: {name}")
+                        # Non-articulated furniture does NOT need .0000 suffix
+                        return name, False
+            except Exception as e:
+                print(f"⚠ Error reading {obj_config}: {e}")
+
+    print(f"⚠ No receptacle found for: {base_hash}")
+    return None, False
+
+
+def get_furniture_bounds_from_glb(
+    sim: habitat_sim.Simulator,
+    furniture_handle_base: str,
+    episode: Dict,
+    furniture_translation: Optional[Tuple[float, float, float]] = None
+) -> Optional[Dict[str, Any]]:
+    """
+    Get furniture bounding box by loading its .glb template directly.
+    
+    This avoids simulator instantiation overhead and gets exact mesh dimensions
+    from the source .glb files.
+    
+    Args:
+        sim: Habitat simulator instance (for template manager access)
+        furniture_handle_base: Base furniture handle without instance suffix
+        episode: Episode dictionary containing scene info
+        furniture_translation: Optional (x, y, z) position from scene file
+    
+    Returns:
+        Dictionary with:
+            - 'min': (x, y, z) minimum bounds
+            - 'max': (x, y, z) maximum bounds
+            - 'center': (x, y, z) center point
+            - 'size': (width, height, depth) dimensions
+            - 'top_surface_y': Y coordinate of top surface
+    """
+    if sim is None:
         return None
 
-    # Find receptacle mesh files (they end with _receptacle_mesh.glb)
-    receptacle_files = list(urdf_dir.glob("*_receptacle_mesh.glb"))
+    print(f"\n{'='*60}")
+    print(f"Loading furniture .glb template for bbox extraction")
+    print(f"  Furniture handle base: {furniture_handle_base}")
+    print(f"{'='*60}")
 
-    if not receptacle_files:
-        print(f"⚠ No receptacle mesh files found in {urdf_dir}")
+    try:
+        # Try articulated object template manager first (for furniture with joints)
+        ao_template_mgr = sim.get_articulated_object_template_manager()
+        obj_template_mgr = sim.get_object_template_manager()
+
+        template_name = furniture_handle_base
+        template = None
+        template_type = None
+
+        print(f"  Attempting to load template: {template_name}")
+
+        # Method 1: Try articulated object template manager (for furniture)
+        print(f"  Checking articulated object template manager...")
+        try:
+            template = ao_template_mgr.get_template_by_handle(template_name)
+            if template is not None:
+                template_type = "articulated"
+                print(f"  ✓ Found in articulated object template manager")
+        except Exception as e:
+            print(f"    Not found in articulated template manager: {e}")
+
+        # Method 2: Try regular object template manager (for rigid objects)
+        if template is None:
+            print(f"  Checking regular object template manager...")
+            try:
+                template = obj_template_mgr.get_template_by_handle(template_name)
+                if template is not None:
+                    template_type = "rigid"
+                    print(f"  ✓ Found in object template manager")
+            except Exception as e:
+                print(f"    Not found in object template manager: {e}")
+
+        # Method 3: Check scene file and try loading with full path
+        if template is None:
+            print(f"  ⚠ Template not found with base handle, checking scene file...")
+
+            scene_id = episode.get("scene_id", "")
+            if scene_id:
+                scene_path = project_root / f"data/hssd-hab/scenes-partnr-filtered/{scene_id}.scene_instance.json"
+                if scene_path.exists():
+                    with open(scene_path, 'r') as f:
+                        scene_data = json.load(f)
+
+                    # Check articulated_object_instances first
+                    for obj in scene_data.get('articulated_object_instances', []):
+                        obj_template = obj.get('template_name', '')
+                        if furniture_handle_base in obj_template or obj_template in furniture_handle_base:
+                            template_name = obj_template
+                            print(f"    Found in scene articulated_object_instances: {template_name}")
+                            # Try to load it
+                            template = ao_template_mgr.get_template_by_handle(template_name)
+                            if template is not None:
+                                template_type = "articulated"
+                                break
+
+                    # Check regular object_instances if not found
+                    if template is None:
+                        for obj in scene_data.get('object_instances', []):
+                            obj_template = obj.get('template_name', '')
+                            if furniture_handle_base in obj_template or obj_template in furniture_handle_base:
+                                template_name = obj_template
+                                print(f"    Found in scene object_instances: {template_name}")
+                                template = obj_template_mgr.get_template_by_handle(template_name)
+                                if template is not None:
+                                    template_type = "rigid"
+                                    break
+
+        if template is None:
+            print(f"  ✗ Could not load template for furniture '{furniture_handle_base}'")
+            print(f"    Available articulated templates: {len(ao_template_mgr.get_template_handles())} total")
+            print(f"    Available rigid templates: {obj_template_mgr.get_template_handles()[:5]}...")
+            return None
+
+        print(f"  ✓ Successfully loaded template: {template_name}")
+        print(f"  Template type: {template_type}")
+
+        # Get bounding box diagonal (width, height, depth)
+        bb_diagonal = template.bounding_box_diagonal
+        width, height, depth = float(bb_diagonal[0]), float(bb_diagonal[1]), float(bb_diagonal[2])
+
+        print(f"  📦 Template bounding box dimensions:")
+        print(f"    Width (X):  {width:.4f} m")
+        print(f"    Height (Y): {height:.4f} m")
+        print(f"    Depth (Z):  {depth:.4f} m")
+        print(f"    Volume:     {width * height * depth:.4f} m³")
+
+        # Check if this is articulated furniture (has URDF)
+        urdf_dir = project_root / "data" / "versioned_data" / "hssd-hab" / "urdf" / furniture_handle_base
+        if urdf_dir.exists():
+            print(f"  🔧 Articulated furniture detected (URDF found)")
+            print(f"    URDF dir: {urdf_dir}")
+            # List available .glb files
+            glb_files = list(urdf_dir.glob("*.glb"))
+            print(f"    Available .glb meshes: {len(glb_files)}")
+            for glb in glb_files[:5]:  # Show first 5
+                print(f"      - {glb.name}")
+
+        # Use furniture translation if provided, otherwise estimate from bbox
+        if furniture_translation:
+            center_x, center_y, center_z = furniture_translation
+            print(f"  📍 Using provided furniture position: ({center_x:.3f}, {center_y:.3f}, {center_z:.3f})")
+        else:
+            # Default to origin if no position provided
+            center_x, center_y, center_z = 0.0, height / 2, 0.0
+            print(f"  📍 No position provided, using estimated center: ({center_x:.3f}, {center_y:.3f}, {center_z:.3f})")
+
+        # Calculate bounding box in world coordinates
+        half_width = width / 2
+        half_height = height / 2
+        half_depth = depth / 2
+
+        min_pt = (
+            center_x - half_width,
+            center_y - half_height,
+            center_z - half_depth
+        )
+        max_pt = (
+            center_x + half_width,
+            center_y + half_height,
+            center_z + half_depth
+        )
+        center = (center_x, center_y, center_z)
+        size = (width, height, depth)
+        # Furniture models typically have origin at base (min Y ≈ 0)
+        # So top surface = translation_y + full_height (not half_height)
+        top_surface_y = center_y + height
+
+        print(f"  📊 Calculated world-space bounding box:")
+        print(f"    Min: ({min_pt[0]:.3f}, {min_pt[1]:.3f}, {min_pt[2]:.3f})")
+        print(f"    Max: ({max_pt[0]:.3f}, {max_pt[1]:.3f}, {max_pt[2]:.3f})")
+        print(f"    Center: ({center[0]:.3f}, {center[1]:.3f}, {center[2]:.3f})")
+        print(f"    Top surface Y: {top_surface_y:.3f} m")
+        print(f"{'='*60}\n")
+
+        return {
+            'min': min_pt,
+            'max': max_pt,
+            'center': center,
+            'size': size,
+            'top_surface_y': top_surface_y,
+            'template_name': template_name,
+        }
+
+    except Exception as e:
+        print(f"  ✗ Error loading furniture template: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
-    # Use the first receptacle mesh file (most furniture has one primary receptacle)
-    receptacle_file = receptacle_files[0]
-    # Remove .glb extension to get the mesh name
-    receptacle_mesh_name = receptacle_file.stem
 
-    print(f"✓ Found receptacle mesh: {receptacle_mesh_name}")
-    if len(receptacle_files) > 1:
-        print(f"  Note: {len(receptacle_files)} receptacle meshes found, using first one")
-        for rf in receptacle_files:
-            print(f"    - {rf.stem}")
+def get_furniture_size_from_glb(furniture_handle_base: str) -> Optional[Tuple[float, float, float]]:
+    """
+    Read furniture dimensions from its GLB file (for rigid objects without URDF).
 
-    return receptacle_mesh_name
+    Args:
+        furniture_handle_base: Base furniture handle without instance suffix
+
+    Returns:
+        (width, height, depth) tuple or None if not found
+    """
+    try:
+        import trimesh
+
+        # GLB path: objects/{first_char}/{hash}.glb
+        first_char = furniture_handle_base[0].lower()
+        glb_path = project_root / "data" / "versioned_data" / "hssd-hab" / "objects" / first_char / f"{furniture_handle_base}.glb"
+
+        if not glb_path.exists():
+            print(f"  GLB file not found: {glb_path}")
+            return None
+
+        print(f"  Loading GLB file: {glb_path.name}")
+        scene = trimesh.load(str(glb_path), force='scene')
+
+        if isinstance(scene, trimesh.Scene):
+            # Combine all meshes in the scene
+            meshes = [geom for geom in scene.geometry.values() if isinstance(geom, trimesh.Trimesh)]
+            if not meshes:
+                return None
+            mesh = trimesh.util.concatenate(meshes)
+        else:
+            mesh = scene
+
+        # Get bounding box dimensions
+        bounds = mesh.bounds  # [[min_x, min_y, min_z], [max_x, max_y, max_z]]
+        size = bounds[1] - bounds[0]  # [width, height, depth]
+        print(f"  ✓ Read dimensions from GLB: {size[0]:.3f} x {size[1]:.3f} x {size[2]:.3f}")
+        return tuple(size)
+    except Exception as e:
+        print(f"  Warning: Could not read GLB: {e}")
+        return None
+
+
+def get_furniture_size_from_urdf(furniture_handle_base: str) -> Optional[Tuple[float, float, float]]:
+    """
+    Read furniture dimensions from its URDF file on disk (lightweight, no simulator needed).
+    Falls back to GLB file if URDF is not available.
+
+    Args:
+        furniture_handle_base: Base furniture handle without instance suffix
+
+    Returns:
+        (width, height, depth) tuple or None if not found
+    """
+    try:
+        import xml.etree.ElementTree as ET
+
+        urdf_dir = project_root / "data" / "versioned_data" / "hssd-hab" / "urdf" / furniture_handle_base
+        urdf_file = urdf_dir / f"{furniture_handle_base}.urdf"
+
+        if not urdf_file.exists():
+            # Fallback: try GLB file (for rigid objects without URDF)
+            print(f"  URDF not found, trying GLB fallback...")
+            return get_furniture_size_from_glb(furniture_handle_base)
+
+        tree = ET.parse(urdf_file)
+        root = tree.getroot()
+
+        # Find the base link's collision box
+        for link in root.findall('link'):
+            collision = link.find('collision')
+            if collision is not None:
+                geometry = collision.find('geometry')
+                if geometry is not None:
+                    box = geometry.find('box')
+                    if box is not None:
+                        size_str = box.get('size')
+                        if size_str:
+                            # Parse "width height depth" string
+                            dims = [float(x) for x in size_str.split()]
+                            if len(dims) == 3:
+                                return tuple(dims)
+
+        # URDF exists but no collision box found, try GLB
+        print(f"  URDF found but no collision box, trying GLB fallback...")
+        return get_furniture_size_from_glb(furniture_handle_base)
+    except Exception as e:
+        print(f"  Warning: Could not parse URDF: {e}")
+        # Fallback to GLB
+        return get_furniture_size_from_glb(furniture_handle_base)
+
+
+def get_furniture_bounds_from_scene_and_urdf(
+    furniture_handle_base: str,
+    furniture_position: Tuple[float, float, float],
+    episode: Dict
+) -> Optional[Dict[str, Any]]:
+    """
+    Get furniture bounding box by combining scene file position with URDF dimensions.
+    This is lightweight and works without Bullet physics or WorldGraph initialization.
+    
+    Args:
+        furniture_handle_base: Base furniture handle without instance suffix
+        furniture_position: (x, y, z) position from scene file
+        episode: Episode dictionary containing scene info
+    
+    Returns:
+        Dictionary with:
+            - 'min': (x, y, z) minimum bounds
+            - 'max': (x, y, z) maximum bounds
+            - 'center': (x, y, z) center point
+            - 'size': (width, height, depth) dimensions
+            - 'top_surface_y': Y coordinate of top surface
+    """
+    try:
+        # Try to get dimensions from URDF file
+        size = get_furniture_size_from_urdf(furniture_handle_base)
+
+        if size is None:
+            return None
+
+        width, height, depth = size
+        center_x, center_y, center_z = furniture_position
+
+        print(f"  ✓ Got furniture dimensions from URDF: {width:.2f}m × {height:.2f}m × {depth:.2f}m")
+
+        # Calculate world-space bounding box
+        # Furniture models have origin at BASE (min Y ≈ 0 in local space)
+        # So the furniture extends from translation_y to translation_y + height
+        half_width = width / 2
+        half_depth = depth / 2
+
+        min_pt = (
+            center_x - half_width,
+            center_y,  # Base of furniture (origin at base)
+            center_z - half_depth
+        )
+        max_pt = (
+            center_x + half_width,
+            center_y + height,  # Top of furniture
+            center_z + half_depth
+        )
+        center = (center_x, center_y + height / 2, center_z)  # Actual center
+        top_surface_y = center_y + height  # Top surface
+
+        return {
+            'min': min_pt,
+            'max': max_pt,
+            'center': center,
+            'size': size,
+            'top_surface_y': top_surface_y,
+        }
+
+    except Exception as e:
+        print(f"  Warning: Could not get furniture bounds from URDF: {e}")
+        return None
 
 
 def create_sim_for_episode(episode: Dict) -> Optional[habitat_sim.Simulator]:
@@ -493,62 +1051,32 @@ def get_furniture_bounds_from_sim(sim: habitat_sim.Simulator, furniture_handle: 
         obj = None
         matched_handle = None
 
-        # Get all handles for debugging
-        rigid_handles = rom.get_object_handles()
-        articulated_handles = aom.get_object_handles()
-
-        print(f"  Looking for furniture with handle: {handle_base}")
-        print(f"  Rigid objects in scene: {len(rigid_handles)}")
-        # Write all handles to a file for debugging
-        debug_file = project_root / "scripts/episode_editor/static/debug_handles.txt"
-        with open(debug_file, 'w') as f:
-            f.write(f"Looking for furniture: {handle_base}\n")
-            f.write(f"Total rigid objects: {len(rigid_handles)}\n")
-            f.write(f"Total articulated objects: {len(articulated_handles)}\n\n")
-            f.write("All rigid handles:\n")
-            for h in rigid_handles:
-                f.write(f"  {h}\n")
-                f.write("\nAll articulated handles:\n")
-            for h in articulated_handles:
-                f.write(f"  {h}\n")
-        print(f"  Debug info written to {debug_file}")
-        print(f"  Articulated objects in scene: {len(articulated_handles)}")
-
-        # Try to find the object by iterating all objects (most robust)
-        print(f"  Starting robust search for {handle_base}...")
-
-        # Method 1: Iterate all objects via substring API to get actual references
-        all_objects_map = rom.get_objects_by_handle_substring("")
-        print(f"  Total accessible objects in ROM: {len(all_objects_map)}")
-
-        for h, o in all_objects_map.items():
-            if handle_base in h:
-                print(f"  ✓ found match in ROM iteration: {h}")
-                obj = o
+        # Search rigid objects first
+        for h in rom.get_object_handles():
+            if handle_base not in h:
+                continue
+            candidate = rom.get_object_by_handle(h)
+            if candidate is not None:
+                obj = candidate
                 matched_handle = h
                 break
 
-        # Method 2: Check articulated objects if not found in rigid
+        # Search articulated objects if not found
         if obj is None:
-            all_ao_map = aom.get_objects_by_handle_substring("")
-            print(f"  Total accessible objects in AOM: {len(all_ao_map)}")
-            for h, o in all_ao_map.items():
-                if handle_base in h:
-                    print(f"  ✓ found match in AOM iteration: {h}")
-                    obj = o
+            for h in aom.get_object_handles():
+                if handle_base not in h:
+                    continue
+                candidate = aom.get_object_by_handle(h)
+                if candidate is not None:
+                    obj = candidate
                     matched_handle = h
                     break
 
-        # Method 3: Fallback to existing logic if maps were empty (unlikely but possible)
         if obj is None:
-            # ... existing logic or failure ...
-            pass
-
-        if obj is None:
-            print(f"  ✗ Could not find furniture '{handle_base}' in simulator after robust search")
+            # Furniture not found in simulator (common for articulated objects)
             return None
 
-        print(f"  ✓ Successfully matched handle: {matched_handle}")
+        print(f"  ✓ Found furniture in simulator: {matched_handle}")
 
         # Get axis-aligned bounding box in world coordinates
         bb = obj.root_scene_node.cumulative_bb
@@ -590,32 +1118,82 @@ def calculate_object_placement_on_furniture(
     """
     import random
 
-    # Get top surface Y coordinate
     top_y = furniture_bounds['top_surface_y']
-
-    # Get furniture center for X/Z
     center_x, _, center_z = furniture_bounds['center']
 
     if randomize:
-        # Get furniture dimensions
         width, height, depth = furniture_bounds['size']
-
-        # Place randomly within 70% of the furniture's top surface
-        # (to avoid edges where objects might fall off)
-        margin_factor = 0.7
+        margin_factor = 0.8
         x_range = width * margin_factor / 2
         z_range = depth * margin_factor / 2
-
         x = center_x + random.uniform(-x_range, x_range)
         z = center_z + random.uniform(-z_range, z_range)
     else:
-        # Place at center of furniture
         x = center_x
         z = center_z
 
     # Add small offset above surface to prevent clipping
     y = top_y + 0.05
 
+    print(f"  ✓ Placement on furniture: ({x:.3f}, {y:.3f}, {z:.3f})")
+    return (x, y, z)
+
+
+def calculate_object_placement_inside_furniture(
+    furniture_bounds: Dict[str, Any],
+    drawer_index: int = -1,
+    num_drawers: int = 1,
+    randomize: bool = True
+) -> Tuple[float, float, float]:
+    """
+    Calculate position INSIDE furniture (drawer/cabinet).
+
+    Uses simple estimation: divide furniture height by number of drawers,
+    place object in the center of the selected drawer.
+
+    Args:
+        furniture_bounds: Bounding box info with 'center', 'size', 'min' keys
+        drawer_index: Which drawer (0 = top drawer, -1 = bottommost drawer)
+        num_drawers: Total number of drawers
+        randomize: If True, randomize X/Z within drawer bounds
+
+    Returns:
+        (x, y, z) position for the object
+    """
+    import random
+
+    center_x = furniture_bounds['center'][0]
+    center_z = furniture_bounds['center'][2]
+    width, height, depth = furniture_bounds['size']
+    base_y = furniture_bounds['min'][1]
+
+    # Get num_drawers from bounds if not specified or invalid
+    if num_drawers <= 0:
+        num_drawers = furniture_bounds.get('num_drawers', 1) or 1
+
+    # Default to bottommost drawer if drawer_index is -1 or not specified
+    if drawer_index < 0:
+        drawer_index = num_drawers - 1  # Bottommost drawer
+        print(f"  Using bottommost drawer (index {drawer_index}) of {num_drawers} drawers")
+
+    # Calculate Y position for drawer/shelf
+    # Drawers are indexed top-to-bottom (0 = top drawer/shelf)
+    drawer_height = height / num_drawers
+    drawer_center_y = base_y + (num_drawers - drawer_index - 0.5) * drawer_height
+    y = drawer_center_y
+
+    if randomize:
+        # Random X/Z within 50% of drawer dimensions
+        margin = 0.5
+        x_range = width * margin / 2
+        z_range = depth * margin / 2
+        x = center_x + random.uniform(-x_range, x_range)
+        z = center_z + random.uniform(-z_range, z_range)
+    else:
+        x = center_x
+        z = center_z
+
+    print(f"  ✓ Placement inside furniture (shelf {drawer_index + 1}/{num_drawers}): ({x:.3f}, {y:.3f}, {z:.3f})")
     return (x, y, z)
 
 
@@ -699,6 +1277,17 @@ def add_object():
     receptacle_handle = data.get("receptacle_handle")
     preposition = data.get("preposition", "on")
     position = data.get("position", {"x": 0, "y": 0.5, "z": 0})
+    placement_mode = data.get("placement_mode", "on")  # 'on' or 'within'
+    drawer_index = data.get("drawer_index", -1)  # Which drawer (0 = top)
+
+    # Auto-detect placement mode from receptacle handle (shelf/drawer detection)
+    if receptacle_handle:
+        is_internal, detected_index, estimated_total = get_shelf_info_from_receptacle(receptacle_handle)
+        if is_internal and placement_mode == "on":
+            # Override to internal placement if shelf/drawer detected
+            placement_mode = "within"
+            drawer_index = detected_index
+            print(f"  Auto-detected internal placement: shelf/drawer index {detected_index} of ~{estimated_total}")
 
     if not all([object_id, object_class, room, furniture]):
         return jsonify({"error": "Missing required fields"}), 400
@@ -729,12 +1318,70 @@ def add_object():
         ):
             explicit_object_count += 1
 
+    # LOOKUP CORRECT NAMES FROM FURNITURE DATA
+    # Instead of using frontend names directly, look them up in pre-extracted furniture data
+    scene_id = ep.get("scene_id", "")
+    episode_id_str = str(ep.get("episode_id", ""))
+
+    correct_furniture_name = furniture
+    correct_room_name = room
+
+    # Try to get correct names from pre-extracted furniture data
+    if receptacle_handle and furniture != "floor":
+        pre_extracted = load_furniture_data(scene_id, episode_id_str)
+        if pre_extracted:
+            # Extract parent handle from receptacle_handle
+            parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
+            parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
+
+            # Find furniture in extracted data
+            furn_result = find_furniture_in_data(pre_extracted, parent_handle_base, furniture)
+
+            if furn_result:
+                # Unpack the tuple: (furniture_name, furniture_data)
+                extracted_furniture_name, furn_data = furn_result
+
+                # Use the furniture name from the JSON key
+                correct_furniture_name = extracted_furniture_name
+
+                # Get room name directly from furniture data
+                extracted_room_name = furn_data.get("room_name")
+
+                if extracted_room_name and extracted_room_name != "unknown_room":
+                    correct_room_name = extracted_room_name
+                else:
+                    # Fallback: Try to infer room name from existing initial_state
+                    for state in ep["info"]["initial_state"]:
+                        if (state.get("furniture_names")
+                            and extracted_furniture_name in state.get("furniture_names", [])):
+                            # Found this furniture in initial_state, use its room
+                            allowed_regions = state.get("allowed_regions", [])
+                            if allowed_regions:
+                                extracted_room_name = allowed_regions[0]
+                                correct_room_name = extracted_room_name
+                                break
+
+                # If still no room found, keep using frontend room name (already set above)
+
+                print(f"\n{'='*60}")
+                print(f"✓ Using correct names from furniture data:")
+                print(f"  Furniture: '{furniture}' → '{correct_furniture_name}'")
+                print(f"  Room: '{room}' → '{correct_room_name}'")
+                print(f"{'='*60}\n")
+            else:
+                print(f"⚠ Furniture with handle '{parent_handle_base}' not found in extracted data")
+                print(f"  Using frontend names: furniture='{furniture}', room='{room}'")
+        else:
+            print(f"⚠ No pre-extracted furniture data available for scene {scene_id}")
+            print(f"  Tip: Run extract_furniture_data.py first for accurate names")
+            print(f"  Using frontend names: furniture='{furniture}', room='{room}'")
+
     # 1. Add to initial_state (before any "common sense"/clutter entries)
     new_state = {
         "number": 1,
         "object_classes": [object_class],
-        "allowed_regions": [room],
-        "furniture_names": [furniture],
+        "allowed_regions": [correct_room_name],
+        "furniture_names": [correct_furniture_name],
     }
 
     # Find position to insert (before first entry with "name" or "template_task_number")
@@ -749,9 +1396,10 @@ def add_object():
     print(f"\n{'='*60}")
     print(f"Adding object: {object_class}")
     print(f"  Object ID: {object_id}")
-    print(f"  Room: {room}")
-    print(f"  Furniture: {furniture}")
+    print(f"  Room (frontend): {room}")
+    print(f"  Furniture (frontend): {furniture}")
     print(f"  Receptacle handle: {receptacle_handle}")
+    print(f"  Placement mode: {placement_mode}" + (f" (drawer {drawer_index + 1})" if drawer_index >= 0 else ""))
     print(f"  Position in arrays: {explicit_object_count} (before clutter)")
     print(f"{'='*60}\n")
 
@@ -788,21 +1436,69 @@ def add_object():
         except Exception as e:
             print(f"⚠ Warning: Could not get furniture info from scene file: {e}")
 
-    # Calculate object position using actual furniture bounding box from simulator
+    # Calculate object position
+    # Priority 1: Pre-extracted furniture data from JSON (most accurate)
+    # Priority 2: Simulator-based bounding box
+    # Priority 3: URDF-based dimensions
+    # Priority 4: Estimated height offset
+    # Priority 5: Manual/default position
     obj_position = None
 
-    if furniture != "floor" and HABITAT_AVAILABLE:
-        # Create simulator to get actual furniture dimensions
-        print(f"\nCreating simulator to get furniture bounding box...")
+    if furniture != "floor":
+        # Priority 1: Try pre-extracted furniture data from JSON
+        pre_extracted = load_furniture_data(scene_id, str(ep.get("episode_id", "")))
+        if pre_extracted:
+            furniture_handle_for_lookup = receptacle_handle.split('|')[0] if receptacle_handle and '|' in receptacle_handle else (receptacle_handle if receptacle_handle else furniture)
+            furn_result = find_furniture_in_data(pre_extracted, furniture_handle_for_lookup, furniture)
+
+            if furn_result:
+                _, furn_entry = furn_result
+            else:
+                furn_entry = None
+
+            if furn_entry and "aabb" in furn_entry:
+                aabb_data = furn_entry["aabb"]
+                furniture_bounds = {
+                    'min': tuple(aabb_data["min"]),
+                    'max': tuple(aabb_data["max"]),
+                    'center': tuple(aabb_data["center"]),
+                    'size': tuple(aabb_data["size"]),
+                    'top_surface_y': aabb_data["top_surface_y"],
+                }
+
+                print(f"Using pre-extracted furniture data from JSON")
+                print(f"  Top surface Y: {furniture_bounds['top_surface_y']:.3f}m")
+                print(f"  Size: ({furniture_bounds['size'][0]:.3f}, {furniture_bounds['size'][1]:.3f}, {furniture_bounds['size'][2]:.3f})")
+
+                if placement_mode == "within" and drawer_index >= 0:
+                    _, num_drawers = get_furniture_articulation_info(receptacle_handle)
+                    furniture_bounds['num_drawers'] = num_drawers
+                    obj_position = calculate_object_placement_inside_furniture(
+                        furniture_bounds, drawer_index, num_drawers, randomize=True
+                    )
+                else:
+                    obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=False)
+            elif furn_entry:
+                print(f"Furniture found in JSON but no AABB data, falling back...")
+            else:
+                print(f"Furniture not found in pre-extracted JSON data, falling back...")
+
+    # Priority 2: Simulator-based bounding box
+    if obj_position is None and furniture != "floor" and HABITAT_AVAILABLE:
+        # Create simulator to get furniture dimensions
+        print(f"\n{'='*60}")
+        print(f"Creating simulator to get furniture bounding box...")
+        print(f"{'='*60}")
         sim = create_sim_for_episode(ep)
 
         if sim:
             try:
-                # Get furniture bounding box from simulator
+                # Get furniture bounding box from simulator (instantiated object)
                 furniture_handle_base = receptacle_handle.split('|')[0] if receptacle_handle and '|' in receptacle_handle else (receptacle_handle if receptacle_handle else furniture)
                 if '_:' in furniture_handle_base:
                     furniture_handle_base = furniture_handle_base.split('_:')[0]
 
+                print(f"Looking for furniture with handle: {furniture_handle_base}")
                 furniture_bounds = get_furniture_bounds_from_sim(sim, furniture_handle_base)
 
                 if furniture_bounds:
@@ -812,11 +1508,40 @@ def add_object():
                     print(f"  Center: ({furniture_bounds['center'][0]:.3f}, {furniture_bounds['center'][1]:.3f}, {furniture_bounds['center'][2]:.3f})")
                     print(f"  Top surface Y: {furniture_bounds['top_surface_y']:.3f}m")
 
-                    # Calculate object placement on furniture
-                    obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=True)
-                    print(f"✓ Calculated object placement: ({obj_position[0]:.3f}, {obj_position[1]:.3f}, {obj_position[2]:.3f})")
+                    # Calculate object placement based on mode
+                    if placement_mode == "within" and drawer_index >= 0:
+                        # Get num_drawers from articulation info
+                        _, num_drawers = get_furniture_articulation_info(receptacle_handle)
+                        furniture_bounds['num_drawers'] = num_drawers
+                        obj_position = calculate_object_placement_inside_furniture(
+                            furniture_bounds, drawer_index, num_drawers, randomize=True
+                        )
+                    else:
+                        obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=True)
                 else:
-                    print(f"⚠ Could not get furniture bounds from simulator, falling back to scene file position")
+                    print(f"⚠ Could not get furniture bounds from simulator")
+
+                    # Fallback: Read dimensions from URDF file (lightweight, no crashes)
+                    if furniture_info:
+                        print(f"  Attempting to get furniture dimensions from URDF file...")
+                        furniture_bounds = get_furniture_bounds_from_scene_and_urdf(
+                            furniture_handle_base,
+                            furniture_info['position'],
+                            ep
+                        )
+
+                        if furniture_bounds:
+                            # Calculate object placement based on mode
+                            if placement_mode == "within" and drawer_index >= 0:
+                                _, num_drawers = get_furniture_articulation_info(receptacle_handle)
+                                furniture_bounds['num_drawers'] = num_drawers
+                                obj_position = calculate_object_placement_inside_furniture(
+                                    furniture_bounds, drawer_index, num_drawers, randomize=True
+                                )
+                            else:
+                                obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=True)
+                        else:
+                            print(f"  Could not read URDF either, will use scene file position")
             finally:
                 # Always close simulator to prevent memory leaks
                 sim.close()
@@ -825,15 +1550,40 @@ def add_object():
     # Fallback: Use furniture position + height offset if simulator method didn't work
     if obj_position is None:
         if furniture_info and furniture != "floor":
-            # Use furniture position with height offset for top surface
             base_pos = furniture_info['position']
-            # Add estimated height for top surface (same logic as scene_utils)
-            if abs(base_pos[1]) < 0.1:  # Ground level furniture
-                surface_y = base_pos[1] + 0.45  # Estimated height offset
-            else:  # Already elevated
-                surface_y = base_pos[1] + 0.05  # Small offset for top surface
-            obj_position = (base_pos[0], surface_y, base_pos[2])
-            print(f"Using furniture position with estimated height offset: {obj_position}")
+
+            # Check if this is internal placement (shelf/drawer)
+            if placement_mode == "within":
+                # Get estimated total shelves from receptacle detection
+                _, _, estimated_total = get_shelf_info_from_receptacle(receptacle_handle) if receptacle_handle else (False, -1, 3)
+                if estimated_total <= 0:
+                    estimated_total = 3  # Default: most drawers have 3 sections
+
+                # Default to bottommost drawer if not specified
+                actual_drawer_index = drawer_index if drawer_index >= 0 else (estimated_total - 1)
+                print(f"  Using bottommost drawer (index {actual_drawer_index}) of {estimated_total} drawers")
+
+                # Estimate furniture height (typical fridge ~1.7m, cabinet ~0.9m)
+                is_fridge = receptacle_handle and 'fridge' in receptacle_handle.lower()
+                estimated_height = 1.7 if is_fridge else 0.9
+
+                # Calculate shelf height: shelves are evenly distributed
+                # shelf_0 = top shelf, shelf_n = bottom shelf
+                shelf_height = estimated_height / estimated_total
+                # Invert index: shelf_01 is typically near top, so higher Y
+                inverted_index = estimated_total - actual_drawer_index - 1
+                surface_y = base_pos[1] + (inverted_index + 0.5) * shelf_height
+
+                obj_position = (base_pos[0], surface_y, base_pos[2])
+                print(f"Using estimated shelf position: shelf {actual_drawer_index + 1} of {estimated_total}, Y = {surface_y:.3f}m")
+            else:
+                # Standard on-top placement
+                if abs(base_pos[1]) < 0.1:  # Ground level furniture
+                    surface_y = base_pos[1] + 0.45  # Estimated height offset
+                else:  # Already elevated
+                    surface_y = base_pos[1] + 0.05  # Small offset for top surface
+                obj_position = (base_pos[0], surface_y, base_pos[2])
+                print(f"Using furniture position with estimated height offset: {obj_position}")
         else:
             obj_position = (position.get("x", 0.0), position.get("y", 0.5), position.get("z", 0.0))
             print(f"Using default/provided position: {obj_position}")
@@ -845,12 +1595,36 @@ def add_object():
     #    [r20, r21, r22, z],
     #    [0.0, 0.0, 0.0, 1.0]]
     # Use furniture's rotation matrix if available
+
+    # Adjust Y position for beds (lower them to account for frame height)
+    if "bed" in furniture.lower():
+        adjusted_y = obj_position[1] * 0.75
+        obj_position = (obj_position[0], adjusted_y, obj_position[2])
+        print(f"  Adjusted Y position for bed: {adjusted_y:.5f} (was {obj_position[1] / 0.75:.5f})")
+
+    print(f"\n{'='*60}")
+    print(f"Building 4×4 transformation matrix for object")
+    print(f"{'='*60}")
+    print(f"  Rotation matrix (3×3):")
+    print(f"    [{rotation_matrix[0, 0]:8.5f}, {rotation_matrix[0, 1]:8.5f}, {rotation_matrix[0, 2]:8.5f}]")
+    print(f"    [{rotation_matrix[1, 0]:8.5f}, {rotation_matrix[1, 1]:8.5f}, {rotation_matrix[1, 2]:8.5f}]")
+    print(f"    [{rotation_matrix[2, 0]:8.5f}, {rotation_matrix[2, 1]:8.5f}, {rotation_matrix[2, 2]:8.5f}]")
+    print(f"  Translation (position):")
+    print(f"    X: {obj_position[0]:.5f}")
+    print(f"    Y: {obj_position[1]:.5f}")
+    print(f"    Z: {obj_position[2]:.5f}")
+
     transform_matrix = [
         [float(rotation_matrix[0, 0]), float(rotation_matrix[0, 1]), float(rotation_matrix[0, 2]), float(obj_position[0])],
         [float(rotation_matrix[1, 0]), float(rotation_matrix[1, 1]), float(rotation_matrix[1, 2]), float(obj_position[1])],
         [float(rotation_matrix[2, 0]), float(rotation_matrix[2, 1]), float(rotation_matrix[2, 2]), float(obj_position[2])],
         [0.0, 0.0, 0.0, 1.0],
     ]
+
+    print(f"  Final transformation matrix (4×4):")
+    for i, row in enumerate(transform_matrix):
+        print(f"    [{row[0]:8.5f}, {row[1]:8.5f}, {row[2]:8.5f}, {row[3]:8.5f}]")
+    print(f"{'='*60}\n")
 
     new_rigid_obj = [
         f"{object_id}.object_config.json",
@@ -868,38 +1642,50 @@ def add_object():
     #
     # Key rules:
     # 1. PARENT_HANDLE must include the instance suffix (e.g., "_:0004")
-    # 2. RECEPTACLE_MESH_NAME always uses the BASE HASH (without instance suffix)
+    # 2. RECEPTACLE_MESH_NAME format depends on furniture type:
     #
-    # Example:
-    #   Furniture: chest_of_drawers_51 -> Handle: 084ff2a0e018cec0a68d318cc0f37f0b7624c8b8_:0004
-    #   Correct format: "084ff2a0e018cec0a68d318cc0f37f0b7624c8b8_:0004|receptacle_mesh_084ff2a0e018cec0a68d318cc0f37f0b7624c8b8.0000"
-    #   WRONG format:   "084ff2a0e018cec0a68d318cc0f37f0b7624c8b8_:0004|receptacle_mesh_084ff2a0e018cec0a68d318cc0f37f0b7624c8b8_:0004.0000"
+    #    ARTICULATED furniture (URDF, has drawers/doors):
+    #      - Needs .0000 suffix on receptacle name
+    #      - Example: "hash_:0004|chest_of_drawers0002_receptacle_mesh.0000"
     #
-    # The base hash (084ff2a0e018cec0a68d318cc0f37f0b7624c8b8) is shared across all instances
-    # of the same furniture type, but each instance has a unique suffix (_:0000, _:0001, etc.)
+    #    NON-ARTICULATED furniture (tables, benches):
+    #      - NO .0000 suffix on receptacle name!
+    #      - Example: "hash_:0000|receptacle_mesh_hash"
+    #
+    # Why this matters:
+    #   Habitat builds sim_handle_to_name from receptacle.unique_name
+    #   which is: parent_object_handle + "|" + receptacle.name
+    #   The receptacle name comes from the config file WITHOUT .0000 for non-articulated.
+    #   If we add .0000 incorrectly, the lookup fails and objects fall to the floor!
     #
     # See docs/ADDING_OBJECTS_TO_EPISODE.md for more details
-    #
-    # We need to get the actual receptacle name from the simulator, not construct it
     if receptacle_handle and furniture != "floor":
         parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
         # Ensure parent handle has instance suffix
         parent_handle_with_suffix = parent_handle if "_:" in parent_handle else f"{parent_handle}_:0000"
 
-        # Find the actual receptacle mesh name from URDF directory
-        receptacle_mesh_name = find_receptacle_mesh_name(parent_handle)
+        # Find the actual receptacle mesh name
+        # Returns (receptacle_name, is_articulated) tuple
+        receptacle_mesh_name, is_articulated = find_receptacle_mesh_name(parent_handle)
 
         if receptacle_mesh_name:
-            # Format: "PARENT_HANDLE_:XXXX|receptacle_mesh_name.0000"
-            # Example: "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000|chest_of_drawers0002_receptacle_mesh.0000"
-            recep_value = f"{parent_handle_with_suffix}|{receptacle_mesh_name}.0000"
-            print(f"✓ Using receptacle from URDF: {recep_value}")
+            if is_articulated:
+                # Articulated furniture (URDF): already has .0000 suffix from find_receptacle_mesh_name
+                # Example: "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000|chest_of_drawers0002_receptacle_mesh.0000"
+                recep_value = f"{parent_handle_with_suffix}|{receptacle_mesh_name}.0000"
+                print(f"✓ Using articulated receptacle: {recep_value}")
+            else:
+                # Non-articulated furniture: uses format receptacle_mesh_<hash>.0000
+                # Example: "033774ae209de7a75a61ef44b69e42189f9af358_:0000|receptacle_mesh_033774ae209de7a75a61ef44b69e42189f9af358.0000"
+                parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
+                recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
+                print(f"✓ Using non-articulated receptacle: {recep_value}")
         else:
-            # Last resort fallback - construct a generic name
+            # Last resort fallback - construct a generic name (will likely fail for sanitized handles)
             parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
-            recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
-            print(f"⚠ WARNING: Could not find receptacle mesh in URDF, using fallback: {recep_value}")
-            print(f"  This will likely cause errors when loading the episode!")
+            recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}"
+            print(f"⚠ WARNING: Could not find receptacle mesh, using fallback: {recep_value}")
+            print(f"  This may cause errors when loading the episode!")
     else:
         recep_value = "floor"
 
@@ -913,6 +1699,8 @@ def add_object():
 
     print(f"\n✓ Object '{object_class}' added successfully!")
     print(f"  Will be named: {object_class}_{explicit_object_count}")
+    print(f"  Saved with furniture_name: '{correct_furniture_name}'")
+    print(f"  Saved with room (allowed_region): '{correct_room_name}'")
     print(f"  Refresh visualization to see the new object.\n")
 
     return jsonify({
@@ -1082,6 +1870,7 @@ def main():
     parser.add_argument("--port", type=int, default=5000, help="Port to run server on")
     parser.add_argument("--debug", action="store_true", help="Run in debug mode")
     parser.add_argument("--skip-viz", action="store_true", help="Skip initial visualization generation")
+    parser.add_argument("--furniture-data", type=str, default="", help="Path to pre-extracted furniture JSON file from extract_furniture_data.py")
 
     args = parser.parse_args()
 
@@ -1113,6 +1902,50 @@ def main():
         sys.exit(1)
 
     print(f"Episode loaded successfully")
+
+    # Extract furniture data using extract_furniture_data.py
+    print(f"Extracting furniture data for episode {episode_id}...")
+    extract_furniture_cmd = [
+        sys.executable,
+        "-m", "habitat_llm.examples.extract_furniture_data",
+        f"+skill_runner_episode_id={episode_id}",
+        'hydra.run.dir=.',
+        f'habitat.dataset.data_path={dataset_path}',
+    ]
+
+    try:
+        result = subprocess.run(
+            extract_furniture_cmd,
+            cwd=str(project_root),
+            capture_output=True,
+            text=True,
+            timeout=45  # 1.5 minute timeout
+        )
+
+        if result.returncode == 0:
+            print("✓ Furniture data extracted successfully in folder {scripts/episode_editor/furniture_data/.json}")
+        else:
+            print(f"Warning: Furniture extraction failed: {result.stderr}")
+            print("Continuing without pre-extracted furniture data...")
+    except subprocess.TimeoutExpired:
+        print("Warning: Furniture extraction timed out")
+        print("Continuing without pre-extracted furniture data...")
+    except Exception as e:
+        print(f"Warning: Could not extract furniture data: {e}")
+        print("Continuing without pre-extracted furniture data...")
+
+    # Pre-load furniture data if provided
+    if args.furniture_data and os.path.exists(args.furniture_data):
+        with open(args.furniture_data, 'r') as f:
+            furn_data = json.load(f)
+        furn_scene_id = furn_data.get("scene_id", "")
+        furn_ep_id = furn_data.get("episode_id", "")
+        cache_key = f"{furn_scene_id}_{furn_ep_id}" if furn_scene_id else "manual"
+        furniture_data_cache[cache_key] = furn_data
+        # Also cache by scene_id alone for cross-episode lookup
+        if furn_scene_id:
+            furniture_data_cache[furn_scene_id] = furn_data
+        print(f"Pre-loaded furniture data: {len(furn_data.get('furniture', {}))} items from {args.furniture_data}")
 
     # Generate visualization
     if not args.skip_viz:

@@ -184,6 +184,30 @@ class Planner:
                     low_level_actions[agent_uid] = low_level_action
                 responses[agent_uid] = response.rstrip("\n")
 
+                # Force perception update after successful Open actions to detect newly accessible objects
+                if (hl_action_name == "Open"
+                    and response
+                    and ("success" in response.lower() or "successful" in response.lower())
+                    and self.env_interface.partial_obs):
+                    # Trigger perception to detect objects inside the opened furniture
+                    try:
+                        # Get current observations and update the world graph
+                        if hasattr(self.env_interface, 'perception') and self.env_interface.perception:
+                            agent_uids = [str(agent_uid)]
+                            # Get the most recent observations from the environment
+                            current_obs = self.env_interface.env.habitat_env.sim.get_sensor_observations()
+                            # Update perception to detect newly visible objects
+                            updated_subgraph = self.env_interface.perception.get_recent_subgraph(
+                                agent_uids, current_obs
+                            )
+                            # Merge the updated observations into the agent's world graph
+                            if hasattr(self.env_interface.world_graph[agent_uid], 'merge_graph'):
+                                self.env_interface.world_graph[agent_uid].merge_graph(updated_subgraph)
+                    except Exception as e:
+                        # Log but don't fail if perception update has issues
+                        from habitat.core.logging import logger
+                        logger.warning(f"Failed to update perception after Open action: {e}")
+
         # update world based on actions
         self.update_world(responses)
 
