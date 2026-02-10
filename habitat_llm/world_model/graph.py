@@ -346,9 +346,17 @@ class Graph:
 
         return
 
-    def get_neighbors(self, node):
+    def get_neighbors(self, node, relation_type=None):
         """
         This method returns all neighbors of the current node
+        
+        Args:
+            node: The node to get neighbors for
+            relation_type: Optional edge label to filter neighbors by
+        
+        Returns:
+            If relation_type is None: dict of {neighbor: edge_label}
+            If relation_type is provided: list of neighbors with matching edge_label
         """
 
         # Fetch node if input type is string
@@ -359,7 +367,17 @@ class Graph:
         if node not in self.graph:
             raise ValueError(f"{node} not present in the graph")
 
-        return self.graph[node]
+        neighbors = self.graph[node]
+
+        # Filter by relation type if specified
+        if relation_type is not None:
+            return [
+                neighbor
+                for neighbor, edge_label in neighbors.items()
+                if edge_label == relation_type
+            ]
+
+        return neighbors
 
     def get_neighbors_of_type(self, node, class_type):
         """

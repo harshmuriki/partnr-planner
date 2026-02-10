@@ -139,6 +139,34 @@ class OracleRearrangeSkill(SkillPolicy):
             reference_object,
         ) = values
 
+        # Validate that the object exists and has a valid sim_handle
+        try:
+            obj_node = env.world_graph[self.agent_uid].get_node_from_name(object_to_be_moved)
+            if obj_node.sim_handle is None:
+                raise ValueError(
+                    f"Cannot rearrange '{object_to_be_moved}': object isn't valid."
+                )
+        except Exception as e:
+            if "not present in the graph" in str(e):
+                raise ValueError(
+                    f"Cannot rearrange '{object_to_be_moved}': object not found in world graph."
+                )
+            raise
+
+        # Validate that the place receptacle exists and has a valid sim_handle
+        try:
+            place_node = env.world_graph[self.agent_uid].get_node_from_name(place_receptacle)
+            if place_node.sim_handle is None:
+                raise ValueError(
+                    f"Cannot place on '{place_receptacle}': furniture isn't valid."
+                )
+        except Exception as e:
+            if "not present in the graph" in str(e):
+                raise ValueError(
+                    f"Cannot place on '{place_receptacle}': furniture not found in world graph."
+                )
+            raise
+
         # Set targets for individual names
         self.skills[AtomicSkills.NAV_OBJ].set_target(object_to_be_moved, env)
         self._skill_args[AtomicSkills.NAV_OBJ] = object_to_be_moved

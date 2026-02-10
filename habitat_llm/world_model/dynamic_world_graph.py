@@ -1290,6 +1290,334 @@ class DynamicWorldGraph(WorldGraph):
             self.add_edge(agent_node, room_node, "in", opposite_label="contains")
             self.update_held_objects(agent_node)
 
+    def add_object_to_graph(
+        self,
+        object_class: str,
+        position: Optional[List[float]] = None,
+        furniture_name: Optional[str] = None,
+        sim_handle: Optional[str] = None,
+        object_states: Optional[Dict[str, Any]] = None,
+        connect_to_entities: bool = True,
+        height_offset: float = 0.1,
+        verbose: bool = False,
+    ) -> Object:
+        """
+        Programmatically add an object of a given class to the concept graph.
+        
+        This method creates an Object node with the specified properties and adds it
+        to the graph. Can place object at a specific position or on top of furniture.
+        
+        Args:
+            object_class: Type/class of object (e.g., "bottle", "cup", "apple")
+            position: [x, y, z] position in world coordinates (optional if furniture_name provided)
+            furniture_name: Name of furniture to place object on (e.g., "couch_45")
+            sim_handle: Optional simulator handle for the object
+            object_states: Optional dictionary of object states (e.g., {"is_clean": True})
+            connect_to_entities: Whether to automatically connect to nearest furniture/room
+            height_offset: Height offset above furniture surface (default 0.1)
+            verbose: Whether to print debug information
+        
+        Returns:
+            The created Object node
+        
+        Example:
+            >>> cg = DynamicWorldGraph()
+            >>> # Place at specific position
+            >>> bottle = cg.add_object_to_graph("bottle", position=[1.0, 0.5, 2.0])
+            >>> # Place on furniture
+            >>> cup = cg.add_object_to_graph("cup", furniture_name="couch_45")
+        """
+        # Generate unique object name
+        object_name = f"{len(self._entity_names)+1}_{object_class.replace(' ', '_')}"
+
+        # Determine position and target furniture
+        target_furniture = None
+        if furniture_name is not None:
+            # Find furniture by name
+            try:
+                target_furniture = self.get_node_from_name(furniture_name)
+                if not isinstance(target_furniture, Furniture):
+                    if verbose:
+                        self._logger.warning(
+                            f"Node '{furniture_name}' is not a Furniture, treating as position-based"
+                        )
+                    target_furniture = None
+                else:
+                    # Get furniture position and place object on top
+                    fur_pos = target_furniture.properties.get('translation')
+                    if fur_pos is not None:
+                        position = [fur_pos[0], fur_pos[1] + height_offset, fur_pos[2]]
+                        if verbose:
+                            self._logger.info(
+                                f"Placing {object_name} on furniture {furniture_name} at {position}"
+                            )
+                    else:
+                        if verbose:
+                            self._logger.warning(
+                                f"Furniture {furniture_name} has no position, using default"
+                            )
+                        if position is None:
+                            position = [0.0, 0.0, 0.0]
+            except Exception as e:
+                if verbose:
+                    self._logger.warning(
+                        f"Could not find furniture '{furniture_name}': {e}"
+                    )
+                if position is None:
+                    position = [0.0, 0.0, 0.0]
+
+        # Ensure position is set
+        if position is None:
+            if verbose:
+                self._logger.warning("No position or furniture specified, using origin [0, 0, 0]")
+            position = [0.0, 0.0, 0.0]
+
+        # Create properties dict
+        properties = {
+            "type": object_class,
+            "translation": position,
+            "camera_pose_of_view": None,
+        }
+
+        # Add states if provided
+        if object_states is not None:
+            properties["states"] = object_states
+        else:
+            properties["states"] = {}
+
+        # Create object node
+        new_object = Object(object_name, properties, sim_handle=sim_handle)
+
+        # Add to graph
+        self.add_node(new_object)
+        self._entity_names.append(new_object.name)
+
+        if verbose:
+            self._logger.info(f"Added object {object_name} at position {position}")
+
+        # Connect to entities
+        if connect_to_entities:
+            if target_furniture is not None:
+                # Directly connect to specified furniture with "on" relation
+                self.add_edge(
+                    target_furniture,
+                    new_object,
+                    "on",
+                    flip_edge("on"),
+                )
+                if verbose:
+                    self._logger.info(
+                        f"Connected {object_name} to furniture {target_furniture.name} with 'on' relation"
+                    )
+            else:
+                # Use spatial proximity to find connection
+                self._connect_object_to_nearest_entity(new_object, verbose=verbose)
+
+        return new_object
+
+    def _connect_object_to_nearest_entity(
+        self, object_node: Object, verbose: bool = False
+    ):
+        """
+        Connect an object to the nearest furniture or room based on spatial proximity.
+        Uses geometric heuristics to determine the most appropriate connection.
+        
+        Args:
+            object_node: The object node to connect
+            verbose: Whether to print debug information
+        """
+        # Get closest entities (furniture and objects for room inference)
+        closest_entities = self.get_closest_entities(
+            5,
+            object_node=object_node,
+            include_furniture=True,
+            include_rooms=False,
+            include_objects=True,
+        )
+
+        if not closest_entities:
+            if verbose:
+                self._logger.warning(
+                    f"No nearby entities found for {object_node.name}, skipping connection"
+                )
+            return
+
+        # Try to connect to furniture using geometric relation check
+        reference_furniture, relation = self._cg_check_for_relation(object_node)
+
+        if reference_furniture is not None and relation is not None:
+            # Found a furniture with valid spatial relation
+            self.add_edge(
+                reference_furniture,
+                object_node,
+                relation,
+                flip_edge(relation),
+            )
+            if verbose:
+                self._logger.info(
+                    f"Connected {object_node.name} to furniture {reference_furniture.name} "
+                    f"via relation '{relation}'"
+                )
+            return
+
+        # No furniture relation found, try to connect to a room
+        # Strategy: Find rooms from nearest objects
+        room_counts: Dict[Room, int] = {}
+
+        for entity in closest_entities:
+            if isinstance(entity, Object):
+                # Get rooms this object is connected to
+                obj_rooms = self.get_neighbors_of_type(entity, Room)
+                for room in obj_rooms:
+                    if room in room_counts:
+                        room_counts[room] += 1
+                    else:
+                        room_counts[room] = 1
+                    break  # Use first room
+            elif isinstance(entity, Furniture):
+                # Get rooms this furniture is connected to
+                fur_rooms = self.get_neighbors_of_type(entity, Room)
+                for room in fur_rooms:
+                    if room in room_counts:
+                        room_counts[room] += 1
+                    else:
+                        room_counts[room] = 1
+                    break  # Use first room
+
+        # Connect to most common room
+        if room_counts:
+            closest_room = max(room_counts, key=room_counts.get)
+            self.add_edge(
+                object_node,
+                closest_room,
+                "in",
+                "contains",
+            )
+            if verbose:
+                self._logger.info(
+                    f"Connected {object_node.name} to room {closest_room.name}"
+                )
+        else:
+            # Fallback: connect to first available room
+            all_rooms = self.get_all_rooms()
+            if all_rooms:
+                self.add_edge(
+                    object_node,
+                    all_rooms[0],
+                    "in",
+                    "contains",
+                )
+                if verbose:
+                    self._logger.warning(
+                        f"No nearby room found, connected {object_node.name} to "
+                        f"default room {all_rooms[0].name}"
+                    )
+
+    def move_robot_to_room(
+        self, room_name: str, agent_id: int = 0, verbose: bool = False, sim=None
+    ) -> bool:
+        """
+        Move the robot agent to a specific room's floor location.
+        Updates the robot's translation property and reconnects it to the target room.
+        Also updates the physical agent position in the simulator if sim is provided.
+        
+        Args:
+            room_name: Name of the room to move the robot to (e.g., "kitchen_1")
+            agent_id: Agent ID (default 0 for SpotRobot)
+            verbose: Whether to print debug information
+            sim: Habitat simulator instance (optional, needed to move physical agent)
+        
+        Returns:
+            True if successful, False otherwise
+        
+        Example:
+            >>> cg = DynamicWorldGraph()
+            >>> cg.move_robot_to_room("kitchen_1", sim=env_interface.sim)
+            >>> # Robot is now positioned at kitchen_1's floor location in both SG and sim
+        """
+        # Get the robot node
+        robot_nodes = self.get_all_nodes_of_type(SpotRobot)
+        if not robot_nodes:
+            if verbose:
+                self._logger.error("No robot node found in graph")
+            return False
+
+        robot_node = robot_nodes[0]  # Assume first robot
+
+        # Get the target room
+        try:
+            room_node = self.get_node_from_name(room_name)
+            if not isinstance(room_node, Room):
+                if verbose:
+                    self._logger.error(f"'{room_name}' is not a Room node")
+                return False
+        except Exception as e:
+            if verbose:
+                self._logger.error(f"Could not find room '{room_name}': {e}")
+            return False
+
+        # Get the floor node for this room
+        floor_name = f"floor_{room_name}"
+        try:
+            floor_node = self.get_node_from_name(floor_name)
+            if not isinstance(floor_node, Floor):
+                if verbose:
+                    self._logger.error(f"'{floor_name}' is not a Floor node")
+                return False
+        except Exception as e:
+            if verbose:
+                self._logger.error(f"Could not find floor '{floor_name}': {e}")
+            return False
+
+        # Get floor position
+        floor_position = floor_node.properties.get("translation")
+        if floor_position is None:
+            # Try room position as fallback
+            floor_position = room_node.properties.get("translation")
+            if floor_position is None:
+                if verbose:
+                    self._logger.error(f"No position found for {room_name} or its floor")
+                return False
+
+        # Update robot position
+        robot_node.properties["translation"] = list(floor_position)
+
+        # Reconnect robot to new room
+        # Remove old room connections
+        old_rooms = self.get_neighbors_of_type(robot_node, Room)
+        for old_room in old_rooms:
+            self.remove_edge(robot_node, old_room)
+
+        # Add new room connection
+        self.add_edge(robot_node, room_node, "inside", flip_edge("inside"))
+
+        # Update physical agent position in simulator if sim is provided
+        if sim is not None:
+            try:
+                import magnum as mn
+                # Get the articulated agent from the simulator
+                if hasattr(sim, 'agents_mgr') and agent_id < len(sim.agents_mgr._all_agent_data):
+                    articulated_agent = sim.agents_mgr._all_agent_data[agent_id].articulated_agent
+                    # Set the base position (y is kept at agent's current height)
+                    current_height = articulated_agent.base_pos.y
+                    new_position = mn.Vector3(floor_position[0], current_height, floor_position[2])
+                    articulated_agent.base_pos = new_position
+                    if verbose:
+                        self._logger.info(f"Updated physical agent position to {new_position}")
+                else:
+                    if verbose:
+                        self._logger.warning(f"Could not access articulated agent {agent_id} in simulator")
+            except Exception as e:
+                if verbose:
+                    self._logger.warning(f"Could not update physical agent position: {e}")
+
+        if verbose:
+            self._logger.info(
+                f"Moved {robot_node.name} to {room_name} at position {floor_position}"
+            )
+
+        return True
+
     def get_object_from_obs(
         self,
         detector_frame: dict,

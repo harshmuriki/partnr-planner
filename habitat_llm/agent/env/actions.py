@@ -382,6 +382,12 @@ class OracleOpenAction(ArticulatedAgentAction):
                 sutils.open_link(ao, default_link)
                 if self._sim._kinematic_mode:
                     self._sim.kinematic_relationship_manager.apply_relations()
+                    self._sim.kinematic_relationship_manager.update_snapshots()
+
+                # Trigger perception update to detect newly visible objects after opening
+                # I don't need to trigger manually. After i open the furniture, I can navigate back to the furniture
+                # and the perception update will be triggered by the navigation action which will update the world graph
+                # and allow the agent to see the newly visible objects.
 
 
 @registry.register_task_action
@@ -457,6 +463,7 @@ class OracleCloseAction(OracleOpenAction):
                 sutils.close_link(ao, default_link)
                 if self._sim._kinematic_mode:
                     self._sim.kinematic_relationship_manager.apply_relations()
+                    self._sim.kinematic_relationship_manager.update_snapshots()
 
 
 @registry.register_task_action

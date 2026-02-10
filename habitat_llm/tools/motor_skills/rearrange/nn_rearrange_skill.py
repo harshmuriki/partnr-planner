@@ -108,6 +108,37 @@ class RearrangeSkillPolicy(OracleRearrangeSkill):
             reference_object,
         ) = values
 
+        # Validate that the object exists and has a valid sim_handle
+        try:
+            obj_node = env.world_graph[self.agent_uid].get_node_from_name(object_to_be_moved)
+            if obj_node.sim_handle is None:
+                raise ValueError(
+                    f"Cannot rearrange '{object_to_be_moved}': object exists in world graph but not in simulator. "
+                    f"This object has no simulator handle and cannot be physically manipulated. "
+                    f"Only objects that exist in the simulator can be rearranged."
+                )
+        except Exception as e:
+            if "not present in the graph" in str(e):
+                raise ValueError(
+                    f"Cannot rearrange '{object_to_be_moved}': object not found in world graph."
+                )
+            raise
+
+        # Validate that the place receptacle exists and has a valid sim_handle
+        try:
+            place_node = env.world_graph[self.agent_uid].get_node_from_name(place_receptacle)
+            if place_node.sim_handle is None:
+                raise ValueError(
+                    f"Cannot place on '{place_receptacle}': furniture exists in world graph but not in simulator. "
+                    f"This furniture has no simulator handle and cannot be used as a placement target."
+                )
+        except Exception as e:
+            if "not present in the graph" in str(e):
+                raise ValueError(
+                    f"Cannot place on '{place_receptacle}': furniture not found in world graph."
+                )
+            raise
+
         # Only set targets for the active skill. Otherwise the dynamics target
         # will be overwritten by the next skill's target
         if self.active_skill in [AtomicSkills.NAV_OBJ, AtomicSkills.PICK]:

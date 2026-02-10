@@ -105,6 +105,11 @@ class EvaluationRunner:
         self.TRUNCATE_LENGTH = self.evaluation_runner_config.truncate_length
 
         dataset_file = self.env_interface.conf.habitat.dataset.data_path.split("/")[-1]
+        # Remove .json.gz extension from dataset file name for cleaner folder structure
+        if dataset_file.endswith('.json.gz'):
+            dataset_file = dataset_file[:-8]  # Remove '.json.gz'
+        elif dataset_file.endswith('.json'):
+            dataset_file = dataset_file[:-5]  # Remove '.json'
         results_dir = self.env_interface.conf.paths.results_dir
         self.output_dir = f"{results_dir}/{dataset_file}/"
         os.makedirs(self.output_dir, exist_ok=True)

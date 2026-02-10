@@ -261,51 +261,10 @@ class SkillPolicy(Policy):
         # Get entity based on the target
         entity = self.env.world_graph[self.agent_uid].get_node_from_name(target_name)
 
-        # non-privileged graph entities do not have any sim-handle; this logic handles assigning the
-        # sim-handle of closest sim-object/furniture entity to non-privileged object/furniture entity respectively
+        # Entities must have a sim_handle to be actionable by skills
         if entity.sim_handle is None:
-            # find closest entity to assign as proxy sim-handle
-            # TODO: @zephirefaith :BE: is there a way to make following less brittle
-            if type(self).__name__ == "PlaceSkillPolicy":
-                all_gt_entities = self.env.perception.gt_graph.get_all_nodes_of_type(
-                    Furniture
-                )
-                # only keep furniture with placeable receptacle
-                all_gt_entities = [
-                    ent
-                    for ent in all_gt_entities
-                    if ent.sim_handle in self.env.perception.fur_to_rec
-                ]
-            elif type(self).__name__ == "PickSkillPolicy":
-                all_gt_entities = self.env.perception.gt_graph.get_all_nodes_of_type(
-                    Object
-                )
-            elif type(self).__name__ == "NavSkillPolicy":
-                all_gt_entities = (
-                    self.env.perception.gt_graph.get_all_nodes_of_type(Furniture)
-                    + self.env.perception.gt_graph.get_all_nodes_of_type(Object)
-                    + self.env.perception.gt_graph.get_all_nodes_of_type(Room)
-                )
-            # only keep entities that have a translation property
-            all_gt_entities = [
-                ent for ent in all_gt_entities if "translation" in ent.properties
-            ]
-
-            # find the closest entity to given target
-            entity_positions = np.array(
-                [
-                    np.array(entity.properties["translation"])
-                    for entity in all_gt_entities
-                ]
-            )
-            entity_distance = np.linalg.norm(
-                entity_positions - np.array(entity.properties["translation"]),
-                axis=1,
-            )
-            closest_entity_idx = np.argmin(entity_distance)
-            entity.sim_handle = all_gt_entities[closest_entity_idx].sim_handle
-            self._logger.debug(
-                f"Detected non-sim object. Matched {all_gt_entities[closest_entity_idx].name} with non-sim object {entity.name}"
+            raise ValueError(
+                f"Entity '{target_name}' does not have a simulator handle. "
             )
 
         # Get sim handle of the target
