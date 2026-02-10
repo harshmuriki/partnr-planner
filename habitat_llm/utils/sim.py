@@ -352,18 +352,26 @@ def check_if_the_object_is_inside_furniture(
     # check the Receptacle
     rec = env.full_world_graph.find_receptacle_for_object(entity)
     # currently any pick on articulated object requires open
-    if (
-        rec is not None
-        and fur.is_articulated()
-        and rec.sim_handle
-        in env.perception.fur_obj_handle_to_recs[fur.sim_handle]["within"]
-        and (not is_open(fur, env, threshold_for_ao_state))
-    ):
-        termination_message = "Failed to pick! Object is in a closed furniture, you need to open the furniture first."
-        failed = True
-        return action_zero, termination_message, failed
-    else:
-        return action, None, False
+    # Check if the furniture is articulated and closed. If object is in/within or on a receptacle, and furniture is closed, don't allow the pick.
+    if fur.is_articulated():
+        # First check using the is_open state from furniture properties if available
+        states = fur.properties.get("states", {})
+        furniture_is_open = states.get("is_open")
+
+        # If we have the is_open state, use it directly
+        if furniture_is_open is not None:
+            if not furniture_is_open:
+                termination_message = f"Failed to pick! Object is inside closed {fur.name}, you need to open the furniture first."
+                failed = True
+                return action_zero, termination_message, failed
+        # Otherwise fall back to the original joint position check
+        elif rec is not None and rec.sim_handle in env.perception.fur_obj_handle_to_recs[fur.sim_handle]["within"]:
+            if not is_open(fur, env, threshold_for_ao_state):
+                termination_message = "Failed to pick! Object is in a closed furniture, you need to open the furniture first."
+                failed = True
+                return action_zero, termination_message, failed
+
+    return action, None, False
 
 
 def check_if_the_object_is_held_by_agent(
