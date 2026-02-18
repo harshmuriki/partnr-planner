@@ -40,55 +40,177 @@ from habitat_llm.utils.world_graph import (
 )
 
 
-def print_object_states(world_graph, object_name: str = None):
+def print_object_states(env_interface, object_name: str = None):
     """
-    Print the states of an object or all objects.
+    Print the states of an object or all objects from the Ground Truth (GT) graph.
     
-    :param world_graph: The active WorldGraph
+    :param env_interface: The EnvironmentInterface (to access GT graph)
     :param object_name: Optional specific object name. If None, shows all objects.
     """
     from habitat_llm.world_model import Object
 
-    if object_name:
-        cprint(f"Object State for: {object_name}", "green")
+    # Try to get GT graph for most accurate state information
+    if env_interface and hasattr(env_interface, 'perception') and env_interface.perception:
+        # Update states to ensure we have the latest info
+        env_interface.perception.update_object_and_furniture_states()
+        gt_graph = env_interface.perception.gt_graph
+        graph_source = "GT (Ground Truth)"
     else:
-        cprint("All Object States:", "green")
+        cprint("No GT graph available (perception not initialized)", "red")
+        return
 
-    objects = world_graph.get_all_objects()
+    if object_name:
+        cprint(f"Object State for: {object_name} (from {graph_source} graph)", "green")
+    else:
+        cprint(f"All Object States (from {graph_source} graph):", "green")
+
+    objects = gt_graph.get_all_objects()
+    found_object = False
 
     for obj in objects:
         if object_name and obj.name != object_name:
             continue
+
+        found_object = True
 
         # Get states from properties
         states = obj.properties.get("states", {})
 
         if states:
             state_str = ", ".join([f"{k}={v}" for k, v in states.items()])
-            cprint(f"{obj.name}: {state_str}", "yellow")
+            cprint(f"  {obj.name}: {state_str}", "yellow")
         else:
             # Check for direct state properties (backward compatibility)
             state_props = {k: v for k, v in obj.properties.items()
                           if k in ["is_powered_on", "is_filled", "is_clean"]}
             if state_props:
                 state_str = ", ".join([f"{k}={v}" for k, v in state_props.items()])
-                cprint(f"{obj.name}: {state_str}", "yellow")
+                cprint(f"  {obj.name}: {state_str}", "yellow")
             else:
-                cprint(f"{obj.name}: No states available", "white")
+                cprint(f"  {obj.name}: No states available", "white")
+    
+    # If searching for a specific object and it wasn't found
+    if object_name and not found_object:
+        cprint(f"  Object '{object_name}' not found in GT graph", "red")
+        cprint(f"  Available objects:", "cyan")
+        all_obj_names = [obj.name for obj in objects]
+        if all_obj_names:
+            for name in sorted(all_obj_names)[:20]:  # Show first 20
+                cprint(f"    - {name}", "white")
+            if len(all_obj_names) > 20:
+                cprint(f"    ... and {len(all_obj_names) - 20} more", "white")
+        else:
+            cprint(f"    (No objects in GT graph)", "white")
+
+def get_entity_location(env_interface, entity_name: str = None):
+    """
+    Get and print the 3D location of an object or furniture from the Ground Truth (GT) graph.
+
+    :param env_interface: The EnvironmentInterface (to access GT graph)
+    :param entity_name: Optional specific entity name. If None, shows all entities with locations.
+    :return: Dictionary with entity locations {name: (x, y, z)} or single tuple if entity_name provided
+    """
+    # Try to get GT graph for most accurate location information
+    if env_interface and hasattr(env_interface, 'perception') and env_interface.perception:
+        gt_graph = env_interface.perception.gt_graph
+        graph_source = "GT (Ground Truth)"
+    else:
+        cprint("No GT graph available (perception not initialized)", "red")
+        return None
+
+    locations = {}
+
+    if entity_name:
+        # Get specific entity
+        try:
+            entity = gt_graph.get_node_from_name(entity_name)
+            translation = entity.properties.get("translation", None)
+            if translation:
+                loc = tuple(translation) if hasattr(translation, '__iter__') else translation
+                locations[entity_name] = loc
+                cprint(f"\n3D Location of '{entity_name}' (from {graph_source} graph):", "green")
+                cprint(f"  X: {loc[0]:.4f}", "white")
+                cprint(f"  Y: {loc[1]:.4f}", "white")
+                cprint(f"  Z: {loc[2]:.4f}", "white")
+
+                # Also print rotation if available
+                rotation = entity.properties.get("rotation", None)
+                if rotation:
+                    cprint(f"  Rotation (quaternion): [{rotation[0]:.4f}, {rotation[1]:.4f}, {rotation[2]:.4f}, {rotation[3]:.4f}]", "white")
+
+                # Print sim_handle if available
+                if entity.sim_handle:
+                    cprint(f"  Sim Handle: {entity.sim_handle}", "cyan")
+
+                return loc
+            else:
+                cprint(f"No translation found for '{entity_name}'", "yellow")
+                return None
+        except (ValueError, KeyError) as e:
+            cprint(f"Entity '{entity_name}' not found in GT graph: {e}", "red")
+            # List available entities
+            cprint(f"  Available entities:", "cyan")
+            all_entities = []
+            all_entities.extend([obj.name for obj in gt_graph.get_all_objects()])
+            all_entities.extend([furn.name for furn in gt_graph.get_all_furnitures()])
+            if all_entities:
+                for name in sorted(all_entities)[:20]:  # Show first 20
+                    cprint(f"    - {name}", "white")
+                if len(all_entities) > 20:
+                    cprint(f"    ... and {len(all_entities) - 20} more", "white")
+            return None
+    else:
+        # Get all objects and furniture
+        cprint(f"\nAll Entity Locations (from {graph_source} graph):", "green")
+
+        # Objects
+        objects = gt_graph.get_all_objects()
+        if objects:
+            cprint("\n  OBJECTS:", "cyan")
+            for obj in sorted(objects, key=lambda o: o.name):
+                translation = obj.properties.get("translation", None)
+                if translation:
+                    loc = tuple(translation) if hasattr(translation, '__iter__') else translation
+                    locations[obj.name] = loc
+                    cprint(f"    {obj.name}: ({loc[0]:.3f}, {loc[1]:.3f}, {loc[2]:.3f})", "white")
+
+        # Furniture
+        furniture = gt_graph.get_all_furnitures()
+        if furniture:
+            cprint("\n  FURNITURE:", "cyan")
+            for furn in sorted(furniture, key=lambda f: f.name):
+                translation = furn.properties.get("translation", None)
+                if translation:
+                    loc = tuple(translation) if hasattr(translation, '__iter__') else translation
+                    locations[furn.name] = loc
+                    cprint(f"    {furn.name}: ({loc[0]:.3f}, {loc[1]:.3f}, {loc[2]:.3f})", "white")
+
+        cprint(f"\nTotal: {len(locations)} entities with locations", "green")
+        return locations
 
 
-def print_articulated_furniture(world_graph):
+def print_articulated_furniture(world_graph, env_interface=None):
     """
     Print all articulated furniture (furniture that can be opened/closed).
-    
+
     :param world_graph: The active WorldGraph
+    :param env_interface: Optional EnvironmentInterface to refresh states from simulator
     """
-    from habitat_llm.world_model import Furniture
+
+    # Update states from simulator if env_interface is provided
+    if env_interface and hasattr(env_interface, 'perception') and env_interface.perception:
+        env_interface.perception.update_object_and_furniture_states()
+        # Use GT graph for state information as it has the most up-to-date states
+        gt_graph = env_interface.perception.gt_graph
+        state_source = "GT graph"
+    else:
+        gt_graph = None
+        state_source = "concept graph"
 
     cprint("Articulated Furniture (can be opened/closed):", "green")
 
     all_furniture = world_graph.get_all_furnitures()
-    print(f"Total furniture pieces in scene: {len(all_furniture)}")
+    print(f"Total furniture pieces in scene: {len(all_furniture)} (states from {state_source})")
     articulated_furniture = []
 
     for furniture in all_furniture:
@@ -108,14 +230,32 @@ def print_articulated_furniture(world_graph):
 
         if furn_type not in furniture_by_type:
             furniture_by_type[furn_type] = []
-        furniture_by_type[furn_type].append(furn.name)
+        furniture_by_type[furn_type].append(furn)
 
-    # Display grouped by type
+    # Display grouped by type with states
     total_count = 0
     for furn_type, furn_list in sorted(furniture_by_type.items()):
         cprint(f"\n  {furn_type.upper()} ({len(furn_list)} items):", "cyan")
-        for furn_name in sorted(furn_list):
-            cprint(f"    - {furn_name}", "white")
+        for furn in sorted(furn_list, key=lambda f: f.name):
+            # Get state information - prefer GT graph if available for most accurate states
+            if gt_graph:
+                try:
+                    gt_furn = gt_graph.get_node_from_name(furn.name)
+                    states = gt_furn.properties.get("states", {})
+                except (ValueError, KeyError):
+                    states = furn.properties.get("states", {})
+            else:
+                states = furn.properties.get("states", {})
+
+            is_open = states.get("is_open")
+
+            # Format state display
+            if is_open is not None:
+                state_str = "OPEN" if is_open else "CLOSED"
+                state_color = "green" if is_open else "yellow"
+                cprint(f"    - {furn.name} [{state_str}]", state_color)
+            else:
+                cprint(f"    - {furn.name} [state unknown]", "white")
             total_count += 1
 
     cprint(f"\nTotal: {total_count} articulated furniture pieces", "green")
@@ -274,6 +414,75 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     agent_uid = config.robot_agent_uid
     active_world_graph = env_interface.world_graph[agent_uid]
 
+    if config.world_model.partial_obs and False:
+        cprint("\n🍾 Adding custom bottle to scene graph (partial observability mode)...", "cyan")
+        if active_world_graph is not None and hasattr(active_world_graph, 'add_object_to_graph'):
+            try:
+                # First, let's check if the furniture exists
+                furniture_name = "counter_42"  # You can change this to any furniture
+                try:
+                    furniture_node = active_world_graph.get_node_from_name(furniture_name)
+                    cprint(f"Found furniture: {furniture_name}", "green")
+                except ValueError:
+                    # If furniture doesn't exist, try to find an alternative
+                    cprint(f"⚠ Furniture '{furniture_name}' not found. Searching for alternatives...", "yellow")
+                    all_furniture = active_world_graph.get_all_furnitures()
+                    if all_furniture:
+                        # Use the first available furniture
+                        furniture_name = all_furniture[0].name
+                        cprint(f"Using alternative furniture: {furniture_name}", "cyan")
+                        # Show first few furniture options
+                        cprint("Available furniture:", "cyan")
+                        for furn in sorted(all_furniture, key=lambda f: f.name)[:10]:
+                            cprint(f"  - {furn.name}", "white")
+                    else:
+                        cprint("No furniture found in scene, placing at origin", "yellow")
+                        furniture_name = None
+
+                # Add bottle to the scene graph
+                object_class = "bottle"
+                if furniture_name:
+                    bottle = active_world_graph.add_object_to_graph(
+                        object_class=object_class,
+                        furniture_name=furniture_name,
+                        connect_to_entities=True,
+                        verbose=True
+                    )
+                else:
+                    # Place at origin if no furniture available
+                    bottle = active_world_graph.add_object_to_graph(
+                        object_class=object_class,
+                        position=[0.0, 0.5, 0.0],
+                        connect_to_entities=True,
+                        verbose=True
+                    )
+
+                cprint(f"✓ Successfully added {bottle.name} at position {bottle.properties['translation']}", "green")
+
+                # Move robot to a specific room
+                cprint("\n🤖 Moving robot to kitchen_1...", "cyan")
+                try:
+                    success = active_world_graph.move_robot_to_room("kitchen_1", verbose=True, sim=sim)
+                    if success:
+                        from habitat_llm.world_model import SpotRobot
+                        robot_nodes = active_world_graph.get_all_nodes_of_type(SpotRobot)
+                        if robot_nodes:
+                            robot_pos = robot_nodes[0].properties.get('translation', [0, 0, 0])
+                            cprint(f"✓ Robot moved to kitchen_1 at position {robot_pos}", "green")
+                    else:
+                        cprint("⚠ Failed to move robot", "yellow")
+                except Exception as e:
+                    cprint(f"⚠ Failed to move robot: {str(e)}", "red")
+                    import traceback
+                    cprint(traceback.format_exc(), "red")
+            except Exception as e:
+                cprint(f"⚠ Failed to add bottle to scene graph: {str(e)}", "red")
+                import traceback
+                cprint(traceback.format_exc(), "red")
+        else:
+            cprint("⚠ Agent world graph not available or doesn't support add_object_to_graph", "yellow")
+
+
     # show the topdown map if requested
     if hasattr(config, "skill_runner_show_topdown"):
         dbv = DebugVisualizer(sim, config.paths.results_dir)
@@ -318,6 +527,7 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     graph_skill = "graph"
     state_skill = "state"
     articulated_skill = "articulated"
+    location_skill = "location"
     gt_graph_skill = "gt"
     pdb_skill = "debug"
     cumulative_video_skill = "make_video"
@@ -343,8 +553,9 @@ def run_skills(config: omegaconf.DictConfig) -> None:
         f"  '{help_skill}' - display help text\n"
         f"  '{entity_skill}' - display all available entities\n"
         f"  '{graph_skill}' - display hierarchical scene graph (rooms -> furniture -> receptacles -> objects)\n"
-        f"  '{state_skill}' or 'state <object_name>' - display object states (is_filled, is_powered_on, is_clean)\n"
+        f"  '{state_skill}' or 'state <object_name>' - display object states from GT graph (is_filled, is_powered_on, is_clean)\n"
         f"  '{articulated_skill}' - display all articulated furniture (can be opened/closed)\n"
+        f"  '{location_skill}' or 'location <entity_name>' - display 3D location from GT graph (x, y, z) of objects/furniture\n"
         f"  '{gt_graph_skill}' - display Ground Truth (GT) graph structure\n"
         f"  '{pdb_skill}' - enter pdb breakpoint for interactive debugging\n"
         f"  '{cumulative_video_skill}' - make a single cumulative video out of all individual command clips"
@@ -422,12 +633,17 @@ def run_skills(config: omegaconf.DictConfig) -> None:
             # print(world_description)
             # print("="*60 + "\n")
         elif user_input == state_skill:
-            print_object_states(active_world_graph)
+            print_object_states(env_interface)
         elif user_input.startswith(state_skill + " "):
             object_name = user_input.split(" ", 1)[1].strip()
-            print_object_states(active_world_graph, object_name)
+            print_object_states(env_interface, object_name)
         elif user_input == articulated_skill:
-            print_articulated_furniture(active_world_graph)
+            print_articulated_furniture(active_world_graph, env_interface)
+        elif user_input == location_skill:
+            get_entity_location(env_interface)
+        elif user_input.startswith(location_skill + " "):
+            entity_name = user_input.split(" ", 1)[1].strip()
+            get_entity_location(env_interface, entity_name)
         elif user_input == gt_graph_skill:
             print_gt_graph(env_interface)
         elif user_input == pdb_skill:

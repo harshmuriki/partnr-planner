@@ -351,8 +351,33 @@ def check_if_the_object_is_inside_furniture(
 
     # check the Receptacle
     rec = env.full_world_graph.find_receptacle_for_object(entity)
-    # currently any pick on articulated object requires open
-    # Check if the furniture is articulated and closed. If object is in/within or on a receptacle, and furniture is closed, don't allow the pick.
+    # Check if object is inside ("within") an articulated furniture receptacle.
+    is_within_receptacle = False
+    if rec is not None:
+        rec_groups = env.perception.fur_obj_handle_to_recs.get(fur.sim_handle, {})
+        within_recs = rec_groups.get("within", [])
+        is_within_receptacle = rec.sim_handle in within_recs
+
+    # Additional geometric heuristic:
+    # If object center Y falls within furniture Y bounds, treat it as potentially
+    # inside the furniture volume for pick gating on closed articulated furniture.
+    is_within_furniture_y_bounds = False
+    try:
+        obj = get_obj_from_handle(env.sim, target_handle)
+        fur_obj = get_obj_from_handle(env.sim, fur.sim_handle)
+        obj_center_y = get_global_keypoints_from_object_id(env.sim, obj.object_id)[0][1]
+        fur_keypoints = get_global_keypoints_from_object_id(env.sim, fur_obj.object_id)
+        fur_y_values = [p[1] for p in fur_keypoints]
+        fur_y_min = min(fur_y_values)
+        fur_y_max = max(fur_y_values)
+        is_within_furniture_y_bounds = fur_y_min <= obj_center_y <= fur_y_max
+    except Exception:
+        # If geometry lookup fails, keep prior behavior based on receptacle type.
+        is_within_furniture_y_bounds = False
+
+    # For articulated furniture, block pick when furniture is closed and either:
+    # 1) object is in a "within" receptacle, or
+    # 2) object's Y falls within furniture Y bounds.
     if fur.is_articulated():
         # First check using the is_open state from furniture properties if available
         states = fur.properties.get("states", {})
@@ -360,12 +385,12 @@ def check_if_the_object_is_inside_furniture(
 
         # If we have the is_open state, use it directly
         if furniture_is_open is not None:
-            if not furniture_is_open:
+            if (is_within_receptacle or is_within_furniture_y_bounds) and not furniture_is_open:
                 termination_message = f"Failed to pick! Object is inside closed {fur.name}, you need to open the furniture first."
                 failed = True
                 return action_zero, termination_message, failed
         # Otherwise fall back to the original joint position check
-        elif rec is not None and rec.sim_handle in env.perception.fur_obj_handle_to_recs[fur.sim_handle]["within"]:
+        elif is_within_receptacle or is_within_furniture_y_bounds:
             if not is_open(fur, env, threshold_for_ao_state):
                 termination_message = "Failed to pick! Object is in a closed furniture, you need to open the furniture first."
                 failed = True

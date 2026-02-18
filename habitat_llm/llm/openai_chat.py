@@ -129,6 +129,6 @@ class OpenAIChat(BaseLLM):
             self.message_history = messages.copy()
             self.message_history.append({"role": "assistant", "content": text_response})
 
-        if stop is not None:
+        if stop is not None and text_response is not None:
             text_response = text_response.split(stop)[0]
         return text_response

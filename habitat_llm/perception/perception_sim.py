@@ -933,13 +933,42 @@ class PerceptionSim(Perception):
                             if is_open is not None and not is_open:
                                 should_add = False
                                 objects_outside_fov[name] = furniture.name
-                                # print(f"Furniture {furniture.name} is closed, filtering out {name}.")
+                                print(f"Furniture {furniture.name} is closed, filtering out {name}.")
                             else:
                                 should_add = True
-                                # print(
-                                #     f"Furniture {furniture.name} is open, "
-                                #     f"allowing detection of {name}."
-                                # )
+                                print(
+                                    f"Furniture {furniture.name} is open, "
+                                    f"allowing detection of {name}."
+                                )
+
+                        # Fallback: if the "within" receptacle check didn't filter
+                        # the object, use the y-position heuristic. If the object's
+                        # y is below the furniture's AABB max y, it is physically
+                        # inside the furniture body and should not be detected while
+                        # the furniture is closed.
+                        if should_add:
+                            states = furniture.properties.get("states", {})
+                            is_open = states.get("is_open")
+                            if is_open is not None and not is_open:
+                                try:
+                                    fur_sim_obj = self.aom.get_object_by_handle(
+                                        furniture.sim_handle
+                                    )
+                                    fur_aabb = fur_sim_obj.aabb
+                                    xform = fur_sim_obj.transformation
+                                    local_min = xform.transform_point(fur_aabb.min)
+                                    local_max = xform.transform_point(fur_aabb.max)
+                                    fur_max_y = max(local_min[1], local_max[1])
+                                    obj_trans = node.properties.get("translation")
+                                    if obj_trans is not None:
+                                        obj_y = obj_trans[1]
+                                        if obj_y < fur_max_y:
+                                            should_add = False
+                                            objects_outside_fov[name] = furniture.name
+                                except Exception:
+                                    pass
+                        # else:
+                            # print(f"Furniture {furniture.name} is closed, filtering out {name}.")
                     # Track newly seen objects and build detection log
                     if should_add:
                         self._seen_objects.add(name)

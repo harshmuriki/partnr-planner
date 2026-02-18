@@ -12,7 +12,11 @@ import os
 import traceback
 import json
 import shutil
+from pathlib import Path
 from omegaconf import OmegaConf
+
+from scripts import view_trace_logs
+from habitat_llm.world_model import SpotRobot
 
 
 # append the path of the
@@ -329,11 +333,12 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
     except Exception:
         cprint("Model: Unable to determine planner model", "blue")
     cprint(f"Partial Observability: {config.world_model.partial_obs}", "blue")
-    # Print whether privileged perception (GT) is being used
-    if hasattr(config.evaluation, "use_oracle_actions") and config.evaluation.use_oracle_actions:
-        cprint("Perception: Privileged (using GT/oracle info)", "green")
+    # Print whether GT object locations or RGB-D observations are being used
+    use_gt_locs = getattr(config.world_model, 'use_gt_object_locations', False)
+    if use_gt_locs:
+        cprint("Perception: Using GT (ground truth) object locations from simulator", "green")
     else:
-        cprint("Perception: Not using privileged/GT oracle info. Using observations (RGB-D)", "green")
+        cprint("Perception: Using RGB-D observations for object detection and localization", "green")
     cprint("---------------------------------------\n", "blue")
 
     os.makedirs(config.paths.results_dir, exist_ok=True)
@@ -353,6 +358,11 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
             # cprint(f"VLM images will be saved to: {vlm_images_dir}", "green")
 
     # Run the planner
+    # Initialize stats_episodes for both CLI and non-CLI modes
+    stats_episodes: Dict[str, Dict] = {
+        str(i): {} for i in range(config.num_runs_per_episode)
+    }
+    
     if config.mode == "cli":
         # Get instruction from config if provided, otherwise use episode instruction
         if config.instruction:
@@ -366,12 +376,122 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
         #     config.evaluation.save_video = True
         #     cprint("Enabling video saving for CLI mode", "yellow")
 
+        # Load runtime configuration if provided (for robot location and runtime objects)
+        runtime_config = None
+        if hasattr(config, 'runtime_config_path') and config.runtime_config_path:
+            import yaml
+            runtime_config_path = Path(config.runtime_config_path)
+            if runtime_config_path.exists():
+                cprint(f"\n📋 Loading runtime configuration from: {runtime_config_path}", "cyan")
+                with open(runtime_config_path, 'r') as f:
+                    runtime_config = yaml.safe_load(f)
+                cprint(f"✓ Runtime config loaded successfully", "green")
+
+                # Override instruction with task from runtime config if present
+                if runtime_config and 'task' in runtime_config and runtime_config['task']:
+                    instruction = runtime_config['task']
+                    cprint(f"✓ Instruction overridden from runtime config 'task'", "green")
+            else:
+                cprint(f"⚠ Runtime config file not found: {runtime_config_path}", "yellow")
+
         cprint(f'\nExecuting instruction: "{instruction}"', "blue")
+
+        # Apply runtime modifications in partial observability mode
+        if config.world_model.partial_obs and runtime_config:
+            agent_graph = env_interface.world_graph.get(config.robot_agent_uid)
+            if agent_graph is not None:
+                # 1. Move robot to specified room if provided
+                if 'runtime_robot_location' in runtime_config and 'room' in runtime_config['runtime_robot_location']:
+                    target_room = runtime_config['runtime_robot_location']['room']
+                    cprint(f"\n🤖 Moving robot to {target_room}...", "cyan")
+                    success = agent_graph.move_robot_to_room(target_room, verbose=True, sim=env_interface.sim)
+                    if success:
+                        robot_nodes = agent_graph.get_all_nodes_of_type(SpotRobot)
+                        if robot_nodes:
+                            robot_pos = robot_nodes[0].properties.get('translation', [0, 0, 0])
+                            cprint(f"✓ Robot moved to {target_room} at position {robot_pos}", "green")
+                    else:
+                        cprint(f"⚠ Failed to move robot to {target_room}", "yellow")
+
+                # 2. Add runtime objects if provided
+                if 'runtime_objects' in runtime_config:
+                    runtime_objs = runtime_config['runtime_objects']
+                    if runtime_objs.get('enabled', False) and 'objects' in runtime_objs:
+                        cprint(f"\n🍾 Adding {len(runtime_objs['objects'])} runtime object(s) to scene graph...", "cyan")
+                        for obj_config in runtime_objs['objects']:
+                            obj_handle = obj_config.get('handle')
+                            obj_class = obj_config.get('class')
+                            furniture_name = obj_config.get('furniture_name')
+                            position = obj_config.get('position')
+                            rotation = obj_config.get('rotation')
+
+                            if not obj_class:
+                                cprint(f"⚠ Skipping object: 'class' not specified", "yellow")
+                                continue
+
+                            try:
+                                if furniture_name:
+                                    # Place on furniture
+                                    added_obj = agent_graph.add_object_to_graph(
+                                        object_class=obj_class,
+                                        furniture_name=furniture_name,
+                                        connect_to_entities=True,
+                                        verbose=True
+                                    )
+                                    cprint(f"✓ Added {added_obj.name} (class: {obj_class}) on {furniture_name} at {added_obj.properties.get('translation')}", "green")
+                                elif position:
+                                    # Place at absolute position
+                                    added_obj = agent_graph.add_object_to_graph(
+                                        object_class=obj_class,
+                                        position=position,
+                                        rotation=rotation if rotation else [0, 0, 0, 1],
+                                        connect_to_entities=True,
+                                        verbose=True
+                                    )
+                                    cprint(f"✓ Added {added_obj.name} (class: {obj_class}) at position {position}", "green")
+                                else:
+                                    cprint(f"⚠ Skipping {obj_class}: neither 'furniture_name' nor 'position' specified", "yellow")
+                            except Exception as e:
+                                cprint(f"✗ Failed to add {obj_class}: {e}", "red")
+            else:
+                cprint("⚠ Agent world graph not available, skipping runtime modifications", "yellow")
+
+        # Print the scene graph before episode starts
+        cprint("\n📊 Scene Graph Before Episode Starts:", "magenta")
+        cprint("=" * 80, "magenta")
+        agent_graph = env_interface.world_graph.get(config.robot_agent_uid)
+        if agent_graph is not None:
+            # Print all objects in the graph
+            all_objects = agent_graph.get_all_objects()
+            cprint(f"Total Objects: {len(all_objects)}", "cyan")
+            for obj in all_objects:
+                obj_type = obj.properties.get('type', 'unknown')
+                obj_pos = obj.properties.get('translation', [0, 0, 0])
+                cprint(f"  - {obj.name} (type: {obj_type}) at {obj_pos}", "white")
+
+            # Print all furniture
+            all_furniture = agent_graph.get_all_furnitures()
+            cprint(f"\nTotal Furniture: {len(all_furniture)}", "cyan")
+            for fur in all_furniture[:10]:  # Show first 10 to avoid cluttering
+                fur_pos = fur.properties.get('translation', [0, 0, 0])
+                cprint(f"  - {fur.name} at {fur_pos}", "white")
+            if len(all_furniture) > 10:
+                cprint(f"  ... and {len(all_furniture) - 10} more furniture items", "white")
+
+            # Print all rooms
+            all_rooms = agent_graph.get_all_rooms()
+            cprint(f"\nTotal Rooms: {len(all_rooms)}", "cyan")
+            for room in all_rooms:
+                cprint(f"  - {room.name}", "white")
+        else:
+            cprint("⚠ Could not access agent world graph", "yellow")
+        cprint("=" * 80 + "\n", "magenta")
+
         try:
             # ! Important call to eval method that runs the planner
             info = eval_runner.run_instruction(instruction)
         except Exception as e:
-            print("An error occurred:", e)
+            print("An error occurred inside of this method:", e)
             # Ensure video is saved even if exception occurs
             if config.evaluation.save_video and hasattr(eval_runner, 'dvu') and len(eval_runner.dvu.frames) > 0:
                 try:
@@ -380,10 +500,6 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
                     print(f"Warning: Failed to save video after exception: {video_error}")
 
     else:
-        stats_episodes: Dict[str, Dict] = {
-            str(i): {} for i in range(config.num_runs_per_episode)
-        }
-
         num_episodes = len(env_interface.env.episodes)
         for run_id in range(config.num_runs_per_episode):
             for _ in range(num_episodes):
@@ -470,20 +586,56 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
             # Write aggregated results across run
             write_to_csv(config.paths.run_result_file_path, run_metrics)
 
-        # aggregate metrics across all runs.
-        if conn is None:
-            all_metrics = aggregate_measures(
-                {run_id: aggregate_measures(v) for run_id, v in stats_episodes.items()}
-            )
-            cprint("\n---------------------------------", "blue")
-            cprint("Metrics Across All Runs:", "blue")
-            for k, v in all_metrics.items():
-                cprint(f"{k}: {v:.3f}", "blue")
-            cprint("\n---------------------------------", "blue")
-            # Write aggregated results across experiment
-            write_to_csv(config.paths.end_result_file_path, all_metrics)
+    # Generate HTML visualization of trace logs
+    try:
+        dataset_file = config.habitat.dataset.data_path.split("/")[-1]
+        # Remove .json.gz extension to match output_dir structure
+        if dataset_file.endswith('.json.gz'):
+            dataset_file = dataset_file[:-8]
+        elif dataset_file.endswith('.json'):
+            dataset_file = dataset_file[:-5]
+
+        # Construct the traces directory path
+        traces_dir = os.path.join(
+            config.paths.results_dir,
+            dataset_file,
+            "traces",
+            "0"
+        )
+
+        # Find the first .txt file in the traces directory
+        trace_file_path = None
+        if os.path.exists(traces_dir):
+            txt_files = [f for f in os.listdir(traces_dir) if f.endswith('.txt')]
+            if txt_files:
+                trace_file_path = os.path.join(traces_dir, txt_files[0])
+
+        if trace_file_path and os.path.exists(trace_file_path):
+            cprint(f"\n📊 Generating HTML trace visualization...", "cyan")
+            trace_data = view_trace_logs.parse_trace_file(trace_file_path)
+            html_output = str(Path(trace_file_path).with_suffix('.html'))
+            view_trace_logs.generate_html(trace_data, html_output)
+            cprint(f"✓ HTML trace file generated at:", "green")
+            cprint(f"  {html_output}", "green")
         else:
-            conn.send(stats_episodes)
+            cprint(f"⚠ Trace file not found in directory: {traces_dir}", "yellow")
+    except Exception as trace_error:
+        cprint(f"⚠ Failed to generate trace HTML: {trace_error}", "yellow")
+
+    # aggregate metrics across all runs.
+    if conn is None:
+        all_metrics = aggregate_measures(
+            {run_id: aggregate_measures(v) for run_id, v in stats_episodes.items()}
+        )
+        cprint("\n---------------------------------", "blue")
+        cprint("Metrics Across All Runs:", "blue")
+        for k, v in all_metrics.items():
+            cprint(f"{k}: {v:.3f}", "blue")
+        cprint("\n---------------------------------", "blue")
+        # Write aggregated results across experiment
+        write_to_csv(config.paths.end_result_file_path, all_metrics)
+    else:
+        conn.send(stats_episodes)
 
     env_interface.env.close()
     del env_interface

@@ -1318,6 +1318,32 @@ def add_object():
         ):
             explicit_object_count += 1
 
+    # Calculate the suffix for this object instance
+    # Check if this object_id already exists in name_to_receptacle
+    # If it does, increment the suffix (0000 -> 0001 -> 0002, etc.)
+    base_handle = object_id
+    suffix_num = 0
+    object_handle = f"{base_handle}_:{suffix_num:04d}"
+
+    # Find all existing handles with this base
+    existing_handles = [key for key in ep["name_to_receptacle"].keys() if key.startswith(f"{base_handle}_:")]
+
+    if existing_handles:
+        # Extract suffix numbers from existing handles
+        existing_suffixes = []
+        for handle in existing_handles:
+            try:
+                suffix = int(handle.split('_:')[1])
+                existing_suffixes.append(suffix)
+            except (IndexError, ValueError):
+                pass
+
+        # Find the next available suffix
+        if existing_suffixes:
+            suffix_num = max(existing_suffixes) + 1
+            object_handle = f"{base_handle}_:{suffix_num:04d}"
+            print(f"ℹ Object '{base_handle}' already exists, using suffix {suffix_num:04d}")
+
     # LOOKUP CORRECT NAMES FROM FURNITURE DATA
     # Instead of using frontend names directly, look them up in pre-extracted furniture data
     scene_id = ep.get("scene_id", "")
@@ -1468,15 +1494,16 @@ def add_object():
 
                 print(f"Using pre-extracted furniture data from JSON")
                 print(f"  Top surface Y: {furniture_bounds['top_surface_y']:.3f}m")
+                print(f"  Center: ({furniture_bounds['center'][0]:.3f}, {furniture_bounds['center'][1]:.3f}, {furniture_bounds['center'][2]:.3f})")
                 print(f"  Size: ({furniture_bounds['size'][0]:.3f}, {furniture_bounds['size'][1]:.3f}, {furniture_bounds['size'][2]:.3f})")
 
-                if placement_mode == "within" and drawer_index >= 0:
-                    _, num_drawers = get_furniture_articulation_info(receptacle_handle)
-                    furniture_bounds['num_drawers'] = num_drawers
-                    obj_position = calculate_object_placement_inside_furniture(
-                        furniture_bounds, drawer_index, num_drawers, randomize=True
-                    )
+                if placement_mode == "within":
+                    # Use center Y for all internal placements
+                    center_x, center_y, center_z = furniture_bounds['center']
+                    obj_position = (center_x, center_y, center_z)
+                    print(f"  ✓ Placement inside furniture (center): ({center_x:.3f}, {center_y:.3f}, {center_z:.3f})")
                 else:
+                    # Use top surface for 'on' placement
                     obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=False)
             elif furn_entry:
                 print(f"Furniture found in JSON but no AABB data, falling back...")
@@ -1509,14 +1536,13 @@ def add_object():
                     print(f"  Top surface Y: {furniture_bounds['top_surface_y']:.3f}m")
 
                     # Calculate object placement based on mode
-                    if placement_mode == "within" and drawer_index >= 0:
-                        # Get num_drawers from articulation info
-                        _, num_drawers = get_furniture_articulation_info(receptacle_handle)
-                        furniture_bounds['num_drawers'] = num_drawers
-                        obj_position = calculate_object_placement_inside_furniture(
-                            furniture_bounds, drawer_index, num_drawers, randomize=True
-                        )
+                    if placement_mode == "within":
+                        # Use center Y for all internal placements
+                        center_x, center_y, center_z = furniture_bounds['center']
+                        obj_position = (center_x, center_y, center_z)
+                        print(f"  ✓ Placement inside furniture (center): ({center_x:.3f}, {center_y:.3f}, {center_z:.3f})")
                     else:
+                        # Use top surface for 'on' placement
                         obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=True)
                 else:
                     print(f"⚠ Could not get furniture bounds from simulator")
@@ -1532,13 +1558,13 @@ def add_object():
 
                         if furniture_bounds:
                             # Calculate object placement based on mode
-                            if placement_mode == "within" and drawer_index >= 0:
-                                _, num_drawers = get_furniture_articulation_info(receptacle_handle)
-                                furniture_bounds['num_drawers'] = num_drawers
-                                obj_position = calculate_object_placement_inside_furniture(
-                                    furniture_bounds, drawer_index, num_drawers, randomize=True
-                                )
+                            if placement_mode == "within":
+                                # Use center Y for all internal placements
+                                center_x, center_y, center_z = furniture_bounds['center']
+                                obj_position = (center_x, center_y, center_z)
+                                print(f"  ✓ Placement inside furniture (center): ({center_x:.3f}, {center_y:.3f}, {center_z:.3f})")
                             else:
+                                # Use top surface for 'on' placement
                                 obj_position = calculate_object_placement_on_furniture(furniture_bounds, randomize=True)
                         else:
                             print(f"  Could not read URDF either, will use scene file position")
@@ -1663,39 +1689,42 @@ def add_object():
         parent_handle = receptacle_handle.split('|')[0] if '|' in receptacle_handle else receptacle_handle
         # Ensure parent handle has instance suffix
         parent_handle_with_suffix = parent_handle if "_:" in parent_handle else f"{parent_handle}_:0000"
-
-        # Find the actual receptacle mesh name
-        # Returns (receptacle_name, is_articulated) tuple
-        receptacle_mesh_name, is_articulated = find_receptacle_mesh_name(parent_handle)
-
-        if receptacle_mesh_name:
-            if is_articulated:
-                # Articulated furniture (URDF): already has .0000 suffix from find_receptacle_mesh_name
-                # Example: "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000|chest_of_drawers0002_receptacle_mesh.0000"
-                recep_value = f"{parent_handle_with_suffix}|{receptacle_mesh_name}.0000"
-                print(f"✓ Using articulated receptacle: {recep_value}")
-            else:
-                # Non-articulated furniture: uses format receptacle_mesh_<hash>.0000
-                # Example: "033774ae209de7a75a61ef44b69e42189f9af358_:0000|receptacle_mesh_033774ae209de7a75a61ef44b69e42189f9af358.0000"
-                parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
-                recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
-                print(f"✓ Using non-articulated receptacle: {recep_value}")
+        parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
+        
+        if placement_mode == "within":
+            # For internal placement, use simple generic receptacle format
+            recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
+            print(f"✓ Using generic internal receptacle: {recep_value}")
         else:
-            # Last resort fallback - construct a generic name (will likely fail for sanitized handles)
-            parent_handle_base = parent_handle.split('_:')[0] if '_:' in parent_handle else parent_handle
-            recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}"
-            print(f"⚠ WARNING: Could not find receptacle mesh, using fallback: {recep_value}")
-            print(f"  This may cause errors when loading the episode!")
+            # For 'on' placement, find specific receptacle mesh name
+            receptacle_mesh_name, is_articulated = find_receptacle_mesh_name(
+                parent_handle
+            )
+            
+            if receptacle_mesh_name:
+                if is_articulated:
+                    # Articulated furniture (URDF): already has .0000 suffix from find_receptacle_mesh_name
+                    # Example: "317294cbd71b7a56a3a38f6d5b912a19bf04ed81_:0000|chest_of_drawers0002_receptacle_mesh.0000"
+                    recep_value = f"{parent_handle_with_suffix}|{receptacle_mesh_name}.0000"
+                    print(f"✓ Using articulated receptacle: {recep_value}")
+                else:
+                    # Non-articulated furniture: uses format receptacle_mesh_<hash>.0000
+                    # Example: "033774ae209de7a75a61ef44b69e42189f9af358_:0000|receptacle_mesh_033774ae209de7a75a61ef44b69e42189f9af358.0000"
+                    recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
+                    print(f"✓ Using non-articulated receptacle: {recep_value}")
+            else:
+                # Fallback
+                recep_value = f"{parent_handle_with_suffix}|receptacle_mesh_{parent_handle_base}.0000"
+                print(f"⚠ Using fallback receptacle: {recep_value}")
     else:
         recep_value = "floor"
 
     # Insert at position equal to number of explicit objects (before clutter)
     recep_items = list(ep["name_to_receptacle"].items())
-    new_handle = f"{object_id}_:0000"
-    recep_items.insert(explicit_object_count, (new_handle, recep_value))
+    recep_items.insert(explicit_object_count, (object_handle, recep_value))
     ep["name_to_receptacle"] = dict(recep_items)
     print(f"✓ Added to name_to_receptacle at position {explicit_object_count}")
-    print(f"  {new_handle} -> {recep_value[:60]}...")
+    print(f"  {object_handle} -> {recep_value[:60]}...")
 
     print(f"\n✓ Object '{object_class}' added successfully!")
     print(f"  Will be named: {object_class}_{explicit_object_count}")
