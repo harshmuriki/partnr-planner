@@ -899,6 +899,18 @@ class PerceptionSim(Perception):
         # Unpack handles from all agents and and make union
         handle_set = set.union(*handles_per_agent.values())
 
+        # Robot's room: only save object detections that are in the same room as the robot
+        robot_room_name = None
+        if agent_uids:
+            try:
+                robot_agent_name = f"agent_{agent_uids[0]}"
+                robot_node = self.gt_graph.get_node_from_name(robot_agent_name)
+                robot_rooms = self.gt_graph.get_neighbors_of_type(robot_node, Room)
+                if robot_rooms:
+                    robot_room_name = robot_rooms[0].name
+            except (ValueError, IndexError):
+                pass
+
         # Convert handles to names, filter objects inside closed furniture,
         # and collect detection details for newly seen objects in a single pass
         names = []
@@ -914,6 +926,15 @@ class PerceptionSim(Perception):
             try:
                 node = self.gt_graph.get_node_from_name(name)
                 if isinstance(node, Object) and (name not in self._seen_objects):
+                    # Don't save objects outside the robot's room
+                    if robot_room_name is not None:
+                        object_room_name = self.get_room_name(handle)
+                        if object_room_name != robot_room_name:
+                            should_add = False
+                            objects_outside_fov[name] = object_room_name
+                            # print(f"Object {name} is outside the robot's room {robot_room_name}, filtering out.")
+                    if not should_add:
+                        continue
                     furniture = self._get_parent_furniture(node)
 
                     # Check if object is inside a closed "within" receptacle
@@ -1003,12 +1024,12 @@ class PerceptionSim(Perception):
                 f"[ROBOT VISION] Newly detected object(s): "
                 f"{', '.join(detection_details)}"
             )
-        if objects_outside_fov:
-            for obj_name, furniture_name in objects_outside_fov.items():
-                logger.info(
-                    f"[ROBOT VISION] Object {obj_name} is inside closed "
-                    f"furniture {furniture_name}, filtering from detections."
-                )
+        # if objects_outside_fov:
+        #     for obj_name, furniture_name in objects_outside_fov.items():
+        #         logger.info(
+        #             f"[ROBOT VISION] Object {obj_name} is inside closed "
+        #             f"furniture {furniture_name}, filtering from detections."
+        #         )
         # Forcefully add robot and human node names
         agent_names = [f"agent_{uid}" for uid in agent_uids]
         names.extend(agent_names)
