@@ -263,8 +263,10 @@ class SkillPolicy(Policy):
 
         # Entities must have a sim_handle to be actionable by skills
         if entity.sim_handle is None:
+            self.env.world_graph[self.agent_uid].remove_object_from_graph(target_name)
+            cprint(f"[skill] Removed '{target_name}' from scene graph (no sim_handle)")
             raise ValueError(
-                f"Entity '{target_name}' does not have a simulator handle. "
+                f"Entity '{target_name}' does not have a simulator handle (hallucinated object)."
             )
 
         # Get sim handle of the target

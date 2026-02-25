@@ -13,7 +13,7 @@ import traceback
 import json
 import shutil
 from pathlib import Path
-from omegaconf import OmegaConf
+from omegaconf import OmegaConf, open_dict
 
 from scripts import view_trace_logs
 from habitat_llm.world_model import SpotRobot
@@ -140,6 +140,34 @@ def run_eval(config):
     t0 = time.time()
     # Setup config
     config = setup_config(config, seed)
+
+    # Normalize dataset path: if folder, pick .json.gz / .json and optional .yaml
+    if hasattr(config, "habitat") and hasattr(config.habitat, "dataset"):
+        data_path = getattr(config.habitat.dataset, "data_path", None)
+        if data_path is not None:
+            data_path_str = str(data_path)
+            if os.path.isdir(data_path_str):
+                folder = Path(data_path_str)
+                json_gz_files = sorted(folder.glob("*.json.gz"))
+                json_files = sorted(folder.glob("*.json"))
+                chosen_dataset = None
+                if json_gz_files:
+                    chosen_dataset = json_gz_files[0]
+                elif json_files:
+                    chosen_dataset = json_files[0]
+                if chosen_dataset is not None:
+                    with open_dict(config):
+                        config.habitat.dataset.data_path = str(chosen_dataset)
+                    data_path_str = str(chosen_dataset)
+                if (not hasattr(config, "runtime_config_path") or not config.runtime_config_path):
+                    yaml_files = sorted(list(folder.glob("*.yaml")) + list(folder.glob("*.yml")))
+                    if yaml_files:
+                        with open_dict(config):
+                            config.runtime_config_path = str(yaml_files[0])
+            if data_path_str.endswith(".json") and not data_path_str.endswith(".json.gz"):
+                with open_dict(config):
+                    config.habitat.dataset.data_path = data_path_str + ".gz"
+
     dataset = CollaborationDatasetV0(config.habitat.dataset)
 
     write_config(config)
@@ -362,7 +390,7 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
     stats_episodes: Dict[str, Dict] = {
         str(i): {} for i in range(config.num_runs_per_episode)
     }
-    
+
     if config.mode == "cli":
         # Get instruction from config if provided, otherwise use episode instruction
         if config.instruction:
@@ -456,40 +484,36 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
             else:
                 cprint("⚠ Agent world graph not available, skipping runtime modifications", "yellow")
 
-        # Print the scene graph before episode starts
-        cprint("\n📊 Scene Graph Before Episode Starts:", "magenta")
+        # Print the robot's scene graph before episode starts
+        cprint("\nRobot Scene Graph:", "magenta")
         cprint("=" * 80, "magenta")
         agent_graph = env_interface.world_graph.get(config.robot_agent_uid)
         if agent_graph is not None:
-            # Print all objects in the graph
-            all_objects = agent_graph.get_all_objects()
-            cprint(f"Total Objects: {len(all_objects)}", "cyan")
-            for obj in all_objects:
-                obj_type = obj.properties.get('type', 'unknown')
-                obj_pos = obj.properties.get('translation', [0, 0, 0])
-                cprint(f"  - {obj.name} (type: {obj_type}) at {obj_pos}", "white")
-
-            # Print all furniture
-            all_furniture = agent_graph.get_all_furnitures()
-            cprint(f"\nTotal Furniture: {len(all_furniture)}", "cyan")
-            for fur in all_furniture[:10]:  # Show first 10 to avoid cluttering
-                fur_pos = fur.properties.get('translation', [0, 0, 0])
-                cprint(f"  - {fur.name} at {fur_pos}", "white")
-            if len(all_furniture) > 10:
-                cprint(f"  ... and {len(all_furniture) - 10} more furniture items", "white")
-
-            # Print all rooms
-            all_rooms = agent_graph.get_all_rooms()
-            cprint(f"\nTotal Rooms: {len(all_rooms)}", "cyan")
-            for room in all_rooms:
-                cprint(f"  - {room.name}", "white")
+            agent_graph.display_hierarchy()
         else:
-            cprint("⚠ Could not access agent world graph", "yellow")
+            cprint("Could not access robot world graph", "yellow")
         cprint("=" * 80 + "\n", "magenta")
 
         try:
             # ! Important call to eval method that runs the planner
             info = eval_runner.run_instruction(instruction)
+
+            # Print action counts and simulation steps
+            if "action_counts" in info and info["action_counts"]:
+                cprint("\n---------------------------------", "cyan")
+                cprint("Action Counts (times selected):", "cyan")
+                for action_name, count in sorted(info["action_counts"].items()):
+                    cprint(f"  {action_name}: {count}", "cyan")
+                cprint("---------------------------------", "cyan")
+            if "action_sim_steps" in info and info["action_sim_steps"]:
+                cprint("\n---------------------------------", "cyan")
+                cprint("Action Simulation Steps (total steps per action):", "cyan")
+                for action_name, steps in sorted(info["action_sim_steps"].items()):
+                    cprint(f"  {action_name}: {steps}", "cyan")
+                cprint("---------------------------------", "cyan")
+
+            # Store action counts for HTML generation
+            last_info = info.copy()
         except Exception as e:
             print("An error occurred inside of this method:", e)
             # Ensure video is saved even if exception occurs
@@ -501,6 +525,7 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
 
     else:
         num_episodes = len(env_interface.env.episodes)
+        last_info = None  # Track last episode's info for HTML generation
         for run_id in range(config.num_runs_per_episode):
             for _ in range(num_episodes):
                 # Get episode id
@@ -514,6 +539,23 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
                     info = eval_runner.run_instruction(
                         output_name=f"episode_{episode_id}_{run_id}"
                     )
+
+                    # Store last info for HTML generation
+                    last_info = info
+
+                    # Print action counts and simulation steps
+                    if "action_counts" in info and info["action_counts"]:
+                        cprint("\n---------------------------------", "cyan")
+                        cprint(f"Action Counts (times selected) For Run {run_id} Episode {episode_id}:", "cyan")
+                        for action_name, count in sorted(info["action_counts"].items()):
+                            cprint(f"  {action_name}: {count}", "cyan")
+                        cprint("---------------------------------", "cyan")
+                    if "action_sim_steps" in info and info["action_sim_steps"]:
+                        cprint("\n---------------------------------", "cyan")
+                        cprint(f"Action Simulation Steps (total steps per action) For Run {run_id} Episode {episode_id}:", "cyan")
+                        for action_name, steps in sorted(info["action_sim_steps"].items()):
+                            cprint(f"  {action_name}: {steps}", "cyan")
+                        cprint("---------------------------------", "cyan")
 
                     info_episode = {
                         "run_id": run_id,
@@ -614,7 +656,20 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
             cprint(f"\n📊 Generating HTML trace visualization...", "cyan")
             trace_data = view_trace_logs.parse_trace_file(trace_file_path)
             html_output = str(Path(trace_file_path).with_suffix('.html'))
-            view_trace_logs.generate_html(trace_data, html_output)
+            # Pass action counts, runtime, and LLM requests from info if available
+            action_counts = None
+            action_sim_steps = None
+            runtime = None
+            llm_requests = None
+            if 'last_info' in locals() and last_info is not None:
+                action_counts = last_info.get("action_counts")
+                action_sim_steps = last_info.get("action_sim_steps")
+                runtime = last_info.get("runtime")
+                # replanning_count maps agent IDs to LLM request counts
+                llm_requests = last_info.get("replanning_count")
+                print(f"Action counts: {action_counts}")
+                print(f"Action simulation steps: {action_sim_steps}")
+            view_trace_logs.generate_html(trace_data, html_output, action_counts=action_counts, action_sim_steps=action_sim_steps, runtime=runtime, llm_requests=llm_requests)
             cprint(f"✓ HTML trace file generated at:", "green")
             cprint(f"  {html_output}", "green")
         else:

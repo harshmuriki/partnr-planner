@@ -1415,6 +1415,11 @@ class DynamicWorldGraph(WorldGraph):
 
         return new_object
 
+    def remove_object_from_graph(self, entity_name: str) -> None:
+        super().remove_object_from_graph(entity_name)
+        if entity_name in self._entity_names:
+            self._entity_names.remove(entity_name)
+
     def _connect_object_to_nearest_entity(
         self, object_node: Object, verbose: bool = False
     ):

@@ -259,6 +259,14 @@ class OracleObjectStateInPlaceSkill(SkillPolicy):
             return action, None
 
         obj = get_obj_from_handle(self.env.sim, self.target_handle)
+        if obj is None:
+            self.failed = True
+            self.termination_message = (
+                "Target is not a valid object (e.g. cannot power on/off this)."
+            )
+            self._is_action_issued[cur_batch_idx] = True
+            return action, None
+
         obj_idx = obj.object_id
 
         # If all preconditions are met, populate the action vector

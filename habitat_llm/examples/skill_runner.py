@@ -5,8 +5,11 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import json
+import os
 import sys
-from typing import List, Tuple, Any
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
 
 
 # append the path of the
@@ -88,7 +91,7 @@ def print_object_states(env_interface, object_name: str = None):
                 cprint(f"  {obj.name}: {state_str}", "yellow")
             else:
                 cprint(f"  {obj.name}: No states available", "white")
-    
+
     # If searching for a specific object and it wasn't found
     if object_name and not found_object:
         cprint(f"  Object '{object_name}' not found in GT graph", "red")
@@ -349,6 +352,42 @@ def run_skills(config: omegaconf.DictConfig) -> None:
 
     assert config.env == "habitat", "Only valid for Habitat skill testing."
 
+    # Normalize dataset path:
+    # - allow passing a directory (auto-pick .json.gz / .json and .yaml)
+    # - allow passing either .json or .json.gz file
+    if hasattr(config, "habitat") and hasattr(config.habitat, "dataset"):
+        data_path = getattr(config.habitat.dataset, "data_path", None)
+        if data_path is not None:
+            data_path_str = str(data_path)
+
+            # If a directory is given, infer dataset file and runtime YAML from it
+            if os.path.isdir(data_path_str):
+                folder = Path(data_path_str)
+                json_gz_files = sorted(folder.glob("*.json.gz"))
+                json_files = sorted(folder.glob("*.json"))
+                chosen_dataset = None
+                if json_gz_files:
+                    chosen_dataset = json_gz_files[0]
+                elif json_files:
+                    chosen_dataset = json_files[0]
+
+                if chosen_dataset is not None:
+                    with omegaconf.open_dict(config):
+                        config.habitat.dataset.data_path = str(chosen_dataset)
+                    data_path_str = str(chosen_dataset)
+
+                # If runtime_config_path is not set, try to infer a YAML from the same folder
+                if (not hasattr(config, "runtime_config_path") or not config.runtime_config_path):
+                    yaml_files = sorted(list(folder.glob("*.yaml")) + list(folder.glob("*.yml")))
+                    if yaml_files:
+                        with omegaconf.open_dict(config):
+                            config.runtime_config_path = str(yaml_files[0])
+
+            # If a plain .json file is given, map it to .json.gz internally
+            if data_path_str.endswith(".json") and not data_path_str.endswith(".json.gz"):
+                with omegaconf.open_dict(config):
+                    config.habitat.dataset.data_path = data_path_str + ".gz"
+
     # whether or not to show blocking videos after each command call
     show_command_videos = (
         config.skill_runner_show_videos
@@ -414,73 +453,79 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     agent_uid = config.robot_agent_uid
     active_world_graph = env_interface.world_graph[agent_uid]
 
-    if config.world_model.partial_obs and False:
-        cprint("\n🍾 Adding custom bottle to scene graph (partial observability mode)...", "cyan")
-        if active_world_graph is not None and hasattr(active_world_graph, 'add_object_to_graph'):
-            try:
-                # First, let's check if the furniture exists
-                furniture_name = "counter_42"  # You can change this to any furniture
-                try:
-                    furniture_node = active_world_graph.get_node_from_name(furniture_name)
-                    cprint(f"Found furniture: {furniture_name}", "green")
-                except ValueError:
-                    # If furniture doesn't exist, try to find an alternative
-                    cprint(f"⚠ Furniture '{furniture_name}' not found. Searching for alternatives...", "yellow")
-                    all_furniture = active_world_graph.get_all_furnitures()
-                    if all_furniture:
-                        # Use the first available furniture
-                        furniture_name = all_furniture[0].name
-                        cprint(f"Using alternative furniture: {furniture_name}", "cyan")
-                        # Show first few furniture options
-                        cprint("Available furniture:", "cyan")
-                        for furn in sorted(all_furniture, key=lambda f: f.name)[:10]:
-                            cprint(f"  - {furn.name}", "white")
-                    else:
-                        cprint("No furniture found in scene, placing at origin", "yellow")
-                        furniture_name = None
-
-                # Add bottle to the scene graph
-                object_class = "bottle"
-                if furniture_name:
-                    bottle = active_world_graph.add_object_to_graph(
-                        object_class=object_class,
-                        furniture_name=furniture_name,
-                        connect_to_entities=True,
-                        verbose=True
-                    )
-                else:
-                    # Place at origin if no furniture available
-                    bottle = active_world_graph.add_object_to_graph(
-                        object_class=object_class,
-                        position=[0.0, 0.5, 0.0],
-                        connect_to_entities=True,
-                        verbose=True
-                    )
-
-                cprint(f"✓ Successfully added {bottle.name} at position {bottle.properties['translation']}", "green")
-
-                # Move robot to a specific room
-                cprint("\n🤖 Moving robot to kitchen_1...", "cyan")
-                try:
-                    success = active_world_graph.move_robot_to_room("kitchen_1", verbose=True, sim=sim)
-                    if success:
-                        from habitat_llm.world_model import SpotRobot
-                        robot_nodes = active_world_graph.get_all_nodes_of_type(SpotRobot)
-                        if robot_nodes:
-                            robot_pos = robot_nodes[0].properties.get('translation', [0, 0, 0])
-                            cprint(f"✓ Robot moved to kitchen_1 at position {robot_pos}", "green")
-                    else:
-                        cprint("⚠ Failed to move robot", "yellow")
-                except Exception as e:
-                    cprint(f"⚠ Failed to move robot: {str(e)}", "red")
-                    import traceback
-                    cprint(traceback.format_exc(), "red")
-            except Exception as e:
-                cprint(f"⚠ Failed to add bottle to scene graph: {str(e)}", "red")
-                import traceback
-                cprint(traceback.format_exc(), "red")
+    # Load runtime configuration from YAML if provided (robot location + objects to add)
+    runtime_config = None
+    if hasattr(config, "runtime_config_path") and config.runtime_config_path:
+        import yaml
+        runtime_config_path = Path(config.runtime_config_path)
+        if runtime_config_path.exists():
+            cprint(f"\n📋 Loading runtime configuration from: {runtime_config_path}", "cyan")
+            with open(runtime_config_path, "r") as f:
+                runtime_config = yaml.safe_load(f)
+            cprint("✓ Runtime config loaded successfully", "green")
         else:
-            cprint("⚠ Agent world graph not available or doesn't support add_object_to_graph", "yellow")
+            cprint(f"⚠ Runtime config file not found: {runtime_config_path}", "yellow")
+
+    # Apply runtime modifications (robot location + new objects) in partial observability mode
+    if config.world_model.partial_obs and runtime_config and active_world_graph is not None:
+        if hasattr(active_world_graph, "add_object_to_graph"):
+            from habitat_llm.world_model import SpotRobot
+
+            # 1. Move robot to specified room if provided
+            if "runtime_robot_location" in runtime_config and "room" in runtime_config["runtime_robot_location"]:
+                target_room = runtime_config["runtime_robot_location"]["room"]
+                cprint(f"\n🤖 Moving robot to {target_room}...", "cyan")
+                success = active_world_graph.move_robot_to_room(target_room, verbose=True, sim=sim)
+                if success:
+                    robot_nodes = active_world_graph.get_all_nodes_of_type(SpotRobot)
+                    if robot_nodes:
+                        robot_pos = robot_nodes[0].properties.get("translation", [0, 0, 0])
+                        cprint(f"✓ Robot moved to {target_room} at position {robot_pos}", "green")
+                else:
+                    cprint(f"⚠ Failed to move robot to {target_room}", "yellow")
+
+            # 2. Add runtime objects if provided
+            if "runtime_objects" in runtime_config:
+                runtime_objs = runtime_config["runtime_objects"]
+                if runtime_objs.get("enabled", False) and "objects" in runtime_objs:
+                    cprint(f"\n🍾 Adding {len(runtime_objs['objects'])} runtime object(s) to scene graph...", "cyan")
+                    for obj_config in runtime_objs["objects"]:
+                        obj_class = obj_config.get("class")
+                        furniture_name = obj_config.get("furniture_name")
+                        position = obj_config.get("position")
+                        rotation = obj_config.get("rotation")
+
+                        if not obj_class:
+                            cprint("⚠ Skipping object: 'class' not specified", "yellow")
+                            continue
+
+                        try:
+                            if furniture_name:
+                                added_obj = active_world_graph.add_object_to_graph(
+                                    object_class=obj_class,
+                                    furniture_name=furniture_name,
+                                    connect_to_entities=True,
+                                    verbose=True,
+                                )
+                                cprint(
+                                    f"✓ Added {added_obj.name} (class: {obj_class}) on {furniture_name} at {added_obj.properties.get('translation')}",
+                                    "green",
+                                )
+                            elif position:
+                                added_obj = active_world_graph.add_object_to_graph(
+                                    object_class=obj_class,
+                                    position=position,
+                                    rotation=rotation if rotation else [0, 0, 0, 1],
+                                    connect_to_entities=True,
+                                    verbose=True,
+                                )
+                                cprint(f"✓ Added {added_obj.name} (class: {obj_class}) at position {position}", "green")
+                            else:
+                                cprint(f"⚠ Skipping {obj_class}: neither 'furniture_name' nor 'position' specified", "yellow")
+                        except Exception as e:
+                            cprint(f"✗ Failed to add {obj_class}: {e}", "red")
+        else:
+            cprint("⚠ Agent world graph doesn't support add_object_to_graph", "yellow")
 
 
     # show the topdown map if requested
@@ -587,6 +632,8 @@ def run_skills(config: omegaconf.DictConfig) -> None:
     command_index = 0
     # history of skill commands and their responses
     command_history: List[Tuple[str, str]] = []
+    # run stats: sim steps per action (each execute_skill call is one action)
+    run_sim_steps_per_action: List[int] = []
     while True:
         cprint("Enter Command", "blue")
         if len(scripted_commands) > command_index:
@@ -603,6 +650,42 @@ def run_skills(config: omegaconf.DictConfig) -> None:
             for ix, t in enumerate(command_history):
                 print(f" [{ix}]: '{t[0]}' -> '{t[1]}'")
             print("==========================")
+            # save run stats: total actions and sim steps per action
+            total_actions = len(run_sim_steps_per_action)
+            total_sim_steps = sum(run_sim_steps_per_action)
+            # per-action: call count and sim steps (action = first word of command, e.g. Explore, Navigate)
+            action_stats: Dict[str, Dict[str, Any]] = {}
+            for cmd, steps in zip([c[0] for c in command_history], run_sim_steps_per_action):
+                action_name = cmd.split()[0] if cmd.split() else cmd
+                if action_name not in action_stats:
+                    action_stats[action_name] = {"call_count": 0, "sim_steps": []}
+                action_stats[action_name]["call_count"] += 1
+                action_stats[action_name]["sim_steps"].append(steps)
+            run_stats = {
+                "total_actions": total_actions,
+                "total_sim_steps": total_sim_steps,
+                "sim_steps_per_action": run_sim_steps_per_action,
+                "per_action": action_stats,
+            }
+            cprint("Run stats:", "green")
+            # Task id from dataset file name (e.g. .../Task_2A.json.gz -> 2A)
+            task_id = None
+            if hasattr(config, "habitat") and hasattr(config.habitat, "dataset"):
+                data_path = getattr(config.habitat.dataset, "data_path", None)
+                if data_path:
+                    stem = os.path.basename(str(data_path))
+                    if stem.endswith(".json.gz"):
+                        stem = stem[:-8]
+                    elif stem.endswith(".json"):
+                        stem = stem[:-5]
+                    task_id = stem[5:] if stem.startswith("Task_") else stem
+            if task_id:
+                cprint(f"Task id: {task_id}", "green")
+            cprint(f"Total actions: {total_actions}", "green")
+            cprint(f"Total sim steps: {total_sim_steps}", "green")
+            cprint("Per action (call_count, sim_steps):", "green")
+            for action_name, stats in action_stats.items():
+                cprint(f"  {action_name!r}: {stats}", "green")
             exit()
         elif user_input == help_skill:
             cprint(help_text, "green")
@@ -698,13 +781,14 @@ def run_skills(config: omegaconf.DictConfig) -> None:
             ############################
             # run the skill
             try:
-                responses, _, frames = execute_skill(
+                responses, step_info, frames = execute_skill(
                     high_level_skill_actions,
                     planner,
                     vid_postfix=f"{command_index}_",
                     make_video=make_video,
                     play_video=show_command_videos,
                 )
+                run_sim_steps_per_action.append(step_info.get("skill_steps", 0))
                 command_history.append((user_input, responses[int(agent_ix)]))
                 skill_name = high_level_skill_actions[int(agent_ix)][0]
                 print(
@@ -714,6 +798,7 @@ def run_skills(config: omegaconf.DictConfig) -> None:
             except Exception as e:
                 failure_string = f"Failed to execute skill with exception: {str(e)}"
                 print(failure_string)
+                run_sim_steps_per_action.append(0)
                 command_history.append((user_input, failure_string))
         command_index += 1
 

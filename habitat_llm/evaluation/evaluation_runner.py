@@ -606,6 +606,13 @@ class EvaluationRunner:
             "num_steps": 0.0,
         }
 
+        # Track action counts (how many times each action was selected)
+        action_counts = {}
+        # Track simulation steps per action (how many sim steps each action took)
+        action_sim_steps = {}
+        # Track previous action to count sim steps correctly
+        prev_action_per_agent = {}
+
         # List to store planner logs at each step
         planner_infos = []
         planner_info: Dict[str, Any] = {}
@@ -624,6 +631,11 @@ class EvaluationRunner:
             # Execute low level actions
             # !! IMPT CODE
             if len(low_level_actions) > 0:
+                # Count simulation steps for the action that was executing (from previous iteration)
+                for agent_id, prev_action_name in prev_action_per_agent.items():
+                    if prev_action_name:
+                        action_sim_steps[prev_action_name] = action_sim_steps.get(prev_action_name, 0) + 1
+                
                 obs, reward, done, info = self.env_interface.step(low_level_actions)
                 # Refresh observations
                 observations = self.env_interface.parse_observations(obs)
@@ -668,6 +680,19 @@ class EvaluationRunner:
             low_level_actions, planner_info, should_end = self.get_low_level_actions(
                 self.current_instruction, observations, self.env_interface.world_graph
             )
+
+            # Track actions: count selections and update previous action for sim step counting
+            if "high_level_actions" in planner_info:
+                for agent_id, action_tuple in planner_info["high_level_actions"].items():
+                    if isinstance(action_tuple, (tuple, list)) and len(action_tuple) > 0:
+                        action_name = action_tuple[0]
+                        
+                        # Count how many times this action was selected (when replanned)
+                        if "replanned" in planner_info and planner_info["replanned"].get(agent_id, False):
+                            action_counts[action_name] = action_counts.get(action_name, 0) + 1
+                        
+                        # Store current action for next iteration's sim step counting
+                        prev_action_per_agent[agent_id] = action_name
 
             # We terminate the episode if this loop gets stuck
             curr_env = self.env_interface.env.env.env._env
@@ -770,6 +795,10 @@ class EvaluationRunner:
         # Log overall time
         t_runtime = time.time() - t_0
         info["runtime"] = t_runtime
+
+        # Add action counts and simulation steps to info
+        info["action_counts"] = action_counts
+        info["action_sim_steps"] = action_sim_steps
 
         # Merge dictionaries
         info |= planner_info

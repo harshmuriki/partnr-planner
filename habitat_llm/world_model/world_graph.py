@@ -76,6 +76,15 @@ class WorldGraph(Graph):
         """
         return [node for node in self.graph if isinstance(node, Object)]
 
+    def remove_object_from_graph(self, entity_name: str) -> None:
+        """
+        Remove a node by name from the graph. No-op if the node does not exist.
+        """
+        try:
+            self.remove_node(entity_name)
+        except ValueError:
+            pass
+
     def get_node_with_property(self, property_key, property_val):
         """
         This method returns a node in the world graph that
@@ -199,16 +208,10 @@ class WorldGraph(Graph):
                 furniture = self.find_furniture_for_object(obj)
                 if furniture is not None:
                     objs_info += obj.name + ": " + furniture.name + "\n"
-                elif furniture is None and (
-                    (is_human_wg and self.agent_asymmetry)
-                    or (not is_human_wg and self.world_model_type in ["concept_graph", "non_privileged"])
-                ):
-                    # Objects are allowed to be marooned on unknown furniture under
-                    # agent asymmetry condition, since the object may be placed anywhere
-                    # in the house unbeknownst to the human agent
-                    objs_info += obj.name + ": " + "unknown" + "\n"
                 else:
-                    raise ValueError(f"Object {obj.name} has no parent")
+                    # No parent in graph (e.g. fake/added objects, or unknown under
+                    # agent asymmetry / concept_graph / non_privileged)
+                    objs_info += obj.name + ": " + "unknown" + "\n"
         return f"Furniture:\n{house_info}\nObjects:\n{objs_info}"
 
     def is_object_with_human(self, obj):
