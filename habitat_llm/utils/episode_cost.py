@@ -214,13 +214,20 @@ def combined_time_breakdown(
     explore_approx_sim_time_s: Any = None,
     sim_freq: float = DEFAULT_SIM_FREQ,
     limit_s: Any = DEFAULT_MAX_COMBINED_TIME_S,
+    physical_explore: bool = False,
+    exclude_explore_from_time_budget: bool = False,
 ) -> Dict[str, Any]:
-    """LLM wall time + exact action sim time + Explore approx sim time."""
+    """LLM wall + non-Explore action sim time, optionally charging Explore."""
     llm_s = _as_nonneg_float(llm_planning_time_s) or 0.0
     action_s = sim_time_from_steps(
         exact_action_sim_steps(action_sim_steps), sim_freq
     ) or 0.0
     explore_s = _as_nonneg_float(explore_approx_sim_time_s) or 0.0
+    if physical_explore:
+        explore_s = sim_time_from_steps((action_sim_steps or {}).get("Explore", 0), sim_freq) or 0.0
+    explore_excluded_s = explore_s if exclude_explore_from_time_budget else 0.0
+    if exclude_explore_from_time_budget:
+        explore_s = 0.0
     used_s = llm_s + action_s + explore_s
     limit = _as_nonneg_float(limit_s)
     if limit is None:
@@ -229,6 +236,8 @@ def combined_time_breakdown(
         "llm_s": llm_s,
         "action_sim_s": action_s,
         "explore_approx_s": explore_s,
+        "explore_excluded_s": explore_excluded_s,
+        "exclude_explore_from_time_budget": exclude_explore_from_time_budget,
         "used_s": used_s,
         "limit_s": limit,
         "exceeded": limit > 0 and used_s >= limit,

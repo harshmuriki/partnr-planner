@@ -636,6 +636,10 @@ class EvaluationRunner:
         metrics = planner_cost_metrics(planner_info)
         return combined_time_breakdown(
             llm_planning_time_s=metrics.get("llm_planning_time_s"),
+            physical_explore=bool(metrics.get("physical_explore", False)),
+            exclude_explore_from_time_budget=bool(getattr(
+                self.evaluation_runner_config, "exclude_explore_from_time_budget", False
+            )),
             action_sim_steps=action_sim_steps,
             explore_approx_sim_time_s=metrics.get("explore_approx_sim_time_s"),
             sim_freq=self._combined_sim_freq(),
@@ -653,10 +657,12 @@ class EvaluationRunner:
         budget_info["combined_time_used_s"] = status["used_s"]
         budget_info["combined_time_limit_s"] = status["limit_s"]
         budget_info["combined_time_limit_hit"] = bool(status["exceeded"])
+        budget_info["exclude_explore_from_time_budget"] = status["exclude_explore_from_time_budget"]
         budget_info["combined_time_breakdown"] = {
             "llm_s": status["llm_s"],
             "action_sim_s": status["action_sim_s"],
             "explore_approx_s": status["explore_approx_s"],
+            "explore_excluded_s": status["explore_excluded_s"],
         }
         info.update(budget_info)
         should_log = log or status["exceeded"]
@@ -670,14 +676,18 @@ class EvaluationRunner:
                 cprint(
                     f"[budget] used {used:.2f}s / {limit_str} "
                     f"(llm {status['llm_s']:.2f} + actions {status['action_sim_s']:.2f} "
-                    f"+ explore~ {status['explore_approx_s']:.2f})",
+                    f"+ explore~ {status['explore_approx_s']:.2f})"
+                    + (f"; Explore excluded: {status['explore_excluded_s']:.2f}s"
+                       if status['exclude_explore_from_time_budget'] else ""),
                     color,
                 )
             if status["exceeded"]:
                 cprint(
                     f"Run ended due to MAX_COMBINED_TIME: {status['used_s']:.2f}s "
                     f">= {status['limit_s']:.2f}s "
-                    "(LLM + exact action sim + explore approx sim)",
+                    + ("(LLM + non-Explore action sim; Explore excluded)"
+                       if status['exclude_explore_from_time_budget']
+                       else "(LLM + exact action sim + explore approx sim)"),
                     "red",
                 )
         return bool(status["exceeded"])

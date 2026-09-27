@@ -203,7 +203,9 @@ def test_particle_weights_are_the_product_along_the_root_to_leaf_path():
         ]
     )
     toh = TreeOfHypotheses(llm, domain, TohConfig(c1=2, c2=2))
-    belief = toh.generate(instruction="put the mug away", observation=make_observation())
+    belief = toh.generate(
+        instruction="put the mug away", observation=make_observation()
+    )
 
     assert len(belief) == 4
     assert abs(belief.total_weight() - 1.0) < 1e-9
@@ -236,7 +238,9 @@ def test_hypothesised_names_stay_distinct_from_habitat_ids():
         ]
     )
     toh = TreeOfHypotheses(llm, domain, TohConfig(c1=1, c2=1))
-    belief = toh.generate(instruction="put the mug away", observation=make_observation())
+    belief = toh.generate(
+        instruction="put the mug away", observation=make_observation()
+    )
     particle = belief.particles[0]
     assert particle.scene.hypothesized == {"mug"}
     assert particle.scene.object_parent["mug"] == "cabinet_3"
@@ -252,7 +256,9 @@ def test_observed_target_locks_its_current_location_without_a_level_3_query():
                 {
                     "answer": [
                         {
-                            "objects": [{"object": "plate_2", "target_area": "table_10"}],
+                            "objects": [
+                                {"object": "plate_2", "target_area": "table_10"}
+                            ],
                             "probability": 1.0,
                         }
                     ]
@@ -301,13 +307,15 @@ def test_state_only_goal_survives_a_null_target_area():
         ]
     )
     toh = TreeOfHypotheses(llm, domain, TohConfig(c1=1, c2=1))
-    belief = toh.generate(instruction="turn the lamp off", observation=make_observation())
+    belief = toh.generate(
+        instruction="turn the lamp off", observation=make_observation()
+    )
     atom = belief.particles[0].goal_atoms[0]
     assert atom.target_area is None
     assert atom.states == ("is_powered_off",)
 
 
-def test_invented_furniture_is_resolved_or_dropped():
+def test_invented_furniture_is_rejected():
     domain = make_domain()
     llm = StubLLM(
         [
@@ -327,14 +335,20 @@ def test_invented_furniture_is_resolved_or_dropped():
         ]
     )
     toh = TreeOfHypotheses(llm, domain, TohConfig(c1=1, c2=1))
-    belief = toh.generate(instruction="put the mug away", observation=make_observation())
-    assert belief.particles[0].goal_atoms[0].target_area == "table_10"
+    belief = toh.generate(
+        instruction="put the mug away", observation=make_observation()
+    )
+    assert len(belief) == 0
+    assert toh.rejected_hypotheses == 1
 
 
 def test_unparseable_llm_output_yields_an_empty_belief():
     domain = make_domain()
     toh = TreeOfHypotheses(StubLLM(["I refuse."]), domain, TohConfig())
-    assert len(toh.generate(instruction="do something", observation=make_observation())) == 0
+    assert (
+        len(toh.generate(instruction="do something", observation=make_observation()))
+        == 0
+    )
 
 
 def test_max_particles_prunes_the_lowest_weight_leaves():

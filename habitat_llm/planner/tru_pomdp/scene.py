@@ -229,6 +229,7 @@ class SceneState:
     hypothesized: Set[str] = field(default_factory=set)
     grounding: Dict[str, str] = field(default_factory=dict)
     previous_parent: Dict[str, str] = field(default_factory=dict)
+    observed_objects: Set[str] = field(default_factory=set)
 
     def copy(self) -> "SceneState":
         return SceneState(
@@ -242,6 +243,7 @@ class SceneState:
             hypothesized=set(self.hypothesized),
             grounding=dict(self.grounding),
             previous_parent=dict(self.previous_parent),
+            observed_objects=set(self.observed_objects),
         )
 
     def held_object(self) -> Optional[str]:
@@ -271,6 +273,8 @@ class SceneState:
             self.previous_parent[new] = self.previous_parent.pop(old)
         if old in self.hypothesized:
             self.hypothesized.discard(old)
+        self.observed_objects.discard(old)
+        self.observed_objects.add(new)
         self.grounding[old] = new
 
 
@@ -317,7 +321,13 @@ def names_match(hypothesised: str, candidate: str) -> bool:
     b = set(normalize_object_name(candidate))
     if not a or not b:
         return False
-    return bool(a & b)
+    # Do not merge distinct numbered instances, or objects sharing only a
+    # generic modifier (e.g. a water jug and a water bottle).
+    h_id = re.match(r"^(.*)_(\d+)$", hypothesised)
+    c_id = re.match(r"^(.*)_(\d+)$", candidate)
+    if h_id and c_id and h_id.group(1) == c_id.group(1):
+        return h_id.group(2) == c_id.group(2)
+    return a <= b or b <= a
 
 
 class SymbolicDomain:
@@ -341,6 +351,8 @@ class SymbolicDomain:
         same_room_distance: float = 4.0,
         cross_room_distance: float = 12.0,
         distance_to_cost: float = 2.25,
+        faucet_areas: Optional[Iterable[str]] = None,
+        faucet_clean_objects: Optional[Iterable[str]] = None,
     ) -> None:
         """
         :param furniture_room: furniture id -> room id for every known furniture.
@@ -371,6 +383,8 @@ class SymbolicDomain:
             if state_affordances is None
             else {k: set(v) for k, v in state_affordances.items()}
         )
+        self.faucet_areas = set(faucet_areas or ())
+        self.faucet_clean_objects = set(faucet_clean_objects or ())
         self.max_place_targets = max_place_targets
         self.same_room_distance = same_room_distance
         self.cross_room_distance = cross_room_distance
@@ -453,16 +467,16 @@ class SymbolicDomain:
         """
         Whether the robot can currently see the object.
 
-        A held object is always visible. Otherwise the containing area must have
-        been inspected AND be open: knowing that a furniture node exists is not
-        the same as having looked inside it.
+        A held object is always visible. Otherwise its containing area must be
+        open and either the object itself observed or the area fully inspected.
+        Knowing that a furniture node exists is not evidence of its contents.
         """
         parent = scene.object_parent.get(obj)
         if parent is None:
             return False
         if parent == HELD:
             return True
-        if parent not in scene.inspected_areas:
+        if parent not in scene.inspected_areas and obj not in scene.observed_objects:
             return False
         return self.get_area_open_from_id(scene, parent)
 
@@ -513,14 +527,12 @@ class SymbolicDomain:
 
     def state_satisfied(self, scene: SceneState, obj: str, literal: str) -> bool:
         if literal not in STATE_LITERALS:
-            # Unknown literal: treat as unconstrained rather than unachievable.
-            return True
+            return False
         flag, wanted = STATE_LITERALS[literal]
         current = scene.state_flag(obj, flag)
         if current is None:
-            # The flag has never been observed. Default powered/filled/clean to
-            # False, which matches how PARTNR initialises object states.
-            current = False
+            # Unknown is not evidence of a satisfied state goal.
+            return False
         return current == wanted
 
     def placement_satisfied(self, scene: SceneState, atom: GoalAtom) -> bool:
@@ -534,6 +546,8 @@ class SymbolicDomain:
         return True
 
     def atom_satisfied(self, scene: SceneState, atom: GoalAtom) -> bool:
+        if atom.obj not in scene.object_parent:
+            return False
         if not self.placement_satisfied(scene, atom):
             return False
         return all(self.state_satisfied(scene, atom.obj, s) for s in atom.states)
@@ -642,9 +656,36 @@ class SymbolicDomain:
                 return False, f"{action.obj} has not been observed"
             if not self.supports_state(action.obj, flag):
                 return False, f"{action.obj} does not support {flag}"
+            if (
+                self.requires_faucet(action)
+                and scene.object_parent.get(action.obj) not in self.faucet_areas
+            ):
+                return False, "object must be placed at a known faucet"
             return True, ""
 
         return False, f"unsupported action {kind}"
+
+    def requires_faucet(self, action: Action) -> bool:
+        return action.action_type is ActionType.FILL or (
+            action.action_type is ActionType.CLEAN
+            and action.obj in self.faucet_clean_objects
+        )
+
+    def faucet_preparation(self, scene: SceneState, obj: str) -> Optional[Action]:
+        if not self.faucet_areas:
+            return None
+        parent = scene.object_parent.get(obj)
+        if parent in self.faucet_areas:
+            return None
+        if parent == HELD:
+            area = min(
+                self.faucet_areas, key=lambda a: (self.distance(scene.robot_area, a), a)
+            )
+            if not self.get_area_open_from_id(scene, area):
+                return Action(ActionType.OPEN, area=area)
+            return Action(ActionType.PLACE, area=area)
+        candidate = Action(ActionType.PICK, area=parent, obj=obj)
+        return candidate if self.feasible(scene, candidate)[0] else None
 
     # -- transition ----------------------------------------------------------
 
@@ -740,16 +781,14 @@ class SymbolicDomain:
             reward += COMPLETION_REWARD
         return nxt, reward, terminal
 
-    def optimistic_value(self, state: Particle) -> float:
-        """
-        Admissible upper bound on the return from a state: assume every
-        remaining atom is achieved at zero cost. Costs are strictly negative, so
-        this can never underestimate the true value.
-        """
-        remaining = len(self.unsatisfied_atoms(state.scene, state.goal_atoms))
-        if remaining == 0:
+    def optimistic_value(
+        self, state: Particle, discount: float = 0.95, horizon: int = 20
+    ) -> float:
+        """Safe finite-horizon bound, including repeatedly disturbed subgoals."""
+        if horizon <= 0 or self.goal_satisfied(state.scene, state.goal_atoms):
             return 0.0
-        return SUBGOAL_REWARD * remaining + COMPLETION_REWARD
+        series = horizon if discount == 1 else (1 - discount**horizon) / (1 - discount)
+        return SUBGOAL_REWARD * len(state.goal_atoms) * series + COMPLETION_REWARD
 
     # -- dynamic action space ------------------------------------------------
 
@@ -761,8 +800,8 @@ class SymbolicDomain:
         hypothesised target; PLACE of the held object into valid open areas,
         including temporary placements rather than only goal areas; plus the
         Habitat extensions (Explore, object-state skills) when the corresponding
-        atoms exist. NULL is offered only when nothing else is available, so the
-        search cannot prefer idling over acting.
+        atoms exist. The action list includes NULL only when nothing else is
+        available; search also considers its zero-return default policy.
         """
         particles = list(belief)
         actions: List[Action] = []
@@ -845,6 +884,10 @@ class SymbolicDomain:
                     candidate = Action(action_type, obj=obj)
                     if self.feasible(scene, candidate)[0]:
                         add(candidate)
+                    elif self.requires_faucet(candidate):
+                        preparation = self.faucet_preparation(scene, obj)
+                        if preparation is not None:
+                            add(preparation)
 
         if held_objects:
             # Temporary placements: any open area, goal areas first, capped for

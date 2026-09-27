@@ -248,7 +248,8 @@ class HybridBeliefUpdater:
         scene = particle.scene
         scene.robot_area = observation.robot_area
         scene.furniture_open.update(observation.furniture_open)
-        scene.inspected_areas |= observation.inspected_areas
+        scene.inspected_areas = set(observation.fully_inspected_areas)
+        scene.observed_objects.update(observation.object_parent)
         for obj, parent in observation.object_parent.items():
             scene.object_parent[obj] = parent
             scene.hypothesized.discard(obj)
@@ -318,7 +319,13 @@ class HybridBeliefUpdater:
         }
 
         if surviving_mass < self.replenish_threshold:
+            info["replenishment_cause"] = (
+                "belief_collapsed" if len(filtered) == 0 else "low_surviving_mass"
+            )
             llm_belief = self._generate_llm_belief(observation, toh_context)
+            if llm_belief is not None:
+                llm_belief, _, rejected = self.eliminate(llm_belief, observation)
+                info["rejected_generated"] = len(rejected)
             if llm_belief is not None and len(llm_belief) > 0:
                 llm_belief.normalize().scale(1.0 - surviving_mass)
                 merged = Belief(list(filtered) + list(llm_belief))
@@ -326,13 +333,9 @@ class HybridBeliefUpdater:
                 info["num_llm_particles"] = len(llm_belief)
                 info["num_particles_after"] = len(merged)
                 return merged.normalize(), info
+            info["replenishment_failed"] = True
             if len(filtered) == 0:
-                # Nothing survived and no LLM belief is available. Never wipe the
-                # belief: fall back to the predicted particles so the planner can
-                # keep acting, and flag it for the caller.
-                info["fallback_to_predicted"] = True
-                info["num_particles_after"] = len(predicted)
-                return predicted.normalize(), info
+                info["termination_reason"] = "empty_belief"
 
         filtered.normalize()
         info["num_particles_after"] = len(filtered)
@@ -367,7 +370,8 @@ def particle_from_observation(
         object_states={k: dict(v) for k, v in observation.object_states.items()},
         spatial_relations={k: set(v) for k, v in observation.spatial_relations.items()},
         robot_area=observation.robot_area,
-        inspected_areas=set(observation.inspected_areas),
+        inspected_areas=set(observation.fully_inspected_areas),
+        observed_objects=set(observation.object_parent),
     )
     return Particle(scene=scene, goal_atoms=tuple(goal_atoms), weight=weight)
 

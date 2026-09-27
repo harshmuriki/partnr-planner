@@ -6,7 +6,7 @@
 from typing import Optional
 
 # Keep observation text short enough for stable prompt sizes.
-MAX_OBSERVED_CHARS = 500
+MAX_OBSERVED_CHARS = 12000
 
 # ---------------------------------------------------------------------------
 # Turn 1: English subgoals  (matches prompt_subgoals_english from kitchen-worlds)
@@ -20,13 +20,13 @@ where <movable>, <surface_furniture>, <container_furniture>, <joint> and <applia
 {objects}.
 
 This observed state is your initial state of the world. You should use it to plan your actions. It can have accurate, missing or outdated information.
-Currently, you can see the following:
+World-graph memory (the same scene description available to PARTNR; facts may be outdated and are not necessarily visible in the attached images):
 ``{observed}''
 {history}
 You are a mobile robot with one arm. You must obey the following commonsense rules:
 1. You must have at least one empty hand before you can pick up an object or open or close a joint.
 2. When you sprinkle or pour something into a container, there must not be objects placed on top of the container.
-3. You can only take actions on objects that you can see.
+3. You may plan for remembered objects outside the current view. Their location may be outdated; navigate and verify before manipulation. Unknown is not absent.
 4. If you don't see a particular object, it may be somewhere in the room on top of a surface or inside a furniture. Use the explore action to search for it.
 5. If you cannot see an object, it may be inside a furniture, open that furniture to find it.
 6. If you cannot see the inside of a container furniture, you must open its door or drawer before you can pick objects from it or place objects inside it.
@@ -35,6 +35,14 @@ You are a mobile robot with one arm. You must obey the following commonsense rul
 9. If you have to clean an object, pick it up, take it to a faucet, and use the clean action (similar to filling). For furniture surfaces, navigate to the furniture and use the clean action directly.
 10. Search for objects in the usual places and give up if you don't find them.
 The accompanying images show a household scene with a robot, including annotated object names and corresponding bounding boxes on the images.
+
+Observation and replanning protocol:
+- Explore(room) gathers observations and triggers replanning; remaining subgoals are replaced.
+- Opening furniture triggers inspection of newly exposed contents and replanning. End the current plan at that information boundary; do not invent unseen contents.
+- Execution failures first receive local PDDL retries. Exhausted retries/branches trigger replanning with a current camera image and failure details.
+- Once all subgoals in the active plan are finished, execution stops without another VLM request. Propose goals that cover the full instruction, unless Explore or Open will trigger new observations and replanning.
+- At a terminal decision, return exactly one JSON object: {{"decision":"complete","reason":"evidence that every requested condition holds"}} or {{"decision":"unsolvable","reason":"what remains unknown or impossible and searches attempted"}}. These are your judgments, not evaluator verdicts.
+- Otherwise return the next intermediate goals. Use only known IDs; keep missing locations unknown. Not seeing an object does not prove absence. Respect reported search limits; do not repeatedly search unchanged places.
 """
 
 # Appended to Turn 1 only after a high-level Explore[room] completes and the planner re-queries the VLM.

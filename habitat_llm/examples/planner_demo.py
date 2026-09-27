@@ -181,10 +181,6 @@ def _get_vlm_tamp_pddl_log_dir(config, env_interface) -> Optional[str]:
     """Log dir for VLM-TAMP PDDL JSONL / index.html (matches VlmTampPddlPlanner._get_log_dir)."""
     try:
         results_dir = config.paths.results_dir
-        ep = env_interface.env.current_episode
-        episode_id = getattr(ep, "episode_id", "unknown")
-        if episode_id is None:
-            episode_id = "unknown"
         log_dir_name = "vlm_tamp_pddl"
         try:
             pc = config.evaluation.agents.agent_0.planner.plan_config
@@ -193,7 +189,7 @@ def _get_vlm_tamp_pddl_log_dir(config, env_interface) -> Optional[str]:
                 log_dir_name = str(ld)
         except Exception:
             pass
-        return os.path.join(results_dir, log_dir_name, str(episode_id))
+        return os.path.join(results_dir, log_dir_name)
     except Exception:
         return None
 
@@ -264,7 +260,7 @@ def _find_planning_tree_image(trace_file_path: str) -> Optional[str]:
     Find planning_tree.png near a trace file for PDDL runs.
     Typical layout:
       <run_root>/<task>/traces/0/trace-...txt
-      <run_root>/vlm_tamp_pddl/<episode>/media/planning_tree.png
+      <run_root>/vlm_tamp_pddl/media/planning_tree.png
     """
     try:
         t = Path(trace_file_path).resolve()
@@ -358,6 +354,8 @@ def _print_action_summary(info: Dict[str, Any], label: Optional[str] = None) -> 
             cost_metrics.get("explore_approx_sim_time_s"),
         ),
         limit_s=info.get("combined_time_limit_s", 0.0),
+        physical_explore=bool(info.get("physical_explore", cost_metrics.get("physical_explore", False))),
+        exclude_explore_from_time_budget=bool(info.get("exclude_explore_from_time_budget", False)),
     )
     limit_s = info.get("combined_time_limit_s", breakdown["limit_s"])
     limit_str = f"{float(limit_s):.2f}s" if limit_s else "disabled"
@@ -366,7 +364,9 @@ def _print_action_summary(info: Dict[str, Any], label: Optional[str] = None) -> 
     cprint(
         f"  used {breakdown['used_s']:.2f}s / {limit_str} "
         f"(llm {breakdown['llm_s']:.2f} + actions {breakdown['action_sim_s']:.2f} "
-        f"+ explore~ {breakdown['explore_approx_s']:.2f})",
+        f"+ explore~ {breakdown['explore_approx_s']:.2f})"
+        + (f"; Explore excluded: {breakdown['explore_excluded_s']:.2f}s"
+           if breakdown['exclude_explore_from_time_budget'] else ""),
         "yellow",
     )
     if info.get("combined_time_limit_hit"):

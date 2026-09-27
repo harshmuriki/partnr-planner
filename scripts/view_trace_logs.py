@@ -225,18 +225,13 @@ def parse_trace_file(trace_file: str, is_pddl_run: bool = False) -> Dict[str, An
     """Parse a trace text file into structured data."""
     with open(trace_file, "r") as f:
         content = f.read()
-    if is_pddl_run:
-        parsed = _parse_trace_file_pddl(content)
-    else:
-        parsed = _parse_trace_file_react(content)
-    parsed.update(_explore_metrics_from_text(content))
-    return parsed
+    if re.search(
+        r"^(?:Hypotheses \((?:initial|updated)\):|Decision \d+:|"
+        r"Tree of Hypotheses returned no hypotheses;)", content, re.MULTILINE
+    ):
+        from scripts.tru_pomdp_trace import parse_trace
 
-
-def parse_trace_file(trace_file: str, is_pddl_run: bool = False) -> Dict[str, Any]:
-    """Parse a trace text file into structured data."""
-    with open(trace_file, "r") as f:
-        content = f.read()
+        return parse_trace(content, source_path=Path(trace_file).resolve())
     if is_pddl_run:
         parsed = _parse_trace_file_pddl(content)
     else:
@@ -576,6 +571,14 @@ def generate_html(
         llm_usd_source: api or estimated
     """
 
+    is_tru_run = trace_data.get("planner_type") == "tru_pomdp"
+    if is_tru_run:
+        from scripts.tru_pomdp_trace import prepare_trace
+
+        trace_data = prepare_trace(
+            trace_data, trace_data.get("source_path") or str(Path(output_file).with_suffix(".txt"))
+        )
+
     task = html.escape(str(trace_data.get("task", "No task")))
     steps = trace_data.get("steps", [])
     total_steps = trace_data.get("total_steps", 0)
@@ -588,6 +591,13 @@ def generate_html(
     file_path = html.escape(os.path.abspath(str(output_file)))
 
     discovered = _discovered_metrics(output_file, trace_data)
+    if is_tru_run:
+        discovered.update(trace_data["tru_context"]["metrics"])
+        # Reuse the shared cost fields with actual physical Explore measurements.
+        physical_steps = discovered.get("action_sim_steps", {}).get("Explore", 0)
+        explore_approx_sim_steps = physical_steps
+        explore_approx_sim_time_s = physical_steps / (sim_freq or DEFAULT_SIM_FREQ)
+
     action_counts = _fill_if_none(action_counts, discovered, "action_counts")
     action_sim_steps = _fill_if_none(action_sim_steps, discovered, "action_sim_steps")
     runtime = _fill_if_none(runtime, discovered, "runtime")
@@ -734,6 +744,8 @@ def generate_html(
         usd_str = fmt_usd(llm_usd)
         if llm_usd_source == "estimated":
             usd_str = f"{usd_str} est."
+            if is_tru_run and discovered.get("llm_usage_note"):
+                usd_str = f"{usd_str} (visible text)"
     elif prompt_tokens or completion_tokens:
         usd_str = "N/A (unknown model price)"
     else:
@@ -853,6 +865,8 @@ def generate_html(
         status_class = "status-success" if success else "status-failure"
         status_text = "Success" if success else "Failed"
         step_class = "success" if success else "failure"
+        if is_tru_run and success is None:
+            status_class, status_text, step_class = "status-unknown", "Unknown", "unknown"
 
         action_display = f"{action}[{args}]" if args else action
         action_display_esc = html.escape(action_display)
@@ -892,6 +906,16 @@ def generate_html(
                         </div>
 """
 
+        for label, text in step.get("trace_sections", []):
+            extra_sections += (
+                '<div class="section"><div class="section-label">'
+                + html.escape(str(label))
+                + '</div><div class="section-content"><div class="objects">'
+                + html.escape(str(text))
+                + '</div></div></div>'
+            )
+        thought_label = "Symbolic decision" if is_tru_run else "Thought"
+
         result_preview = result.replace("\n", " ").strip()
         if len(result_preview) > 72:
             result_preview = result_preview[:69] + "..."
@@ -909,7 +933,7 @@ def generate_html(
                     </div>
                     <div class="step-expand">
                         <div class="section">
-                            <div class="section-label">Thought</div>
+                            <div class="section-label">{thought_label}</div>
                             <div class="section-content">{thought_esc}</div>
                         </div>
                         <div class="section">
@@ -920,6 +944,27 @@ def generate_html(
                     </div>
                 </div>
 """
+
+    planner_note = ""
+    explore_label, explore_prefix = "Explore approx (~)", "~"
+    action_hint = "Explore times are how often it was selected. Explore steps are walked + later geodesic × ratio."
+    explore_hint = f"First Explore is walked. Later tours use geodesic × walked/geodesic ratio at {freq:g} Hz."
+    if is_tru_run:
+        reason = trace_data["tru_context"]["diagnostics"].get("termination_reason") or "not recorded"
+        planner_note = (
+            '<div class="header-path">TRU-POMDP · '
+            + str(len(trace_data["decisions"])) + ' symbolic decisions · termination: '
+            + html.escape(str(reason))
+            + ' · LLM input: text only (0 image attachments).</div>'
+        )
+        if discovered.get("llm_usage_note"):
+            planner_note += (
+                '<div class="header-path">' + html.escape(discovered["llm_usage_note"])
+                + '</div>'
+            )
+        explore_label, explore_prefix = "Explore (physical)", ""
+        action_hint = "Explore counts are selections; steps are measured physical simulation steps."
+        explore_hint = f"Full physical tours, no fast explore. Actual simulation steps at {freq:g} Hz."
 
     html_content = f"""
 <!DOCTYPE html>
@@ -1333,6 +1378,7 @@ def generate_html(
 
         .status-success {{ background: #d1fae5; color: #065f46; }}
         .status-failure {{ background: #fee2e2; color: #991b1b; }}
+        .status-unknown {{ background: #f3f4f6; color: #4b5563; }}
 
         .step-expand {{
             padding: 6px 8px;
@@ -1388,6 +1434,7 @@ def generate_html(
                 <div class="chip"><span class="chip-label">Effort</span><span class="chip-value">{effort_str}</span></div>
                 <div class="chip"><span class="chip-label">API cost</span><span class="chip-value">{usd_str}</span></div>
             </div>
+            {planner_note}
             {banner_html}
         </div>
 
@@ -1413,8 +1460,8 @@ def generate_html(
                         <div class="breakdown-track"><div class="breakdown-fill" style="width:{_share(action_s):.1f}%"></div></div>
                     </div>
                     <div class="breakdown-row">
-                        <div>Explore approx (~)</div>
-                        <div class="num">~{fmt_seconds(explore_s)}</div>
+                        <div>{explore_label}</div>
+                        <div class="num">{explore_prefix}{fmt_seconds(explore_s)}</div>
                         <div class="breakdown-track"><div class="breakdown-fill" style="width:{_share(explore_s):.1f}%"></div></div>
                     </div>
                 </div>
@@ -1428,7 +1475,7 @@ def generate_html(
 
             <section class="panel">
                 <h2>Actions</h2>
-                <p class="hint">Explore times are how often it was selected. Explore steps are walked + later geodesic × ratio.</p>
+                <p class="hint">{action_hint}</p>
                 <div class="metric-grid">
                     <div class="metric"><div class="metric-label">Action steps</div><div class="metric-value">{total_sim_steps}</div></div>
                     <div class="metric"><div class="metric-label">Action time</div><div class="metric-value">{exact_sim_time_str}</div></div>
@@ -1449,7 +1496,7 @@ def generate_html(
                     </tbody>
                 </table>
                 <h2 style="margin-top:8px;">Explore</h2>
-                <p class="hint">First Explore is walked. Later tours use geodesic × walked/geodesic ratio at {freq:g} Hz.</p>
+                <p class="hint">{explore_hint}</p>
                 <div class="kv">
                     <span>times <b>{explore_count}</b></span>
                     <span>steps <b>{explore_approx_steps_str}</b></span>

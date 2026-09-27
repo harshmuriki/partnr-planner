@@ -209,7 +209,7 @@ class GroundTruthArchive:
             for run in runs:
                 base = f"{run['variant'].split('-')[0]}/{run['variant']}/"
                 video = f'<a href="{base}video.mp4">Watch video</a>' if run['artifact_status'] == 'ready' else html.escape(run['artifact_status'])
-                rows.append(f"<tr><td>{html.escape(run['variant'])}</td><td>{html.escape(run['completed_at'] or '')}</td>"
+                rows.append(f"<tr><td>{html.escape(run['variant'])}</td>"
                             f"<td>{run['action_count']}</td><td>{run['sim_steps']}{'' if run['steps_complete'] else ' (partial)'}</td>"
                             f'<td>{video}</td><td><a href="{base}run.json">Run JSON</a> · '
                             f'<a href="{base}actions.csv">Actions CSV</a> · <a href="{base}">Files</a></td></tr>')
@@ -217,7 +217,7 @@ class GroundTruthArchive:
 <title>Ground-truth archive</title><style>body{font:14px system-ui;margin:32px;color:#222}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:10px;border-bottom:1px solid #ddd}a{color:#2563eb}.scroll{overflow:auto}</style>
 <h1>Ground-truth archive</h1><p>One saved ground truth per variant. Recording a variant again replaces its previous ground truth.</p>
 <p><a href="index.csv">Download all (CSV)</a> · <a href="index.json">All (JSON)</a> · <a href="../gui/scenario_viewer.html">Scenario viewer</a></p>
-<div class="scroll"><table><thead><tr><th>Variant</th><th>Saved</th><th>Actions</th><th>Simulator steps</th><th>Video</th><th>Data</th></tr></thead><tbody>''' + ''.join(rows) + '</tbody></table></div>')
+<div class="scroll"><table><thead><tr><th>Variant</th><th>Actions</th><th>Simulator steps</th><th>Video</th><th>Data</th></tr></thead><tbody>''' + ''.join(rows) + '</tbody></table></div>')
             atomic_write(self.root / 'README.md', '''# Ground-truth archive
 
 Open index.html through the scenario viewer server, or use index.csv/index.json for analysis.

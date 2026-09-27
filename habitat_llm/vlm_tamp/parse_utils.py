@@ -52,6 +52,12 @@ def parse_subgoal_response(response) -> list:
         if not line:
             continue
         line = re.sub(r"^\d+[\).]\s*", "", line)
+        # Models sometimes omit quotes in a one-line predicate list. Split
+        # between complete calls, never at commas inside predicate arguments.
+        calls = re.findall(r"[A-Za-z][\w-]*\([^()\n]*\)", line)
+        if len(calls) > 1:
+            items.extend(calls)
+            continue
         items.append(line.strip().strip("'\""))
     if not items and "," in content:
         for part in content.split(","):

@@ -2,6 +2,7 @@ import contextlib
 import colorsys
 import hashlib
 import io
+import json
 import os
 import sys
 import time
@@ -15,7 +16,7 @@ from habitat_llm.planner.planner import Planner
 from habitat_llm.utils.llm_usage import snapshot_from_llm
 from habitat_llm.world_model.entities.floor import Floor
 from habitat_llm.world_model.entity import Object, Receptacle
-from habitat_llm.llm.instruct.utils import pil_image_to_data_url
+from habitat_llm.llm.instruct.utils import get_world_descr, pil_image_to_data_url
 from habitat_llm.pddlstream.problem import build_pddlstream_problem, extract_scope_names
 from habitat_llm.pddlstream.solve import solve_pddlstream_problem
 from habitat_llm.vlm_tamp import (
@@ -445,6 +446,8 @@ class VlmTampPddlPlanner(Planner):
         )
         self.explore_fast = bool(self.plan_config.get("explore_fast", False))
         self.explore_image_interval = max(1, int(self.plan_config.get("explore_image_interval", 30)))
+        self.max_vlm_cycles = max(1, int(self.plan_config.get("max_vlm_cycles", 20)))
+        self.max_searches_per_target = max(1, int(self.plan_config.get("max_searches_per_target", 2)))
         # evaluation.pddl_baseline (baseline yaml) or plan_config.pddl_baseline
         self.pddl_baseline_html = self._read_pddl_baseline_flag()
 
@@ -550,6 +553,12 @@ class VlmTampPddlPlanner(Planner):
         self._explore_image_tick = 0
         self._explore_image_session = 0
         self._subgoal_retry_count: int = 0
+        self._vlm_cycles = 0
+        self._vlm_wall_s = 0.0
+        self._vlm_calls = 0
+        self._search_counts = {}
+        self._last_memory_snapshot = {}
+        self._stop_reason = ""
         # Reprompt bookkeeping (kitchen-worlds-style)
         self._reprompt_round: int = 0
         self._already_succeeded_subgoals: List[str] = []
@@ -614,8 +623,7 @@ class VlmTampPddlPlanner(Planner):
     def _get_log_dir(self):
         if self._log_dir is None:
             results_dir = getattr(self.env_interface.conf.paths, "results_dir", ".")
-            episode_id = getattr(self.env_interface.env.current_episode, "episode_id", "unknown")
-            self._log_dir = os.path.join(results_dir, self.log_dir_name, str(episode_id))
+            self._log_dir = os.path.join(results_dir, self.log_dir_name)
             os.makedirs(self._log_dir, exist_ok=True)
         return self._log_dir
 
@@ -629,6 +637,9 @@ class VlmTampPddlPlanner(Planner):
         log_path = os.path.join(log_dir, "vlm_tamp_pddl_log.jsonl")
         with open(log_path, "a") as f:
             f.write(str(payload) + "\n")
+        if payload.get("event") in ("vlm_english_subgoals", "planner_decision"):
+            from habitat_llm.vlm_tamp.render_observation_history import render_observation_history
+            render_observation_history(log_dir)
 
     def _append_vlm_prompt(
         self,
@@ -849,8 +860,6 @@ class VlmTampPddlPlanner(Planner):
         }
         objects_by_room: Dict[str, List[str]] = defaultdict(list)
         for obj in world_graph.get_all_objects():
-            if visible_object_names is not None and obj.name not in visible_object_names:
-                continue
             room_name: Optional[str] = None
             try:
                 furn = world_graph.find_furniture_for_object(obj)
@@ -903,7 +912,7 @@ class VlmTampPddlPlanner(Planner):
         observations: Dict[str, Any],
         world_graph,
     ) -> Optional[Set[str]]:
-        """Infer names currently in the camera view from projected GT boxes."""
+        """Infer visible names from instance pixels in the matching camera view."""
         rgb_data = observations.get("agent_0_third_rgb")
         if rgb_data is None:
             return None
@@ -924,167 +933,75 @@ class VlmTampPddlPlanner(Planner):
         agent_uid: int,
         visible_entity_names: Optional[Set[str]] = None,
     ) -> str:
-        """Build a compact English description of the current scene state."""
-        lines = []
-        agent_nodes = world_graph.get_agents()
-        agent_node = next((a for a in agent_nodes if a.name == f"agent_{agent_uid}"), None)
-        if agent_node is None and agent_nodes:
-            agent_node = agent_nodes[0]
-        if agent_node is not None:
-            agent_room_name = None
-            for neighbor in world_graph.get_neighbors(agent_node):
-                neighbor_name = getattr(neighbor, "name", None)
-                if neighbor_name is not None:
-                    agent_room_name = neighbor_name
-                    break
-            if agent_room_name:
-                lines.append(f"Robot is in {agent_room_name}.")
-            held = agent_node.properties.get("last_held_object", None)
-            held_name = held.name if held and hasattr(held, "name") else str(held) if held else None
-            if held_name:
-                lines.append(f"Robot is holding {held_name}.")
-            else:
-                lines.append("Robot hand is empty.")
+        """Use the same remembered scene facts and serializer as PARTNR/ReAct.
 
-        for obj in world_graph.get_all_objects():
-            if visible_entity_names is not None and obj.name not in visible_entity_names:
-                continue
-            neighbors = world_graph.get_neighbors(obj)
-            for neighbor, edge in neighbors.items():
-                rel = "inside" if edge in ("inside", "in", "within") else "on"
-                lines.append(f"{obj.name} is {rel} {neighbor.name}.")
-                break
+        Visibility is used only for the requested image annotations, not to
+        supply extra simulator-derived state claims in the text prompt.
+        """
+        return get_world_descr(
+            world_graph, agent_uid=agent_uid, include_room_name=True,
+            add_state_info=True, centralized=False,
+        )
 
-        for furn in world_graph.get_all_furnitures():
-            if (
-                visible_entity_names is not None
-                and furn.name not in visible_entity_names
-            ):
-                continue
-            if furn.properties.get("is_articulated", False):
-                is_open = furn.properties.get("is_open", False)
-                state = "open" if is_open else "closed"
-                lines.append(f"{furn.name} is {state}.")
+    @staticmethod
+    def _memory_snapshot(world_graph):
+        return {
+            obj.name: {
+                "relations": sorted((neighbor.name, edge) for neighbor, edge
+                                    in world_graph.get_neighbors(obj).items()),
+                "states": dict(obj.properties.get("states", {})),
+            }
+            for obj in world_graph.get_all_objects()
+        }
 
-        desc = "\n".join(lines) if lines else "No objects currently visible."
+    def _ask_vlm(self, *args, **kwargs):
+        started = time.monotonic()
+        try:
+            return self.vlm.ask(*args, **kwargs)
+        finally:
+            self._vlm_wall_s = getattr(self, "_vlm_wall_s", 0.0) + time.monotonic() - started
+            self._vlm_calls = getattr(self, "_vlm_calls", 0) + 1
 
-        # self._vprint_header("SCENE STATE", "cyan")
-        # for line in (lines or ["No objects currently visible."]):
-        #     self._vprint(f"  {line}")
+    def _finish_planning(self, reason, evidence=""):
+        self.is_done = True
+        self._stop_reason = reason
+        self._log_event({"event": "planner_decision", "decision": reason, "evidence": evidence,
+                         "evaluator_success": "not consulted"})
+        self._trace_append(f"Planner decision: {reason}. {evidence}")
 
-        return desc
+    def _observe_and_continue(self, instruction, observations, world_graph, reason, target=None):
+        """Continue from the graph already updated by the shared env.step path."""
+        before = getattr(self, "_last_memory_snapshot", {})
+        fresh = self._observe_failure_state(observations, reason=reason)
+        # Do not invoke a planner-specific perception update: PARTNR receives
+        # the same graph after every environment step, including Open.
+        after = self._memory_snapshot(world_graph)
+        self._log_event({"event": "memory_update", "reason": reason, "target": target,
+                         "new_objects": sorted(set(after) - set(before)),
+                         "changed_objects": sorted(k for k in after if k in before and after[k] != before[k]),
+                         "absence_policy": "not seen does not establish absence"})
+        self._reprompt_round += 1
+        self._log_event({"event": "reprompt_started", "reason": reason,
+                         "branch": self.branch_idx, "subgoal_idx": self.subgoal_idx,
+                         "target": target, "reprompt_round": self._reprompt_round})
+        self.current_plan = []
+        self.current_action_idx = 0
+        self.last_high_level_actions = {}
+        self._subgoal_retry_count = 0
+        history = (f"Replanning reason: {reason}; target: {target}.\n"
+                   f"Previously achieved subgoals: {self._already_succeeded_subgoals}.\n"
+                   "Replan for the ORIGINAL task using this new observation.")
+        self._generate_subgoals(instruction, world_graph, fresh, history_str=history,
+                               append=True, observation_reason=reason)
 
     def _collect_gt_projected_boxes(self, world_graph, W: int, H: int) -> List[GtProjectedBox]:
-        """Project GT 3D AABBs to 2D for VLM overlay.
+        """Return visible-pixel boxes from the current RGB camera's instance mask."""
+        from habitat_llm.vlm_tamp.visible_boxes import visible_entity_boxes
 
-        Drops floors, behind-camera / mostly off-screen AABBs, and near-duplicate
-        furniture boxes that would otherwise stack on the same pixels.
-        """
-        import numpy as np
-        from habitat.sims.habitat_simulator.sim_utilities import get_obj_from_handle
-        from habitat_llm.utils.geometric import project_to_im_coordinates
-
-        sim = self.env_interface.sim
-        sensor = sim.agents[0]._sensors["agent_0_third_rgb"]
-        camera_matrix = sensor.render_camera.camera_matrix
-        projection_matrix = sensor.render_camera.projection_matrix
-        im_size = np.array([W, H], dtype=np.float64)
-        cam_near = 0.05
-        # Magnum/OpenGL camera looks down -Z, so in-front points have negative Z.
-        u_bound = 2.0 * W
-        v_bound = 2.0 * H
-
-        entities = [
-            (obj, "movable") for obj in world_graph.get_all_objects()
-        ] + [
-            (fur, "furniture")
-            for fur in world_graph.get_all_furnitures()
-            if not isinstance(fur, Floor)
+        entities = list(world_graph.get_all_objects()) + [
+            fur for fur in world_graph.get_all_furnitures() if not isinstance(fur, Floor)
         ]
-
-        boxes: List[GtProjectedBox] = []
-        movable_names: Set[str] = set()
-        for entity, etype in entities:
-            handle = getattr(entity, "sim_handle", None)
-            if not handle or handle == "floor":
-                continue
-            try:
-                obj = get_obj_from_handle(sim, handle)
-            except Exception:
-                continue
-            if obj is None:
-                continue
-
-            try:
-                aabb = obj.aabb
-                xform = obj.transformation
-                center_cam = camera_matrix.transform_point(
-                    xform.transform_point(aabb.center())
-                )
-                if float(center_cam.z) >= -cam_near:
-                    continue
-
-                mn_min = aabb.min
-                mn_max = aabb.max
-                front_world = []
-                for x in (mn_min[0], mn_max[0]):
-                    for y in (mn_min[1], mn_max[1]):
-                        for z in (mn_min[2], mn_max[2]):
-                            wp = xform.transform_point(mn.Vector3(x, y, z))
-                            cam_pt = camera_matrix.transform_point(wp)
-                            if float(cam_pt.z) < -cam_near:
-                                front_world.append([wp[0], wp[1], wp[2]])
-
-                min_corners = 1 if etype == "movable" else 2
-                if len(front_world) < min_corners:
-                    continue
-                proj_src = np.array(front_world, dtype=np.float64)
-                px = project_to_im_coordinates(
-                    proj_src, camera_matrix, projection_matrix, im_size
-                )
-                finite = np.isfinite(px).all(axis=1)
-                in_bound = (
-                    finite
-                    & (px[:, 0] > -u_bound)
-                    & (px[:, 0] < W + u_bound)
-                    & (px[:, 1] > -v_bound)
-                    & (px[:, 1] < H + v_bound)
-                )
-                if int(in_bound.sum()) < min_corners:
-                    continue
-                px = px[in_bound]
-                u_min = float(px[:, 0].min())
-                v_min = float(px[:, 1].min())
-                u_max = float(px[:, 0].max())
-                v_max = float(px[:, 1].max())
-                cx = 0.5 * (u_min + u_max)
-                cy = 0.5 * (v_min + v_max)
-                if cx < -0.2 * W or cx > 1.2 * W or cy < -0.2 * H or cy > 1.2 * H:
-                    continue
-
-                clipped = _clip_and_accept_gt_box(
-                    u_min,
-                    v_min,
-                    u_max,
-                    v_max,
-                    W,
-                    H,
-                    min_side_px=8.0 if etype == "movable" else 12.0,
-                    min_on_screen_fraction=0.15 if etype == "movable" else 0.3,
-                )
-                if clipped is None:
-                    continue
-                cu_min, cv_min, cu_max, cv_max = clipped
-                color = _rgb_for_label(entity.name)
-                boxes.append(
-                    (entity.name, color, cu_min, cv_min, cu_max, cv_max)
-                )
-                if etype == "movable":
-                    movable_names.add(entity.name)
-            except Exception:
-                continue
-
-        return _suppress_similar_overlapping_boxes(boxes, movable_names=movable_names)
+        return visible_entity_boxes(self.env_interface.sim, entities, _rgb_for_label, W, H)
 
     def _draw_gt_box_list_on_image(self, scene_img, boxes: List[GtProjectedBox]) -> None:
         """Draw projected boxes and labels on *scene_img* in-place (mutates image)."""
@@ -1219,6 +1136,7 @@ class VlmTampPddlPlanner(Planner):
 
     def _save_vlm_images(self, images: List[Any]) -> None:
         """Save PIL image(s) about to be sent to the VLM; one logical step → one counter tick."""
+        self._last_vlm_image_paths = []
         if not images:
             return
         try:
@@ -1228,11 +1146,13 @@ class VlmTampPddlPlanner(Planner):
             if len(images) == 1:
                 fname = os.path.join(img_dir, f"vlm_input_{idx:04d}.png")
                 images[0].save(fname)
+                self._last_vlm_image_paths.append(os.path.relpath(fname, self._get_log_dir()))
                 self._vprint(f"  [image saved]  {fname}", "gray")
             else:
                 for si, im in enumerate(images):
                     fname = os.path.join(img_dir, f"vlm_input_{idx:04d}_p{si}.png")
                     im.save(fname)
+                    self._last_vlm_image_paths.append(os.path.relpath(fname, self._get_log_dir()))
                     self._vprint(f"  [image saved]  {fname}", "gray")
             self._vlm_image_count += 1
         except Exception as e:
@@ -1243,6 +1163,9 @@ class VlmTampPddlPlanner(Planner):
     # ------------------------------------------------------------------
 
     def _begin_explore_images(self, observations, world_graph, room_name):
+        self._search_counts = getattr(self, "_search_counts", {})
+        key = "explore:" + room_name
+        self._search_counts[key] = self._search_counts.get(key, 0) + 1
         self._explore_image_records = []
         self._explore_image_tick = 0
         self._explore_image_session = getattr(self, "_explore_image_session", 0) + 1
@@ -1310,7 +1233,7 @@ class VlmTampPddlPlanner(Planner):
         self._save_vlm_images(images)
         return [pil_image_to_data_url(im) for im in images], selected
 
-    def _observe_failure_state(self, observations: Dict[str, Any]) -> Dict[str, Any]:
+    def _observe_failure_state(self, observations: Dict[str, Any], reason="failure") -> Dict[str, Any]:
         """Render the current failure state without taking a simulation step.
 
         Keep non-camera observations, but never reuse a stale planning image if
@@ -1321,7 +1244,8 @@ class VlmTampPddlPlanner(Planner):
         if not self.use_images:
             return refreshed
         event: Dict[str, Any] = {
-            "event": "failure_observation",
+            "event": "failure_observation" if reason == "failure" else "current_observation",
+            "reason": reason,
             "reprompt_round": self._reprompt_round,
             "branch": self.branch_idx,
             "subgoal_idx": self.subgoal_idx,
@@ -1354,12 +1278,17 @@ class VlmTampPddlPlanner(Planner):
         after_explore: bool = False,
         explored_room: Optional[str] = None,
         refresh_failure_observation: bool = False,
+        observation_reason: Optional[str] = None,
     ):
         """Two-step VLM prompting:
           Turn 1 — English intermediate goals (with scene image if available)
           Turn 2 — Translate to PDDL predicates; request self.num_branches alternatives
           If after_explore, append post-explore instructions (avoid redundant explore, prefer open joints).
         """
+        self._vlm_cycles = getattr(self, "_vlm_cycles", 0) + 1
+        if self._vlm_cycles > getattr(self, "max_vlm_cycles", 20):
+            self._finish_planning("budget_exhausted", "VLM cycle limit reached")
+            return
         if refresh_failure_observation:
             observations = self._observe_failure_state(observations)
         exploration_images = []
@@ -1380,11 +1309,17 @@ class VlmTampPddlPlanner(Planner):
             visible_object_names=visible_object_names,
         )
         agent_uid = self._agents[0].uid if self._agents else 0
+        self._last_memory_snapshot = self._memory_snapshot(world_graph)
         scene_desc = self._build_scene_description(
             world_graph,
             agent_uid,
             visible_entity_names=visible_entity_names,
         )
+        self._log_event({"event": "memory_snapshot", "reprompt_round": self._reprompt_round,
+                         "visible_entities": sorted(visible_entity_names or []),
+                         "known_objects": sorted(o.name for o in world_graph.get_all_objects()),
+                         "description": scene_desc,
+                         "search_counts": dict(getattr(self, "_search_counts", {}))})
 
         self.vlm.new_session()
 
@@ -1393,7 +1328,7 @@ class VlmTampPddlPlanner(Planner):
             goal=instruction,
             objects_by_type=self._objects_by_type,
             scene_description=scene_desc,
-            history=history_str,
+            history=history_str + f"\nSearch/inspection counts: {getattr(self, '_search_counts', {})}. Per-target limit: {getattr(self, 'max_searches_per_target', 2)}.\n",
             after_explore=after_explore,
             explored_room=explored_room,
         )
@@ -1409,8 +1344,9 @@ class VlmTampPddlPlanner(Planner):
         if after_explore and self.use_images:
             image_urls = explore_urls
         else:
+            self._last_vlm_image_paths = []
             image_urls = self._get_annotated_vlm_image_urls(
-                observations, world_graph, annotate=not refresh_failure_observation
+                observations, world_graph, annotate=not (refresh_failure_observation or observation_reason)
             )
         english_prompt_send = english_prompt
         if after_explore:
@@ -1423,6 +1359,8 @@ class VlmTampPddlPlanner(Planner):
             for i, record in enumerate(exploration_images):
                 image_context += f"Image {i + 1}: exploration tick {record['capture_tick']}.\n"
             english_prompt_send = image_context + "\n" + english_prompt
+        elif observation_reason:
+            english_prompt_send = f"Observation trigger: {observation_reason}. The attached image, if present, is the current third-person view.\n\n" + english_prompt
         elif refresh_failure_observation:
             english_prompt_send = (
                 "The image is a fresh third-person camera observation at failure replanning.\n\n"
@@ -1445,7 +1383,7 @@ class VlmTampPddlPlanner(Planner):
             prompt_text=english_prompt_send,
             image_count=len(image_urls),
         )
-        english_response = self.vlm.ask(
+        english_response = self._ask_vlm(
             english_prompt_send,
             image_data_urls=image_urls if image_urls else None,
             max_completion_tokens=self.vlm_max_tokens,
@@ -1459,13 +1397,25 @@ class VlmTampPddlPlanner(Planner):
             "after_explore": bool(after_explore),
             "explored_room": explored_room,
             "image_count": len(image_urls),
-            "image_context": "exploration_sequence" if after_explore else "current_failure" if refresh_failure_observation else "initial_scene",
+            "image_context": "exploration_sequence" if after_explore else observation_reason or ("current_failure" if refresh_failure_observation else "initial_scene"),
+            "vlm_cycle": self._vlm_cycles,
+            "image_paths": list(getattr(self, "_last_vlm_image_paths", [])),
             "exploration_images": exploration_images,
             "prompt": english_prompt_send,
             "response": english_response,
             "api_response": self.vlm.get_last_response_metadata(),
         })
 
+        try:
+            decision = json.loads(str(english_response).strip().removeprefix("```json").removesuffix("```").strip())
+        except (ValueError, TypeError):
+            decision = None
+        if isinstance(decision, dict) and decision.get("decision") in ("complete", "unsolvable"):
+            self._finish_planning(decision["decision"], str(decision.get("reason", "")))
+            return
+        if not str(english_response).strip():
+            self._finish_planning("invalid_response", "Empty VLM plan; inspect completion token limit")
+            return
         self._vprint("  [response]", "magenta")
         for line in str(english_response).strip().splitlines():
             self._vprint(f"    {line}")
@@ -1486,7 +1436,7 @@ class VlmTampPddlPlanner(Planner):
             prompt_text=predicate_prompt,
             image_count=0,
         )
-        predicate_response = self.vlm.ask(
+        predicate_response = self._ask_vlm(
             predicate_prompt,
             max_completion_tokens=self.vlm_max_tokens,
             temperature=self.vlm_temperature,
@@ -1526,6 +1476,7 @@ class VlmTampPddlPlanner(Planner):
         if not branches or not any(branches):
             self._vprint("  [WARNING] VLM returned no valid subgoals.", "red")
             self._trace_append("VLM returned no valid subgoals.")
+            self._finish_planning("invalid_response", "No executable subgoals or explicit terminal decision")
             return
 
         # Filter invalid subgoals (e.g. on(obj, movable)) and deduplicate branches
@@ -1538,12 +1489,16 @@ class VlmTampPddlPlanner(Planner):
             if b and b not in seen:
                 seen.append(b)
 
+        if not seen:
+            self._finish_planning("invalid_response", "All proposed subgoals failed validation")
+            return
+
         if append and self.branches:
             old_len = len(self.branches)
             added_branches: List[List[str]] = []
             added_indices: List[int] = []
             for b in seen:
-                if b not in self.branches:
+                if b:  # A new observation may justify retrying a previously proposed plan.
                     self.branches.append(b)
                     self._branch_origin_round.append(self._reprompt_round)
                     added_branches.append(b)
@@ -1836,6 +1791,11 @@ class VlmTampPddlPlanner(Planner):
         pred, args = self._parse_subgoal(subgoal)
         if not pred:
             return False
+        if args and pred in ("explore", "opened-door", "opened-drawer"):
+            key = ("explore:" if pred == "explore" else "inspect:") + args[0]
+            if getattr(self, "_search_counts", {}).get(key, 0) >= getattr(self, "max_searches_per_target", 2):
+                self._log_event({"event": "search_limit", "subgoal": subgoal, "target": key})
+                return False
         movables = set(self._objects_by_type.get("movable", []))
         if pred in ("picked", "pick", "holding") and len(args) >= 1:
             obj_arg = args[1] if len(args) >= 2 else args[0]
@@ -2113,6 +2073,9 @@ class VlmTampPddlPlanner(Planner):
             hl = dict(self.last_high_level_actions)
         out: Dict[str, Any] = {"high_level_actions": hl, "traces": {agent_uid: self.trace}}
         out.update(kwargs)
+        out["cost_metrics"] = {"llm_planning_time_s": getattr(self, "_vlm_wall_s", 0.0),
+                               "llm_requests": getattr(self, "_vlm_calls", 0),
+                               "physical_explore": not self.explore_fast}
         usage = snapshot_from_llm(self.vlm)
         if usage:
             cost = dict(out.get("cost_metrics") or {})
@@ -2228,10 +2191,12 @@ class VlmTampPddlPlanner(Planner):
                     f"{self._subgoals_completed}/{sum(len(b) for b in self.branches[:self.branch_idx + 1])} completed)",
                     "green",
                 )
-                if not self._advance_branch():
-                    self.is_done = True
-                    return {}, self._planner_info(agent_uid, hl_override={}, is_done={agent_uid: True}), True
-                return self.get_next_action(instruction, observations, world_graphs)
+                self._finish_planning(
+                    "plan_completed", "All subgoals in the active branch are finished."
+                )
+                return {}, self._planner_info(
+                    agent_uid, hl_override={}, is_done={agent_uid: True}
+                ), True
 
             subgoal = subgoals[self.subgoal_idx]
             self._log_subgoal_status(
@@ -2567,6 +2532,23 @@ class VlmTampPddlPlanner(Planner):
                         append=True, refresh_failure_observation=True,
                     )
                 else:
+                    if _active_action == "Open":
+                        target = hl_snapshot[agent_uid][1]
+                        active = subgoals[self.subgoal_idx]
+                        if self.current_action_idx + 1 >= len(self.current_plan):
+                            self._log_subgoal_status("solved", active)
+                            self._emit_subgoal_execution("solved", active)
+                            self._subgoals_completed += 1
+                            if active not in self._already_succeeded_subgoals:
+                                self._already_succeeded_subgoals.append(active)
+                        else:
+                            self._emit_subgoal_execution("observation_boundary", active)
+                        self._search_counts = getattr(self, "_search_counts", {})
+                        key = "inspect:" + str(target)
+                        self._search_counts[key] = self._search_counts.get(key, 0) + 1
+                        self.history.append(f"opened({target})")
+                        self._observe_and_continue(instruction, observations, world_graph, "opened_furniture", target)
+                        return low_level_actions, self._planner_info(agent_uid, hl_override=hl_snapshot, responses=responses), self.is_done
                     self.current_action_idx += 1
                     # Check if subgoal's plan is now fully executed
                     if self.current_action_idx >= len(self.current_plan):
@@ -2582,18 +2564,24 @@ class VlmTampPddlPlanner(Planner):
 
                             if self.subgoal_idx < len(subgoals):
                                 sg_ex = subgoals[self.subgoal_idx]
-                                self._vprint_subgoal_complete_block(sg_ex)
-                                self._log_subgoal_status(
-                                    status="solved",
-                                    subgoal=sg_ex,
-                                    branch_idx=self.branch_idx,
-                                    subgoal_idx=self.subgoal_idx,
-                                )
-                                self._emit_subgoal_execution(
-                                    "solved", sg_ex, extra_trailing_delimiter=False
-                                )
-                                if sg_ex not in self._already_succeeded_subgoals:
-                                    self._already_succeeded_subgoals.append(sg_ex)
+                                explore_pred, _ = self._parse_subgoal(sg_ex)
+                                if explore_pred in ("explore", "searched-room", "search-room"):
+                                    self._vprint_subgoal_complete_block(sg_ex)
+                                    self._log_subgoal_status(
+                                        status="solved", subgoal=sg_ex,
+                                        branch_idx=self.branch_idx,
+                                        subgoal_idx=self.subgoal_idx,
+                                    )
+                                    self._emit_subgoal_execution(
+                                        "solved", sg_ex, extra_trailing_delimiter=False
+                                    )
+                                    self._subgoals_completed += 1
+                                    if sg_ex not in self._already_succeeded_subgoals:
+                                        self._already_succeeded_subgoals.append(sg_ex)
+                                else:
+                                    # Searching for a missing object does not
+                                    # achieve the manipulation goal that needed it.
+                                    self._emit_subgoal_execution("observation_boundary", sg_ex)
                                 self._log_plan_tree()
 
                             self._vprint_header("REPLANNING AFTER EXPLORE", "yellow")

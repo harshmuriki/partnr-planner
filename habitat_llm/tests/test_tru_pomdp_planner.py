@@ -100,7 +100,17 @@ def make_world_graph(robot_at=(0.0, 0.0, 0.0)) -> WorldGraph:
     lamp = Object("lamp_0", {"type": "lamp", "states": {"is_powered_on": True}})
     robot = SpotRobot("agent_0", {"type": "agent", "translation": list(robot_at)})
 
-    for node in (kitchen, living_room, counter, cabinet, fridge, table, plate, lamp, robot):
+    for node in (
+        kitchen,
+        living_room,
+        counter,
+        cabinet,
+        fridge,
+        table,
+        plate,
+        lamp,
+        robot,
+    ):
         graph.add_node(node)
     graph.add_edge(counter, kitchen, "inside", "contains")
     graph.add_edge(cabinet, kitchen, "inside", "contains")
@@ -356,10 +366,11 @@ def test_planner_holds_the_skill_until_the_response_is_non_empty():
     assert executor.calls[1] == executor.calls[0]
 
     # Third call: the Navigate reports success, so it is cleared and the area is
-    # recorded as deliberately inspected.
+    # recorded as successful navigation, without claiming exhaustive inspection.
     _, _, done = planner.get_next_action("put the mug away", {}, {0: graph})
     assert planner.last_high_level_actions == {}
-    assert "cabinet_3" in planner._deliberately_inspected
+    assert "cabinet_3" not in planner._deliberately_inspected
+    assert planner._navigated
     # The manipulation is still queued, so no replanning happened.
     assert planner._queue == [("Open", "cabinet_3")]
     assert planner._symbolic_action == Action(ActionType.OPEN, area="cabinet_3")
@@ -395,7 +406,8 @@ def test_hybrid_update_runs_once_the_symbolic_action_completes():
     # The symbolic action was consumed by the hybrid belief update.
     assert planner._symbolic_action is None
     assert "Belief:" in planner._trace
-    assert planner.belief is not None and len(planner.belief) >= 1
+    assert planner.belief is not None and len(planner.belief) == 0
+    assert planner._termination_reason == "empty_belief"
 
 
 def test_failed_skill_is_recorded_and_clears_the_queue():

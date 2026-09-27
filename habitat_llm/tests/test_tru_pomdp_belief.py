@@ -142,9 +142,7 @@ def test_failed_skill_still_moves_the_robot_but_applies_no_manipulation():
 def test_failed_skill_differs_from_null():
     domain = make_domain()
     updater = HybridBeliefUpdater(domain)
-    scene = make_scene(
-        object_parent={"cup_0": "cabinet_3"}, robot_area="counter_24"
-    )
+    scene = make_scene(object_parent={"cup_0": "cabinet_3"}, robot_area="counter_24")
     belief = Belief([Particle(scene, (GoalAtom("cup_0", "table_10"),))])
     action = Action(ActionType.PICK, area="cabinet_3", obj="cup_0")
 
@@ -446,7 +444,7 @@ def test_healthy_belief_is_only_normalised():
     assert not llm.prompts, "no LLM call should happen while the belief is healthy"
 
 
-def test_collapse_without_a_toh_falls_back_instead_of_wiping_the_belief():
+def test_collapse_without_a_toh_reports_empty_belief():
     domain = make_domain()
     updater = HybridBeliefUpdater(domain, toh=None, replenish_threshold=0.3)
     goal = (GoalAtom("cup_0", "table_10"),)
@@ -463,5 +461,5 @@ def test_collapse_without_a_toh_falls_back_instead_of_wiping_the_belief():
         observation,
     )
     assert info["surviving_mass"] == 0.0
-    assert info.get("fallback_to_predicted") is True
-    assert len(new_belief) == 1
+    assert info["termination_reason"] == "empty_belief"
+    assert len(new_belief) == 0

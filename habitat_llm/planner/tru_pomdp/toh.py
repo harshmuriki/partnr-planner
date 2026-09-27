@@ -28,6 +28,8 @@ path, normalised over the belief.
 import itertools
 import json
 import re
+import math
+import random
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
@@ -39,7 +41,7 @@ from habitat_llm.planner.tru_pomdp.scene import (
     SceneState,
     SymbolicDomain,
     names_match,
-    normalize_object_name,
+    STATE_LITERALS,
 )
 
 # ---------------------------------------------------------------------------
@@ -206,7 +208,7 @@ fits the instruction rather than naming the room.
 
 - No target_area assignments yet.
 
-- Each combination must contain no more than {max_objects} objects.
+- Include every object required by the instruction; never truncate a combination. {max_objects}
 
 - Prioritize logical groupings and auto-prune duplicates or redundant patterns.
 
@@ -408,18 +410,19 @@ class TohConfig:
 
     :param c1: number of Level 1/2 candidate combinations.
     :param c2: number of Level 3 candidate locations per invisible object.
-    :param max_objects_per_combination: the paper's cap of 4 objects per goal.
+    :param max_objects_per_combination: optional rejection limit; never truncates.
     :param max_particles: cap on the number of root-to-leaf paths kept. The
-        Cartesian product over Level 3 choices can reach c1 * c2 ** 4 leaves; the
-        lowest-weight leaves are pruned and the belief renormalised.
+        Cartesian product is enumerated below this limit, otherwise sampled
+        proportionally to path weights without constructing every leaf.
     :param max_tokens: generation budget. The A.1 prompts ask for a long
         reasoning chain before the JSON, so this has to be generous.
     """
 
     c1: int = 3
     c2: int = 3
-    max_objects_per_combination: int = 4
+    max_objects_per_combination: Optional[int] = None
     max_particles: int = 48
+    seed: int = 0
     max_tokens: int = 4096
 
 
@@ -469,7 +472,9 @@ def build_observation_text(
         parent = observation.object_parent[obj]
         where = "the robot's hand" if parent == HELD else parent
         placements.append(f"{obj} is in {where}")
-    lines.append(f"The observed objects and their initial areas are: {_format_list(placements)}")
+    lines.append(
+        f"The observed objects and their initial areas are: {_format_list(placements)}"
+    )
     lines.append("")
 
     states = []
@@ -490,7 +495,7 @@ def build_observation_text(
     lines.append("")
     lines.append(
         f"The areas that have NOT been inspected yet are: "
-        f"{_format_list([f for f in known if f not in observation.inspected_areas])}"
+        f"{_format_list([f for f in known if f not in observation.fully_inspected_areas])}"
     )
     lines.append("")
 
@@ -515,7 +520,9 @@ def build_observation_text(
         lines.append("none")
         lines.append("")
 
-    lines.append(f"Objects already in target areas: {_format_list(sorted(satisfied_objects))}")
+    lines.append(
+        f"Objects already in target areas: {_format_list(sorted(satisfied_objects))}"
+    )
     return "\n".join(lines)
 
 
@@ -579,6 +586,8 @@ class TreeOfHypotheses:
         self.domain = domain
         self.config = config or TohConfig()
         self.verbose = verbose
+        self.rng = random.Random(self.config.seed)
+        self.rejected_hypotheses = 0
         self.last_prompts: List[str] = []
         self.last_responses: List[str] = []
 
@@ -604,7 +613,11 @@ class TreeOfHypotheses:
         prompt = (
             TOH_LEVEL12_SYSTEM_PROMPT.format(
                 k=self.config.c1,
-                max_objects=self.config.max_objects_per_combination,
+                max_objects=(
+                    f"At most {self.config.max_objects_per_combination} objects are supported."
+                    if self.config.max_objects_per_combination
+                    else ""
+                ),
             )
             + "\n\n# Task instruction\n\n"
             + instruction
@@ -613,32 +626,38 @@ class TreeOfHypotheses:
             + "\n\nNow give your reasoning and then the final JSON answer.\n"
         )
         parsed = parse_json_answer(self._query(prompt))
-        if parsed is None:
+        if parsed is None or not isinstance(parsed.get("answer"), list):
+            self.rejected_hypotheses += 1
             return []
         combinations: List[Tuple[List[GoalAtom], float]] = []
         for entry in parsed.get("answer", [])[: self.config.c1]:
             if not isinstance(entry, dict):
                 continue
-            atoms: List[GoalAtom] = []
-            for item in entry.get("objects", [])[
-                : self.config.max_objects_per_combination
-            ]:
-                atom = self._parse_goal_item(item)
-                if atom is not None:
-                    atoms.append(atom)
-            if not atoms:
+            items = entry.get("objects", [])
+            if not isinstance(items, list) or not items:
+                self.rejected_hypotheses += 1
+                continue
+            atoms = [self._parse_goal_item(item) for item in items]
+            cap = self.config.max_objects_per_combination
+            if any(atom is None for atom in atoms) or (cap and len(atoms) > cap):
+                self.rejected_hypotheses += 1
                 continue
             try:
                 probability = float(entry.get("probability", 0.0))
             except (TypeError, ValueError):
                 probability = 0.0
-            if probability <= 0.0:
-                probability = 1e-3
+            if not math.isfinite(probability) or probability <= 0.0:
+                self.rejected_hypotheses += 1
+                continue
             combinations.append((atoms, probability))
         return combinations
 
     def _parse_goal_item(self, item: Any) -> Optional[GoalAtom]:
-        if not isinstance(item, dict) or not item.get("object"):
+        if (
+            not isinstance(item, dict)
+            or not isinstance(item.get("object"), str)
+            or not item["object"].strip()
+        ):
             return None
         name = str(item["object"]).strip().replace(" ", "_")
         target = item.get("target_area")
@@ -648,12 +667,18 @@ class TreeOfHypotheses:
             return None
         relation = str(item.get("relation") or "on").strip().lower()
         if relation not in ("on", "within"):
-            relation = "on"
+            return None
         next_to = item.get("next_to")
         states = item.get("states") or []
         if isinstance(states, str):
             states = [states]
+        if not isinstance(states, (list, tuple)):
+            return None
         states = tuple(str(s).strip() for s in states if str(s).strip())
+        if any(s not in STATE_LITERALS for s in states):
+            return None
+        if next_to and (not isinstance(next_to, str) or area is None):
+            return None
         if area is None and not states:
             # Neither a placement nor a state change: nothing to plan for.
             return None
@@ -676,15 +701,7 @@ class TreeOfHypotheses:
         for furniture in self.domain.furniture_room:
             if furniture.lower() == lowered:
                 return furniture
-        wanted = set(normalize_object_name(text))
-        best: Optional[str] = None
-        best_overlap = 0
-        for furniture in sorted(self.domain.furniture_room):
-            overlap = len(wanted & set(normalize_object_name(furniture)))
-            if overlap > best_overlap:
-                best_overlap = overlap
-                best = furniture
-        return best
+        return None
 
     # -- level 3 -------------------------------------------------------------
 
@@ -706,29 +723,23 @@ class TreeOfHypotheses:
         )
         parsed = parse_json_answer(self._query(prompt))
         results: List[Tuple[str, float]] = []
-        if parsed is not None:
+        if parsed is not None and isinstance(parsed.get("answer"), list):
             allowed = set(candidate_areas)
             for entry in parsed.get("answer", []):
                 if not isinstance(entry, dict):
                     continue
                 area = self._resolve_area(entry.get("initial_area"))
-                if area is None or (allowed and area not in allowed):
+                if area is None or area not in allowed:
                     continue
                 try:
                     probability = float(entry.get("probability", 0.0))
                 except (TypeError, ValueError):
                     probability = 0.0
-                if probability <= 0.0:
-                    probability = 1e-3
+                if not math.isfinite(probability) or probability <= 0.0:
+                    continue
                 results.append((area, probability))
                 if len(results) >= self.config.c2:
                     break
-        if not results and candidate_areas:
-            # Never leave a hypothesised object without a location: spread the
-            # mass uniformly over the plausible hidden areas.
-            share = 1.0 / min(self.config.c2, len(candidate_areas))
-            for area in list(candidate_areas)[: self.config.c2]:
-                results.append((area, share))
         return results
 
     def candidate_hidden_areas(self, observation: Observation) -> List[str]:
@@ -742,7 +753,7 @@ class TreeOfHypotheses:
         uninspected = [
             f
             for f in known
-            if f not in observation.inspected_areas and f not in closed
+            if f not in observation.fully_inspected_areas and f not in closed
         ]
         return closed + uninspected
 
@@ -755,6 +766,8 @@ class TreeOfHypotheses:
         wrong_goal_states: Sequence[Sequence[GoalAtom]] = (),
         satisfied_objects: Sequence[str] = (),
         failed_attempts: Sequence[str] = (),
+        memory: Optional[Dict[str, str]] = None,
+        history: Sequence[str] = (),
     ) -> Belief:
         """
         Run the three levels and build the particle belief b_LLM.
@@ -769,6 +782,16 @@ class TreeOfHypotheses:
             satisfied_objects=satisfied_objects,
             failed_attempts=failed_attempts,
         )
+        memory = dict(memory or {})
+        if memory:
+            observation_text += (
+                "\nRemembered placements (revisable, not current observations):\n"
+                + json.dumps(memory, sort_keys=True)
+            )
+        if history:
+            observation_text += "\nAction and observation history:\n" + "\n".join(
+                history
+            )
         combinations = self.query_levels_1_2(instruction, observation_text)
         if not combinations:
             return Belief()
@@ -778,12 +801,11 @@ class TreeOfHypotheses:
         # paper queries each invisible target object independently.
         location_cache: Dict[str, List[Tuple[str, float]]] = {}
 
-        leaves: List[Tuple[Particle, float]] = []
+        branches = []
+        path_count = 0
         for atoms, combination_weight in combinations:
             invisible = [
-                atom.obj
-                for atom in atoms
-                if atom.obj not in observation.object_parent
+                atom.obj for atom in atoms if atom.obj not in observation.object_parent
             ]
             unique_invisible = sorted(set(invisible))
             for obj in unique_invisible:
@@ -793,31 +815,63 @@ class TreeOfHypotheses:
                 if grounded is not None:
                     location_cache[obj] = [(observation.object_parent[grounded], 1.0)]
                     continue
+                remembered = (
+                    obj
+                    if obj in memory
+                    else next((name for name in memory if names_match(obj, name)), None)
+                )
+                if (
+                    remembered is not None
+                    and memory[remembered] not in observation.fully_inspected_areas
+                ):
+                    location_cache[obj] = [(memory[remembered], 1.0)]
+                    continue
                 location_cache[obj] = self.query_level_3(
                     instruction, observation_text, obj, hidden_areas
                 )
 
             option_lists = [location_cache.get(obj, []) for obj in unique_invisible]
-            if any(len(options) == 0 for options in option_lists):
-                # An object with no plausible location at all: keep the goal but
-                # leave the object's location unknown.
-                option_lists = [options or [(None, 1.0)] for options in option_lists]
+            if any(not options for options in option_lists):
+                self.rejected_hypotheses += 1
+                continue
+            count = math.prod(len(options) for options in option_lists)
+            mass = combination_weight * math.prod(
+                sum(w for _, w in options) for options in option_lists
+            )
+            branches.append(
+                (atoms, unique_invisible, option_lists, combination_weight, mass)
+            )
+            path_count += count
 
-            for assignment in itertools.product(*option_lists) if unique_invisible else [()]:
-                weight = combination_weight
-                placements: Dict[str, Optional[str]] = {}
-                for obj, (area, probability) in zip(unique_invisible, assignment):
-                    weight *= probability
-                    placements[obj] = area
-                particle = self._build_particle(
-                    observation, atoms, placements, weight
+        cap = max(1, self.config.max_particles)
+        particles = []
+        if path_count <= cap:
+            for atoms, invisible, options, weight, _ in branches:
+                for assignment in itertools.product(*options):
+                    placements = dict(zip(invisible, (area for area, _ in assignment)))
+                    particles.append(
+                        self._build_particle(
+                            observation,
+                            atoms,
+                            placements,
+                            weight * math.prod(w for _, w in assignment),
+                        )
+                    )
+        elif branches:
+            # Sample the joint distribution without materializing its Cartesian product.
+            for _ in range(cap):
+                atoms, invisible, options, _, _ = self.rng.choices(
+                    branches, weights=[b[4] for b in branches], k=1
+                )[0]
+                assignment = [
+                    self.rng.choices(opt, weights=[w for _, w in opt], k=1)[0]
+                    for opt in options
+                ]
+                placements = dict(zip(invisible, (area for area, _ in assignment)))
+                particles.append(
+                    self._build_particle(observation, atoms, placements, 1.0 / cap)
                 )
-                leaves.append((particle, weight))
-
-        leaves.sort(key=lambda pair: pair[1], reverse=True)
-        leaves = leaves[: self.config.max_particles]
-        belief = Belief(particle for particle, _ in leaves)
-        return belief.normalize()
+        return Belief(particles).normalize()
 
     def _observed_alias(self, obj: str, observation: Observation) -> Optional[str]:
         """If an observed object already matches this hypothesised name, use it."""
@@ -842,7 +896,8 @@ class TreeOfHypotheses:
                 k: set(v) for k, v in observation.spatial_relations.items()
             },
             robot_area=observation.robot_area,
-            inspected_areas=set(observation.inspected_areas),
+            inspected_areas=set(observation.fully_inspected_areas),
+            observed_objects=set(observation.object_parent),
         )
         resolved_atoms: List[GoalAtom] = []
         hypothesised: Set[str] = set()
@@ -865,6 +920,4 @@ class TreeOfHypotheses:
             hypothesised.add(name)
             resolved_atoms.append(atom)
         scene.hypothesized = hypothesised
-        return Particle(
-            scene=scene, goal_atoms=tuple(resolved_atoms), weight=max(weight, 1e-9)
-        )
+        return Particle(scene=scene, goal_atoms=tuple(resolved_atoms), weight=weight)

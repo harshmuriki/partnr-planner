@@ -17,8 +17,10 @@ world_model:
   use_gt_static_structure: True
 
 evaluation:
+  # The 600-second budget counts VLM calls and non-Explore action simulation time.
+  exclude_explore_from_time_budget: True
   use_rgb: True
-  # When true: interactive planning-tree HTML (click solved nodes for logs); false = legacy index.html.
+  # When true: expandable trace HTML (click each row for logs and images); false = legacy index.html.
   pddl_baseline: True
   agents:
     agent_0:
@@ -27,6 +29,8 @@ evaluation:
           pddl_baseline: True
           num_branches: 1 # Number of different branches generated for each VLM call # This is what is there for default VLM-TAMP paper
           max_reprompts: 50 # This is total reprompts in the whole episode; Setting the same as partnr-planner=50 (total replans tho)  # From VLM-TAMP paper=2 for every parent
+          max_vlm_cycles: 20 # Includes initial planning and Explore/open/failure replanning.
+          max_searches_per_target: 2
           ntamp_max_pddl_replan_retries: 3 # PDDL-only replans per subgoal before branch/VLM escalation
           enable_partial_obs_explore: True # CG memory-driven Explore[room] before PDDL if required objects are missing/unlocated
           explore_on_missing_required_objects: True
@@ -39,7 +43,7 @@ evaluation:
           vlm:
             type: gpt4v
             model_name: gpt-5.6-luna
-            max_completion_tokens: 1200
+            max_completion_tokens: 16384
             temperature: 0.2
             reasoning_effort: high
             use_images: True

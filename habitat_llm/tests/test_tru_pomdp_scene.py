@@ -153,7 +153,9 @@ def test_visibility_alone_does_not_imply_a_successful_pick():
     )
     assert domain.is_visible(scene, "cup_0")
     # The gripper is full.
-    ok, reason = domain.feasible(scene, Action(ActionType.PICK, area="counter_24", obj="cup_0"))
+    ok, reason = domain.feasible(
+        scene, Action(ActionType.PICK, area="counter_24", obj="cup_0")
+    )
     assert not ok
     assert "already holding" in reason
 
@@ -206,6 +208,8 @@ def test_declared_affordances_restrict_state_actions():
     assert not domain.feasible(scene, Action(ActionType.FILL, obj="lamp_0"))[0]
     # An object with no declared affordances is unrestricted.
     scene.object_parent["cup_0"] = "table_10"
+    assert not domain.feasible(scene, Action(ActionType.FILL, obj="cup_0"))[0]
+    domain.faucet_areas.add("table_10")
     assert domain.feasible(scene, Action(ActionType.FILL, obj="cup_0"))[0]
 
 
@@ -247,7 +251,9 @@ def test_subgoal_and_completion_reward():
         robot_area="table_10",
     )
     particle = Particle(scene, goal)
-    _, reward, terminal = domain.step(particle, Action(ActionType.PLACE, area="table_10"))
+    _, reward, terminal = domain.step(
+        particle, Action(ActionType.PLACE, area="table_10")
+    )
     assert terminal
     assert reward == SUBGOAL_REWARD + COMPLETION_REWARD - MANIPULATION_COST
 

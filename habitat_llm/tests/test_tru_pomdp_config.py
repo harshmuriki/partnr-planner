@@ -73,6 +73,11 @@ def test_baseline_yaml_composes_with_the_expected_agent_and_llm():
     assert EXPECTED_TOOLS <= tools
 
     assert cfg.world_model.partial_obs is True
+    explore = (
+        cfg.evaluation.agents.agent_0.config.tools.motor_skills.oracle_explore.skill_config
+    )
+    assert explore.max_furniture_samples_per_room == 0
+    assert planner.plan_config.max_goal_objects is None
 
 
 def test_planner_subclasses_the_base_planner_and_overrides_the_lifecycle():

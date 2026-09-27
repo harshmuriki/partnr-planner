@@ -213,3 +213,28 @@ def test_vlm_request_routes_explore_sequence_and_current_failure_image(tmp_path,
         p._generate_subgoals("task", wg, {}, refresh_failure_observation=True)
     assert calls[-1][1]["image_data_urls"] == ["current"]
     assert "fresh third-person" in calls[-1][0]
+
+
+def test_unquoted_one_line_predicates_keep_argument_commas():
+    from habitat_llm.vlm_tamp.parse_utils import parse_branch_response
+    assert parse_branch_response(
+        '[explore(entryway_1), explore(living_room_1), on(box_0, table_12)]'
+    ) == [['explore(entryway_1)', 'explore(living_room_1)', 'on(box_0, table_12)']]
+
+
+def test_vlm_logs_and_viewer_use_flat_run_directory(tmp_path):
+    from habitat_llm.examples.planner_demo import _get_vlm_tamp_pddl_log_dir
+    from habitat_llm.vlm_tamp.render_pddl_baseline_html import _default_interactive_pddl_html_basename
+    run = tmp_path / 't2-inc-con'
+    config = SimpleNamespace(paths=SimpleNamespace(results_dir=str(run)))
+    env = SimpleNamespace(conf=config)
+    p = VlmTampPddlPlanner.__new__(VlmTampPddlPlanner)
+    p.env_interface = env
+    p._log_dir = None
+    p.log_dir_name = 'vlm_tamp_pddl'
+    expected = str(run / 'vlm_tamp_pddl')
+    assert p._get_log_dir() == expected
+    assert _get_vlm_tamp_pddl_log_dir(config, env) == expected
+    assert _default_interactive_pddl_html_basename(expected) == 't2-inc-con_pddl.html'
+    assert _default_interactive_pddl_html_basename(expected + '/old_episode') == 't2-inc-con_pddl.html'
+    assert not (run / 'vlm_tamp_pddl' / 'unknown').exists()

@@ -620,6 +620,7 @@ def test_tree_render_2_writes_layout_json_and_interactive_html(tmp_path):
             "branch": 0,
             "subgoal_idx": 0,
             "status": "success",
+            "subgoal": "explore(entryway_1)",
             "seq_idx": 1,
         },
         {
@@ -627,6 +628,8 @@ def test_tree_render_2_writes_layout_json_and_interactive_html(tmp_path):
             "branch": 0,
             "subgoal_idx": 0,
             "log_text": "HIGH-LEVEL EXPLORE",
+            "subgoal": "explore(entryway_1)",
+            "status": "solved",
             "seq_idx": 2,
         },
     ]
@@ -642,9 +645,9 @@ def test_tree_render_2_writes_layout_json_and_interactive_html(tmp_path):
     assert (log_dir / "media" / "planning_tree_layout.json").is_file()
     assert html_path == str(log_dir / "Task_1_Dis_2_pddl.html")
     html_text = (log_dir / "Task_1_Dis_2_pddl.html").read_text(encoding="utf-8")
-    assert "interactive tree" in html_text
-    assert "Subgoal execution log" in html_text
-    assert "Legend" in html_text
-    assert "#27ae60" in html_text
-    assert "#8e44ad" not in html_text
-    assert "<tspan" in html_text
+    assert 'data-node="b0:s0"' in html_text
+    assert 'class="step success"' in html_text
+    assert "Execution log" in html_text
+    assert "HIGH-LEVEL EXPLORE" in html_text
+    assert 'id="expand"' in html_text
+    assert '<svg' not in html_text

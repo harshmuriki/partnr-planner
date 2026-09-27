@@ -1,5 +1,6 @@
 defaults:
   - /llm@plan_config.llm: openai_chat
+  - _self_
 
 _target_: 'habitat_llm.planner.TruPOMDPPlanner'
 _recursive_: False
@@ -9,16 +10,15 @@ plan_config:
     # -- Tree of Hypotheses (paper Appendix A.5) --------------------------------
     c1: 3                    # Level 1/2 candidate combinations
     c2: 3                    # Level 3 candidate locations per invisible object
-    max_goal_objects: 4      # objects per goal combination
+    max_goal_objects: null      # no truncation of complete goals
     max_particles: 48        # cap on root-to-leaf paths kept in the belief
     toh_max_tokens: 4096     # the A.1 prompts ask for a long reasoning chain
 
     # -- Hybrid belief update --------------------------------------------------
     replenish_threshold: 0.3 # regenerate TOH when surviving mass drops below this
-    # A deliberately inspected area (opened, navigated to, or covered by Explore)
-    # can refute a hypothesis. Set to True to also let areas that merely contain
-    # an observed object refute one, which is only sound if the world model is
-    # complete for open furniture.
+    # Only verified coverage (currently successful Open) refutes by absence.
+    # Navigation and Explore do not certify exhaustive visibility. True also
+    # trusts areas containing an observed object; use only with complete sensing.
     trust_observed_areas: False
 
     # -- DESPOT ----------------------------------------------------------------
@@ -26,7 +26,7 @@ plan_config:
     max_search_depth: 20     # d_s
     rollout_depth: 10        # d_r
     discount: 0.95
-    xi: 0.95                 # regularisation on excess uncertainty
+    xi: 0.95                 # target fraction of root uncertainty
     num_trials: 500
     planning_time_s: 1.0     # anytime budget per decision
     seed: 0

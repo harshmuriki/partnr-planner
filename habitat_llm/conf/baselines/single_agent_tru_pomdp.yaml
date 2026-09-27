@@ -19,6 +19,13 @@ world_model:
 evaluation:
   agents:
     agent_0:
+      config:
+        tools:
+          motor_skills:
+            oracle_explore:
+              skill_config:
+                # Full physical tour: never sample a subset of room furniture.
+                max_furniture_samples_per_room: 0
       planner:
         plan_config:
           llm:
@@ -29,6 +36,6 @@ evaluation:
               max_tokens: 4096
               # OpenAIChat.generate does len() on this, so it must be a string.
               stop: ""
-  # Combined budget: LLM wall + exact action sim + Explore approx sim (seconds).
+  # Combined budget: LLM wall + exact action simulation, including full Explore.
   max_combined_time_s: 600
   generate_prediviz: True
