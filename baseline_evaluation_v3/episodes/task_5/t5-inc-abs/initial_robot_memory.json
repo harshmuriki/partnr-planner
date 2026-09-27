@@ -1,0 +1,17 @@
+{
+  "variant": "T5-INC-ABS",
+  "objects": [
+    {
+      "entity": "soap_dispenser_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "glass_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "glass_1",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

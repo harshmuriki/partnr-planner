@@ -1,0 +1,411 @@
+{
+  "config": null,
+  "episodes": [
+    {
+      "episode_id": "T1-ACC-BASE",
+      "scene_id": "103997895_171031182",
+      "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json",
+      "additional_obj_config_paths": [
+        "data/objects/ycb/configs/",
+        "data/objects_ovmm/train_val/ai2thorhab/configs/objects",
+        "data/objects_ovmm/train_val/amazon_berkeley/configs",
+        "data/objects_ovmm/train_val/google_scanned/configs",
+        "data/objects_ovmm/train_val/hssd/configs/objects"
+      ],
+      "start_position": [
+        -13.69438,
+        0.1793,
+        -3.13765
+      ],
+      "start_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "info": {
+        "episode_id": "T1-ACC-BASE",
+        "is_dynamic": true,
+        "sample_configs": {
+          "0": {
+            "name": "jug_0",
+            "number": 1,
+            "object_classes": [
+              "jug"
+            ],
+            "object_instances": [
+              "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4"
+            ],
+            "excluded_object_instances": [
+              "260b77a7bb7899bbe4665886be2af5e303a6e4f1",
+              "2b429c575b4de6837a9d3ce5472ceb8a918fdbd2",
+              "2f8ce20db01f6f9cff0d3170271f45ef139276ed",
+              "320f797f7f3936b01c7fb659ddd56c63cc52f85f",
+              "381a128d056d4db0e70276aa918065ca42f89e8f",
+              "67428f64fcb9f822080d8d77c4991cc5c075f15d",
+              "794f4ad86d136c76bfe3082ffedc4133e876ac9a",
+              "79590e37b261153df0b50a05e90edf40bc4f13c0",
+              "aaf1ba3e91ae781751ab5eba22ec2bbd30e05365",
+              "ad87281ca93b236560306a08f0953ba340e85c3c",
+              "aee86f6cb8551b9601a11062038936fdb927860d",
+              "e70ea42b5270583ea34fe50123b841d79a380e19"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "1": {
+            "name": "lamp_0",
+            "number": 1,
+            "object_classes": [
+              "lamp"
+            ],
+            "object_instances": [
+              "B07HK83QRB"
+            ],
+            "excluded_object_instances": [
+              "B07HK3PNSK"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "chest_of_drawers_0"
+            ],
+            "allowed_regions": [
+              "bedroom_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false,
+              "is_powered_on": true
+            }
+          }
+        },
+        "object_labels": {},
+        "extra_info": {
+          "scene_id": "103997895_171031182",
+          "episode_id": "T1-ACC-BASE",
+          "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+          "initial_state": [
+            {
+              "name": "jug_0",
+              "number": 1,
+              "object_classes": [
+                "jug"
+              ],
+              "object_instances": [
+                "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4"
+              ],
+              "excluded_object_instances": [
+                "260b77a7bb7899bbe4665886be2af5e303a6e4f1",
+                "2b429c575b4de6837a9d3ce5472ceb8a918fdbd2",
+                "2f8ce20db01f6f9cff0d3170271f45ef139276ed",
+                "320f797f7f3936b01c7fb659ddd56c63cc52f85f",
+                "381a128d056d4db0e70276aa918065ca42f89e8f",
+                "67428f64fcb9f822080d8d77c4991cc5c075f15d",
+                "794f4ad86d136c76bfe3082ffedc4133e876ac9a",
+                "79590e37b261153df0b50a05e90edf40bc4f13c0",
+                "aaf1ba3e91ae781751ab5eba22ec2bbd30e05365",
+                "ad87281ca93b236560306a08f0953ba340e85c3c",
+                "aee86f6cb8551b9601a11062038936fdb927860d",
+                "e70ea42b5270583ea34fe50123b841d79a380e19"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "lamp_0",
+              "number": 1,
+              "object_classes": [
+                "lamp"
+              ],
+              "object_instances": [
+                "B07HK83QRB"
+              ],
+              "excluded_object_instances": [
+                "B07HK3PNSK"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "chest_of_drawers_0"
+              ],
+              "allowed_regions": [
+                "bedroom_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false,
+                "is_powered_on": true
+              }
+            }
+          ],
+          "obj_info": {
+            "jug": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
+            "lamp": "B07HK83QRB_:0000"
+          }
+        },
+        "variant_spec": {
+          "variant_id": "T1-ACC-BASE",
+          "sha256": "4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca",
+          "entity_handles": {
+            "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
+            "lamp_0": "B07HK83QRB_:0000"
+          },
+          "initial_robot_memory": "- jug_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
+          "memory_runtime_applied": false,
+          "unscored_success_text": [],
+          "seed": 3443868297,
+          "initial_validation": [
+            "jug_0: exact asset, initial states, furniture, region checked",
+            "lamp_0: exact asset, initial states, furniture, region checked"
+          ],
+          "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"
+        }
+      },
+      "ao_states": {},
+      "rigid_objs": [
+        [
+          "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.object_config.json",
+          [
+            [
+              0.02938,
+              -0.00015,
+              0.99957,
+              -8.65163
+            ],
+            [
+              -9e-05,
+              1.0,
+              0.00015,
+              1.05117
+            ],
+            [
+              -0.99957,
+              -0.0001,
+              0.02938,
+              2.53832
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "B07HK83QRB.object_config.json",
+          [
+            [
+              -0.3673,
+              -9e-05,
+              0.9301,
+              -2.4811
+            ],
+            [
+              -4e-05,
+              1.0,
+              8e-05,
+              0.88579
+            ],
+            [
+              -0.9301,
+              -1e-05,
+              -0.3673,
+              -3.31192
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      ],
+      "targets": {},
+      "markers": [],
+      "target_receptacles": [],
+      "goal_receptacles": [],
+      "name_to_receptacle": {
+        "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000",
+        "B07HK83QRB_:0000": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
+      },
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "evaluation_propositions": [
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000"
+            ],
+            "receptacle_handles": [
+              "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_filled",
+          "args": {
+            "object_handles": [
+              "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_powered_off",
+          "args": {
+            "object_handles": [
+              "B07HK83QRB_:0000"
+            ],
+            "number": 1
+          }
+        }
+      ],
+      "evaluation_proposition_dependencies": [],
+      "evaluation_constraints": [
+        {
+          "type": "TemporalConstraint",
+          "args": {
+            "dag_edges": [],
+            "n_propositions": 3
+          }
+        },
+        {
+          "type": "TerminalSatisfactionConstraint",
+          "args": {
+            "proposition_indices": [
+              0,
+              1,
+              2
+            ],
+            "n_propositions": 3
+          }
+        }
+      ],
+      "object_states": {
+        "is_clean": {
+          "045fbffe4884b8583b3768185fe8cdc15662e835_:0000": false,
+          "6ee3321de3d9a91d0c8964fe0069fe09e6a5169e_:0000": false,
+          "d46d7261aa80655e3f2583b0b752e26d86d6271d_:0000": false,
+          "bb313b17f36fb1198043bc6a48170bda35ba113d_:0000": false,
+          "32620999debf3d3afebd7749200375c457fd79ac_:0000": false,
+          "36850ecd5f3ec1555bbc41bdd652e90affb43d63_:0000": false,
+          "c444bd4ee4524c01839e9b0e1632eb4396b1910c_:0000": false,
+          "fe6a04f91f6d8c9d44b6c1ec30350ae3b12c6ef0_:0000": false,
+          "e457542ad4c5be15cddcd11ffe0295a7e6ed89f7_:0000": false,
+          "4122c550741deeda8ed0b4da129bab0cd403cae7_:0000": false,
+          "bca05d502eecf7f29ecd33de75df3073086a2ca8_:0000": false,
+          "809aa90d72a9aa73fadef388620c7ca3668f9d00_:0000": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0002": false,
+          "03ec07ddbb7262844606d7a97d7b6b35d7f6ec00_:0000": false,
+          "735845d0674f69f736af7e0f116767a01392f9b8_:0000": false,
+          "50bf1434785c2776eac002be0f7c3abeff54709c_:0000": false,
+          "1ac1fbdf9f8ac576d0e981e522f4c491c2f2d825_:0000": false,
+          "04801d6f327197470d63bfd728d4cf02bd33ec56_:0000": false,
+          "252ea1f9106ada162cf68bb61c71efd4a62d4c87_part_3_:0000": false,
+          "c1965c146b48cddf434f6d5407dfc6ac43bde9b7_:0000": false,
+          "d575a3572a1e16cb6d618b314d5479638dbbb8aa_:0000": false,
+          "0022fa6ee5a44330e765488919803155b1a9e88c_:0000": false,
+          "2ba78a798010191fd7b9d8e395c76a9e55d427ac_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000": false,
+          "3248e003a06811e76a9743e72979924b2b9c9373_:0000": false,
+          "5e1ca8d31450af5d4fd58bd5b3537cf00636df7c_:0000": false,
+          "499dd12f83d3fcb655a0bc2373e4da020a67008a_:0000": false,
+          "db064ef059f7bb0af9f1036e7649e4835a9ff4f5_:0000": false,
+          "dd00b36439864cbfa47440f93d6fc81f91a164d3_:0000": false,
+          "81d0d47953778079c6cf43c917247b8be8d9a78a_:0000": false,
+          "5d77eeaa7a16e02ef64e3ce74893768cc8389aed_:0000": false,
+          "988c8f3bedac15261ab3007ec6ffacb65573aa5a_:0000": false,
+          "d575a3572a1e16cb6d618b314d5479638dbbb8aa_:0001": false,
+          "4629b2bfe7de3edd1e1e295a0441c0e1aca5d3fd_:0000": false,
+          "0ce32f140400176aa09faa2e869adc288dc427ce_:0000": false,
+          "5ce08f13b19c6852152063917b9f2111d30de3e5_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001": false,
+          "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000": true,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0001": false,
+          "17d794589c8a8f9ea1eec282ef041dfb6f2ebd46_:0000": false,
+          "B07HK83QRB_:0000": true,
+          "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000": false,
+          "759009978263a3cba19e877146937598808ac8fc_:0000": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0000": false,
+          "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000": false,
+          "d57e3132eb49a7e0a3e6971f304a6d52951a4f74_:0000": false,
+          "204-2_:0000": false,
+          "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000": false,
+          "3752-0_:0000": false,
+          "f70c9cd37e4949edaa532254729fb3153ff6a76f_:0000": false,
+          "fa786f463631d9e8ab7b794d8df610a233a445eb_:0000": false,
+          "d4ba31e433421a8ef008208e9b868da12e24a5a5_:0000": false,
+          "f5bf7b0f14752c987cd026abe7b1238fb25ff9b3_:0000": false,
+          "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000": false,
+          "426b82af6d87005e0f2fa17217cd45b4826189aa_:0000": false,
+          "ff698a0cb15de8749c925c8aae3e8cdb8e88aa8f_:0000": false,
+          "319c007ee7d07ca84c797a512ad4a98c9abc42da_:0000": false,
+          "af45703d9d6e1e327161f253cb6bde9dd479c232_:0000": false,
+          "4c911c25364d1cbb37493ecfaa6b889d931c78ac_:0000": false,
+          "1e414b53eef039690faed7557721dd9ce784ef8c_:0000": false,
+          "90fb388959832dd71fdcad95215f28b077fe4a3d_:0000": false,
+          "038ccdca4c91d34febe3f4efc596225a66a11d79_:0000": false,
+          "ae5bbeab569aed333ee50e683afdbd4d96ec93a6_:0000": false,
+          "4f59765435e64524ba5ac8e25427a895fa530311_:0000": false,
+          "37e59e768eb7f42a0019713374063cb63419a44c_:0000": false,
+          "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000": false,
+          "4c911c25364d1cbb37493ecfaa6b889d931c78ac_:0001": false,
+          "ec6d929832a895b456fd6cca745a18c192c41f4b_:0000": false,
+          "c23e159071acb3f9bd03ed01576d9077cc30f1cf_:0000": false,
+          "4c911c25364d1cbb37493ecfaa6b889d931c78ac_:0002": false
+        },
+        "is_powered_on": {
+          "32620999debf3d3afebd7749200375c457fd79ac_:0000": false,
+          "36850ecd5f3ec1555bbc41bdd652e90affb43d63_:0000": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0002": false,
+          "03ec07ddbb7262844606d7a97d7b6b35d7f6ec00_:0000": false,
+          "2ba78a798010191fd7b9d8e395c76a9e55d427ac_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000": false,
+          "5e1ca8d31450af5d4fd58bd5b3537cf00636df7c_:0000": false,
+          "988c8f3bedac15261ab3007ec6ffacb65573aa5a_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0001": false,
+          "B07HK83QRB_:0000": true,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0000": false,
+          "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000": false,
+          "d57e3132eb49a7e0a3e6971f304a6d52951a4f74_:0000": false,
+          "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000": false,
+          "ec6d929832a895b456fd6cca745a18c192c41f4b_:0000": false
+        },
+        "is_filled": {
+          "20e9177223672e9bf6bd79a4db6022cb27c03e58_:0000": false,
+          "c1965c146b48cddf434f6d5407dfc6ac43bde9b7_:0000": false,
+          "0022fa6ee5a44330e765488919803155b1a9e88c_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000": false,
+          "81d0d47953778079c6cf43c917247b8be8d9a78a_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001": false,
+          "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000": false,
+          "B07HK83QRB_:0000": false,
+          "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000": false,
+          "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000": false,
+          "f70c9cd37e4949edaa532254729fb3153ff6a76f_:0000": false
+        }
+      }
+    }
+  ]
+}

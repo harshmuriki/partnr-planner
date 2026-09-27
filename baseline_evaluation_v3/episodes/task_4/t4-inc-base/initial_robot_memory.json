@@ -1,0 +1,29 @@
+{
+  "variant": "T4-INC-BASE",
+  "objects": [
+    {
+      "entity": "apple_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "apple_1",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "orange_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "basket_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "bottle_1",
+      "in_initial_robot_memory": false
+    }
+  ]
+}

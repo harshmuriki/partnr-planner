@@ -1,0 +1,110 @@
+rooms: bedroom_2, entryway/foyer/lobby_0, bedroom_1, kitchen_0, garage_0, living_room_0, hallway_1, other_room_0, bedroom_0, bathroom_2, bathroom_0, bathroom_1, office_0, utilityroom/toolroom_0, dining_room_0, laundryroom/mudroom_0
+bedroom_2:
+  - bed_0: Bed
+  - chair_2: Vanguard # Brinley Tufted Arm Chair
+  - bench_0: Pacifica Bench
+  - table_5: Clyde side table
+  - chair_9: Etienne Upholstered Chair
+  - cabinet_11: Antique Gray Accent Cabinet
+  - chest_of_drawers_3: Tarver Nightstand
+  - chest_of_drawers_4: Tarver Nightstand
+  - table_11: Vanity Desk - Antique White
+entryway/foyer/lobby_0:
+  - table_0: Provencal 220cm Farmhouse Table
+  - chest_of_drawers_2: Farmhouse 10 Drawer Merchants Chest - Ivory
+bedroom_1:
+  - shelves_0: Baybrin Bookshelf
+  - table_4: Dark Oak
+  - chair_3: Sinclair Chair
+  - chair_4: Doomoo Seat
+  - table_6: Table
+  - chair_5: Blake Chair, White
+  - chair_6: Blake Chair, White
+  - counter_8: Laurent Buffet
+kitchen_0:
+  - counter_0: YOO OH Kitchen Island
+  - counter_1: YOO OH Kitchen Island
+  - counter_2: YOO OH Kitchen Island
+  - counter_3: YOO OH Kitchen Island
+  - cabinet_0: Kitchen cabinet with 2 doors
+  - cabinet_1: Kitchen cabinet with 2 doors
+  - cabinet_2: Kitchen cabinet with 2 doors
+  - cabinet_3: Kitchen cabinet with 2 doors
+  - cabinet_4: Kitchen cabinet with 2 doors
+  - cabinet_5: Kitchen cabinet with 2 doors
+  - cabinet_6: Kitchen cabinet with 2 doors
+  - cabinet_7: Kitchen cabinet with 2 doors
+  - counter_6: Kitchen island, 60x150x90
+  - counter_7: Kitchen island, 60x150x90
+  - cabinet_10: Kitchen corner cabinet
+  - cabinet_15: Kitchen cabinet with sink, single
+  - cabinet_16: Kitchen cabinet with drawers
+  - cabinet_17: Kitchen cabinet with drawers
+  - cabinet_18: Kitchen cabinet with drawers
+  - cabinet_20: Kitchen cabinet with drawers
+  - microwave_0: Samsung Convection Oven with Microwave and Grill.
+garage_0:
+  - shelves_1: Nexel Chrome Wire Shelving Starter 36''
+  - shelves_2: Nexel Chrome Wire Shelving Starter 36''
+  - fridge_0: KEW - Fridge
+  - cabinet_12: Kitchen wall cabinet
+  - cabinet_13: Kitchen wall cabinet
+  - cabinet_14: Kitchen wall cabinet
+  - cabinet_21: VÃ„RDE counter storage unit
+  - cabinet_22: VÃ„RDE counter storage unit
+living_room_0:
+  - chair_0: Abigail Armchair by Brosa
+  - chair_1: Abigail Armchair by Brosa
+  - couch_0: Caden Settee
+  - shelves_10: 54 Inch Pyramid Bookcase
+  - shelves_13: Parson 5-Shelf Bookcase
+  - shelves_14: Parson 5-Shelf Bookcase
+  - table_2: Dark Oak
+  - table_3: Dark Oak
+  - couch_1: NOCKEBY Three seat sofa, Talmira Light Beige/Wood
+  - chair_7: Hickory Chair # Cantrell Chair
+  - counter_4: Camilla Buffet
+  - table_10: Bayshore Coffee Table With Casters
+  - chest_of_drawers_5: Barn Door Accent Chest
+hallway_1:
+  - shelves_3: shelf
+  - chair_2: Vanguard # Brinley Tufted Arm Chair
+other_room_0:
+  - shelves_4: Low Open Storage
+  - shelves_5: Low Open Storage
+  - shelves_6: Low Open Storage
+  - shelves_16: TV Shelf
+bedroom_0:
+  - table_1: Nature Color Chunky 48" Round Table 15-24" Adjustable Legs - Natural
+  - bed_1: Magnolia Home Playhouse Jo'S White Full Canopy Bed By Joanna Gaines
+  - chair_8: Kids Armchair
+  - chest_of_drawers_0: Heidi 2-Drawer Night Stand
+  - chest_of_drawers_1: Heidi 2-Drawer Night Stand
+  - table_9: MICKE Kids desk with storage, white
+  - wardrobe_0: STUVA Storage combination with 2 doors 3 drawers, White/Birch
+  - wardrobe_1: STUVA Storage combination with 2 doors 3 drawers, White/Birch
+  - wardrobe_2: STUVA Storage combination with 2 doors 3 drawers, White/Birch
+bathroom_2:
+  - shelves_11: Parson 5-Shelf Bookcase
+  - shelves_12: Parson 5-Shelf Bookcase
+  - toilet_1: Cooke & Lewis Romeo Modern Close-Coupled Toilet with Soft Close Seat
+bathroom_0:
+  - toilet_0: Cooke & Lewis Romeo Modern Close-Coupled Toilet with Soft Close Seat
+bathroom_1:
+  - toilet_2: Cooke & Lewis Romeo Modern Close-Coupled Toilet with Soft Close Seat
+office_0:
+  - couch_2: Utopia Sofa
+  - table_8: Monza Dressing Table
+  - counter_5: Matt White
+  - stand_0: TV unit
+utilityroom/toolroom_0:
+  - shelves_15: Shelves
+dining_room_0:
+  - table_7: table
+  - cabinet_8: Market Buffet/Hutch
+  - cabinet_9: Market Buffet/Hutch
+  - cabinet_17: Kitchen cabinet with drawers
+laundryroom/mudroom_0:
+  - cabinet_19: Kitchen cabinet with drawers
+  - cabinet_23: Kitchen cabinet with door
+  - cabinet_24: Kitchen cabinet with door

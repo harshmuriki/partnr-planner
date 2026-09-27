@@ -1,0 +1,4 @@
+/human_verification.lock
+/ground_truth.sqlite3-shm
+/ground_truth.sqlite3-wal
+/ground_truth_runs/

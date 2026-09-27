@@ -1,0 +1,43 @@
+{
+  "variant": "T5-OUT-DIS",
+  "objects": [
+    {
+      "entity": "soap_dispenser_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on washer_dryer_0 (bathroom_1)"
+    },
+    {
+      "entity": "glass_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on cabinet_0 (kitchen_0)"
+    },
+    {
+      "entity": "glass_1",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "plate_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_2 (kitchen_0)"
+    },
+    {
+      "entity": "soap_dish_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "vase_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "plant_saucer_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    }
+  ]
+}

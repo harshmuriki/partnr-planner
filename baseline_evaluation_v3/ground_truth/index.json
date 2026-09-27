@@ -1,0 +1,19 @@
+{
+  "schema_version": 2,
+  "ground_truths": [
+    {
+      "id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "variant": "T1-ACC-BASE",
+      "completed_at": "2026-09-16T19:05:45.116862+00:00",
+      "action_count": 10,
+      "sim_steps": 676,
+      "steps_complete": 1,
+      "artifact_status": "ready",
+      "artifact_error": null,
+      "video_bytes": 6482878,
+      "video_sha256": "c20dd6cb6201915b07cea649bb0fdcea45f3d5b066064d440d8bd9a7f8e921bc",
+      "spec_hash": "4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca",
+      "dataset_hash": "21a1fa9dd3067f4bb0d6738b13413f35be638d06766d2ee3eb877817f5c7d036"
+    }
+  ]
+}

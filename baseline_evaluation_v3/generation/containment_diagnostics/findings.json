@@ -1,0 +1,34 @@
+{
+  "T2_T3": {
+    "cause": "Objects sampled in open drawers were not transported when joint positions closed the drawers.",
+    "fix": "Preserve sampled object transform in receptacle coordinates while closing joints; then run standard physics settling.",
+    "result": "All six T2/T3 CON episodes generated without spec or asset changes; all six pass runtime initialization and evaluation-handle checks."
+  },
+  "T1": {
+    "asset": "ec6d929832a895b456fd6cca745a18c192c41f4b",
+    "jug_size_m": [
+      0.226002,
+      0.299885,
+      0.14052
+    ],
+    "default_link": 6,
+    "allowed_interior": "Wardrobe0001_door06_receptacle_mesh",
+    "lower_compartment": {
+      "normally_filtered": "access_filtered",
+      "diagnostic_override_only": true,
+      "stable": true,
+      "inside_predicate": true,
+      "navigation_accessible": true,
+      "object_center_height_m": 0.664239
+    },
+    "upper_compartment": {
+      "normally_filtered": "height_filtered",
+      "diagnostic_override_only": true,
+      "stable": true,
+      "inside_predicate": true,
+      "navigation_accessible": false,
+      "object_center_height_m": 2.0479
+    },
+    "remaining": "Runtime Open actuates default link 6 (drawer). Larger lower compartment uses other doors. Need consistent receptacle/default-link metadata and interaction verification before promoting this diagnostic placement. Scene metadata and T1 production episodes were not changed."
+  }
+}

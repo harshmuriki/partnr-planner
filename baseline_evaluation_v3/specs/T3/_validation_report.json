@@ -1,0 +1,82 @@
+[
+  {
+    "variant_id": "T3-ACC-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T3-ACC-ABS",
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "[WARNING] Initial robot memory: 1 line(s) did not match the strict 'entity_id: relation furniture_id (room)[, states]' format and were skipped"
+    ]
+  },
+  {
+    "variant_id": "T3-ACC-CON",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T3-ACC-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T3-INC-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T3-INC-ABS",
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "[WARNING] Initial robot memory: 2 line(s) did not match the strict 'entity_id: relation furniture_id (room)[, states]' format and were skipped"
+    ]
+  },
+  {
+    "variant_id": "T3-INC-CON",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T3-INC-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T3-OUT-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T3-OUT-ABS",
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "[WARNING] Initial robot memory: furniture id 'table_1' used for laptop_0 but not listed in the '## Scene' furniture list"
+    ]
+  },
+  {
+    "variant_id": "T3-OUT-CON",
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "[WARNING] Initial robot memory: furniture id 'table_1' used for laptop_0 but not listed in the '## Scene' furniture list"
+    ]
+  },
+  {
+    "variant_id": "T3-OUT-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+]

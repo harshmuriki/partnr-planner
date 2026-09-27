@@ -1,0 +1,228 @@
+{
+  "variant": "T6-INC-SUB",
+  "status": "generated",
+  "dataset": "episodes/task_6/t6-inc-sub/dataset.json.gz",
+  "episode_id": "T6-INC-SUB",
+  "scene": "104348010_171512832",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "asset": "Bread_8",
+      "handle": "Bread_8_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {},
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {},
+        "next_to": [
+          "cup_0",
+          "blue_hand_towel_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -8.663469314575195,
+        1.0321745872497559,
+        -10.866991996765137
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "bread_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "bread_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "bread_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "27903d5a77d900067dd9031caf2f229776d800d4_:0000|receptacle_mesh_27903d5a77d900067dd9031caf2f229776d800d4.0000"
+    },
+    {
+      "entity": "cup_0",
+      "asset": "ed95f32cc00075ceed5bd4b593d2a06a444c0eec",
+      "handle": "ed95f32cc00075ceed5bd4b593d2a06a444c0eec_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_7",
+        "room": "dining_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [
+          "bread_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -3.2312450408935547,
+        0.886330783367157,
+        -10.18154525756836
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "cup_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "cup_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "cup_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "ea8b4b9360dcfe7e18aae385c53f7ca2200678ab_part_6_:0000|receptacle_mesh_ea8b4b9360dcfe7e18aae385c53f7ca2200678ab_part_6.0024"
+    },
+    {
+      "entity": "blue_hand_towel_0",
+      "asset": "Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26",
+      "handle": "Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "shelves_11",
+        "room": "bathroom_2",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "bread_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        13.686473846435547,
+        1.076419472694397,
+        -8.394654273986816
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "blue_hand_towel_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "blue_hand_towel_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "blue_hand_towel_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "4c355b695ac09b08703f86e3f64bbec6267a6f8b_:0000|receptacle_mesh_4c355b695ac09b08703f86e3f64bbec6267a6f8b.0003"
+    },
+    {
+      "entity": "lamp_living_0",
+      "asset": "B07HK3PNSK",
+      "handle": "B07HK3PNSK_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.775594711303711,
+        0.8707520961761475,
+        -5.10170841217041
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "lamp_living_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "lamp_living_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "lamp_living_0-angle-4.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "5d70cc76c99acee4513ec5f7fad497d2baebca9e_:0000|receptacle_mesh_5d70cc76c99acee4513ec5f7fad497d2baebca9e.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T6-ACC-SUB",
+  "checks": [
+    "bread_0: exact asset, initial states, furniture, region checked",
+    "cup_0: exact asset, initial states, furniture, region checked",
+    "blue_hand_towel_0: exact asset, initial states, furniture, region checked",
+    "lamp_living_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- Using blue_hand_towel_0 in place of the missing hand_towel_0 counts as success; do not require or invent a hand_towel.",
+    "- Using cup_0 in place of the missing bottle_0 counts as success; do not require or invent a bottle."
+  ],
+  "spec_sha256": "83b5c38063bbc2df64420e760e9cc700b896231e429d64cd8aea61f2212d4c81",
+  "initial_robot_memory": "- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

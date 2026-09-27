@@ -1,0 +1,13 @@
+{
+  "variant": "T1-INC-SUB",
+  "objects": [
+    {
+      "entity": "pitcher_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "lamp_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

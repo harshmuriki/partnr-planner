@@ -1,0 +1,231 @@
+{
+  "variant": "T5-OUT-SUB",
+  "status": "generated",
+  "dataset": "episodes/task_5/t5-out-sub/dataset.json.gz",
+  "episode_id": "T5-OUT-SUB",
+  "scene": "106878915_174887025",
+  "objects": [
+    {
+      "entity": "soap_dispenser_0",
+      "asset": "Soap_Bottle_26",
+      "handle": "Soap_Bottle_26_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "cabinet_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "cabinet_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -5.362370014190674,
+        1.0264500379562378,
+        -3.1924800872802734
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "soap_dispenser_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "soap_dispenser_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "soap_dispenser_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000"
+    },
+    {
+      "entity": "glass_0",
+      "asset": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+      "handle": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": false,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [
+          "plate_black_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.9105401039123535,
+        0.822629988193512,
+        -3.4424901008605957
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "glass_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "glass_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "glass_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0000"
+    },
+    {
+      "entity": "glass_1",
+      "asset": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+      "handle": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_3",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": false,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [
+          "plate_black_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -1.3576600551605225,
+        0.8428300023078918,
+        -5.105070114135742
+      ],
+      "views": [
+        {
+          "label": "Angle 5",
+          "image": "glass_1-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "glass_1-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "glass_1-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "183de9f61a9c362d58ac340058ecddc54da18809_:0000|Desk0015_receptacle_mesh.0000"
+    },
+    {
+      "entity": "plate_black_0",
+      "asset": "21551881391c2b21c2e1358effa7d6b69cbd435f",
+      "handle": "21551881391c2b21c2e1358effa7d6b69cbd435f_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "cabinet_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "glass_0",
+          "glass_1"
+        ],
+        "closed": []
+      },
+      "position": [
+        -5.126800060272217,
+        0.921970009803772,
+        -3.1023199558258057
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "plate_black_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "plate_black_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "plate_black_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T5-ACC-SUB",
+  "checks": [
+    "soap_dispenser_0: exact asset, initial states, furniture, region checked",
+    "glass_0: exact asset, initial states, furniture, region checked",
+    "glass_1: exact asset, initial states, furniture, region checked",
+    "plate_black_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- Using plate_black_0 in place of the missing plate_0 counts as success; do not require or invent a plate."
+  ],
+  "spec_sha256": "336eac712aafb2bcec15b00989c5ff23a98864f6b292b0e5fa05ca76072a02ef",
+  "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record; the object is not actually in the scene",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

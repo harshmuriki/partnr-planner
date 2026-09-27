@@ -1,0 +1,215 @@
+{
+  "initial_state_dicts": [
+    {
+      "scene_id": "104348010_171512832",
+      "episode_id": "T6-ACC-SUB",
+      "instruction": "Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+      "initial_state": [
+        {
+          "name": "bread_0",
+          "number": 1,
+          "object_classes": [
+            "bread"
+          ],
+          "object_instances": [
+            "Bread_8"
+          ],
+          "excluded_object_instances": [
+            "Bread_1",
+            "Bread_10",
+            "Bread_11",
+            "Bread_12",
+            "Bread_13",
+            "Bread_15",
+            "Bread_16",
+            "Bread_18",
+            "Bread_19",
+            "Bread_20",
+            "Bread_21",
+            "Bread_22",
+            "Bread_23",
+            "Bread_25",
+            "Bread_26",
+            "Bread_27",
+            "Bread_28",
+            "Bread_29",
+            "Bread_3",
+            "Bread_4",
+            "Bread_5",
+            "Bread_7",
+            "Bread_9"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "counter_0"
+          ],
+          "allowed_regions": [
+            "kitchen_0"
+          ],
+          "object_states": {}
+        },
+        {
+          "name": "cup_0",
+          "number": 1,
+          "object_classes": [
+            "cup"
+          ],
+          "object_instances": [
+            "ed95f32cc00075ceed5bd4b593d2a06a444c0eec"
+          ],
+          "excluded_object_instances": [
+            "1a6b779033e0f9f9936970d79af01ed7653e4321",
+            "1bc20d448937a6c0c1936b28486a110f31093947",
+            "22899dfeb3cfe700149f4fbf87f6d443351cee67",
+            "2b895802055054fdce43bb4936cc4ff1ee7597a3",
+            "30414cd6c4eeac82960afb6163bace31f880343e",
+            "3b74d1f30a48132571b6660f5735b657b2c3a886",
+            "3c3143392a1d13fa86796d07b8518a0963902c86",
+            "3d779b56904aafa1c8f2412e4f5e4c4460098bb0",
+            "438c5d36069bba7af2248c42349e99c1a69547ff",
+            "4732b4385ae973f1309ad75682fc11704818afe7",
+            "4c439ebcd2eec3923ab3e41dc64d71092b54a0ab",
+            "53e7d7c13d3c89976da853ba6a606dfd3fc3f7b4",
+            "547c0a77b74f52c4e6c4a0a52f14f6c9c7a57b49",
+            "569ddd79ca925c3e50d50b9819fbab743ad0db74",
+            "572e2f04cf9e17424557ecc4f449e6122a9cae95",
+            "5742501065a46cf69165e60257b42a86f5fadf8b",
+            "5d1f718ed51e63cdf4d69617f849e10ad36f9b97",
+            "6327ba4a244492ad0b3389841220c16a577e6a4d",
+            "666effa6a16d624cbaebdbcaca82bcb97dfe0988",
+            "6a833596dd725a0044674dbaada29368ebe7a53e",
+            "6c988f13a1ea7360d4958bb938e7910c547e7ed4",
+            "6dd0f10b6eb11dd530c6f4229e7ea20d50333bf6",
+            "6e8ac33c3e309c177c8b63483dfcae81a2b0fe64",
+            "6f5798f9d8c522047a6faf5672f26e684b036e33",
+            "72a1da1ecef422dbf6ba0c505c3e1cf86a11f70e",
+            "7557cdd4decb1493938bb8b18887e59b5718f658",
+            "7a18a3e82b9463b934c1017fce21adcbc5d0b1da",
+            "7bc8528050b98c9b07598139756cd475d4c7b4a0",
+            "87a34af23efddf90b6267768647fbedcbf846827",
+            "8b7632a97cc5c3adf66e7eed98b59a51ef86bf26",
+            "8e8fa96be074973692545b222867725fffb480a4",
+            "8f219c41f9dee18f531ead442c29cb1f5615cd7d",
+            "9475586d9db640875150dc2a3beb7e0234d815d4",
+            "94a332bec3e3408abef55d1cfff170262c8b3fdc",
+            "98c9f836f480292409eba3cc56d2d7de01624bdf",
+            "9c02c6496d1e3c5cc62b01afc47de32ac9818ed0",
+            "ACE_Coffee_Mug_Kristen_16_oz_cup",
+            "Cole_Hardware_Mug_Classic_Blue",
+            "Cup_1",
+            "Cup_10",
+            "Cup_11",
+            "Cup_12",
+            "Cup_13",
+            "Cup_15",
+            "Cup_16",
+            "Cup_17",
+            "Cup_19",
+            "Cup_2",
+            "Cup_20",
+            "Cup_28",
+            "Cup_29",
+            "Cup_3",
+            "Cup_30",
+            "Cup_4",
+            "Cup_6",
+            "Cup_7",
+            "Cup_8",
+            "Cup_9",
+            "Ecoforms_Cup_B4_SAN",
+            "Mug_1",
+            "Mug_2",
+            "Mug_3",
+            "Threshold_Porcelain_Coffee_Mug_All_Over_Bead_White",
+            "b5061af764b94e966a35149eb419152f4a3687d1",
+            "b5d5f688a226b182e406b595b49fe7a53842621c",
+            "b85e6b68f338ea552d9b34da780589aa0c2ab6ad",
+            "bb4b72c2ccb0a094041f26774be1930dd3e76855",
+            "bd12f6fd478618cc550689cd9a050e61b1b5abe0",
+            "c707408215afcc11910353f0ccbe67eb53cb1e49",
+            "c71222582b58b14c0dfc64f55bdb8a44b34f3959",
+            "c7f51a814b3319836007955e10ae1da1060465ec",
+            "c89ad9df5af596d19da02bea32f469ecb872e57d",
+            "cb1704d6c4cc1aae0e801e94c92c67a846246274",
+            "d09e802e1433f67df014386783a93db85eedef8e",
+            "d4960da019b35da664905c729de7bd9fa233ff51",
+            "dc053d1212b867ffee642809e9e4ce612c7fdeb4",
+            "dcdb1e2d961f1a6648e45d5058fe93c2ef2f7791",
+            "e14277deea40140eef220e7c75c291dbaf39efbe",
+            "e3479ce73271171bdaa163968c50500719ed4d72",
+            "fcae3d93545969544b5aec155f56fda69f1a2f9a",
+            "xxxx5c7e6e1fx622fx41c1x8138x6fb9d7764061",
+            "xxxx6c3b8f4ax07a5x4c9exbf89x4cce25209c87"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_7"
+          ],
+          "allowed_regions": [
+            "dining_room_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": true
+          }
+        },
+        {
+          "name": "blue_hand_towel_0",
+          "number": 1,
+          "object_classes": [
+            "hand_towel"
+          ],
+          "object_instances": [
+            "Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26"
+          ],
+          "excluded_object_instances": [
+            "Cole_Hardware_Dishtowel_Blue",
+            "Cole_Hardware_Dishtowel_Red",
+            "Cole_Hardware_Dishtowel_Stripe",
+            "Envision_Home_Dish_Drying_Mat_Red_6_x_18",
+            "Tag_Dishtowel_18_x_26",
+            "Tag_Dishtowel_Green",
+            "Tag_Dishtowel_Waffle_Gray_Checks_18_x_26",
+            "Threshold_Hand_Towel_Blue_Medallion_16_x_27"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "shelves_11"
+          ],
+          "allowed_regions": [
+            "bathroom_2"
+          ],
+          "object_states": {
+            "is_clean": true
+          }
+        },
+        {
+          "name": "lamp_living_0",
+          "number": 1,
+          "object_classes": [
+            "lamp"
+          ],
+          "object_instances": [
+            "B07HK3PNSK"
+          ],
+          "excluded_object_instances": [
+            "B07HK83QRB"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_2"
+          ],
+          "allowed_regions": [
+            "living_room_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false,
+            "is_powered_on": true
+          }
+        }
+      ]
+    }
+  ],
+  "seed": 333520334
+}

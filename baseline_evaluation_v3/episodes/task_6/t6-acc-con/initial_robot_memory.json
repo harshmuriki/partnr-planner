@@ -1,0 +1,21 @@
+{
+  "variant": "T6-ACC-CON",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "hand_towel_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "lamp_living_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

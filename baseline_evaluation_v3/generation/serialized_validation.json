@@ -1,0 +1,17 @@
+{
+  "counts": {
+    "generated": 90
+  },
+  "serialized_episodes_checked": 90,
+  "checks": [
+    "unchanged source/copied specs",
+    "instruction",
+    "exact assets and count",
+    "initial states",
+    "finite transforms",
+    "variant memory text",
+    "identical physical memory variants"
+  ],
+  "benchmark_ready": false,
+  "full_rollouts_performed": false
+}

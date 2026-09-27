@@ -1,0 +1,383 @@
+{
+  "variant": "T7-INC-DIS",
+  "status": "generated",
+  "dataset": "episodes/task_7/t7-inc-dis/dataset.json.gz",
+  "episode_id": "T7-INC-DIS",
+  "scene": "102816756",
+  "objects": [
+    {
+      "entity": "toy_truck_0",
+      "asset": "FIRE_ENGINE",
+      "handle": "FIRE_ENGINE_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_living_room_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "wardrobe_91",
+        "room": "bedroom_3",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -12.40142822265625,
+        0.02735825441777706,
+        -0.7225210070610046
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "toy_truck_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "toy_truck_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "toy_truck_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "stuffed_toy_0",
+      "asset": "b3e8be210978ec373be6eb5fcffec36c6a9712e6",
+      "handle": "b3e8be210978ec373be6eb5fcffec36c6a9712e6_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "couch_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "wardrobe_91",
+        "room": "bedroom_3",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.481745719909668,
+        0.6668807864189148,
+        -5.8573198318481445
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "stuffed_toy_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "stuffed_toy_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "stuffed_toy_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "174ea8cf2a80b38b2ce4dbbda6de2fee33d3870b_:0000|receptacle_mesh_174ea8cf2a80b38b2ce4dbbda6de2fee33d3870b.0001"
+    },
+    {
+      "entity": "plate_0",
+      "asset": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+      "handle": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "cabinet_5",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "cabinet_7",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -0.37824463844299316,
+        0.9168545603752136,
+        -1.8147449493408203
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "plate_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "plate_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "plate_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "6acafe4f37b17ff0c33d22c8dc3fede1bddc67de_:0000|double_sided_sink_cabinet0004_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "lamp_living_0",
+      "asset": "B07HK83QRB",
+      "handle": "B07HK83QRB_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_3",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_3",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -9.556011199951172,
+        0.5094974637031555,
+        -4.1402268409729
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "lamp_living_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "lamp_living_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 8",
+          "image": "lamp_living_0-angle-8.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "d60340031eacc7eba62900753ddb800d5d022e69_:0000|receptacle_mesh_d60340031eacc7eba62900753ddb800d5d022e69.0000"
+    },
+    {
+      "entity": "lamp_kitchen_0",
+      "asset": "B07HK3PNSK",
+      "handle": "B07HK3PNSK_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -2.6830642223358154,
+        1.0578527450561523,
+        -3.31254243850708
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "lamp_kitchen_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "lamp_kitchen_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "lamp_kitchen_0-angle-6.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "465c339f405bf0f55e0c316820958dee1126dabd_:0000|kitchen_island_cabinet0007_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "clean_plate_0",
+      "asset": "Plate_20",
+      "handle": "Plate_20_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "cabinet_5",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "plate_0"
+        ],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "cabinet_5",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "plate_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -0.2505676746368408,
+        0.9105151891708374,
+        -1.4391263723373413
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "clean_plate_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "clean_plate_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "clean_plate_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "6acafe4f37b17ff0c33d22c8dc3fede1bddc67de_:0000|double_sided_sink_cabinet0004_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "cushion_0",
+      "asset": "pillow_4",
+      "handle": "pillow_4_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "couch_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "stuffed_toy_0"
+        ],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "couch_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.476690292358398,
+        0.6108964085578918,
+        -5.357564449310303
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "cushion_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "cushion_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "cushion_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "174ea8cf2a80b38b2ce4dbbda6de2fee33d3870b_:0000|receptacle_mesh_174ea8cf2a80b38b2ce4dbbda6de2fee33d3870b.0001"
+    }
+  ],
+  "image_root": "gui/episode_views/T7-ACC-DIS",
+  "checks": [
+    "toy_truck_0: exact asset, initial states, furniture, region checked",
+    "stuffed_toy_0: exact asset, initial states, furniture, region checked",
+    "plate_0: exact asset, initial states, furniture, region checked",
+    "lamp_living_0: exact asset, initial states, furniture, region checked",
+    "lamp_kitchen_0: exact asset, initial states, furniture, region checked",
+    "clean_plate_0: exact asset, initial states, furniture, region checked",
+    "cushion_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- Distractors (clean_plate_0, cushion_0) must not be used in place of the task objects; they have no placement goals."
+  ],
+  "spec_sha256": "62b06c0d6e99bca55c53817e94958d0e9d6e4abd528e987b8f68dfb63896d0fe",
+  "initial_robot_memory": "- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on\n- clean_plate_0: on cabinet_5 (kitchen_0), is_clean, next to plate_0\n- cushion_0: on couch_0 (living_room_0), is_clean, next to stuffed_toy_0",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

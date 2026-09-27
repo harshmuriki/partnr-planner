@@ -1,0 +1,25 @@
+{
+  "variant": "T4-ACC-ABS",
+  "objects": [
+    {
+      "entity": "apple_1",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "orange_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "basket_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "bottle_1",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

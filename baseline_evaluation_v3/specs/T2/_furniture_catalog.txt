@@ -1,0 +1,65 @@
+scene_id: 106878960_174887073
+rooms: dining_room_0, living_room_0, office_0, entryway/foyer/lobby_0, bedroom_1, bedroom_0, bathroom_0, hallway_0, closet_1, closet_0, kitchen_0
+rooms: dining_room_0, living_room_0, office_0, entryway/foyer/lobby_0, bedroom_1, bedroom_0, bathroom_0, hallway_0, closet_1, closet_0, kitchen_0
+dining_room_0:
+  - table_0: Livingston Dining Table 62"
+  - counter_0: Ming Alder Cabinet
+living_room_0:
+  - table_1: Lianne Chinoiserie Box on Stand
+  - chair_0: Suzette Chair
+  - chair_1: Suzette Chair
+  - table_16: Madison Park Signature Bordeaux Coffee Table
+  - couch_0: Little Mother 3 Seater Sofa, Divina Melange 3 - 0227 / Walnut legs
+  - table_4: 24 Inch Iron Pedestal Accent Table With White Tray
+  - couch_3: Narciso
+office_0:
+  - chair_2: Suzette Chair
+  - shelves_0: Tall Pilar Bookcase, Black
+  - couch_1: FUMOIR 3 Seater
+  - table_6: 16 Inch Two Tone Carved Pedestal Accent Table
+  - bench_1: Tilton 48" Hair on Hide Bench
+  - table_10: SEDONA SIDE TABLE
+  - table_13: Sadie Desk
+entryway/foyer/lobby_0:
+  - bench_0: Piano stool - three seater
+  - chest_of_drawers_2: Bombay Two Drawer Chest, Black
+bedroom_1:
+  - table_3: Aluminum 22 Inch Accent Table
+  - table_11: Black Five Leg Table
+  - table_12: Black Five Leg Table
+  - chair_3: Cassatt Armchair
+  - bed_1: Brock King Poster Bed
+  - chest_of_drawers_1: Conrad 58" Reeded Chest
+  - wardrobe_1: Moulin Noir Mirrored Armoire
+bedroom_0:
+  - bed_0: Palais Queen Metal Panel Bed By Nate Berkus And Jeremiah Brent
+  - table_5: Thaddeus Glass Round Cocktail Side Table, Forged Brass
+  - table_8: Aster Accent Table, Gold
+  - table_9: Aster Accent Table, Gold
+  - chair_4: Cassatt Armchair
+  - wardrobe_0: Moulin Noir Mirrored Armoire
+bathroom_0:
+  - bathtub_0: Devon Bath With Tap Holes White
+  - stand_0: Abingdon Victoria Washstand Chrome
+  - table_7: 16 Inch Two Tone Carved Pedestal Accent Table
+  - toilet_0: Blenheim/Victoria/Dorchester White Cistern HL
+hallway_0:
+  - couch_2: Tufted Curved Settee, Navy
+  - chest_of_drawers_0: Bombay Three Drawer Chest, Black
+closet_1:
+  - shelves_1: Nexel Chrome Wire Shelving Starter 24''
+  - shelves_2: Nexel Chrome Wire Shelving Starter 24''
+  - cabinet_4: Farmhouse Wine Rack Cabinet
+closet_0:
+  - shelves_3: BUFFET CUPBOARD BARCELONA 4 doors, Oak
+kitchen_0:
+  - cabinet_0: Shaker Kitchen Corner Base Cabinet
+  - cabinet_1: Shaker Kitchen Corner Base Cabinet
+  - cabinet_2: Shaker Kitchen Base Cabinet Double, Top-mount Basin
+  - cabinet_3: Shaker Kitchen Base Cabinet Single
+  - fridge_0: 36'' Classic Over-and-Under Refrigerator/Freezer
+  - cabinet_5: Shaker Kitchen Base Cabinet Double
+  - cabinet_6: Shaker Kitchen Base Cabinet Double
+  - cabinet_7: Shaker Kitchen Base Cabinet Drawers
+  - cabinet_8: Shaker Kitchen Base Cabinet Drawers
+  - cabinet_9: Shaker Kitchen Base Cabinet Drawers

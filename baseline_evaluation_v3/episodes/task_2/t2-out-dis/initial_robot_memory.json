@@ -1,0 +1,37 @@
+{
+  "variant": "T2-OUT-DIS",
+  "objects": [
+    {
+      "entity": "box_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "box_1",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "floor floor_living_room_0 (living_room_0)"
+    },
+    {
+      "entity": "scissors_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_0 (dining_room_0)"
+    },
+    {
+      "entity": "board_game_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "distractor_knife_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "screwdriver_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    }
+  ]
+}

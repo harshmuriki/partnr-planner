@@ -1,0 +1,96 @@
+[
+  {
+    "variant_id": "T5-ACC-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-ACC-SUB",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-ACC-ABS",
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "[WARNING] Initial robot memory: 1 line(s) did not match the strict 'entity_id: relation furniture_id (room)[, states]' format and were skipped"
+    ]
+  },
+  {
+    "variant_id": "T5-ACC-CON",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-ACC-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-INC-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-INC-SUB",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-INC-ABS",
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "[WARNING] Initial robot memory: 3 line(s) did not match the strict 'entity_id: relation furniture_id (room)[, states]' format and were skipped"
+    ]
+  },
+  {
+    "variant_id": "T5-INC-CON",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-INC-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-OUT-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-OUT-SUB",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-OUT-ABS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-OUT-CON",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T5-OUT-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+]

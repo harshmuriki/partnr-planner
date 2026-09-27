@@ -1,0 +1,33 @@
+{
+  "variant": "T5-INC-DIS",
+  "objects": [
+    {
+      "entity": "soap_dispenser_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "glass_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "glass_1",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "plate_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "soap_dish_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "vase_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "plant_saucer_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

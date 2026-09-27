@@ -1,0 +1,123 @@
+{
+  "variant": "T3-OUT-ABS",
+  "status": "generated",
+  "dataset": "episodes/task_3/t3-out-abs/dataset.json.gz",
+  "episode_id": "T3-OUT-ABS",
+  "scene": "106878915_174887025",
+  "objects": [
+    {
+      "entity": "book_0",
+      "asset": "Book_17",
+      "handle": "Book_17_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "bed_1",
+        "room": "bedroom_1",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -7.295899868011475,
+        0.4934200048446655,
+        -4.995930194854736
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "book_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "book_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "book_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0001"
+    },
+    {
+      "entity": "laptop_0",
+      "asset": "Laptop_2",
+      "handle": "Laptop_2_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -3.4021201133728027,
+        0.894819974899292,
+        -3.4684898853302
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "laptop_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "laptop_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "laptop_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001"
+    }
+  ],
+  "image_root": "gui/episode_views/T3-ACC-ABS",
+  "checks": [
+    "book_0: exact asset, initial states, furniture, region checked",
+    "laptop_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- The book (book_1) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+  ],
+  "spec_sha256": "028f27e4ead0d91144ce3f76207209b4da472d0fb0a2bd4ffea8082cd6ad5817",
+  "initial_robot_memory": "- book_0: on table_2 (kitchen_0), is_clean, stale record\n- laptop_0: on table_1 (bedroom_1), is_clean, is_powered_on, stale record\n- book_1: on table_2 (kitchen_0), is_clean, stale record; the object is not actually in the scene",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "reused_sample": "T3-ACC-ABS",
+  "runtime_verified": true
+}

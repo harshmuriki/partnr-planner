@@ -1,0 +1,269 @@
+{
+  "variant": "T4-OUT-ABS",
+  "status": "generated",
+  "dataset": "episodes/task_4/t4-out-abs/dataset.json.gz",
+  "episode_id": "T4-OUT-ABS",
+  "scene": "107734176_176000019",
+  "objects": [
+    {
+      "entity": "apple_1",
+      "asset": "Apple_4",
+      "handle": "Apple_4_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "basket_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -6.254302501678467,
+        0.9637026786804199,
+        -6.76686429977417
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "apple_1-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "apple_1-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "apple_1-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "orange_0",
+      "asset": "017_orange",
+      "handle": "017_orange_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {},
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "basket_0",
+        "room": "kitchen_0",
+        "states": {},
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -6.090577602386475,
+        0.9315855503082275,
+        -7.08867073059082
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "orange_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "orange_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "orange_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "basket_0",
+      "asset": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+      "handle": "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -6.364020824432373,
+        0.9722433090209961,
+        -6.551706790924072
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "basket_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "basket_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "basket_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "bottle_0",
+      "asset": "2f92d709c9e94753a896c065cb62ed33765837c0",
+      "handle": "2f92d709c9e94753a896c065cb62ed33765837c0_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "cabinet_1",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -5.948863983154297,
+        1.013851284980774,
+        -9.09720230102539
+      ],
+      "views": [
+        {
+          "label": "Angle 2",
+          "image": "bottle_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "bottle_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "bottle_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "2c95bbd0e11baed1173e4a1c2f34a52f2c0f6dcc_:0001|double_sided_cabinet0008_receptacle_mesh.0000"
+    },
+    {
+      "entity": "bottle_1",
+      "asset": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+      "handle": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "cabinet_1",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -6.139934539794922,
+        1.067171335220337,
+        -8.93155288696289
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "bottle_1-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "bottle_1-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "bottle_1-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "2c95bbd0e11baed1173e4a1c2f34a52f2c0f6dcc_:0001|double_sided_cabinet0008_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T4-ACC-ABS",
+  "checks": [
+    "apple_1: exact asset, initial states, furniture, region checked",
+    "orange_0: exact asset, initial states, furniture, region checked",
+    "basket_0: exact asset, initial states, furniture, region checked",
+    "bottle_0: exact asset, initial states, furniture, region checked",
+    "bottle_1: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- The apple (apple_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+  ],
+  "spec_sha256": "19871197a027d7148155b3f745fddba05fe18af5abae740ed2a0e2bd82933472",
+  "initial_robot_memory": "- apple_1: on table_4 (living_room_0), is_clean, stale record\n- orange_0: on table_4 (living_room_0), stale record\n- basket_0: on counter_0 (kitchen_0), is_clean, is_empty\n- bottle_0: on table_4 (living_room_0), is_clean, is_empty, stale record\n- bottle_1: on table_4 (living_room_0), is_clean, is_empty, stale record\n- apple_0: on table_4 (living_room_0), is_clean, stale record; the object is not actually in the scene",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 5,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

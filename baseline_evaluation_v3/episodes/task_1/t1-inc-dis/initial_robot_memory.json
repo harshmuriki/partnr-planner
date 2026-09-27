@@ -1,0 +1,21 @@
+{
+  "variant": "T1-INC-DIS",
+  "objects": [
+    {
+      "entity": "jug_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "lamp_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "vase_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "spray_bottle_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

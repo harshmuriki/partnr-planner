@@ -1,0 +1,37 @@
+{
+  "initial_state_dicts": [
+    {
+      "scene_id": "103997895_171031182",
+      "episode_id": "T1-ACC-ABS",
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "initial_state": [
+        {
+          "name": "lamp_0",
+          "number": 1,
+          "object_classes": [
+            "lamp"
+          ],
+          "object_instances": [
+            "B07HK83QRB"
+          ],
+          "excluded_object_instances": [
+            "B07HK3PNSK"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "chest_of_drawers_0"
+          ],
+          "allowed_regions": [
+            "bedroom_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false,
+            "is_powered_on": true
+          }
+        }
+      ]
+    }
+  ],
+  "seed": 1535596943
+}

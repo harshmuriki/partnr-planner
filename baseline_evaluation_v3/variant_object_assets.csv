@@ -1,0 +1,367 @@
+Variant_ID,Object,Label,In_Initial_Robot_Memory,Outdated_Location,Real_Object_ID,State_Category,Possible_States,Start_Clean_Dirty,Start_Filled_Empty,Start_Powered_On_Off,End_Clean_Dirty,End_Filled_Empty,End_Powered_On_Off
+T1-ACC-BASE,jug_0 (jug),target,in,,264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-ACC-BASE,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-INC-BASE,jug_0 (jug),target,not_in,,264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-INC-BASE,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-OUT-BASE,jug_0 (jug),target,outdated,on table_2 (kitchen_0),264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-OUT-BASE,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-ACC-SUB,pitcher_0 (pitcher),substitute,in,,Threshold_Porcelain_Pitcher_White,pitcher,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-ACC-SUB,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-INC-SUB,pitcher_0 (pitcher),substitute,not_in,,Threshold_Porcelain_Pitcher_White,pitcher,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-INC-SUB,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-OUT-SUB,pitcher_0 (pitcher),substitute,not_in,,Threshold_Porcelain_Pitcher_White,pitcher,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-OUT-SUB,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-ACC-ABS,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-INC-ABS,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-OUT-ABS,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-ACC-CON,jug_0 (jug),target,in,,264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-ACC-CON,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-INC-CON,jug_0 (jug),target,not_in,,264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-INC-CON,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-OUT-CON,jug_0 (jug),target,outdated,on table_2 (kitchen_0),264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-OUT-CON,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-ACC-DIS,jug_0 (jug),target,in,,264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-ACC-DIS,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-ACC-DIS,vase_0 (vase),distractor,in,,B075HR4ZDB,vase,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T1-ACC-DIS,spray_bottle_0 (spray_bottle),distractor,in,,Spray_Bottle_7,spray_bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T1-INC-DIS,jug_0 (jug),target,not_in,,264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-INC-DIS,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-INC-DIS,vase_0 (vase),distractor,in,,B075HR4ZDB,vase,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T1-INC-DIS,spray_bottle_0 (spray_bottle),distractor,in,,Spray_Bottle_7,spray_bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T1-OUT-DIS,jug_0 (jug),target,outdated,on table_2 (kitchen_0),264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4,jug,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_filled,n/a
+T1-OUT-DIS,lamp_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T1-OUT-DIS,vase_0 (vase),distractor,in,,B075HR4ZDB,vase,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T1-OUT-DIS,spray_bottle_0 (spray_bottle),distractor,in,,Spray_Bottle_7,spray_bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-BASE,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-BASE,box_1 (box),target,in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-BASE,scissors_0 (scissors),target,in,,Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-INC-BASE,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-BASE,box_1 (box),target,not_in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-BASE,scissors_0 (scissors),target,not_in,,Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-OUT-BASE,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-BASE,box_1 (box),target,outdated,floor floor_living_room_0 (living_room_0),B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-BASE,scissors_0 (scissors),target,outdated,on table_0 (dining_room_0),Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-ACC-SUB,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-SUB,box_1 (box),target,in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-SUB,knife_0 (knife),substitute,in,,Knife_2,knife,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-INC-SUB,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-SUB,box_1 (box),target,not_in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-SUB,knife_0 (knife),substitute,not_in,,Knife_2,knife,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-OUT-SUB,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-SUB,box_1 (box),target,outdated,floor floor_living_room_0 (living_room_0),B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-SUB,knife_0 (knife),substitute,not_in,,Knife_2,knife,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-ACC-ABS,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-ABS,box_1 (box),target,in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-ABS,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-ABS,box_1 (box),target,not_in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-ABS,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-ABS,box_1 (box),target,outdated,floor floor_living_room_0 (living_room_0),B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-CON,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-CON,box_1 (box),target,in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-CON,scissors_0 (scissors),target,in,,Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-INC-CON,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-CON,box_1 (box),target,not_in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-CON,scissors_0 (scissors),target,not_in,,Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-OUT-CON,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-CON,box_1 (box),target,outdated,floor floor_living_room_0 (living_room_0),B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-CON,scissors_0 (scissors),target,outdated,on table_0 (dining_room_0),Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-ACC-DIS,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-DIS,box_1 (box),target,in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-ACC-DIS,scissors_0 (scissors),target,in,,Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-ACC-DIS,board_game_0 (board_game),distractor,in,,Clue_Board_Game_Classic_Edition,board_game,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-ACC-DIS,distractor_knife_0 (knife),distractor,in,,ButterKnife_1,knife,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-ACC-DIS,screwdriver_0 (screwdriver),distractor,in,,Craftsman_Grip_Screwdriver_Phillips_Cushion,screwdriver,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-INC-DIS,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-DIS,box_1 (box),target,not_in,,B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-INC-DIS,scissors_0 (scissors),target,not_in,,Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-INC-DIS,board_game_0 (board_game),distractor,in,,Clue_Board_Game_Classic_Edition,board_game,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-INC-DIS,distractor_knife_0 (knife),distractor,in,,ButterKnife_1,knife,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-INC-DIS,screwdriver_0 (screwdriver),distractor,in,,Craftsman_Grip_Screwdriver_Phillips_Cushion,screwdriver,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-OUT-DIS,box_0 (box),target,in,,B073PB1H88,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-DIS,box_1 (box),target,outdated,floor floor_living_room_0 (living_room_0),B071225BBS,box,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T2-OUT-DIS,scissors_0 (scissors),target,outdated,on table_0 (dining_room_0),Diamond_Visions_Scissors_Red,scissors,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-OUT-DIS,board_game_0 (board_game),distractor,in,,Clue_Board_Game_Classic_Edition,board_game,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-OUT-DIS,distractor_knife_0 (knife),distractor,in,,ButterKnife_1,knife,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T2-OUT-DIS,screwdriver_0 (screwdriver),distractor,in,,Craftsman_Grip_Screwdriver_Phillips_Cushion,screwdriver,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-BASE,book_0 (book),target,in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-BASE,book_1 (book),target,in,,Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-BASE,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-INC-BASE,book_0 (book),target,not_in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-BASE,book_1 (book),target,not_in,,Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-BASE,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-OUT-BASE,book_0 (book),target,outdated,on table_2 (kitchen_0),Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-BASE,book_1 (book),target,outdated,on table_2 (kitchen_0),Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-BASE,laptop_0 (laptop),target,outdated,on table_1 (bedroom_1),Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-ACC-ABS,book_0 (book),target,in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-ABS,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-INC-ABS,book_0 (book),target,not_in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-ABS,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-OUT-ABS,book_0 (book),target,outdated,on table_2 (kitchen_0),Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-ABS,laptop_0 (laptop),target,outdated,on table_1 (bedroom_1),Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-ACC-CON,book_0 (book),target,in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-CON,book_1 (book),target,in,,Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-CON,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-INC-CON,book_0 (book),target,not_in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-CON,book_1 (book),target,not_in,,Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-CON,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-OUT-CON,book_0 (book),target,outdated,on table_2 (kitchen_0),Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-CON,book_1 (book),target,outdated,on table_2 (kitchen_0),Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-CON,laptop_0 (laptop),target,outdated,on table_1 (bedroom_1),Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-ACC-DIS,book_0 (book),target,in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-DIS,book_1 (book),target,in,,Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-DIS,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-ACC-DIS,folder_0 (folder),distractor,in,,B01B254OVC,folder,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-ACC-DIS,phone_0 (phone),distractor,in,,Cellphone_5,cellphone,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_on
+T3-INC-DIS,book_0 (book),target,not_in,,Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-DIS,book_1 (book),target,not_in,,Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-DIS,laptop_0 (laptop),target,in,,Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-INC-DIS,folder_0 (folder),distractor,in,,B01B254OVC,folder,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-INC-DIS,phone_0 (phone),distractor,in,,Cellphone_5,cellphone,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_on
+T3-OUT-DIS,book_0 (book),target,outdated,on table_2 (kitchen_0),Book_17,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-DIS,book_1 (book),target,outdated,on table_2 (kitchen_0),Book_20,book,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-DIS,laptop_0 (laptop),target,outdated,on table_1 (bedroom_1),Laptop_2,laptop,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_off
+T3-OUT-DIS,folder_0 (folder),distractor,in,,B01B254OVC,folder,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T3-OUT-DIS,phone_0 (phone),distractor,in,,Cellphone_5,cellphone,is_clean; is_dirty; is_powered_on; is_powered_off,is_clean,n/a,is_powered_on,is_clean,n/a,is_powered_on
+T4-ACC-BASE,apple_0 (apple),target,in,,Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-BASE,apple_1 (apple),target,in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-BASE,orange_0 (orange),target,in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-ACC-BASE,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-BASE,bottle_0 (bottle),target,in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-BASE,bottle_1 (bottle),target,in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-BASE,apple_0 (apple),target,not_in,,Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-BASE,apple_1 (apple),target,not_in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-BASE,orange_0 (orange),target,not_in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-INC-BASE,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-BASE,bottle_0 (bottle),target,not_in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-BASE,bottle_1 (bottle),target,not_in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-BASE,apple_0 (apple),target,outdated,on table_4 (living_room_0),Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-BASE,apple_1 (apple),target,outdated,on table_4 (living_room_0),Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-BASE,orange_0 (orange),target,outdated,on table_4 (living_room_0),017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-OUT-BASE,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-BASE,bottle_0 (bottle),target,outdated,on table_4 (living_room_0),2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-BASE,bottle_1 (bottle),target,outdated,on table_4 (living_room_0),xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-ABS,apple_1 (apple),target,in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-ABS,orange_0 (orange),target,in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-ACC-ABS,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-ABS,bottle_0 (bottle),target,in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-ABS,bottle_1 (bottle),target,in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-ABS,apple_1 (apple),target,not_in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-ABS,orange_0 (orange),target,not_in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-INC-ABS,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-ABS,bottle_0 (bottle),target,not_in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-ABS,bottle_1 (bottle),target,not_in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-ABS,apple_1 (apple),target,outdated,on table_4 (living_room_0),Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-ABS,orange_0 (orange),target,outdated,on table_4 (living_room_0),017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-OUT-ABS,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-ABS,bottle_0 (bottle),target,outdated,on table_4 (living_room_0),2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-ABS,bottle_1 (bottle),target,outdated,on table_4 (living_room_0),xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-CON,apple_0 (apple),target,in,,Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-CON,apple_1 (apple),target,in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-CON,orange_0 (orange),target,in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-ACC-CON,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-CON,bottle_0 (bottle),target,in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-CON,bottle_1 (bottle),target,in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-CON,apple_0 (apple),target,not_in,,Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-CON,apple_1 (apple),target,not_in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-CON,orange_0 (orange),target,not_in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-INC-CON,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-CON,bottle_0 (bottle),target,not_in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-CON,bottle_1 (bottle),target,not_in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-CON,apple_0 (apple),target,outdated,on table_4 (living_room_0),Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-CON,apple_1 (apple),target,outdated,on table_4 (living_room_0),Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-CON,orange_0 (orange),target,outdated,on table_4 (living_room_0),017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-OUT-CON,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-CON,bottle_0 (bottle),target,outdated,on table_4 (living_room_0),2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-CON,bottle_1 (bottle),target,outdated,on table_4 (living_room_0),xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-DIS,apple_0 (apple),target,in,,Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-DIS,apple_1 (apple),target,in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-DIS,orange_0 (orange),target,in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-ACC-DIS,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-DIS,bottle_0 (bottle),target,in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-DIS,bottle_1 (bottle),target,in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-ACC-DIS,toy_fruit_0 (toy_fruits),distractor,in,,Fruity_Friends,toy_fruits,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-ACC-DIS,spray_bottle_0 (spray_bottle),distractor,in,,Spray_Bottle_3,spray_bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-DIS,apple_0 (apple),target,not_in,,Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-DIS,apple_1 (apple),target,not_in,,Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-DIS,orange_0 (orange),target,not_in,,017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-INC-DIS,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-DIS,bottle_0 (bottle),target,not_in,,2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-DIS,bottle_1 (bottle),target,not_in,,xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-INC-DIS,toy_fruit_0 (toy_fruits),distractor,in,,Fruity_Friends,toy_fruits,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-INC-DIS,spray_bottle_0 (spray_bottle),distractor,in,,Spray_Bottle_3,spray_bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-DIS,apple_0 (apple),target,outdated,on table_4 (living_room_0),Apple_26,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-DIS,apple_1 (apple),target,outdated,on table_4 (living_room_0),Apple_4,apple,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-DIS,orange_0 (orange),target,outdated,on table_4 (living_room_0),017_orange,orange,none,n/a,n/a,n/a,n/a,n/a,n/a
+T4-OUT-DIS,basket_0 (basket),target,in,,87ed6d0c785b3245207bb217eb3ee3fc079f8633,basket,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-DIS,bottle_0 (bottle),target,outdated,on table_4 (living_room_0),2f92d709c9e94753a896c065cb62ed33765837c0,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-DIS,bottle_1 (bottle),target,outdated,on table_4 (living_room_0),xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T4-OUT-DIS,toy_fruit_0 (toy_fruits),distractor,in,,Fruity_Friends,toy_fruits,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T4-OUT-DIS,spray_bottle_0 (spray_bottle),distractor,in,,Spray_Bottle_3,spray_bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-BASE,soap_dispenser_0 (soap_dispenser),target,in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-BASE,glass_0 (glass),target,in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-BASE,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-BASE,plate_0 (plate),target,in,,Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-INC-BASE,soap_dispenser_0 (soap_dispenser),target,not_in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-BASE,glass_0 (glass),target,not_in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-BASE,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-BASE,plate_0 (plate),target,not_in,,Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-OUT-BASE,soap_dispenser_0 (soap_dispenser),target,outdated,on washer_dryer_0 (bathroom_1),Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-BASE,glass_0 (glass),target,outdated,on cabinet_0 (kitchen_0),9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-BASE,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-BASE,plate_0 (plate),target,outdated,on table_2 (kitchen_0),Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-ACC-SUB,soap_dispenser_0 (soap_dispenser),target,in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-SUB,glass_0 (glass),target,in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-SUB,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-SUB,plate_black_0 (plate),substitute,in,,21551881391c2b21c2e1358effa7d6b69cbd435f,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-INC-SUB,soap_dispenser_0 (soap_dispenser),target,not_in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-SUB,glass_0 (glass),target,not_in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-SUB,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-SUB,plate_black_0 (plate),substitute,not_in,,21551881391c2b21c2e1358effa7d6b69cbd435f,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-OUT-SUB,soap_dispenser_0 (soap_dispenser),target,outdated,on washer_dryer_0 (bathroom_1),Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-SUB,glass_0 (glass),target,outdated,on cabinet_0 (kitchen_0),9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-SUB,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-SUB,plate_black_0 (plate),substitute,not_in,,21551881391c2b21c2e1358effa7d6b69cbd435f,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-ACC-ABS,soap_dispenser_0 (soap_dispenser),target,in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-ABS,glass_0 (glass),target,in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-ABS,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-ABS,soap_dispenser_0 (soap_dispenser),target,not_in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-ABS,glass_0 (glass),target,not_in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-ABS,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-ABS,soap_dispenser_0 (soap_dispenser),target,outdated,on washer_dryer_0 (bathroom_1),Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-ABS,glass_0 (glass),target,outdated,on cabinet_0 (kitchen_0),9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-ABS,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-CON,soap_dispenser_0 (soap_dispenser),target,in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-CON,glass_0 (glass),target,in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-CON,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-CON,plate_0 (plate),target,in,,Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-INC-CON,soap_dispenser_0 (soap_dispenser),target,not_in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-CON,glass_0 (glass),target,not_in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-CON,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-CON,plate_0 (plate),target,not_in,,Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-OUT-CON,soap_dispenser_0 (soap_dispenser),target,outdated,on washer_dryer_0 (bathroom_1),Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-CON,glass_0 (glass),target,outdated,on cabinet_0 (kitchen_0),9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-CON,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-CON,plate_0 (plate),target,outdated,on table_2 (kitchen_0),Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-ACC-DIS,soap_dispenser_0 (soap_dispenser),target,in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-DIS,glass_0 (glass),target,in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-DIS,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-ACC-DIS,plate_0 (plate),target,in,,Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-ACC-DIS,soap_dish_0 (soap_dish),distractor,in,,Threshold_Bamboo_Ceramic_Soap_Dish,soap_dish,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-DIS,vase_0 (vase),distractor,in,,04f409f17d79445a3afd109c557c6a2702e15cd8,vase,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-ACC-DIS,plant_saucer_0 (plant_saucer),distractor,in,,Cole_Hardware_Plant_Saucer_Brown_125,plant_saucer,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-DIS,soap_dispenser_0 (soap_dispenser),target,not_in,,Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-DIS,glass_0 (glass),target,not_in,,9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-DIS,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-INC-DIS,plate_0 (plate),target,not_in,,Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-INC-DIS,soap_dish_0 (soap_dish),distractor,in,,Threshold_Bamboo_Ceramic_Soap_Dish,soap_dish,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-DIS,vase_0 (vase),distractor,in,,04f409f17d79445a3afd109c557c6a2702e15cd8,vase,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-INC-DIS,plant_saucer_0 (plant_saucer),distractor,in,,Cole_Hardware_Plant_Saucer_Brown_125,plant_saucer,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-DIS,soap_dispenser_0 (soap_dispenser),target,outdated,on washer_dryer_0 (bathroom_1),Soap_Bottle_26,soap_dispenser,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-DIS,glass_0 (glass),target,outdated,on cabinet_0 (kitchen_0),9428caf70c42e50bb3c3c604eba00c43b8efb58f,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-DIS,glass_1 (glass),target,in,,f9ce9e87b840524cfd4404f4a0cfc52d88f2c794,glass,is_clean; is_dirty; is_filled; is_empty,is_dirty,is_empty,n/a,is_clean,is_filled,n/a
+T5-OUT-DIS,plate_0 (plate),target,outdated,on table_2 (kitchen_0),Plate_26,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T5-OUT-DIS,soap_dish_0 (soap_dish),distractor,in,,Threshold_Bamboo_Ceramic_Soap_Dish,soap_dish,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-DIS,vase_0 (vase),distractor,in,,04f409f17d79445a3afd109c557c6a2702e15cd8,vase,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T5-OUT-DIS,plant_saucer_0 (plant_saucer),distractor,in,,Cole_Hardware_Plant_Saucer_Brown_125,plant_saucer,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T6-ACC-BASE,bread_0 (bread),target,in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-ACC-BASE,bottle_0 (bottle),target,in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-ACC-BASE,hand_towel_0 (hand_towel),target,in,,Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-ACC-BASE,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-INC-BASE,bread_0 (bread),target,not_in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-INC-BASE,bottle_0 (bottle),target,not_in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-INC-BASE,hand_towel_0 (hand_towel),target,not_in,,Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-INC-BASE,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-OUT-BASE,bread_0 (bread),target,outdated,on table_7 (dining_room_0),Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-OUT-BASE,bottle_0 (bottle),target,outdated,on table_5 (bedroom_2),03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-OUT-BASE,hand_towel_0 (hand_towel),target,outdated,on chair_9 (bedroom_2),Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-OUT-BASE,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-ACC-SUB,bread_0 (bread),target,in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-ACC-SUB,cup_0 (cup),substitute,in,,ed95f32cc00075ceed5bd4b593d2a06a444c0eec,cup,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-ACC-SUB,blue_hand_towel_0 (hand_towel),substitute,in,,Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-ACC-SUB,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-INC-SUB,bread_0 (bread),target,not_in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-INC-SUB,cup_0 (cup),substitute,not_in,,ed95f32cc00075ceed5bd4b593d2a06a444c0eec,cup,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-INC-SUB,blue_hand_towel_0 (hand_towel),substitute,not_in,,Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-INC-SUB,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-OUT-SUB,bread_0 (bread),target,outdated,on table_7 (dining_room_0),Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-OUT-SUB,cup_0 (cup),substitute,not_in,,ed95f32cc00075ceed5bd4b593d2a06a444c0eec,cup,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-OUT-SUB,blue_hand_towel_0 (hand_towel),substitute,not_in,,Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-OUT-SUB,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-ACC-ABS,bread_0 (bread),target,in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-ACC-ABS,bottle_0 (bottle),target,in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-ACC-ABS,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-INC-ABS,bread_0 (bread),target,not_in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-INC-ABS,bottle_0 (bottle),target,not_in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-INC-ABS,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-OUT-ABS,bread_0 (bread),target,outdated,on table_7 (dining_room_0),Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-OUT-ABS,bottle_0 (bottle),target,outdated,on table_5 (bedroom_2),03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-OUT-ABS,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-ACC-CON,bread_0 (bread),target,in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-ACC-CON,bottle_0 (bottle),target,in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-ACC-CON,hand_towel_0 (hand_towel),target,in,,Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-ACC-CON,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-INC-CON,bread_0 (bread),target,not_in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-INC-CON,bottle_0 (bottle),target,not_in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-INC-CON,hand_towel_0 (hand_towel),target,not_in,,Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-INC-CON,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-OUT-CON,bread_0 (bread),target,outdated,on table_7 (dining_room_0),Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-OUT-CON,bottle_0 (bottle),target,outdated,on table_5 (bedroom_2),03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-OUT-CON,hand_towel_0 (hand_towel),target,outdated,on chair_9 (bedroom_2),Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-OUT-CON,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-ACC-DIS,bread_0 (bread),target,in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-ACC-DIS,bottle_0 (bottle),target,in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-ACC-DIS,hand_towel_0 (hand_towel),target,in,,Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-ACC-DIS,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-ACC-DIS,dirty_hand_towel_0 (hand_towel),distractor,in,,Cole_Hardware_Dishtowel_Red,hand_towel,is_clean; is_dirty,is_dirty,n/a,n/a,is_dirty,n/a,n/a
+T6-ACC-DIS,bread_25_0 (bread),distractor,in,,Bread_25,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-ACC-DIS,supplement_bottle_0 (bottle),distractor,in,,Theanine,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T6-INC-DIS,bread_0 (bread),target,not_in,,Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-INC-DIS,bottle_0 (bottle),target,not_in,,03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-INC-DIS,hand_towel_0 (hand_towel),target,not_in,,Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-INC-DIS,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-INC-DIS,dirty_hand_towel_0 (hand_towel),distractor,in,,Cole_Hardware_Dishtowel_Red,hand_towel,is_clean; is_dirty,is_dirty,n/a,n/a,is_dirty,n/a,n/a
+T6-INC-DIS,bread_25_0 (bread),distractor,in,,Bread_25,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-INC-DIS,supplement_bottle_0 (bottle),distractor,in,,Theanine,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T6-OUT-DIS,bread_0 (bread),target,outdated,on table_7 (dining_room_0),Bread_8,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-OUT-DIS,bottle_0 (bottle),target,outdated,on table_5 (bedroom_2),03758534dd2a3a8303e742cf4fc10fedd4c48843,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_filled,n/a,is_clean,is_filled,n/a
+T6-OUT-DIS,hand_towel_0 (hand_towel),target,outdated,on chair_9 (bedroom_2),Tag_Dishtowel_Green,hand_towel,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T6-OUT-DIS,lamp_living_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T6-OUT-DIS,dirty_hand_towel_0 (hand_towel),distractor,in,,Cole_Hardware_Dishtowel_Red,hand_towel,is_clean; is_dirty,is_dirty,n/a,n/a,is_dirty,n/a,n/a
+T6-OUT-DIS,bread_25_0 (bread),distractor,in,,Bread_25,bread,none,n/a,n/a,n/a,n/a,n/a,n/a
+T6-OUT-DIS,supplement_bottle_0 (bottle),distractor,in,,Theanine,bottle,is_clean; is_dirty; is_filled; is_empty,is_clean,is_empty,n/a,is_clean,is_empty,n/a
+T7-ACC-BASE,toy_truck_0 (toy_fire_truck),target,in,,FIRE_ENGINE,toy_fire_truck,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_off,is_clean,is_empty,is_powered_off
+T7-ACC-BASE,stuffed_toy_0 (stuffed_toy),target,in,,b3e8be210978ec373be6eb5fcffec36c6a9712e6,stuffed_toy,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-ACC-BASE,plate_0 (plate),target,in,,Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring,plate,is_clean; is_dirty,is_dirty,n/a,n/a,is_clean,n/a,n/a
+T7-ACC-BASE,lamp_living_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-ACC-BASE,lamp_kitchen_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-INC-BASE,toy_truck_0 (toy_fire_truck),target,not_in,,FIRE_ENGINE,toy_fire_truck,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_off,is_clean,is_empty,is_powered_off
+T7-INC-BASE,stuffed_toy_0 (stuffed_toy),target,not_in,,b3e8be210978ec373be6eb5fcffec36c6a9712e6,stuffed_toy,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-INC-BASE,plate_0 (plate),target,not_in,,Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring,plate,is_clean; is_dirty,is_dirty,n/a,n/a,is_clean,n/a,n/a
+T7-INC-BASE,lamp_living_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-INC-BASE,lamp_kitchen_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-OUT-BASE,toy_truck_0 (toy_fire_truck),target,outdated,on table_8 (bedroom_3),FIRE_ENGINE,toy_fire_truck,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_off,is_clean,is_empty,is_powered_off
+T7-OUT-BASE,stuffed_toy_0 (stuffed_toy),target,outdated,on table_8 (bedroom_3),b3e8be210978ec373be6eb5fcffec36c6a9712e6,stuffed_toy,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-OUT-BASE,plate_0 (plate),target,outdated,on table_0 (living_room_0),Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring,plate,is_clean; is_dirty,is_dirty,n/a,n/a,is_clean,n/a,n/a
+T7-OUT-BASE,lamp_living_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-OUT-BASE,lamp_kitchen_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-ACC-DIS,toy_truck_0 (toy_fire_truck),target,in,,FIRE_ENGINE,toy_fire_truck,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_off,is_clean,is_empty,is_powered_off
+T7-ACC-DIS,stuffed_toy_0 (stuffed_toy),target,in,,b3e8be210978ec373be6eb5fcffec36c6a9712e6,stuffed_toy,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-ACC-DIS,plate_0 (plate),target,in,,Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring,plate,is_clean; is_dirty,is_dirty,n/a,n/a,is_clean,n/a,n/a
+T7-ACC-DIS,lamp_living_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-ACC-DIS,lamp_kitchen_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-ACC-DIS,clean_plate_0 (plate),distractor,in,,Plate_20,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-ACC-DIS,cushion_0 (cushion),distractor,in,,pillow_4,cushion,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-INC-DIS,toy_truck_0 (toy_fire_truck),target,not_in,,FIRE_ENGINE,toy_fire_truck,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_off,is_clean,is_empty,is_powered_off
+T7-INC-DIS,stuffed_toy_0 (stuffed_toy),target,not_in,,b3e8be210978ec373be6eb5fcffec36c6a9712e6,stuffed_toy,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-INC-DIS,plate_0 (plate),target,not_in,,Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring,plate,is_clean; is_dirty,is_dirty,n/a,n/a,is_clean,n/a,n/a
+T7-INC-DIS,lamp_living_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-INC-DIS,lamp_kitchen_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-INC-DIS,clean_plate_0 (plate),distractor,in,,Plate_20,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-INC-DIS,cushion_0 (cushion),distractor,in,,pillow_4,cushion,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-OUT-DIS,toy_truck_0 (toy_fire_truck),target,outdated,on table_8 (bedroom_3),FIRE_ENGINE,toy_fire_truck,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_off,is_clean,is_empty,is_powered_off
+T7-OUT-DIS,stuffed_toy_0 (stuffed_toy),target,outdated,on table_8 (bedroom_3),b3e8be210978ec373be6eb5fcffec36c6a9712e6,stuffed_toy,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-OUT-DIS,plate_0 (plate),target,outdated,on table_0 (living_room_0),Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring,plate,is_clean; is_dirty,is_dirty,n/a,n/a,is_clean,n/a,n/a
+T7-OUT-DIS,lamp_living_0 (lamp),target,in,,B07HK83QRB,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-OUT-DIS,lamp_kitchen_0 (lamp),target,in,,B07HK3PNSK,lamp,is_clean; is_dirty; is_filled; is_empty; is_powered_on; is_powered_off,is_clean,is_empty,is_powered_on,is_clean,is_empty,is_powered_off
+T7-OUT-DIS,clean_plate_0 (plate),distractor,in,,Plate_20,plate,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a
+T7-OUT-DIS,cushion_0 (cushion),distractor,in,,pillow_4,cushion,is_clean; is_dirty,is_clean,n/a,n/a,is_clean,n/a,n/a

@@ -1,0 +1,25 @@
+{
+  "variant": "T3-ACC-DIS",
+  "objects": [
+    {
+      "entity": "book_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "book_1",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "laptop_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "folder_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "phone_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

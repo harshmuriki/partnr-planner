@@ -1,0 +1,181 @@
+{
+  "initial_state_dicts": [
+    {
+      "scene_id": "104348010_171512832",
+      "episode_id": "T6-ACC-BASE",
+      "instruction": "Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+      "initial_state": [
+        {
+          "name": "bread_0",
+          "number": 1,
+          "object_classes": [
+            "bread"
+          ],
+          "object_instances": [
+            "Bread_8"
+          ],
+          "excluded_object_instances": [
+            "Bread_1",
+            "Bread_10",
+            "Bread_11",
+            "Bread_12",
+            "Bread_13",
+            "Bread_15",
+            "Bread_16",
+            "Bread_18",
+            "Bread_19",
+            "Bread_20",
+            "Bread_21",
+            "Bread_22",
+            "Bread_23",
+            "Bread_25",
+            "Bread_26",
+            "Bread_27",
+            "Bread_28",
+            "Bread_29",
+            "Bread_3",
+            "Bread_4",
+            "Bread_5",
+            "Bread_7",
+            "Bread_9"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "counter_0"
+          ],
+          "allowed_regions": [
+            "kitchen_0"
+          ],
+          "object_states": {}
+        },
+        {
+          "name": "bottle_0",
+          "number": 1,
+          "object_classes": [
+            "bottle"
+          ],
+          "object_instances": [
+            "03758534dd2a3a8303e742cf4fc10fedd4c48843"
+          ],
+          "excluded_object_instances": [
+            "0198c423ae08bf04bb03b16238b34407d6ab4ecf",
+            "021a0ba1300490e2e288221a21f4387ce626d1de",
+            "1eb36fba48eb1f378fcbebaf74f30e3dcc5021de",
+            "21527bf23974c98dc7bc88b44ba6b54ed32e676c",
+            "22c78acc789ce802af372af9dca938a1c08c5f16",
+            "2f3cdc387d8c8e6e4ec9ce174e5f3dbe090933dd",
+            "2f92d709c9e94753a896c065cb62ed33765837c0",
+            "3a4f40e2d346ca8cebe6edf88cec493bb89737b7",
+            "49e444157676c90fb1cfa5696f50dc1f82c9f052",
+            "4b4f5834c4163706bcc3029862f8f0ec73d92684",
+            "4e58355312c1de13eb2b1b29b4dfbf0a8dbabefd",
+            "5_HTP",
+            "5de840e0dbacebbce6b2686706e4e5acc55c8e78",
+            "6321b6d56d59d1298990434517ac65e2d93f5274",
+            "6361984802efa59ed8b1b2bafc2ca9aa91d4fe8e",
+            "8358e371f092d654f97dd20b5d41af5eb30d45fd",
+            "867cf3a6f88aa00b97aee772c2349bff732fbac5",
+            "8c4b0396525dfedeaabd64fafcde66ae1e87863a",
+            "9074d79340ff79a56ec2e1cdcc3aec203ace5e87",
+            "9bffa4820132a4933b3296739b9f1437857ddb7e",
+            "AllergenFree_JarroDophilus",
+            "Beta_Glucan",
+            "Bifidus_Balance_FOS",
+            "Blackcurrant_Lutein",
+            "CoQ10_wSSVoxVppVD",
+            "Folic_Acid",
+            "NattoMax",
+            "Organic_Whey_Protein_Unflavored",
+            "Perricone_MD_Health_Weight_Management_Supplements",
+            "Pet_Dophilus_powder",
+            "PhosphOmega",
+            "QAbsorb_CoQ10",
+            "QHPomegranate",
+            "Sleep_Optimizer",
+            "Theanine",
+            "a63cb49060e3a034ebc86fea841e5e1521a85629",
+            "c1bd4ed24b1eab295513bd16896686129dff4f1a",
+            "c82a08279ca1a84d891e9bc0928fd461c1e41cd2",
+            "ce33c1228cfca3da78e22645019258d7a92af3a9",
+            "d5a5480ce6fc74aa5cb74f6b16c2dea8cb90544e",
+            "d60ba70ec8b1b5faedcf3998713fb94ebb9c4bb2",
+            "d946cb7fdeeb63eefb33fa3ee04b98d3a44bc966",
+            "e1b703e78962df6a81b81acab566c6a202b17197",
+            "e5dc7a8a5601d4d26ece19878d8d7b6407129c63",
+            "ec09eff22b5cba63c206b16a960ab411411d2488",
+            "f1c99d9ad79767c09aed2f6d96e1cf87f898b9df",
+            "xxxx55b940d1x7fecx4ea5xa0e2xb695c9547b28",
+            "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_7"
+          ],
+          "allowed_regions": [
+            "dining_room_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": true
+          }
+        },
+        {
+          "name": "hand_towel_0",
+          "number": 1,
+          "object_classes": [
+            "hand_towel"
+          ],
+          "object_instances": [
+            "Tag_Dishtowel_Green"
+          ],
+          "excluded_object_instances": [
+            "Cole_Hardware_Dishtowel_Blue",
+            "Cole_Hardware_Dishtowel_Red",
+            "Cole_Hardware_Dishtowel_Stripe",
+            "Envision_Home_Dish_Drying_Mat_Red_6_x_18",
+            "Tag_Dishtowel_18_x_26",
+            "Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26",
+            "Tag_Dishtowel_Waffle_Gray_Checks_18_x_26",
+            "Threshold_Hand_Towel_Blue_Medallion_16_x_27"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "shelves_11"
+          ],
+          "allowed_regions": [
+            "bathroom_2"
+          ],
+          "object_states": {
+            "is_clean": true
+          }
+        },
+        {
+          "name": "lamp_living_0",
+          "number": 1,
+          "object_classes": [
+            "lamp"
+          ],
+          "object_instances": [
+            "B07HK3PNSK"
+          ],
+          "excluded_object_instances": [
+            "B07HK83QRB"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_2"
+          ],
+          "allowed_regions": [
+            "living_room_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false,
+            "is_powered_on": true
+          }
+        }
+      ]
+    }
+  ],
+  "seed": 2157128055
+}

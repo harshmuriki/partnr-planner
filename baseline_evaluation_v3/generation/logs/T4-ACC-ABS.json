@@ -1,0 +1,22 @@
+[
+  {
+    "attempt": 1,
+    "error": "{\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/harshmuriki/Documents/partnr-planner/dataset_generation/benchmark_generation/generate_verified_specs.py\", line 471, in run\n    raise ValueError(json.dumps(details))\nValueError: {\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}\n"
+  },
+  {
+    "attempt": 2,
+    "error": "{\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/harshmuriki/Documents/partnr-planner/dataset_generation/benchmark_generation/generate_verified_specs.py\", line 471, in run\n    raise ValueError(json.dumps(details))\nValueError: {\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}\n"
+  },
+  {
+    "attempt": 3,
+    "error": "{\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/harshmuriki/Documents/partnr-planner/dataset_generation/benchmark_generation/generate_verified_specs.py\", line 471, in run\n    raise ValueError(json.dumps(details))\nValueError: {\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}\n"
+  },
+  {
+    "attempt": 4,
+    "error": "{\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/harshmuriki/Documents/partnr-planner/dataset_generation/benchmark_generation/generate_verified_specs.py\", line 471, in run\n    raise ValueError(json.dumps(details))\nValueError: {\"scene\": \"107734176_176000019\", \"phase_details\": {\"1\": {}, \"2\": {}, \"3\": {}, \"4\": {}, \"5\": {}}, \"failure_mode\": \"unstable state\"}\n"
+  }
+]

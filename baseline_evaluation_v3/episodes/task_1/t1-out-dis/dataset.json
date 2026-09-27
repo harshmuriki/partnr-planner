@@ -1,0 +1,961 @@
+{
+  "config": null,
+  "episodes": [
+    {
+      "episode_id": "T1-OUT-DIS",
+      "scene_id": "103997895_171031182",
+      "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json",
+      "additional_obj_config_paths": [
+        "data/objects/ycb/configs/",
+        "data/objects_ovmm/train_val/ai2thorhab/configs/objects",
+        "data/objects_ovmm/train_val/amazon_berkeley/configs",
+        "data/objects_ovmm/train_val/google_scanned/configs",
+        "data/objects_ovmm/train_val/hssd/configs/objects"
+      ],
+      "start_position": [
+        -13.69438,
+        0.1793,
+        -3.13765
+      ],
+      "start_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "info": {
+        "episode_id": "T1-OUT-DIS",
+        "is_dynamic": true,
+        "sample_configs": {
+          "0": {
+            "name": "jug_0",
+            "number": 1,
+            "object_classes": [
+              "jug"
+            ],
+            "object_instances": [
+              "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4"
+            ],
+            "excluded_object_instances": [
+              "260b77a7bb7899bbe4665886be2af5e303a6e4f1",
+              "2b429c575b4de6837a9d3ce5472ceb8a918fdbd2",
+              "2f8ce20db01f6f9cff0d3170271f45ef139276ed",
+              "320f797f7f3936b01c7fb659ddd56c63cc52f85f",
+              "381a128d056d4db0e70276aa918065ca42f89e8f",
+              "67428f64fcb9f822080d8d77c4991cc5c075f15d",
+              "794f4ad86d136c76bfe3082ffedc4133e876ac9a",
+              "79590e37b261153df0b50a05e90edf40bc4f13c0",
+              "aaf1ba3e91ae781751ab5eba22ec2bbd30e05365",
+              "ad87281ca93b236560306a08f0953ba340e85c3c",
+              "aee86f6cb8551b9601a11062038936fdb927860d",
+              "e70ea42b5270583ea34fe50123b841d79a380e19"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "1": {
+            "name": "lamp_0",
+            "number": 1,
+            "object_classes": [
+              "lamp"
+            ],
+            "object_instances": [
+              "B07HK83QRB"
+            ],
+            "excluded_object_instances": [
+              "B07HK3PNSK"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "chest_of_drawers_0"
+            ],
+            "allowed_regions": [
+              "bedroom_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false,
+              "is_powered_on": true
+            }
+          },
+          "2": {
+            "name": "vase_0",
+            "number": 1,
+            "object_classes": [
+              "vase"
+            ],
+            "object_instances": [
+              "B075HR4ZDB"
+            ],
+            "excluded_object_instances": [
+              "00386b5179df69aec660a71fb9c65b344857d016",
+              "01f076bf712f7a14ceed10f92a72948c05925858",
+              "04f409f17d79445a3afd109c557c6a2702e15cd8",
+              "0561c92e2635eaaa0ad753cabfb427cfde565ec0",
+              "0875307f7666e4fce7e217849c10c29972d142a7",
+              "0ae9ee903346b3fd69b34228a3340662a173b791",
+              "0aebf7979e3510654f3c16418145ab973c22a381",
+              "0b0df80543773a698cd4ddcf76a7c5acfc4a803d",
+              "0c48040ad6f64c0103c2f1b3133e2760ed8392b7",
+              "0d61b723728d6d5ac05ac53e07372bcc7ff676ce",
+              "1125b9ca061f6deee5d7e8a31cbe46eee10e535d",
+              "1182b246f9dc763f898cf5a47feb003f8905d289",
+              "13fe6d40a8869913ca6623bc6ed25dbcffb7da0d",
+              "1404f8d65e562307f0fead3fd0d408c34f0af26a",
+              "14b8b72a08380f9f7f13fbb0eef83344a2c11c33",
+              "14e43de7e803f8d42e974f35cef746dcb7b57ed9",
+              "1520472dfd763a8cb0f1b2a447bce437827b8776",
+              "15fbefb684c5f988e5ff754bbded98aa80d3542f",
+              "18a2fab4d1fe71c969e654740028d422d18ad9b6",
+              "1ad21d8bf5749da64c01c01848f571e38819c316",
+              "1b4711c1a5a9978cc2e7c57008f3d085c355d145",
+              "1bd20c0904b0a85598a32a2de70c3a2facdf8e4d",
+              "1d6275b17496af0183fe2c158332a8b8d3eea5b7",
+              "1e736736c9417babd8baa34f83b526eac426e842",
+              "20b562393eb8b161d1bfb7b1e9c5c65d277cfe6f",
+              "2252ee7e50a8ff3608007253e73d1137358d125d",
+              "243bad4f4c1bdda1dddf46ac7e54c567289fd38d",
+              "2470231ef2743a97f8159f356337527eef366763",
+              "247538767e1fde11b53e2b41edcf5b066cf0126c",
+              "25daa32e8ec122ad22c8662a137bf444fb8da745",
+              "263cce6bd107ce2e9f259120e38cd27f5dac0bcc",
+              "2b6a6f943bdaf73ef2018a02ceb1720ab04b5b2d",
+              "2b93011397cebb7664a934bb1876f126b70313d0",
+              "2bc5fe4f4fc48aec41c67e34ebe603bbb53b1d01",
+              "2c66d9495affb0273810b7bacd4c87a4b0f90852",
+              "2c9b708ce46c0fa262c9c97f58e4856a792dba5e",
+              "2d686cdf1b2da2c4b61c629bdefdb4a5c6678168",
+              "2fd36b341e66b948ec0cd87264036f7881cedb4b",
+              "310fe43cec6ff66fc0f99cca8443c5cdeca818ad",
+              "334e738f9a75aa50fdc33f0776b43bdea1fccdfe",
+              "3448a0f2142df518fd92e165207bf1d58dd05fa0",
+              "356b8426ceec3110080b71163f586c8a0f15acfb",
+              "371efb7286ca8324dea0d9642b3824783a11aa73",
+              "379ad1f30cbdee03b3ce2a68d11b6b855e746fb7",
+              "3bd1652a8ee18e0dc0985011fef96125f46b1ac4",
+              "40bf81e852fd34c4d390fa68f71d2cafcb91f2f4",
+              "4551602f795cf1b62cea365613c31f56dfe3999c",
+              "463db7d43c592863e0deb15b198bf5747faae86f",
+              "4b67581ca492a2028ccf3064b2824dcc8d104fb0",
+              "4d264b0fb9851427c3bfcc8a92f12d33b30fe5d5",
+              "4d40134bdb82e6e53b72cd912f99835c486e8759",
+              "4fc6a72c3c780fd8c70c0bdd23aa877b0c4f4a7b",
+              "51b55165bde866a2c8d74b46843d2f549135b889",
+              "535fa87debd90c5fedc585161bf019aea7ceda68",
+              "539a80debf42cd0b6b3c3d1d67d9488efa95af45",
+              "55cc6c146898e7fb1c2ea66ac86b04d6566ad1a5",
+              "56a3cb5686d12e4bad648c325ae998def645c997",
+              "5c111a7314a6d708375b5fc1a0d6560d306da7b1",
+              "5d21ea3e7e66c57b22608a848317d807dbde3c3a",
+              "5fd9d34de9562a5891fe0657010d6c7777438db8",
+              "6152354f6498a5bea31b40f720f2cbff10634608",
+              "634a9acb28154794523f83c0ae981b8537ab6d07",
+              "6441c18aab2884608788795c231b96924c6e5523",
+              "64e73ca852efff52e03768163453a7a41e117f43",
+              "6654629c2b0e6e4769e3c911947605375033bde5",
+              "66d17b302cff7b3baffdccbb52f16325ff35c623",
+              "67b71a4ad2610e060ea018855d108362a4d6fbae",
+              "6dd9e51b58072dbd08fbbdf95ce568aacc47ec59",
+              "6f9e025e59a4a4c1991bb6dc7e73ccb985d07c57",
+              "71b30944a9c6ca8077d2ab8903e586a4dd2a3917",
+              "736eebbb72e7ee9ef01d76ae3b0075e55f05ceb5",
+              "77fb3131da84c90973accb42a2ce5d594e5b4987",
+              "7b497caf99a943b669087b3dd4e77be63b3dbc0a",
+              "7d38434695df81af30390db76c89bcc04529b406",
+              "7ec42d263b2ee8d9b0cd09651f32c2ce46982351",
+              "80794dc5fde2b3276714ff40107bce7b909e45c7",
+              "85a26b27d39fe3c8317df4342d0ae32203739b8e",
+              "877384ee8dc4577ccc2dc5b37ee505d2d4af3d0e",
+              "882802e4ffc1f87c16e16d1322c651a849f7743d",
+              "8aa978beb04d130c9d587f9c2858522cbf559703",
+              "8ffc1468a4c10a3badb8b36062d58f5553c02d21",
+              "9150be2ad622edb189333575dd7ecf229f28c490",
+              "91cb2a92d739d4d71c46a12cb744415b90b17047",
+              "94a5de038faeea77c286fbe0af7469d2a2f7792b",
+              "96dec181c78bf169dbe3bb8c0215c383ce30bd3e",
+              "99de5eb0d3e87db48cc5c2c558880d7aa1ec2c2d",
+              "9c09a8ddc8047cdecc332f1368332a2e62a6c784",
+              "9ec28866f43e42093f181e656ef1c89923945808",
+              "B075HR7DM7",
+              "B075HR7KY9",
+              "B075HWMC6S",
+              "B075HWX46K",
+              "B075HXJPW6",
+              "B075HXLWT5",
+              "B075HXPFTG",
+              "B078JGHZT3",
+              "B078JGYJTG",
+              "B078JJDPR2",
+              "B078JMJC46",
+              "B078JMJC49",
+              "B07B8NVHX1",
+              "B07B8NZQ68",
+              "B07B8PXTSY",
+              "B07B8VJBCL",
+              "B07B8W8FBV",
+              "B07HSJVP5C",
+              "B07HSLG6WR",
+              "B07HSMVFMP",
+              "B07JLBDT51",
+              "B07JM1K8VH",
+              "B07JM6GHC8",
+              "Vase_Decorative_1",
+              "Vase_Flat_1",
+              "Vase_Flat_2",
+              "Vase_Flat_3",
+              "Vase_Flat_4",
+              "Vase_Flat_5",
+              "Vase_Medium_1",
+              "Vase_Medium_2",
+              "Vase_Medium_3",
+              "Vase_Medium_4",
+              "Vase_Medium_5",
+              "Vase_Open_1",
+              "Vase_Open_2",
+              "Vase_Open_3",
+              "Vase_Tall_1",
+              "Vase_Tall_2",
+              "Vase_Tall_3",
+              "Vase_Tall_4",
+              "Vase_Tall_5",
+              "a043589070ad2a710483ac68aeb242f00ae1e994",
+              "a17f03892b9f71801e057be9db2de908464d1fba",
+              "a1a955a6d0706fa3634c9baea186632791ade20c",
+              "a21f46139ac72eca15b4240cf8055b984d593af1",
+              "aad0bda6fe5e168eaa4dbf1292878b18c54f249b",
+              "acce2a11f70af73275e053fe644a8f608089893c",
+              "adf37dc162377502fc26a64433466f01d182ebf9",
+              "aea09725b176eae21cb59fa852a55174189c11ee",
+              "af357e69163c47f0d376340314809ae12ee0c609",
+              "af753234600031dd1619673de2827b3fb2ae5b72",
+              "b0365152ce8404708c65752b9de332604bdf6063",
+              "b084a1e5e80ece7227672011515ee3b5b33a01d9",
+              "b4c970f1a8fa29e0934f4e8ccd1cb67ad92b0d51",
+              "b5a2e303c9a5cfa54fb5b257cd82926b194e1e26",
+              "b6439d60ffdbd1c1a71ba76e706dcbfc87f2c6df",
+              "b728f6c0506deaea1e8231b629d1e20b0a5fa0f8",
+              "b9b836b51c44ad76b7966ae565ae4910e89c2de6",
+              "bbe510f23f2488ae618cd8c6601f1df4e4edacc8",
+              "c27ffe33c37fb0d58bd76b949f85b4896545e0ed",
+              "c3a6db9251980820f1e2ddcabebf8d21f059e0a4",
+              "c3c8a9a0e1f2037d9e82d2286748cb576b1fd738",
+              "c4776ee9f31d7ab3177be970e35e3f76c44e0f8c",
+              "c4a76da68c72eec12f07b0f047a21a130872a0ba",
+              "c8626f2d3bbeb2f1601a2af656c4610cd99e56fa",
+              "c8af5b98558601d1ea284a89c3578eb39e061c00",
+              "c94029096657382ebca374164eef6746d80bd99e",
+              "cc5281d4600eb70647018d02c92032abf391535f",
+              "d3d2da9dd341d78c1536200b130180b40971bab8",
+              "d6b5822b17434f97ff007e0854cd9385dc79a150",
+              "d8e3ee46b61694958a24ae70fc740f9197aef41e",
+              "dd62a6aafabe4bcc5dc49e61a5d5c87019e1b4c3",
+              "dfcbfd3a7de15b9689dc0580c38f2f0896b6647d",
+              "e05af79080f048e261865dc1f9cf0a80d47deea4",
+              "e60a5e30bb3384125c02cbda6b8aeaffc900b78a",
+              "f161fe4fd2234d49ab5e452f7b4d869ae276330e",
+              "f427ee2c7b7482af6c00918245cad73df5241a94",
+              "f51fd63c6cd12ee673b94946d1450c6afc8713be",
+              "fa5c8c836453388913b0017c4a2e33304373bc31",
+              "fbf828b972d59baba95d1a54e1f95442d7ea0b46",
+              "fc2d461dfe96f499d7c38306747b8000e111b13f",
+              "fead0a77067515bd384f322f81592d868093c8ce",
+              "ff10cb92d3dbd50abc4b4aac608055945bdb31e7",
+              "xxxx0d0ff402xe09fx4188xb9a6xcf5d7e13475e",
+              "xxxx3a4d8840x65eax4986x98f8xb64e2fba5da6",
+              "xxxx3df1391bx35d8x4752xad8exde9f3cf64b31",
+              "xxxx59b79f40x2b52x4d5axb58bx2c8d239b9a1e",
+              "xxxx609fb6c8x44a7x4239xb341xb9880ac81843",
+              "xxxx630c96dfx08d3x4691xbee6x6a40dfda78dc",
+              "xxxx962ed056x74e2x4f30x98ffx26eea6a2adad",
+              "xxxxaab02551x8cf4x48ecxb45fxbc8207ba0eca",
+              "xxxxc5720538x33bbx460cx820cxd375445ef773",
+              "xxxxccb30c58x6dc6x4d15x9e92x1583d4c2562f"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            },
+            "next_to": [
+              "jug_0"
+            ]
+          },
+          "3": {
+            "name": "spray_bottle_0",
+            "number": 1,
+            "object_classes": [
+              "spray_bottle"
+            ],
+            "object_instances": [
+              "Spray_Bottle_7"
+            ],
+            "excluded_object_instances": [
+              "Spray_Bottle_1",
+              "Spray_Bottle_2",
+              "Spray_Bottle_3",
+              "Spray_Bottle_5",
+              "Spray_Bottle_8"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            },
+            "next_to": [
+              "jug_0"
+            ]
+          }
+        },
+        "object_labels": {},
+        "extra_info": {
+          "scene_id": "103997895_171031182",
+          "episode_id": "T1-OUT-DIS",
+          "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+          "initial_state": [
+            {
+              "name": "jug_0",
+              "number": 1,
+              "object_classes": [
+                "jug"
+              ],
+              "object_instances": [
+                "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4"
+              ],
+              "excluded_object_instances": [
+                "260b77a7bb7899bbe4665886be2af5e303a6e4f1",
+                "2b429c575b4de6837a9d3ce5472ceb8a918fdbd2",
+                "2f8ce20db01f6f9cff0d3170271f45ef139276ed",
+                "320f797f7f3936b01c7fb659ddd56c63cc52f85f",
+                "381a128d056d4db0e70276aa918065ca42f89e8f",
+                "67428f64fcb9f822080d8d77c4991cc5c075f15d",
+                "794f4ad86d136c76bfe3082ffedc4133e876ac9a",
+                "79590e37b261153df0b50a05e90edf40bc4f13c0",
+                "aaf1ba3e91ae781751ab5eba22ec2bbd30e05365",
+                "ad87281ca93b236560306a08f0953ba340e85c3c",
+                "aee86f6cb8551b9601a11062038936fdb927860d",
+                "e70ea42b5270583ea34fe50123b841d79a380e19"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "lamp_0",
+              "number": 1,
+              "object_classes": [
+                "lamp"
+              ],
+              "object_instances": [
+                "B07HK83QRB"
+              ],
+              "excluded_object_instances": [
+                "B07HK3PNSK"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "chest_of_drawers_0"
+              ],
+              "allowed_regions": [
+                "bedroom_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false,
+                "is_powered_on": true
+              }
+            },
+            {
+              "name": "vase_0",
+              "number": 1,
+              "object_classes": [
+                "vase"
+              ],
+              "object_instances": [
+                "B075HR4ZDB"
+              ],
+              "excluded_object_instances": [
+                "00386b5179df69aec660a71fb9c65b344857d016",
+                "01f076bf712f7a14ceed10f92a72948c05925858",
+                "04f409f17d79445a3afd109c557c6a2702e15cd8",
+                "0561c92e2635eaaa0ad753cabfb427cfde565ec0",
+                "0875307f7666e4fce7e217849c10c29972d142a7",
+                "0ae9ee903346b3fd69b34228a3340662a173b791",
+                "0aebf7979e3510654f3c16418145ab973c22a381",
+                "0b0df80543773a698cd4ddcf76a7c5acfc4a803d",
+                "0c48040ad6f64c0103c2f1b3133e2760ed8392b7",
+                "0d61b723728d6d5ac05ac53e07372bcc7ff676ce",
+                "1125b9ca061f6deee5d7e8a31cbe46eee10e535d",
+                "1182b246f9dc763f898cf5a47feb003f8905d289",
+                "13fe6d40a8869913ca6623bc6ed25dbcffb7da0d",
+                "1404f8d65e562307f0fead3fd0d408c34f0af26a",
+                "14b8b72a08380f9f7f13fbb0eef83344a2c11c33",
+                "14e43de7e803f8d42e974f35cef746dcb7b57ed9",
+                "1520472dfd763a8cb0f1b2a447bce437827b8776",
+                "15fbefb684c5f988e5ff754bbded98aa80d3542f",
+                "18a2fab4d1fe71c969e654740028d422d18ad9b6",
+                "1ad21d8bf5749da64c01c01848f571e38819c316",
+                "1b4711c1a5a9978cc2e7c57008f3d085c355d145",
+                "1bd20c0904b0a85598a32a2de70c3a2facdf8e4d",
+                "1d6275b17496af0183fe2c158332a8b8d3eea5b7",
+                "1e736736c9417babd8baa34f83b526eac426e842",
+                "20b562393eb8b161d1bfb7b1e9c5c65d277cfe6f",
+                "2252ee7e50a8ff3608007253e73d1137358d125d",
+                "243bad4f4c1bdda1dddf46ac7e54c567289fd38d",
+                "2470231ef2743a97f8159f356337527eef366763",
+                "247538767e1fde11b53e2b41edcf5b066cf0126c",
+                "25daa32e8ec122ad22c8662a137bf444fb8da745",
+                "263cce6bd107ce2e9f259120e38cd27f5dac0bcc",
+                "2b6a6f943bdaf73ef2018a02ceb1720ab04b5b2d",
+                "2b93011397cebb7664a934bb1876f126b70313d0",
+                "2bc5fe4f4fc48aec41c67e34ebe603bbb53b1d01",
+                "2c66d9495affb0273810b7bacd4c87a4b0f90852",
+                "2c9b708ce46c0fa262c9c97f58e4856a792dba5e",
+                "2d686cdf1b2da2c4b61c629bdefdb4a5c6678168",
+                "2fd36b341e66b948ec0cd87264036f7881cedb4b",
+                "310fe43cec6ff66fc0f99cca8443c5cdeca818ad",
+                "334e738f9a75aa50fdc33f0776b43bdea1fccdfe",
+                "3448a0f2142df518fd92e165207bf1d58dd05fa0",
+                "356b8426ceec3110080b71163f586c8a0f15acfb",
+                "371efb7286ca8324dea0d9642b3824783a11aa73",
+                "379ad1f30cbdee03b3ce2a68d11b6b855e746fb7",
+                "3bd1652a8ee18e0dc0985011fef96125f46b1ac4",
+                "40bf81e852fd34c4d390fa68f71d2cafcb91f2f4",
+                "4551602f795cf1b62cea365613c31f56dfe3999c",
+                "463db7d43c592863e0deb15b198bf5747faae86f",
+                "4b67581ca492a2028ccf3064b2824dcc8d104fb0",
+                "4d264b0fb9851427c3bfcc8a92f12d33b30fe5d5",
+                "4d40134bdb82e6e53b72cd912f99835c486e8759",
+                "4fc6a72c3c780fd8c70c0bdd23aa877b0c4f4a7b",
+                "51b55165bde866a2c8d74b46843d2f549135b889",
+                "535fa87debd90c5fedc585161bf019aea7ceda68",
+                "539a80debf42cd0b6b3c3d1d67d9488efa95af45",
+                "55cc6c146898e7fb1c2ea66ac86b04d6566ad1a5",
+                "56a3cb5686d12e4bad648c325ae998def645c997",
+                "5c111a7314a6d708375b5fc1a0d6560d306da7b1",
+                "5d21ea3e7e66c57b22608a848317d807dbde3c3a",
+                "5fd9d34de9562a5891fe0657010d6c7777438db8",
+                "6152354f6498a5bea31b40f720f2cbff10634608",
+                "634a9acb28154794523f83c0ae981b8537ab6d07",
+                "6441c18aab2884608788795c231b96924c6e5523",
+                "64e73ca852efff52e03768163453a7a41e117f43",
+                "6654629c2b0e6e4769e3c911947605375033bde5",
+                "66d17b302cff7b3baffdccbb52f16325ff35c623",
+                "67b71a4ad2610e060ea018855d108362a4d6fbae",
+                "6dd9e51b58072dbd08fbbdf95ce568aacc47ec59",
+                "6f9e025e59a4a4c1991bb6dc7e73ccb985d07c57",
+                "71b30944a9c6ca8077d2ab8903e586a4dd2a3917",
+                "736eebbb72e7ee9ef01d76ae3b0075e55f05ceb5",
+                "77fb3131da84c90973accb42a2ce5d594e5b4987",
+                "7b497caf99a943b669087b3dd4e77be63b3dbc0a",
+                "7d38434695df81af30390db76c89bcc04529b406",
+                "7ec42d263b2ee8d9b0cd09651f32c2ce46982351",
+                "80794dc5fde2b3276714ff40107bce7b909e45c7",
+                "85a26b27d39fe3c8317df4342d0ae32203739b8e",
+                "877384ee8dc4577ccc2dc5b37ee505d2d4af3d0e",
+                "882802e4ffc1f87c16e16d1322c651a849f7743d",
+                "8aa978beb04d130c9d587f9c2858522cbf559703",
+                "8ffc1468a4c10a3badb8b36062d58f5553c02d21",
+                "9150be2ad622edb189333575dd7ecf229f28c490",
+                "91cb2a92d739d4d71c46a12cb744415b90b17047",
+                "94a5de038faeea77c286fbe0af7469d2a2f7792b",
+                "96dec181c78bf169dbe3bb8c0215c383ce30bd3e",
+                "99de5eb0d3e87db48cc5c2c558880d7aa1ec2c2d",
+                "9c09a8ddc8047cdecc332f1368332a2e62a6c784",
+                "9ec28866f43e42093f181e656ef1c89923945808",
+                "B075HR7DM7",
+                "B075HR7KY9",
+                "B075HWMC6S",
+                "B075HWX46K",
+                "B075HXJPW6",
+                "B075HXLWT5",
+                "B075HXPFTG",
+                "B078JGHZT3",
+                "B078JGYJTG",
+                "B078JJDPR2",
+                "B078JMJC46",
+                "B078JMJC49",
+                "B07B8NVHX1",
+                "B07B8NZQ68",
+                "B07B8PXTSY",
+                "B07B8VJBCL",
+                "B07B8W8FBV",
+                "B07HSJVP5C",
+                "B07HSLG6WR",
+                "B07HSMVFMP",
+                "B07JLBDT51",
+                "B07JM1K8VH",
+                "B07JM6GHC8",
+                "Vase_Decorative_1",
+                "Vase_Flat_1",
+                "Vase_Flat_2",
+                "Vase_Flat_3",
+                "Vase_Flat_4",
+                "Vase_Flat_5",
+                "Vase_Medium_1",
+                "Vase_Medium_2",
+                "Vase_Medium_3",
+                "Vase_Medium_4",
+                "Vase_Medium_5",
+                "Vase_Open_1",
+                "Vase_Open_2",
+                "Vase_Open_3",
+                "Vase_Tall_1",
+                "Vase_Tall_2",
+                "Vase_Tall_3",
+                "Vase_Tall_4",
+                "Vase_Tall_5",
+                "a043589070ad2a710483ac68aeb242f00ae1e994",
+                "a17f03892b9f71801e057be9db2de908464d1fba",
+                "a1a955a6d0706fa3634c9baea186632791ade20c",
+                "a21f46139ac72eca15b4240cf8055b984d593af1",
+                "aad0bda6fe5e168eaa4dbf1292878b18c54f249b",
+                "acce2a11f70af73275e053fe644a8f608089893c",
+                "adf37dc162377502fc26a64433466f01d182ebf9",
+                "aea09725b176eae21cb59fa852a55174189c11ee",
+                "af357e69163c47f0d376340314809ae12ee0c609",
+                "af753234600031dd1619673de2827b3fb2ae5b72",
+                "b0365152ce8404708c65752b9de332604bdf6063",
+                "b084a1e5e80ece7227672011515ee3b5b33a01d9",
+                "b4c970f1a8fa29e0934f4e8ccd1cb67ad92b0d51",
+                "b5a2e303c9a5cfa54fb5b257cd82926b194e1e26",
+                "b6439d60ffdbd1c1a71ba76e706dcbfc87f2c6df",
+                "b728f6c0506deaea1e8231b629d1e20b0a5fa0f8",
+                "b9b836b51c44ad76b7966ae565ae4910e89c2de6",
+                "bbe510f23f2488ae618cd8c6601f1df4e4edacc8",
+                "c27ffe33c37fb0d58bd76b949f85b4896545e0ed",
+                "c3a6db9251980820f1e2ddcabebf8d21f059e0a4",
+                "c3c8a9a0e1f2037d9e82d2286748cb576b1fd738",
+                "c4776ee9f31d7ab3177be970e35e3f76c44e0f8c",
+                "c4a76da68c72eec12f07b0f047a21a130872a0ba",
+                "c8626f2d3bbeb2f1601a2af656c4610cd99e56fa",
+                "c8af5b98558601d1ea284a89c3578eb39e061c00",
+                "c94029096657382ebca374164eef6746d80bd99e",
+                "cc5281d4600eb70647018d02c92032abf391535f",
+                "d3d2da9dd341d78c1536200b130180b40971bab8",
+                "d6b5822b17434f97ff007e0854cd9385dc79a150",
+                "d8e3ee46b61694958a24ae70fc740f9197aef41e",
+                "dd62a6aafabe4bcc5dc49e61a5d5c87019e1b4c3",
+                "dfcbfd3a7de15b9689dc0580c38f2f0896b6647d",
+                "e05af79080f048e261865dc1f9cf0a80d47deea4",
+                "e60a5e30bb3384125c02cbda6b8aeaffc900b78a",
+                "f161fe4fd2234d49ab5e452f7b4d869ae276330e",
+                "f427ee2c7b7482af6c00918245cad73df5241a94",
+                "f51fd63c6cd12ee673b94946d1450c6afc8713be",
+                "fa5c8c836453388913b0017c4a2e33304373bc31",
+                "fbf828b972d59baba95d1a54e1f95442d7ea0b46",
+                "fc2d461dfe96f499d7c38306747b8000e111b13f",
+                "fead0a77067515bd384f322f81592d868093c8ce",
+                "ff10cb92d3dbd50abc4b4aac608055945bdb31e7",
+                "xxxx0d0ff402xe09fx4188xb9a6xcf5d7e13475e",
+                "xxxx3a4d8840x65eax4986x98f8xb64e2fba5da6",
+                "xxxx3df1391bx35d8x4752xad8exde9f3cf64b31",
+                "xxxx59b79f40x2b52x4d5axb58bx2c8d239b9a1e",
+                "xxxx609fb6c8x44a7x4239xb341xb9880ac81843",
+                "xxxx630c96dfx08d3x4691xbee6x6a40dfda78dc",
+                "xxxx962ed056x74e2x4f30x98ffx26eea6a2adad",
+                "xxxxaab02551x8cf4x48ecxb45fxbc8207ba0eca",
+                "xxxxc5720538x33bbx460cx820cxd375445ef773",
+                "xxxxccb30c58x6dc6x4d15x9e92x1583d4c2562f"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              },
+              "next_to": [
+                "jug_0"
+              ]
+            },
+            {
+              "name": "spray_bottle_0",
+              "number": 1,
+              "object_classes": [
+                "spray_bottle"
+              ],
+              "object_instances": [
+                "Spray_Bottle_7"
+              ],
+              "excluded_object_instances": [
+                "Spray_Bottle_1",
+                "Spray_Bottle_2",
+                "Spray_Bottle_3",
+                "Spray_Bottle_5",
+                "Spray_Bottle_8"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              },
+              "next_to": [
+                "jug_0"
+              ]
+            }
+          ],
+          "obj_info": {
+            "jug": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
+            "lamp": "B07HK83QRB_:0000",
+            "vase": "B075HR4ZDB_:0000",
+            "spray_bottle": "Spray_Bottle_7_:0000"
+          }
+        },
+        "variant_spec": {
+          "variant_id": "T1-OUT-DIS",
+          "sha256": "d876ef182b1dfa0101465c5a54cedd8896b17a59dfd6e8e53bc1b8d01148e772",
+          "entity_handles": {
+            "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
+            "lamp_0": "B07HK83QRB_:0000",
+            "vase_0": "B075HR4ZDB_:0000",
+            "spray_bottle_0": "Spray_Bottle_7_:0000"
+          },
+          "initial_robot_memory": "- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0\n- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0",
+          "memory_runtime_applied": false,
+          "unscored_success_text": [
+            "- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
+          ],
+          "seed": 3000285082,
+          "initial_validation": [
+            "jug_0: exact asset, initial states, furniture, region checked",
+            "lamp_0: exact asset, initial states, furniture, region checked",
+            "vase_0: exact asset, initial states, furniture, region checked",
+            "spray_bottle_0: exact asset, initial states, furniture, region checked"
+          ],
+          "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"
+        }
+      },
+      "ao_states": {},
+      "rigid_objs": [
+        [
+          "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.object_config.json",
+          [
+            [
+              -0.48578,
+              -0.00015,
+              -0.87408,
+              -8.66339
+            ],
+            [
+              0.00019,
+              1.0,
+              -0.00027,
+              1.05118
+            ],
+            [
+              0.87408,
+              -0.00029,
+              -0.48578,
+              2.56437
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "B07HK83QRB.object_config.json",
+          [
+            [
+              -0.39527,
+              -2e-05,
+              0.91857,
+              -2.40865
+            ],
+            [
+              1e-05,
+              1.0,
+              2e-05,
+              0.88579
+            ],
+            [
+              -0.91857,
+              1e-05,
+              -0.39527,
+              -3.26996
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "B075HR4ZDB.object_config.json",
+          [
+            [
+              0.77324,
+              2e-05,
+              -0.63411,
+              -8.93547
+            ],
+            [
+              -0.00027,
+              1.0,
+              -0.0003,
+              1.00034
+            ],
+            [
+              0.63411,
+              0.0004,
+              0.77324,
+              2.47398
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Spray_Bottle_7.object_config.json",
+          [
+            [
+              0.93949,
+              0.33896,
+              -0.04966,
+              -8.4284
+            ],
+            [
+              -0.34124,
+              0.93873,
+              -0.04836,
+              1.01822
+            ],
+            [
+              0.03023,
+              0.06238,
+              0.99759,
+              2.7183
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      ],
+      "targets": {},
+      "markers": [],
+      "target_receptacles": [],
+      "goal_receptacles": [],
+      "name_to_receptacle": {
+        "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000",
+        "B07HK83QRB_:0000": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000",
+        "B075HR4ZDB_:0000": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000",
+        "Spray_Bottle_7_:0000": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000"
+      },
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "evaluation_propositions": [
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000"
+            ],
+            "receptacle_handles": [
+              "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_filled",
+          "args": {
+            "object_handles": [
+              "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_powered_off",
+          "args": {
+            "object_handles": [
+              "B07HK83QRB_:0000"
+            ],
+            "number": 1
+          }
+        }
+      ],
+      "evaluation_proposition_dependencies": [],
+      "evaluation_constraints": [
+        {
+          "type": "TemporalConstraint",
+          "args": {
+            "dag_edges": [],
+            "n_propositions": 3
+          }
+        },
+        {
+          "type": "TerminalSatisfactionConstraint",
+          "args": {
+            "proposition_indices": [
+              0,
+              1,
+              2
+            ],
+            "n_propositions": 3
+          }
+        }
+      ],
+      "object_states": {
+        "is_clean": {
+          "6ee3321de3d9a91d0c8964fe0069fe09e6a5169e_:0000": false,
+          "32620999debf3d3afebd7749200375c457fd79ac_:0000": false,
+          "36850ecd5f3ec1555bbc41bdd652e90affb43d63_:0000": false,
+          "c1965c146b48cddf434f6d5407dfc6ac43bde9b7_:0000": false,
+          "809aa90d72a9aa73fadef388620c7ca3668f9d00_:0000": false,
+          "4122c550741deeda8ed0b4da129bab0cd403cae7_:0000": false,
+          "bca05d502eecf7f29ecd33de75df3073086a2ca8_:0000": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0001": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0002": false,
+          "03ec07ddbb7262844606d7a97d7b6b35d7f6ec00_:0000": false,
+          "50bf1434785c2776eac002be0f7c3abeff54709c_:0000": false,
+          "04801d6f327197470d63bfd728d4cf02bd33ec56_:0000": false,
+          "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000": false,
+          "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000": false,
+          "d46d7261aa80655e3f2583b0b752e26d86d6271d_:0000": false,
+          "c444bd4ee4524c01839e9b0e1632eb4396b1910c_:0000": false,
+          "252ea1f9106ada162cf68bb61c71efd4a62d4c87_part_3_:0000": false,
+          "bb313b17f36fb1198043bc6a48170bda35ba113d_:0000": false,
+          "d575a3572a1e16cb6d618b314d5479638dbbb8aa_:0000": false,
+          "0022fa6ee5a44330e765488919803155b1a9e88c_:0000": false,
+          "735845d0674f69f736af7e0f116767a01392f9b8_:0000": false,
+          "3248e003a06811e76a9743e72979924b2b9c9373_:0000": false,
+          "fe6a04f91f6d8c9d44b6c1ec30350ae3b12c6ef0_:0000": false,
+          "d575a3572a1e16cb6d618b314d5479638dbbb8aa_:0001": false,
+          "499dd12f83d3fcb655a0bc2373e4da020a67008a_:0000": false,
+          "2ba78a798010191fd7b9d8e395c76a9e55d427ac_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001": false,
+          "4629b2bfe7de3edd1e1e295a0441c0e1aca5d3fd_:0000": false,
+          "db064ef059f7bb0af9f1036e7649e4835a9ff4f5_:0000": false,
+          "dd00b36439864cbfa47440f93d6fc81f91a164d3_:0000": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0000": false,
+          "e457542ad4c5be15cddcd11ffe0295a7e6ed89f7_:0000": false,
+          "5d77eeaa7a16e02ef64e3ce74893768cc8389aed_:0000": false,
+          "988c8f3bedac15261ab3007ec6ffacb65573aa5a_:0000": false,
+          "045fbffe4884b8583b3768185fe8cdc15662e835_:0000": false,
+          "0ce32f140400176aa09faa2e869adc288dc427ce_:0000": false,
+          "5e1ca8d31450af5d4fd58bd5b3537cf00636df7c_:0000": false,
+          "5ce08f13b19c6852152063917b9f2111d30de3e5_:0000": false,
+          "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000": false,
+          "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000": true,
+          "17d794589c8a8f9ea1eec282ef041dfb6f2ebd46_:0000": false,
+          "B07HK83QRB_:0000": true,
+          "B075HR4ZDB_:0000": true,
+          "1ac1fbdf9f8ac576d0e981e522f4c491c2f2d825_:0000": false,
+          "759009978263a3cba19e877146937598808ac8fc_:0000": false,
+          "Spray_Bottle_7_:0000": true,
+          "d57e3132eb49a7e0a3e6971f304a6d52951a4f74_:0000": false,
+          "204-2_:0000": false,
+          "81d0d47953778079c6cf43c917247b8be8d9a78a_:0000": false,
+          "3752-0_:0000": false,
+          "f70c9cd37e4949edaa532254729fb3153ff6a76f_:0000": false,
+          "fa786f463631d9e8ab7b794d8df610a233a445eb_:0000": false,
+          "d4ba31e433421a8ef008208e9b868da12e24a5a5_:0000": false,
+          "f5bf7b0f14752c987cd026abe7b1238fb25ff9b3_:0000": false,
+          "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000": false,
+          "426b82af6d87005e0f2fa17217cd45b4826189aa_:0000": false,
+          "ff698a0cb15de8749c925c8aae3e8cdb8e88aa8f_:0000": false,
+          "319c007ee7d07ca84c797a512ad4a98c9abc42da_:0000": false,
+          "af45703d9d6e1e327161f253cb6bde9dd479c232_:0000": false,
+          "4c911c25364d1cbb37493ecfaa6b889d931c78ac_:0000": false,
+          "1e414b53eef039690faed7557721dd9ce784ef8c_:0000": false,
+          "90fb388959832dd71fdcad95215f28b077fe4a3d_:0000": false,
+          "038ccdca4c91d34febe3f4efc596225a66a11d79_:0000": false,
+          "ae5bbeab569aed333ee50e683afdbd4d96ec93a6_:0000": false,
+          "4f59765435e64524ba5ac8e25427a895fa530311_:0000": false,
+          "37e59e768eb7f42a0019713374063cb63419a44c_:0000": false,
+          "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000": false,
+          "4c911c25364d1cbb37493ecfaa6b889d931c78ac_:0001": false,
+          "ec6d929832a895b456fd6cca745a18c192c41f4b_:0000": false,
+          "c23e159071acb3f9bd03ed01576d9077cc30f1cf_:0000": false,
+          "4c911c25364d1cbb37493ecfaa6b889d931c78ac_:0002": false
+        },
+        "is_powered_on": {
+          "32620999debf3d3afebd7749200375c457fd79ac_:0000": false,
+          "36850ecd5f3ec1555bbc41bdd652e90affb43d63_:0000": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0001": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0002": false,
+          "03ec07ddbb7262844606d7a97d7b6b35d7f6ec00_:0000": false,
+          "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000": false,
+          "2ba78a798010191fd7b9d8e395c76a9e55d427ac_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001": false,
+          "6319836748d647739bf8f23c3dc3bcf58bd62753_:0000": false,
+          "988c8f3bedac15261ab3007ec6ffacb65573aa5a_:0000": false,
+          "5e1ca8d31450af5d4fd58bd5b3537cf00636df7c_:0000": false,
+          "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000": false,
+          "B07HK83QRB_:0000": true,
+          "d57e3132eb49a7e0a3e6971f304a6d52951a4f74_:0000": false,
+          "ec6d929832a895b456fd6cca745a18c192c41f4b_:0000": false
+        },
+        "is_filled": {
+          "c1965c146b48cddf434f6d5407dfc6ac43bde9b7_:0000": false,
+          "20e9177223672e9bf6bd79a4db6022cb27c03e58_:0000": false,
+          "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000": false,
+          "0022fa6ee5a44330e765488919803155b1a9e88c_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000": false,
+          "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001": false,
+          "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000": false,
+          "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000": false,
+          "B07HK83QRB_:0000": false,
+          "B075HR4ZDB_:0000": false,
+          "Spray_Bottle_7_:0000": false,
+          "81d0d47953778079c6cf43c917247b8be8d9a78a_:0000": false,
+          "f70c9cd37e4949edaa532254729fb3153ff6a76f_:0000": false
+        }
+      }
+    }
+  ]
+}

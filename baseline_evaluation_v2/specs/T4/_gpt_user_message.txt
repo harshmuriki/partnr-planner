@@ -1,0 +1,102 @@
+TASK ROW (New Tasks tab)
+{
+  "id": "T4",
+  "scene_id": "107734176_176000019",
+  "task": "Put all the 3 fruits from the kitchen counter in the fruit basket and the 2 drink containers on the kitchen counter.",
+  "required_objects_to_spawn": "apple \u00d72; orange \u00d71; basket \u00d71; bottle \u00d72",
+  "uncertainty_targets": "2: one apple, one bottle",
+  "suitable_substitutes": "N/A",
+  "atomic_actions": "Navigate, Pick, Place, Open/Close",
+  "memory_accurate": "Apple on kitchen counter; bottle on kitchen table",
+  "memory_missing": "Selected apple and bottle absent from memory",
+  "memory_outdated": "Both remembered on dining table; actually in kitchen",
+  "avail_target_exists": "All 3 fruits and 2 drink containers exist",
+  "avail_substitute": "N/A",
+  "avail_none": "Selected apple absent; only 2 required fruits remain",
+  "containment_on_surface": "Selected apple on kitchen counter; bottle on kitchen table",
+  "containment_inside": "Apple inside kitchen cabinet; bottle inside fridge",
+  "distractors_none": "No toy fruits or unrelated bottles nearby",
+  "distractors_present": "toy_fruits near apple; spray_bottle near bottle",
+  "instruction_full": "Object counts, fruit basket, and kitchen counter specified",
+  "instruction_underspecified": "\u201cPut the fruits in the kitchen counter and move the drinks to counter.\u201d",
+  "loc_exact": "Apple: kitchen counter; bottle: kitchen table",
+  "loc_room": "Both: kitchen",
+  "loc_candidate_rooms": "Both: kitchen / dining room"
+}
+
+Emit ALL 20 variants in one JSON object. Filenames:
+T4-ACC-BASE, T4-ACC-SUB, T4-ACC-ABS, T4-ACC-CON, T4-ACC-DIS, T4-ACC-AMB, T4-ACC-ROOM, T4-ACC-CAND, T4-INC-BASE, T4-INC-SUB, T4-INC-ABS, T4-INC-CON, T4-INC-DIS, T4-INC-AMB, T4-OUT-BASE, T4-OUT-SUB, T4-OUT-ABS, T4-OUT-CON, T4-OUT-DIS, T4-OUT-AMB
+
+SCENE FURNITURE CATALOG (107734176_176000019)
+rooms: laundryroom/mudroom_0, living_room_0, lounge_0, porch/terrace/deck/driveway_0, bedroom_2, bathroom_1, bedroom_1, bedroom_0, kitchen_0, bathroom_0
+laundryroom/mudroom_0:
+  - washer_dryer_0: Samsung Freestanding Washing Machine White WF8704RSW (H)844 x (W)598 x (D)600mm
+living_room_0:
+  - table_0: Console Table
+  - table_1: Coffee table
+  - chair_0: Burbeck Chair with Seat Pad
+  - chair_1: Burbeck Chair with Seat Pad
+  - table_2: Antique Brass Collection Side Table
+  - table_3: Antique Brass Collection Side Table
+  - table_4: "Alameda" Dining Table
+  - table_5: Boracay End Table
+  - couch_0: Arcata Sofa 75'' Sofa
+  - stool_0: Mariposa Ottoman
+  - stool_1: Mariposa Ottoman
+  - table_7: Sabina Accent Table
+  - table_8: Helms Sofa Table
+  - couch_1: Mercer Down II 3 Piece Sectional With Double Chaise
+  - bench_3: Evan Bench
+  - stand_0: TV-
+lounge_0:
+  - chair_2: Outdoor Sienna Lounge Chair
+  - chair_3: Outdoor Sienna Lounge Chair
+  - stool_4: Nassau 37" Round Ottoman 
+  - chair_9: Bruin Dining Chair
+  - chair_10: Bruin Dining Chair
+  - chair_11: Bruin Dining Chair
+  - table_9: CHIPS DINING TABLE
+porch/terrace/deck/driveway_0:
+  - chair_3: Outdoor Sienna Lounge Chair
+bedroom_2:
+  - bed_0: Papilio bed
+  - chair_7: Aventura dining chair
+  - chair_8: Aventura dining chair
+  - stool_5: Wicker Natural Ottoman - Natural Ottoman
+  - chest_of_drawers_2: Splay Night Stand
+  - chest_of_drawers_3: Splay Night Stand
+bathroom_1:
+  - bench_0: Cutter Bench
+  - toilet_1: Blenheim CC Comfort Pan White
+bedroom_1:
+  - table_6: Ren Accent Table
+  - chair_4: Painted Anne Chair
+  - chair_5: Painted Anne Chair
+  - bed_1: Venice Bed
+  - bed_2: Venice Bed
+  - bench_2: Franklin bench
+  - chest_of_drawers_5: BROOKE MIRRORED NIGHTSTAND
+bedroom_0:
+  - chair_6: Diandra Armchair
+  - bed_3: Wyatt Full Bed
+  - chest_of_drawers_0: Marrakesh Night Stand
+  - chest_of_drawers_1: Marrakesh Night Stand
+  - chest_of_drawers_4: Columbia Dresser
+kitchen_0:
+  - stool_2: Harper Counter Stool
+  - stool_3: Harper Counter Stool
+  - cabinet_0: Kitchen cabinet with drawers
+  - cabinet_1: Kitchen cabinet with drawers
+  - fridge_0: KEW - Fridge
+  - counter_0: Kitchen island, 60x150x90
+bathroom_0:
+  - bench_1: Bench One
+  - toilet_0: Blenheim CC Comfort Pan White
+  - cabinet_2: Bathroom Vanity Unit
+
+ALLOWED OBJECT CLASSES
+action_figure, android_figure, apple, backpack, baseballbat, basket, basketball, bath_towel, battery_charger, board_game, book, bottle, bowl, box, bread, bundt_pan, butter_dish, c-clamp, cake_pan, can, can_opener, candle, candle_holder, candy_bar, canister, carrying_case, casserole, cellphone, clock, credit_card, cup, cushion, doll, dumbbell, egg, electric_kettle, electronic_cable, file_sorter, folder, fork, gaming_console, glass, hammer, hand_towel, handbag, hard_drive, hat, helmet, jug, kettle, keychain, knife, ladle, lamp, laptop, laptop_cover, laptop_stand, lunch_box, milk_frother_cup, monitor_stand, mouse_pad, multiport_hub, orange, pan, pen, pencil_case, phone_stand, picture_frame, pitcher, plant_container, plant_saucer, plate, potato, ramekin, scissors, screwdriver, shoe, soap_dish, soap_dispenser, spatula, spectacles, spicemill, sponge, spoon, spray_bottle, squeezer, statue, stuffed toy, stuffed_toy, sushi_mat, tape, teapot, tennis_racquet, tomato, toy_airplane, toy_animal, toy_bee, toy_cactus, toy_construction_set, toy_fire_truck, toy_food, toy_fruits, toy_pineapple, toy_swing, toy_vehicle, tray, vase, watch
+
+Return ONLY this JSON (no markdown fences, no extra text):
+{"files":[{"filename":"T4-ACC-BASE.md","content":"<full markdown spec>"}]}
+Exactly 20 objects in files, one per variant above. Each content is a complete spec. Uncertainty being tested lists ONLY the matrix-cell axes.

@@ -1,0 +1,128 @@
+TASK ROW (New Tasks tab)
+{
+  "id": "T7",
+  "scene_id": "102816756",
+  "task": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from sink, and turn off the living-room and kitchen lights.",
+  "required_objects_to_spawn": "toy_fire_truck, toy_airplane, doll, stuffed_toy, toy_animal \u00d71 each; plate \u00d72; bowl \u00d71; lamp as needed",
+  "uncertainty_targets": "3: toy_fire_truck, stuffed_toy, one dirty plate",
+  "suitable_substitutes": "N/A",
+  "atomic_actions": "Navigate, Pick, Place, Open, Close, Clean, Power Off",
+  "memory_accurate": "Truck on living-room floor; stuffed toy on sofa; plate on kitchen sink",
+  "memory_missing": "Selected toys and plate absent from memory",
+  "memory_outdated": "Toys remembered in bedroom; plate on dining table; actually in living room/kitchen",
+  "avail_target_exists": "All task-relevant toys and dirty dishes exist",
+  "avail_substitute": "N/A",
+  "avail_none": "N/A",
+  "containment_on_surface": "Truck on living-room floor; stuffed toy on sofa; dirty plate on kitchen counter",
+  "containment_inside": "Toys inside living-room cabinet; plate inside kitchen cabinet",
+  "distractors_none": "No decorative figures, cushions, or clean dishes near targets",
+  "distractors_present": "statue near truck; cushion near stuffed toy; clean plate near dirty plate",
+  "instruction_full": "Toy scope, wardrobe, dish cleaning/storage, and lights specified",
+  "instruction_underspecified": "\u201cTidy the living room and clean up the dishes.\u201d",
+  "loc_exact": "Truck: living-room floor; stuffed toy: sofa; plate: kitchen counter",
+  "loc_room": "Toys: living room; plate: kitchen",
+  "loc_candidate_rooms": "Toys: living room / bedroom; plate: kitchen / dining room"
+}
+
+Emit ALL 20 variants in one JSON object. Filenames:
+T7-ACC-BASE, T7-ACC-SUB, T7-ACC-ABS, T7-ACC-CON, T7-ACC-DIS, T7-ACC-AMB, T7-ACC-ROOM, T7-ACC-CAND, T7-INC-BASE, T7-INC-SUB, T7-INC-ABS, T7-INC-CON, T7-INC-DIS, T7-INC-AMB, T7-OUT-BASE, T7-OUT-SUB, T7-OUT-ABS, T7-OUT-CON, T7-OUT-DIS, T7-OUT-AMB
+
+SCENE FURNITURE CATALOG (102816756)
+rooms: living_room_0, bedroom_1, kitchen_0, bedroom_3, bedroom_2, bedroom_0, toilet_0, bathroom_0, entryway/foyer/lobby_0, closet_0
+living_room_0:
+  - chair_0: Panton Chair
+  - chair_1: Panton Chair
+  - chair_2: Panton Chair
+  - chair_3: Panton Chair
+  - chair_4: Panton Chair
+  - chair_5: Panton Chair
+  - chair_6: Panton Chair
+  - chair_7: Panton Chair
+  - chair_8: Panton Chair
+  - chair_9: Panton Chair
+  - couch_0: Delano 3 Piece Sectional With Left Arm Facing Chaise, Pearl
+  - couch_1: Filmore 56'' Upholstered Chair
+  - couch_2: Filmore 56'' Upholstered Chair
+  - chair_11: PILLOW
+  - stool_0: Filmore Storage Ottoman
+  - stool_1: Filmore Storage Ottoman
+  - table_0: Palerma Extendable Dining Table, White
+  - table_1: Zee Lacquered Accent Table
+  - table_2: Plinth Tall Side Table, Carrara
+  - table_3: 
+Plinth Coffee Table, Carrara
+  - stand_0: Revolve Surge TV Stand, White High Gloss
+  - counter_3: Tecnos Sideboard, Breite 240 cm, white
+bedroom_1:
+  - bed_0: Revolve Lenox King Bed, White Leather
+  - chair_19: Ivery Wing Chair
+  - chair_20: Ivery Wing Chair
+  - table_5: Revolve Grange End Table
+  - chest_of_drawers_0: Revolve Madison Double Dresser, White
+  - chest_of_drawers_1: Revolve Madison Night Stand, White
+  - chest_of_drawers_2: Revolve Madison Night Stand, White
+  - chest_of_drawers_3: Revolve Madison Chest, Large, White
+  - chest_of_drawers_4: Revolve Madison Chest, Large, White
+kitchen_0:
+  - shelves_0: Esco shelving unit, white
+  - shelves_1: Esco shelving unit, white
+  - chair_12: Felix Stool, White
+  - chair_13: Felix Stool, White
+  - chair_14: Felix Stool, White
+  - chair_15: Felix Stool, White
+  - cabinet_0: Kitchen tall cabinet with oven
+  - cabinet_1: Kitchen tall cabinet with oven
+  - cabinet_2: Kitchen cabinet with door, narrow
+  - cabinet_3: Kitchen cabinet with drawers
+  - cabinet_4: Kitchen cabinet with drawers
+  - counter_0: Kitchen island, 90x150x90
+  - counter_1: Kitchen island, 60x100x90
+  - counter_2: Kitchen island, 60x150x90
+  - cabinet_5: Kitchen cabinet with sink, double
+  - cabinet_6: Kitchen tall cabinet
+  - cabinet_7: Kitchen corner cabinet
+  - cabinet_8: Kitchen cabinet with 2 doors
+  - fridge_0: American fridge freezer, white
+bedroom_3:
+  - chair_10: Costura Chaise, Flax Linen
+  - bed_2: Thorne Queen Bed, Sand Leatherette with Gold Leg
+  - table_4: Laptop Table
+  - wardrobe_0: Designer Double Wardrobe White &amp; White Gloss
+  - wardrobe_1: Designer Double Wardrobe White &amp; White Gloss
+  - chest_of_drawers_11: Dino Nightstand, White
+  - chest_of_drawers_12: Dino Nightstand, White
+  - table_8: Dino Dresser, White
+  - table_10: Dino Dresser, White
+bedroom_2:
+  - bed_1: Larkin Queen Panel Bed With Storage, White
+  - chair_16: Como Chaise in Leather, Right, Black
+  - chest_of_drawers_7: Larkin Dresser, White
+  - table_7: Sherlock Desk
+  - chest_of_drawers_9: Larkin Nightstand, White
+  - chest_of_drawers_10: Larkin Nightstand, White
+  - chest_of_drawers_14: Larkin Chest, White
+  - wardrobe_3: Betrib Wardrobe
+bedroom_0:
+  - chair_17: Cara Leather Swivel Accent Chair, White
+  - chair_18: Cara Leather Swivel Accent Chair, White
+  - bed_3: Orwell California King Panel Bed
+  - table_6: Zigi
+  - chest_of_drawers_5: Orwell Nightstand With Usb
+  - chest_of_drawers_6: Orwell Nightstand With Usb
+  - chest_of_drawers_8: Orwell Dresser
+  - chest_of_drawers_13: Orwell Chest Of Drawers
+toilet_0:
+  - toilet_0: WC/toilette Duravit Vero Air
+bathroom_0:
+  - toilet_1: WC/toilette Duravit Vero Air
+entryway/foyer/lobby_0:
+  - table_9: Dino Dresser, White
+closet_0:
+  - wardrobe_2: Betrib Wardrobe
+
+ALLOWED OBJECT CLASSES
+action_figure, android_figure, apple, backpack, baseballbat, basket, basketball, bath_towel, battery_charger, board_game, book, bottle, bowl, box, bread, bundt_pan, butter_dish, c-clamp, cake_pan, can, can_opener, candle, candle_holder, candy_bar, canister, carrying_case, casserole, cellphone, clock, credit_card, cup, cushion, doll, dumbbell, egg, electric_kettle, electronic_cable, file_sorter, folder, fork, gaming_console, glass, hammer, hand_towel, handbag, hard_drive, hat, helmet, jug, kettle, keychain, knife, ladle, lamp, laptop, laptop_cover, laptop_stand, lunch_box, milk_frother_cup, monitor_stand, mouse_pad, multiport_hub, orange, pan, pen, pencil_case, phone_stand, picture_frame, pitcher, plant_container, plant_saucer, plate, potato, ramekin, scissors, screwdriver, shoe, soap_dish, soap_dispenser, spatula, spectacles, spicemill, sponge, spoon, spray_bottle, squeezer, statue, stuffed toy, stuffed_toy, sushi_mat, tape, teapot, tennis_racquet, tomato, toy_airplane, toy_animal, toy_bee, toy_cactus, toy_construction_set, toy_fire_truck, toy_food, toy_fruits, toy_pineapple, toy_swing, toy_vehicle, tray, vase, watch
+
+Return ONLY this JSON (no markdown fences, no extra text):
+{"files":[{"filename":"T7-ACC-BASE.md","content":"<full markdown spec>"}]}
+Exactly 20 objects in files, one per variant above. Each content is a complete spec. Uncertainty being tested lists ONLY the matrix-cell axes.

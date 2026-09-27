@@ -1,0 +1,72 @@
+# T1-INC-DIS
+
+## Base task
+Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.
+
+## Scene
+- scene_id: 103997895_171031182
+- rooms used: kitchen_0, bedroom_0, living_room_0
+- furniture used (id — room — catalog description):
+  - table_2 — kitchen_0 — Bar
+  - counter_0 — kitchen_0 — Kitchen island, 60x100x90
+  - chest_of_drawers_0 — bedroom_0 — Presby Nightstand, White
+  - table_0 — living_room_0 — Tulip Table (90cm)
+
+## Task instruction / prompt given
+"Turn off all the lights in the bedroom and bring a full jug of water to the living-room table."
+
+## Affected object(s)
+- jug_0 (jug, asset 264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4): uncertainty target.
+- lamp_0 (lamp, asset B07HK83QRB): remaining task object.
+- vase_0 (vase, asset B075HR4ZDB): distractor, placed next to jug_0.
+- spray_bottle_0 (spray_bottle, asset Spray_Bottle_7): distractor, placed next to jug_0.
+
+## Entity registry
+- jug_0: jug, uncertainty target
+- lamp_0: lamp, remaining task object
+- vase_0: vase, distractor
+- spray_bottle_0: spray_bottle, distractor
+
+## Uncertainty being tested
+- Internal robot memory: Incomplete
+- Distractors: Present
+- Memory in this version: robot memory has no record of jug_0.
+
+## Information supplied in instruction
+- Specified: the bedroom lights, a full jug of water, and the living-room table as the destination.
+- Not specified: where each object currently is; the robot relies on its memory or exploration.
+
+## Initial world state
+- jug_0: on counter_0 (kitchen_0), is_clean, is_empty
+- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on
+- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0
+- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0
+
+## Final expected world state
+- jug_0: on table_0 (living_room_0), is_clean, is_filled
+- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_off
+- vase_0: on counter_0 (kitchen_0), is_clean, is_empty
+- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty
+
+## Initial robot memory
+- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on
+- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0
+- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0
+
+## Success criteria
+- is_on_top(jug_0, table_0)
+- is_filled(jug_0)
+- is_powered_off(lamp_0)
+- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals.
+
+## Spawn / planner notes
+- Scene 103997895_171031182; the robot starts in living_room_0.
+- Spawn jug x1 as jug_0 on counter_0 (kitchen_0), pinned asset 264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4; start states: is_clean, is_empty.
+- Spawn lamp x1 as lamp_0 on chest_of_drawers_0 (bedroom_0), pinned asset B07HK83QRB; start states: is_clean, is_empty, is_powered_on.
+- Spawn vase x1 as vase_0 on counter_0 (kitchen_0), next to jug_0, pinned asset B075HR4ZDB; start states: is_clean, is_empty.
+- Spawn spray_bottle x1 as spray_bottle_0 on counter_0 (kitchen_0), next to jug_0, pinned asset Spray_Bottle_7; start states: is_clean, is_empty.
+- The scene has no dining room: the kitchen bar table (table_2) stands in for the dining table where Outdated memory places the jug.
+- The bedroom whose lights are turned off is bedroom_0 (the bedroom with a nightstand for the lamp); its lights are the spawned lamp_0.
+- The living-room table is the Tulip table table_0.
+- Filling needs the robot within 1.5 m of a faucet-marked object. This scene's faucet objects are a double washbasin and a bathtub; no kitchen furniture carries faucet markers. Reachability is not verified.
+- The Accurate, Incomplete and Outdated versions of this variant spawn exactly the same objects, assets, placements and states; only the robot's initial memory differs.

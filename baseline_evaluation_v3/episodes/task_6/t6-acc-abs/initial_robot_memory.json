@@ -1,0 +1,17 @@
+{
+  "variant": "T6-ACC-ABS",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "lamp_living_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "variant": "T5-ACC-CON",
+  "objects": [
+    {
+      "entity": "soap_dispenser_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "glass_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "glass_1",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "plate_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

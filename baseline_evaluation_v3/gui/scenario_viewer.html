@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baseline Evaluation v3 — Scenario Viewer</title>
+<!--
+  All variant/object data comes from ../variant_object_assets.csv (read live).
+  Only the preview gifs are loaded from data/hssd-hab/metadata/object_gifs/.
+  Serve the repo root:  python3 scripts/serve_scenario_viewer.py --port 8000
+  Open:  http://localhost:8000/baseline_evaluation_v3/gui/scenario_viewer.html
+-->
+<style>
+  :root {
+    --bg: #f6f6f4; --panel: #ffffff; --border: #e2e2df; --border-soft: #ececea;
+    --text: #1a1a1a; --muted: #6b6b68; --accent: #2563eb; --accent-soft: #eaf0fe;
+    --target: #c2410c; --target-bg: #fdeee6;
+    --sub: #7c3aed; --sub-bg: #f1eafe;
+    --dist: #475569; --dist-bg: #eef1f5;
+    --acc-c: #15803d; --inc-c: #b45309; --out-c: #b91c1c;
+    --acc-bg: #e8f7ee; --inc-bg: #fef3e2; --out-bg: #fdeaea;
+    --drawer-w: 340px;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg); color: var(--text);
+  }
+  code { font-family: ui-monospace, monospace; font-size: 12px; }
+
+  /* ---------- task tabs ---------- */
+  #tabbar {
+    position: sticky; top: 0; background: var(--panel); border-bottom: 1px solid var(--border);
+    padding: 14px 24px; z-index: 20;
+  }
+  .tabbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  #taskTabs { display: flex; gap: 14px; flex-wrap: wrap; }
+  .task-btn {
+    padding: 9px 20px; border: 1.5px solid var(--border); border-radius: 999px; background: #fff;
+    cursor: pointer; font-size: 14px; font-weight: 700; color: var(--muted);
+    transition: all .12s ease;
+  }
+  .task-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .task-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  main { max-width: 1180px; margin: 0 auto; padding: 26px 20px 70px; }
+  .status { background: #fff7e6; color: #92400e; border: 1px solid #f5d9a8; border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; font-size: 13px; }
+
+  /* ---------- human review checklist (side drawer) ---------- */
+  /* The drawer is fixed to the right edge; opening it pads the body so the
+     page content slides left instead of sitting underneath the panel. */
+  body { transition: padding-right .18s ease; }
+  body.review-open { padding-right: var(--drawer-w); }
+
+  #reviewToggle {
+    display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+    padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 10px; background: #fff;
+    cursor: pointer; color: var(--muted); line-height: 1; transition: all .12s ease;
+  }
+  #reviewToggle:hover { border-color: var(--accent); color: var(--accent); }
+  #reviewToggle[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  #reviewToggle svg { display: block; width: 17px; height: 17px; }
+  #reviewBadge { font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  #reviewPanel {
+    position: fixed; top: 0; right: 0; bottom: 0; width: var(--drawer-w); z-index: 40;
+    display: flex; flex-direction: column;
+    background: var(--panel); border-left: 1px solid var(--border);
+    transform: translateX(100%); visibility: hidden;
+    transition: transform .18s ease, visibility .18s ease;
+  }
+  body.review-open #reviewPanel { transform: none; visibility: visible; }
+  #reviewHead {
+    display: flex; align-items: center; gap: 8px;
+    padding: 15px 14px 13px 18px; border-bottom: 1px solid var(--border);
+  }
+  #reviewHead h2 { margin: 0; font-size: 14px; font-weight: 700; }
+  #reviewProgress { color: var(--muted); font-size: 12px; font-weight: 400; white-space: nowrap; }
+  #reviewClose {
+    margin-left: auto; flex-shrink: 0; width: 26px; height: 26px; padding: 0;
+    border: 1px solid var(--border); border-radius: 7px; background: #fff;
+    cursor: pointer; color: var(--muted); font-size: 14px; line-height: 1;
+  }
+  #reviewClose:hover { border-color: var(--accent); color: var(--accent); }
+  #reviewError { margin: 14px 18px 0; }
+  #reviewList { flex: 1; overflow-y: auto; padding: 4px 18px 18px; }
+  .review-task { border-top: 1px solid var(--border-soft); padding: 10px 0; }
+  .review-task > summary { cursor: pointer; font-weight: 700; font-size: 14px; }
+  .review-task-count { color: var(--muted); font-size: 12px; font-weight: 400; margin-left: 8px; }
+  .review-items { display: grid; gap: 6px; padding: 10px 0 0; }
+  .review-row { display: flex; align-items: center; gap: 8px; padding: 7px 9px; border: 1px solid var(--border-soft); border-radius: 7px; }
+  .review-row.verified { background: var(--acc-bg); }
+  .review-row.current { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  .review-row input { width: 18px; height: 18px; accent-color: var(--acc-c); cursor: pointer; flex-shrink: 0; }
+  .review-row a { color: var(--accent); font: 12px ui-monospace, monospace; padding: 4px 0; }
+  .review-mark { color: var(--acc-c); font-size: 11px; margin-left: auto; }
+  #detail { scroll-margin-top: 110px; }
+  /* Too narrow to give up a column: the drawer floats over the content instead. */
+  @media (max-width: 900px) {
+    :root { --drawer-w: min(320px, 88vw); }
+    body.review-open { padding-right: 0; }
+  }
+
+  /* ---------- matrix ---------- */
+  #matrixWrap {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px; margin-bottom: 24px; overflow-x: auto;
+  }
+  table.matrix { border-collapse: separate; border-spacing: 4px; width: 100%; min-width: 760px; table-layout: fixed; }
+  table.matrix th, table.matrix td { text-align: center; }
+  .grp-header {
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .02em;
+    color: #3730a3; background: var(--accent-soft); padding: 5px 2px; border-radius: 7px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .col-header {
+    font-size: 9.5px; font-weight: 600; color: var(--muted); padding: 4px 2px 8px;
+    line-height: 1.2; word-break: break-word;
+  }
+  .mem-header {
+    font-size: 11px; font-weight: 800; text-transform: uppercase; padding: 6px 6px;
+    border-radius: 7px; white-space: nowrap;
+  }
+  .mem-header.ACC { background: var(--acc-bg); color: var(--acc-c); }
+  .mem-header.INC { background: var(--inc-bg); color: var(--inc-c); }
+  .mem-header.OUT { background: var(--out-bg); color: var(--out-c); }
+  td.cell { padding: 0; }
+  button.cell-btn {
+    width: 100%; padding: 6px 2px 5px; border-radius: 8px; border: 1.5px solid var(--border);
+    background: #fbfbfa; cursor: pointer; font-size: 10.5px; font-weight: 700; color: #333;
+    transition: all .12s ease; line-height: 1.25;
+  }
+  button.cell-btn .n { display: block; font-size: 9.5px; font-weight: 600; color: var(--muted); }
+  button.cell-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+  button.cell-btn.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.cell-btn.selected .n { color: #dbe6fd; }
+  button.cell-btn.is-base { color: var(--muted); font-weight: 600; }
+  button.cell-btn.selected.is-base { color: #fff; }
+  td.cell.na { padding: 8px 2px; font-size: 10.5px; color: #bbb; font-weight: 600; }
+
+  /* ---------- selected variant ---------- */
+  #detail { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+  #detailTop { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  #detailTop h1 { margin: 0; font-size: 22px; }
+  .pill {
+    display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 11px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .03em; white-space: nowrap;
+  }
+  .pill-mem-ACC { background: var(--acc-bg); color: var(--acc-c); }
+  .pill-mem-INC { background: var(--inc-bg); color: var(--inc-c); }
+  .pill-mem-OUT { background: var(--out-bg); color: var(--out-c); }
+  .pill-axis { background: var(--accent-soft); color: #3730a3; }
+  .label-target { background: var(--target-bg); color: var(--target); }
+  .label-substitute { background: var(--sub-bg); color: var(--sub); }
+  .label-distractor { background: var(--dist-bg); color: var(--dist); }
+  .label-unknown { background: #f1f1ef; color: var(--muted); }
+
+  #labelCounts { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 18px; font-size: 13px; color: var(--muted); }
+  #objGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .card {
+    background: #fff; border: 1px solid var(--border-soft); border-radius: 10px; overflow: hidden;
+    display: flex; flex-direction: column; border-top-width: 4px;
+  }
+  .card.label-target { border-top-color: var(--target); }
+  .card.label-substitute { border-top-color: var(--sub); }
+  .card.label-distractor { border-top-color: var(--dist); }
+  .card.label-unknown { border-top-color: var(--border); }
+  .card, .card.label-target, .card.label-substitute, .card.label-distractor, .card.label-unknown { background: #fff; color: var(--text); }
+  .thumb { aspect-ratio: 1 / 1; max-width: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px; }
+  .thumb img { width: 100%; height: 100%; object-fit: contain; }
+  .card .body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+  .obj-name { font-weight: 700; font-size: 14px; font-family: ui-monospace, monospace; word-break: break-all; }
+  .obj-class { font-size: 12px; color: var(--muted); }
+  .real-id { font-family: ui-monospace, monospace; font-size: 10px; color: #999; word-break: break-all; margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--border-soft); align-self: stretch; }
+  .states { align-self: stretch; display: flex; flex-direction: column; gap: 3px; margin-top: 6px; }
+  .state { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 3px 7px; border-radius: 6px; background: #f6f6f4; font-size: 12px; color: #444; }
+  .state-name { color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .state.changes { background: #fff3d1; color: #7a4b00; }
+  .state.changes b { color: #1a1a1a; }
+  .states-none { font-size: 11px; color: #aaa; margin-top: 6px; }
+  .empty { color: var(--muted); font-size: 14px; }
+
+  /* ---------- collapsible spec ---------- */
+  #specPanel { margin-top: 22px; border: 1px solid var(--border); border-radius: 10px; background: #fcfcfb; }
+  #specPanel > summary {
+    cursor: pointer; padding: 12px 16px; font-weight: 700; font-size: 14px; list-style: none;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  #specPanel > summary::-webkit-details-marker { display: none; }
+  #specPanel > summary::before { content: "▸"; color: var(--muted); transition: transform .12s ease; }
+  #specPanel[open] > summary::before { transform: rotate(90deg); }
+  #specPanel[open] > summary { border-bottom: 1px solid var(--border-soft); }
+  .spec-path { font-weight: 400; font-size: 12px; color: var(--muted); font-family: ui-monospace, monospace; }
+  #specBody { padding: 6px 18px 18px; font-size: 13.5px; line-height: 1.55; color: #222; overflow-wrap: anywhere; }
+  #specBody h1 { font-size: 16px; margin: 10px 0 2px; }
+  #specBody h2 { font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 18px 0 6px; }
+  #specBody ul { margin: 0; padding-left: 20px; }
+  #specBody li { margin: 2px 0; }
+  #specBody p { margin: 4px 0; }
+  #specBody code { font-family: ui-monospace, monospace; font-size: 12.5px; }
+  .spec-missing { color: var(--muted); font-size: 13px; }
+  [hidden] { display: none !important; }
+  .spec-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 18px 0; font-size: 13px; color: var(--muted); }
+  .spec-toolbar .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; background: #fff; }
+  .spec-toolbar .seg button { border: 0; background: transparent; padding: 5px 14px; cursor: pointer; font-size: 12.5px; color: var(--text); }
+  .spec-toolbar .seg button + button { border-left: 1px solid var(--border); }
+  .spec-toolbar .seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  .spec-toolbar label { display: inline-flex; align-items: center; gap: 6px; }
+  .spec-toolbar select { font: inherit; color: var(--text); padding: 4px 6px; border: 1px solid var(--border); border-radius: 6px; background: #fff; max-width: 100%; }
+  .diff-summary { font-size: 13px; color: #333; margin: 12px 0 8px; line-height: 1.5; }
+  .diff-summary .del { color: #b42318; font-weight: 700; }
+  .diff-summary .add { color: #067647; font-weight: 700; }
+  .diff { font: 12.5px/1.55 ui-monospace, monospace; border: 1px solid var(--border-soft); border-radius: 8px; overflow: hidden; background: #fff; }
+  .diff-line { display: grid; grid-template-columns: 24px minmax(0, 1fr); white-space: pre-wrap; overflow-wrap: anywhere; padding-right: 10px; }
+  .diff-line .sign { text-align: center; color: #aaa; user-select: none; }
+  .diff-line.del { background: #fef3f2; }
+  .diff-line.del .sign { color: #b42318; }
+  .diff-line.add { background: #ecfdf3; }
+  .diff-line.add .sign { color: #067647; }
+  .diff-line.head { background: #f5f5f3; font-weight: 700; color: #444; }
+  .diff-line.gap { background: #fafaf9; color: #999; font-style: italic; }
+  .diff-line del { background: #fecdca; text-decoration: none; border-radius: 3px; }
+  .diff-line ins { background: #abefc6; text-decoration: none; border-radius: 3px; }
+  .diff-same { color: var(--muted); font-size: 13px; margin: 12px 0; }
+
+  /* ---------- scenario summary ---------- */
+  #scenarioSummary { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; margin: 0 0 20px; }
+  #scenarioSummary:empty { display: none; }
+  .summary-box { border: 1px solid var(--border-soft); border-radius: 10px; padding: 12px 14px; background: #fcfcfb; font-size: 13px; line-height: 1.5; }
+  .summary-box h3 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .summary-box ul { margin: 0; padding-left: 18px; }
+  .summary-box li { margin: 2px 0; overflow-wrap: anywhere; }
+  .summary-instruction { grid-column: 1 / -1; font-size: 15px; background: var(--accent-soft); border-color: #cfdcfb; }
+  .summary-instruction q { quotes: "\201C" "\201D"; }
+  .summary-order { color: #7a4b00; }
+  .loc { align-self: stretch; font-size: 11.5px; color: #444; line-height: 1.45; margin-top: 6px; }
+  .loc b { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .04em; margin-right: 4px; }
+  @media (max-width: 760px) { #scenarioSummary { grid-template-columns: 1fr; } }
+
+</style>
+</head>
+<body>
+<div id="tabbar">
+  <div class="tabbar-inner">
+    <div id="taskTabs"></div>
+    <button id="reviewToggle" type="button" aria-expanded="false" aria-controls="reviewPanel"
+            title="Verified" aria-label="Verified">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 3h6a1 1 0 0 1 1 1v1H8V4a1 1 0 0 1 1-1z"></path>
+        <path d="M16 5h2a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h2"></path>
+        <path d="M9 13l2 2 4-4"></path>
+      </svg>
+      <span id="reviewBadge" aria-hidden="true"></span>
+    </button>
+  </div>
+</div>
+<main>
+  <div id="status" class="status" role="status" hidden></div>
+  <div id="matrixWrap">
+    <table class="matrix" id="matrixTable"></table>
+  </div>
+  <div id="detail">
+    <div id="detailTop"></div>
+    <div id="labelCounts"></div>
+    <div id="scenarioSummary"></div>
+    <div id="objGrid"></div>
+    <section id="episodePanel" aria-label="Generated episode placement review">
+      <h2>Generated episode</h2>
+      <div id="episodeBody" role="status">Select a variant to inspect its episode.</div>
+    </section>
+    <details id="specPanel">
+      <summary>Spec <span class="spec-path" id="specPath"></span></summary>
+      <div class="spec-toolbar">
+        <div class="seg" role="group" aria-label="Spec view">
+          <button type="button" data-spec-mode="spec" aria-pressed="true">Spec</button>
+          <button type="button" data-spec-mode="diff" aria-pressed="false">Diff</button>
+        </div>
+        <label class="diff-controls" hidden>Compare with <select id="diffTarget"></select></label>
+        <label class="diff-controls" hidden><input type="checkbox" id="diffOnlyChanges" checked> Only changed sections</label>
+      </div>
+      <div id="specBody"></div>
+    </details>
+    <section id="groundTruthPanel" aria-label="Ground truth">
+      <h2>Ground truth</h2>
+      <div id="groundTruthBody">Select a variant to record ground truth.</div>
+    </section>
+  </div>
+</main>
+
+<aside id="reviewPanel" aria-label="Verified">
+  <div id="reviewHead">
+    <h2>Verified</h2>
+    <span id="reviewProgress" aria-live="polite"></span>
+    <button id="reviewClose" type="button" aria-label="Close checklist">&#10005;</button>
+  </div>
+  <div id="reviewError" class="status" role="alert" hidden></div>
+  <div id="reviewList"></div>
+</aside>
+
+<link rel="stylesheet" href="episode_viewer.css?v=20260915-summary">
+<script src="episode_viewer.js?v=20260915-summary"></script>
+<link rel="stylesheet" href="ground_truth.css?v=8-furniture">
+<script src="ground_truth.js?v=13-furniture"></script>
+<script>
+const CSV_URL = "../variant_object_assets.csv";
+const GIF_ROOT = "../../data/hssd-hab/metadata/object_gifs/";
+// Bump when shared previews are regenerated so browsers fetch the corrected assets.
+const GIF_VERSION = "20260914-clue-upright";
+// Preview gifs live at <category>/<Real_Object_ID>.gif. The class in the CSV's Object column
+// ("phone_0 (phone)") matches that category folder for every asset except these.
+const GIF_FOLDER_ALIAS = { phone: "cellphone" };
+
+const LABEL_ORDER = ["target", "substitute", "distractor"];
+// Start_/End_ column pairs in the CSV; "n/a" means the asset doesn't support that state.
+const STATE_FAMILIES = [
+  { col: "Clean_Dirty", name: "Clean" },
+  { col: "Filled_Empty", name: "Fill (water)", hint: "is_filled = filled with water, not items inside" },
+  { col: "Powered_On_Off", name: "Power" },
+];
+const STATE_WORD = { is_clean: "clean", is_dirty: "dirty", is_filled: "filled", is_empty: "empty", is_powered_on: "on", is_powered_off: "off" };
+const stateWord = s => STATE_WORD[s] || s;
+const MEM_LABEL = { ACC: "Accurate", INC: "Incomplete", OUT: "Outdated" };
+const MEMS = ["ACC", "INC", "OUT"];
+const AXIS_ORDER = ["BASE", "SUB", "ABS", "CON", "DIS"];
+
+// Seven-column layout: several columns are
+// intentionally "same as baseline" for a given dimension.
+const COLUMN_GROUPS = [
+  { name: "Object Availability", cols: [
+      { label: "Target Exists", axis: "BASE" },
+      { label: "Substitute Available", axis: "SUB" },
+      { label: "No Suitable Object", axis: "ABS" },
+  ]},
+  { name: "Object Containment", cols: [
+      { label: "On Surface", axis: "BASE" },
+      { label: "Inside Closed Receptacle", axis: "CON" },
+  ]},
+  { name: "Distractor Presence", cols: [
+      { label: "None", axis: "BASE" },
+      { label: "Present", axis: "DIS" },
+  ]},
+];
+const FLAT_COLS = COLUMN_GROUPS.flatMap(g => g.cols);
+
+let variants = new Map();   // Variant_ID -> { id, task, mem, axis, objects: [{ entity, cls, label, asset }] }
+let tasks = [];
+let currentTask = null;
+let currentVariantId = null;
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+// Human sign-offs are shared through the repository server. Local storage is
+// used only for drawer preferences and importing checks from the old viewer.
+const REVIEW_PREFIX = "partnr.baseline_evaluation_v3.human_review.v1.";
+const REVIEW_OPEN_KEY = REVIEW_PREFIX + "panel_open";
+const REVIEW_API = "../api/human-reviews";
+let humanReviews = new Map();
+let reviewBusy = false;
+let reviewReady = false;
+
+function reviewError(message = "") {
+  const notice = document.getElementById("reviewError");
+  notice.textContent = message;
+  notice.hidden = !message;
+}
+
+async function reviewRequest(payload) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+  try {
+    const response = await fetch(REVIEW_API, {
+      method: payload ? "POST" : "GET", cache: "no-store", signal: controller.signal,
+      ...(payload ? { headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) } : {}),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (data.version !== 1 || !data.reviews || typeof data.reviews !== "object") throw new Error("Invalid review data");
+    return data;
+  } finally { clearTimeout(timeout); }
+}
+
+function applyHumanReviews(data) {
+  humanReviews = new Map(Object.entries(data.reviews)
+    .filter(([id, record]) => variants.has(id) && record.verified === true)
+    .map(([id, record]) => [id, record.updated_at]));
+  reviewReady = true;
+}
+
+async function loadHumanReviews() {
+  if (reviewBusy || !variants.size) return;
+  reviewBusy = true;
+  try {
+    let data = await reviewRequest();
+    const legacy = {};
+    try {
+      for (const id of variants.keys()) {
+        const value = localStorage.getItem(REVIEW_PREFIX + id);
+        if (value && Number.isFinite(Date.parse(value))) legacy[id] = new Date(value).toISOString();
+      }
+    } catch (_) {} // Shared reviews also work with browser storage disabled.
+    if (Object.keys(legacy).length) {
+      data = await reviewRequest({ import: legacy });
+      // Remove old checks only after the server confirms that they were handled.
+      try { Object.keys(legacy).forEach(id => localStorage.removeItem(REVIEW_PREFIX + id)); } catch (_) {}
+    }
+    applyHumanReviews(data);
+    reviewError();
+  } catch (_) {
+    reviewReady = false;
+    reviewError("Shared verification is unavailable. Start the viewer with: python3 scripts/serve_scenario_viewer.py --port 8000. Existing saved checks are preserved; reconnect to load and edit them.");
+  } finally {
+    reviewBusy = false;
+    updateHumanReviews();
+  }
+}
+
+async function setHumanReview(id, checked) {
+  if (!variants.has(id) || reviewBusy || !reviewReady) { updateHumanReviews(); return; }
+  reviewBusy = true;
+  updateHumanReviews();
+  try {
+    applyHumanReviews(await reviewRequest({ variant_id: id, verified: checked }));
+    reviewError();
+  } catch (_) {
+    reviewError("Could not confirm this verification change. Reconnect to the viewer server to load the saved state, then try again.");
+    reviewReady = false;
+  } finally {
+    reviewBusy = false;
+    updateHumanReviews();
+  }
+}
+
+function buildReviewChecklist() {
+  loadHumanReviews();
+  document.getElementById("reviewList").innerHTML = tasks.map(task => `
+    <details class="review-task" open>
+      <summary>${esc(task)} <span class="review-task-count" data-review-task="${esc(task)}"></span></summary>
+      <div class="review-items">${taskVariants(task).map(v => `
+        <div class="review-row" data-review-id="${esc(v.id)}">
+          <input type="checkbox" aria-label="Human verified: ${esc(v.id)} spec and episode starting scene">
+          <a href="#${esc(v.id)}">${esc(v.id)}</a>
+          <span class="review-mark"></span>
+        </div>`).join("")}</div>
+    </details>`).join("");
+  document.querySelectorAll(".review-row").forEach(row => {
+    row.querySelector("input").addEventListener("change", e => setHumanReview(row.dataset.reviewId, e.target.checked));
+    row.querySelector("a").addEventListener("click", e => {
+      if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      const id = row.dataset.reviewId;
+      if (id !== currentVariantId) history.pushState(null, "", "#" + id);
+      currentVariantId = id;
+      currentTask = variants.get(id).task;
+      renderAll();
+      const heading = document.querySelector("#detailTop h1");
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+      document.getElementById("detail").scrollIntoView({ block: "start" });
+    });
+  });
+  let wasOpen = false;
+  try { wasOpen = localStorage.getItem(REVIEW_OPEN_KEY) === "true"; } catch (_) {}
+  setReviewOpen(wasOpen, { remember: false });
+}
+
+function updateHumanReviews() {
+  document.getElementById("reviewProgress").textContent = `${humanReviews.size} / ${variants.size} verified`;
+  document.querySelectorAll("[data-review-task]").forEach(el => {
+    const list = taskVariants(el.dataset.reviewTask);
+    el.textContent = `${list.filter(v => humanReviews.has(v.id)).length} / ${list.length} verified`;
+  });
+  document.querySelectorAll(".review-row").forEach(row => {
+    const id = row.dataset.reviewId;
+    const verified = humanReviews.has(id);
+    row.querySelector("input").checked = verified;
+    row.querySelector("input").disabled = reviewBusy || !reviewReady;
+    row.classList.toggle("verified", verified);
+    row.classList.toggle("current", id === currentVariantId);
+    const link = row.querySelector("a");
+    if (id === currentVariantId) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+    row.querySelector(".review-mark").textContent = verified ? "Verified" : "";
+    row.title = verified ? `Human verified ${new Date(humanReviews.get(id)).toLocaleString()}` : "Not yet human verified";
+  });
+  document.getElementById("reviewBadge").textContent = reviewReady ? `${humanReviews.size}/${variants.size}` : "Offline";
+}
+
+// Opening the drawer pads the body, so the page content slides left beside it.
+function setReviewOpen(open, { remember = true } = {}) {
+  document.body.classList.toggle("review-open", open);
+  document.getElementById("reviewToggle").setAttribute("aria-expanded", String(open));
+  if (remember) { try { localStorage.setItem(REVIEW_OPEN_KEY, String(open)); } catch (_) {} }
+}
+
+document.getElementById("reviewToggle").addEventListener("click", () => {
+  setReviewOpen(!document.body.classList.contains("review-open"));
+});
+document.getElementById("reviewClose").addEventListener("click", () => {
+  setReviewOpen(false);
+  document.getElementById("reviewToggle").focus();
+});
+// Refresh other browsers' edits, including after returning to a background tab.
+setInterval(() => { if (!document.hidden) loadHumanReviews(); }, 5000);
+window.addEventListener("focus", loadHumanReviews);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) loadHumanReviews(); });
+
+function parseCSV(text) {
+  const rows = []; let row = [], field = "", quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) {
+      if (c === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else quoted = false; }
+      else field += c;
+    } else if (c === '"') quoted = true;
+    else if (c === ",") { row.push(field); field = ""; }
+    else if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+    else if (c !== "\r") field += c;
+  }
+  if (field !== "" || row.length) { row.push(field); rows.push(row); }
+  const header = (rows.shift() || []).map(h => h.trim());
+  return rows.filter(r => r.some(x => x.trim())).map(r => Object.fromEntries(header.map((h, j) => [h, r[j] ?? ""])));
+}
+
+function taskVariants(task) {
+  return [...variants.values()]
+    .filter(v => v.task === task)
+    .sort((a, b) => MEMS.indexOf(a.mem) - MEMS.indexOf(b.mem) || AXIS_ORDER.indexOf(a.axis) - AXIS_ORDER.indexOf(b.axis));
+}
+
+async function loadCsv() {
+  const status = document.getElementById("status");
+  try {
+    const response = await fetch(CSV_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const rows = parseCSV(await response.text());
+    const next = new Map();
+    const skipped = [];
+    rows.forEach((r, i) => {
+      const vm = /^(T\d+)-(ACC|INC|OUT)-([A-Z]+)$/.exec((r.Variant_ID || "").trim());
+      const om = /^(\S+)\s*\(([^)]+)\)$/.exec((r.Object || "").trim());
+      if (!vm || !om) { skipped.push(`line ${i + 2} ("${r.Variant_ID}", "${r.Object}")`); return; }
+      if (!next.has(vm[0])) next.set(vm[0], { id: vm[0], task: vm[1], mem: vm[2], axis: vm[3], objects: [] });
+      next.get(vm[0]).objects.push({
+        entity: om[1], cls: om[2].trim(),
+        label: (r.Label || "").trim().toLowerCase(),
+        asset: (r.Real_Object_ID || "").trim(),
+        states: STATE_FAMILIES
+          .map(f => ({ name: f.name, hint: f.hint || "", start: (r[`Start_${f.col}`] || "").trim(), end: (r[`End_${f.col}`] || "").trim() }))
+          .filter(st => (st.start && st.start !== "n/a") || (st.end && st.end !== "n/a")),
+      });
+    });
+    variants = next;
+    tasks = [...new Set([...next.values()].map(v => v.task))].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+
+    const fromHash = decodeURIComponent(location.hash.slice(1));
+    if (variants.has(fromHash)) currentVariantId = fromHash;
+    else if (!variants.has(currentVariantId)) currentVariantId = tasks.length ? taskVariants(tasks[0])[0].id : null;
+    currentTask = currentVariantId ? variants.get(currentVariantId).task : null;
+
+    status.hidden = skipped.length === 0;
+    status.textContent = skipped.length ? `Skipped ${skipped.length} unreadable CSV row(s): ${skipped.slice(0, 5).join(", ")}` : "";
+    buildReviewChecklist();
+    renderAll();
+  } catch (error) {
+    status.hidden = false;
+    status.innerHTML = `Could not load <code>variant_object_assets.csv</code> (${esc(error.message)}). ` +
+      `Serve the repo root with <code>python3 scripts/serve_scenario_viewer.py --port 8000</code> and open this page through it.`;
+  }
+}
+
+function renderTabs() {
+  const wrap = document.getElementById("taskTabs");
+  wrap.innerHTML = "";
+  tasks.forEach(t => {
+    const b = document.createElement("button");
+    b.className = "task-btn" + (t === currentTask ? " active" : "");
+    b.textContent = t;
+    b.onclick = () => { currentTask = t; currentVariantId = taskVariants(t)[0].id; renderAll(); };
+    wrap.appendChild(b);
+  });
+}
+
+function renderMatrix() {
+  const table = document.getElementById("matrixTable");
+  table.innerHTML = "";
+
+  const colgroup = document.createElement("colgroup");
+  const rowHeadCol = document.createElement("col");
+  rowHeadCol.style.width = "9%";
+  colgroup.appendChild(rowHeadCol);
+  FLAT_COLS.forEach(() => colgroup.appendChild(document.createElement("col")));
+  table.appendChild(colgroup);
+
+  const grpRow = document.createElement("tr");
+  grpRow.appendChild(document.createElement("th"));
+  COLUMN_GROUPS.forEach(g => {
+    const th = document.createElement("th");
+    th.className = "grp-header";
+    th.colSpan = g.cols.length;
+    th.textContent = g.name;
+    grpRow.appendChild(th);
+  });
+  table.appendChild(grpRow);
+
+  const colRow = document.createElement("tr");
+  colRow.appendChild(document.createElement("th"));
+  FLAT_COLS.forEach(c => {
+    const th = document.createElement("th");
+    th.className = "col-header";
+    th.textContent = c.label;
+    colRow.appendChild(th);
+  });
+  table.appendChild(colRow);
+
+  MEMS.forEach(mem => {
+    const row = document.createElement("tr");
+    const memTh = document.createElement("th");
+    memTh.className = "mem-header " + mem;
+    memTh.textContent = MEM_LABEL[mem];
+    row.appendChild(memTh);
+
+    FLAT_COLS.forEach(c => {
+      const td = document.createElement("td");
+      td.className = "cell";
+      const vid = `${currentTask}-${mem}-${c.axis}`;
+      const v = variants.get(vid);
+      if (!v) {
+        td.classList.add("na");
+        td.textContent = "N/A";
+      } else {
+        const btn = document.createElement("button");
+        btn.className = "cell-btn" + (c.axis === "BASE" ? " is-base" : "") + (vid === currentVariantId ? " selected" : "");
+        btn.innerHTML = `${esc(c.axis)}<span class="n">${v.objects.length} obj</span>`;
+        btn.title = `${vid} · ${v.objects.length} objects`;
+        btn.onclick = () => { currentVariantId = vid; renderAll(); };
+        td.appendChild(btn);
+      }
+      row.appendChild(td);
+    });
+    table.appendChild(row);
+  });
+}
+
+function gifUrl(o) {
+  const folder = GIF_FOLDER_ALIAS[o.cls] || o.cls;
+  return `${GIF_ROOT}${encodeURIComponent(folder)}/${encodeURIComponent(o.asset)}.gif?v=${GIF_VERSION}`;
+}
+
+function renderDetail() {
+  const top = document.getElementById("detailTop");
+  const counts = document.getElementById("labelCounts");
+  const grid = document.getElementById("objGrid");
+  const v = variants.get(currentVariantId);
+  if (!v) {
+    top.innerHTML = ""; counts.innerHTML = "";
+    grid.innerHTML = `<p class="empty">No variants found in the CSV.</p>`;
+    return;
+  }
+
+  top.innerHTML = `
+    <h1>${esc(v.id)}</h1>
+    <span class="pill pill-mem-${esc(v.mem)}">${esc(MEM_LABEL[v.mem] || v.mem)}</span>
+    <span class="pill pill-axis">${esc(v.axis)}</span>`;
+
+  const labelClass = l => LABEL_ORDER.includes(l) ? `label-${l}` : "label-unknown";
+  const rank = l => { const i = LABEL_ORDER.indexOf(l); return i < 0 ? LABEL_ORDER.length : i; };
+  const objects = [...v.objects].sort((a, b) => rank(a.label) - rank(b.label));
+
+  const tally = {};
+  objects.forEach(o => { tally[o.label] = (tally[o.label] || 0) + 1; });
+  const changed = objects.filter(o => o.states.some(st => st.start !== st.end)).length;
+  counts.innerHTML = `${objects.length} objects · ${changed} with a state change` + Object.keys(tally)
+    .sort((a, b) => rank(a) - rank(b))
+    .map(l => `<span class="pill ${labelClass(l)}">${tally[l]} ${esc(l || "no label")}</span>`).join("");
+
+  grid.innerHTML = "";
+  objects.forEach(o => {
+    const card = document.createElement("div");
+    card.className = `card ${labelClass(o.label)}`;
+    card.dataset.entity = o.entity;
+    card.innerHTML = `
+      <div class="thumb">${o.asset ? `<img src="${gifUrl(o)}" loading="lazy" alt="${esc(o.entity)}">` : "no asset"}</div>
+      <div class="body">
+        <span class="pill ${labelClass(o.label)}">${esc(o.label || "no label")}</span>
+        <div class="obj-name">${esc(o.entity)}</div>
+        <div class="obj-class">${esc(o.cls)}</div>
+        ${o.states.length ? `<div class="states" title="start → expected end">${o.states.map(st => {
+          const changes = st.start !== st.end;
+          return `<div class="state${changes ? " changes" : ""}"><span class="state-name"${st.hint ? ` title="${esc(st.hint)}"` : ""}>${esc(st.name)}</span>` +
+            `<span>${esc(stateWord(st.start))}${changes ? ` → <b>${esc(stateWord(st.end))}</b>` : ""}</span></div>`;
+        }).join("")}</div>` : `<div class="states-none">no object states</div>`}
+        <div class="loc"></div>
+        <div class="real-id">${esc(o.asset)}</div>
+      </div>`;
+    const img = card.querySelector("img");
+    if (img) img.addEventListener("error", () => { img.parentNode.textContent = "no image"; });
+    grid.appendChild(card);
+  });
+  renderSummary(v);
+  renderSpec(v);
+  renderEpisode(v);
+  renderGroundTruth(v);
+}
+
+// Instruction, robot memory and success criteria from the spec, shown above the object cards,
+// plus each object's start and goal location on its card.
+let summaryRequest = 0;
+function specSection(md, heading) {
+  const m = new RegExp(`^## ${heading.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")}\\n([\\s\\S]*?)(?=^## |(?![\\s\\S]))`, "m").exec(md);
+  return m ? m[1].trim() : "";
+}
+const specItems = text => text.split("\n").filter(l => /^- /.test(l)).map(l => l.slice(2));
+async function renderSummary(v) {
+  const req = ++summaryRequest;
+  const box = document.getElementById("scenarioSummary");
+  box.innerHTML = "";
+  let md;
+  try { md = await fetchSpec(v); } catch { return; }
+  if (req !== summaryRequest) return;
+  const instruction = specSection(md, "Task instruction / prompt given").replace(/^"|"$/g, "");
+  const memory = specItems(specSection(md, "Initial robot memory"));
+  const success = specItems(specSection(md, "Success criteria"));
+  const criterion = s => s.startsWith("order: ")
+    ? `<li class="summary-order"><b>Order:</b> ${inlineMd(s.slice(7).replace(" before ", " must happen before "))}</li>`
+    : `<li>${inlineMd(s)}</li>`;
+  box.innerHTML =
+    `<div class="summary-box summary-instruction"><h3>Instruction</h3><q>${esc(instruction)}</q></div>` +
+    `<div class="summary-box"><h3>Success criteria</h3><ul>${success.map(criterion).join("")}</ul></div>` +
+    `<div class="summary-box"><h3>Initial robot memory · ${esc(MEM_LABEL[v.mem] || v.mem)}</h3><ul>${memory.map(m => `<li>${inlineMd(m)}</li>`).join("")}</ul></div>`;
+  const place = text => text.replace(/,\s*(is_\w+|next to \w+|\w+ starts closed)(?=,|$)/g, "").trim();
+  const locations = heading => Object.fromEntries(specItems(specSection(md, heading))
+    .map(l => /^(\w+): (.*)$/.exec(l)).filter(Boolean).map(m => [m[1], place(m[2])]));
+  const start = locations("Initial world state"), goal = locations("Final expected world state");
+  document.querySelectorAll("#objGrid .card").forEach(card => {
+    const e = card.dataset.entity, loc = card.querySelector(".loc");
+    if (!loc || !start[e]) return;
+    loc.innerHTML = `<div><b>Start</b>${esc(start[e])}</div>` +
+      (goal[e] && goal[e] !== start[e] ? `<div><b>Goal</b>${esc(goal[e])}</div>` : `<div><b>Goal</b>stays in place</div>`);
+  });
+}
+
+// Specs live at ../specs/T{n}/T{n}-{MEM}-{AXIS}.md; shown in the collapsible panel under the cards.
+let specRequest = 0;
+const inlineMd = s => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>");
+function mdToHtml(md) {
+  const out = [];
+  let depth = 0;
+  const closeTo = d => { while (depth > d) { out.push("</ul>"); depth--; } };
+  md.split("\n").forEach(raw => {
+    const line = raw.replace(/\s+$/, "");
+    const m = /^(\s*)- (.*)$/.exec(line);
+    if (m) {
+      const d = Math.floor(m[1].length / 2) + 1;
+      while (depth < d) { out.push("<ul>"); depth++; }
+      closeTo(d);
+      out.push(`<li>${inlineMd(m[2])}</li>`);
+      return;
+    }
+    closeTo(0);
+    if (line.startsWith("## ")) out.push(`<h2>${inlineMd(line.slice(3))}</h2>`);
+    else if (line.startsWith("# ")) out.push(`<h1>${inlineMd(line.slice(2))}</h1>`);
+    else if (line.trim()) out.push(`<p>${inlineMd(line)}</p>`);
+  });
+  closeTo(0);
+  return out.join("");
+}
+
+let specMode = "spec";   // "spec" | "diff"
+let diffTargetId = "";   // variant compared against; kept while it belongs to the current task
+
+async function fetchSpec(v) {
+  const res = await fetch(`../specs/${encodeURIComponent(v.task)}/${encodeURIComponent(v.id)}.md`, { cache: "no-store" });
+  if (!res.ok) {
+    const err = new Error(res.status === 404 ? `No spec file for ${v.id} yet.` : `Could not load ${v.id} (HTTP ${res.status}).`);
+    err.shown = true;
+    throw err;
+  }
+  return res.text();
+}
+
+// Default comparison: the same scenario at the next memory level (ACC -> INC -> OUT), else BASE.
+function defaultDiffTarget(v) {
+  const others = taskVariants(v.task).filter(x => x.id !== v.id);
+  const sameAxis = others.filter(x => x.axis === v.axis);
+  const next = sameAxis.find(x => MEMS.indexOf(x.mem) > MEMS.indexOf(v.mem)) || sameAxis[0];
+  const base = others.find(x => x.mem === v.mem && x.axis === "BASE");
+  return (next || base || others[0] || {}).id || "";
+}
+
+// Longest-common-subsequence diff over arrays of strings.
+function lcsDiff(a, b) {
+  const n = a.length, m = b.length;
+  const dp = Array.from({ length: n + 1 }, () => new Uint32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const out = [];
+  let i = 0, j = 0;
+  while (i < n && j < m) {
+    if (a[i] === b[j]) { out.push({ op: "eq", a: a[i], b: b[j] }); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) out.push({ op: "del", a: a[i++] });
+    else out.push({ op: "add", b: b[j++] });
+  }
+  while (i < n) out.push({ op: "del", a: a[i++] });
+  while (j < m) out.push({ op: "add", b: b[j++] });
+  return out;
+}
+
+function wordDiffPair(aLine, bLine) {
+  const tok = s => s.match(/\s+|[^\s]+/g) || [];
+  let aHtml = "", bHtml = "";
+  lcsDiff(tok(aLine), tok(bLine)).forEach(o => {
+    if (o.op === "eq") { aHtml += esc(o.a); bHtml += esc(o.b); }
+    else if (o.op === "del") aHtml += `<del>${esc(o.a)}</del>`;
+    else bHtml += `<ins>${esc(o.b)}</ins>`;
+  });
+  return [aHtml, bHtml];
+}
+
+function diffHtml(aText, bText, aId, bId, onlyChanges) {
+  // The "# <variant id>" title always differs; leave it out of the comparison.
+  const lines = t => t.replace(/\n+$/, "").split("\n").filter((ln, i) => !(i === 0 && ln.startsWith("# ")));
+  const ops = lcsDiff(lines(aText), lines(bText));
+  const rows = [];
+  let section = "";
+  for (let k = 0; k < ops.length;) {
+    if (ops[k].op === "eq") {
+      const ln = ops[k].a;
+      if (ln.startsWith("## ")) section = ln.slice(3);
+      rows.push({ kind: ln.startsWith("## ") ? "head" : "eq", sign: "", html: esc(ln), section });
+      k++;
+      continue;
+    }
+    const dels = [], adds = [];
+    while (k < ops.length && ops[k].op !== "eq") { (ops[k].op === "del" ? dels : adds).push(ops[k]); k++; }
+    const pairs = Math.min(dels.length, adds.length);
+    const sec = section;
+    dels.forEach((d, idx) => rows.push({ kind: "del", sign: "−", section: sec,
+      html: idx < pairs ? wordDiffPair(d.a, adds[idx].b)[0] : esc(d.a) }));
+    adds.forEach((d, idx) => {
+      if (d.b.startsWith("## ")) section = d.b.slice(3);
+      rows.push({ kind: "add", sign: "+", section: sec, html: idx < pairs ? wordDiffPair(dels[idx].a, d.b)[1] : esc(d.b) });
+    });
+  }
+  const changedRows = rows.filter(r => r.kind === "del" || r.kind === "add");
+  if (!changedRows.length) return `<p class="diff-same">${esc(aId)} and ${esc(bId)} are identical apart from the title.</p>`;
+  const changed = [...new Set(changedRows.map(r => r.section))];
+  const nDel = rows.filter(r => r.kind === "del").length, nAdd = rows.filter(r => r.kind === "add").length;
+  let html = `<p class="diff-summary"><span class="del">− ${esc(aId)}</span> (this variant) vs <span class="add">+ ${esc(bId)}</span>: ` +
+    `${nDel} line${nDel === 1 ? "" : "s"} only in ${esc(aId)}, ${nAdd} only in ${esc(bId)}. Changed sections: ${esc(changed.join(", "))}.</p><div class="diff">`;
+  let hidden = [];
+  const flushHidden = () => {
+    if (hidden.length) html += `<div class="diff-line gap"><span class="sign"></span><span>unchanged: ${esc(hidden.join(", "))}</span></div>`;
+    hidden = [];
+  };
+  rows.forEach(r => {
+    if (onlyChanges && !changed.includes(r.section)) {
+      if (r.kind === "head" && !hidden.includes(r.section)) hidden.push(r.section);
+      return;
+    }
+    flushHidden();
+    html += `<div class="diff-line ${r.kind}"><span class="sign">${r.sign}</span><span>${r.html || " "}</span></div>`;
+  });
+  flushHidden();
+  return html + "</div>";
+}
+
+async function renderSpec(v) {
+  const req = ++specRequest;
+  const body = document.getElementById("specBody");
+  const select = document.getElementById("diffTarget");
+  const others = taskVariants(v.task).filter(x => x.id !== v.id);
+  if (!others.some(x => x.id === diffTargetId)) diffTargetId = defaultDiffTarget(v);
+  const diffing = specMode === "diff" && !!diffTargetId;
+
+  document.getElementById("specPath").textContent = diffing
+    ? `specs/${v.task}/${v.id}.md vs ${diffTargetId}.md` : `specs/${v.task}/${v.id}.md`;
+  document.querySelectorAll("[data-spec-mode]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.specMode === specMode)));
+  document.querySelectorAll(".diff-controls").forEach(el => { el.hidden = specMode !== "diff"; });
+  select.innerHTML = MEMS.map(m => {
+    const opts = others.filter(x => x.mem === m);
+    return opts.length ? `<optgroup label="${esc(MEM_LABEL[m])} memory">` + opts.map(x =>
+      `<option value="${esc(x.id)}"${x.id === diffTargetId ? " selected" : ""}>${esc(x.id)}${x.axis === v.axis ? " (same scenario)" : ""}</option>`).join("") + `</optgroup>` : "";
+  }).join("");
+
+  body.innerHTML = `<p class="spec-missing">Loading…</p>`;
+  try {
+    if (diffing) {
+      const other = variants.get(diffTargetId);
+      const [a, b] = await Promise.all([fetchSpec(v), fetchSpec(other)]);
+      if (req !== specRequest) return;
+      body.innerHTML = diffHtml(a, b, v.id, other.id, document.getElementById("diffOnlyChanges").checked);
+    } else {
+      const md = await fetchSpec(v);
+      if (req !== specRequest) return;
+      body.innerHTML = mdToHtml(md);
+    }
+  } catch (error) {
+    if (req === specRequest) body.innerHTML = `<p class="spec-missing">${esc(error.shown ? error.message : `Could not load the spec (${error.message}).`)}</p>`;
+  }
+}
+
+const rerenderSpec = () => { if (variants.has(currentVariantId)) renderSpec(variants.get(currentVariantId)); };
+document.querySelectorAll("[data-spec-mode]").forEach(b => b.addEventListener("click", () => { specMode = b.dataset.specMode; rerenderSpec(); }));
+document.getElementById("diffTarget").addEventListener("change", e => { diffTargetId = e.target.value; rerenderSpec(); });
+document.getElementById("diffOnlyChanges").addEventListener("change", rerenderSpec);
+
+function renderAll() {
+  renderTabs();
+  renderMatrix();
+  renderDetail();
+  updateHumanReviews();
+  if (currentVariantId) history.replaceState(null, "", "#" + currentVariantId);
+}
+
+window.addEventListener("hashchange", () => {
+  const id = location.hash.slice(1);
+  if (!variants.has(id) || id === currentVariantId) return;
+  currentVariantId = id;
+  currentTask = variants.get(id).task;
+  renderAll();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && document.body.classList.contains("review-open")) {
+    setReviewOpen(false);
+    document.getElementById("reviewToggle").focus();
+    return;
+  }
+  if (!currentTask) return;
+  if (e.target.closest && e.target.closest("select, input, textarea")) return;
+  const inTask = taskVariants(currentTask);
+  const i = inTask.findIndex(v => v.id === currentVariantId);
+  if (e.key === "ArrowRight") { currentVariantId = inTask[(i + 1) % inTask.length].id; renderAll(); }
+  else if (e.key === "ArrowLeft") { currentVariantId = inTask[(i - 1 + inTask.length) % inTask.length].id; renderAll(); }
+  else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    const ti = tasks.indexOf(currentTask);
+    currentTask = tasks[e.key === "ArrowDown" ? (ti + 1) % tasks.length : (ti - 1 + tasks.length) % tasks.length];
+    currentVariantId = taskVariants(currentTask)[0].id;
+    renderAll();
+  }
+});
+
+loadCsv();
+</script>
+</body>
+</html>

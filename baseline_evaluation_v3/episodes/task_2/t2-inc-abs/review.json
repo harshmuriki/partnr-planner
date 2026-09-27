@@ -1,0 +1,128 @@
+{
+  "variant": "T2-INC-ABS",
+  "status": "generated",
+  "dataset": "episodes/task_2/t2-inc-abs/dataset.json.gz",
+  "episode_id": "T2-INC-ABS",
+  "scene": "106878960_174887073",
+  "objects": [
+    {
+      "entity": "box_0",
+      "asset": "B073PB1H88",
+      "handle": "B073PB1H88_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_1"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.056584358215332,
+        0.16349084675312042,
+        -7.825316429138184
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "box_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "box_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "box_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "box_1",
+      "asset": "B071225BBS",
+      "handle": "B071225BBS_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -3.0765764713287354,
+        0.15441986918449402,
+        -4.171125888824463
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "box_1-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "box_1-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "box_1-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    }
+  ],
+  "image_root": "gui/episode_views/T2-ACC-ABS",
+  "checks": [
+    "box_0: exact asset, initial states, furniture, region checked",
+    "box_1: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- The scissors (scissors_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+  ],
+  "spec_sha256": "b24d07c834b77111c33c1161482eb14020390638965a4fe87f96a97ed7d652e9",
+  "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- box_1: no record; the robot does not know whether it exists or where it is\n- scissors_0: no record; the robot does not know whether it exists or where it is",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

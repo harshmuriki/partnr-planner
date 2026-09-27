@@ -1,0 +1,232 @@
+{
+  "variant": "T1-ACC-DIS",
+  "status": "generated",
+  "dataset": "episodes/task_1/t1-acc-dis/dataset.json.gz",
+  "episode_id": "T1-ACC-DIS",
+  "scene": "103997895_171031182",
+  "objects": [
+    {
+      "entity": "jug_0",
+      "asset": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+      "handle": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.663394927978516,
+        1.0511834621429443,
+        2.56437349319458
+      ],
+      "views": [
+        {
+          "label": "Angle 4",
+          "image": "jug_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "jug_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "jug_0-angle-6.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "lamp_0",
+      "asset": "B07HK83QRB",
+      "handle": "B07HK83QRB_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -2.4086520671844482,
+        0.8857851624488831,
+        -3.26995849609375
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "lamp_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "lamp_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "lamp_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
+    },
+    {
+      "entity": "vase_0",
+      "asset": "B075HR4ZDB",
+      "handle": "B075HR4ZDB_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "jug_0"
+        ],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.93547248840332,
+        1.0003376007080078,
+        2.473980188369751
+      ],
+      "views": [
+        {
+          "label": "Angle 4",
+          "image": "vase_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "vase_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "vase_0-angle-6.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "spray_bottle_0",
+      "asset": "Spray_Bottle_7",
+      "handle": "Spray_Bottle_7_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "jug_0"
+        ],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.428397178649902,
+        1.0182199478149414,
+        2.718302011489868
+      ],
+      "views": [
+        {
+          "label": "Angle 4",
+          "image": "spray_bottle_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "spray_bottle_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "spray_bottle_0-angle-6.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T1-ACC-DIS",
+  "checks": [
+    "jug_0: exact asset, initial states, furniture, region checked",
+    "lamp_0: exact asset, initial states, furniture, region checked",
+    "vase_0: exact asset, initial states, furniture, region checked",
+    "spray_bottle_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
+  ],
+  "spec_sha256": "b812bcf4d48b5b25585d847dfe4d3136b87e14065e88d9861a356464a8577545",
+  "initial_robot_memory": "- jug_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0\n- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 6,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

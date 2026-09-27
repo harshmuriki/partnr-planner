@@ -1,0 +1,126 @@
+{
+  "variant": "T1-ACC-SUB",
+  "status": "generated",
+  "dataset": "episodes/task_1/t1-acc-sub/dataset.json.gz",
+  "episode_id": "T1-ACC-SUB",
+  "scene": "103997895_171031182",
+  "objects": [
+    {
+      "entity": "pitcher_0",
+      "asset": "Threshold_Porcelain_Pitcher_White",
+      "handle": "Threshold_Porcelain_Pitcher_White_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.642129898071289,
+        1.0390000343322754,
+        2.6239700317382812
+      ],
+      "views": [
+        {
+          "label": "Angle 4",
+          "image": "pitcher_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "pitcher_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "pitcher_0-angle-6.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "lamp_0",
+      "asset": "B07HK83QRB",
+      "handle": "B07HK83QRB_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -2.4390599727630615,
+        0.8857799768447876,
+        -3.2565600872039795
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "lamp_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "lamp_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "lamp_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T1-ACC-SUB",
+  "checks": [
+    "pitcher_0: exact asset, initial states, furniture, region checked",
+    "lamp_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- Using pitcher_0 in place of the missing jug_0 counts as success; do not require or invent a jug."
+  ],
+  "spec_sha256": "eb500e3c9a4210c79a7c24b68a577d7fc83b7156dcfc5bf956e559add9d2bc16",
+  "initial_robot_memory": "- pitcher_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

@@ -1,0 +1,93 @@
+/home/harshmuriki/miniconda3/envs/habitat/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+pybullet build time: Oct 23 2025 10:01:39
+PluginManager::Manager: duplicate static plugin StbImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin GltfImporter, ignoring
+PluginManager::Manager: duplicate static plugin BasisImporter, ignoring
+PluginManager::Manager: duplicate static plugin AssimpImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnySceneImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnyImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin StbImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin GltfImporter, ignoring
+PluginManager::Manager: duplicate static plugin BasisImporter, ignoring
+PluginManager::Manager: duplicate static plugin AssimpImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnySceneImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnyImageImporter, ignoring
+2026-09-15 02:17:55,041 Initializing scene 106878960_174887073
+PluginManager::Manager: duplicate static plugin StbImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin GltfImporter, ignoring
+PluginManager::Manager: duplicate static plugin BasisImporter, ignoring
+PluginManager::Manager: duplicate static plugin AssimpImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnySceneImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnyImageImporter, ignoring
+2026-09-15 02:17:57,432 Initializing scene 106878960_174887073
+2026-09-15 02:17:59,023 Loaded receptacle filter data for scene '106878960_174887073' from configured filter file 'data/hssd-hab/scene_filter_files/106878960_174887073.rec_filter.json'.
+2026-09-15 02:17:59,061 Loaded receptacle filter data for scene '106878960_174887073' from configured filter file 'data/hssd-hab/scene_filter_files/106878960_174887073.rec_filter.json'.
+2026-09-15 02:17:59,109 sampled_object = scissors
+2026-09-15 02:17:59,109 sampled_rec = chest_of_drawers
+2026-09-15 02:17:59,109 region(s) = ['entryway/foyer/lobby_0']
+2026-09-15 02:17:59,114 Running placement stability analysis...
+2026-09-15 02:18:01,124    ...done with placement stability analysis in 2.009503126144409 seconds.
+2026-09-15 02:18:01,124 Computing placement stability report:
+----------------------------------------
+2026-09-15 02:18:01,124  : unstable=0|3 (0.0%) : [].
+2026-09-15 02:18:01,124  : Maximum displacement from settling = 0.040000639855861664
+2026-09-15 02:18:01,124 0 target objects are unstable.
+2026-09-15 02:18:01,124   Detailed receptacle stability analysis:
+      receptacle 'floor': (0/2) (unstable/total) objects.
+      receptacle 'd015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_drawer02_receptacle_mesh.0000': (0/1) (unstable/total) objects.
+----------------------------------------
+No active dbv agent to remove.
+No active dbv agent to remove.
+smart_placement primaries: d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_drawer02_receptacle_mesh.0000
+within_placement: opened d015e61bece2fc81cddeadd8bd55d97005846874_:0000 link 2
+smart_placement: placed Diamond_Visions_Scissors_Red_:0000 in d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_drawer02_receptacle_mesh.0000 at Vector(-2.53321, 0.37306, -2.97723)
+RESULT T2 True {'scene': '106878960_174887073', 'phase_details': {1: {'include_floor': True}, 2: {'include_floor': True}, 3: {'within_placement': True, 'within_recs': ['d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_drawer02_receptacle_mesh.0000']}}}
+VALIDATED ({'box_0': 'B073PB1H88_:0000', 'box_1': 'B071225BBS_:0000', 'scissors_0': 'Diamond_Visions_Scissors_Red_:0000'}, ['box_0: exact asset, initial states, furniture, region checked', 'box_1: exact asset, initial states, furniture, region checked', 'scissors_0: exact asset, initial states, furniture, region checked'])
+2026-09-15 02:18:01,127 Initializing scene 106878915_174887025
+PluginManager::Manager: duplicate static plugin StbImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin GltfImporter, ignoring
+PluginManager::Manager: duplicate static plugin BasisImporter, ignoring
+PluginManager::Manager: duplicate static plugin AssimpImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnySceneImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnyImageImporter, ignoring
+2026-09-15 02:18:02,481 Initializing scene 106878915_174887025
+2026-09-15 02:18:03,353 Loaded receptacle filter data for scene '106878915_174887025' from configured filter file 'data/hssd-hab/scene_filter_files/106878915_174887025.rec_filter.json'.
+2026-09-15 02:18:03,404 Sampling '/home/harshmuriki/Documents/partnr-planner/data/objects_ovmm/train_val/ai2thorhab/configs/objects/Book_17.object_config.json' from 'e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0001'
+2026-09-15 02:18:03,418 Successfully sampled (snapped) object placement in 1 tries.
+2026-09-15 02:18:03,418 sampled_object = book
+2026-09-15 02:18:03,418 sampled_rec = bed
+2026-09-15 02:18:03,418 region(s) = ['bedroom_1']
+2026-09-15 02:18:03,478 sampled_object = book
+2026-09-15 02:18:03,478 sampled_rec = stand
+2026-09-15 02:18:03,478 region(s) = ['bedroom_1']
+2026-09-15 02:18:03,503 Loaded receptacle filter data for scene '106878915_174887025' from configured filter file 'data/hssd-hab/scene_filter_files/106878915_174887025.rec_filter.json'.
+2026-09-15 02:18:03,507 sampled_object = laptop
+2026-09-15 02:18:03,507 sampled_rec = table
+2026-09-15 02:18:03,507 region(s) = ['kitchen_0']
+2026-09-15 02:18:03,510 Running placement stability analysis...
+2026-09-15 02:18:03,843    ...done with placement stability analysis in 0.333085298538208 seconds.
+2026-09-15 02:18:03,843 Computing placement stability report:
+----------------------------------------
+2026-09-15 02:18:03,843  : unstable=0|3 (0.0%) : [].
+2026-09-15 02:18:03,843  : Maximum displacement from settling = 0.0435616634786129
+2026-09-15 02:18:03,843 0 target objects are unstable.
+2026-09-15 02:18:03,843   Detailed receptacle stability analysis:
+      receptacle 'e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0001': (0/1) (unstable/total) objects.
+      receptacle 'e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000|tv_cabinet0001_drawer01_receptacle_mesh.0000': (0/1) (unstable/total) objects.
+      receptacle '91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001': (0/1) (unstable/total) objects.
+----------------------------------------
+No active dbv agent to remove.
+No active dbv agent to remove.
+smart_placement primaries: e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0001
+smart_placement: fallback to ObjectSampler after failed attempts on e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0001
+smart_placement primaries: e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000|tv_cabinet0001_drawer01_receptacle_mesh.0000
+within_placement: opened e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000 link 5
+smart_placement: placed Book_20_:0000 in e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000|tv_cabinet0001_drawer01_receptacle_mesh.0000 at Vector(-6.48935, 0.199821, -3.48261)
+smart_placement primaries: 91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001
+smart_placement: placed Laptop_2_:0000 on 91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001 at Vector(-3.35231, 0.937057, -3.62581)
+RESULT T3 True {'scene': '106878915_174887025', 'phase_details': {1: {}, 2: {'within_placement': True, 'within_recs': ['e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000|tv_cabinet0001_drawer01_receptacle_mesh.0000']}, 3: {}}}
+VALIDATED ({'book_0': 'Book_17_:0000', 'book_1': 'Book_20_:0000', 'laptop_0': 'Laptop_2_:0000'}, ['book_0: exact asset, initial states, furniture, region checked', 'book_1: exact asset, initial states, furniture, region checked', 'laptop_0: exact asset, initial states, furniture, region checked'])

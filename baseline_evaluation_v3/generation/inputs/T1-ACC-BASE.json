@@ -1,0 +1,72 @@
+{
+  "initial_state_dicts": [
+    {
+      "scene_id": "103997895_171031182",
+      "episode_id": "T1-ACC-BASE",
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "initial_state": [
+        {
+          "name": "jug_0",
+          "number": 1,
+          "object_classes": [
+            "jug"
+          ],
+          "object_instances": [
+            "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4"
+          ],
+          "excluded_object_instances": [
+            "260b77a7bb7899bbe4665886be2af5e303a6e4f1",
+            "2b429c575b4de6837a9d3ce5472ceb8a918fdbd2",
+            "2f8ce20db01f6f9cff0d3170271f45ef139276ed",
+            "320f797f7f3936b01c7fb659ddd56c63cc52f85f",
+            "381a128d056d4db0e70276aa918065ca42f89e8f",
+            "67428f64fcb9f822080d8d77c4991cc5c075f15d",
+            "794f4ad86d136c76bfe3082ffedc4133e876ac9a",
+            "79590e37b261153df0b50a05e90edf40bc4f13c0",
+            "aaf1ba3e91ae781751ab5eba22ec2bbd30e05365",
+            "ad87281ca93b236560306a08f0953ba340e85c3c",
+            "aee86f6cb8551b9601a11062038936fdb927860d",
+            "e70ea42b5270583ea34fe50123b841d79a380e19"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "counter_0"
+          ],
+          "allowed_regions": [
+            "kitchen_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false
+          }
+        },
+        {
+          "name": "lamp_0",
+          "number": 1,
+          "object_classes": [
+            "lamp"
+          ],
+          "object_instances": [
+            "B07HK83QRB"
+          ],
+          "excluded_object_instances": [
+            "B07HK3PNSK"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "chest_of_drawers_0"
+          ],
+          "allowed_regions": [
+            "bedroom_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false,
+            "is_powered_on": true
+          }
+        }
+      ]
+    }
+  ],
+  "seed": 3443868297
+}

@@ -1,0 +1,91 @@
+rooms: living_room_0, bedroom_1, kitchen_0, bedroom_3, bedroom_2, bedroom_0, toilet_0, bathroom_0, entryway/foyer/lobby_0, closet_0
+living_room_0:
+  - chair_0: Panton Chair
+  - chair_1: Panton Chair
+  - chair_2: Panton Chair
+  - chair_3: Panton Chair
+  - chair_4: Panton Chair
+  - chair_5: Panton Chair
+  - chair_6: Panton Chair
+  - chair_7: Panton Chair
+  - chair_8: Panton Chair
+  - chair_9: Panton Chair
+  - couch_0: Delano 3 Piece Sectional With Left Arm Facing Chaise, Pearl
+  - couch_1: Filmore 56'' Upholstered Chair
+  - couch_2: Filmore 56'' Upholstered Chair
+  - chair_11: PILLOW
+  - stool_0: Filmore Storage Ottoman
+  - stool_1: Filmore Storage Ottoman
+  - table_0: Palerma Extendable Dining Table, White
+  - table_1: Zee Lacquered Accent Table
+  - table_2: Plinth Tall Side Table, Carrara
+  - table_3: 
+Plinth Coffee Table, Carrara
+  - stand_0: Revolve Surge TV Stand, White High Gloss
+  - counter_3: Tecnos Sideboard, Breite 240 cm, white
+bedroom_1:
+  - bed_0: Revolve Lenox King Bed, White Leather
+  - chair_19: Ivery Wing Chair
+  - chair_20: Ivery Wing Chair
+  - table_5: Revolve Grange End Table
+  - chest_of_drawers_0: Revolve Madison Double Dresser, White
+  - chest_of_drawers_1: Revolve Madison Night Stand, White
+  - chest_of_drawers_2: Revolve Madison Night Stand, White
+  - chest_of_drawers_3: Revolve Madison Chest, Large, White
+  - chest_of_drawers_4: Revolve Madison Chest, Large, White
+kitchen_0:
+  - shelves_0: Esco shelving unit, white
+  - shelves_1: Esco shelving unit, white
+  - chair_12: Felix Stool, White
+  - chair_13: Felix Stool, White
+  - chair_14: Felix Stool, White
+  - chair_15: Felix Stool, White
+  - cabinet_0: Kitchen tall cabinet with oven
+  - cabinet_1: Kitchen tall cabinet with oven
+  - cabinet_2: Kitchen cabinet with door, narrow
+  - cabinet_3: Kitchen cabinet with drawers
+  - cabinet_4: Kitchen cabinet with drawers
+  - counter_0: Kitchen island, 90x150x90
+  - counter_1: Kitchen island, 60x100x90
+  - counter_2: Kitchen island, 60x150x90
+  - cabinet_5: Kitchen cabinet with sink, double
+  - cabinet_6: Kitchen tall cabinet
+  - cabinet_7: Kitchen corner cabinet
+  - cabinet_8: Kitchen cabinet with 2 doors
+  - fridge_0: American fridge freezer, white
+bedroom_3:
+  - chair_10: Costura Chaise, Flax Linen
+  - bed_2: Thorne Queen Bed, Sand Leatherette with Gold Leg
+  - table_4: Laptop Table
+  - wardrobe_0: Designer Double Wardrobe White &amp; White Gloss
+  - wardrobe_1: Designer Double Wardrobe White &amp; White Gloss
+  - chest_of_drawers_11: Dino Nightstand, White
+  - chest_of_drawers_12: Dino Nightstand, White
+  - table_8: Dino Dresser, White
+  - table_10: Dino Dresser, White
+bedroom_2:
+  - bed_1: Larkin Queen Panel Bed With Storage, White
+  - chair_16: Como Chaise in Leather, Right, Black
+  - chest_of_drawers_7: Larkin Dresser, White
+  - table_7: Sherlock Desk
+  - chest_of_drawers_9: Larkin Nightstand, White
+  - chest_of_drawers_10: Larkin Nightstand, White
+  - chest_of_drawers_14: Larkin Chest, White
+  - wardrobe_3: Betrib Wardrobe
+bedroom_0:
+  - chair_17: Cara Leather Swivel Accent Chair, White
+  - chair_18: Cara Leather Swivel Accent Chair, White
+  - bed_3: Orwell California King Panel Bed
+  - table_6: Zigi
+  - chest_of_drawers_5: Orwell Nightstand With Usb
+  - chest_of_drawers_6: Orwell Nightstand With Usb
+  - chest_of_drawers_8: Orwell Dresser
+  - chest_of_drawers_13: Orwell Chest Of Drawers
+toilet_0:
+  - toilet_0: WC/toilette Duravit Vero Air
+bathroom_0:
+  - toilet_1: WC/toilette Duravit Vero Air
+entryway/foyer/lobby_0:
+  - table_9: Dino Dresser, White
+closet_0:
+  - wardrobe_2: Betrib Wardrobe

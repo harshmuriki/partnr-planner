@@ -1,0 +1,75 @@
+{
+  "variant": "T1-OUT-ABS",
+  "status": "generated",
+  "dataset": "episodes/task_1/t1-out-abs/dataset.json.gz",
+  "episode_id": "T1-OUT-ABS",
+  "scene": "103997895_171031182",
+  "objects": [
+    {
+      "entity": "lamp_0",
+      "asset": "B07HK83QRB",
+      "handle": "B07HK83QRB_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -2.41087007522583,
+        0.8857899904251099,
+        -3.2549500465393066
+      ],
+      "views": [
+        {
+          "label": "Angle 4",
+          "image": "lamp_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "lamp_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 1",
+          "image": "lamp_0-angle-1.webp",
+          "target_visible": false
+        }
+      ],
+      "receptacle": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T1-ACC-ABS",
+  "checks": [
+    "lamp_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+  ],
+  "spec_sha256": "f58e15161074d351229534c2c0f5494927cad7fa228320f0a1ec4245876b1dee",
+  "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record; the object is not actually in the scene",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

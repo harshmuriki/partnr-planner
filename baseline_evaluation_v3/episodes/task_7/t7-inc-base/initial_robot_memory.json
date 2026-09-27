@@ -1,0 +1,25 @@
+{
+  "variant": "T7-INC-BASE",
+  "objects": [
+    {
+      "entity": "toy_truck_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "stuffed_toy_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "plate_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "lamp_living_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "lamp_kitchen_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

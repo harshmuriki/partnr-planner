@@ -1,0 +1,213 @@
+{
+  "initial_state_dicts": [
+    {
+      "scene_id": "102816756",
+      "episode_id": "T7-ACC-BASE",
+      "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from sink, and turn off the living-room and kitchen lights.",
+      "initial_state": [
+        {
+          "name": "toy_truck_0",
+          "number": 1,
+          "object_classes": [
+            "toy_fire_truck"
+          ],
+          "object_instances": [
+            "FIRE_ENGINE"
+          ],
+          "excluded_object_instances": [],
+          "location": "floor",
+          "furniture_names": [
+            "floor"
+          ],
+          "allowed_regions": [
+            "living_room_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false,
+            "is_powered_on": false
+          }
+        },
+        {
+          "name": "stuffed_toy_0",
+          "number": 1,
+          "object_classes": [
+            "stuffed_toy"
+          ],
+          "object_instances": [
+            "b3e8be210978ec373be6eb5fcffec36c6a9712e6"
+          ],
+          "excluded_object_instances": [
+            "1a3ab8e3d8569a2a2e2b6f8510af417848b71c6a",
+            "1c1f8cb950c338c7685124f7cfba716c242435c4",
+            "42df49592ce3c646bf92368203f520035f62a28f",
+            "5149957d46a31be888657d1b041130d8dc7ed905",
+            "567ba453e60735e7667f25ea6d09377be18bda66",
+            "5998b2343f9bd0da7fd75c77cca93bc84d735fbc",
+            "70bf9f997babb17d77bafb5cc9cfc30e32a02403",
+            "74f64d7acc653e121e48e7f98dfdeba8b7f26067",
+            "7c36beb8e017c9b8c66291ad9c5be9f7270281b4",
+            "8e800737f35b9af45ec9f3d8eb215ce7f7969e80",
+            "963d58e321de1039c6404fd25b9fe470b7217979",
+            "Animal_Planet_Foam_2Headed_Dragon",
+            "Elephant",
+            "Ortho_Forward_Facing",
+            "Ortho_Forward_Facing_3Q6J2oKJD92",
+            "Ortho_Forward_Facing_QCaor9ImJ2G",
+            "Racoon",
+            "Shark",
+            "Sootheze_Cold_Therapy_Elephant",
+            "Sootheze_Toasty_Orca",
+            "Squirrel",
+            "a33b4d0b2cf35e7f24e07b0a1dc3b8a2b52593fa",
+            "a3fce687e16c92cce0a801e92c7705a20ac74525",
+            "a8e2f442d0f6e5d86d27aa23aac71392f332addf",
+            "af58f8524168dbb36acdfd66ef3d4f4c9d0906c0",
+            "b469cdabd74ce7e2a4cfb787504e17a8e71f172d",
+            "b4ba58ab622b84b76b98a8d4f907116425d68f3b",
+            "bbab821a01804c11220bb499da6aec0142a3e253",
+            "cccc049db3ef5417dc934e267c4fbe40d6eb3691",
+            "d5cbf59bbda4034360222434bd46e2e7b9d448c9",
+            "f172324eef47eb930d2d10f6ddce5852d6e44941",
+            "f8b01d51b06fcba41cd2a7fa3f3f3a358df0b6a5"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "couch_0"
+          ],
+          "allowed_regions": [
+            "living_room_0"
+          ],
+          "object_states": {
+            "is_clean": true
+          }
+        },
+        {
+          "name": "plate_0",
+          "number": 1,
+          "object_classes": [
+            "plate"
+          ],
+          "object_instances": [
+            "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring"
+          ],
+          "excluded_object_instances": [
+            "21551881391c2b21c2e1358effa7d6b69cbd435f",
+            "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94",
+            "3b519761173617ee47ca61e25681279ae9fdaba9",
+            "4087db7d03a368aeb48956f358eeee58e0edd7b3",
+            "41753aebe629e7e2fbc8c576ce5865056b824ff7",
+            "46d69ab16b7cd068d424c383955b91e756184130",
+            "5a0ac54dc91ce3d40e4351a0dcfb6b9ffa08fdc2",
+            "624150e8832d1acf256bdf52050ac6226d5c6a5f",
+            "761c161d57068a6f504e8fd35cad5a04663b62f1",
+            "7e067cafd8b96fae4671c0032317763fd9549b80",
+            "7f5e4621caaeae9e3f4fbca6fc84779fa4b9c64f",
+            "878dc86bcc60dec276240e2c7551b73094903127",
+            "8cd9b448815a904b8b3b5817c742620729fe4a7c",
+            "91bfe2681a0d397e267e93e125924c872e6a2159",
+            "Plate_1",
+            "Plate_10",
+            "Plate_11",
+            "Plate_12",
+            "Plate_13",
+            "Plate_14",
+            "Plate_15",
+            "Plate_16",
+            "Plate_17",
+            "Plate_18",
+            "Plate_19",
+            "Plate_2",
+            "Plate_20",
+            "Plate_21",
+            "Plate_22",
+            "Plate_23",
+            "Plate_24",
+            "Plate_25",
+            "Plate_26",
+            "Plate_27",
+            "Plate_28",
+            "Plate_29",
+            "Plate_3",
+            "Plate_30",
+            "Plate_4",
+            "Plate_5",
+            "Plate_6",
+            "Plate_7",
+            "Plate_8",
+            "Plate_9",
+            "Threshold_Dinner_Plate_Square_Rim_White_Porcelain",
+            "b3879123202b611e2287fb8ef66089bcb13e9d69",
+            "b599eb548442db2690265de15d2bf8aa549acd02",
+            "bdd5e488098e1e64921b53aacfc8df260e2f898c",
+            "c717fbe8f10ad354c83f9cfc7ce154ae2fcdf96c",
+            "cc9929ee326793bba8cc58e9120ef2262f087ca4",
+            "db5318d5db53a15c19b290628b82f08a27f5639a",
+            "fed3e9529785079e938d85b35e53c34735cc05c0"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "cabinet_5"
+          ],
+          "allowed_regions": [
+            "kitchen_0"
+          ],
+          "object_states": {
+            "is_clean": false
+          }
+        },
+        {
+          "name": "lamp_living_0",
+          "number": 1,
+          "object_classes": [
+            "lamp"
+          ],
+          "object_instances": [
+            "B07HK83QRB"
+          ],
+          "excluded_object_instances": [
+            "B07HK3PNSK"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_3"
+          ],
+          "allowed_regions": [
+            "living_room_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false,
+            "is_powered_on": true
+          }
+        },
+        {
+          "name": "lamp_kitchen_0",
+          "number": 1,
+          "object_classes": [
+            "lamp"
+          ],
+          "object_instances": [
+            "B07HK3PNSK"
+          ],
+          "excluded_object_instances": [
+            "B07HK83QRB"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "counter_0"
+          ],
+          "allowed_regions": [
+            "kitchen_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_filled": false,
+            "is_powered_on": true
+          }
+        }
+      ]
+    }
+  ],
+  "seed": 594452318
+}

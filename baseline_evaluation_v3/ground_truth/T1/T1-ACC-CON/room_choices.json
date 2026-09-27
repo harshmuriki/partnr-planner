@@ -1,0 +1,12 @@
+{
+  "jug_0": [
+    "kitchen_0",
+    "bedroom_0",
+    "bedroom_1",
+    "living_room_0"
+  ],
+  "lamp_0": [
+    "bedroom_0",
+    "bedroom_1"
+  ]
+}

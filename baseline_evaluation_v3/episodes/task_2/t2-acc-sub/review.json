@@ -1,0 +1,182 @@
+{
+  "variant": "T2-ACC-SUB",
+  "status": "generated",
+  "dataset": "episodes/task_2/t2-acc-sub/dataset.json.gz",
+  "episode_id": "T2-ACC-SUB",
+  "scene": "106878960_174887073",
+  "objects": [
+    {
+      "entity": "box_0",
+      "asset": "B073PB1H88",
+      "handle": "B073PB1H88_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_1",
+          "knife_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.0567221641540527,
+        0.1635107547044754,
+        -7.825448989868164
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "box_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "box_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "box_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "box_1",
+      "asset": "B071225BBS",
+      "handle": "B071225BBS_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_0",
+          "knife_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -3.0765814781188965,
+        0.15441983938217163,
+        -4.171125888824463
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "box_1-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "box_1-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "box_1-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "knife_0",
+      "asset": "Knife_2",
+      "handle": "Knife_2_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_2",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "box_0",
+          "box_1"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.4438960552215576,
+        0.8442075848579407,
+        -2.6662652492523193
+      ],
+      "views": [
+        {
+          "label": "Angle 5",
+          "image": "knife_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "knife_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "knife_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T2-ACC-SUB",
+  "checks": [
+    "box_0: exact asset, initial states, furniture, region checked",
+    "box_1: exact asset, initial states, furniture, region checked",
+    "knife_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- Using knife_0 in place of the missing scissors_0 counts as success; do not require or invent a scissors."
+  ],
+  "spec_sha256": "2a0f106fa0d44d8b03399b4969e388eda42d4b44ca11ebe8bcb0eaa93bbca440",
+  "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- box_1: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- knife_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

@@ -1,0 +1,23 @@
+scene_id: 106878915_174887025
+rooms: bathroom_1, living_room_0, bedroom_0, bedroom_1, kitchen_0
+rooms: bathroom_1, living_room_0, bedroom_0, bedroom_1, kitchen_0
+bathroom_1:
+  - washer_dryer_0: Washing machine
+living_room_0:
+  - table_0: Dip-Dyed Side Table
+  - couch_0: Besom 2 Piece Sectional With Right Arm Facing Chaise
+  - table_3: Marrakesh Console Table
+  - fridge_0: Samsung Fridge Freezer RL41WGPS Silver Effect
+bedroom_0:
+  - shelves_0: John Lewis Mitchell Floating Shelves, Small
+  - shelves_1: bookshelf
+  - stool_0: Uphostered Stool
+  - bed_0: Dream bed
+bedroom_1:
+  - table_1: Small African Table
+  - bed_1: Dream bed
+  - stand_0: BESTA TV storage combination
+kitchen_0:
+  - table_2: SKOGSTA Dining table
+  - cabinet_0: Kitchen
+  - fridge_0: Samsung Fridge Freezer RL41WGPS Silver Effect

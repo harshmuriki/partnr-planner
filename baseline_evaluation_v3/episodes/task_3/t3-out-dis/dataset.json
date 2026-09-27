@@ -1,0 +1,1003 @@
+{
+  "config": null,
+  "episodes": [
+    {
+      "episode_id": "T3-OUT-DIS",
+      "scene_id": "106878915_174887025",
+      "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json",
+      "additional_obj_config_paths": [
+        "data/objects/ycb/configs/",
+        "data/objects_ovmm/train_val/ai2thorhab/configs/objects",
+        "data/objects_ovmm/train_val/amazon_berkeley/configs",
+        "data/objects_ovmm/train_val/google_scanned/configs",
+        "data/objects_ovmm/train_val/hssd/configs/objects"
+      ],
+      "start_position": [
+        -3.44565,
+        0.17663,
+        -5.787
+      ],
+      "start_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "info": {
+        "episode_id": "T3-OUT-DIS",
+        "is_dynamic": true,
+        "sample_configs": {
+          "0": {
+            "name": "book_0",
+            "number": 1,
+            "object_classes": [
+              "book"
+            ],
+            "object_instances": [
+              "Book_17"
+            ],
+            "excluded_object_instances": [
+              "0e00b8fa01cc07735378cc1df01619b667af2698",
+              "0e11918fe7eaf8bdee859494e0d3dfe59d5b2d32",
+              "10aad7e8b95a3bc4bf9cc81d416016befad8e737",
+              "188c1fa84ac72c9d9f17430052459e4cfebc0f81",
+              "18e6fa40bb534fe88001d8a79022fedbdfa58e54",
+              "1aedffbcaec52392b114758a0490c39ea92080e7",
+              "1ccad6983b2f452110705e8175626fc2760a106a",
+              "21e5c7cabc2047f82439c63c8e5e785d58a67bfc",
+              "28b8057ff4790e3860c3494e093f2fadd3c422fd",
+              "2a06baac13fbb8210ccc11325b72b844426c208f",
+              "2d16bb0da869abae99bb080d54869111fdfa2c67",
+              "2f7ac29a1a7006f169b9a6235de97532c78b03c5",
+              "361a6c08b1137a16977f5a00761aabcb311a7475",
+              "387d604356db232de6468dc6a4c66230c8cd0fac",
+              "5bb85d3caf11acb1eb2f299ccc724eb7a855b7cf",
+              "6305d9ce403689f0085d59aa72008c136ef8fa58",
+              "631cf05ac0f3bcc4f61054911a84cbc9ccc37d3a",
+              "6c012b2a87c94cc8b26d014ba8601b4eadf0c17d",
+              "73e424cce8835563a1ca043e199122c3dfe62d11",
+              "79431fb55870504f86c5f3e2e4c47f4ba88f63e0",
+              "7c4abfaad6caa34008cf4aac249adcba013ad51b",
+              "81c6dd3830a8df6644bd1f6b9a239615234e888f",
+              "8c6411e06f17477320b687b36a247e4ebc86dc3d",
+              "8db837a85a24fbb6e51e4bba33cd3253d0ebfa92",
+              "8f2898b7a87221b1689078fedc133b3aea95a38c",
+              "917651b88d2d95bdb9d186328a36a94b1a1f3222",
+              "9434ebf4ba8489f4ba751d2b67688d120f822d0c",
+              "99843575975c6fcf087647c77f56bce970b7902a",
+              "9c395719a9c79bc2333db882a9370a913c0e3471",
+              "9e0b08eceb97e1b79cb728ec31891e71ac97570a",
+              "B01DN8TB5U",
+              "B078GTTCCF",
+              "Book_1",
+              "Book_10",
+              "Book_11",
+              "Book_12",
+              "Book_13",
+              "Book_14",
+              "Book_15",
+              "Book_16",
+              "Book_18",
+              "Book_19",
+              "Book_20",
+              "Book_21",
+              "Book_22",
+              "Book_23",
+              "Book_24",
+              "Book_25",
+              "Book_26",
+              "Book_27",
+              "Book_3",
+              "Book_30",
+              "Book_4",
+              "Book_5",
+              "Book_6",
+              "Book_7",
+              "Book_9",
+              "Eat_to_Live_The_Amazing_NutrientRich_Program_for_Fast_and_Sustained_Weight_Loss_Revised_Edition_Book",
+              "afe9e2965cc528e785591c47971a404d742e2c7b",
+              "b6e22b867069fc1a559eeade866de21ad233fb8c",
+              "bd53d8e362a0b1c63854b3d97187ba2f46a36a57",
+              "bf3d6b452f8d2ea2af24debf3b19cb187d6798af",
+              "c28aa62e0d287fa9b35fa7e64b4379f66004225c",
+              "c366e25f8eedfeff6ebe1991e712b91ef235031f",
+              "c42c9cc7db0f5e58e14f3d6acfff94c9b2c5f488",
+              "c9d140d976657e8d058bd6bc3dc068b87daf9260",
+              "d344e96d26c7f5ca8ffcad826d39617635f81def",
+              "d3bc33eb5aafbdab8388188e6d76ca75e537a18a",
+              "d413be1b49919287e484dd5cb5658c56b05aebf5",
+              "dbcd7791f12e9e9ae40e8ea77a8203bf66cb50a1",
+              "e204459fc66073fd8832ec0c5f5f9c018ae2f440",
+              "e46d683380db1069cea53aaec940d9c400c9b61d",
+              "e6a24c5d82ac274c29caa24dc71c18c5c5481a56",
+              "edf5a667080ed733fda55514ee18a8081f9dcf9c",
+              "fa86c98cbdba8962a436be647969fa0f304d2c84",
+              "xxxx9a19f571x1dc0x45c3x99fdxbf82a1abcb7f",
+              "xxxxc7c6f64axb1d5x4e58x8b61x553c557dc68f"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "bed_1"
+            ],
+            "allowed_regions": [
+              "bedroom_1"
+            ],
+            "object_states": {
+              "is_clean": true
+            }
+          },
+          "1": {
+            "name": "book_1",
+            "number": 1,
+            "object_classes": [
+              "book"
+            ],
+            "object_instances": [
+              "Book_20"
+            ],
+            "excluded_object_instances": [
+              "0e00b8fa01cc07735378cc1df01619b667af2698",
+              "0e11918fe7eaf8bdee859494e0d3dfe59d5b2d32",
+              "10aad7e8b95a3bc4bf9cc81d416016befad8e737",
+              "188c1fa84ac72c9d9f17430052459e4cfebc0f81",
+              "18e6fa40bb534fe88001d8a79022fedbdfa58e54",
+              "1aedffbcaec52392b114758a0490c39ea92080e7",
+              "1ccad6983b2f452110705e8175626fc2760a106a",
+              "21e5c7cabc2047f82439c63c8e5e785d58a67bfc",
+              "28b8057ff4790e3860c3494e093f2fadd3c422fd",
+              "2a06baac13fbb8210ccc11325b72b844426c208f",
+              "2d16bb0da869abae99bb080d54869111fdfa2c67",
+              "2f7ac29a1a7006f169b9a6235de97532c78b03c5",
+              "361a6c08b1137a16977f5a00761aabcb311a7475",
+              "387d604356db232de6468dc6a4c66230c8cd0fac",
+              "5bb85d3caf11acb1eb2f299ccc724eb7a855b7cf",
+              "6305d9ce403689f0085d59aa72008c136ef8fa58",
+              "631cf05ac0f3bcc4f61054911a84cbc9ccc37d3a",
+              "6c012b2a87c94cc8b26d014ba8601b4eadf0c17d",
+              "73e424cce8835563a1ca043e199122c3dfe62d11",
+              "79431fb55870504f86c5f3e2e4c47f4ba88f63e0",
+              "7c4abfaad6caa34008cf4aac249adcba013ad51b",
+              "81c6dd3830a8df6644bd1f6b9a239615234e888f",
+              "8c6411e06f17477320b687b36a247e4ebc86dc3d",
+              "8db837a85a24fbb6e51e4bba33cd3253d0ebfa92",
+              "8f2898b7a87221b1689078fedc133b3aea95a38c",
+              "917651b88d2d95bdb9d186328a36a94b1a1f3222",
+              "9434ebf4ba8489f4ba751d2b67688d120f822d0c",
+              "99843575975c6fcf087647c77f56bce970b7902a",
+              "9c395719a9c79bc2333db882a9370a913c0e3471",
+              "9e0b08eceb97e1b79cb728ec31891e71ac97570a",
+              "B01DN8TB5U",
+              "B078GTTCCF",
+              "Book_1",
+              "Book_10",
+              "Book_11",
+              "Book_12",
+              "Book_13",
+              "Book_14",
+              "Book_15",
+              "Book_16",
+              "Book_17",
+              "Book_18",
+              "Book_19",
+              "Book_21",
+              "Book_22",
+              "Book_23",
+              "Book_24",
+              "Book_25",
+              "Book_26",
+              "Book_27",
+              "Book_3",
+              "Book_30",
+              "Book_4",
+              "Book_5",
+              "Book_6",
+              "Book_7",
+              "Book_9",
+              "Eat_to_Live_The_Amazing_NutrientRich_Program_for_Fast_and_Sustained_Weight_Loss_Revised_Edition_Book",
+              "afe9e2965cc528e785591c47971a404d742e2c7b",
+              "b6e22b867069fc1a559eeade866de21ad233fb8c",
+              "bd53d8e362a0b1c63854b3d97187ba2f46a36a57",
+              "bf3d6b452f8d2ea2af24debf3b19cb187d6798af",
+              "c28aa62e0d287fa9b35fa7e64b4379f66004225c",
+              "c366e25f8eedfeff6ebe1991e712b91ef235031f",
+              "c42c9cc7db0f5e58e14f3d6acfff94c9b2c5f488",
+              "c9d140d976657e8d058bd6bc3dc068b87daf9260",
+              "d344e96d26c7f5ca8ffcad826d39617635f81def",
+              "d3bc33eb5aafbdab8388188e6d76ca75e537a18a",
+              "d413be1b49919287e484dd5cb5658c56b05aebf5",
+              "dbcd7791f12e9e9ae40e8ea77a8203bf66cb50a1",
+              "e204459fc66073fd8832ec0c5f5f9c018ae2f440",
+              "e46d683380db1069cea53aaec940d9c400c9b61d",
+              "e6a24c5d82ac274c29caa24dc71c18c5c5481a56",
+              "edf5a667080ed733fda55514ee18a8081f9dcf9c",
+              "fa86c98cbdba8962a436be647969fa0f304d2c84",
+              "xxxx9a19f571x1dc0x45c3x99fdxbf82a1abcb7f",
+              "xxxxc7c6f64axb1d5x4e58x8b61x553c557dc68f"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_1"
+            ],
+            "allowed_regions": [
+              "bedroom_1"
+            ],
+            "object_states": {
+              "is_clean": true
+            }
+          },
+          "2": {
+            "name": "laptop_0",
+            "number": 1,
+            "object_classes": [
+              "laptop"
+            ],
+            "object_instances": [
+              "Laptop_2"
+            ],
+            "excluded_object_instances": [
+              "Laptop_1",
+              "Laptop_10",
+              "Laptop_11",
+              "Laptop_12",
+              "Laptop_13",
+              "Laptop_15",
+              "Laptop_16",
+              "Laptop_17",
+              "Laptop_19",
+              "Laptop_20",
+              "Laptop_21",
+              "Laptop_22",
+              "Laptop_23",
+              "Laptop_24",
+              "Laptop_25",
+              "Laptop_26",
+              "Laptop_27",
+              "Laptop_28",
+              "Laptop_29",
+              "Laptop_3",
+              "Laptop_4",
+              "Laptop_5",
+              "Laptop_6"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_2"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_powered_on": true
+            }
+          },
+          "3": {
+            "name": "folder_0",
+            "number": 1,
+            "object_classes": [
+              "folder"
+            ],
+            "object_instances": [
+              "B01B254OVC"
+            ],
+            "excluded_object_instances": [],
+            "location": "on",
+            "furniture_names": [
+              "bed_1"
+            ],
+            "allowed_regions": [
+              "bedroom_1"
+            ],
+            "object_states": {
+              "is_clean": true
+            }
+          },
+          "4": {
+            "name": "phone_0",
+            "number": 1,
+            "object_classes": [
+              "cellphone"
+            ],
+            "object_instances": [
+              "Cellphone_5"
+            ],
+            "excluded_object_instances": [
+              "Cellphone_2",
+              "Cellphone_3",
+              "Cellphone_6",
+              "Cellphone_7",
+              "Cellphone_8"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_2"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_powered_on": true
+            }
+          }
+        },
+        "object_labels": {},
+        "extra_info": {
+          "scene_id": "106878915_174887025",
+          "episode_id": "T3-OUT-DIS",
+          "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+          "initial_state": [
+            {
+              "name": "book_0",
+              "number": 1,
+              "object_classes": [
+                "book"
+              ],
+              "object_instances": [
+                "Book_17"
+              ],
+              "excluded_object_instances": [
+                "0e00b8fa01cc07735378cc1df01619b667af2698",
+                "0e11918fe7eaf8bdee859494e0d3dfe59d5b2d32",
+                "10aad7e8b95a3bc4bf9cc81d416016befad8e737",
+                "188c1fa84ac72c9d9f17430052459e4cfebc0f81",
+                "18e6fa40bb534fe88001d8a79022fedbdfa58e54",
+                "1aedffbcaec52392b114758a0490c39ea92080e7",
+                "1ccad6983b2f452110705e8175626fc2760a106a",
+                "21e5c7cabc2047f82439c63c8e5e785d58a67bfc",
+                "28b8057ff4790e3860c3494e093f2fadd3c422fd",
+                "2a06baac13fbb8210ccc11325b72b844426c208f",
+                "2d16bb0da869abae99bb080d54869111fdfa2c67",
+                "2f7ac29a1a7006f169b9a6235de97532c78b03c5",
+                "361a6c08b1137a16977f5a00761aabcb311a7475",
+                "387d604356db232de6468dc6a4c66230c8cd0fac",
+                "5bb85d3caf11acb1eb2f299ccc724eb7a855b7cf",
+                "6305d9ce403689f0085d59aa72008c136ef8fa58",
+                "631cf05ac0f3bcc4f61054911a84cbc9ccc37d3a",
+                "6c012b2a87c94cc8b26d014ba8601b4eadf0c17d",
+                "73e424cce8835563a1ca043e199122c3dfe62d11",
+                "79431fb55870504f86c5f3e2e4c47f4ba88f63e0",
+                "7c4abfaad6caa34008cf4aac249adcba013ad51b",
+                "81c6dd3830a8df6644bd1f6b9a239615234e888f",
+                "8c6411e06f17477320b687b36a247e4ebc86dc3d",
+                "8db837a85a24fbb6e51e4bba33cd3253d0ebfa92",
+                "8f2898b7a87221b1689078fedc133b3aea95a38c",
+                "917651b88d2d95bdb9d186328a36a94b1a1f3222",
+                "9434ebf4ba8489f4ba751d2b67688d120f822d0c",
+                "99843575975c6fcf087647c77f56bce970b7902a",
+                "9c395719a9c79bc2333db882a9370a913c0e3471",
+                "9e0b08eceb97e1b79cb728ec31891e71ac97570a",
+                "B01DN8TB5U",
+                "B078GTTCCF",
+                "Book_1",
+                "Book_10",
+                "Book_11",
+                "Book_12",
+                "Book_13",
+                "Book_14",
+                "Book_15",
+                "Book_16",
+                "Book_18",
+                "Book_19",
+                "Book_20",
+                "Book_21",
+                "Book_22",
+                "Book_23",
+                "Book_24",
+                "Book_25",
+                "Book_26",
+                "Book_27",
+                "Book_3",
+                "Book_30",
+                "Book_4",
+                "Book_5",
+                "Book_6",
+                "Book_7",
+                "Book_9",
+                "Eat_to_Live_The_Amazing_NutrientRich_Program_for_Fast_and_Sustained_Weight_Loss_Revised_Edition_Book",
+                "afe9e2965cc528e785591c47971a404d742e2c7b",
+                "b6e22b867069fc1a559eeade866de21ad233fb8c",
+                "bd53d8e362a0b1c63854b3d97187ba2f46a36a57",
+                "bf3d6b452f8d2ea2af24debf3b19cb187d6798af",
+                "c28aa62e0d287fa9b35fa7e64b4379f66004225c",
+                "c366e25f8eedfeff6ebe1991e712b91ef235031f",
+                "c42c9cc7db0f5e58e14f3d6acfff94c9b2c5f488",
+                "c9d140d976657e8d058bd6bc3dc068b87daf9260",
+                "d344e96d26c7f5ca8ffcad826d39617635f81def",
+                "d3bc33eb5aafbdab8388188e6d76ca75e537a18a",
+                "d413be1b49919287e484dd5cb5658c56b05aebf5",
+                "dbcd7791f12e9e9ae40e8ea77a8203bf66cb50a1",
+                "e204459fc66073fd8832ec0c5f5f9c018ae2f440",
+                "e46d683380db1069cea53aaec940d9c400c9b61d",
+                "e6a24c5d82ac274c29caa24dc71c18c5c5481a56",
+                "edf5a667080ed733fda55514ee18a8081f9dcf9c",
+                "fa86c98cbdba8962a436be647969fa0f304d2c84",
+                "xxxx9a19f571x1dc0x45c3x99fdxbf82a1abcb7f",
+                "xxxxc7c6f64axb1d5x4e58x8b61x553c557dc68f"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "bed_1"
+              ],
+              "allowed_regions": [
+                "bedroom_1"
+              ],
+              "object_states": {
+                "is_clean": true
+              }
+            },
+            {
+              "name": "book_1",
+              "number": 1,
+              "object_classes": [
+                "book"
+              ],
+              "object_instances": [
+                "Book_20"
+              ],
+              "excluded_object_instances": [
+                "0e00b8fa01cc07735378cc1df01619b667af2698",
+                "0e11918fe7eaf8bdee859494e0d3dfe59d5b2d32",
+                "10aad7e8b95a3bc4bf9cc81d416016befad8e737",
+                "188c1fa84ac72c9d9f17430052459e4cfebc0f81",
+                "18e6fa40bb534fe88001d8a79022fedbdfa58e54",
+                "1aedffbcaec52392b114758a0490c39ea92080e7",
+                "1ccad6983b2f452110705e8175626fc2760a106a",
+                "21e5c7cabc2047f82439c63c8e5e785d58a67bfc",
+                "28b8057ff4790e3860c3494e093f2fadd3c422fd",
+                "2a06baac13fbb8210ccc11325b72b844426c208f",
+                "2d16bb0da869abae99bb080d54869111fdfa2c67",
+                "2f7ac29a1a7006f169b9a6235de97532c78b03c5",
+                "361a6c08b1137a16977f5a00761aabcb311a7475",
+                "387d604356db232de6468dc6a4c66230c8cd0fac",
+                "5bb85d3caf11acb1eb2f299ccc724eb7a855b7cf",
+                "6305d9ce403689f0085d59aa72008c136ef8fa58",
+                "631cf05ac0f3bcc4f61054911a84cbc9ccc37d3a",
+                "6c012b2a87c94cc8b26d014ba8601b4eadf0c17d",
+                "73e424cce8835563a1ca043e199122c3dfe62d11",
+                "79431fb55870504f86c5f3e2e4c47f4ba88f63e0",
+                "7c4abfaad6caa34008cf4aac249adcba013ad51b",
+                "81c6dd3830a8df6644bd1f6b9a239615234e888f",
+                "8c6411e06f17477320b687b36a247e4ebc86dc3d",
+                "8db837a85a24fbb6e51e4bba33cd3253d0ebfa92",
+                "8f2898b7a87221b1689078fedc133b3aea95a38c",
+                "917651b88d2d95bdb9d186328a36a94b1a1f3222",
+                "9434ebf4ba8489f4ba751d2b67688d120f822d0c",
+                "99843575975c6fcf087647c77f56bce970b7902a",
+                "9c395719a9c79bc2333db882a9370a913c0e3471",
+                "9e0b08eceb97e1b79cb728ec31891e71ac97570a",
+                "B01DN8TB5U",
+                "B078GTTCCF",
+                "Book_1",
+                "Book_10",
+                "Book_11",
+                "Book_12",
+                "Book_13",
+                "Book_14",
+                "Book_15",
+                "Book_16",
+                "Book_17",
+                "Book_18",
+                "Book_19",
+                "Book_21",
+                "Book_22",
+                "Book_23",
+                "Book_24",
+                "Book_25",
+                "Book_26",
+                "Book_27",
+                "Book_3",
+                "Book_30",
+                "Book_4",
+                "Book_5",
+                "Book_6",
+                "Book_7",
+                "Book_9",
+                "Eat_to_Live_The_Amazing_NutrientRich_Program_for_Fast_and_Sustained_Weight_Loss_Revised_Edition_Book",
+                "afe9e2965cc528e785591c47971a404d742e2c7b",
+                "b6e22b867069fc1a559eeade866de21ad233fb8c",
+                "bd53d8e362a0b1c63854b3d97187ba2f46a36a57",
+                "bf3d6b452f8d2ea2af24debf3b19cb187d6798af",
+                "c28aa62e0d287fa9b35fa7e64b4379f66004225c",
+                "c366e25f8eedfeff6ebe1991e712b91ef235031f",
+                "c42c9cc7db0f5e58e14f3d6acfff94c9b2c5f488",
+                "c9d140d976657e8d058bd6bc3dc068b87daf9260",
+                "d344e96d26c7f5ca8ffcad826d39617635f81def",
+                "d3bc33eb5aafbdab8388188e6d76ca75e537a18a",
+                "d413be1b49919287e484dd5cb5658c56b05aebf5",
+                "dbcd7791f12e9e9ae40e8ea77a8203bf66cb50a1",
+                "e204459fc66073fd8832ec0c5f5f9c018ae2f440",
+                "e46d683380db1069cea53aaec940d9c400c9b61d",
+                "e6a24c5d82ac274c29caa24dc71c18c5c5481a56",
+                "edf5a667080ed733fda55514ee18a8081f9dcf9c",
+                "fa86c98cbdba8962a436be647969fa0f304d2c84",
+                "xxxx9a19f571x1dc0x45c3x99fdxbf82a1abcb7f",
+                "xxxxc7c6f64axb1d5x4e58x8b61x553c557dc68f"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_1"
+              ],
+              "allowed_regions": [
+                "bedroom_1"
+              ],
+              "object_states": {
+                "is_clean": true
+              }
+            },
+            {
+              "name": "laptop_0",
+              "number": 1,
+              "object_classes": [
+                "laptop"
+              ],
+              "object_instances": [
+                "Laptop_2"
+              ],
+              "excluded_object_instances": [
+                "Laptop_1",
+                "Laptop_10",
+                "Laptop_11",
+                "Laptop_12",
+                "Laptop_13",
+                "Laptop_15",
+                "Laptop_16",
+                "Laptop_17",
+                "Laptop_19",
+                "Laptop_20",
+                "Laptop_21",
+                "Laptop_22",
+                "Laptop_23",
+                "Laptop_24",
+                "Laptop_25",
+                "Laptop_26",
+                "Laptop_27",
+                "Laptop_28",
+                "Laptop_29",
+                "Laptop_3",
+                "Laptop_4",
+                "Laptop_5",
+                "Laptop_6"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_2"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_powered_on": true
+              }
+            },
+            {
+              "name": "folder_0",
+              "number": 1,
+              "object_classes": [
+                "folder"
+              ],
+              "object_instances": [
+                "B01B254OVC"
+              ],
+              "excluded_object_instances": [],
+              "location": "on",
+              "furniture_names": [
+                "bed_1"
+              ],
+              "allowed_regions": [
+                "bedroom_1"
+              ],
+              "object_states": {
+                "is_clean": true
+              }
+            },
+            {
+              "name": "phone_0",
+              "number": 1,
+              "object_classes": [
+                "cellphone"
+              ],
+              "object_instances": [
+                "Cellphone_5"
+              ],
+              "excluded_object_instances": [
+                "Cellphone_2",
+                "Cellphone_3",
+                "Cellphone_6",
+                "Cellphone_7",
+                "Cellphone_8"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_2"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_powered_on": true
+              }
+            }
+          ],
+          "obj_info": {
+            "book": "Book_20_:0000",
+            "laptop": "Laptop_2_:0000",
+            "folder": "B01B254OVC_:0000",
+            "cellphone": "Cellphone_5_:0000"
+          }
+        },
+        "variant_spec": {
+          "variant_id": "T3-OUT-DIS",
+          "sha256": "1af959873bad5ef25f1de5ea0954f1f80db01f20854b7525c40e5da2fbfa1bcd",
+          "entity_handles": {
+            "book_0": "Book_17_:0000",
+            "book_1": "Book_20_:0000",
+            "laptop_0": "Laptop_2_:0000",
+            "folder_0": "B01B254OVC_:0000",
+            "phone_0": "Cellphone_5_:0000"
+          },
+          "initial_robot_memory": "- book_0: on table_2 (kitchen_0), is_clean, stale record\n- book_1: on table_2 (kitchen_0), is_clean, stale record\n- laptop_0: on table_1 (bedroom_1), is_clean, is_powered_on, stale record\n- folder_0: on bed_1 (bedroom_1), is_clean, next to book_0\n- phone_0: on table_2 (kitchen_0), is_clean, is_powered_on",
+          "memory_runtime_applied": false,
+          "unscored_success_text": [
+            "- Distractors (folder_0, phone_0) must not be used in place of the task objects; they have no placement goals."
+          ],
+          "seed": 693976748,
+          "initial_validation": [
+            "book_0: exact asset, initial states, furniture, region checked",
+            "book_1: exact asset, initial states, furniture, region checked",
+            "laptop_0: exact asset, initial states, furniture, region checked",
+            "folder_0: exact asset, initial states, furniture, region checked",
+            "phone_0: exact asset, initial states, furniture, region checked"
+          ],
+          "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"
+        }
+      },
+      "ao_states": {},
+      "rigid_objs": [
+        [
+          "Book_17.object_config.json",
+          [
+            [
+              0.07044,
+              0.08324,
+              -0.99404,
+              -7.82354
+            ],
+            [
+              0.04843,
+              0.99505,
+              0.08676,
+              0.55287
+            ],
+            [
+              0.99634,
+              -0.05426,
+              0.06606,
+              -4.89144
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Book_20.object_config.json",
+          [
+            [
+              -0.99809,
+              -3e-05,
+              0.06179,
+              -6.09025
+            ],
+            [
+              -8e-05,
+              1.0,
+              -0.00081,
+              0.53224
+            ],
+            [
+              -0.06179,
+              -0.00082,
+              -0.99809,
+              -5.84906
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Laptop_2.object_config.json",
+          [
+            [
+              0.83245,
+              -5e-05,
+              0.5541,
+              -2.92381
+            ],
+            [
+              1e-05,
+              1.0,
+              9e-05,
+              0.89482
+            ],
+            [
+              -0.5541,
+              -7e-05,
+              0.83245,
+              -3.42099
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "B01B254OVC.object_config.json",
+          [
+            [
+              -0.99739,
+              0.07084,
+              -0.01363,
+              -7.85136
+            ],
+            [
+              0.07086,
+              0.99749,
+              -0.00087,
+              0.65506
+            ],
+            [
+              0.01353,
+              -0.00183,
+              -0.99991,
+              -4.63605
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Cellphone_5.object_config.json",
+          [
+            [
+              -0.53127,
+              0.00018,
+              0.8472,
+              -3.11492
+            ],
+            [
+              0.00027,
+              1.0,
+              -5e-05,
+              0.7565
+            ],
+            [
+              -0.8472,
+              0.0002,
+              -0.53127,
+              -3.5295
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      ],
+      "targets": {},
+      "markers": [],
+      "target_receptacles": [],
+      "goal_receptacles": [],
+      "name_to_receptacle": {
+        "Book_17_:0000": "e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0002",
+        "Book_20_:0000": "4a5f3b29cc15b191bb35bfae6c5918087a173827_:0000|receptacle_mesh_4a5f3b29cc15b191bb35bfae6c5918087a173827.0000",
+        "Laptop_2_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0000",
+        "B01B254OVC_:0000": "e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0002",
+        "Cellphone_5_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0000"
+      },
+      "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+      "evaluation_propositions": [
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "Book_17_:0000"
+            ],
+            "receptacle_handles": [
+              "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "Book_20_:0000"
+            ],
+            "receptacle_handles": [
+              "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_powered_off",
+          "args": {
+            "object_handles": [
+              "Laptop_2_:0000"
+            ],
+            "number": 1
+          }
+        }
+      ],
+      "evaluation_proposition_dependencies": [],
+      "evaluation_constraints": [
+        {
+          "type": "TemporalConstraint",
+          "args": {
+            "dag_edges": [],
+            "n_propositions": 3
+          }
+        },
+        {
+          "type": "TerminalSatisfactionConstraint",
+          "args": {
+            "proposition_indices": [
+              0,
+              1,
+              2
+            ],
+            "n_propositions": 3
+          }
+        }
+      ],
+      "object_states": {
+        "is_clean": {
+          "f6853182c26e4d30f2164293adfa77986faae26c_:0002": false,
+          "cc3139083fa1ad931a015aaddb24c339e0835f10_:0000": false,
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0000": false,
+          "f6853182c26e4d30f2164293adfa77986faae26c_:0001": false,
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0001": false,
+          "4dc93f5fa533934de0d2aef6b9359dc96417627e_:0001": false,
+          "ef5f1b9208feab193c638fd13ec9f5a1a671be80_:0000": false,
+          "4aedf1697c9095b318e9920ebcd9f465a4b36af9_:0000": false,
+          "adaf50303f95c9ff0a069041673f80cd72469bfb_:0000": false,
+          "4dc93f5fa533934de0d2aef6b9359dc96417627e_:0000": false,
+          "B01B254OVC_:0000": true,
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0001": false,
+          "Book_20_:0000": true,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0002": false,
+          "cd1a32857dd7bbc7d78d214f727a0f07cb71d76c_:0000": false,
+          "Book_17_:0000": true,
+          "e94ede305ff3f873dd34f8e95274bb54679df6b4_:0000": false,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0001": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0000": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0001": false,
+          "d564a9dfddaed66661ac318ff1e3c7b62b99f0ee_:0000": false,
+          "5f6564ee5d1e8026846204b071361369f669855c_:0000": false,
+          "xxxxbe0989d6xfc2ax4516xa2c6xb497a6037fb8_:0000": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0001": false,
+          "3220d21b0885b4f0ac2c044d00a76c2ff7844dca_:0000": false,
+          "d4ffac01fb53b35fb167619a53badcfcfdbbdcdf_:0000": false,
+          "Laptop_2_:0000": true,
+          "679d4207f433ee1bb6030bae48df158a775d2b0b_part_64_:0000": false,
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_5_:0000": false,
+          "cff54dd6df371fea7a23bda408acec1ed26488c6_:0000": false,
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_6_:0000": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0000": false,
+          "973c8db16abb188caa2868a16141b643684e3881_:0000": false,
+          "f6853182c26e4d30f2164293adfa77986faae26c_:0000": false,
+          "34292497a33f039dd556b550e0766a63928f8e58_:0000": false,
+          "e8a8d169c17b2f14008e10642994c92ea35b3946_:0000": false,
+          "8a2d6c76deccf5964e793c0e591b985590bb916a_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0001": false,
+          "885bf5232852d8ee0c738b1d590ad1958186d1dd_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0002": false,
+          "c1d3ee7e099fbe68b35b5915fa6b4987403650a4_:0000": false,
+          "7663ea1e420810b10770330b87393ecfa6f70889_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0000": false,
+          "e3d3ed213f437121abf8a1faffa60ae0672cbf25_:0000": false,
+          "2cb375dc30e908a6e4b6545976ad71d2586d6807_:0000": false,
+          "2cb375dc30e908a6e4b6545976ad71d2586d6807_:0001": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0000": false,
+          "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0001": false,
+          "54de8a81569ad75759d3fe685801f354f3d091f3_:0000": false,
+          "a9bb13d8f342efded56484a24b16f896d95a749f_:0000": false,
+          "8718b96e8acda5e530bc0eb72a0d3660778ff59a_:0000": false,
+          "4122c550741deeda8ed0b4da129bab0cd403cae7_:0000": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0000": false,
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0000": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0002": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0003": false,
+          "f7411ceab74991d377e79d79664120d67ff53b71_:0000": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0004": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0000": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0001": false,
+          "fe799ce4f050da99c88ef6f994b2197d874cf67d_:0000": false,
+          "xxxxc62548fbx6b78x4f7exa203xb8e973026972_:0000": false,
+          "4a5f3b29cc15b191bb35bfae6c5918087a173827_:0000": false,
+          "b31b3406480c29c8e44613edece1325cb5bd85ae_:0000": false,
+          "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false,
+          "91762e71879d66596716bfa58beca60624e95773_:0000": false,
+          "69f290dc18b7d92985f576f078e3d44bef963c09_:0000": false,
+          "203-2_:0000": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0001": false,
+          "4134-11_:0000": false,
+          "3262-5_:0000": false,
+          "Cellphone_5_:0000": true,
+          "3262-5_:0001": false,
+          "4134-12_:0000": false,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0000": false,
+          "4134-13_:0000": false,
+          "3262-6_:0000": false,
+          "4134-14_:0000": false,
+          "4134-15_:0000": false,
+          "e1d008861be1c6252e581526031b15ca5be867b1_:0000": false,
+          "4134-16_:0000": false,
+          "78a02cbe18b9bac0aedf264e100a73f34fd05023_:0000": false,
+          "183de9f61a9c362d58ac340058ecddc54da18809_:0000": false,
+          "412c833d4428480466b704ce25bf06f519c8cf72_:0000": false,
+          "e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000": false
+        },
+        "is_powered_on": {
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0000": false,
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0001": false,
+          "ef5f1b9208feab193c638fd13ec9f5a1a671be80_:0000": false,
+          "adaf50303f95c9ff0a069041673f80cd72469bfb_:0000": false,
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0001": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0002": false,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0001": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0000": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0001": false,
+          "d564a9dfddaed66661ac318ff1e3c7b62b99f0ee_:0000": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0001": false,
+          "Laptop_2_:0000": true,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0001": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0002": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0000": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0000": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0001": false,
+          "8718b96e8acda5e530bc0eb72a0d3660778ff59a_:0000": false,
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0000": false,
+          "f7411ceab74991d377e79d79664120d67ff53b71_:0000": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0000": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0001": false,
+          "fe799ce4f050da99c88ef6f994b2197d874cf67d_:0000": false,
+          "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false,
+          "Cellphone_5_:0000": true,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0000": false,
+          "78a02cbe18b9bac0aedf264e100a73f34fd05023_:0000": false
+        },
+        "is_filled": {
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_3_:0000": false,
+          "1f148fddeb1bb6e9634f8d8be3c979e0d5405a65_:0000": false,
+          "e3d3ed213f437121abf8a1faffa60ae0672cbf25_:0000": false,
+          "3330c15aea09a3653dfef1a26ec300ec11fc319e_:0000": false,
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_2_:0000": false,
+          "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1277 @@
+{
+  "config": null,
+  "episodes": [
+    {
+      "episode_id": "T4-OUT-DIS",
+      "scene_id": "107734176_176000019",
+      "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json",
+      "additional_obj_config_paths": [
+        "data/objects/ycb/configs/",
+        "data/objects_ovmm/train_val/ai2thorhab/configs/objects",
+        "data/objects_ovmm/train_val/amazon_berkeley/configs",
+        "data/objects_ovmm/train_val/google_scanned/configs",
+        "data/objects_ovmm/train_val/hssd/configs/objects"
+      ],
+      "start_position": [
+        -4.55333,
+        0.16888,
+        -7.04843
+      ],
+      "start_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "info": {
+        "episode_id": "T4-OUT-DIS",
+        "is_dynamic": true,
+        "sample_configs": {
+          "0": {
+            "name": "apple_0",
+            "number": 1,
+            "object_classes": [
+              "apple"
+            ],
+            "object_instances": [
+              "Apple_26"
+            ],
+            "excluded_object_instances": [
+              "Apple_10",
+              "Apple_11",
+              "Apple_12",
+              "Apple_13",
+              "Apple_14",
+              "Apple_18",
+              "Apple_19",
+              "Apple_20",
+              "Apple_21",
+              "Apple_22",
+              "Apple_23",
+              "Apple_24",
+              "Apple_25",
+              "Apple_27",
+              "Apple_28",
+              "Apple_29",
+              "Apple_3",
+              "Apple_30",
+              "Apple_4",
+              "Apple_6",
+              "Apple_7",
+              "Apple_8",
+              "Apple_9"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true
+            }
+          },
+          "1": {
+            "name": "apple_1",
+            "number": 1,
+            "object_classes": [
+              "apple"
+            ],
+            "object_instances": [
+              "Apple_4"
+            ],
+            "excluded_object_instances": [
+              "Apple_10",
+              "Apple_11",
+              "Apple_12",
+              "Apple_13",
+              "Apple_14",
+              "Apple_18",
+              "Apple_19",
+              "Apple_20",
+              "Apple_21",
+              "Apple_22",
+              "Apple_23",
+              "Apple_24",
+              "Apple_25",
+              "Apple_26",
+              "Apple_27",
+              "Apple_28",
+              "Apple_29",
+              "Apple_3",
+              "Apple_30",
+              "Apple_6",
+              "Apple_7",
+              "Apple_8",
+              "Apple_9"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true
+            }
+          },
+          "2": {
+            "name": "orange_0",
+            "number": 1,
+            "object_classes": [
+              "orange"
+            ],
+            "object_instances": [
+              "017_orange"
+            ],
+            "excluded_object_instances": [],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {}
+          },
+          "3": {
+            "name": "basket_0",
+            "number": 1,
+            "object_classes": [
+              "basket"
+            ],
+            "object_instances": [
+              "87ed6d0c785b3245207bb217eb3ee3fc079f8633"
+            ],
+            "excluded_object_instances": [
+              "RJ_Rabbit_Easter_Basket_Blue",
+              "Spritz_Easter_Basket_Plastic_Teal"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "4": {
+            "name": "bottle_0",
+            "number": 1,
+            "object_classes": [
+              "bottle"
+            ],
+            "object_instances": [
+              "2f92d709c9e94753a896c065cb62ed33765837c0"
+            ],
+            "excluded_object_instances": [
+              "0198c423ae08bf04bb03b16238b34407d6ab4ecf",
+              "021a0ba1300490e2e288221a21f4387ce626d1de",
+              "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+              "1eb36fba48eb1f378fcbebaf74f30e3dcc5021de",
+              "21527bf23974c98dc7bc88b44ba6b54ed32e676c",
+              "22c78acc789ce802af372af9dca938a1c08c5f16",
+              "2f3cdc387d8c8e6e4ec9ce174e5f3dbe090933dd",
+              "3a4f40e2d346ca8cebe6edf88cec493bb89737b7",
+              "49e444157676c90fb1cfa5696f50dc1f82c9f052",
+              "4b4f5834c4163706bcc3029862f8f0ec73d92684",
+              "4e58355312c1de13eb2b1b29b4dfbf0a8dbabefd",
+              "5_HTP",
+              "5de840e0dbacebbce6b2686706e4e5acc55c8e78",
+              "6321b6d56d59d1298990434517ac65e2d93f5274",
+              "6361984802efa59ed8b1b2bafc2ca9aa91d4fe8e",
+              "8358e371f092d654f97dd20b5d41af5eb30d45fd",
+              "867cf3a6f88aa00b97aee772c2349bff732fbac5",
+              "8c4b0396525dfedeaabd64fafcde66ae1e87863a",
+              "9074d79340ff79a56ec2e1cdcc3aec203ace5e87",
+              "9bffa4820132a4933b3296739b9f1437857ddb7e",
+              "AllergenFree_JarroDophilus",
+              "Beta_Glucan",
+              "Bifidus_Balance_FOS",
+              "Blackcurrant_Lutein",
+              "CoQ10_wSSVoxVppVD",
+              "Folic_Acid",
+              "NattoMax",
+              "Organic_Whey_Protein_Unflavored",
+              "Perricone_MD_Health_Weight_Management_Supplements",
+              "Pet_Dophilus_powder",
+              "PhosphOmega",
+              "QAbsorb_CoQ10",
+              "QHPomegranate",
+              "Sleep_Optimizer",
+              "Theanine",
+              "a63cb49060e3a034ebc86fea841e5e1521a85629",
+              "c1bd4ed24b1eab295513bd16896686129dff4f1a",
+              "c82a08279ca1a84d891e9bc0928fd461c1e41cd2",
+              "ce33c1228cfca3da78e22645019258d7a92af3a9",
+              "d5a5480ce6fc74aa5cb74f6b16c2dea8cb90544e",
+              "d60ba70ec8b1b5faedcf3998713fb94ebb9c4bb2",
+              "d946cb7fdeeb63eefb33fa3ee04b98d3a44bc966",
+              "e1b703e78962df6a81b81acab566c6a202b17197",
+              "e5dc7a8a5601d4d26ece19878d8d7b6407129c63",
+              "ec09eff22b5cba63c206b16a960ab411411d2488",
+              "f1c99d9ad79767c09aed2f6d96e1cf87f898b9df",
+              "xxxx55b940d1x7fecx4ea5xa0e2xb695c9547b28",
+              "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_1"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "5": {
+            "name": "bottle_1",
+            "number": 1,
+            "object_classes": [
+              "bottle"
+            ],
+            "object_instances": [
+              "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3"
+            ],
+            "excluded_object_instances": [
+              "0198c423ae08bf04bb03b16238b34407d6ab4ecf",
+              "021a0ba1300490e2e288221a21f4387ce626d1de",
+              "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+              "1eb36fba48eb1f378fcbebaf74f30e3dcc5021de",
+              "21527bf23974c98dc7bc88b44ba6b54ed32e676c",
+              "22c78acc789ce802af372af9dca938a1c08c5f16",
+              "2f3cdc387d8c8e6e4ec9ce174e5f3dbe090933dd",
+              "2f92d709c9e94753a896c065cb62ed33765837c0",
+              "3a4f40e2d346ca8cebe6edf88cec493bb89737b7",
+              "49e444157676c90fb1cfa5696f50dc1f82c9f052",
+              "4b4f5834c4163706bcc3029862f8f0ec73d92684",
+              "4e58355312c1de13eb2b1b29b4dfbf0a8dbabefd",
+              "5_HTP",
+              "5de840e0dbacebbce6b2686706e4e5acc55c8e78",
+              "6321b6d56d59d1298990434517ac65e2d93f5274",
+              "6361984802efa59ed8b1b2bafc2ca9aa91d4fe8e",
+              "8358e371f092d654f97dd20b5d41af5eb30d45fd",
+              "867cf3a6f88aa00b97aee772c2349bff732fbac5",
+              "8c4b0396525dfedeaabd64fafcde66ae1e87863a",
+              "9074d79340ff79a56ec2e1cdcc3aec203ace5e87",
+              "9bffa4820132a4933b3296739b9f1437857ddb7e",
+              "AllergenFree_JarroDophilus",
+              "Beta_Glucan",
+              "Bifidus_Balance_FOS",
+              "Blackcurrant_Lutein",
+              "CoQ10_wSSVoxVppVD",
+              "Folic_Acid",
+              "NattoMax",
+              "Organic_Whey_Protein_Unflavored",
+              "Perricone_MD_Health_Weight_Management_Supplements",
+              "Pet_Dophilus_powder",
+              "PhosphOmega",
+              "QAbsorb_CoQ10",
+              "QHPomegranate",
+              "Sleep_Optimizer",
+              "Theanine",
+              "a63cb49060e3a034ebc86fea841e5e1521a85629",
+              "c1bd4ed24b1eab295513bd16896686129dff4f1a",
+              "c82a08279ca1a84d891e9bc0928fd461c1e41cd2",
+              "ce33c1228cfca3da78e22645019258d7a92af3a9",
+              "d5a5480ce6fc74aa5cb74f6b16c2dea8cb90544e",
+              "d60ba70ec8b1b5faedcf3998713fb94ebb9c4bb2",
+              "d946cb7fdeeb63eefb33fa3ee04b98d3a44bc966",
+              "e1b703e78962df6a81b81acab566c6a202b17197",
+              "e5dc7a8a5601d4d26ece19878d8d7b6407129c63",
+              "ec09eff22b5cba63c206b16a960ab411411d2488",
+              "f1c99d9ad79767c09aed2f6d96e1cf87f898b9df",
+              "xxxx55b940d1x7fecx4ea5xa0e2xb695c9547b28"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_1"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "6": {
+            "name": "toy_fruit_0",
+            "number": 1,
+            "object_classes": [
+              "toy_fruits"
+            ],
+            "object_instances": [
+              "Fruity_Friends"
+            ],
+            "excluded_object_instances": [],
+            "location": "on",
+            "furniture_names": [
+              "counter_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true
+            },
+            "next_to": [
+              "apple_0"
+            ]
+          },
+          "7": {
+            "name": "spray_bottle_0",
+            "number": 1,
+            "object_classes": [
+              "spray_bottle"
+            ],
+            "object_instances": [
+              "Spray_Bottle_3"
+            ],
+            "excluded_object_instances": [
+              "Spray_Bottle_1",
+              "Spray_Bottle_2",
+              "Spray_Bottle_5",
+              "Spray_Bottle_7",
+              "Spray_Bottle_8"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_1"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            },
+            "next_to": [
+              "bottle_0"
+            ]
+          }
+        },
+        "object_labels": {},
+        "extra_info": {
+          "scene_id": "107734176_176000019",
+          "episode_id": "T4-OUT-DIS",
+          "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+          "initial_state": [
+            {
+              "name": "apple_0",
+              "number": 1,
+              "object_classes": [
+                "apple"
+              ],
+              "object_instances": [
+                "Apple_26"
+              ],
+              "excluded_object_instances": [
+                "Apple_10",
+                "Apple_11",
+                "Apple_12",
+                "Apple_13",
+                "Apple_14",
+                "Apple_18",
+                "Apple_19",
+                "Apple_20",
+                "Apple_21",
+                "Apple_22",
+                "Apple_23",
+                "Apple_24",
+                "Apple_25",
+                "Apple_27",
+                "Apple_28",
+                "Apple_29",
+                "Apple_3",
+                "Apple_30",
+                "Apple_4",
+                "Apple_6",
+                "Apple_7",
+                "Apple_8",
+                "Apple_9"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true
+              }
+            },
+            {
+              "name": "apple_1",
+              "number": 1,
+              "object_classes": [
+                "apple"
+              ],
+              "object_instances": [
+                "Apple_4"
+              ],
+              "excluded_object_instances": [
+                "Apple_10",
+                "Apple_11",
+                "Apple_12",
+                "Apple_13",
+                "Apple_14",
+                "Apple_18",
+                "Apple_19",
+                "Apple_20",
+                "Apple_21",
+                "Apple_22",
+                "Apple_23",
+                "Apple_24",
+                "Apple_25",
+                "Apple_26",
+                "Apple_27",
+                "Apple_28",
+                "Apple_29",
+                "Apple_3",
+                "Apple_30",
+                "Apple_6",
+                "Apple_7",
+                "Apple_8",
+                "Apple_9"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true
+              }
+            },
+            {
+              "name": "orange_0",
+              "number": 1,
+              "object_classes": [
+                "orange"
+              ],
+              "object_instances": [
+                "017_orange"
+              ],
+              "excluded_object_instances": [],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {}
+            },
+            {
+              "name": "basket_0",
+              "number": 1,
+              "object_classes": [
+                "basket"
+              ],
+              "object_instances": [
+                "87ed6d0c785b3245207bb217eb3ee3fc079f8633"
+              ],
+              "excluded_object_instances": [
+                "RJ_Rabbit_Easter_Basket_Blue",
+                "Spritz_Easter_Basket_Plastic_Teal"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "bottle_0",
+              "number": 1,
+              "object_classes": [
+                "bottle"
+              ],
+              "object_instances": [
+                "2f92d709c9e94753a896c065cb62ed33765837c0"
+              ],
+              "excluded_object_instances": [
+                "0198c423ae08bf04bb03b16238b34407d6ab4ecf",
+                "021a0ba1300490e2e288221a21f4387ce626d1de",
+                "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+                "1eb36fba48eb1f378fcbebaf74f30e3dcc5021de",
+                "21527bf23974c98dc7bc88b44ba6b54ed32e676c",
+                "22c78acc789ce802af372af9dca938a1c08c5f16",
+                "2f3cdc387d8c8e6e4ec9ce174e5f3dbe090933dd",
+                "3a4f40e2d346ca8cebe6edf88cec493bb89737b7",
+                "49e444157676c90fb1cfa5696f50dc1f82c9f052",
+                "4b4f5834c4163706bcc3029862f8f0ec73d92684",
+                "4e58355312c1de13eb2b1b29b4dfbf0a8dbabefd",
+                "5_HTP",
+                "5de840e0dbacebbce6b2686706e4e5acc55c8e78",
+                "6321b6d56d59d1298990434517ac65e2d93f5274",
+                "6361984802efa59ed8b1b2bafc2ca9aa91d4fe8e",
+                "8358e371f092d654f97dd20b5d41af5eb30d45fd",
+                "867cf3a6f88aa00b97aee772c2349bff732fbac5",
+                "8c4b0396525dfedeaabd64fafcde66ae1e87863a",
+                "9074d79340ff79a56ec2e1cdcc3aec203ace5e87",
+                "9bffa4820132a4933b3296739b9f1437857ddb7e",
+                "AllergenFree_JarroDophilus",
+                "Beta_Glucan",
+                "Bifidus_Balance_FOS",
+                "Blackcurrant_Lutein",
+                "CoQ10_wSSVoxVppVD",
+                "Folic_Acid",
+                "NattoMax",
+                "Organic_Whey_Protein_Unflavored",
+                "Perricone_MD_Health_Weight_Management_Supplements",
+                "Pet_Dophilus_powder",
+                "PhosphOmega",
+                "QAbsorb_CoQ10",
+                "QHPomegranate",
+                "Sleep_Optimizer",
+                "Theanine",
+                "a63cb49060e3a034ebc86fea841e5e1521a85629",
+                "c1bd4ed24b1eab295513bd16896686129dff4f1a",
+                "c82a08279ca1a84d891e9bc0928fd461c1e41cd2",
+                "ce33c1228cfca3da78e22645019258d7a92af3a9",
+                "d5a5480ce6fc74aa5cb74f6b16c2dea8cb90544e",
+                "d60ba70ec8b1b5faedcf3998713fb94ebb9c4bb2",
+                "d946cb7fdeeb63eefb33fa3ee04b98d3a44bc966",
+                "e1b703e78962df6a81b81acab566c6a202b17197",
+                "e5dc7a8a5601d4d26ece19878d8d7b6407129c63",
+                "ec09eff22b5cba63c206b16a960ab411411d2488",
+                "f1c99d9ad79767c09aed2f6d96e1cf87f898b9df",
+                "xxxx55b940d1x7fecx4ea5xa0e2xb695c9547b28",
+                "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_1"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "bottle_1",
+              "number": 1,
+              "object_classes": [
+                "bottle"
+              ],
+              "object_instances": [
+                "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3"
+              ],
+              "excluded_object_instances": [
+                "0198c423ae08bf04bb03b16238b34407d6ab4ecf",
+                "021a0ba1300490e2e288221a21f4387ce626d1de",
+                "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+                "1eb36fba48eb1f378fcbebaf74f30e3dcc5021de",
+                "21527bf23974c98dc7bc88b44ba6b54ed32e676c",
+                "22c78acc789ce802af372af9dca938a1c08c5f16",
+                "2f3cdc387d8c8e6e4ec9ce174e5f3dbe090933dd",
+                "2f92d709c9e94753a896c065cb62ed33765837c0",
+                "3a4f40e2d346ca8cebe6edf88cec493bb89737b7",
+                "49e444157676c90fb1cfa5696f50dc1f82c9f052",
+                "4b4f5834c4163706bcc3029862f8f0ec73d92684",
+                "4e58355312c1de13eb2b1b29b4dfbf0a8dbabefd",
+                "5_HTP",
+                "5de840e0dbacebbce6b2686706e4e5acc55c8e78",
+                "6321b6d56d59d1298990434517ac65e2d93f5274",
+                "6361984802efa59ed8b1b2bafc2ca9aa91d4fe8e",
+                "8358e371f092d654f97dd20b5d41af5eb30d45fd",
+                "867cf3a6f88aa00b97aee772c2349bff732fbac5",
+                "8c4b0396525dfedeaabd64fafcde66ae1e87863a",
+                "9074d79340ff79a56ec2e1cdcc3aec203ace5e87",
+                "9bffa4820132a4933b3296739b9f1437857ddb7e",
+                "AllergenFree_JarroDophilus",
+                "Beta_Glucan",
+                "Bifidus_Balance_FOS",
+                "Blackcurrant_Lutein",
+                "CoQ10_wSSVoxVppVD",
+                "Folic_Acid",
+                "NattoMax",
+                "Organic_Whey_Protein_Unflavored",
+                "Perricone_MD_Health_Weight_Management_Supplements",
+                "Pet_Dophilus_powder",
+                "PhosphOmega",
+                "QAbsorb_CoQ10",
+                "QHPomegranate",
+                "Sleep_Optimizer",
+                "Theanine",
+                "a63cb49060e3a034ebc86fea841e5e1521a85629",
+                "c1bd4ed24b1eab295513bd16896686129dff4f1a",
+                "c82a08279ca1a84d891e9bc0928fd461c1e41cd2",
+                "ce33c1228cfca3da78e22645019258d7a92af3a9",
+                "d5a5480ce6fc74aa5cb74f6b16c2dea8cb90544e",
+                "d60ba70ec8b1b5faedcf3998713fb94ebb9c4bb2",
+                "d946cb7fdeeb63eefb33fa3ee04b98d3a44bc966",
+                "e1b703e78962df6a81b81acab566c6a202b17197",
+                "e5dc7a8a5601d4d26ece19878d8d7b6407129c63",
+                "ec09eff22b5cba63c206b16a960ab411411d2488",
+                "f1c99d9ad79767c09aed2f6d96e1cf87f898b9df",
+                "xxxx55b940d1x7fecx4ea5xa0e2xb695c9547b28"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_1"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "toy_fruit_0",
+              "number": 1,
+              "object_classes": [
+                "toy_fruits"
+              ],
+              "object_instances": [
+                "Fruity_Friends"
+              ],
+              "excluded_object_instances": [],
+              "location": "on",
+              "furniture_names": [
+                "counter_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true
+              },
+              "next_to": [
+                "apple_0"
+              ]
+            },
+            {
+              "name": "spray_bottle_0",
+              "number": 1,
+              "object_classes": [
+                "spray_bottle"
+              ],
+              "object_instances": [
+                "Spray_Bottle_3"
+              ],
+              "excluded_object_instances": [
+                "Spray_Bottle_1",
+                "Spray_Bottle_2",
+                "Spray_Bottle_5",
+                "Spray_Bottle_7",
+                "Spray_Bottle_8"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_1"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              },
+              "next_to": [
+                "bottle_0"
+              ]
+            }
+          ],
+          "obj_info": {
+            "apple": "Apple_4_:0000",
+            "orange": "017_orange_:0000",
+            "basket": "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000",
+            "bottle": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000",
+            "toy_fruits": "Fruity_Friends_:0000",
+            "spray_bottle": "Spray_Bottle_3_:0000"
+          }
+        },
+        "variant_spec": {
+          "variant_id": "T4-OUT-DIS",
+          "sha256": "29588564ccb56bc9a8147e4ed7d4a5b5c11bf7b7380a31c9c72ece146ea8ba4a",
+          "entity_handles": {
+            "apple_0": "Apple_26_:0000",
+            "apple_1": "Apple_4_:0000",
+            "orange_0": "017_orange_:0000",
+            "basket_0": "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000",
+            "bottle_0": "2f92d709c9e94753a896c065cb62ed33765837c0_:0000",
+            "bottle_1": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000",
+            "toy_fruit_0": "Fruity_Friends_:0000",
+            "spray_bottle_0": "Spray_Bottle_3_:0000"
+          },
+          "initial_robot_memory": "- apple_0: on table_4 (living_room_0), is_clean, stale record\n- apple_1: on table_4 (living_room_0), is_clean, stale record\n- orange_0: on table_4 (living_room_0), stale record\n- basket_0: on counter_0 (kitchen_0), is_clean, is_empty\n- bottle_0: on table_4 (living_room_0), is_clean, is_empty, stale record\n- bottle_1: on table_4 (living_room_0), is_clean, is_empty, stale record\n- toy_fruit_0: on counter_0 (kitchen_0), is_clean, next to apple_0\n- spray_bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty, next to bottle_0",
+          "memory_runtime_applied": false,
+          "unscored_success_text": [
+            "- Distractors (toy_fruit_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
+          ],
+          "seed": 506475623,
+          "initial_validation": [
+            "apple_0: exact asset, initial states, furniture, region checked",
+            "apple_1: exact asset, initial states, furniture, region checked",
+            "orange_0: exact asset, initial states, furniture, region checked",
+            "basket_0: exact asset, initial states, furniture, region checked",
+            "bottle_0: exact asset, initial states, furniture, region checked",
+            "bottle_1: exact asset, initial states, furniture, region checked",
+            "toy_fruit_0: exact asset, initial states, furniture, region checked",
+            "spray_bottle_0: exact asset, initial states, furniture, region checked"
+          ],
+          "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"
+        }
+      },
+      "ao_states": {},
+      "rigid_objs": [
+        [
+          "Apple_26.object_config.json",
+          [
+            [
+              0.3192,
+              0.85927,
+              0.3997,
+              -6.32096
+            ],
+            [
+              0.22421,
+              0.34132,
+              -0.91281,
+              0.93722
+            ],
+            [
+              -0.92078,
+              0.38099,
+              -0.08371,
+              -6.91778
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Apple_4.object_config.json",
+          [
+            [
+              -0.72486,
+              0.01226,
+              0.68879,
+              -7.4839
+            ],
+            [
+              -0.04121,
+              0.99728,
+              -0.06112,
+              0.9637
+            ],
+            [
+              -0.68766,
+              -0.07269,
+              -0.72238,
+              -6.79412
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "017_orange.object_config.json",
+          [
+            [
+              -0.51705,
+              -0.33625,
+              0.78714,
+              -6.31103
+            ],
+            [
+              0.71771,
+              0.33079,
+              0.61275,
+              0.9295
+            ],
+            [
+              -0.46642,
+              0.88177,
+              0.0703,
+              -6.62609
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "87ed6d0c785b3245207bb217eb3ee3fc079f8633.object_config.json",
+          [
+            [
+              -0.99972,
+              -0.02363,
+              -0.00167,
+              -7.26895
+            ],
+            [
+              -0.02363,
+              0.99972,
+              -0.0,
+              0.97752
+            ],
+            [
+              0.00167,
+              4e-05,
+              -1.0,
+              -7.03009
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "2f92d709c9e94753a896c065cb62ed33765837c0.object_config.json",
+          [
+            [
+              0.49345,
+              -5e-05,
+              -0.86977,
+              -5.92949
+            ],
+            [
+              -0.00111,
+              1.0,
+              -0.00069,
+              1.01386
+            ],
+            [
+              0.86977,
+              0.00131,
+              0.49345,
+              -9.14328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.object_config.json",
+          [
+            [
+              0.97276,
+              -0.00055,
+              -0.23183,
+              -5.9124
+            ],
+            [
+              0.00069,
+              1.0,
+              0.00052,
+              1.06699
+            ],
+            [
+              0.23183,
+              -0.00066,
+              0.97276,
+              -8.94216
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Fruity_Friends.object_config.json",
+          [
+            [
+              -0.99727,
+              -0.0018,
+              0.07376,
+              -6.2851
+            ],
+            [
+              -0.00213,
+              0.99999,
+              -0.00438,
+              0.98482
+            ],
+            [
+              -0.07376,
+              -0.00453,
+              -0.99727,
+              -6.71939
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Spray_Bottle_3.object_config.json",
+          [
+            [
+              0.01266,
+              -0.00853,
+              0.99988,
+              -5.80328
+            ],
+            [
+              -0.46821,
+              0.88351,
+              0.01346,
+              1.01202
+            ],
+            [
+              -0.88353,
+              -0.46833,
+              0.00719,
+              -9.33328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      ],
+      "targets": {},
+      "markers": [],
+      "target_receptacles": [],
+      "goal_receptacles": [],
+      "name_to_receptacle": {
+        "Apple_26_:0000": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000",
+        "Apple_4_:0000": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000",
+        "017_orange_:0000": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000",
+        "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000",
+        "2f92d709c9e94753a896c065cb62ed33765837c0_:0000": "2c95bbd0e11baed1173e4a1c2f34a52f2c0f6dcc_:0001|double_sided_cabinet0008_receptacle_mesh.0000",
+        "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000": "2c95bbd0e11baed1173e4a1c2f34a52f2c0f6dcc_:0001|double_sided_cabinet0008_receptacle_mesh.0000",
+        "Fruity_Friends_:0000": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000",
+        "Spray_Bottle_3_:0000": "2c95bbd0e11baed1173e4a1c2f34a52f2c0f6dcc_:0001|double_sided_cabinet0008_receptacle_mesh.0000"
+      },
+      "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+      "evaluation_propositions": [
+        {
+          "function_name": "is_inside",
+          "args": {
+            "object_handles": [
+              "Apple_26_:0000"
+            ],
+            "receptacle_handles": [
+              "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_inside",
+          "args": {
+            "object_handles": [
+              "Apple_4_:0000"
+            ],
+            "receptacle_handles": [
+              "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_inside",
+          "args": {
+            "object_handles": [
+              "017_orange_:0000"
+            ],
+            "receptacle_handles": [
+              "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000"
+            ],
+            "receptacle_handles": [
+              "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "2f92d709c9e94753a896c065cb62ed33765837c0_:0000"
+            ],
+            "receptacle_handles": [
+              "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000"
+            ],
+            "receptacle_handles": [
+              "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000"
+            ],
+            "number": 1
+          }
+        }
+      ],
+      "evaluation_proposition_dependencies": [],
+      "evaluation_constraints": [
+        {
+          "type": "TemporalConstraint",
+          "args": {
+            "dag_edges": [],
+            "n_propositions": 6
+          }
+        },
+        {
+          "type": "TerminalSatisfactionConstraint",
+          "args": {
+            "proposition_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "n_propositions": 6
+          }
+        }
+      ],
+      "object_states": {
+        "is_clean": {
+          "f303d22d219dfb8878d74923c6d147fa02d0f64d_:0000": false,
+          "e4258a74474114a9e2677548124b209cf0f6ae43_:0000": false,
+          "3c1908134093a069fcd779ebee6224296f736d54_:0001": false,
+          "0a4dca66c0ab33f774d1edfdf819537baf2a6bf4_:0001": false,
+          "0a4dca66c0ab33f774d1edfdf819537baf2a6bf4_:0000": false,
+          "189c4deccb4c8f936ba9ae9dc14c719f19fee2ba_:0001": false,
+          "189c4deccb4c8f936ba9ae9dc14c719f19fee2ba_:0000": false,
+          "30169ffca25bfe6398dc267a124f09a975531f66_:0000": false,
+          "257f0502154f87737d29e4c63b90197f77808640_:0000": false,
+          "a58885b138c463870ae858aae6acd55ca46574c8_:0000": false,
+          "f25cf740f8e3cf689982238eb89491800f1e1a86_:0001": false,
+          "f25cf740f8e3cf689982238eb89491800f1e1a86_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_13_:0003": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_12_:0003": false,
+          "806186d3b65190797e716ededa9983b7139a9c5f_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_1_:0005": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_1_:0004": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_16_:0002": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0006": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_23_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_23_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_13_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_12_:0001": false,
+          "bbe458f78e3686c63a219a0b9a6fcd785b55cf3d_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_12_:0000": false,
+          "bbe458f78e3686c63a219a0b9a6fcd785b55cf3d_:0000": false,
+          "6fb43dd9a6f262dd6d391b860437ab10a76a0acd_:0000": false,
+          "a2a1ec31ab47a0a637616de59901ec2eb4163855_:0000": false,
+          "aa554f7be876c98a2c021a1d17ebf7819aeaf002_:0001": false,
+          "aa554f7be876c98a2c021a1d17ebf7819aeaf002_:0000": false,
+          "dd7384f40cca85a25a886e494d08b4d3cb907bd3_:0000": false,
+          "f75c49f9bed26c64c3ada2c8623fda53583d3025_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_17_:0002": false,
+          "b08ff9ef963290143022654176782c384a0062ad_:0003": false,
+          "b08ff9ef963290143022654176782c384a0062ad_:0002": false,
+          "b08ff9ef963290143022654176782c384a0062ad_:0001": false,
+          "b08ff9ef963290143022654176782c384a0062ad_:0000": false,
+          "9d5c4c5e897817e769610d84c3fa695b4f4fee0b_:0000": false,
+          "c44c0bcf893a572611c4aac52b4c06d515ddaf69_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_12_:0002": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0002": false,
+          "c44c0bcf893a572611c4aac52b4c06d515ddaf69_:0000": false,
+          "174666b4a100a3e62f73d11e96a2ff9c432cd731_:0001": false,
+          "30169ffca25bfe6398dc267a124f09a975531f66_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_13_:0005": false,
+          "6931780efdd88a0c00d433f20a0d3418c44a9790_:0000": false,
+          "93556df144002e9ccbdd366b1a36adfb59304389_:0000": false,
+          "bbe458f78e3686c63a219a0b9a6fcd785b55cf3d_:0002": false,
+          "6cbc7c1a94f8fa7cac977903128c312dd49ff168_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_13_:0004": false,
+          "4c4a0a4f499e66e1ce7e46f2ae27d849baca0d43_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0005": false,
+          "736dbf03e4ad0a36ebc9b4e3a5f65e8ef35ccb37_:0000": false,
+          "afe773ff0423115a55e49defb4c62bf5e20cf172_:0000": false,
+          "033774ae209de7a75a61ef44b69e42189f9af358_:0000": false,
+          "d426c3358bbe11053691c6c96412d85344590e72_:0000": false,
+          "7b4c611e578247d01c1c8b7c61bfe17dbc381960_:0000": false,
+          "7b4c611e578247d01c1c8b7c61bfe17dbc381960_:0001": false,
+          "c66a7ad447cd8e4d09fc31e0f28832ae398d0676_:0000": false,
+          "c66a7ad447cd8e4d09fc31e0f28832ae398d0676_:0001": false,
+          "ae8d6d659e5b918671bd99d7f6351dfdc8fb7ae4_:0000": false,
+          "b39d5fdf03917dbc9ef22c8b7d310e2f3675c4c6_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_13_:0002": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_16_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_16_:0001": false,
+          "6931780efdd88a0c00d433f20a0d3418c44a9790_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_17_:0000": false,
+          "d879ea537b0771d1ce1c37c3dbcf88f3bd5b44a6_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_17_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_1_:0002": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_16_:0003": false,
+          "82506f481ca07d1ffd8339dbd5e43b7ee2dabd11_:0000": false,
+          "8e5629324a727721c5f3d874ef8a05047092ef06_:0000": false,
+          "0bd3fff760626beb3b250521c516ebc696984229_:0000": false,
+          "0bd3fff760626beb3b250521c516ebc696984229_:0001": false,
+          "d524008a3b1c8468e9f8528f1a0c328755ea7006_:0000": false,
+          "9e94bcd5f087018a11366b769a6fc6ec05a7f1b3_:0000": false,
+          "9c0567a6a0032ec2bad911ec5024eb5f7633868d_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0000": false,
+          "6d923a19211572d56274f7ed8121dbce6e616526_:0001": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0003": false,
+          "46979d39dd98ffacb51e30784306180579eafd88_:0000": false,
+          "a39b562977cb3dfdd9ec23848f036e4e6f537b31_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0007": false,
+          "xxxx9bced4c2x856fx415cx9381x92ed933c0bb9_:0000": false,
+          "031024e00569909d466d87df9fead90355ba29e5_:0000": false,
+          "4c4a0a4f499e66e1ce7e46f2ae27d849baca0d43_:0001": false,
+          "086ae0df95ac1b212fabe2f0b8bf5c63968dfb69_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_21_:0004": false,
+          "dd7384f40cca85a25a886e494d08b4d3cb907bd3_:0001": false,
+          "174666b4a100a3e62f73d11e96a2ff9c432cd731_:0000": false,
+          "73969913e86d513a2e3bbb01a9930a7515af2959_:0000": false,
+          "8bd519211a91692f89d9fb81f6a178e3c21b1265_:0000": false,
+          "11e1226225e420fe40fba0b5bfc7ec05ff26cb84_:0000": false,
+          "de2b7f0bebe42b3ec6d54d8e4de9e5856d9c79da_:0000": false,
+          "f9edbcfde457e4966eb294ba2cb7a9161e6c405f_:0000": false,
+          "fdc92bc1587bfd92efbe7a431cb901c0c1892e77_:0000": false,
+          "37fe9dd335464555c11ba560a08515dd129c2257_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_1_:0003": false,
+          "ae395c1d720ffca43630e6411ec16bebbe3e955b_:0000": false,
+          "53c01001289a25b3e5ec12d4521fa0b184cb1f05_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_23_:0002": false,
+          "24304078d26588e2d78d4db014c5804506388cf5_:0000": false,
+          "6a9b9f8c5c14b981eb58dc8971b426c00e2f409c_:0000": false,
+          "ac2a3b9311cbe311edfeeed429f101cf7a6e3ac4_:0000": false,
+          "45a9ba0780886fa0ec01c959448263cb2c2f9499_:0000": false,
+          "45a9ba0780886fa0ec01c959448263cb2c2f9499_:0001": false,
+          "59e47016c587f125d5da87e7cfc4159921325b2e_:0000": false,
+          "60eeaf00f44996e4267891f5235c23ac456a259f_:0000": false,
+          "999ce14924d99d6da8b84000c6e16b1fb6ce1a08_:0000": false,
+          "999ce14924d99d6da8b84000c6e16b1fb6ce1a08_:0001": false,
+          "6d923a19211572d56274f7ed8121dbce6e616526_:0000": false,
+          "xxxxaf473d33x3e91x4b4ex9182x033de637aafb_:0000": false,
+          "211-34_:0000": false,
+          "3c1908134093a069fcd779ebee6224296f736d54_:0000": false,
+          "211-35_:0000": false,
+          "211-35_:0001": false,
+          "211-35_:0002": false,
+          "211-34_:0001": false,
+          "219-67_:0000": false,
+          "219-68_:0000": false,
+          "1f366035e778f93cff51f06f392d86814b3eab65_:0000": false,
+          "Apple_26_:0000": true,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_23_:0003": false,
+          "79b71be64f8b275103e264cbd1c070d820bac2b4_:0000": false,
+          "Apple_4_:0000": true,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_13_:0000": false,
+          "76ae9b47590b35c68e8ab908e4641d523f083b0c_part_17_:0003": false,
+          "d6f74ac26ab18691b1c20529a58fec8e9fae7179_:0000": false,
+          "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000": true,
+          "60eeaf00f44996e4267891f5235c23ac456a259f_:0001": false,
+          "2f92d709c9e94753a896c065cb62ed33765837c0_:0000": true,
+          "211-35_:0003": false,
+          "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000": true,
+          "Fruity_Friends_:0000": true,
+          "Spray_Bottle_3_:0000": true,
+          "2c95bbd0e11baed1173e4a1c2f34a52f2c0f6dcc_:0001": false,
+          "a4fe17ac1cceb3d8c6cf020b14522c345f526d8a_:0000": false,
+          "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000": false,
+          "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000": false,
+          "65f7bee43fcb222850db45ae67e997889c559edb_:0000": false,
+          "9b64cef587a9b4069ee8e6504715e3ce1a9b1d67_:0000": false,
+          "7dd55651012d3cec11a14ef934ef669c71413d3d_:0001": false,
+          "93767fc355a1afbfff79d54a25204069e0543d2b_:0000": false,
+          "c493273348e661dce9c1690dc54fc625ab9cf834_:0000": false,
+          "2c95bbd0e11baed1173e4a1c2f34a52f2c0f6dcc_:0000": false,
+          "7dd55651012d3cec11a14ef934ef669c71413d3d_:0000": false,
+          "65f7bee43fcb222850db45ae67e997889c559edb_:0001": false
+        },
+        "is_powered_on": {
+          "b08ff9ef963290143022654176782c384a0062ad_:0003": false,
+          "b08ff9ef963290143022654176782c384a0062ad_:0002": false,
+          "b08ff9ef963290143022654176782c384a0062ad_:0001": false,
+          "b08ff9ef963290143022654176782c384a0062ad_:0000": false,
+          "c44c0bcf893a572611c4aac52b4c06d515ddaf69_:0001": false,
+          "c44c0bcf893a572611c4aac52b4c06d515ddaf69_:0000": false,
+          "4c4a0a4f499e66e1ce7e46f2ae27d849baca0d43_:0000": false,
+          "7b4c611e578247d01c1c8b7c61bfe17dbc381960_:0000": false,
+          "7b4c611e578247d01c1c8b7c61bfe17dbc381960_:0001": false,
+          "c66a7ad447cd8e4d09fc31e0f28832ae398d0676_:0000": false,
+          "c66a7ad447cd8e4d09fc31e0f28832ae398d0676_:0001": false,
+          "031024e00569909d466d87df9fead90355ba29e5_:0000": false,
+          "4c4a0a4f499e66e1ce7e46f2ae27d849baca0d43_:0001": false,
+          "45a9ba0780886fa0ec01c959448263cb2c2f9499_:0000": false,
+          "45a9ba0780886fa0ec01c959448263cb2c2f9499_:0001": false,
+          "60eeaf00f44996e4267891f5235c23ac456a259f_:0000": false,
+          "79b71be64f8b275103e264cbd1c070d820bac2b4_:0000": false,
+          "60eeaf00f44996e4267891f5235c23ac456a259f_:0001": false,
+          "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000": false
+        },
+        "is_filled": {
+          "c44c0bcf893a572611c4aac52b4c06d515ddaf69_:0001": false,
+          "c44c0bcf893a572611c4aac52b4c06d515ddaf69_:0000": false,
+          "031024e00569909d466d87df9fead90355ba29e5_:0000": false,
+          "475870f8089a1c7bf8186679ed82537d9fbcc587_:0000": false,
+          "475870f8089a1c7bf8186679ed82537d9fbcc587_:0001": false,
+          "79b71be64f8b275103e264cbd1c070d820bac2b4_:0000": false,
+          "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000": false,
+          "2f92d709c9e94753a896c065cb62ed33765837c0_:0000": false,
+          "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000": false,
+          "Spray_Bottle_3_:0000": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+scene_id: 103997895_171031182
+rooms: bedroom_0, bedroom_1, living_room_0, kitchen_0, laundryroom/mudroom_0, bathroom_0, bathroom_1, closet_0
+rooms: bedroom_0, bedroom_1, living_room_0, kitchen_0, laundryroom/mudroom_0, bathroom_0, bathroom_1, closet_0
+bedroom_0:
+  - chair_0: Hercules Swivel Glider Recliner, Oyster
+  - chest_of_drawers_0: Presby Nightstand, White
+bedroom_1:
+  - bed_0: Casa King Storage Bed, Black
+  - shelves_1: Telegraph Wide Bookcase, Acacia White
+  - table_3: Telegraph Desk, Acacia White
+  - filing_cabinet_0: Telegraph 4 Drawer File, Acacia White
+living_room_0:
+  - shelves_0: bookshelf
+  - table_0: Tulip Table (90cm)
+  - couch_0: Presley 3 Seater Beige
+  - table_1: Lincoln Marble 3 In 1 Pack Tables
+  - couch_2: Presley 2 Seater Beige
+kitchen_0:
+  - shelves_0: bookshelf
+  - cabinet_0: Kitchen cabinet with hobs and oven
+  - table_2: Bar
+  - cabinet_1: Kitchen cabinet with door
+  - cabinet_2: Kitchen cabinet with 2 doors
+  - cabinet_3: Kitchen cabinet with drawers
+  - counter_0: Kitchen island, 60x100x90
+  - cabinet_4: Kitchen tall cabinet
+  - cabinet_6: Kitchen cabinet with sink, double
+  - fridge_0: American fridge freezer
+  - cabinet_7: Kitchen corner cabinet
+laundryroom/mudroom_0:
+  - washer_dryer_0: 1600 spin 8kg load washing machine in silver F1647TD5
+  - washer_dryer_1: 1600 spin 8kg load washing machine in silver F1647TD5
+  - couch_1: Couch
+  - cabinet_5: Kitchen Cabinet with sink, 2 doors
+bathroom_0:
+  - toilet_0: Close Coupled Toilet
+bathroom_1:
+  - toilet_1: Cooke & Lewis Romeo Modern Close-Coupled Toilet with Soft Close Seat
+  - cabinet_0: Kitchen cabinet with hobs and oven
+closet_0:
+  - wardrobe_0: Dublin Combi Wardrobe - Black
+  - wardrobe_1: Dublin Black Wardrobe - 2 Door - 2 Drawer

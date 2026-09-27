@@ -1,0 +1,305 @@
+{
+  "initial_state_dicts": [
+    {
+      "scene_id": "106878915_174887025",
+      "episode_id": "T3-ACC-DIS",
+      "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+      "initial_state": [
+        {
+          "name": "book_0",
+          "number": 1,
+          "object_classes": [
+            "book"
+          ],
+          "object_instances": [
+            "Book_17"
+          ],
+          "excluded_object_instances": [
+            "0e00b8fa01cc07735378cc1df01619b667af2698",
+            "0e11918fe7eaf8bdee859494e0d3dfe59d5b2d32",
+            "10aad7e8b95a3bc4bf9cc81d416016befad8e737",
+            "188c1fa84ac72c9d9f17430052459e4cfebc0f81",
+            "18e6fa40bb534fe88001d8a79022fedbdfa58e54",
+            "1aedffbcaec52392b114758a0490c39ea92080e7",
+            "1ccad6983b2f452110705e8175626fc2760a106a",
+            "21e5c7cabc2047f82439c63c8e5e785d58a67bfc",
+            "28b8057ff4790e3860c3494e093f2fadd3c422fd",
+            "2a06baac13fbb8210ccc11325b72b844426c208f",
+            "2d16bb0da869abae99bb080d54869111fdfa2c67",
+            "2f7ac29a1a7006f169b9a6235de97532c78b03c5",
+            "361a6c08b1137a16977f5a00761aabcb311a7475",
+            "387d604356db232de6468dc6a4c66230c8cd0fac",
+            "5bb85d3caf11acb1eb2f299ccc724eb7a855b7cf",
+            "6305d9ce403689f0085d59aa72008c136ef8fa58",
+            "631cf05ac0f3bcc4f61054911a84cbc9ccc37d3a",
+            "6c012b2a87c94cc8b26d014ba8601b4eadf0c17d",
+            "73e424cce8835563a1ca043e199122c3dfe62d11",
+            "79431fb55870504f86c5f3e2e4c47f4ba88f63e0",
+            "7c4abfaad6caa34008cf4aac249adcba013ad51b",
+            "81c6dd3830a8df6644bd1f6b9a239615234e888f",
+            "8c6411e06f17477320b687b36a247e4ebc86dc3d",
+            "8db837a85a24fbb6e51e4bba33cd3253d0ebfa92",
+            "8f2898b7a87221b1689078fedc133b3aea95a38c",
+            "917651b88d2d95bdb9d186328a36a94b1a1f3222",
+            "9434ebf4ba8489f4ba751d2b67688d120f822d0c",
+            "99843575975c6fcf087647c77f56bce970b7902a",
+            "9c395719a9c79bc2333db882a9370a913c0e3471",
+            "9e0b08eceb97e1b79cb728ec31891e71ac97570a",
+            "B01DN8TB5U",
+            "B078GTTCCF",
+            "Book_1",
+            "Book_10",
+            "Book_11",
+            "Book_12",
+            "Book_13",
+            "Book_14",
+            "Book_15",
+            "Book_16",
+            "Book_18",
+            "Book_19",
+            "Book_20",
+            "Book_21",
+            "Book_22",
+            "Book_23",
+            "Book_24",
+            "Book_25",
+            "Book_26",
+            "Book_27",
+            "Book_3",
+            "Book_30",
+            "Book_4",
+            "Book_5",
+            "Book_6",
+            "Book_7",
+            "Book_9",
+            "Eat_to_Live_The_Amazing_NutrientRich_Program_for_Fast_and_Sustained_Weight_Loss_Revised_Edition_Book",
+            "afe9e2965cc528e785591c47971a404d742e2c7b",
+            "b6e22b867069fc1a559eeade866de21ad233fb8c",
+            "bd53d8e362a0b1c63854b3d97187ba2f46a36a57",
+            "bf3d6b452f8d2ea2af24debf3b19cb187d6798af",
+            "c28aa62e0d287fa9b35fa7e64b4379f66004225c",
+            "c366e25f8eedfeff6ebe1991e712b91ef235031f",
+            "c42c9cc7db0f5e58e14f3d6acfff94c9b2c5f488",
+            "c9d140d976657e8d058bd6bc3dc068b87daf9260",
+            "d344e96d26c7f5ca8ffcad826d39617635f81def",
+            "d3bc33eb5aafbdab8388188e6d76ca75e537a18a",
+            "d413be1b49919287e484dd5cb5658c56b05aebf5",
+            "dbcd7791f12e9e9ae40e8ea77a8203bf66cb50a1",
+            "e204459fc66073fd8832ec0c5f5f9c018ae2f440",
+            "e46d683380db1069cea53aaec940d9c400c9b61d",
+            "e6a24c5d82ac274c29caa24dc71c18c5c5481a56",
+            "edf5a667080ed733fda55514ee18a8081f9dcf9c",
+            "fa86c98cbdba8962a436be647969fa0f304d2c84",
+            "xxxx9a19f571x1dc0x45c3x99fdxbf82a1abcb7f",
+            "xxxxc7c6f64axb1d5x4e58x8b61x553c557dc68f"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "bed_1"
+          ],
+          "allowed_regions": [
+            "bedroom_1"
+          ],
+          "object_states": {
+            "is_clean": true
+          }
+        },
+        {
+          "name": "book_1",
+          "number": 1,
+          "object_classes": [
+            "book"
+          ],
+          "object_instances": [
+            "Book_20"
+          ],
+          "excluded_object_instances": [
+            "0e00b8fa01cc07735378cc1df01619b667af2698",
+            "0e11918fe7eaf8bdee859494e0d3dfe59d5b2d32",
+            "10aad7e8b95a3bc4bf9cc81d416016befad8e737",
+            "188c1fa84ac72c9d9f17430052459e4cfebc0f81",
+            "18e6fa40bb534fe88001d8a79022fedbdfa58e54",
+            "1aedffbcaec52392b114758a0490c39ea92080e7",
+            "1ccad6983b2f452110705e8175626fc2760a106a",
+            "21e5c7cabc2047f82439c63c8e5e785d58a67bfc",
+            "28b8057ff4790e3860c3494e093f2fadd3c422fd",
+            "2a06baac13fbb8210ccc11325b72b844426c208f",
+            "2d16bb0da869abae99bb080d54869111fdfa2c67",
+            "2f7ac29a1a7006f169b9a6235de97532c78b03c5",
+            "361a6c08b1137a16977f5a00761aabcb311a7475",
+            "387d604356db232de6468dc6a4c66230c8cd0fac",
+            "5bb85d3caf11acb1eb2f299ccc724eb7a855b7cf",
+            "6305d9ce403689f0085d59aa72008c136ef8fa58",
+            "631cf05ac0f3bcc4f61054911a84cbc9ccc37d3a",
+            "6c012b2a87c94cc8b26d014ba8601b4eadf0c17d",
+            "73e424cce8835563a1ca043e199122c3dfe62d11",
+            "79431fb55870504f86c5f3e2e4c47f4ba88f63e0",
+            "7c4abfaad6caa34008cf4aac249adcba013ad51b",
+            "81c6dd3830a8df6644bd1f6b9a239615234e888f",
+            "8c6411e06f17477320b687b36a247e4ebc86dc3d",
+            "8db837a85a24fbb6e51e4bba33cd3253d0ebfa92",
+            "8f2898b7a87221b1689078fedc133b3aea95a38c",
+            "917651b88d2d95bdb9d186328a36a94b1a1f3222",
+            "9434ebf4ba8489f4ba751d2b67688d120f822d0c",
+            "99843575975c6fcf087647c77f56bce970b7902a",
+            "9c395719a9c79bc2333db882a9370a913c0e3471",
+            "9e0b08eceb97e1b79cb728ec31891e71ac97570a",
+            "B01DN8TB5U",
+            "B078GTTCCF",
+            "Book_1",
+            "Book_10",
+            "Book_11",
+            "Book_12",
+            "Book_13",
+            "Book_14",
+            "Book_15",
+            "Book_16",
+            "Book_17",
+            "Book_18",
+            "Book_19",
+            "Book_21",
+            "Book_22",
+            "Book_23",
+            "Book_24",
+            "Book_25",
+            "Book_26",
+            "Book_27",
+            "Book_3",
+            "Book_30",
+            "Book_4",
+            "Book_5",
+            "Book_6",
+            "Book_7",
+            "Book_9",
+            "Eat_to_Live_The_Amazing_NutrientRich_Program_for_Fast_and_Sustained_Weight_Loss_Revised_Edition_Book",
+            "afe9e2965cc528e785591c47971a404d742e2c7b",
+            "b6e22b867069fc1a559eeade866de21ad233fb8c",
+            "bd53d8e362a0b1c63854b3d97187ba2f46a36a57",
+            "bf3d6b452f8d2ea2af24debf3b19cb187d6798af",
+            "c28aa62e0d287fa9b35fa7e64b4379f66004225c",
+            "c366e25f8eedfeff6ebe1991e712b91ef235031f",
+            "c42c9cc7db0f5e58e14f3d6acfff94c9b2c5f488",
+            "c9d140d976657e8d058bd6bc3dc068b87daf9260",
+            "d344e96d26c7f5ca8ffcad826d39617635f81def",
+            "d3bc33eb5aafbdab8388188e6d76ca75e537a18a",
+            "d413be1b49919287e484dd5cb5658c56b05aebf5",
+            "dbcd7791f12e9e9ae40e8ea77a8203bf66cb50a1",
+            "e204459fc66073fd8832ec0c5f5f9c018ae2f440",
+            "e46d683380db1069cea53aaec940d9c400c9b61d",
+            "e6a24c5d82ac274c29caa24dc71c18c5c5481a56",
+            "edf5a667080ed733fda55514ee18a8081f9dcf9c",
+            "fa86c98cbdba8962a436be647969fa0f304d2c84",
+            "xxxx9a19f571x1dc0x45c3x99fdxbf82a1abcb7f",
+            "xxxxc7c6f64axb1d5x4e58x8b61x553c557dc68f"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_1"
+          ],
+          "allowed_regions": [
+            "bedroom_1"
+          ],
+          "object_states": {
+            "is_clean": true
+          }
+        },
+        {
+          "name": "laptop_0",
+          "number": 1,
+          "object_classes": [
+            "laptop"
+          ],
+          "object_instances": [
+            "Laptop_2"
+          ],
+          "excluded_object_instances": [
+            "Laptop_1",
+            "Laptop_10",
+            "Laptop_11",
+            "Laptop_12",
+            "Laptop_13",
+            "Laptop_15",
+            "Laptop_16",
+            "Laptop_17",
+            "Laptop_19",
+            "Laptop_20",
+            "Laptop_21",
+            "Laptop_22",
+            "Laptop_23",
+            "Laptop_24",
+            "Laptop_25",
+            "Laptop_26",
+            "Laptop_27",
+            "Laptop_28",
+            "Laptop_29",
+            "Laptop_3",
+            "Laptop_4",
+            "Laptop_5",
+            "Laptop_6"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_2"
+          ],
+          "allowed_regions": [
+            "kitchen_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_powered_on": true
+          }
+        },
+        {
+          "name": "folder_0",
+          "number": 1,
+          "object_classes": [
+            "folder"
+          ],
+          "object_instances": [
+            "B01B254OVC"
+          ],
+          "excluded_object_instances": [],
+          "location": "on",
+          "furniture_names": [
+            "bed_1"
+          ],
+          "allowed_regions": [
+            "bedroom_1"
+          ],
+          "object_states": {
+            "is_clean": true
+          }
+        },
+        {
+          "name": "phone_0",
+          "number": 1,
+          "object_classes": [
+            "cellphone"
+          ],
+          "object_instances": [
+            "Cellphone_5"
+          ],
+          "excluded_object_instances": [
+            "Cellphone_2",
+            "Cellphone_3",
+            "Cellphone_6",
+            "Cellphone_7",
+            "Cellphone_8"
+          ],
+          "location": "on",
+          "furniture_names": [
+            "table_2"
+          ],
+          "allowed_regions": [
+            "kitchen_0"
+          ],
+          "object_states": {
+            "is_clean": true,
+            "is_powered_on": true
+          }
+        }
+      ]
+    }
+  ],
+  "seed": 693976748
+}

@@ -1,0 +1,13 @@
+{
+  "variant": "T2-ACC-ABS",
+  "objects": [
+    {
+      "entity": "box_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "box_1",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

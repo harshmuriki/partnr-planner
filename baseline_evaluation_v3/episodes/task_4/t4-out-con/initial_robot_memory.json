@@ -1,0 +1,40 @@
+{
+  "variant": "T4-OUT-CON",
+  "objects": [
+    {
+      "entity": "apple_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_4 (living_room_0)"
+    },
+    {
+      "entity": "apple_1",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_4 (living_room_0)"
+    },
+    {
+      "entity": "orange_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_4 (living_room_0)"
+    },
+    {
+      "entity": "basket_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_4 (living_room_0)"
+    },
+    {
+      "entity": "bottle_1",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_4 (living_room_0)"
+    }
+  ]
+}

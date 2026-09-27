@@ -1,0 +1,38 @@
+[
+  {
+    "variant_id": "T7-ACC-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T7-ACC-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T7-INC-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T7-INC-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T7-OUT-BASE",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  {
+    "variant_id": "T7-OUT-DIS",
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+]

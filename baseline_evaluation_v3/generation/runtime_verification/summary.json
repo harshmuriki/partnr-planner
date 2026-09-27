@@ -1,0 +1,632 @@
+{
+  "T1-ACC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-ACC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-ACC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-ACC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-ACC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-INC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-INC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-INC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-INC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-INC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-OUT-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-OUT-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-OUT-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-OUT-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T1-OUT-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-ACC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-ACC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-ACC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-ACC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-ACC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-INC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-INC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-INC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-INC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-INC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-OUT-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-OUT-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-OUT-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-OUT-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T2-OUT-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-ACC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-ACC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-ACC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-ACC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-INC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-INC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-INC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-INC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-OUT-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-OUT-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-OUT-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T3-OUT-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-ACC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-ACC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-ACC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-ACC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-INC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-INC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-INC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-INC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-OUT-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-OUT-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-OUT-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T4-OUT-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-ACC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-ACC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-ACC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-ACC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-ACC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-INC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-INC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-INC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-INC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-INC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-OUT-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-OUT-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-OUT-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-OUT-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T5-OUT-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-ACC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-ACC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-ACC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-ACC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-ACC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-INC-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-INC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-INC-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-INC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-INC-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-OUT-ABS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.16666666666666666,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-OUT-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-OUT-CON.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-OUT-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T6-OUT-SUB.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.2222222222222222,
+      "task_state_success": 0.0
+    }
+  },
+  "T7-ACC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T7-ACC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T7-INC-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T7-INC-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T7-OUT-BASE.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  },
+  "T7-OUT-DIS.json": {
+    "success_init": true,
+    "info": {
+      "task_percent_complete": 0.0,
+      "task_state_success": 0.0
+    }
+  }
+}

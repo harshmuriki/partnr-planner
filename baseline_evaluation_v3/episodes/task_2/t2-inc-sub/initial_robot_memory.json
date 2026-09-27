@@ -1,0 +1,17 @@
+{
+  "variant": "T2-INC-SUB",
+  "objects": [
+    {
+      "entity": "box_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "box_1",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "knife_0",
+      "in_initial_robot_memory": false
+    }
+  ]
+}

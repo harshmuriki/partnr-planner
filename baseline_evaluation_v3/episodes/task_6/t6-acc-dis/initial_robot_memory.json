@@ -1,0 +1,33 @@
+{
+  "variant": "T6-ACC-DIS",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "hand_towel_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "lamp_living_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "dirty_hand_towel_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "bread_25_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "supplement_bottle_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

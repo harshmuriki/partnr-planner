@@ -1,0 +1,242 @@
+{
+  "objects": [
+    "jug_0",
+    "lamp_0"
+  ],
+  "rooms": [
+    "bathroom_0",
+    "bathroom_1",
+    "bedroom_0",
+    "bedroom_1",
+    "closet_0",
+    "hallway_0",
+    "kitchen_0",
+    "laundryroom/mudroom_0",
+    "living_room_0"
+  ],
+  "object_to_recep": {
+    "lamp_0": "chest_of_drawers_0",
+    "jug_0": "counter_0"
+  },
+  "object_to_room": {
+    "lamp_0": "bedroom_0",
+    "jug_0": "kitchen_0"
+  },
+  "recep_to_room": {
+    "toilet_0": "bathroom_0",
+    "cabinet_0": "bathroom_1",
+    "toilet_1": "bathroom_1",
+    "chair_0": "bedroom_0",
+    "chest_of_drawers_0": "bedroom_0",
+    "bed_0": "bedroom_1",
+    "filing_cabinet_0": "bedroom_1",
+    "shelves_1": "bedroom_1",
+    "table_3": "bedroom_1",
+    "wardrobe_0": "closet_0",
+    "wardrobe_1": "closet_0",
+    "cabinet_1": "kitchen_0",
+    "cabinet_2": "kitchen_0",
+    "cabinet_3": "kitchen_0",
+    "cabinet_4": "kitchen_0",
+    "cabinet_6": "kitchen_0",
+    "cabinet_7": "kitchen_0",
+    "counter_0": "kitchen_0",
+    "fridge_0": "kitchen_0",
+    "shelves_0": "kitchen_0",
+    "table_2": "kitchen_0",
+    "cabinet_5": "laundryroom/mudroom_0",
+    "couch_1": "laundryroom/mudroom_0",
+    "washer_dryer_0": "laundryroom/mudroom_0",
+    "washer_dryer_1": "laundryroom/mudroom_0",
+    "couch_0": "living_room_0",
+    "couch_2": "living_room_0",
+    "table_0": "living_room_0",
+    "table_1": "living_room_0"
+  },
+  "recep_to_description": {
+    "bed_0": "Casa King Storage Bed, Black",
+    "cabinet_0": "Kitchen cabinet with hobs and oven",
+    "cabinet_1": "Kitchen cabinet with door",
+    "cabinet_2": "Kitchen cabinet with 2 doors",
+    "cabinet_3": "Kitchen cabinet with drawers",
+    "cabinet_4": "Kitchen tall cabinet",
+    "cabinet_5": "Kitchen Cabinet with sink, 2 doors",
+    "cabinet_6": "Kitchen cabinet with sink, double",
+    "cabinet_7": "Kitchen corner cabinet",
+    "chair_0": "Hercules Swivel Glider Recliner, Oyster",
+    "chest_of_drawers_0": "Presby Nightstand, White",
+    "couch_0": "Presley 3 Seater Beige",
+    "couch_1": "Couch",
+    "couch_2": "Presley 2 Seater Beige",
+    "counter_0": "Kitchen island, 60x100x90",
+    "filing_cabinet_0": "Telegraph 4 Drawer File, Acacia White",
+    "fridge_0": "American fridge freezer",
+    "shelves_0": "bookshelf",
+    "shelves_1": "Telegraph Wide Bookcase, Acacia White",
+    "table_0": "Tulip Table (90cm)",
+    "table_1": "Lincoln Marble 3 In 1 Pack Tables",
+    "table_2": "Bar",
+    "table_3": "Telegraph Desk, Acacia White",
+    "toilet_0": "Close Coupled Toilet",
+    "toilet_1": "Cooke & Lewis Romeo Modern Close-Coupled Toilet with Soft Close Seat",
+    "wardrobe_0": "Dublin Combi Wardrobe - Black",
+    "wardrobe_1": "Dublin Black Wardrobe - 2 Door - 2 Drawer",
+    "washer_dryer_0": "1600 spin 8kg load washing machine in silver F1647TD5",
+    "washer_dryer_1": "1600 spin 8kg load washing machine in silver F1647TD5"
+  },
+  "object_to_states": {
+    "bed_0": {
+      "is_clean": false
+    },
+    "cabinet_0": {
+      "is_clean": false
+    },
+    "cabinet_1": {
+      "is_clean": false
+    },
+    "cabinet_2": {
+      "is_clean": false
+    },
+    "cabinet_3": {
+      "is_clean": false
+    },
+    "cabinet_4": {
+      "is_clean": false
+    },
+    "cabinet_5": {
+      "is_clean": false
+    },
+    "cabinet_6": {
+      "is_clean": false
+    },
+    "cabinet_7": {
+      "is_clean": false
+    },
+    "chair_0": {
+      "is_clean": false
+    },
+    "chest_of_drawers_0": {
+      "is_clean": false
+    },
+    "couch_0": {
+      "is_clean": false
+    },
+    "couch_1": {
+      "is_clean": false
+    },
+    "couch_2": {
+      "is_clean": false
+    },
+    "counter_0": {
+      "is_clean": false
+    },
+    "filing_cabinet_0": {
+      "is_clean": false,
+      "is_filled": false
+    },
+    "fridge_0": {
+      "is_clean": false,
+      "is_powered_on": false
+    },
+    "jug_0": {
+      "is_clean": false,
+      "is_filled": false
+    },
+    "lamp_0": {
+      "is_clean": false,
+      "is_powered_on": false,
+      "is_filled": false
+    },
+    "shelves_0": {
+      "is_clean": false
+    },
+    "shelves_1": {
+      "is_clean": false
+    },
+    "table_0": {
+      "is_clean": false
+    },
+    "table_1": {
+      "is_clean": false
+    },
+    "table_2": {
+      "is_clean": false
+    },
+    "table_3": {
+      "is_clean": false
+    },
+    "toilet_0": {
+      "is_clean": false,
+      "is_powered_on": false,
+      "is_filled": false
+    },
+    "toilet_1": {
+      "is_clean": false,
+      "is_powered_on": false,
+      "is_filled": false
+    },
+    "wardrobe_0": {
+      "is_clean": false
+    },
+    "wardrobe_1": {
+      "is_clean": false
+    },
+    "washer_dryer_0": {
+      "is_clean": false,
+      "is_powered_on": false,
+      "is_filled": false
+    },
+    "washer_dryer_1": {
+      "is_clean": false,
+      "is_powered_on": false,
+      "is_filled": false
+    }
+  },
+  "object_to_handle": {
+    "jug_0": "2b429c575b4de6837a9d3ce5472ceb8a918fdbd2_:0000",
+    "lamp_0": "B07HK3PNSK_:0000"
+  },
+  "recep_to_handle": {
+    "bed_0": "0ce32f140400176aa09faa2e869adc288dc427ce_:0000",
+    "cabinet_0": "db064ef059f7bb0af9f1036e7649e4835a9ff4f5_:0000",
+    "cabinet_1": "1e414b53eef039690faed7557721dd9ce784ef8c_:0000",
+    "cabinet_2": "37e59e768eb7f42a0019713374063cb63419a44c_:0000",
+    "cabinet_3": "4f59765435e64524ba5ac8e25427a895fa530311_:0000",
+    "cabinet_4": "90fb388959832dd71fdcad95215f28b077fe4a3d_:0000",
+    "cabinet_5": "ae5bbeab569aed333ee50e683afdbd4d96ec93a6_:0000",
+    "cabinet_6": "d4ba31e433421a8ef008208e9b868da12e24a5a5_:0000",
+    "cabinet_7": "ff698a0cb15de8749c925c8aae3e8cdb8e88aa8f_:0000",
+    "chair_0": "04801d6f327197470d63bfd728d4cf02bd33ec56_:0000",
+    "chest_of_drawers_0": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000",
+    "couch_0": "50bf1434785c2776eac002be0f7c3abeff54709c_:0000",
+    "couch_1": "5d77eeaa7a16e02ef64e3ce74893768cc8389aed_:0000",
+    "couch_2": "809aa90d72a9aa73fadef388620c7ca3668f9d00_:0000",
+    "counter_0": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000",
+    "filing_cabinet_0": "f70c9cd37e4949edaa532254729fb3153ff6a76f_:0000",
+    "fridge_0": "ec6d929832a895b456fd6cca745a18c192c41f4b_:0000",
+    "shelves_0": "252ea1f9106ada162cf68bb61c71efd4a62d4c87_part_3_:0000",
+    "shelves_1": "499dd12f83d3fcb655a0bc2373e4da020a67008a_:0000",
+    "table_0": "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000",
+    "table_1": "735845d0674f69f736af7e0f116767a01392f9b8_:0000",
+    "table_2": "dd00b36439864cbfa47440f93d6fc81f91a164d3_:0000",
+    "table_3": "319c007ee7d07ca84c797a512ad4a98c9abc42da_:0000",
+    "toilet_0": "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000",
+    "toilet_1": "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000",
+    "wardrobe_0": "f5bf7b0f14752c987cd026abe7b1238fb25ff9b3_:0000",
+    "wardrobe_1": "fa786f463631d9e8ab7b794d8df610a233a445eb_:0000",
+    "washer_dryer_0": "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000",
+    "washer_dryer_1": "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001"
+  },
+  "room_to_id": {
+    "bathroom_0": "bathroom",
+    "bathroom_1": "bathroom.001",
+    "bedroom_0": "bedroom",
+    "bedroom_1": "bedroom.001",
+    "closet_0": "closet",
+    "hallway_0": "hallway",
+    "kitchen_0": "kitchen",
+    "laundryroom/mudroom_0": "laundryroom",
+    "living_room_0": "living room"
+  },
+  "instruction": "Turn off all the lights in bedroom_0 and bring the full water jug on the kitchen island to the Tulip table in the living room."
+}

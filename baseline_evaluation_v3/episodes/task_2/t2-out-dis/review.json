@@ -1,0 +1,335 @@
+{
+  "variant": "T2-OUT-DIS",
+  "status": "generated",
+  "dataset": "episodes/task_2/t2-out-dis/dataset.json.gz",
+  "episode_id": "T2-OUT-DIS",
+  "scene": "106878960_174887073",
+  "objects": [
+    {
+      "entity": "box_0",
+      "asset": "B073PB1H88",
+      "handle": "B073PB1H88_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_1",
+          "scissors_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.0566980838775635,
+        0.1635035276412964,
+        -7.825239658355713
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "box_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "box_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "box_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "box_1",
+      "asset": "B071225BBS",
+      "handle": "B071225BBS_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_0",
+          "scissors_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -3.0765175819396973,
+        0.15441827476024628,
+        -4.170992374420166
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "box_1-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "box_1-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "box_1-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "scissors_0",
+      "asset": "Diamond_Visions_Scissors_Red",
+      "handle": "Diamond_Visions_Scissors_Red_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_2",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "box_0",
+          "box_1"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.396660804748535,
+        0.8438560962677002,
+        -2.5928218364715576
+      ],
+      "views": [
+        {
+          "label": "Angle 5",
+          "image": "scissors_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "scissors_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "scissors_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_receptacle_mesh.0000"
+    },
+    {
+      "entity": "board_game_0",
+      "asset": "Clue_Board_Game_Classic_Edition",
+      "handle": "Clue_Board_Game_Classic_Edition_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "box_1"
+        ],
+        "closed": []
+      },
+      "expected": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -3.1789698600769043,
+        0.1419811099767685,
+        -3.67901873588562
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "board_game_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "board_game_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "board_game_0-angle-4.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "distractor_knife_0",
+      "asset": "ButterKnife_1",
+      "handle": "ButterKnife_1_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_2",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "scissors_0"
+        ],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_2",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -2.677316427230835,
+        0.8420686721801758,
+        -2.6614768505096436
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "distractor_knife_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "distractor_knife_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "distractor_knife_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_receptacle_mesh.0000"
+    },
+    {
+      "entity": "screwdriver_0",
+      "asset": "Craftsman_Grip_Screwdriver_Phillips_Cushion",
+      "handle": "Craftsman_Grip_Screwdriver_Phillips_Cushion_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_2",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "scissors_0"
+        ],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_2",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -2.6391854286193848,
+        0.8457105159759521,
+        -2.821221351623535
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "screwdriver_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "screwdriver_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "screwdriver_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T2-ACC-DIS",
+  "checks": [
+    "box_0: exact asset, initial states, furniture, region checked",
+    "box_1: exact asset, initial states, furniture, region checked",
+    "scissors_0: exact asset, initial states, furniture, region checked",
+    "board_game_0: exact asset, initial states, furniture, region checked",
+    "distractor_knife_0: exact asset, initial states, furniture, region checked",
+    "screwdriver_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- Distractors (board_game_0, distractor_knife_0, screwdriver_0) must not be used in place of the task objects; they have no placement goals."
+  ],
+  "spec_sha256": "c4bac65cb288669fcea05f19b9c959aad0e298d5f631d849a075c572d8a712f0",
+  "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- box_1: floor floor_living_room_0 (living_room_0), is_clean, is_empty, stale record\n- scissors_0: on table_0 (dining_room_0), is_clean, stale record\n- board_game_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, next to box_1\n- distractor_knife_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean, next to scissors_0\n- screwdriver_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean, next to scissors_0",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

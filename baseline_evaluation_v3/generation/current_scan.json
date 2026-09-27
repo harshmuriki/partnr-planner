@@ -1,0 +1,59 @@
+{
+  "scan_date": "2026-09-27",
+  "summary": {
+    "T1": {
+      "specs": 15,
+      "saved": 15,
+      "missing": []
+    },
+    "T2": {
+      "specs": 15,
+      "saved": 15,
+      "missing": []
+    },
+    "T3": {
+      "specs": 12,
+      "saved": 12,
+      "missing": []
+    },
+    "T4": {
+      "specs": 12,
+      "saved": 12,
+      "missing": []
+    },
+    "T5": {
+      "specs": 15,
+      "saved": 15,
+      "missing": []
+    },
+    "T6": {
+      "specs": 15,
+      "saved": 15,
+      "missing": []
+    },
+    "T7": {
+      "specs": 6,
+      "saved": 6,
+      "missing": []
+    }
+  },
+  "saved_variants": 90,
+  "missing": {},
+  "problems": [],
+  "goals_and_verification_problems": [],
+  "current_hash_runtime_verified": 90,
+  "remaining_active_issue_ids": [],
+  "checks_performed": [
+    "inventory",
+    "current source/copied spec equality",
+    "episode and audit provenance",
+    "compiled goals, dependencies and temporal constraints",
+    "recorded initial memory",
+    "exact assets and initial states",
+    "shared physical state across memory variants",
+    "all 90 ground-truth catalog availability checks",
+    "fresh Habitat initialization, evaluation handles and constraint argument checks"
+  ],
+  "simulator_checks_rerun": true,
+  "full_rollouts_performed": false
+}

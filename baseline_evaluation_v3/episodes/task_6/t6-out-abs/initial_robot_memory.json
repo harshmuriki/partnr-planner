@@ -1,0 +1,29 @@
+{
+  "variant": "T6-OUT-ABS",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_7 (dining_room_0)"
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_5 (bedroom_2)"
+    },
+    {
+      "entity": "lamp_living_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "hand_towel_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on chair_9 (bedroom_2)",
+      "present_in_scene": false
+    }
+  ]
+}

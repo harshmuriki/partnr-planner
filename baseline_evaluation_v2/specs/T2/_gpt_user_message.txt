@@ -1,0 +1,100 @@
+TASK ROW (New Tasks tab)
+{
+  "id": "T2",
+  "scene_id": "106878960_174887073",
+  "task": "Move both packages from the entryway to the living-room center table and place them next to each other. Bring the scissors beside them.",
+  "required_objects_to_spawn": "box \u00d72; scissors \u00d71",
+  "uncertainty_targets": "2: one box, scissors",
+  "suitable_substitutes": "knife for scissors",
+  "atomic_actions": "Navigate, Pick, Place",
+  "memory_accurate": "Boxes on entryway floor; scissors on entryway table",
+  "memory_missing": "Selected box and scissors absent from memory",
+  "memory_outdated": "Box remembered in living room; scissors on dining bench; both actually in entryway",
+  "avail_target_exists": "Both packages and scissors exist",
+  "avail_substitute": "Scissors absent; knife available",
+  "avail_none": "No acceptable cutting tool; boxes remain",
+  "containment_on_surface": "Selected box on entryway floor; scissors on entryway table",
+  "containment_inside": "Scissors inside entryway drawer; box stays exposed",
+  "distractors_none": "No similar boxes or tools nearby",
+  "distractors_present": "pencil_case near box; pen, screwdriver next to scissors",
+  "instruction_full": "Both packages, destination, arrangement, and scissors specified",
+  "instruction_underspecified": "\u201cMove the packages to the center of the living room and bring something to open them.\u201d",
+  "loc_exact": "Box: entryway floor; scissors: entryway table",
+  "loc_room": "Both: entryway",
+  "loc_candidate_rooms": "Box: entryway / living room; scissors: entryway / kitchen"
+}
+
+Emit ALL 20 variants in one JSON object. Filenames:
+T2-ACC-BASE, T2-ACC-SUB, T2-ACC-ABS, T2-ACC-CON, T2-ACC-DIS, T2-ACC-AMB, T2-ACC-ROOM, T2-ACC-CAND, T2-INC-BASE, T2-INC-SUB, T2-INC-ABS, T2-INC-CON, T2-INC-DIS, T2-INC-AMB, T2-OUT-BASE, T2-OUT-SUB, T2-OUT-ABS, T2-OUT-CON, T2-OUT-DIS, T2-OUT-AMB
+
+SCENE FURNITURE CATALOG (106878960_174887073)
+rooms: dining_room_0, living_room_0, office_0, entryway/foyer/lobby_0, bedroom_1, bedroom_0, bathroom_0, hallway_0, closet_1, closet_0, kitchen_0
+dining_room_0:
+  - table_0: Livingston Dining Table 62"
+  - counter_0: Ming Alder Cabinet
+living_room_0:
+  - table_1: Lianne Chinoiserie Box on Stand
+  - chair_0: Suzette Chair
+  - chair_1: Suzette Chair
+  - table_2: Madison Park Signature Bordeaux Coffee Table
+  - couch_0: Little Mother 3 Seater Sofa, Divina Melange 3 - 0227 / Walnut legs
+  - table_4: 24 Inch Iron Pedestal Accent Table With White Tray
+  - couch_3: Narciso
+office_0:
+  - chair_2: Suzette Chair
+  - shelves_0: Tall Pilar Bookcase, Black
+  - couch_1: FUMOIR 3 Seater
+  - table_6: 16 Inch Two Tone Carved Pedestal Accent Table
+  - bench_1: Tilton 48" Hair on Hide Bench
+  - table_10: SEDONA SIDE TABLE
+  - table_13: Sadie Desk
+entryway/foyer/lobby_0:
+  - bench_0: Piano stool - three seater
+  - chest_of_drawers_2: Bombay Two Drawer Chest, Black
+bedroom_1:
+  - table_3: Aluminum 22 Inch Accent Table
+  - table_11: Black Five Leg Table
+  - table_12: Black Five Leg Table
+  - chair_3: Cassatt Armchair
+  - bed_1: Brock King Poster Bed
+  - chest_of_drawers_1: Conrad 58" Reeded Chest
+  - wardrobe_1: Moulin Noir Mirrored Armoire
+bedroom_0:
+  - bed_0: Palais Queen Metal Panel Bed By Nate Berkus And Jeremiah Brent
+  - table_5: Thaddeus Glass Round Cocktail Side Table, Forged Brass
+  - table_8: Aster Accent Table, Gold
+  - table_9: Aster Accent Table, Gold
+  - chair_4: Cassatt Armchair
+  - wardrobe_0: Moulin Noir Mirrored Armoire
+bathroom_0:
+  - bathtub_0: Devon Bath With Tap Holes White
+  - stand_0: Abingdon Victoria Washstand Chrome
+  - table_7: 16 Inch Two Tone Carved Pedestal Accent Table
+  - toilet_0: Blenheim/Victoria/Dorchester White Cistern HL
+hallway_0:
+  - couch_2: Tufted Curved Settee, Navy
+  - chest_of_drawers_0: Bombay Three Drawer Chest, Black
+closet_1:
+  - shelves_1: Nexel Chrome Wire Shelving Starter 24''
+  - shelves_2: Nexel Chrome Wire Shelving Starter 24''
+  - cabinet_4: Farmhouse Wine Rack Cabinet
+closet_0:
+  - shelves_3: BUFFET CUPBOARD BARCELONA 4 doors, Oak
+kitchen_0:
+  - cabinet_0: Shaker Kitchen Corner Base Cabinet
+  - cabinet_1: Shaker Kitchen Corner Base Cabinet
+  - cabinet_2: Shaker Kitchen Base Cabinet Double, Top-mount Basin
+  - cabinet_3: Shaker Kitchen Base Cabinet Single
+  - fridge_0: 36'' Classic Over-and-Under Refrigerator/Freezer
+  - cabinet_5: Shaker Kitchen Base Cabinet Double
+  - cabinet_6: Shaker Kitchen Base Cabinet Double
+  - cabinet_7: Shaker Kitchen Base Cabinet Drawers
+  - cabinet_8: Shaker Kitchen Base Cabinet Drawers
+  - cabinet_9: Shaker Kitchen Base Cabinet Drawers
+
+ALLOWED OBJECT CLASSES
+action_figure, android_figure, apple, backpack, baseballbat, basket, basketball, bath_towel, battery_charger, board_game, book, bottle, bowl, box, bread, bundt_pan, butter_dish, c-clamp, cake_pan, can, can_opener, candle, candle_holder, candy_bar, canister, carrying_case, casserole, cellphone, clock, credit_card, cup, cushion, doll, dumbbell, egg, electric_kettle, electronic_cable, file_sorter, folder, fork, gaming_console, glass, hammer, hand_towel, handbag, hard_drive, hat, helmet, jug, kettle, keychain, knife, ladle, lamp, laptop, laptop_cover, laptop_stand, lunch_box, milk_frother_cup, monitor_stand, mouse_pad, multiport_hub, orange, pan, pen, pencil_case, phone_stand, picture_frame, pitcher, plant_container, plant_saucer, plate, potato, ramekin, scissors, screwdriver, shoe, soap_dish, soap_dispenser, spatula, spectacles, spicemill, sponge, spoon, spray_bottle, squeezer, statue, stuffed toy, stuffed_toy, sushi_mat, tape, teapot, tennis_racquet, tomato, toy_airplane, toy_animal, toy_bee, toy_cactus, toy_construction_set, toy_fire_truck, toy_food, toy_fruits, toy_pineapple, toy_swing, toy_vehicle, tray, vase, watch
+
+Return ONLY this JSON (no markdown fences, no extra text):
+{"files":[{"filename":"T2-ACC-BASE.md","content":"<full markdown spec>"}]}
+Exactly 20 objects in files, one per variant above. Each content is a complete spec. Uncertainty being tested lists ONLY the matrix-cell axes.

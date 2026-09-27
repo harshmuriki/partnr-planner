@@ -1,0 +1,33 @@
+{
+  "variant": "T3-OUT-DIS",
+  "objects": [
+    {
+      "entity": "book_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_2 (kitchen_0)"
+    },
+    {
+      "entity": "book_1",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_2 (kitchen_0)"
+    },
+    {
+      "entity": "laptop_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_1 (bedroom_1)"
+    },
+    {
+      "entity": "folder_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "phone_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    }
+  ]
+}

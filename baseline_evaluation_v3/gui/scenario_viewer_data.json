@@ -1,0 +1,4922 @@
+[
+  {
+    "variant_id": "T1-ACC-BASE",
+    "task": "T1",
+    "mem": "ACC",
+    "axis": "BASE",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "kitchen counter; is_empty -> is_filled",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Correctly knows jug on kitchen counter.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-base_20260913_182631/dataset.json.gz",
+    "episode_id": "3"
+  },
+  {
+    "variant_id": "T1-INC-BASE",
+    "task": "T1",
+    "mem": "INC",
+    "axis": "BASE",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "kitchen counter; is_empty -> is_filled",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Jug absent from memory entirely.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-base_20260913_182729/dataset.json.gz",
+    "episode_id": "11"
+  },
+  {
+    "variant_id": "T1-OUT-BASE",
+    "task": "T1",
+    "mem": "OUT",
+    "axis": "BASE",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "kitchen counter; is_empty -> is_filled",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Remembers jug on the dining table (stale); actually on kitchen counter.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-base_20260913_182811/dataset.json.gz",
+    "episode_id": "17"
+  },
+  {
+    "variant_id": "T1-ACC-SUB",
+    "task": "T1",
+    "mem": "ACC",
+    "axis": "SUB",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "pitcher_0",
+        "cls": "pitcher",
+        "role": "SUB",
+        "setup": "kitchen counter; is_filled (full); replaces jug_0",
+        "real_id": "Threshold_Porcelain_Pitcher_White",
+        "real_name": "White Porcelain Pitcher",
+        "gif": "pitcher/Threshold_Porcelain_Pitcher_White.gif",
+        "tags": "white, porcelain, rounded, pitcher"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Correctly represents the pitcher.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-sub_20260913_182710/dataset.json.gz",
+    "episode_id": "8"
+  },
+  {
+    "variant_id": "T1-INC-SUB",
+    "task": "T1",
+    "mem": "INC",
+    "axis": "SUB",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "pitcher_0",
+        "cls": "pitcher",
+        "role": "SUB",
+        "setup": "kitchen counter; is_filled (full); replaces jug_0",
+        "real_id": "Threshold_Porcelain_Pitcher_White",
+        "real_name": "White Porcelain Pitcher",
+        "gif": "pitcher/Threshold_Porcelain_Pitcher_White.gif",
+        "tags": "white, porcelain, rounded, pitcher"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Jug and substitute pitcher both absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-sub_20260913_182753/dataset.json.gz",
+    "episode_id": "14"
+  },
+  {
+    "variant_id": "T1-OUT-SUB",
+    "task": "T1",
+    "mem": "OUT",
+    "axis": "SUB",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "pitcher_0",
+        "cls": "pitcher",
+        "role": "SUB",
+        "setup": "kitchen counter; is_filled (full); replaces jug_0",
+        "real_id": "Threshold_Porcelain_Pitcher_White",
+        "real_name": "White Porcelain Pitcher",
+        "gif": "pitcher/Threshold_Porcelain_Pitcher_White.gif",
+        "tags": "white, porcelain, rounded, pitcher"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Retains stale jug@dining-table belief despite pitcher being the real substitute.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-sub_20260913_182836/dataset.json.gz",
+    "episode_id": "20"
+  },
+  {
+    "variant_id": "T1-ACC-ABS",
+    "task": "T1",
+    "mem": "ACC",
+    "axis": "ABS",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off; no jug/pitcher spawned - no acceptable water container exists",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Correctly knows no acceptable water container exists.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-abs_20260913_182614/dataset.json.gz",
+    "episode_id": "1"
+  },
+  {
+    "variant_id": "T1-INC-ABS",
+    "task": "T1",
+    "mem": "INC",
+    "axis": "ABS",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off; no jug/pitcher spawned - no acceptable water container exists",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Lacks info to know no container is available.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-abs_20260913_182715/dataset.json.gz",
+    "episode_id": "9"
+  },
+  {
+    "variant_id": "T1-OUT-ABS",
+    "task": "T1",
+    "mem": "OUT",
+    "axis": "ABS",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off; no jug/pitcher spawned - no acceptable water container exists",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Incorrectly believes a jug exists on the dining table; none actually available.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-abs_20260913_182758/dataset.json.gz",
+    "episode_id": "15"
+  },
+  {
+    "variant_id": "T1-ACC-CON",
+    "task": "T1",
+    "mem": "ACC",
+    "axis": "CON",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "inside fridge (kitchen); is_empty, closed receptacle",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Correctly knows jug is in the fridge.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-con_20260913_182645/dataset.json.gz",
+    "episode_id": "5"
+  },
+  {
+    "variant_id": "T1-INC-CON",
+    "task": "T1",
+    "mem": "INC",
+    "axis": "CON",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "inside fridge (kitchen); is_empty, closed receptacle",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Jug and its containment info absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-con_20260913_182736/dataset.json.gz",
+    "episode_id": "12"
+  },
+  {
+    "variant_id": "T1-OUT-CON",
+    "task": "T1",
+    "mem": "OUT",
+    "axis": "CON",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "inside fridge (kitchen); is_empty, closed receptacle",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Remembers jug on dining table though it's actually in the fridge.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-con_20260913_182817/dataset.json.gz",
+    "episode_id": "18"
+  },
+  {
+    "variant_id": "T1-ACC-DIS",
+    "task": "T1",
+    "mem": "ACC",
+    "axis": "DIS",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "kitchen counter; is_empty -> is_filled",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "vase_0",
+        "cls": "vase",
+        "role": "DIST",
+        "setup": "near jug_0, kitchen counter",
+        "real_id": "B075HR4ZDB",
+        "real_name": "Ribbed Teardrop Vase",
+        "gif": "vase/B075HR4ZDB.gif",
+        "tags": "beige, ceramic, ribbed, ornate, decorative"
+      },
+      {
+        "entity_id": "spray_bottle_0",
+        "cls": "spray_bottle",
+        "role": "DIST",
+        "setup": "near jug_0, kitchen counter",
+        "real_id": "Spray_Bottle_7",
+        "real_name": "Trigger Spray Bottle",
+        "gif": "spray_bottle/Spray_Bottle_7.gif",
+        "tags": "gray, plastic, translucent, trigger, cleaning"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Correctly represents target jug and all distractors.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-dis_20260913_182654/dataset.json.gz",
+    "episode_id": "6"
+  },
+  {
+    "variant_id": "T1-INC-DIS",
+    "task": "T1",
+    "mem": "INC",
+    "axis": "DIS",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "kitchen counter; is_empty -> is_filled",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "vase_0",
+        "cls": "vase",
+        "role": "DIST",
+        "setup": "near jug_0, kitchen counter",
+        "real_id": "B075HR4ZDB",
+        "real_name": "Ribbed Teardrop Vase",
+        "gif": "vase/B075HR4ZDB.gif",
+        "tags": "beige, ceramic, ribbed, ornate, decorative"
+      },
+      {
+        "entity_id": "spray_bottle_0",
+        "cls": "spray_bottle",
+        "role": "DIST",
+        "setup": "near jug_0, kitchen counter",
+        "real_id": "Spray_Bottle_7",
+        "real_name": "Trigger Spray Bottle",
+        "gif": "spray_bottle/Spray_Bottle_7.gif",
+        "tags": "gray, plastic, translucent, trigger, cleaning"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Target jug absent from memory (distractors are still physically present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-dis_20260913_182745/dataset.json.gz",
+    "episode_id": "13"
+  },
+  {
+    "variant_id": "T1-OUT-DIS",
+    "task": "T1",
+    "mem": "OUT",
+    "axis": "DIS",
+    "scene_id": "107734176_176000019",
+    "objects": [
+      {
+        "entity_id": "jug_0",
+        "cls": "jug",
+        "role": "TARGET",
+        "setup": "kitchen counter; is_empty -> is_filled",
+        "real_id": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+        "real_name": "Tall Ceramic Jug",
+        "gif": "jug/264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4.gif",
+        "tags": "beige, ceramic, tall, cylindrical, jug"
+      },
+      {
+        "entity_id": "lamp_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "bedroom nightstand; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "vase_0",
+        "cls": "vase",
+        "role": "DIST",
+        "setup": "near jug_0, kitchen counter",
+        "real_id": "B075HR4ZDB",
+        "real_name": "Ribbed Teardrop Vase",
+        "gif": "vase/B075HR4ZDB.gif",
+        "tags": "beige, ceramic, ribbed, ornate, decorative"
+      },
+      {
+        "entity_id": "spray_bottle_0",
+        "cls": "spray_bottle",
+        "role": "DIST",
+        "setup": "near jug_0, kitchen counter",
+        "real_id": "Spray_Bottle_7",
+        "real_name": "Trigger Spray Bottle",
+        "gif": "spray_bottle/Spray_Bottle_7.gif",
+        "tags": "gray, plastic, translucent, trigger, cleaning"
+      }
+    ],
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "memory_note": "Incorrectly remembers target jug on the dining table.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-dis_20260913_182827/dataset.json.gz",
+    "episode_id": "19"
+  },
+  {
+    "variant_id": "T2-ACC-BASE",
+    "task": "T2",
+    "mem": "ACC",
+    "axis": "BASE",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor; package retained in memory; both packages must be moved",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor; package whose memory is varied; both packages must be moved",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "entryway table",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Correctly knows box_1 on entryway floor and scissors on entryway table.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-acc-base_20260913_182908/dataset.json.gz",
+    "episode_id": "23"
+  },
+  {
+    "variant_id": "T2-INC-BASE",
+    "task": "T2",
+    "mem": "INC",
+    "axis": "BASE",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor; package retained in memory; both packages must be moved",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor; package whose memory is varied; both packages must be moved",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "entryway table",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "box_1 and scissors_0 absent from memory (box_0 still known).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-inc-base_20260913_182953/dataset.json.gz",
+    "episode_id": "31"
+  },
+  {
+    "variant_id": "T2-OUT-BASE",
+    "task": "T2",
+    "mem": "OUT",
+    "axis": "BASE",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor; package retained in memory; both packages must be moved",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor; package whose memory is varied; both packages must be moved",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "entryway table",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Remembers box_1 in the living room and scissors on the dining bench (both stale); actually both in entryway.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-out-base_20260913_183029/dataset.json.gz",
+    "episode_id": "37"
+  },
+  {
+    "variant_id": "T2-ACC-SUB",
+    "task": "T2",
+    "mem": "ACC",
+    "axis": "SUB",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "knife_0",
+        "cls": "knife",
+        "role": "SUB",
+        "setup": "entryway table; replaces scissors_0",
+        "real_id": "Knife_2",
+        "real_name": "Black Pocket Knife",
+        "gif": "knife/Knife_2.gif",
+        "tags": "black, metal, folding, compact, utility"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Correctly represents the knife substitute and both boxes.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-acc-sub_20260913_182940/dataset.json.gz",
+    "episode_id": "28"
+  },
+  {
+    "variant_id": "T2-INC-SUB",
+    "task": "T2",
+    "mem": "INC",
+    "axis": "SUB",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "knife_0",
+        "cls": "knife",
+        "role": "SUB",
+        "setup": "entryway table; replaces scissors_0",
+        "real_id": "Knife_2",
+        "real_name": "Black Pocket Knife",
+        "gif": "knife/Knife_2.gif",
+        "tags": "black, metal, folding, compact, utility"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "box_1 and substitute knife absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-inc-sub_20260913_183013/dataset.json.gz",
+    "episode_id": "34"
+  },
+  {
+    "variant_id": "T2-OUT-SUB",
+    "task": "T2",
+    "mem": "OUT",
+    "axis": "SUB",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "knife_0",
+        "cls": "knife",
+        "role": "SUB",
+        "setup": "entryway table; replaces scissors_0",
+        "real_id": "Knife_2",
+        "real_name": "Black Pocket Knife",
+        "gif": "knife/Knife_2.gif",
+        "tags": "black, metal, folding, compact, utility"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Same stale beliefs, with knife as the real substitute.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-out-sub_20260913_183051/dataset.json.gz",
+    "episode_id": "40"
+  },
+  {
+    "variant_id": "T2-ACC-ABS",
+    "task": "T2",
+    "mem": "ACC",
+    "axis": "ABS",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Correctly knows no acceptable cutting tool exists.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-acc-abs_20260913_182856/dataset.json.gz",
+    "episode_id": "21"
+  },
+  {
+    "variant_id": "T2-INC-ABS",
+    "task": "T2",
+    "mem": "INC",
+    "axis": "ABS",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "box_1 absent from memory; lacks info that no suitable tool is available.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-inc-abs_20260913_182943/dataset.json.gz",
+    "episode_id": "29"
+  },
+  {
+    "variant_id": "T2-OUT-ABS",
+    "task": "T2",
+    "mem": "OUT",
+    "axis": "ABS",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Same stale beliefs; no suitable tool actually exists.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-out-abs_20260913_183018/dataset.json.gz",
+    "episode_id": "35"
+  },
+  {
+    "variant_id": "T2-ACC-CON",
+    "task": "T2",
+    "mem": "ACC",
+    "axis": "CON",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor (stays exposed)",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "inside entryway drawer; closed receptacle",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Correctly knows scissors are in the closed drawer, box_1 exposed on floor.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-acc-con_20260913_182919/dataset.json.gz",
+    "episode_id": "25"
+  },
+  {
+    "variant_id": "T2-INC-CON",
+    "task": "T2",
+    "mem": "INC",
+    "axis": "CON",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor (stays exposed)",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "inside entryway drawer; closed receptacle",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "box_1, scissors_0, and scissors' containment info absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-inc-con_20260913_182959/dataset.json.gz",
+    "episode_id": "32"
+  },
+  {
+    "variant_id": "T2-OUT-CON",
+    "task": "T2",
+    "mem": "OUT",
+    "axis": "CON",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor (stays exposed)",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "inside entryway drawer; closed receptacle",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Same stale beliefs; scissors actually in the closed drawer.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-out-con_20260913_183034/dataset.json.gz",
+    "episode_id": "38"
+  },
+  {
+    "variant_id": "T2-ACC-DIS",
+    "task": "T2",
+    "mem": "ACC",
+    "axis": "DIS",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "entryway table",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      },
+      {
+        "entity_id": "board_game_0",
+        "cls": "board_game",
+        "role": "DIST",
+        "setup": "near box_1",
+        "real_id": "Clue_Board_Game_Classic_Edition",
+        "real_name": "Clue Classic Board Game",
+        "gif": "board_game/Clue_Board_Game_Classic_Edition.gif",
+        "tags": "board-game, cardboard, green, rectangular, mystery"
+      },
+      {
+        "entity_id": "distractor_knife_0",
+        "cls": "knife",
+        "role": "DIST",
+        "setup": "near scissors_0",
+        "real_id": "ButterKnife_1",
+        "real_name": "Butter Knife",
+        "gif": "knife/ButterKnife_1.gif",
+        "tags": "black, metal, blunt, flat, tableware"
+      },
+      {
+        "entity_id": "screwdriver_0",
+        "cls": "screwdriver",
+        "role": "DIST",
+        "setup": "near scissors_0",
+        "real_id": "Craftsman_Grip_Screwdriver_Phillips_Cushion",
+        "real_name": "Craftsman Phillips Screwdriver",
+        "gif": "screwdriver/Craftsman_Grip_Screwdriver_Phillips_Cushion.gif",
+        "tags": "red, black, steel, cushion-grip, hand-tool"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Correctly represents targets and all distractors.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-acc-dis_20260913_182928/dataset.json.gz",
+    "episode_id": "26"
+  },
+  {
+    "variant_id": "T2-INC-DIS",
+    "task": "T2",
+    "mem": "INC",
+    "axis": "DIS",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "entryway table",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      },
+      {
+        "entity_id": "board_game_0",
+        "cls": "board_game",
+        "role": "DIST",
+        "setup": "near box_1",
+        "real_id": "Clue_Board_Game_Classic_Edition",
+        "real_name": "Clue Classic Board Game",
+        "gif": "board_game/Clue_Board_Game_Classic_Edition.gif",
+        "tags": "board-game, cardboard, green, rectangular, mystery"
+      },
+      {
+        "entity_id": "distractor_knife_0",
+        "cls": "knife",
+        "role": "DIST",
+        "setup": "near scissors_0",
+        "real_id": "ButterKnife_1",
+        "real_name": "Butter Knife",
+        "gif": "knife/ButterKnife_1.gif",
+        "tags": "black, metal, blunt, flat, tableware"
+      },
+      {
+        "entity_id": "screwdriver_0",
+        "cls": "screwdriver",
+        "role": "DIST",
+        "setup": "near scissors_0",
+        "real_id": "Craftsman_Grip_Screwdriver_Phillips_Cushion",
+        "real_name": "Craftsman Phillips Screwdriver",
+        "gif": "screwdriver/Craftsman_Grip_Screwdriver_Phillips_Cushion.gif",
+        "tags": "red, black, steel, cushion-grip, hand-tool"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "box_1 and scissors_0 absent from memory (distractors still physically present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-inc-dis_20260913_183008/dataset.json.gz",
+    "episode_id": "33"
+  },
+  {
+    "variant_id": "T2-OUT-DIS",
+    "task": "T2",
+    "mem": "OUT",
+    "axis": "DIS",
+    "scene_id": "106878915_174887025",
+    "objects": [
+      {
+        "entity_id": "box_0",
+        "cls": "box",
+        "role": "",
+        "setup": "entryway floor",
+        "real_id": "B073PB1H88",
+        "real_name": "Tapered Brown Box",
+        "gif": "box/B073PB1H88.gif",
+        "tags": "brown, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "box_1",
+        "cls": "box",
+        "role": "TARGET",
+        "setup": "entryway floor",
+        "real_id": "B071225BBS",
+        "real_name": "Light Brown Tapered Box",
+        "gif": "box/B071225BBS.gif",
+        "tags": "light brown, plastic, tapered, rectangular, storage"
+      },
+      {
+        "entity_id": "scissors_0",
+        "cls": "scissors",
+        "role": "TARGET",
+        "setup": "entryway table",
+        "real_id": "Diamond_Visions_Scissors_Red",
+        "real_name": "Red Handled Scissors",
+        "gif": "scissors/Diamond_Visions_Scissors_Red.gif",
+        "tags": "red, metal, blades, cutting, household"
+      },
+      {
+        "entity_id": "board_game_0",
+        "cls": "board_game",
+        "role": "DIST",
+        "setup": "near box_1",
+        "real_id": "Clue_Board_Game_Classic_Edition",
+        "real_name": "Clue Classic Board Game",
+        "gif": "board_game/Clue_Board_Game_Classic_Edition.gif",
+        "tags": "board-game, cardboard, green, rectangular, mystery"
+      },
+      {
+        "entity_id": "distractor_knife_0",
+        "cls": "knife",
+        "role": "DIST",
+        "setup": "near scissors_0",
+        "real_id": "ButterKnife_1",
+        "real_name": "Butter Knife",
+        "gif": "knife/ButterKnife_1.gif",
+        "tags": "black, metal, blunt, flat, tableware"
+      },
+      {
+        "entity_id": "screwdriver_0",
+        "cls": "screwdriver",
+        "role": "DIST",
+        "setup": "near scissors_0",
+        "real_id": "Craftsman_Grip_Screwdriver_Phillips_Cushion",
+        "real_name": "Craftsman Phillips Screwdriver",
+        "gif": "screwdriver/Craftsman_Grip_Screwdriver_Phillips_Cushion.gif",
+        "tags": "red, black, steel, cushion-grip, hand-tool"
+      }
+    ],
+    "task_goal": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "instruction": "Move both packages to the living-room center table and place them next to each other. Bring the scissors and place beside them to open the packages.",
+    "memory_note": "Same stale beliefs (distractors are still physically present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_2/t2-out-dis_20260913_183043/dataset.json.gz",
+    "episode_id": "39"
+  },
+  {
+    "variant_id": "T3-ACC-BASE",
+    "task": "T3",
+    "mem": "ACC",
+    "axis": "BASE",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; green book #1",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom table; green book #2",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Correctly knows one book on the bed, one on the bedroom table.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-base_20260913_183438/dataset.json.gz",
+    "episode_id": "43"
+  },
+  {
+    "variant_id": "T3-INC-BASE",
+    "task": "T3",
+    "mem": "INC",
+    "axis": "BASE",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; green book #1",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom table; green book #2",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Both books absent from memory (laptop info unchanged).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-base_20260913_183530/dataset.json.gz",
+    "episode_id": "49"
+  },
+  {
+    "variant_id": "T3-OUT-BASE",
+    "task": "T3",
+    "mem": "OUT",
+    "axis": "BASE",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; green book #1",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom table; green book #2",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Remembers both books at incorrect (stale) furniture; laptop stale too.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-base_20260913_183608/dataset.json.gz",
+    "episode_id": "53"
+  },
+  {
+    "variant_id": "T3-ACC-ABS",
+    "task": "T3",
+    "mem": "ACC",
+    "axis": "ABS",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; the one remaining book",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off; book_1 is absent - no suitable object",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Correctly knows one required book is unavailable; knows the remaining book's location.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-abs_20260913_183423/dataset.json.gz",
+    "episode_id": "41"
+  },
+  {
+    "variant_id": "T3-INC-ABS",
+    "task": "T3",
+    "mem": "INC",
+    "axis": "ABS",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; the one remaining book",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off; book_1 is absent - no suitable object",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Both books absent from memory; doesn't know one is unavailable.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-abs_20260913_183516/dataset.json.gz",
+    "episode_id": "47"
+  },
+  {
+    "variant_id": "T3-OUT-ABS",
+    "task": "T3",
+    "mem": "OUT",
+    "axis": "ABS",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; the one remaining book",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off; book_1 is absent - no suitable object",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Incorrectly believes the missing book is still available at a stale location.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-abs_20260913_183553/dataset.json.gz",
+    "episode_id": "51"
+  },
+  {
+    "variant_id": "T3-ACC-CON",
+    "task": "T3",
+    "mem": "ACC",
+    "axis": "CON",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; stays at baseline location",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "inside bedroom cabinet; closed receptacle",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Correctly knows one book is in the closed bedroom cabinet.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-con_20260913_183750/dataset.json.gz",
+    "episode_id": "55"
+  },
+  {
+    "variant_id": "T3-INC-CON",
+    "task": "T3",
+    "mem": "INC",
+    "axis": "CON",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; stays at baseline location",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "inside bedroom cabinet; closed receptacle",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Both books and their containment info absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-con_20260913_183757/dataset.json.gz",
+    "episode_id": "56"
+  },
+  {
+    "variant_id": "T3-OUT-CON",
+    "task": "T3",
+    "mem": "OUT",
+    "axis": "CON",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed; stays at baseline location",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "inside bedroom cabinet; closed receptacle",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Stores incorrect stale furniture for both books.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-con_20260913_183803/dataset.json.gz",
+    "episode_id": "57"
+  },
+  {
+    "variant_id": "T3-ACC-DIS",
+    "task": "T3",
+    "mem": "ACC",
+    "axis": "DIS",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom table",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      },
+      {
+        "entity_id": "folder_0",
+        "cls": "folder",
+        "role": "DIST",
+        "setup": "near the books",
+        "real_id": "B01B254OVC",
+        "real_name": "Brown File Folder",
+        "gif": "folder/B01B254OVC.gif",
+        "tags": "brown, paper, slim, rectangular, storage"
+      },
+      {
+        "entity_id": "phone_0",
+        "cls": "phone",
+        "role": "DIST",
+        "setup": "near the laptop",
+        "real_id": "Cellphone_5",
+        "real_name": "Slim Cellphone",
+        "gif": "cellphone/Cellphone_5.gif",
+        "tags": "black, cream, rectangular, electronic, handheld"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Correctly represents both books/laptop and the distractors.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-dis_20260913_183501/dataset.json.gz",
+    "episode_id": "45"
+  },
+  {
+    "variant_id": "T3-INC-DIS",
+    "task": "T3",
+    "mem": "INC",
+    "axis": "DIS",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom table",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      },
+      {
+        "entity_id": "folder_0",
+        "cls": "folder",
+        "role": "DIST",
+        "setup": "near the books",
+        "real_id": "B01B254OVC",
+        "real_name": "Brown File Folder",
+        "gif": "folder/B01B254OVC.gif",
+        "tags": "brown, paper, slim, rectangular, storage"
+      },
+      {
+        "entity_id": "phone_0",
+        "cls": "phone",
+        "role": "DIST",
+        "setup": "near the laptop",
+        "real_id": "Cellphone_5",
+        "real_name": "Slim Cellphone",
+        "gif": "cellphone/Cellphone_5.gif",
+        "tags": "black, cream, rectangular, electronic, handheld"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Both books absent from memory (laptop info unchanged).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-dis_20260913_183546/dataset.json.gz",
+    "episode_id": "50"
+  },
+  {
+    "variant_id": "T3-OUT-DIS",
+    "task": "T3",
+    "mem": "OUT",
+    "axis": "DIS",
+    "scene_id": "106878960_174887073",
+    "objects": [
+      {
+        "entity_id": "book_0",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom bed",
+        "real_id": "Book_17",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_17.gif",
+        "tags": "green, hardcover, rectangular, vintage, book"
+      },
+      {
+        "entity_id": "book_1",
+        "cls": "book",
+        "role": "TARGET",
+        "setup": "bedroom table",
+        "real_id": "Book_20",
+        "real_name": "Dark Green Hardcover Book",
+        "gif": "book/Book_20.gif",
+        "tags": "dark green, hardcover, rectangular, book, literature"
+      },
+      {
+        "entity_id": "laptop_0",
+        "cls": "laptop",
+        "role": "TARGET",
+        "setup": "dining table; is_powered_on -> is_powered_off",
+        "real_id": "Laptop_2",
+        "real_name": "Black Laptop Computer",
+        "gif": "laptop/Laptop_2.gif",
+        "tags": "black, plastic, portable, clamshell, keyboard"
+      },
+      {
+        "entity_id": "folder_0",
+        "cls": "folder",
+        "role": "DIST",
+        "setup": "near the books",
+        "real_id": "B01B254OVC",
+        "real_name": "Brown File Folder",
+        "gif": "folder/B01B254OVC.gif",
+        "tags": "brown, paper, slim, rectangular, storage"
+      },
+      {
+        "entity_id": "phone_0",
+        "cls": "phone",
+        "role": "DIST",
+        "setup": "near the laptop",
+        "real_id": "Cellphone_5",
+        "real_name": "Slim Cellphone",
+        "gif": "cellphone/Cellphone_5.gif",
+        "tags": "black, cream, rectangular, electronic, handheld"
+      }
+    ],
+    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "memory_note": "Stores outdated locations for both books (laptop/distractors unaffected).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-dis_20260913_183624/dataset.json.gz",
+    "episode_id": "54"
+  },
+  {
+    "variant_id": "T4-ACC-BASE",
+    "task": "T4",
+    "mem": "ACC",
+    "axis": "BASE",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "kitchen counter; selected apple",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter; fruit destination landmark",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table; selected bottle",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Correctly knows all fruit/bottle locations.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-acc-base_20260913_183836/dataset.json.gz",
+    "episode_id": "60"
+  },
+  {
+    "variant_id": "T4-INC-BASE",
+    "task": "T4",
+    "mem": "INC",
+    "axis": "BASE",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "kitchen counter; selected apple",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter; fruit destination landmark",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table; selected bottle",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "ALL fruit/bottle locations unknown to robot; only basket's location is known.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-inc-base_20260913_183931/dataset.json.gz",
+    "episode_id": "67"
+  },
+  {
+    "variant_id": "T4-OUT-BASE",
+    "task": "T4",
+    "mem": "OUT",
+    "axis": "BASE",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "kitchen counter; selected apple",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter; fruit destination landmark",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table; selected bottle",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Remembers all fruits/bottles on the dining table (stale); basket unchanged.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-out-base_20260913_184012/dataset.json.gz",
+    "episode_id": "72"
+  },
+  {
+    "variant_id": "T4-ACC-ABS",
+    "task": "T4",
+    "mem": "ACC",
+    "axis": "ABS",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter; apple_0 absent - only 2 fruits remain",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Correctly knows apple_0 is unavailable; knows remaining objects' locations.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-acc-abs_20260913_183819/dataset.json.gz",
+    "episode_id": "58"
+  },
+  {
+    "variant_id": "T4-INC-ABS",
+    "task": "T4",
+    "mem": "INC",
+    "axis": "ABS",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter; apple_0 absent - only 2 fruits remain",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "apple_0 absent; all remaining locations unknown; doesn't know apple is unavailable. Basket known.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-inc-abs_20260913_183916/dataset.json.gz",
+    "episode_id": "65"
+  },
+  {
+    "variant_id": "T4-OUT-ABS",
+    "task": "T4",
+    "mem": "OUT",
+    "axis": "ABS",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter; apple_0 absent - only 2 fruits remain",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Incorrectly remembers apple_0 (and others) on the dining table.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-out-abs_20260913_183956/dataset.json.gz",
+    "episode_id": "70"
+  },
+  {
+    "variant_id": "T4-ACC-CON",
+    "task": "T4",
+    "mem": "ACC",
+    "axis": "CON",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter (stays exposed)",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Correctly knows everything is in the closed fridge, basket stays outside.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-acc-con_20260913_183851/dataset.json.gz",
+    "episode_id": "62"
+  },
+  {
+    "variant_id": "T4-INC-CON",
+    "task": "T4",
+    "mem": "INC",
+    "axis": "CON",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter (stays exposed)",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "All fridge locations/containment unknown to robot; basket known.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-inc-con_20260913_183939/dataset.json.gz",
+    "episode_id": "68"
+  },
+  {
+    "variant_id": "T4-OUT-CON",
+    "task": "T4",
+    "mem": "OUT",
+    "axis": "CON",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter (stays exposed)",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "inside fridge; closed receptacle",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Remembers everything on the dining table though actually in the closed fridge.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-out-con_20260913_184020/dataset.json.gz",
+    "episode_id": "73"
+  },
+  {
+    "variant_id": "T4-ACC-DIS",
+    "task": "T4",
+    "mem": "ACC",
+    "axis": "DIS",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      },
+      {
+        "entity_id": "toy_fruit_0",
+        "cls": "toy_fruits",
+        "role": "DIST",
+        "setup": "near apple_0",
+        "real_id": "Fruity_Friends",
+        "real_name": "Toy Apple Cluster",
+        "gif": "toy_fruits/Fruity_Friends.gif",
+        "tags": "red, green, plastic, fruit, toy"
+      },
+      {
+        "entity_id": "spray_bottle_0",
+        "cls": "spray_bottle",
+        "role": "DIST",
+        "setup": "near bottle_0",
+        "real_id": "Spray_Bottle_3",
+        "real_name": "Black Trigger Spray Bottle",
+        "gif": "spray_bottle/Spray_Bottle_3.gif",
+        "tags": "black, plastic, trigger, cleaning"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Correctly represents targets and distractors.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-acc-dis_20260913_183900/dataset.json.gz",
+    "episode_id": "63"
+  },
+  {
+    "variant_id": "T4-INC-DIS",
+    "task": "T4",
+    "mem": "INC",
+    "axis": "DIS",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      },
+      {
+        "entity_id": "toy_fruit_0",
+        "cls": "toy_fruits",
+        "role": "DIST",
+        "setup": "near apple_0",
+        "real_id": "Fruity_Friends",
+        "real_name": "Toy Apple Cluster",
+        "gif": "toy_fruits/Fruity_Friends.gif",
+        "tags": "red, green, plastic, fruit, toy"
+      },
+      {
+        "entity_id": "spray_bottle_0",
+        "cls": "spray_bottle",
+        "role": "DIST",
+        "setup": "near bottle_0",
+        "real_id": "Spray_Bottle_3",
+        "real_name": "Black Trigger Spray Bottle",
+        "gif": "spray_bottle/Spray_Bottle_3.gif",
+        "tags": "black, plastic, trigger, cleaning"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Locations of all task fruits/bottles unknown; basket known (distractors still present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-inc-dis_20260913_183948/dataset.json.gz",
+    "episode_id": "69"
+  },
+  {
+    "variant_id": "T4-OUT-DIS",
+    "task": "T4",
+    "mem": "OUT",
+    "axis": "DIS",
+    "scene_id": "103997895_171031182",
+    "objects": [
+      {
+        "entity_id": "apple_0",
+        "cls": "apple",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Apple_26",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_26.gif",
+        "tags": "red, fruit, organic, rounded"
+      },
+      {
+        "entity_id": "apple_1",
+        "cls": "apple",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "Apple_4",
+        "real_name": "Red Apple",
+        "gif": "apple/Apple_4.gif",
+        "tags": "dark red, smooth, organic, fruit"
+      },
+      {
+        "entity_id": "orange_0",
+        "cls": "orange",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "017_orange",
+        "real_name": "Whole Orange",
+        "gif": "orange/017_orange.gif",
+        "tags": "orange, fruit, round, textured"
+      },
+      {
+        "entity_id": "basket_0",
+        "cls": "basket",
+        "role": "",
+        "setup": "kitchen counter",
+        "real_id": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+        "real_name": "Woven Lidded Basket",
+        "gif": "basket/87ed6d0c785b3245207bb217eb3ee3fc079f8633.gif",
+        "tags": "brown, woven, rattan, rectangular, storage"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "kitchen table",
+        "real_id": "2f92d709c9e94753a896c065cb62ed33765837c0",
+        "real_name": "Tall Glass Bottle",
+        "gif": "bottle/2f92d709c9e94753a896c065cb62ed33765837c0.gif",
+        "tags": "glass, clear, narrow-neck, beverage, capped"
+      },
+      {
+        "entity_id": "bottle_1",
+        "cls": "bottle",
+        "role": "",
+        "setup": "kitchen table",
+        "real_id": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+        "real_name": "Dark Glass Bottle",
+        "gif": "bottle/xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3.gif",
+        "tags": "dark, glass, tall, narrow-neck, beverage"
+      },
+      {
+        "entity_id": "toy_fruit_0",
+        "cls": "toy_fruits",
+        "role": "DIST",
+        "setup": "near apple_0",
+        "real_id": "Fruity_Friends",
+        "real_name": "Toy Apple Cluster",
+        "gif": "toy_fruits/Fruity_Friends.gif",
+        "tags": "red, green, plastic, fruit, toy"
+      },
+      {
+        "entity_id": "spray_bottle_0",
+        "cls": "spray_bottle",
+        "role": "DIST",
+        "setup": "near bottle_0",
+        "real_id": "Spray_Bottle_3",
+        "real_name": "Black Trigger Spray Bottle",
+        "gif": "spray_bottle/Spray_Bottle_3.gif",
+        "tags": "black, plastic, trigger, cleaning"
+      }
+    ],
+    "task_goal": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "instruction": "Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitchen counter.",
+    "memory_note": "Incorrectly remembers all fruits/bottles on the dining table.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_4/t4-out-dis_20260913_184030/dataset.json.gz",
+    "episode_id": "74"
+  },
+  {
+    "variant_id": "T5-ACC-BASE",
+    "task": "T5",
+    "mem": "ACC",
+    "axis": "BASE",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled; selected glass",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen counter; white plate",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Correctly knows soap by sink, bottle_0 on dining table, plate on kitchen counter.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-base_20260913_184113/dataset.json.gz",
+    "episode_id": "77"
+  },
+  {
+    "variant_id": "T5-INC-BASE",
+    "task": "T5",
+    "mem": "INC",
+    "axis": "BASE",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled; selected glass",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen counter; white plate",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Soap dispenser, bottle_0, and plate absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-base_20260913_184234/dataset.json.gz",
+    "episode_id": "85"
+  },
+  {
+    "variant_id": "T5-OUT-BASE",
+    "task": "T5",
+    "mem": "OUT",
+    "axis": "BASE",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled; selected glass",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen counter; white plate",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Remembers soap in bathroom, bottle_0 on kitchen counter, plate on dining table (all stale).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-base_20260913_184339/dataset.json.gz",
+    "episode_id": "91"
+  },
+  {
+    "variant_id": "T5-ACC-SUB",
+    "task": "T5",
+    "mem": "ACC",
+    "axis": "SUB",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_black_0",
+        "cls": "plate",
+        "role": "SUB",
+        "setup": "kitchen counter; black plate, replaces plate_0",
+        "real_id": "21551881391c2b21c2e1358effa7d6b69cbd435f",
+        "real_name": "Black Ceramic Plate",
+        "gif": "plate/21551881391c2b21c2e1358effa7d6b69cbd435f.gif",
+        "tags": "black, ceramic, round, flat, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Correctly represents the black plate substitute.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-sub_20260913_184208/dataset.json.gz",
+    "episode_id": "82"
+  },
+  {
+    "variant_id": "T5-INC-SUB",
+    "task": "T5",
+    "mem": "INC",
+    "axis": "SUB",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_black_0",
+        "cls": "plate",
+        "role": "SUB",
+        "setup": "kitchen counter; black plate, replaces plate_0",
+        "real_id": "21551881391c2b21c2e1358effa7d6b69cbd435f",
+        "real_name": "Black Ceramic Plate",
+        "gif": "plate/21551881391c2b21c2e1358effa7d6b69cbd435f.gif",
+        "tags": "black, ceramic, round, flat, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Soap dispenser, bottle_0, and substitute plate absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-sub_20260913_184310/dataset.json.gz",
+    "episode_id": "88"
+  },
+  {
+    "variant_id": "T5-OUT-SUB",
+    "task": "T5",
+    "mem": "OUT",
+    "axis": "SUB",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_black_0",
+        "cls": "plate",
+        "role": "SUB",
+        "setup": "kitchen counter; black plate, replaces plate_0",
+        "real_id": "21551881391c2b21c2e1358effa7d6b69cbd435f",
+        "real_name": "Black Ceramic Plate",
+        "gif": "plate/21551881391c2b21c2e1358effa7d6b69cbd435f.gif",
+        "tags": "black, ceramic, round, flat, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Same stale beliefs, with black plate as the real substitute.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-sub_20260913_184414/dataset.json.gz",
+    "episode_id": "94"
+  },
+  {
+    "variant_id": "T5-ACC-ABS",
+    "task": "T5",
+    "mem": "ACC",
+    "axis": "ABS",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Correctly knows no suitable plate is available.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-abs_20260913_184051/dataset.json.gz",
+    "episode_id": "75"
+  },
+  {
+    "variant_id": "T5-INC-ABS",
+    "task": "T5",
+    "mem": "INC",
+    "axis": "ABS",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Soap dispenser and bottle_0 absent from memory; doesn't know no plate is available.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-abs_20260913_184216/dataset.json.gz",
+    "episode_id": "83"
+  },
+  {
+    "variant_id": "T5-OUT-ABS",
+    "task": "T5",
+    "mem": "OUT",
+    "axis": "ABS",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Same stale beliefs; no suitable plate actually exists.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-abs_20260913_184319/dataset.json.gz",
+    "episode_id": "89"
+  },
+  {
+    "variant_id": "T5-ACC-CON",
+    "task": "T5",
+    "mem": "ACC",
+    "axis": "CON",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "inside lower kitchen cabinet; closed receptacle",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "inside upper kitchen cabinet; closed receptacle",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Correctly knows soap/plate are in their closed cabinets.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-con_20260913_184133/dataset.json.gz",
+    "episode_id": "79"
+  },
+  {
+    "variant_id": "T5-INC-CON",
+    "task": "T5",
+    "mem": "INC",
+    "axis": "CON",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "inside lower kitchen cabinet; closed receptacle",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "inside upper kitchen cabinet; closed receptacle",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Soap, plate, and their containment info absent from memory; bottle_0 absent too.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-con_20260913_184245/dataset.json.gz",
+    "episode_id": "86"
+  },
+  {
+    "variant_id": "T5-OUT-CON",
+    "task": "T5",
+    "mem": "OUT",
+    "axis": "CON",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "inside lower kitchen cabinet; closed receptacle",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "inside upper kitchen cabinet; closed receptacle",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Same stale beliefs; soap/plate actually in their closed cabinets.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-con_20260913_184349/dataset.json.gz",
+    "episode_id": "92"
+  },
+  {
+    "variant_id": "T5-ACC-DIS",
+    "task": "T5",
+    "mem": "ACC",
+    "axis": "DIS",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      },
+      {
+        "entity_id": "soap_dish_0",
+        "cls": "soap_dish",
+        "role": "DIST",
+        "setup": "near soap dispenser",
+        "real_id": "Threshold_Bamboo_Ceramic_Soap_Dish",
+        "real_name": "Bamboo Ceramic Soap Dish",
+        "gif": "soap_dish/Threshold_Bamboo_Ceramic_Soap_Dish.gif",
+        "tags": "tan, bamboo, ceramic, rectangular, bathroom"
+      },
+      {
+        "entity_id": "vase_0",
+        "cls": "vase",
+        "role": "DIST",
+        "setup": "near glass_0 and glass_1",
+        "real_id": "04f409f17d79445a3afd109c557c6a2702e15cd8",
+        "real_name": "Tall Faceted Vase",
+        "gif": "vase/04f409f17d79445a3afd109c557c6a2702e15cd8.gif",
+        "tags": "brown, ceramic, faceted, tall, vase"
+      },
+      {
+        "entity_id": "plant_saucer_0",
+        "cls": "plant_saucer",
+        "role": "DIST",
+        "setup": "near plate_0",
+        "real_id": "Cole_Hardware_Plant_Saucer_Brown_125",
+        "real_name": "Brown Plant Saucer",
+        "gif": "plant_saucer/Cole_Hardware_Plant_Saucer_Brown_125.gif",
+        "tags": "brown, plastic, round, shallow, plant"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Correctly represents targets and all distractors.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-dis_20260913_184147/dataset.json.gz",
+    "episode_id": "80"
+  },
+  {
+    "variant_id": "T5-INC-DIS",
+    "task": "T5",
+    "mem": "INC",
+    "axis": "DIS",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      },
+      {
+        "entity_id": "soap_dish_0",
+        "cls": "soap_dish",
+        "role": "DIST",
+        "setup": "near soap dispenser",
+        "real_id": "Threshold_Bamboo_Ceramic_Soap_Dish",
+        "real_name": "Bamboo Ceramic Soap Dish",
+        "gif": "soap_dish/Threshold_Bamboo_Ceramic_Soap_Dish.gif",
+        "tags": "tan, bamboo, ceramic, rectangular, bathroom"
+      },
+      {
+        "entity_id": "vase_0",
+        "cls": "vase",
+        "role": "DIST",
+        "setup": "near glass_0 and glass_1",
+        "real_id": "04f409f17d79445a3afd109c557c6a2702e15cd8",
+        "real_name": "Tall Faceted Vase",
+        "gif": "vase/04f409f17d79445a3afd109c557c6a2702e15cd8.gif",
+        "tags": "brown, ceramic, faceted, tall, vase"
+      },
+      {
+        "entity_id": "plant_saucer_0",
+        "cls": "plant_saucer",
+        "role": "DIST",
+        "setup": "near plate_0",
+        "real_id": "Cole_Hardware_Plant_Saucer_Brown_125",
+        "real_name": "Brown Plant Saucer",
+        "gif": "plant_saucer/Cole_Hardware_Plant_Saucer_Brown_125.gif",
+        "tags": "brown, plastic, round, shallow, plant"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Soap dispenser, bottle_0, plate absent from memory (distractors still present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-dis_20260913_184300/dataset.json.gz",
+    "episode_id": "87"
+  },
+  {
+    "variant_id": "T5-OUT-DIS",
+    "task": "T5",
+    "mem": "OUT",
+    "axis": "DIS",
+    "scene_id": "104348010_171512832",
+    "objects": [
+      {
+        "entity_id": "soap_dispenser_0",
+        "cls": "soap_dispenser",
+        "role": "",
+        "setup": "kitchen sink",
+        "real_id": "Soap_Bottle_26",
+        "real_name": "Black Soap Dispenser",
+        "gif": "soap_dispenser/Soap_Bottle_26.gif",
+        "tags": "black, plastic, rectangular, pump, bathroom"
+      },
+      {
+        "entity_id": "glass_0",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+        "real_name": "Faceted Glass Tumbler",
+        "gif": "glass/9428caf70c42e50bb3c3c604eba00c43b8efb58f.gif",
+        "tags": "smoky, green, glass, faceted, drinkware"
+      },
+      {
+        "entity_id": "glass_1",
+        "cls": "glass",
+        "role": "",
+        "setup": "dining table; is_dirty -> is_clean, is_empty -> is_filled",
+        "real_id": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+        "real_name": "Tall Drinking Glass",
+        "gif": "glass/f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.gif",
+        "tags": "gray, glass, cylindrical, tumbler, drinkware"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Plate_26",
+        "real_name": "White Round Plate",
+        "gif": "plate/Plate_26.gif",
+        "tags": "white, ceramic, round, shallow, tableware"
+      },
+      {
+        "entity_id": "soap_dish_0",
+        "cls": "soap_dish",
+        "role": "DIST",
+        "setup": "near soap dispenser",
+        "real_id": "Threshold_Bamboo_Ceramic_Soap_Dish",
+        "real_name": "Bamboo Ceramic Soap Dish",
+        "gif": "soap_dish/Threshold_Bamboo_Ceramic_Soap_Dish.gif",
+        "tags": "tan, bamboo, ceramic, rectangular, bathroom"
+      },
+      {
+        "entity_id": "vase_0",
+        "cls": "vase",
+        "role": "DIST",
+        "setup": "near glass_0 and glass_1",
+        "real_id": "04f409f17d79445a3afd109c557c6a2702e15cd8",
+        "real_name": "Tall Faceted Vase",
+        "gif": "vase/04f409f17d79445a3afd109c557c6a2702e15cd8.gif",
+        "tags": "brown, ceramic, faceted, tall, vase"
+      },
+      {
+        "entity_id": "plant_saucer_0",
+        "cls": "plant_saucer",
+        "role": "DIST",
+        "setup": "near plate_0",
+        "real_id": "Cole_Hardware_Plant_Saucer_Brown_125",
+        "real_name": "Brown Plant Saucer",
+        "gif": "plant_saucer/Cole_Hardware_Plant_Saucer_Brown_125.gif",
+        "tags": "brown, plastic, round, shallow, plant"
+      }
+    ],
+    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "memory_note": "Same stale beliefs (distractors still physically present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-dis_20260913_184404/dataset.json.gz",
+    "episode_id": "93"
+  },
+  {
+    "variant_id": "T6-ACC-BASE",
+    "task": "T6",
+    "mem": "ACC",
+    "axis": "BASE",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled; water bottle",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "bathroom shelf; is_clean; green, clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Correctly knows bread on counter, bottle on dining table, towel on bathroom shelf.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-base_20260913_184457/dataset.json.gz",
+    "episode_id": "97"
+  },
+  {
+    "variant_id": "T6-INC-BASE",
+    "task": "T6",
+    "mem": "INC",
+    "axis": "BASE",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled; water bottle",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "bathroom shelf; is_clean; green, clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Bread, bottle, and towel all absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-base_20260913_184615/dataset.json.gz",
+    "episode_id": "104"
+  },
+  {
+    "variant_id": "T6-OUT-BASE",
+    "task": "T6",
+    "mem": "OUT",
+    "axis": "BASE",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled; water bottle",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "bathroom shelf; is_clean; green, clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Remembers bread on dining table, bottle in bedroom, towel on a bedroom chair (all stale).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-base_20260913_184715/dataset.json.gz",
+    "episode_id": "109"
+  },
+  {
+    "variant_id": "T6-ACC-SUB",
+    "task": "T6",
+    "mem": "ACC",
+    "axis": "SUB",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "cup_0",
+        "cls": "cup",
+        "role": "SUB",
+        "setup": "dining table; is_empty -> is_filled; replaces bottle_0",
+        "real_id": "ed95f32cc00075ceed5bd4b593d2a06a444c0eec",
+        "real_name": "Dark Tumbler Cup",
+        "gif": "cup/ed95f32cc00075ceed5bd4b593d2a06a444c0eec.gif",
+        "tags": "dark green, ceramic, cylindrical, drinkware"
+      },
+      {
+        "entity_id": "blue_hand_towel_0",
+        "cls": "hand_towel",
+        "role": "SUB",
+        "setup": "bathroom shelf; is_clean; replaces hand_towel_0",
+        "real_id": "Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26",
+        "real_name": "Blue Striped Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26.gif",
+        "tags": "blue, cotton, striped, textile, kitchen"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Correctly represents the cup and blue towel substitutes.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-sub_20260913_184548/dataset.json.gz",
+    "episode_id": "101"
+  },
+  {
+    "variant_id": "T6-INC-SUB",
+    "task": "T6",
+    "mem": "INC",
+    "axis": "SUB",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "cup_0",
+        "cls": "cup",
+        "role": "SUB",
+        "setup": "dining table; is_empty -> is_filled; replaces bottle_0",
+        "real_id": "ed95f32cc00075ceed5bd4b593d2a06a444c0eec",
+        "real_name": "Dark Tumbler Cup",
+        "gif": "cup/ed95f32cc00075ceed5bd4b593d2a06a444c0eec.gif",
+        "tags": "dark green, ceramic, cylindrical, drinkware"
+      },
+      {
+        "entity_id": "blue_hand_towel_0",
+        "cls": "hand_towel",
+        "role": "SUB",
+        "setup": "bathroom shelf; is_clean; replaces hand_towel_0",
+        "real_id": "Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26",
+        "real_name": "Blue Striped Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26.gif",
+        "tags": "blue, cotton, striped, textile, kitchen"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Bread and both substitutes (cup, blue towel) absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-sub_20260913_184648/dataset.json.gz",
+    "episode_id": "106"
+  },
+  {
+    "variant_id": "T6-OUT-SUB",
+    "task": "T6",
+    "mem": "OUT",
+    "axis": "SUB",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "cup_0",
+        "cls": "cup",
+        "role": "SUB",
+        "setup": "dining table; is_empty -> is_filled; replaces bottle_0",
+        "real_id": "ed95f32cc00075ceed5bd4b593d2a06a444c0eec",
+        "real_name": "Dark Tumbler Cup",
+        "gif": "cup/ed95f32cc00075ceed5bd4b593d2a06a444c0eec.gif",
+        "tags": "dark green, ceramic, cylindrical, drinkware"
+      },
+      {
+        "entity_id": "blue_hand_towel_0",
+        "cls": "hand_towel",
+        "role": "SUB",
+        "setup": "bathroom shelf; is_clean; replaces hand_towel_0",
+        "real_id": "Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26",
+        "real_name": "Blue Striped Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26.gif",
+        "tags": "blue, cotton, striped, textile, kitchen"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Same stale beliefs, with cup/blue towel as the real substitutes.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-sub_20260913_184747/dataset.json.gz",
+    "episode_id": "111"
+  },
+  {
+    "variant_id": "T6-ACC-ABS",
+    "task": "T6",
+    "mem": "ACC",
+    "axis": "ABS",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off; no hand towel or substitute spawned",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Correctly knows no suitable towel (or substitute) is available.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-abs_20260913_184436/dataset.json.gz",
+    "episode_id": "95"
+  },
+  {
+    "variant_id": "T6-INC-ABS",
+    "task": "T6",
+    "mem": "INC",
+    "axis": "ABS",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off; no hand towel or substitute spawned",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Bread and bottle absent from memory; doesn't know no towel is available.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-abs_20260913_184555/dataset.json.gz",
+    "episode_id": "102"
+  },
+  {
+    "variant_id": "T6-OUT-ABS",
+    "task": "T6",
+    "mem": "OUT",
+    "axis": "ABS",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off; no hand towel or substitute spawned",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Same stale beliefs; no suitable towel actually exists.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-abs_20260913_184656/dataset.json.gz",
+    "episode_id": "107"
+  },
+  {
+    "variant_id": "T6-ACC-CON",
+    "task": "T6",
+    "mem": "ACC",
+    "axis": "CON",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "inside kitchen cabinet; closed receptacle",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle, is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "inside bathroom cabinet; closed receptacle, is_clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Correctly knows all three are in their closed receptacles.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-con_20260913_192018/dataset.json.gz",
+    "episode_id": "118"
+  },
+  {
+    "variant_id": "T6-INC-CON",
+    "task": "T6",
+    "mem": "INC",
+    "axis": "CON",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "inside kitchen cabinet; closed receptacle",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle, is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "inside bathroom cabinet; closed receptacle, is_clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Bread, bottle, towel, and their containment info absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-con_20260913_192028/dataset.json.gz",
+    "episode_id": "119"
+  },
+  {
+    "variant_id": "T6-OUT-CON",
+    "task": "T6",
+    "mem": "OUT",
+    "axis": "CON",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "inside kitchen cabinet; closed receptacle",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "inside fridge; closed receptacle, is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "inside bathroom cabinet; closed receptacle, is_clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Same stale beliefs; all three actually in their closed receptacles.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-con_20260913_192123/dataset.json.gz",
+    "episode_id": "120"
+  },
+  {
+    "variant_id": "T6-ACC-DIS",
+    "task": "T6",
+    "mem": "ACC",
+    "axis": "DIS",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "bathroom shelf; is_clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      },
+      {
+        "entity_id": "dirty_hand_towel_0",
+        "cls": "hand_towel",
+        "role": "DIST",
+        "setup": "near hand_towel_0; is_dirty",
+        "real_id": "Cole_Hardware_Dishtowel_Red",
+        "real_name": "Red Folded Dish Towel",
+        "gif": "hand_towel/Cole_Hardware_Dishtowel_Red.gif",
+        "tags": "red, fabric, folded, textile, kitchen"
+      },
+      {
+        "entity_id": "bread_25_0",
+        "cls": "bread",
+        "role": "DIST",
+        "setup": "near bread_0; sourdough loaf",
+        "real_id": "Bread_25",
+        "real_name": "Flat Brown Loaf",
+        "gif": "bread/Bread_25.gif",
+        "tags": "brown, bread, oval, crusty, baked"
+      },
+      {
+        "entity_id": "supplement_bottle_0",
+        "cls": "bottle",
+        "role": "DIST",
+        "setup": "near bottle_0",
+        "real_id": "Theanine",
+        "real_name": "Blue Supplement Bottle",
+        "gif": "bottle/Theanine.gif",
+        "tags": "blue, plastic, cylindrical, bottle, supplement"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Correctly represents targets and all distractors, including cleanliness.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-dis_20260913_184529/dataset.json.gz",
+    "episode_id": "99"
+  },
+  {
+    "variant_id": "T6-INC-DIS",
+    "task": "T6",
+    "mem": "INC",
+    "axis": "DIS",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "bathroom shelf; is_clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      },
+      {
+        "entity_id": "dirty_hand_towel_0",
+        "cls": "hand_towel",
+        "role": "DIST",
+        "setup": "near hand_towel_0; is_dirty",
+        "real_id": "Cole_Hardware_Dishtowel_Red",
+        "real_name": "Red Folded Dish Towel",
+        "gif": "hand_towel/Cole_Hardware_Dishtowel_Red.gif",
+        "tags": "red, fabric, folded, textile, kitchen"
+      },
+      {
+        "entity_id": "bread_25_0",
+        "cls": "bread",
+        "role": "DIST",
+        "setup": "near bread_0; sourdough loaf",
+        "real_id": "Bread_25",
+        "real_name": "Flat Brown Loaf",
+        "gif": "bread/Bread_25.gif",
+        "tags": "brown, bread, oval, crusty, baked"
+      },
+      {
+        "entity_id": "supplement_bottle_0",
+        "cls": "bottle",
+        "role": "DIST",
+        "setup": "near bottle_0",
+        "real_id": "Theanine",
+        "real_name": "Blue Supplement Bottle",
+        "gif": "bottle/Theanine.gif",
+        "tags": "blue, plastic, cylindrical, bottle, supplement"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Bread, bottle, towel absent from memory (distractors still present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-dis_20260913_184639/dataset.json.gz",
+    "episode_id": "105"
+  },
+  {
+    "variant_id": "T6-OUT-DIS",
+    "task": "T6",
+    "mem": "OUT",
+    "axis": "DIS",
+    "scene_id": "102817140",
+    "objects": [
+      {
+        "entity_id": "bread_0",
+        "cls": "bread",
+        "role": "TARGET",
+        "setup": "kitchen counter",
+        "real_id": "Bread_8",
+        "real_name": "Rectangular Bread Loaf",
+        "gif": "bread/Bread_8.gif",
+        "tags": "brown, baked, rectangular, loaf, food"
+      },
+      {
+        "entity_id": "bottle_0",
+        "cls": "bottle",
+        "role": "TARGET",
+        "setup": "dining table; is_empty -> is_filled",
+        "real_id": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+        "real_name": "Tapered Metal Bottle",
+        "gif": "bottle/03758534dd2a3a8303e742cf4fc10fedd4c48843.gif",
+        "tags": "gray, metal, tapered, narrow-neck, container"
+      },
+      {
+        "entity_id": "hand_towel_0",
+        "cls": "hand_towel",
+        "role": "TARGET",
+        "setup": "bathroom shelf; is_clean",
+        "real_id": "Tag_Dishtowel_Green",
+        "real_name": "Green Dish Towel",
+        "gif": "hand_towel/Tag_Dishtowel_Green.gif",
+        "tags": "green, fabric, folded, kitchen, hand towel"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      },
+      {
+        "entity_id": "dirty_hand_towel_0",
+        "cls": "hand_towel",
+        "role": "DIST",
+        "setup": "near hand_towel_0; is_dirty",
+        "real_id": "Cole_Hardware_Dishtowel_Red",
+        "real_name": "Red Folded Dish Towel",
+        "gif": "hand_towel/Cole_Hardware_Dishtowel_Red.gif",
+        "tags": "red, fabric, folded, textile, kitchen"
+      },
+      {
+        "entity_id": "bread_25_0",
+        "cls": "bread",
+        "role": "DIST",
+        "setup": "near bread_0; sourdough loaf",
+        "real_id": "Bread_25",
+        "real_name": "Flat Brown Loaf",
+        "gif": "bread/Bread_25.gif",
+        "tags": "brown, bread, oval, crusty, baked"
+      },
+      {
+        "entity_id": "supplement_bottle_0",
+        "cls": "bottle",
+        "role": "DIST",
+        "setup": "near bottle_0",
+        "real_id": "Theanine",
+        "real_name": "Blue Supplement Bottle",
+        "gif": "bottle/Theanine.gif",
+        "tags": "blue, plastic, cylindrical, bottle, supplement"
+      }
+    ],
+    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "memory_note": "Same stale beliefs (distractors still physically present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-dis_20260913_184738/dataset.json.gz",
+    "episode_id": "110"
+  },
+  {
+    "variant_id": "T7-ACC-BASE",
+    "task": "T7",
+    "mem": "ACC",
+    "axis": "BASE",
+    "scene_id": "102816756",
+    "objects": [
+      {
+        "entity_id": "toy_truck_0",
+        "cls": "toy_fire_truck",
+        "role": "TARGET",
+        "setup": "living-room floor",
+        "real_id": "FIRE_ENGINE",
+        "real_name": "Toy Fire Truck",
+        "gif": "toy_fire_truck/FIRE_ENGINE.gif",
+        "tags": "red, plastic, wheeled, vehicle, firefighter"
+      },
+      {
+        "entity_id": "stuffed_toy_0",
+        "cls": "stuffed_toy",
+        "role": "TARGET",
+        "setup": "sofa (living room)",
+        "real_id": "b3e8be210978ec373be6eb5fcffec36c6a9712e6",
+        "real_name": "Dottie Plush Elephant",
+        "gif": "stuffed_toy/b3e8be210978ec373be6eb5fcffec36c6a9712e6.gif",
+        "tags": "brown, plush, soft, animal, toy"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen sink; is_dirty; selected dirty plate",
+        "real_id": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+        "real_name": "Ruby Ring Dinner Plate",
+        "gif": "plate/Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring.gif",
+        "tags": "white, ceramic, round, rimmed, dinnerware"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "lamp_kitchen_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "kitchen; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "memory_note": "Correctly knows truck on living-room floor, stuffed toy on sofa, dirty plate at kitchen sink.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-acc-base_20260913_192719/dataset.json.gz",
+    "episode_id": "133"
+  },
+  {
+    "variant_id": "T7-INC-BASE",
+    "task": "T7",
+    "mem": "INC",
+    "axis": "BASE",
+    "scene_id": "102816756",
+    "objects": [
+      {
+        "entity_id": "toy_truck_0",
+        "cls": "toy_fire_truck",
+        "role": "TARGET",
+        "setup": "living-room floor",
+        "real_id": "FIRE_ENGINE",
+        "real_name": "Toy Fire Truck",
+        "gif": "toy_fire_truck/FIRE_ENGINE.gif",
+        "tags": "red, plastic, wheeled, vehicle, firefighter"
+      },
+      {
+        "entity_id": "stuffed_toy_0",
+        "cls": "stuffed_toy",
+        "role": "TARGET",
+        "setup": "sofa (living room)",
+        "real_id": "b3e8be210978ec373be6eb5fcffec36c6a9712e6",
+        "real_name": "Dottie Plush Elephant",
+        "gif": "stuffed_toy/b3e8be210978ec373be6eb5fcffec36c6a9712e6.gif",
+        "tags": "brown, plush, soft, animal, toy"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen sink; is_dirty; selected dirty plate",
+        "real_id": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+        "real_name": "Ruby Ring Dinner Plate",
+        "gif": "plate/Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring.gif",
+        "tags": "white, ceramic, round, rimmed, dinnerware"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "lamp_kitchen_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "kitchen; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "memory_note": "Truck, stuffed toy, and selected dirty plate absent from memory.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-inc-base_20260913_192814/dataset.json.gz",
+    "episode_id": "138"
+  },
+  {
+    "variant_id": "T7-OUT-BASE",
+    "task": "T7",
+    "mem": "OUT",
+    "axis": "BASE",
+    "scene_id": "102816756",
+    "objects": [
+      {
+        "entity_id": "toy_truck_0",
+        "cls": "toy_fire_truck",
+        "role": "TARGET",
+        "setup": "living-room floor",
+        "real_id": "FIRE_ENGINE",
+        "real_name": "Toy Fire Truck",
+        "gif": "toy_fire_truck/FIRE_ENGINE.gif",
+        "tags": "red, plastic, wheeled, vehicle, firefighter"
+      },
+      {
+        "entity_id": "stuffed_toy_0",
+        "cls": "stuffed_toy",
+        "role": "TARGET",
+        "setup": "sofa (living room)",
+        "real_id": "b3e8be210978ec373be6eb5fcffec36c6a9712e6",
+        "real_name": "Dottie Plush Elephant",
+        "gif": "stuffed_toy/b3e8be210978ec373be6eb5fcffec36c6a9712e6.gif",
+        "tags": "brown, plush, soft, animal, toy"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen sink; is_dirty; selected dirty plate",
+        "real_id": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+        "real_name": "Ruby Ring Dinner Plate",
+        "gif": "plate/Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring.gif",
+        "tags": "white, ceramic, round, rimmed, dinnerware"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "lamp_kitchen_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "kitchen; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      }
+    ],
+    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "memory_note": "Remembers selected toys in the bedroom and dirty plate on the dining table (stale); actually living room/kitchen sink.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-out-base_20260913_192847/dataset.json.gz",
+    "episode_id": "141"
+  },
+  {
+    "variant_id": "T7-ACC-DIS",
+    "task": "T7",
+    "mem": "ACC",
+    "axis": "DIS",
+    "scene_id": "102816756",
+    "objects": [
+      {
+        "entity_id": "toy_truck_0",
+        "cls": "toy_fire_truck",
+        "role": "TARGET",
+        "setup": "living-room floor",
+        "real_id": "FIRE_ENGINE",
+        "real_name": "Toy Fire Truck",
+        "gif": "toy_fire_truck/FIRE_ENGINE.gif",
+        "tags": "red, plastic, wheeled, vehicle, firefighter"
+      },
+      {
+        "entity_id": "stuffed_toy_0",
+        "cls": "stuffed_toy",
+        "role": "TARGET",
+        "setup": "sofa (living room)",
+        "real_id": "b3e8be210978ec373be6eb5fcffec36c6a9712e6",
+        "real_name": "Dottie Plush Elephant",
+        "gif": "stuffed_toy/b3e8be210978ec373be6eb5fcffec36c6a9712e6.gif",
+        "tags": "brown, plush, soft, animal, toy"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen sink; is_dirty",
+        "real_id": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+        "real_name": "Ruby Ring Dinner Plate",
+        "gif": "plate/Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring.gif",
+        "tags": "white, ceramic, round, rimmed, dinnerware"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "lamp_kitchen_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "kitchen; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      },
+      {
+        "entity_id": "clean_plate_0",
+        "cls": "plate",
+        "role": "DIST",
+        "setup": "near plate_0; is_clean",
+        "real_id": "Plate_20",
+        "real_name": "Cream Decorative Plate",
+        "gif": "plate/Plate_20.gif",
+        "tags": "cream, ceramic, round, flat, tableware"
+      },
+      {
+        "entity_id": "cushion_0",
+        "cls": "cushion",
+        "role": "DIST",
+        "setup": "near stuffed_toy_0",
+        "real_id": "pillow_4",
+        "real_name": "Dark Brown Cushion",
+        "gif": "cushion/pillow_4.gif",
+        "tags": "brown, fabric, rounded, soft, seating"
+      }
+    ],
+    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "memory_note": "Correctly represents targets and distractors, including plate cleanliness.",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-acc-dis_20260913_192741/dataset.json.gz",
+    "episode_id": "135"
+  },
+  {
+    "variant_id": "T7-INC-DIS",
+    "task": "T7",
+    "mem": "INC",
+    "axis": "DIS",
+    "scene_id": "102816756",
+    "objects": [
+      {
+        "entity_id": "toy_truck_0",
+        "cls": "toy_fire_truck",
+        "role": "TARGET",
+        "setup": "living-room floor",
+        "real_id": "FIRE_ENGINE",
+        "real_name": "Toy Fire Truck",
+        "gif": "toy_fire_truck/FIRE_ENGINE.gif",
+        "tags": "red, plastic, wheeled, vehicle, firefighter"
+      },
+      {
+        "entity_id": "stuffed_toy_0",
+        "cls": "stuffed_toy",
+        "role": "TARGET",
+        "setup": "sofa (living room)",
+        "real_id": "b3e8be210978ec373be6eb5fcffec36c6a9712e6",
+        "real_name": "Dottie Plush Elephant",
+        "gif": "stuffed_toy/b3e8be210978ec373be6eb5fcffec36c6a9712e6.gif",
+        "tags": "brown, plush, soft, animal, toy"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen sink; is_dirty",
+        "real_id": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+        "real_name": "Ruby Ring Dinner Plate",
+        "gif": "plate/Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring.gif",
+        "tags": "white, ceramic, round, rimmed, dinnerware"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "lamp_kitchen_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "kitchen; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      },
+      {
+        "entity_id": "clean_plate_0",
+        "cls": "plate",
+        "role": "DIST",
+        "setup": "near plate_0; is_clean",
+        "real_id": "Plate_20",
+        "real_name": "Cream Decorative Plate",
+        "gif": "plate/Plate_20.gif",
+        "tags": "cream, ceramic, round, flat, tableware"
+      },
+      {
+        "entity_id": "cushion_0",
+        "cls": "cushion",
+        "role": "DIST",
+        "setup": "near stuffed_toy_0",
+        "real_id": "pillow_4",
+        "real_name": "Dark Brown Cushion",
+        "gif": "cushion/pillow_4.gif",
+        "tags": "brown, fabric, rounded, soft, seating"
+      }
+    ],
+    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "memory_note": "Truck, stuffed toy, plate absent from memory (distractors still physically present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-inc-dis_20260913_192827/dataset.json.gz",
+    "episode_id": "139"
+  },
+  {
+    "variant_id": "T7-OUT-DIS",
+    "task": "T7",
+    "mem": "OUT",
+    "axis": "DIS",
+    "scene_id": "102816756",
+    "objects": [
+      {
+        "entity_id": "toy_truck_0",
+        "cls": "toy_fire_truck",
+        "role": "TARGET",
+        "setup": "living-room floor",
+        "real_id": "FIRE_ENGINE",
+        "real_name": "Toy Fire Truck",
+        "gif": "toy_fire_truck/FIRE_ENGINE.gif",
+        "tags": "red, plastic, wheeled, vehicle, firefighter"
+      },
+      {
+        "entity_id": "stuffed_toy_0",
+        "cls": "stuffed_toy",
+        "role": "TARGET",
+        "setup": "sofa (living room)",
+        "real_id": "b3e8be210978ec373be6eb5fcffec36c6a9712e6",
+        "real_name": "Dottie Plush Elephant",
+        "gif": "stuffed_toy/b3e8be210978ec373be6eb5fcffec36c6a9712e6.gif",
+        "tags": "brown, plush, soft, animal, toy"
+      },
+      {
+        "entity_id": "plate_0",
+        "cls": "plate",
+        "role": "TARGET",
+        "setup": "kitchen sink; is_dirty",
+        "real_id": "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+        "real_name": "Ruby Ring Dinner Plate",
+        "gif": "plate/Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring.gif",
+        "tags": "white, ceramic, round, rimmed, dinnerware"
+      },
+      {
+        "entity_id": "lamp_living_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "living room; is_powered_on -> is_powered_off",
+        "real_id": "B07HK83QRB",
+        "real_name": "Wooden Table Lamp",
+        "gif": "lamp/B07HK83QRB.gif",
+        "tags": "tan, wood, fabric, spherical, tabletop, lighting"
+      },
+      {
+        "entity_id": "lamp_kitchen_0",
+        "cls": "lamp",
+        "role": "",
+        "setup": "kitchen; is_powered_on -> is_powered_off",
+        "real_id": "B07HK3PNSK",
+        "real_name": "Brass Stem Lamp",
+        "gif": "lamp/B07HK3PNSK.gif",
+        "tags": "brass, black, metal, slender, lighting"
+      },
+      {
+        "entity_id": "clean_plate_0",
+        "cls": "plate",
+        "role": "DIST",
+        "setup": "near plate_0; is_clean",
+        "real_id": "Plate_20",
+        "real_name": "Cream Decorative Plate",
+        "gif": "plate/Plate_20.gif",
+        "tags": "cream, ceramic, round, flat, tableware"
+      },
+      {
+        "entity_id": "cushion_0",
+        "cls": "cushion",
+        "role": "DIST",
+        "setup": "near stuffed_toy_0",
+        "real_id": "pillow_4",
+        "real_name": "Dark Brown Cushion",
+        "gif": "cushion/pillow_4.gif",
+        "tags": "brown, fabric, rounded, soft, seating"
+      }
+    ],
+    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "memory_note": "Same stale beliefs (distractors still physically present).",
+    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-out-dis_20260913_192900/dataset.json.gz",
+    "episode_id": "142"
+  }
+]

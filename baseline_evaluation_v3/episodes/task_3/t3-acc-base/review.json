@@ -1,0 +1,169 @@
+{
+  "variant": "T3-ACC-BASE",
+  "status": "generated",
+  "dataset": "episodes/task_3/t3-acc-base/dataset.json.gz",
+  "episode_id": "T3-ACC-BASE",
+  "scene": "106878915_174887025",
+  "objects": [
+    {
+      "entity": "book_0",
+      "asset": "Book_17",
+      "handle": "Book_17_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "bed_1",
+        "room": "bedroom_1",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.091819763183594,
+        0.5389800071716309,
+        -4.921289920806885
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "book_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "book_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "book_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0000"
+    },
+    {
+      "entity": "book_1",
+      "asset": "Book_20",
+      "handle": "Book_20_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_1",
+        "room": "bedroom_1",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -6.13047981262207,
+        0.5321199893951416,
+        -5.8125200271606445
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "book_1-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "book_1-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "book_1-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "4a5f3b29cc15b191bb35bfae6c5918087a173827_:0000|receptacle_mesh_4a5f3b29cc15b191bb35bfae6c5918087a173827.0000"
+    },
+    {
+      "entity": "laptop_0",
+      "asset": "Laptop_2",
+      "handle": "Laptop_2_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -3.4180500507354736,
+        0.894819974899292,
+        -3.5497798919677734
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "laptop_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "laptop_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "laptop_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001"
+    }
+  ],
+  "image_root": "gui/episode_views/T3-ACC-BASE",
+  "checks": [
+    "book_0: exact asset, initial states, furniture, region checked",
+    "book_1: exact asset, initial states, furniture, region checked",
+    "laptop_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [],
+  "spec_sha256": "7eda0b42521084f5da55cac44443516b891fd3641d9fdde4be1a3577efe97a76",
+  "initial_robot_memory": "- book_0: on bed_1 (bedroom_1), is_clean\n- book_1: on table_1 (bedroom_1), is_clean\n- laptop_0: on table_2 (kitchen_0), is_clean, is_powered_on",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

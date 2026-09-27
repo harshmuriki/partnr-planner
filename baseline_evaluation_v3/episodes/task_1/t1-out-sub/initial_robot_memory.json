@@ -1,0 +1,22 @@
+{
+  "variant": "T1-OUT-SUB",
+  "objects": [
+    {
+      "entity": "pitcher_0",
+      "in_initial_robot_memory": false,
+      "memory_status": "not_in"
+    },
+    {
+      "entity": "lamp_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "jug_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_2 (kitchen_0)",
+      "present_in_scene": false
+    }
+  ]
+}

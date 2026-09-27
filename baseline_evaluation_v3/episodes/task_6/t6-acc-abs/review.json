@@ -1,0 +1,175 @@
+{
+  "variant": "T6-ACC-ABS",
+  "status": "generated",
+  "dataset": "episodes/task_6/t6-acc-abs/dataset.json.gz",
+  "episode_id": "T6-ACC-ABS",
+  "scene": "104348010_171512832",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "asset": "Bread_8",
+      "handle": "Bread_8_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {},
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {},
+        "next_to": [
+          "bottle_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -8.629948616027832,
+        1.0320595502853394,
+        -11.0040283203125
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "bread_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "bread_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "bread_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "27903d5a77d900067dd9031caf2f229776d800d4_:0000|receptacle_mesh_27903d5a77d900067dd9031caf2f229776d800d4.0000"
+    },
+    {
+      "entity": "bottle_0",
+      "asset": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+      "handle": "03758534dd2a3a8303e742cf4fc10fedd4c48843_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_7",
+        "room": "dining_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [
+          "bread_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -3.1713972091674805,
+        0.9585795998573303,
+        -10.185599327087402
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "bottle_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "bottle_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "bottle_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "ea8b4b9360dcfe7e18aae385c53f7ca2200678ab_part_6_:0000|receptacle_mesh_ea8b4b9360dcfe7e18aae385c53f7ca2200678ab_part_6.0024"
+    },
+    {
+      "entity": "lamp_living_0",
+      "asset": "B07HK3PNSK",
+      "handle": "B07HK3PNSK_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.732527732849121,
+        0.8707515597343445,
+        -5.126165390014648
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "lamp_living_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "lamp_living_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "lamp_living_0-angle-4.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "5d70cc76c99acee4513ec5f7fad497d2baebca9e_:0000|receptacle_mesh_5d70cc76c99acee4513ec5f7fad497d2baebca9e.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T6-ACC-ABS",
+  "checks": [
+    "bread_0: exact asset, initial states, furniture, region checked",
+    "bottle_0: exact asset, initial states, furniture, region checked",
+    "lamp_living_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [
+    "- The hand_towel (hand_towel_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+  ],
+  "spec_sha256": "ee98970307c66ba4465ab032e1b2283e11ab4240a9078cd8bb4475805b4ab42e",
+  "initial_robot_memory": "- bread_0: on counter_0 (kitchen_0)\n- bottle_0: on table_7 (dining_room_0), is_clean, is_filled\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on\n- hand_towel_0: known absent; no hand towel or acceptable substitute (blue hand towel) exists anywhere in the scene",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

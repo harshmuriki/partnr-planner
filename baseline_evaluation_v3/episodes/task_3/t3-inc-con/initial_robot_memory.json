@@ -1,0 +1,17 @@
+{
+  "variant": "T3-INC-CON",
+  "objects": [
+    {
+      "entity": "book_0",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "book_1",
+      "in_initial_robot_memory": false
+    },
+    {
+      "entity": "laptop_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

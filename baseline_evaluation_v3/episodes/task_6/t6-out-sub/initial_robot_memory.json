@@ -1,0 +1,40 @@
+{
+  "variant": "T6-OUT-SUB",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_7 (dining_room_0)"
+    },
+    {
+      "entity": "cup_0",
+      "in_initial_robot_memory": false,
+      "memory_status": "not_in"
+    },
+    {
+      "entity": "blue_hand_towel_0",
+      "in_initial_robot_memory": false,
+      "memory_status": "not_in"
+    },
+    {
+      "entity": "lamp_living_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_5 (bedroom_2)",
+      "present_in_scene": false
+    },
+    {
+      "entity": "hand_towel_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on chair_9 (bedroom_2)",
+      "present_in_scene": false
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+variant,id,completed_at,action_count,sim_steps,steps_complete,artifact_status,artifact_error,video_bytes,video_sha256,spec_hash,dataset_hash
+T1-ACC-BASE,63f68ca30d7542c2ab573ae37ba1c8f9,2026-09-16T19:05:45.116862+00:00,10,676,1,ready,,6482878,c20dd6cb6201915b07cea649bb0fdcea45f3d5b066064d440d8bd9a7f8e921bc,4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca,21a1fa9dd3067f4bb0d6738b13413f35be638d06766d2ee3eb877817f5c7d036

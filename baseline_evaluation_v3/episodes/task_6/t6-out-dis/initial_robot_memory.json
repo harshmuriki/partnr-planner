@@ -1,0 +1,43 @@
+{
+  "variant": "T6-OUT-DIS",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_7 (dining_room_0)"
+    },
+    {
+      "entity": "bottle_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_5 (bedroom_2)"
+    },
+    {
+      "entity": "hand_towel_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on chair_9 (bedroom_2)"
+    },
+    {
+      "entity": "lamp_living_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "dirty_hand_towel_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "bread_25_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    },
+    {
+      "entity": "supplement_bottle_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    }
+  ]
+}

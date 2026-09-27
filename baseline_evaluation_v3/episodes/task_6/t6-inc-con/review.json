@@ -1,0 +1,231 @@
+{
+  "variant": "T6-INC-CON",
+  "status": "generated",
+  "dataset": "episodes/task_6/t6-inc-con/dataset.json.gz",
+  "episode_id": "T6-INC-CON",
+  "scene": "104348010_171512832",
+  "objects": [
+    {
+      "entity": "bread_0",
+      "asset": "Bread_8",
+      "handle": "Bread_8_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "cabinet_1",
+        "room": "kitchen_0",
+        "states": {},
+        "next_to": [],
+        "closed": [
+          "cabinet_1"
+        ]
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {},
+        "next_to": [
+          "bottle_0",
+          "hand_towel_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -9.566195487976074,
+        0.25051525235176086,
+        -7.745840072631836
+      ],
+      "views": [
+        {
+          "label": "Interior 1",
+          "image": "bread_0-interior-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 2",
+          "image": "bread_0-interior-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 3",
+          "image": "bread_0-interior-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "14472289b14fcc1132137b9a8f8fe4e1ce47aa2e_:0001|double_sided_cabinet0013_shelf_receptacle_mesh.0000"
+    },
+    {
+      "entity": "bottle_0",
+      "asset": "03758534dd2a3a8303e742cf4fc10fedd4c48843",
+      "handle": "03758534dd2a3a8303e742cf4fc10fedd4c48843_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "fridge_0",
+        "room": "garage_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [],
+        "closed": [
+          "fridge_0"
+        ]
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [
+          "bread_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -18.855722427368164,
+        0.28774967789649963,
+        -5.394833087921143
+      ],
+      "views": [
+        {
+          "label": "Interior 7",
+          "image": "bottle_0-interior-7.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 8",
+          "image": "bottle_0-interior-8.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 1",
+          "image": "bottle_0-angle-1.webp",
+          "target_visible": false
+        }
+      ],
+      "receptacle": "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000|fridge0013_inside_door01_bottom_receptacle_mesh.0000"
+    },
+    {
+      "entity": "hand_towel_0",
+      "asset": "Tag_Dishtowel_Green",
+      "handle": "Tag_Dishtowel_Green_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "cabinet_23",
+        "room": "laundryroom/mudroom_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": [
+          "cabinet_23"
+        ]
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_11",
+        "room": "bedroom_2",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "bread_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -19.31026840209961,
+        0.1750003546476364,
+        -8.563477516174316
+      ],
+      "views": [
+        {
+          "label": "Interior 2",
+          "image": "hand_towel_0-interior-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 3",
+          "image": "hand_towel_0-interior-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 4",
+          "image": "hand_towel_0-interior-4.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "dd665def2d6a4b899e40affc18c777799f0d65fd_:0000|kitchen_cabinet0009_cabinet_receptacle_mesh.0000"
+    },
+    {
+      "entity": "lamp_living_0",
+      "asset": "B07HK3PNSK",
+      "handle": "B07HK3PNSK_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_2",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -8.739666938781738,
+        0.8707513213157654,
+        -5.147934436798096
+      ],
+      "views": [
+        {
+          "label": "Angle 2",
+          "image": "lamp_living_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "lamp_living_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "lamp_living_0-angle-6.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "5d70cc76c99acee4513ec5f7fad497d2baebca9e_:0000|receptacle_mesh_5d70cc76c99acee4513ec5f7fad497d2baebca9e.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T6-ACC-CON",
+  "checks": [
+    "bread_0: exact asset, initial states, furniture, region checked",
+    "bottle_0: exact asset, initial states, furniture, region checked",
+    "hand_towel_0: exact asset, initial states, furniture, region checked",
+    "lamp_living_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [],
+  "spec_sha256": "5237192e4d15592a89602c53e81d7ff11d2da93fab9c4a51d1d00d09a98e5686",
+  "initial_robot_memory": "- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

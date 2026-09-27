@@ -1,0 +1,29 @@
+{
+  "variant": "T2-ACC-DIS",
+  "objects": [
+    {
+      "entity": "box_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "box_1",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "scissors_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "board_game_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "distractor_knife_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "screwdriver_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

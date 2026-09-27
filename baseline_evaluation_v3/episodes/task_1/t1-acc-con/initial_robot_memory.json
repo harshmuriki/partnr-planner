@@ -1,0 +1,13 @@
+{
+  "variant": "T1-ACC-CON",
+  "objects": [
+    {
+      "entity": "jug_0",
+      "in_initial_robot_memory": true
+    },
+    {
+      "entity": "lamp_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

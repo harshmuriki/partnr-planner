@@ -1,0 +1,91 @@
+You write one PARTNR/Habitat-LLM evaluation spec file.
+Output ONLY the markdown spec. No JSON. No fences. No preamble.
+
+## What each spec file must contain
+Use this exact markdown skeleton (fill every section; no placeholders like TBD):
+
+# <VARIANT_ID>
+
+## Base task
+<canonical fully-specified instruction from the task row>
+
+## Scene
+- scene_id: <id>
+- rooms used: ...
+- furniture used (id — room — catalog description):
+  - table_0 — living_room_0 — Coffee table
+  (list EVERY furniture id referenced in this spec)
+
+## Task instruction / prompt given
+"<exact natural-language instruction the robot receives in this variant>"
+
+## Affected object(s)
+- spawn class, instance ids (class_0, class_1), which are uncertainty targets vs remaining task objects vs substitutes vs distractors
+
+## Uncertainty being tested
+List ONLY the axes this variant actually tests (the matrix cell). Do not list default axes.
+Examples:
+- ACC-ABS: Internal robot memory: Accurate; Object availability: No Suitable Object
+- INC-CON: Internal robot memory: Incomplete; Containment: Inside Closed Receptacle
+- ACC-ROOM: Internal robot memory: Accurate; Localization: Room Known
+- INC-BASE: Internal robot memory: Incomplete
+Never include Target Exists, On Surface, No distractors, Fully Specified, or Exact unless that axis is the one being varied. No "what changes" / target-object bullets here.
+
+## Information supplied in instruction
+- objects, counts, rooms, furniture, states, arrangement mentioned vs omitted
+
+## Initial world state
+Ground every object to a REAL furniture id from the scene catalog (or floor_<room> only if the spreadsheet says floor).
+Format: object_id: relation furniture_id (room), states.
+Relations: on | within | next_to | floor.
+Articulated furniture that must start closed for CON variants: list Open/Close.
+
+## Final expected world state
+Ground to furniture ids. Impossible actions must be rewritten to Habitat-legal success (see constraints).
+
+## Initial robot memory
+- If Accurate: copy of initial world state (include distractors/substitutes that exist).
+- If Incomplete: same as world state but OMIT the uncertainty-target objects (and their containment). Remaining task objects stay.
+- If Outdated: copy world state but MOVE/CHANGE only the uncertainty-target objects to the spreadsheet's stale locations (must still be real furniture ids). World state stays true; memory is wrong.
+- Localization ROOM/CAND (Accurate only): memory may name rooms or candidate rooms without a specific furniture id for targets.
+
+## Success criteria
+- Habitat propositions: is_on_top, is_inside, is_next_to, is_filled, is_clean, is_powered_off, in_room.
+- ABS variants: planner should give up; success = do not invent missing objects; remaining feasible subgoals may still hold.
+- SUB variants: substitute object satisfying the goal is success.
+- List proposition-style bullets tied to furniture ids.
+
+## Spawn / planner notes
+- classes to spawn, start furniture, within vs on, distractors, lamps if PowerOff on lights
+- robot start room if relevant
+
+## Constraints you MUST obey
+1. Furniture ids and rooms MUST appear in SCENE FURNITURE CATALOG. Never invent table_99, desk_0, sink_0, wardrobe_0, microwave, etc. If the spreadsheet says "desk" / "sink" / "wardrobe" / "entryway table", pick the closest catalog item (e.g. table in bedroom, kitchen counter, chest_of_drawers/cabinet, entryway table_N) and name that id.
+2. Spawn classes MUST be in ALLOWED OBJECT CLASSES. Map: packages→box; jug stays jug (pitcher is SUB only); plate_white→plate; soap→soap_dispenser; green/blue hand towel→hand_towel; stuffed toy→stuffed_toy. There is no paper, package, tissue_box, microwave, heat, or cook. Clean uses a faucet affordance (still spawn soap_dispenser if the task mentions soap). Fill exists. PowerOff works on spawned lamp, not ceiling fixtures — spawn lamp in the rooms whose lights must turn off.
+3. basket is a pickupable object, not a receptacle. "Fruits in the fruit basket" → fruits is_next_to basket AND is_on_top of the kitchen counter (same furniture as basket).
+4. No stack: use is_next_to.
+5. "within" / inside closed receptacle only on furniture that can contain (cabinet, fridge, chest_of_drawers, wardrobe-like cabinets). Prefer fridge_0 for drinks, cabinet_* for dry goods.
+6. Keep non-target objects in the default BASE world state. Apply the variant's uncertainty only to the spreadsheet "Uncertainty targets".
+7. ACC-ROOM / ACC-CAND: world state still has exact furniture; the instruction and/or memory withhold exact furniture (room or candidate rooms from the spreadsheet).
+8. Use the spreadsheet's AMB instruction text when Instruction is Underspecified.
+9. T6 "Heat up the bread": there is no heat skill. Success is bread placed at the chosen bedroom table/desk furniture next_to bottle and hand_towel; do not require a heated state.
+10. T5 Clean: bottles is_clean and is_filled; soap_dispenser does not need to move unless useful. Plate next_to bottles on living-room table.
+11. Default BASE world: targets exist, on surfaces, no distractors, fully specified instruction, exact locations, accurate memory.
+
+## Variant matrix (20 per task)
+Columns combine Internal Robot Memory with one non-default external axis (others default).
+ROOM and CAND exist only with Accurate memory.
+
+ACCURATE (ACC): ACC-BASE, ACC-SUB, ACC-ABS, ACC-CON, ACC-DIS, ACC-AMB, ACC-ROOM, ACC-CAND
+INCOMPLETE (INC): INC-BASE, INC-SUB, INC-ABS, INC-CON, INC-DIS, INC-AMB
+OUTDATED (OUT): OUT-BASE, OUT-SUB, OUT-ABS, OUT-CON, OUT-DIS, OUT-AMB
+
+Meaning of the external axis (from New Un):
+- BASE: Target exists on a surface; no distractors; fully specified instruction.
+- SUB: Requested target missing; suitable substitute exists and is correctly represented when memory is Accurate. Incomplete: substitute missing from memory. Outdated: memory still has the missing target at a stale location, not the substitute.
+- ABS: Target and substitutes unavailable. Accurate memory knows that. Incomplete: memory lacks enough info (should give up). Outdated: memory falsely suggests a suitable object exists.
+- CON: Selected uncertainty-target object(s) start inside a closed receptacle. Accurate memory knows containment. Incomplete: containment/object missing from memory. Outdated: memory has an old on-surface location.
+- DIS: Spreadsheet distractors present near targets. Accurate: memory has them. Incomplete: target and/or distractors missing. Outdated: stale info about target/distractors.
+- AMB: Use spreadsheet underspecified instruction. Accurate: world fully known. Incomplete: also missing env info. Outdated: also stale env info.
+- ROOM: Robot/instruction knows the room but not exact furniture (Accurate only).
+- CAND: Robot/instruction knows only candidate rooms (Accurate only).

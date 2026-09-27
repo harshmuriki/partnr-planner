@@ -1,0 +1,326 @@
+{
+  "variant": "T4-OUT-CON",
+  "status": "generated",
+  "dataset": "episodes/task_4/t4-out-con/dataset.json.gz",
+  "episode_id": "T4-OUT-CON",
+  "scene": "107734176_176000019",
+  "objects": [
+    {
+      "entity": "apple_0",
+      "asset": "Apple_26",
+      "handle": "Apple_26_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "fridge_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": [
+          "fridge_0"
+        ]
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "basket_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -4.920658111572266,
+        0.20232117176055908,
+        -9.073348999023438
+      ],
+      "views": [
+        {
+          "label": "Interior 2",
+          "image": "apple_0-interior-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 3",
+          "image": "apple_0-interior-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 4",
+          "image": "apple_0-interior-4.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000|fridge0013_inside_door01_bottom_receptacle_mesh.0000"
+    },
+    {
+      "entity": "apple_1",
+      "asset": "Apple_4",
+      "handle": "Apple_4_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "fridge_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": [
+          "fridge_0"
+        ]
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "basket_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -4.841375827789307,
+        0.2285030335187912,
+        -9.187358856201172
+      ],
+      "views": [
+        {
+          "label": "Interior 3",
+          "image": "apple_1-interior-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 4",
+          "image": "apple_1-interior-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 5",
+          "image": "apple_1-interior-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000|fridge0013_inside_door01_bottom_receptacle_mesh.0000"
+    },
+    {
+      "entity": "orange_0",
+      "asset": "017_orange",
+      "handle": "017_orange_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "fridge_0",
+        "room": "kitchen_0",
+        "states": {},
+        "next_to": [],
+        "closed": [
+          "fridge_0"
+        ]
+      },
+      "expected": {
+        "relation": "within",
+        "furniture": "basket_0",
+        "room": "kitchen_0",
+        "states": {},
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -4.700549602508545,
+        0.19875995814800262,
+        -9.102181434631348
+      ],
+      "views": [
+        {
+          "label": "Interior 1",
+          "image": "orange_0-interior-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 2",
+          "image": "orange_0-interior-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 3",
+          "image": "orange_0-interior-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000|fridge0013_inside_door01_bottom_receptacle_mesh.0000"
+    },
+    {
+      "entity": "basket_0",
+      "asset": "87ed6d0c785b3245207bb217eb3ee3fc079f8633",
+      "handle": "87ed6d0c785b3245207bb217eb3ee3fc079f8633_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -7.317148208618164,
+        0.9763990044593811,
+        -6.9629011154174805
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "basket_0-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "basket_0-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "basket_0-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "bf0ea53947cff924371c0ae4abf8b9891452e9c5_:0000|kitchen_island_cabinet0001_top_receptacle_mesh.0000"
+    },
+    {
+      "entity": "bottle_0",
+      "asset": "2f92d709c9e94753a896c065cb62ed33765837c0",
+      "handle": "2f92d709c9e94753a896c065cb62ed33765837c0_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "fridge_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": [
+          "fridge_0"
+        ]
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -4.9077863693237305,
+        0.27891793847084045,
+        -8.783329010009766
+      ],
+      "views": [
+        {
+          "label": "Interior 6",
+          "image": "bottle_0-interior-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 7",
+          "image": "bottle_0-interior-7.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 1",
+          "image": "bottle_0-angle-1.webp",
+          "target_visible": false
+        }
+      ],
+      "receptacle": "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000|fridge0013_inside_door01_bottom_receptacle_mesh.0000"
+    },
+    {
+      "entity": "bottle_1",
+      "asset": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3",
+      "handle": "xxxxe3f9a974xfd88x433bx92c8x5f4d72d43be3_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "fridge_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": [
+          "fridge_0"
+        ]
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "counter_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -5.039177417755127,
+        0.32874029874801636,
+        -8.787538528442383
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "bottle_1-angle-1.webp",
+          "target_visible": false
+        },
+        {
+          "label": "Angle 2",
+          "image": "bottle_1-angle-2.webp",
+          "target_visible": false
+        },
+        {
+          "label": "Angle 3",
+          "image": "bottle_1-angle-3.webp",
+          "target_visible": false
+        }
+      ],
+      "receptacle": "35880f4a551d6b1790f8ded9b23498f1da88575b_:0000|fridge0013_inside_door01_bottom_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T4-ACC-CON",
+  "checks": [
+    "apple_0: exact asset, initial states, furniture, region checked",
+    "apple_1: exact asset, initial states, furniture, region checked",
+    "orange_0: exact asset, initial states, furniture, region checked",
+    "basket_0: exact asset, initial states, furniture, region checked",
+    "bottle_0: exact asset, initial states, furniture, region checked",
+    "bottle_1: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [],
+  "spec_sha256": "4df825302eb0967a70c2cb29bab41df9c786c733708c6d44998fb997c9b326e2",
+  "initial_robot_memory": "- apple_0: on table_4 (living_room_0), is_clean, stale record\n- apple_1: on table_4 (living_room_0), is_clean, stale record\n- orange_0: on table_4 (living_room_0), stale record\n- basket_0: on counter_0 (kitchen_0), is_clean, is_empty\n- bottle_0: on table_4 (living_room_0), is_clean, is_empty, stale record\n- bottle_1: on table_4 (living_room_0), is_clean, is_empty, stale record",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 2,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

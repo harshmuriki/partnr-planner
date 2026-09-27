@@ -1,0 +1,87 @@
+/home/harshmuriki/miniconda3/envs/habitat/lib/python3.9/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+pybullet build time: Oct 23 2025 10:01:39
+PluginManager::Manager: duplicate static plugin StbImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin GltfImporter, ignoring
+PluginManager::Manager: duplicate static plugin BasisImporter, ignoring
+PluginManager::Manager: duplicate static plugin AssimpImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnySceneImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnyImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin StbImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin GltfImporter, ignoring
+PluginManager::Manager: duplicate static plugin BasisImporter, ignoring
+PluginManager::Manager: duplicate static plugin AssimpImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnySceneImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnyImageImporter, ignoring
+2026-09-15 02:19:33,253 Initializing scene 103997895_171031182
+PluginManager::Manager: duplicate static plugin StbImageImporter, ignoring
+PluginManager::Manager: duplicate static plugin GltfImporter, ignoring
+PluginManager::Manager: duplicate static plugin BasisImporter, ignoring
+PluginManager::Manager: duplicate static plugin AssimpImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnySceneImporter, ignoring
+PluginManager::Manager: duplicate static plugin AnyImageImporter, ignoring
+[02:19:34:219937]:[Error]:[URDF] URDFParser.cpp(680)::parseGeometry : Collision box primitive with 0 scale detected  Vector(0.3706, 0, 0.522) . Replacing zeros with 0.001 and continuing.
+2026-09-15 02:19:35,109 Initializing scene 103997895_171031182
+[02:19:35:628778]:[Error]:[URDF] URDFParser.cpp(680)::parseGeometry : Collision box primitive with 0 scale detected  Vector(0.3706, 0, 0.522) . Replacing zeros with 0.001 and continuing.
+2026-09-15 02:19:36,353 sampled_object = jug
+2026-09-15 02:19:36,353 sampled_rec = fridge
+2026-09-15 02:19:36,353 region(s) = ['kitchen_0']
+2026-09-15 02:19:36,375 Loaded receptacle filter data for scene '103997895_171031182' from configured filter file 'data/hssd-hab/scene_filter_files/103997895_171031182.rec_filter.json'.
+2026-09-15 02:19:36,388 sampled_object = lamp
+2026-09-15 02:19:36,388 sampled_rec = chest_of_drawers
+2026-09-15 02:19:36,388 region(s) = ['bedroom_0']
+2026-09-15 02:19:36,391 Running placement stability analysis...
+2026-09-15 02:19:37,854    ...done with placement stability analysis in 1.4630999565124512 seconds.
+2026-09-15 02:19:37,854 Computing placement stability report:
+----------------------------------------
+2026-09-15 02:19:37,854  : unstable=0|2 (0.0%) : [].
+2026-09-15 02:19:37,854  : Maximum displacement from settling = 0.04039132967591286
+2026-09-15 02:19:37,854 0 target objects are unstable.
+2026-09-15 02:19:37,855   Detailed receptacle stability analysis:
+      receptacle 'ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_lower_cabinet_receptacle_mesh.0000': (0/1) (unstable/total) objects.
+      receptacle 'b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000': (0/1) (unstable/total) objects.
+----------------------------------------
+No active dbv agent to remove.
+No active dbv agent to remove.
+smart_placement primaries: ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_lower_cabinet_receptacle_mesh.0000
+smart_placement: placed 264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000 in ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_lower_cabinet_receptacle_mesh.0000 at Vector(-10.6119, 0.70422, 3.78178)
+smart_placement primaries: b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000
+smart_placement: placed B07HK83QRB_:0000 on b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000 at Vector(-2.42238, 0.925786, -3.29746)
+RESULT lower_cabinet True {'scene': '103997895_171031182', 'phase_details': {1: {'within_placement': True, 'within_recs': ['ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_lower_cabinet_receptacle_mesh.0000']}, 2: {}}}
+VALIDATED ({'jug_0': '264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000', 'lamp_0': 'B07HK83QRB_:0000'}, ['jug_0: exact asset, initial states, furniture, region checked', 'lamp_0: exact asset, initial states, furniture, region checked'])
+ACCESS True POS Vector(-10.6124, 0.664239, 3.78155)
+2026-09-15 02:19:37,994 Initializing scene 103997895_171031182
+[02:19:38:473849]:[Error]:[URDF] URDFParser.cpp(680)::parseGeometry : Collision box primitive with 0 scale detected  Vector(0.3706, 0, 0.522) . Replacing zeros with 0.001 and continuing.
+2026-09-15 02:19:39,196 Initializing scene 103997895_171031182
+[02:19:39:689298]:[Error]:[URDF] URDFParser.cpp(680)::parseGeometry : Collision box primitive with 0 scale detected  Vector(0.3706, 0, 0.522) . Replacing zeros with 0.001 and continuing.
+2026-09-15 02:19:40,503 sampled_object = jug
+2026-09-15 02:19:40,503 sampled_rec = fridge
+2026-09-15 02:19:40,504 region(s) = ['kitchen_0']
+2026-09-15 02:19:40,526 Loaded receptacle filter data for scene '103997895_171031182' from configured filter file 'data/hssd-hab/scene_filter_files/103997895_171031182.rec_filter.json'.
+2026-09-15 02:19:40,532 sampled_object = lamp
+2026-09-15 02:19:40,532 sampled_rec = chest_of_drawers
+2026-09-15 02:19:40,532 region(s) = ['bedroom_0']
+2026-09-15 02:19:40,534 Running placement stability analysis...
+2026-09-15 02:19:42,019    ...done with placement stability analysis in 1.484499454498291 seconds.
+2026-09-15 02:19:42,019 Computing placement stability report:
+----------------------------------------
+2026-09-15 02:19:42,019  : unstable=0|2 (0.0%) : [].
+2026-09-15 02:19:42,019  : Maximum displacement from settling = 0.04063192754983902
+2026-09-15 02:19:42,019 0 target objects are unstable.
+2026-09-15 02:19:42,019   Detailed receptacle stability analysis:
+      receptacle 'ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_upper_cabinet_receptacle_mesh.0000': (0/1) (unstable/total) objects.
+      receptacle 'b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000': (0/1) (unstable/total) objects.
+----------------------------------------
+No active dbv agent to remove.
+No active dbv agent to remove.
+smart_placement primaries: ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_upper_cabinet_receptacle_mesh.0000
+smart_placement: placed 264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000 in ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_upper_cabinet_receptacle_mesh.0000 at Vector(-10.5508, 2.0878, 3.76523)
+smart_placement primaries: b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000
+smart_placement: placed B07HK83QRB_:0000 on b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000 at Vector(-2.45112, 0.925787, -3.31696)
+RESULT upper_cabinet True {'scene': '103997895_171031182', 'phase_details': {1: {'within_placement': True, 'within_recs': ['ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_upper_cabinet_receptacle_mesh.0000']}, 2: {}}}
+VALIDATED ({'jug_0': '264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000', 'lamp_0': 'B07HK83QRB_:0000'}, ['jug_0: exact asset, initial states, furniture, region checked', 'lamp_0: exact asset, initial states, furniture, region checked'])
+ACCESS False POS Vector(-10.5487, 2.0479, 3.77209)
+No active dbv agent to remove.

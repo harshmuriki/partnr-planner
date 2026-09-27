@@ -1,0 +1,180 @@
+{
+  "variant": "T2-INC-BASE",
+  "status": "generated",
+  "dataset": "episodes/task_2/t2-inc-base/dataset.json.gz",
+  "episode_id": "T2-INC-BASE",
+  "scene": "106878960_174887073",
+  "objects": [
+    {
+      "entity": "box_0",
+      "asset": "B073PB1H88",
+      "handle": "B073PB1H88_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_1",
+          "scissors_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.0566248893737793,
+        0.16350339353084564,
+        -7.825682163238525
+      ],
+      "views": [
+        {
+          "label": "Angle 3",
+          "image": "box_0-angle-3.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 4",
+          "image": "box_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "box_0-angle-5.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "box_1",
+      "asset": "B071225BBS",
+      "handle": "B071225BBS_:0000",
+      "initial": {
+        "relation": "floor",
+        "furniture": "floor_entryway_foyer_lobby_0",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [
+          "box_0",
+          "scissors_0"
+        ],
+        "closed": []
+      },
+      "position": [
+        -3.0765771865844727,
+        0.15441985428333282,
+        -4.1711249351501465
+      ],
+      "views": [
+        {
+          "label": "Angle 1",
+          "image": "box_1-angle-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 2",
+          "image": "box_1-angle-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 3",
+          "image": "box_1-angle-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "floor"
+    },
+    {
+      "entity": "scissors_0",
+      "asset": "Diamond_Visions_Scissors_Red",
+      "handle": "Diamond_Visions_Scissors_Red_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_2",
+        "room": "entryway/foyer/lobby_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_16",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true
+        },
+        "next_to": [
+          "box_0",
+          "box_1"
+        ],
+        "closed": []
+      },
+      "position": [
+        -2.4679646492004395,
+        0.8438630700111389,
+        -2.650130271911621
+      ],
+      "views": [
+        {
+          "label": "Angle 5",
+          "image": "scissors_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 6",
+          "image": "scissors_0-angle-6.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 7",
+          "image": "scissors_0-angle-7.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "d015e61bece2fc81cddeadd8bd55d97005846874_:0000|Dresser0237_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T2-ACC-BASE",
+  "checks": [
+    "box_0: exact asset, initial states, furniture, region checked",
+    "box_1: exact asset, initial states, furniture, region checked",
+    "scissors_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [],
+  "spec_sha256": "565b0ab2b04c37dad2e1b553097a29d1962bc9c48ee317c6cb927171bf12e2e5",
+  "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

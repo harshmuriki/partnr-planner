@@ -1,0 +1,65 @@
+rooms: laundryroom/mudroom_0, living_room_0, lounge_0, porch/terrace/deck/driveway_0, bedroom_2, bathroom_1, bedroom_1, bedroom_0, kitchen_0, bathroom_0
+laundryroom/mudroom_0:
+  - washer_dryer_0: Samsung Freestanding Washing Machine White WF8704RSW (H)844 x (W)598 x (D)600mm
+living_room_0:
+  - table_0: Console Table
+  - table_1: Coffee table
+  - chair_0: Burbeck Chair with Seat Pad
+  - chair_1: Burbeck Chair with Seat Pad
+  - table_2: Antique Brass Collection Side Table
+  - table_3: Antique Brass Collection Side Table
+  - table_4: "Alameda" Dining Table
+  - table_5: Boracay End Table
+  - couch_0: Arcata Sofa 75'' Sofa
+  - stool_0: Mariposa Ottoman
+  - stool_1: Mariposa Ottoman
+  - table_7: Sabina Accent Table
+  - table_8: Helms Sofa Table
+  - couch_1: Mercer Down II 3 Piece Sectional With Double Chaise
+  - bench_3: Evan Bench
+  - stand_0: TV-
+lounge_0:
+  - chair_2: Outdoor Sienna Lounge Chair
+  - chair_3: Outdoor Sienna Lounge Chair
+  - stool_4: Nassau 37" Round Ottoman 
+  - chair_9: Bruin Dining Chair
+  - chair_10: Bruin Dining Chair
+  - chair_11: Bruin Dining Chair
+  - table_9: CHIPS DINING TABLE
+porch/terrace/deck/driveway_0:
+  - chair_3: Outdoor Sienna Lounge Chair
+bedroom_2:
+  - bed_0: Papilio bed
+  - chair_7: Aventura dining chair
+  - chair_8: Aventura dining chair
+  - stool_5: Wicker Natural Ottoman - Natural Ottoman
+  - chest_of_drawers_2: Splay Night Stand
+  - chest_of_drawers_3: Splay Night Stand
+bathroom_1:
+  - bench_0: Cutter Bench
+  - toilet_1: Blenheim CC Comfort Pan White
+bedroom_1:
+  - table_6: Ren Accent Table
+  - chair_4: Painted Anne Chair
+  - chair_5: Painted Anne Chair
+  - bed_1: Venice Bed
+  - bed_2: Venice Bed
+  - bench_2: Franklin bench
+  - chest_of_drawers_5: BROOKE MIRRORED NIGHTSTAND
+bedroom_0:
+  - chair_6: Diandra Armchair
+  - bed_3: Wyatt Full Bed
+  - chest_of_drawers_0: Marrakesh Night Stand
+  - chest_of_drawers_1: Marrakesh Night Stand
+  - chest_of_drawers_4: Columbia Dresser
+kitchen_0:
+  - stool_2: Harper Counter Stool
+  - stool_3: Harper Counter Stool
+  - cabinet_0: Kitchen cabinet with drawers
+  - cabinet_1: Kitchen cabinet with drawers
+  - fridge_0: KEW - Fridge
+  - counter_0: Kitchen island, 60x150x90
+bathroom_0:
+  - bench_1: Bench One
+  - toilet_0: Blenheim CC Comfort Pan White
+  - cabinet_2: Bathroom Vanity Unit

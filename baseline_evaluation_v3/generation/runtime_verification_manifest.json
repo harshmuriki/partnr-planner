@@ -1,0 +1,457 @@
+{
+  "verifier": "dataset_generation.benchmark_generation.verify_dataset",
+  "verified_at": "2026-09-27T04:03:11.761827+00:00",
+  "episodes": {
+    "T1-ACC-ABS": {
+      "dataset_sha256": "f6aa1f50ac3a0afe13281afa0446256873c43bdd590a4ee3ac444281130a64c5",
+      "spec_sha256": "a0ac09570796f0a0c90a7c09e9c457ce83cad4eef6e1a8efef0b6943b6ac0dc2",
+      "success_init": true
+    },
+    "T1-ACC-BASE": {
+      "dataset_sha256": "21a1fa9dd3067f4bb0d6738b13413f35be638d06766d2ee3eb877817f5c7d036",
+      "spec_sha256": "4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca",
+      "success_init": true
+    },
+    "T1-ACC-CON": {
+      "dataset_sha256": "e385ea5a903ae9d184778525365cdbdd669d6e8e906999b2af3722131fea5ceb",
+      "spec_sha256": "7b8c14d8e0ab38c29145c793a3a51d811e6b308a3695a9c1cc8fc41f366e84b4",
+      "success_init": true
+    },
+    "T1-ACC-DIS": {
+      "dataset_sha256": "7dde601471193eacc5cd8e784ca0a8bb8a17249ca97b9785699f6f29a0adada0",
+      "spec_sha256": "b812bcf4d48b5b25585d847dfe4d3136b87e14065e88d9861a356464a8577545",
+      "success_init": true
+    },
+    "T1-ACC-SUB": {
+      "dataset_sha256": "c4fb0a1193407f58bd45ce9e5451c4f2c5dae7f84dd7b797e3e5e034aa2b585c",
+      "spec_sha256": "eb500e3c9a4210c79a7c24b68a577d7fc83b7156dcfc5bf956e559add9d2bc16",
+      "success_init": true
+    },
+    "T1-INC-ABS": {
+      "dataset_sha256": "32fa60d05046df14f0bb6b225cb8c8f3bedb5092c7c79e37e5e973d702523a27",
+      "spec_sha256": "98668476ace0497107e53e85bf4ddbe93aba18d8986eaf05c363e6e26107dc99",
+      "success_init": true
+    },
+    "T1-INC-BASE": {
+      "dataset_sha256": "a7c2ffb36467a0e1e738cf5b231e2aa58f58e136f5de6b41887b9da79d117899",
+      "spec_sha256": "3a84734ea7c501705850f7caebd2a7bf3f368c63677c8916073dfc606296554c",
+      "success_init": true
+    },
+    "T1-INC-CON": {
+      "dataset_sha256": "fce65d6681acec76f69293b3f6c438935f679c21e251df1943e2352cc102b773",
+      "spec_sha256": "bcc50666c23139a38acabe16d2bd7ab84b16fb105520dc50bd9ca980ea2a572a",
+      "success_init": true
+    },
+    "T1-INC-DIS": {
+      "dataset_sha256": "0b8ebe931cf676d16123bd272b9890314a0d7505eebac3f7c71d45b20bf02af8",
+      "spec_sha256": "0943597a85ab7572181c653b25736757f973a19e9e1de4945753866eea34f3d4",
+      "success_init": true
+    },
+    "T1-INC-SUB": {
+      "dataset_sha256": "399c7481e8780ecf745a9309508181f011a350441f7dda83121edb5f20660748",
+      "spec_sha256": "a3555be54ca252a6f9c9fb0153ec57488aad86214e2470a88da102872288479a",
+      "success_init": true
+    },
+    "T1-OUT-ABS": {
+      "dataset_sha256": "e33a4eed072e3e02e432cf8c29118d09f94bcb92ee068d9c3417d7a5c6ebda9c",
+      "spec_sha256": "f58e15161074d351229534c2c0f5494927cad7fa228320f0a1ec4245876b1dee",
+      "success_init": true
+    },
+    "T1-OUT-BASE": {
+      "dataset_sha256": "7f07351779be3f4a300f34070928fa3b078c5d5c7a18179dd50e8b5bcfbe6683",
+      "spec_sha256": "baca36bdee15187a413318efc58f6dbedb4878b48ac1b7f691ca2c0f1e41fa7f",
+      "success_init": true
+    },
+    "T1-OUT-CON": {
+      "dataset_sha256": "ef101c51c420e3d9671596f626300fbbbef43bde13bd2cfcc31515a8d2f5a45e",
+      "spec_sha256": "87cc751165e19e0febb7193de44964863e1b087a704e04a9e1d45c825d551333",
+      "success_init": true
+    },
+    "T1-OUT-DIS": {
+      "dataset_sha256": "d3491e454de22f9ddac59a34c3c87867b7d47a67e08c3c1403881ee8e0783a45",
+      "spec_sha256": "d876ef182b1dfa0101465c5a54cedd8896b17a59dfd6e8e53bc1b8d01148e772",
+      "success_init": true
+    },
+    "T1-OUT-SUB": {
+      "dataset_sha256": "599e943dccb4405d22eb8e550707994d08c50b26843d1cba140b3e9d648af41d",
+      "spec_sha256": "fd30a80b6eaf7ebff43e9ba1f7e899537a4a0372f408fd281f2f60b753004e20",
+      "success_init": true
+    },
+    "T2-ACC-ABS": {
+      "dataset_sha256": "f45e86ecf4e1daf9c23caadb5ff08766dd1b536e8fa43c210084e9bd1d73f49c",
+      "spec_sha256": "505a8fb3f5b74648da78e7108d3cfaea0a310413a76037994a249d92b084d93f",
+      "success_init": true
+    },
+    "T2-ACC-BASE": {
+      "dataset_sha256": "0710c8c8cf3e320eec8d50ec5aaca088ee1ba2164ca733b93b4f5990be3a5f07",
+      "spec_sha256": "a2ff263df4631c1ea68134459ebdb0a51d7e312a1c25ffa6bccf49bb4996ac40",
+      "success_init": true
+    },
+    "T2-ACC-CON": {
+      "dataset_sha256": "8bca613868436584e1b2056e7a1fa25d1dac446abd165d1e64f6dad8b774e621",
+      "spec_sha256": "a2e15313b5989fe0847018ccbb6b8c7a05d153d555f261783a2a2b0e04a81983",
+      "success_init": true
+    },
+    "T2-ACC-DIS": {
+      "dataset_sha256": "df725ab4c088fbdf8370d9d100000da3ff52de3ae3999f45e44debce51ecf803",
+      "spec_sha256": "1d9e5e1bd9f5d793bc23ad83e170cbc6a189dfedbe2a6541c54fc95ad966a258",
+      "success_init": true
+    },
+    "T2-ACC-SUB": {
+      "dataset_sha256": "86492fa084dfa4ea063770cf2750600ae4b93f95a9a28ed263b7b0a3d15c81c2",
+      "spec_sha256": "2a0f106fa0d44d8b03399b4969e388eda42d4b44ca11ebe8bcb0eaa93bbca440",
+      "success_init": true
+    },
+    "T2-INC-ABS": {
+      "dataset_sha256": "60ba0f00c1963b6c13bb1924418bb73d15ddcab9a874847517fb4624de184066",
+      "spec_sha256": "b24d07c834b77111c33c1161482eb14020390638965a4fe87f96a97ed7d652e9",
+      "success_init": true
+    },
+    "T2-INC-BASE": {
+      "dataset_sha256": "e280abf15f9008f427a07eb08fbbfb0c3d7600702e50f2d2d53f849d50043b12",
+      "spec_sha256": "565b0ab2b04c37dad2e1b553097a29d1962bc9c48ee317c6cb927171bf12e2e5",
+      "success_init": true
+    },
+    "T2-INC-CON": {
+      "dataset_sha256": "887caa000d7939f67f4ed49bc46512624470b68f4a312c731060ba47d39e7fe0",
+      "spec_sha256": "50cc238c66397d3d8a0e70bfc38104af1893532771fa85b0c8d02fbb3e0211bb",
+      "success_init": true
+    },
+    "T2-INC-DIS": {
+      "dataset_sha256": "938e9e2441573b6de3ac7fd87f51fa4b6f3a8c9c612ce9772d11d6c7c93dcfcd",
+      "spec_sha256": "e9f17e3062ee905cc66ffe97946bbfa1f647e0d2527d5500a5766217c3657626",
+      "success_init": true
+    },
+    "T2-INC-SUB": {
+      "dataset_sha256": "584ab20d0b791537495a39a6f0efff45fb5da230f7962732e44b043da4d4efda",
+      "spec_sha256": "6c7c471f68a1a3c31cc3e60db0b0881f4045bd0623c2d78798e93c19428cda56",
+      "success_init": true
+    },
+    "T2-OUT-ABS": {
+      "dataset_sha256": "c454d76bc5ad98368440049534a75de5810fee414f38d2eb3a9bdc39ef12b9d4",
+      "spec_sha256": "03f60db1aaf059e808e36477cd606f6311767cebbe7a3640058d3b294d76662d",
+      "success_init": true
+    },
+    "T2-OUT-BASE": {
+      "dataset_sha256": "b4020755b4859e967f625b3787393d5614f941710f8d887bf99050bbfc87f9df",
+      "spec_sha256": "d3db381b3c1df2cc3814a81fa82563a8aa0c787a28123708db3af8cb8b611418",
+      "success_init": true
+    },
+    "T2-OUT-CON": {
+      "dataset_sha256": "d3b5e953ae854ce42ce449e1328fbb298cd99a635cd830b619ff72b3aea4301a",
+      "spec_sha256": "c647ba39263a1adde24fa887aba78dcc2ed5b66a80c26c02f62e8f7cfe44be48",
+      "success_init": true
+    },
+    "T2-OUT-DIS": {
+      "dataset_sha256": "750e4251c8d665de2b8db9d2df86a10bc9ed2bcb8cf7d940767055b1c72eae1d",
+      "spec_sha256": "c4bac65cb288669fcea05f19b9c959aad0e298d5f631d849a075c572d8a712f0",
+      "success_init": true
+    },
+    "T2-OUT-SUB": {
+      "dataset_sha256": "cb47d45eb9c510ef5fb4f983994de00861547d3379f5f0c9e63b2f44a9aca9ce",
+      "spec_sha256": "8327861b510641bc3717050cabbe9e35ca52fe38ee0913f2b9ae1b7180ca40bc",
+      "success_init": true
+    },
+    "T3-ACC-ABS": {
+      "dataset_sha256": "73924e785e9d67053858b9a65917b80aa816ab0ad733cb3601fd069f0246a1d3",
+      "spec_sha256": "ce163c6984b1e4c7d3520acbfbf3e11feb1bd562883cb36fa95d5702a70fe768",
+      "success_init": true
+    },
+    "T3-ACC-BASE": {
+      "dataset_sha256": "e232143e59cdcb405efb4f4047849a16b87f2ca26f0e00faf04f5a2c40a8f454",
+      "spec_sha256": "7eda0b42521084f5da55cac44443516b891fd3641d9fdde4be1a3577efe97a76",
+      "success_init": true
+    },
+    "T3-ACC-CON": {
+      "dataset_sha256": "9aa00188cfc1fc1ec102e51f7146e45bc7afb79025812dac5cf41450cf4ba688",
+      "spec_sha256": "4bd9e7d3557ec2e52430ae5aee403e89fb51fbb310a3f3d92d6aca5d3c2cda18",
+      "success_init": true
+    },
+    "T3-ACC-DIS": {
+      "dataset_sha256": "878f4c1b48513b6d2413dc986e3b7605fc9c4fecc622294fd7cd227aa742e765",
+      "spec_sha256": "7373a92ff09a79112680bb35ca56be30a0ee5b80ac94759d4cddd085579c196e",
+      "success_init": true
+    },
+    "T3-INC-ABS": {
+      "dataset_sha256": "a204ed0204a0494a03d88aacaeeaea283bfc314b4c083e95c8df5a9f24deb731",
+      "spec_sha256": "59a90cfb4fc46b6a43638eb59ab0629b9f3cd8c2932e3f4c4c49358ba2ed821a",
+      "success_init": true
+    },
+    "T3-INC-BASE": {
+      "dataset_sha256": "0817a4d9261f86c4cc9a2d9d437c7443c8ad7784858ab1361e407baf4ca7005f",
+      "spec_sha256": "9bab41427e3e0e292f75835894e35c477d3f09100783d58f26ac1f2174a9d752",
+      "success_init": true
+    },
+    "T3-INC-CON": {
+      "dataset_sha256": "275346200e4600ddd55b6a6a7dee13597ba939af035ea63215e72fa785b0ab20",
+      "spec_sha256": "0c99cc201dd19d8405dd85d7cdb7ce2f52803adbe7438c981283f1fb60e7c1ae",
+      "success_init": true
+    },
+    "T3-INC-DIS": {
+      "dataset_sha256": "4483d974bc64cc999ecfd8e649bccd7ffab36b48bfaba9a6a3e16861ba1810ae",
+      "spec_sha256": "2c141e5b3878ea4a9671d9128daf45e77a1cb0c244ae68d5368927c25bf91cf9",
+      "success_init": true
+    },
+    "T3-OUT-ABS": {
+      "dataset_sha256": "4a9df36a54a1e464fb27ea46b27a4ddcae13ec37cca6c13f4109209a307e4325",
+      "spec_sha256": "028f27e4ead0d91144ce3f76207209b4da472d0fb0a2bd4ffea8082cd6ad5817",
+      "success_init": true
+    },
+    "T3-OUT-BASE": {
+      "dataset_sha256": "392cc300443e5a6d6408af27a376e19bb25eb9f5991ba8c35334431012bd54de",
+      "spec_sha256": "441a3163301f72a12dfe31eaa542c9342b728ffac061bbec944131aaf7df12d6",
+      "success_init": true
+    },
+    "T3-OUT-CON": {
+      "dataset_sha256": "32e71b948bf702132b5763f1980daf1ab53242e5bae890aee06d5340aed0faab",
+      "spec_sha256": "cd0e67a3ce158cbdb37af0bbdc7106a7bc9fc7d56bc5448283249428f2e517a7",
+      "success_init": true
+    },
+    "T3-OUT-DIS": {
+      "dataset_sha256": "b93c0fcfbe4a43853fcec16092c807a881b84bdd5fc2e5cd6204797418a88264",
+      "spec_sha256": "1af959873bad5ef25f1de5ea0954f1f80db01f20854b7525c40e5da2fbfa1bcd",
+      "success_init": true
+    },
+    "T4-ACC-ABS": {
+      "dataset_sha256": "00f07d997663df875b654cce37a9d93d2867f5048b52839eca59c8a3b510ed4a",
+      "spec_sha256": "0efe3756c6173bf27c487897f0e81d332ec3a402a531883afbbd6105c630668a",
+      "success_init": true
+    },
+    "T4-ACC-BASE": {
+      "dataset_sha256": "130d29e755cc750a1fe003dac3e36dd8b4890ba765a47f9b61118658e3a538e3",
+      "spec_sha256": "958321f7f835bfac7914e127930046413693d35f11578d624aaf23fd0ffb6a3f",
+      "success_init": true
+    },
+    "T4-ACC-CON": {
+      "dataset_sha256": "ba23cfdcf01cee70d04a3326c0415e4e42587a3b1f0f07499cd211e534fad996",
+      "spec_sha256": "06f76e7bd59318a6a43a9cd1725646b5846c879cad2d8fe3f63cfb5c930584df",
+      "success_init": true
+    },
+    "T4-ACC-DIS": {
+      "dataset_sha256": "3cd4b07daf23942090f9ed3712a6a03784855679c0d357eaecfb909bcf01cb20",
+      "spec_sha256": "b0ed03692de34d88117617d70882285e11c1f82035cb2ae4d70416aebbdaed3a",
+      "success_init": true
+    },
+    "T4-INC-ABS": {
+      "dataset_sha256": "5ca25902480421fb3554618b7f8e9e8263ee25b060634b485ee5c0be67e19f56",
+      "spec_sha256": "7fe1e4e4aead4a68b637ad85cf86c3bf5da7c9d029336606da29e0d145f50ad0",
+      "success_init": true
+    },
+    "T4-INC-BASE": {
+      "dataset_sha256": "239a44a25f4c29eb34dabd1e3d97581a783b0c627686e43b3c9a7dd00db843b9",
+      "spec_sha256": "80b4acb0882f9138af59188bdf41caf4add8ff503793c465e53c7a1aabc7b38e",
+      "success_init": true
+    },
+    "T4-INC-CON": {
+      "dataset_sha256": "d04f8cfe3878617917097571047272974a08afa3909cc32256d217d899cb7911",
+      "spec_sha256": "7e3c4e168c73e1db3d95c5a8a779857c995bd44f90fc2b1ca8fe9582fb1b35a1",
+      "success_init": true
+    },
+    "T4-INC-DIS": {
+      "dataset_sha256": "96928171f95d5a0c6cc0cdad4acc22f349d6246cbffce3df218a73012ed1c3bf",
+      "spec_sha256": "67342b3a7d2599f53076b9dc4df3e019f7f8706b43eba73e5735c8c528d19199",
+      "success_init": true
+    },
+    "T4-OUT-ABS": {
+      "dataset_sha256": "c39c8eccfd95d361c1402d3c9d9ddf214667351c9d2d511cd7e4a7a75ebb9885",
+      "spec_sha256": "19871197a027d7148155b3f745fddba05fe18af5abae740ed2a0e2bd82933472",
+      "success_init": true
+    },
+    "T4-OUT-BASE": {
+      "dataset_sha256": "808a5bfd845f176bc29f83cd71d734c5f3d7e50339409eff844125cfd513e964",
+      "spec_sha256": "19fd77e96f64afc148f77deb0d490c76d8d4bad18f5c30526108ce6f9b5e6e42",
+      "success_init": true
+    },
+    "T4-OUT-CON": {
+      "dataset_sha256": "56bdb094a3d88744ad2b80d24de6f03c3e92b7e86b433b1eddbaba51019ff403",
+      "spec_sha256": "4df825302eb0967a70c2cb29bab41df9c786c733708c6d44998fb997c9b326e2",
+      "success_init": true
+    },
+    "T4-OUT-DIS": {
+      "dataset_sha256": "5f171ec1467431f8ea8ff58f6358c6d533f3848e52c4e1e8138c6c7f3f1b3036",
+      "spec_sha256": "29588564ccb56bc9a8147e4ed7d4a5b5c11bf7b7380a31c9c72ece146ea8ba4a",
+      "success_init": true
+    },
+    "T5-ACC-ABS": {
+      "dataset_sha256": "371c71dbceeeb84f4836bc194c167c2a9a37887ec01b482654b151357477e2d3",
+      "spec_sha256": "ff24790405cf7c5c5d1f82aeaecb026462ed3105a5cf74ab8ee3ac2b3b7a62ac",
+      "success_init": true
+    },
+    "T5-ACC-BASE": {
+      "dataset_sha256": "f7279b796a0325777fae0d6c704d16c31aca155bbba7440dc2d462a6f8d91e14",
+      "spec_sha256": "9d012ff5d0806ff81dec52670bb957e830702911ee40f1d36d9e70419c57c995",
+      "success_init": true
+    },
+    "T5-ACC-CON": {
+      "dataset_sha256": "3c97fa063e50a8d4cf31494dce451230b22ecd2d5a2dfc8d570db104d2b86a42",
+      "spec_sha256": "6c5329f40c62aa09845e70b8b6c02d154eff32da4bc1a523da57864c59376568",
+      "success_init": true
+    },
+    "T5-ACC-DIS": {
+      "dataset_sha256": "1339632ad627966cd11d6ba745405e93140f9968edb240426cac10a5cc824dea",
+      "spec_sha256": "eb8bc47dc13590956690bc326c8ef165088a4728085e9ab75b3e65c04b7b5872",
+      "success_init": true
+    },
+    "T5-ACC-SUB": {
+      "dataset_sha256": "624386fb45dd603d9c6a501234326e3d7e17ae84f1ed8ef20e8eb468fcb422d7",
+      "spec_sha256": "422b030b282b30f97cc69fb5323917f95cf0715f7f8f90a2961866e449164d92",
+      "success_init": true
+    },
+    "T5-INC-ABS": {
+      "dataset_sha256": "e5883c087fc570a83d9377566307e8115ba6a2d7c7550b6a39e3299a7c894c58",
+      "spec_sha256": "45caf52b1b72d8d8aacc76784690709ef0ec5793b8bb3b20470c30f928ece728",
+      "success_init": true
+    },
+    "T5-INC-BASE": {
+      "dataset_sha256": "715dce8a21fb122a422fc74acbef790e2bfe6b4e500d841b0c1772be7646a095",
+      "spec_sha256": "8af14a2d377bd81921f3630b78fecc899ded22fe7b42bcd2f19babf46af54c9c",
+      "success_init": true
+    },
+    "T5-INC-CON": {
+      "dataset_sha256": "bb06e677281d6905501071a855c820345beed39cd7b20946d5e9e702f336702e",
+      "spec_sha256": "875786eac3c1e0e1afd84c3d13335ad86e32c5952f2cddb8883cde693bae2d0c",
+      "success_init": true
+    },
+    "T5-INC-DIS": {
+      "dataset_sha256": "8577eb17290a85047618bf770137f2548429a7a687662e90f7e04a9bc30be82c",
+      "spec_sha256": "015c84e910900d8832b97317e7821c8536a300427cca13b995fb8db7623c1730",
+      "success_init": true
+    },
+    "T5-INC-SUB": {
+      "dataset_sha256": "6f329721ae765d75175ea5e94e6f9568db8c21a9cbf96e8dd200a72f72159b88",
+      "spec_sha256": "b4b306be93bb30089f3866ecd1029b197377693d629a4a601c239939b4bcc64f",
+      "success_init": true
+    },
+    "T5-OUT-ABS": {
+      "dataset_sha256": "b2689a2848c67de7f76d1c77e0a330ab6da859060aa9930a623cc6f542b31418",
+      "spec_sha256": "256db5d00ecca0b93c44436afdfaa17b8a13995efde8b695036ca11ae9caad4b",
+      "success_init": true
+    },
+    "T5-OUT-BASE": {
+      "dataset_sha256": "1ea1bbee3d8818a4734fbc9b70477cbb441a309cdd2b62e04bdadf466666a271",
+      "spec_sha256": "a4e628618a15197eb33266f8d81e480cca1a6524d278a8ccab3e98635c853f41",
+      "success_init": true
+    },
+    "T5-OUT-CON": {
+      "dataset_sha256": "e86018ac896ee7b90efadd89dd0b465b0ceeb1b44e25a39776f720d9e17a2150",
+      "spec_sha256": "25310d5172fcdd8eadf6cc21a75b9bc80b8d5b699f6b1c992c1800b7234854b1",
+      "success_init": true
+    },
+    "T5-OUT-DIS": {
+      "dataset_sha256": "3e65c1b706859b4fc8f4a6a63c57104a489ea70a308b565aa483a9fcff98ad2b",
+      "spec_sha256": "f4868b81df0e7702b32c1de6764d7b239f824ead9306df19f33ce917cb71b559",
+      "success_init": true
+    },
+    "T5-OUT-SUB": {
+      "dataset_sha256": "0a3c8f89a050f056511be94a4236b6ba71e75548b2468e40dc43bb57b8cf9a47",
+      "spec_sha256": "336eac712aafb2bcec15b00989c5ff23a98864f6b292b0e5fa05ca76072a02ef",
+      "success_init": true
+    },
+    "T6-ACC-ABS": {
+      "dataset_sha256": "d1548d0b26377b96c3c8b30dfd0993593797225e3bdd8f0726b55096096e55a5",
+      "spec_sha256": "ee98970307c66ba4465ab032e1b2283e11ab4240a9078cd8bb4475805b4ab42e",
+      "success_init": true
+    },
+    "T6-ACC-BASE": {
+      "dataset_sha256": "83cd975a1283dde7c6264016f3ec929b9002c4ae1addf083d2320e2fc67ae693",
+      "spec_sha256": "4fe346eab5ddf121e2fcf1b2de052a360416f9be663c95fa8444e896af70a72d",
+      "success_init": true
+    },
+    "T6-ACC-CON": {
+      "dataset_sha256": "90537efc134d28e0390e4af1f223eaa54eb7bbea9a2eec1a409f587dd5011c18",
+      "spec_sha256": "f300911fb688553f16586c4cb3b7bc7df4ab56444228f9f53745d58759342cf0",
+      "success_init": true
+    },
+    "T6-ACC-DIS": {
+      "dataset_sha256": "df8f94b9ae87feba27b20d3ee1e05ac43f81b7ce354d42e5e90ab31e50e4af75",
+      "spec_sha256": "4b4a46c6f1e9e153ddd220687fca3d3a71e715bbb2a79bff60d1bc20451e2481",
+      "success_init": true
+    },
+    "T6-ACC-SUB": {
+      "dataset_sha256": "d65477f64d8c3d23431b168ec438f0923b41455f54e40da6db9343676b2bdee2",
+      "spec_sha256": "07f16cd75c95a36c9028a0282ffbce5f0009e9606a458c6c5cb0c67ef480e799",
+      "success_init": true
+    },
+    "T6-INC-ABS": {
+      "dataset_sha256": "dac45a8ac370d5be950fbb575d5786fd9bf75992530a4898b42d0718f899c2fd",
+      "spec_sha256": "30304ffdab82fd1c213b57ebe2cf8cad4352ceec00ca958e72e091643aa9cfdf",
+      "success_init": true
+    },
+    "T6-INC-BASE": {
+      "dataset_sha256": "8b1dd73b2f2ce125cd23e65399a03b03eec67d1605d1c13d6c813518f488dafd",
+      "spec_sha256": "7dc44cbc0c8351f0e70f6eaf189271e3050ee970c199e121acd43d7f2ddb789c",
+      "success_init": true
+    },
+    "T6-INC-CON": {
+      "dataset_sha256": "4ddb256bd4b16fbbe6ab441db3669a8d1a435e11ef9a802b1eb6e2675ee68ac7",
+      "spec_sha256": "5237192e4d15592a89602c53e81d7ff11d2da93fab9c4a51d1d00d09a98e5686",
+      "success_init": true
+    },
+    "T6-INC-DIS": {
+      "dataset_sha256": "eb709ee92ded2a51a7f4ef3d0cdbc8f8b164d4c63e77636d96fdb7238afb0b86",
+      "spec_sha256": "40aa87e438a958859730a37cfed18049d0fb448149ab7e19b58954d1e7e743bc",
+      "success_init": true
+    },
+    "T6-INC-SUB": {
+      "dataset_sha256": "6bfe9dbffa3d85105b026466425a15fc40ed3aad60a4d337e443c050ffac2561",
+      "spec_sha256": "83b5c38063bbc2df64420e760e9cc700b896231e429d64cd8aea61f2212d4c81",
+      "success_init": true
+    },
+    "T6-OUT-ABS": {
+      "dataset_sha256": "d640394ea5f94d134c9921937768eb5105f80b77aa803da0df47152ad83a2011",
+      "spec_sha256": "bc0f6417c93c51738602ee4ad6948cfaabab74180574b08851c0ed22d5fcabcc",
+      "success_init": true
+    },
+    "T6-OUT-BASE": {
+      "dataset_sha256": "c0c177e31170127b1aeb7254f128cdf8459b928e31a3afa240783986142dc132",
+      "spec_sha256": "5ac7e92b8fb25717521c7c4b5ac1da771aa026d3698cee31b49945e2bc8f3857",
+      "success_init": true
+    },
+    "T6-OUT-CON": {
+      "dataset_sha256": "f77e726ee27ff79309c6d7c8a17898aed39a03e8daeb9e08e2f3ab442745c4a8",
+      "spec_sha256": "5b0f50a18b7831b4c7c0ee71b614a5fdc9db3cc4f97e17f2e905e0ab1f90e1d3",
+      "success_init": true
+    },
+    "T6-OUT-DIS": {
+      "dataset_sha256": "6750465cf616a08b692c7057e1e36bfba39db6bd41b44faee8828ca46dd0611f",
+      "spec_sha256": "43a11f0a88c3276af5192b66629d7a733e46a07330fe10267ab59b3ccb21acba",
+      "success_init": true
+    },
+    "T6-OUT-SUB": {
+      "dataset_sha256": "692cc66c459af97076e4798bceaf22c39abefe23f2614f086093cd12f131e215",
+      "spec_sha256": "b621b6cd77865037663a77445519c06ad3af34e8fb7251f3829404c4cbb0cfa7",
+      "success_init": true
+    },
+    "T7-ACC-BASE": {
+      "dataset_sha256": "acbbd0eded1e4689b113b91592715d5351c98f16a970d192d9db84bdd68ea6f6",
+      "spec_sha256": "c38f075ab331476225dfcf23c98938025330420decc0e681c4a0ac53590136b9",
+      "success_init": true
+    },
+    "T7-ACC-DIS": {
+      "dataset_sha256": "b67a414f3c87bc6efd3d42c5c0eb13fb98756786c8e7891d23c3471603bc9a91",
+      "spec_sha256": "7a7463dfd2e5363849e2596b1a7817e857c8f6a2d943a9a9dc097fdff6d3a055",
+      "success_init": true
+    },
+    "T7-INC-BASE": {
+      "dataset_sha256": "8197b279e2c94c83c333eec13c38f28fc6c3ad168ab912b04dc7d11ccadd6fc1",
+      "spec_sha256": "24fd360eea05e993ca08da940ec51b4c4ffdacd440dad7fc3a8be2694906bc43",
+      "success_init": true
+    },
+    "T7-INC-DIS": {
+      "dataset_sha256": "100d07265f04aea4467c37b1d55199413872b7a4d1575b4387691f8e8d1dda9e",
+      "spec_sha256": "62b06c0d6e99bca55c53817e94958d0e9d6e4abd528e987b8f68dfb63896d0fe",
+      "success_init": true
+    },
+    "T7-OUT-BASE": {
+      "dataset_sha256": "0c6d859b4a8238b1017869214f91acb2cfa5cdc623d1bbf0eabd2640112dcd99",
+      "spec_sha256": "2ad63153d6b817a436492242d171095351e4cc02696b76bfc18baea815c22399",
+      "success_init": true
+    },
+    "T7-OUT-DIS": {
+      "dataset_sha256": "ba0bdc3feab15b61bbd2bd91552cafb02c4f2845d95387fbcebf5983d9ae6e6b",
+      "spec_sha256": "224f80d841cb3a52916908ee1fd00476f057189fbe02f034e1212c19e28199e7",
+      "success_init": true
+    }
+  },
+  "full_rollouts_performed": false
+}

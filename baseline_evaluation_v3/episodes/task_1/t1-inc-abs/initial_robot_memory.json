@@ -1,0 +1,9 @@
+{
+  "variant": "T1-INC-ABS",
+  "objects": [
+    {
+      "entity": "lamp_0",
+      "in_initial_robot_memory": true
+    }
+  ]
+}

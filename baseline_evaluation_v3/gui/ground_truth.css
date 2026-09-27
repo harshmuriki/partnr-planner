@@ -1,0 +1,71 @@
+#groundTruthPanel { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+#groundTruthPanel h2 { margin: 0 0 12px; font-size: 18px; }
+#groundTruthPanel h3 { font-size: 14px; margin: 12px 0 8px; }
+.gt-help { color: var(--muted); font-size: 12px; line-height: 1.5; }
+.gt-toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
+#groundTruthPanel button, #groundTruthPanel select, #groundTruthPanel input[type=text] { border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font: inherit; background: white; max-width: 100%; }
+#groundTruthPanel button { cursor: pointer; }
+#groundTruthPanel button:disabled { cursor: wait; opacity: .5; }
+#groundTruthPanel .gt-primary { background: var(--accent); color: white; }
+.gt-count { font-size: 18px; font-weight: 700; }
+.gt-saved { padding: 10px 12px; background: var(--acc-bg); border-radius: 8px; font-size: 13px; }
+.gt-error { background: #fff3d1; color: #7a4b00; padding: 10px; border-radius: 8px; font-size: 13px; white-space: pre-wrap; }
+.gt-layout { display: grid; grid-template-columns: minmax(210px, .7fr) minmax(0, 1.3fr); gap: 14px; }
+.gt-tree { max-height: 380px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; padding: 10px; font-size: 12px; }
+.gt-tree details { margin-left: 12px; }
+.gt-tree summary { cursor: pointer; padding: 4px 0; }
+#groundTruthPanel .gt-entity { border: 0; padding: 3px 5px; color: var(--accent); font-size: 12px; text-align: left; }
+.gt-camera { width: 100%; background: #20232b; min-height: 160px; object-fit: contain; border-radius: 8px; }
+.gt-controls { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 8px; margin-top: 10px; }
+.gt-controls label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; }
+.gt-controls .gt-wide { grid-column: 1 / -1; }
+.gt-rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 10px; }
+.gt-room-card { border: 1px solid var(--border); border-radius: 8px; padding: 10px; min-width: 0; }
+.gt-room-options { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.gt-room-options label { display: flex; align-items: center; gap: 4px; font-size: 11px; padding: 5px 7px; border-radius: 6px; background: var(--bg); cursor: pointer; overflow-wrap: anywhere; }
+.gt-room-options label:has(input:checked) { background: var(--accent-soft); color: var(--accent); }
+.gt-room-options input { accent-color: var(--accent); }
+/* Keep the two run logs from crowding each other and the room grid above them. */
+.gt-log { margin-top: 20px; }
+.gt-log > summary { cursor: pointer; padding: 4px 0; font-weight: 700; }
+.gt-history { max-height: 220px; overflow: auto; font-size: 12px; margin-top: 8px; }
+.gt-history li { padding: 4px; overflow-wrap: anywhere; }
+.gt-criteria { font-size: 12px; white-space: pre-wrap; line-height: 1.5; margin: 0; }
+@media (max-width: 760px) { .gt-layout { grid-template-columns: 1fr; } }
+
+/* Selected rooms form the persisted search order; unselected rooms can be added below. */
+.gt-room-ranking { list-style: none; padding: 0; margin: 10px 0; }
+.gt-room-ranking li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.gt-room-ranking label { display: flex; align-items: center; gap: 6px; font-size: 12px; overflow-wrap: anywhere; cursor: pointer; }
+.gt-room-ranking input { accent-color: var(--accent); flex-shrink: 0; }
+.gt-room-rank { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 700; }
+.gt-room-moves { display: flex; gap: 3px; }
+#groundTruthPanel .gt-room-moves button { padding: 4px 7px; min-width: 30px; min-height: 32px; }
+#groundTruthPanel .gt-room-moves button:disabled { cursor: default; }
+.gt-room-add summary { cursor: pointer; color: var(--muted); font-size: 12px; padding: 5px 0; }
+.gt-room-feedback { display: block; min-height: 18px; margin-top: 6px; }
+
+/* Sandbox steps: checked ones are replayed when recording; unchecked ones are dimmed. */
+.gt-steps { list-style: none; padding: 0; margin: 8px 0; max-height: 320px; overflow: auto; font-size: 12px; }
+.gt-steps li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+.gt-steps li > .gt-help { grid-column: 1 / -1; padding-left: 22px; }
+.gt-steps label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.gt-steps input { accent-color: var(--accent); flex-shrink: 0; }
+.gt-steps .gt-skipped label b { color: var(--muted); text-decoration: line-through; }
+#groundTruthPanel .gt-remove { padding: 2px 8px; color: var(--muted); }
+#gtResult { margin: 8px 0; }
+
+/* Free-text assumptions, per variant and per task, autosaved to the server. */
+.gt-notes { margin: 0 0 16px; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.gt-notes > summary { cursor: pointer; font-weight: 700; }
+.gt-notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; margin-top: 10px; }
+.gt-notes label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 600; }
+.gt-notes textarea { font: 13px/1.5 inherit; font-family: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; resize: vertical; min-height: 90px; width: 100%; box-sizing: border-box; }
+.gt-notes .gt-help { font-weight: 400; min-height: 18px; }
+
+/* Likely furniture: same ranking controls as rooms, with the picker grouped by room. */
+.gt-rank-title { font-size: 12px; margin: 12px 0 2px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.gt-furniture-group { margin: 8px 0; }
+.gt-furniture-group .gt-room-options label { align-items: flex-start; max-width: 100%; }
+.gt-furniture-group .gt-room-options label input { margin-top: 2px; }
+.gt-room-ranking label .gt-help { font-size: 11px; }

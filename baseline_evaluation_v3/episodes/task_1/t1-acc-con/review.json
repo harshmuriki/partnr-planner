@@ -1,0 +1,126 @@
+{
+  "variant": "T1-ACC-CON",
+  "status": "generated",
+  "dataset": "episodes/task_1/t1-acc-con/dataset.json.gz",
+  "episode_id": "T1-ACC-CON",
+  "scene": "103997895_171031182",
+  "objects": [
+    {
+      "entity": "jug_0",
+      "asset": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4",
+      "handle": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
+      "initial": {
+        "relation": "within",
+        "furniture": "fridge_0",
+        "room": "kitchen_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false
+        },
+        "next_to": [],
+        "closed": [
+          "fridge_0"
+        ]
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "table_0",
+        "room": "living_room_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -10.589534759521484,
+        0.6642276644706726,
+        3.7740724086761475
+      ],
+      "views": [
+        {
+          "label": "Interior 1",
+          "image": "jug_0-interior-1.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 2",
+          "image": "jug_0-interior-2.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Interior 3",
+          "image": "jug_0-interior-3.webp",
+          "target_visible": true
+        }
+      ],
+      "receptacle": "ec6d929832a895b456fd6cca745a18c192c41f4b_:0000|Wardrobe0001_lower_cabinet_receptacle_mesh.0000"
+    },
+    {
+      "entity": "lamp_0",
+      "asset": "B07HK83QRB",
+      "handle": "B07HK83QRB_:0000",
+      "initial": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": true
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "expected": {
+        "relation": "on",
+        "furniture": "chest_of_drawers_0",
+        "room": "bedroom_0",
+        "states": {
+          "is_clean": true,
+          "is_filled": false,
+          "is_powered_on": false
+        },
+        "next_to": [],
+        "closed": []
+      },
+      "position": [
+        -2.4734292030334473,
+        0.8857892751693726,
+        -3.329948663711548
+      ],
+      "views": [
+        {
+          "label": "Angle 4",
+          "image": "lamp_0-angle-4.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 5",
+          "image": "lamp_0-angle-5.webp",
+          "target_visible": true
+        },
+        {
+          "label": "Angle 1",
+          "image": "lamp_0-angle-1.webp",
+          "target_visible": false
+        }
+      ],
+      "receptacle": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
+    }
+  ],
+  "image_root": "gui/episode_views/T1-ACC-CON",
+  "checks": [
+    "jug_0: exact asset, initial states, furniture, region checked",
+    "lamp_0: exact asset, initial states, furniture, region checked"
+  ],
+  "unscored_success_text": [],
+  "spec_sha256": "7b8c14d8e0ab38c29145c793a3a51d811e6b308a3695a9c1cc8fc41f366e84b4",
+  "initial_robot_memory": "- jug_0: within fridge_0 (kitchen_0), is_clean, is_empty, fridge_0 starts closed\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
+  "memory_runtime_applied": false,
+  "issues": [],
+  "attempts": 1,
+  "benchmark_ready": false,
+  "runtime_verified": true
+}

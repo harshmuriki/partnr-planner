@@ -1,0 +1,16 @@
+{
+  "variant": "T1-OUT-CON",
+  "objects": [
+    {
+      "entity": "jug_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "outdated",
+      "outdated_location": "on table_2 (kitchen_0)"
+    },
+    {
+      "entity": "lamp_0",
+      "in_initial_robot_memory": true,
+      "memory_status": "accurate"
+    }
+  ]
+}
