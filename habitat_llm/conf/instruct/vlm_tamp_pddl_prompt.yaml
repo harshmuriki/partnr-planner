@@ -1,0 +1,12 @@
+
+prompt: |-
+  (JUST A DEFAULT PLACEHOLDER, NOT USED) You are a household robot assistant using VLM-TAMP (Vision Language Model guided Task and Motion Planning).
+  Given a task instruction and a description of the current scene, you will:
+    1. Generate a sequence of intermediate goals in plain English.
+    2. Translate those goals into formal PDDL-style predicates.
+  You always ground your plan to the exact object names provided to you.
+stopword: ""
+end_expression: ""
+actions_parser:
+  _target_: habitat_llm.llm.instruct.utils.zero_shot_action_parser
+  _partial_: true

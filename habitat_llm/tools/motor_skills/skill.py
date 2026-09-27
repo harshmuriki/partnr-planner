@@ -143,7 +143,12 @@ class SkillPolicy(Policy):
 
         # Return if the skill has finished
         if self.finished:
-            response = "Successful execution!"
+            # Some skills terminate by marking failed and then finishing in the same step.
+            # In that case, emit a failure response instead of a success banner.
+            if self.failed:
+                response = self.termination_message or "Unexpected failure!"
+            else:
+                response = "Successful execution!"
 
             # Add action to previous actions
             self.prev_actions.copy_(actions)
@@ -154,11 +159,16 @@ class SkillPolicy(Policy):
             # Reset the skill if its finished
             self.reset([0])
             
-            cprint("\n" + "="*80, "magenta")
-            cprint("✓ ACTION RESULT: SUCCESS", "green")
-            cprint("="*80, "magenta")
-            cprint(f"{response}", "green")
-            cprint("="*80, "magenta")
+            cprint("\n" + "=" * 80, "magenta")
+            if self.failed:
+                cprint("✗ ACTION RESULT: FAILED", "red")
+                cprint("=" * 80, "magenta")
+                cprint(f"{response}", "red")
+            else:
+                cprint("✓ ACTION RESULT: SUCCESS", "green")
+                cprint("=" * 80, "magenta")
+                cprint(f"{response}", "green")
+            cprint("=" * 80, "magenta")
 
             return actions[0], response
 
@@ -263,8 +273,6 @@ class SkillPolicy(Policy):
 
         # Entities must have a sim_handle to be actionable by skills
         if entity.sim_handle is None:
-            self.env.world_graph[self.agent_uid].remove_object_from_graph(target_name)
-            cprint(f"[skill] Removed '{target_name}' from scene graph (no sim_handle)")
             raise ValueError(
                 f"Entity '{target_name}' does not have a simulator handle (hallucinated object)."
             )

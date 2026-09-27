@@ -14,7 +14,9 @@ if typing.TYPE_CHECKING:
 
 import base64
 import io
+from collections import defaultdict
 
+import numpy as np
 from PIL import Image
 
 from habitat_llm.world_model.world_graph import WorldGraph
@@ -544,6 +546,196 @@ def image_data_to_pil(data: str):
     return Image.open(
         io.BytesIO(base64.decodebytes(bytes(data.split(header)[1], "utf-8")))
     )
+
+
+def _observation_items(observations):
+    if observations is None:
+        return []
+    if isinstance(observations, dict):
+        return list(observations.items())
+    items_fn = getattr(observations, "items", None)
+    if callable(items_fn):
+        try:
+            return list(items_fn())
+        except Exception:
+            return []
+    return []
+
+
+def _rgb_key_rank(key, agent_uid):
+    name = str(key).lower()
+    if "rgb" not in name or "panoptic" in name:
+        return None
+    agent_tag = f"agent_{agent_uid}"
+    if "agent_" in name and agent_tag not in name:
+        return None
+    if "jaw" in name:
+        return None
+    if "third_rgb" in name:
+        return 0
+    if "head_rgb" in name:
+        return 1
+    return 10
+
+
+def _array_to_pil(rgb_data):
+    if rgb_data is None:
+        return None
+    if "torch" in str(type(rgb_data)):
+        rgb_data = rgb_data.detach().cpu().numpy()
+    rgb_data = np.array(np.asarray(rgb_data), copy=True)
+    while rgb_data.ndim > 3 and rgb_data.shape[0] == 1:
+        rgb_data = rgb_data[0]
+    if rgb_data.ndim == 4:
+        rgb_data = rgb_data[0]
+    if rgb_data.ndim == 3 and rgb_data.shape[0] in (1, 3, 4) and rgb_data.shape[-1] not in (1, 3, 4):
+        rgb_data = np.transpose(rgb_data, (1, 2, 0))
+    if rgb_data.dtype != np.uint8:
+        max_val = float(np.max(rgb_data)) if rgb_data.size else 1.0
+        rgb_data = (rgb_data * 255).astype(np.uint8) if max_val <= 1.0 else rgb_data.astype(np.uint8)
+    if rgb_data.ndim == 2:
+        return Image.fromarray(rgb_data, mode="L")
+    if rgb_data.ndim != 3:
+        return None
+    if rgb_data.shape[-1] == 4:
+        return Image.fromarray(rgb_data, mode="RGBA").convert("RGB")
+    if rgb_data.shape[-1] == 3:
+        return Image.fromarray(rgb_data)
+    return None
+
+
+ROBOT_RGB_PRIORITY = (
+    "third_rgb",
+    "head_rgb",
+)
+
+
+def matching_sensor_names(sensor_names, agent_uid, cam_prefix):
+    """Match multi-agent prefixed sensors such as agent_0_head_rgb to prefix head."""
+    agent_tag = f"agent_{agent_uid}_"
+    prefix = str(cam_prefix).lower()
+    matches = []
+    for name in sensor_names:
+        n = str(name).lower()
+        if "agent_" in n and agent_tag not in n:
+            continue
+        if n.startswith(agent_tag + prefix) or n.startswith(prefix + "_") or n == prefix:
+            matches.append(name)
+    return matches
+
+
+def ranked_robot_rgb_names(sensor_names, agent_uid):
+    """Prefer Spot overhead third_rgb over head or jaw views."""
+    ranked = []
+    seen = set()
+    agent_tag = f"agent_{agent_uid}_"
+    for suffix in ROBOT_RGB_PRIORITY:
+        prefix = suffix[:-4] if suffix.endswith("_rgb") else suffix
+        matches = matching_sensor_names(sensor_names, agent_uid, prefix)
+        matches.sort(key=lambda name: (0 if agent_tag in str(name) else 1, str(name)))
+        for name in matches:
+            n = str(name).lower()
+            if "rgb" not in n or "panoptic" in n or "jaw" in n or name in seen:
+                continue
+            if suffix == "head_rgb" and "stereo" in n:
+                continue
+            ranked.append(name)
+            seen.add(name)
+    return ranked
+
+
+def _spot_third_cam_info(cameras):
+    for key, info in cameras.items():
+        if str(key).lower() in ("third",) or str(key).lower().endswith("_third"):
+            return info
+    return None
+
+
+def _bind_third_rgb_like_vlm_tamp(sim, art, agent_uid):
+    """Attach overhead third_rgb with Habitat startswith prefixes, same as VLM-TAMP."""
+    cameras = getattr(getattr(art, "params", None), "cameras", None)
+    if not cameras:
+        return
+    third_info = _spot_third_cam_info(cameras)
+    if third_info is not None:
+        for prefix in (f"agent_{agent_uid}_third", "third"):
+            cameras[prefix] = third_info
+    sensor_names = list(getattr(sim, "_sensors", {}) or {})
+    bound = defaultdict(list)
+    for camera_prefix in cameras:
+        for sensor_name in sensor_names:
+            if str(sensor_name).startswith(camera_prefix):
+                if sensor_name not in bound[camera_prefix]:
+                    bound[camera_prefix].append(sensor_name)
+    if any(bound.values()):
+        art._cameras = bound
+
+
+def _draw_sensor_rgb(sim, uuid):
+    sensor_map = getattr(sim, "_sensors", None) or {}
+    sensor = sensor_map.get(uuid) if hasattr(sensor_map, "get") else None
+    if sensor is None:
+        return None
+    draw = getattr(sensor, "draw_observation", None)
+    if callable(draw):
+        draw()
+    get_obs = getattr(sensor, "get_observation", None)
+    rgb = None
+    if callable(get_obs):
+        try:
+            rgb = get_obs()
+        except TypeError:
+            rgb = None
+    if rgb is None and hasattr(sim, "get_sensor_observations"):
+        rgb = sim.get_sensor_observations().get(uuid)
+    return _array_to_pil(rgb)
+
+
+def draw_agent_rgb_to_pil(sim, agent_uid=0):
+    """Render Spot overhead third_rgb after articulated-camera update."""
+    if sim is None:
+        return None
+    mgr = getattr(sim, "agents_mgr", None)
+    art = None
+    if mgr is not None:
+        try:
+            art = mgr[agent_uid].articulated_agent
+        except Exception:
+            art = None
+    if art is not None:
+        _bind_third_rgb_like_vlm_tamp(sim, art, agent_uid)
+        update = getattr(art, "update", None)
+        if callable(update):
+            update()
+    for uuid in (f"agent_{agent_uid}_third_rgb", "third_rgb"):
+        pil_image = _draw_sensor_rgb(sim, uuid)
+        if pil_image is not None:
+            return pil_image.copy()
+    return None
+
+
+def observation_rgb_to_pil(observations, agent_uid=0):
+    """Decode robot camera RGB from env observations as a PIL image."""
+    ranked = []
+    for key, value in _observation_items(observations):
+        rank = _rgb_key_rank(key, agent_uid)
+        if rank is None or value is None:
+            continue
+        ranked.append((rank, str(key), value))
+    ranked.sort(key=lambda item: (item[0], item[1]))
+    for _rank, _key, value in ranked:
+        pil_image = _array_to_pil(value)
+        if pil_image is not None:
+            return pil_image
+    return None
+
+
+def observation_rgb_to_data_url(observations, agent_uid=0):
+    """Encode the robot camera RGB from env observations as a PNG data URL."""
+    pil_image = observation_rgb_to_pil(observations, agent_uid)
+    if pil_image is None:
+        return None
+    return pil_image_to_data_url(pil_image)
 
 
 def pil_image_to_data_url(image: Image):

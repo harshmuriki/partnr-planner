@@ -16,6 +16,10 @@ defaults:
   - override /llm@evaluation.planner.plan_config.llm: mock
   - _self_
 
+# Optional path to YAML with runtime_robot_location and runtime_objects (same format as planner_demo).
+# Override via CLI: runtime_config_path=path/to/runtime.yaml
+runtime_config_path: null
+
 world_model:
   partial_obs: False
   use_gt_static_structure: True

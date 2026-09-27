@@ -33,6 +33,11 @@ from habitat_llm.agent.env.sensors import SENSOR_MAPPINGS
 from habitat_llm.perception import PerceptionObs, PerceptionSim
 from habitat_llm.sims.metadata_interface import get_metadata_dict_from_config
 from habitat_llm.utils.core import separate_agent_idx
+from habitat_llm.utils.initial_robot_memory import (
+    apply_outdated_placements,
+    load_remembered_object_records,
+    load_scene_info,
+)
 
 # LOCAL
 from habitat_llm.world_model import DynamicWorldGraph, WorldGraph, Furniture, Object
@@ -293,7 +298,76 @@ class EnvironmentInterface:
                 f"World model not implemented for type: {self.conf.world_model.type}"
             )
 
+        self._seed_initial_robot_memory()
+
         return
+
+    def _seed_initial_robot_memory(self) -> None:
+        """Copy remembered objects from GT into the agent's partial-obs world graph."""
+        if not self.partial_obs:
+            return
+        data_path = None
+        if hasattr(self.conf, "habitat") and hasattr(self.conf.habitat, "dataset"):
+            data_path = getattr(self.conf.habitat.dataset, "data_path", None)
+        remembered = load_remembered_object_records(data_path)
+        if not remembered:
+            return
+        gt = getattr(self.perception, "gt_graph", None)
+        if gt is None:
+            gt = self.full_world_graph
+        object_nodes = []
+        missing = []
+        for record in remembered:
+            node = None
+            if record.sim_handle:
+                try:
+                    node = gt.get_node_from_sim_handle(record.sim_handle)
+                except ValueError:
+                    node = None
+            if node is None:
+                try:
+                    node = gt.get_node_from_name(record.entity)
+                except ValueError:
+                    node = None
+            if record.outdated_location:
+                continue
+            if node is None:
+                missing.append(record.entity)
+                continue
+            if isinstance(node, Object):
+                object_nodes.append(node)
+        if missing:
+            cprint(
+                "⚠ initial_robot_memory entities not in GT graph: "
+                + ", ".join(missing),
+                "yellow",
+            )
+        if object_nodes:
+            subgraph = gt.get_subgraph(object_nodes)
+            for agent_key in self.world_graph:
+                self.world_graph[agent_key].update(
+                    subgraph, True, self.wm_update_mode, add_only=True
+                )
+        scene_info = load_scene_info(data_path)
+        stale_names = []
+        for agent_key in self.world_graph:
+            warnings = apply_outdated_placements(
+                self.world_graph[agent_key],
+                gt,
+                remembered,
+                scene_info,
+            )
+            for warning in warnings:
+                cprint("⚠ initial_robot_memory: " + warning, "yellow")
+        for record in remembered:
+            if record.outdated_location:
+                stale_names.append(record.entity)
+        named = [node.name for node in object_nodes] + [
+            name for name in stale_names if name not in [node.name for node in object_nodes]
+        ]
+        if named:
+            extra = f" (stale: {', '.join(stale_names)})" if stale_names else ""
+            cprint("Initial robot memory objects: " + ", ".join(named) + extra, "green")
 
     def get_observations(self):
         """

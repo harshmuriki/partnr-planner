@@ -237,7 +237,6 @@ def test_oracle_planner():
     del env_interface
     gc.collect()
 
-
 def test_llm_planner():
     config = get_config(
         "examples/planner_multi_agent_demo_config.yaml",

@@ -1,0 +1,1158 @@
+"""
+Interactive planning-tree HTML for PDDL baselines (click solved nodes for execution logs).
+
+Reads: vlm_tamp_pddl_log.jsonl, media/planning_tree_layout.json
+Writes: log_dir/{run_id}_pddl.html (default; see _default_interactive_pddl_html_basename)
+"""
+
+from __future__ import annotations
+
+import ast
+from collections import Counter
+import html
+import json
+import os
+import re
+from typing import Any, Dict, List, Optional, Tuple
+
+from habitat_llm.utils.episode_cost import fmt_seconds
+from habitat_llm.utils.llm_usage import fmt_usd
+
+# Match render_planning_tree.py (RGB)
+_STATUS_HEX: Dict[str, Tuple[str, str]] = {
+    "started": ("#800080", "#f5e6f5"),
+    "planned": ("#505050", "#ebebeb"),
+    "already": ("#1f78d1", "#d9ebfb"),
+    "skipped": ("#b8860b", "#fff7cc"),
+    "blocked": ("#6b7280", "#efefef"),
+    "solved": ("#27ae60", "#c8ebdc"),
+    "failed": ("#c0392b", "#fcdcd6"),
+    "current": ("#f39c12", "#fff0d2"),
+    "pending": ("#5a5a5a", "#ffffff"),
+    "default": ("#3c3c3c", "#f8f8f8"),
+}
+
+_STATUS_FONT_HEX: Dict[str, str] = {
+    "already": "#145a9c",
+    "skipped": "#7a5a00",
+    "blocked": "#4b5563",
+}
+
+
+def _safe_filename_segment(segment: str) -> str:
+    s = re.sub(r"[^a-zA-Z0-9_.-]+", "_", (segment or "").strip()).strip("_")
+    return s or "x"
+
+
+def _default_interactive_pddl_html_basename(log_dir: str) -> str:
+    """
+    Default output filename: {run_id}_pddl.html
+
+    Expects log_dir like: .../<task_name>/<run_id>/vlm_tamp_pddl/<episode_id>/
+    where run_id is typically like Task_3_Obj_1.
+    """
+    try:
+        log_dir = os.path.normpath(os.path.abspath(log_dir))
+        vlm_sub = os.path.dirname(log_dir)
+        run_dir = os.path.dirname(vlm_sub)
+        run_name = os.path.basename(run_dir)
+        if not run_name:
+            return "index.html"
+        return f"{_safe_filename_segment(run_name)}_pddl.html"
+    except Exception:
+        return "index.html"
+
+
+def _svg_escape_text(s: str) -> str:
+    return html.escape(s or "", quote=False).replace("&#x27;", "'")
+
+
+def _svg_text_lines(label: str, *, blocked: bool) -> str:
+    raw_lines = str(label or "").split("\n")
+    lines = [ln if len(ln) <= 52 else ln[:49] + "..." for ln in raw_lines]
+    line_height = 14
+    start_dy = 5 - (line_height * (len(lines) - 1) / 2)
+    parts: List[str] = []
+    for idx, line in enumerate(lines):
+        dy = start_dy if idx == 0 else line_height
+        strike = ' text-decoration="line-through"' if blocked else ""
+        parts.append(
+            f'<tspan x="0" dy="{dy}"{strike}>{_svg_escape_text(line)}</tspan>'
+        )
+    return "".join(parts)
+
+
+def _svg_legend(x: float = 16, y: float = 16) -> str:
+    rows = [
+        ("#27ae60", "Solved"),
+        ("#c0392b", "Failed"),
+        ("#800080", "Current / started"),
+        ("#1f78d1", "Skipped by PDDL"),
+        ("#b8860b", "Skipped after explore"),
+        ("#6b7280", "Blocked after failure"),
+    ]
+    row_h = 22
+    width = 170
+    height = 28 + row_h * len(rows)
+    parts = [
+        f'<g transform="translate({x},{y})">',
+        f'<rect x="0" y="0" width="{width}" height="{height}" fill="#ffffff" stroke="#444" stroke-width="1.5"/>',
+        '<text x="85" y="18" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700" fill="#111">Legend</text>',
+    ]
+    for idx, (color, label) in enumerate(rows):
+        row_y = 28 + idx * row_h
+        parts.append(
+            f'<rect x="0" y="{row_y}" width="{width}" height="{row_h}" fill="none" stroke="#444" stroke-width="1"/>'
+        )
+        parts.append(
+            f'<rect x="0" y="{row_y}" width="18" height="{row_h}" fill="{color}" stroke="#444" stroke-width="1"/>'
+        )
+        parts.append(
+            f'<text x="26" y="{row_y + 15}" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#111">{_svg_escape_text(label)}</text>'
+        )
+    parts.append("</g>")
+    return "".join(parts)
+
+
+def _safe_literal_eval(line: str) -> Optional[Dict[str, Any]]:
+    line = line.strip()
+    if not line:
+        return None
+    try:
+        v = ast.literal_eval(line)
+        return v if isinstance(v, dict) else None
+    except (SyntaxError, ValueError):
+        return None
+
+
+def _parse_pddl_plan_line(line: str) -> Optional[Dict[str, Any]]:
+    if "'event': 'pddl_plan'" not in line:
+        return None
+
+    def _int_field(key: str) -> Optional[int]:
+        m = re.search(rf"'{key}':\s*(-?\d+)", line)
+        return int(m.group(1)) if m else None
+
+    def _str_field(key: str) -> Optional[str]:
+        m = re.search(rf"'{key}':\s*'([^']*)'", line)
+        return m.group(1) if m else None
+
+    plan_src = ""
+    m_plan = re.search(r"'plan':\s*(.*)\}\s*$", line.strip())
+    if m_plan:
+        plan_src = m_plan.group(1).strip()
+
+    reprompt_round = _int_field("reprompt_round")
+    branch = _int_field("branch")
+    subgoal = _str_field("subgoal")
+    if reprompt_round is None or branch is None or subgoal is None:
+        return None
+
+    return {
+        "event": "pddl_plan",
+        "reprompt_round": reprompt_round,
+        "branch": branch,
+        "subgoal": subgoal,
+        "plan_raw": plan_src,
+    }
+
+
+EPISODE_METRICS_JSON = "episode_metrics.json"
+
+
+def _load_episode_metrics(log_dir: str) -> Dict[str, Any]:
+    """
+    Episode outcome/cost metrics from evaluation (same source as ReAct trace HTML).
+    Written by planner_demo as episode_metrics.json after the episode finishes.
+    """
+    path = os.path.join(log_dir, EPISODE_METRICS_JSON)
+    if not os.path.isfile(path):
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (OSError, json.JSONDecodeError, TypeError, ValueError):
+        return {}
+
+
+def _load_episode_runtime_sec(log_dir: str) -> Optional[float]:
+    """Episode wall-clock runtime from episode_metrics.json, if present."""
+    data = _load_episode_metrics(log_dir)
+    v = data.get("episode_runtime_sec")
+    if isinstance(v, (int, float)) and float(v) >= 0:
+        return float(v)
+    return None
+
+
+def _format_task_score(value: Any) -> str:
+    if value is None or not isinstance(value, (int, float)):
+        return "N/A"
+    number = float(value)
+    if 0.0 <= number <= 1.0:
+        return f"{number:.3f} ({number:.1%})"
+    return f"{number:.3f}"
+
+
+def _format_usd(value: Any, source: Any = None) -> str:
+    if value is None:
+        return "N/A"
+    text = fmt_usd(value)
+    if source == "estimated":
+        return f"{text} est."
+    return text
+
+
+def _format_tokens(value: Any) -> str:
+    if value is None or not isinstance(value, (int, float)):
+        return "N/A"
+    return f"{int(value):,}"
+
+
+def _outcome_chips_html(metrics: Dict[str, Any]) -> str:
+    """ReAct-style outcome chips from episode_metrics.json fields."""
+    if not metrics:
+        return ""
+
+    task_ok = metrics.get("task_state_success")
+    if isinstance(task_ok, (int, float)):
+        success_value = "Success" if float(task_ok) >= 1.0 else "Failed"
+    else:
+        success_value = "N/A"
+
+    model = metrics.get("llm_model")
+    model_str = html.escape(str(model).strip()) if model else "N/A"
+    effort = metrics.get("llm_reasoning_effort")
+    effort_str = html.escape(str(effort).strip()) if effort else "N/A"
+    usd_str = _format_usd(metrics.get("llm_usd"), metrics.get("llm_usd_source"))
+
+    chips = [
+        ("Outcome", success_value),
+        ("task_percent_complete", _format_task_score(metrics.get("task_percent_complete"))),
+        ("task_state_success", _format_task_score(metrics.get("task_state_success"))),
+        ("Model", model_str),
+        ("Effort", effort_str),
+        ("API cost", usd_str),
+    ]
+    parts = ['<div class="outcome-row">']
+    for label, value in chips:
+        parts.append(
+            f'<div class="chip"><span class="chip-label">{html.escape(label)}</span>'
+            f'<span class="chip-value">{value}</span></div>'
+        )
+    parts.append("</div>")
+    return "".join(parts)
+
+
+def _cost_kv_html(metrics: Dict[str, Any]) -> str:
+    """Compact token/planning/runtime line under the chips."""
+    if not metrics:
+        return ""
+
+    prompt = _format_tokens(metrics.get("prompt_tokens"))
+    completion = _format_tokens(metrics.get("completion_tokens"))
+    cached = _format_tokens(metrics.get("cached_tokens"))
+    usd = _format_usd(metrics.get("llm_usd"), metrics.get("llm_usd_source"))
+    llm_s = metrics.get("llm_planning_time_s")
+    llm_req = metrics.get("llm_requests")
+    runtime = metrics.get("episode_runtime_sec")
+    bits = [
+        f"Tokens <b>{prompt}</b> in / <b>{completion}</b> out · cached {cached}",
+        f"API cost <b>{usd}</b>",
+    ]
+    if isinstance(llm_s, (int, float)):
+        req_part = f" · {int(llm_req)} req" if isinstance(llm_req, (int, float)) else ""
+        bits.insert(0, f"LLM/VLM planning <b>{fmt_seconds(llm_s)}</b>{req_part}")
+    if isinstance(runtime, (int, float)):
+        bits.append(f"Wall-clock runtime <b>{fmt_seconds(runtime)}</b>")
+    return '<div class="kv">' + "".join(f"<span>{b}</span>" for b in bits) + "</div>"
+
+
+def _read_jsonl_events(log_dir: str) -> List[Dict[str, Any]]:
+    path = os.path.join(log_dir, "vlm_tamp_pddl_log.jsonl")
+    if not os.path.isfile(path):
+        return []
+    out: List[Dict[str, Any]] = []
+    with open(path, "r", encoding="utf-8", errors="replace") as f:
+        for line in f:
+            ev = _safe_literal_eval(line)
+            if ev is None:
+                ev = _parse_pddl_plan_line(line)
+            if ev is not None:
+                out.append(ev)
+    return out
+
+
+def _execution_logs_by_key(events: List[Dict[str, Any]]) -> Dict[str, str]:
+    """Map 'branch-subgoal_idx' -> latest log_text for subgoal_execution events."""
+    latest: Dict[str, Tuple[int, str]] = {}
+    for ev in events:
+        if ev.get("event") != "subgoal_execution":
+            continue
+        b = ev.get("branch")
+        s = ev.get("subgoal_idx")
+        if not isinstance(b, int) or not isinstance(s, int):
+            continue
+        key = f"{b}-{s}"
+        seq = int(ev.get("seq_idx", -1))
+        prev = latest.get(key)
+        if prev is None or seq >= prev[0]:
+            latest[key] = (seq, str(ev.get("log_text", "")))
+    return {k: v[1] for k, v in latest.items()}
+
+
+def _pair_log_key(branch: int, subgoal_idx: int) -> str:
+    return f"{int(branch)}-{int(subgoal_idx)}"
+
+
+def _node_pairs(node: Dict[str, Any]) -> List[Dict[str, int]]:
+    pairs: List[Dict[str, int]] = []
+    raw_pairs = node.get("pairs")
+    if isinstance(raw_pairs, list):
+        for row in raw_pairs:
+            if not isinstance(row, dict):
+                continue
+            b = row.get("branch")
+            sidx = row.get("subgoal_idx")
+            if isinstance(b, int) and isinstance(sidx, int):
+                pairs.append({"branch": int(b), "subgoal_idx": int(sidx)})
+    if pairs:
+        return pairs
+
+    b = node.get("branch")
+    sidx = node.get("subgoal_idx")
+    if isinstance(b, int) and isinstance(sidx, int):
+        return [{"branch": int(b), "subgoal_idx": int(sidx)}]
+    return []
+
+
+def _node_execution_logs_by_id(
+    nodes: List[Dict[str, Any]],
+    exec_logs: Dict[str, str],
+) -> Dict[str, str]:
+    node_logs: Dict[str, str] = {}
+    for node in nodes:
+        node_id = str(node.get("id") or "")
+        if not node_id:
+            continue
+        pairs = _node_pairs(node)
+        if not pairs:
+            continue
+
+        sections: List[str] = []
+        show_headers = len(pairs) > 1
+        for pair in pairs:
+            key = _pair_log_key(pair["branch"], pair["subgoal_idx"])
+            text = str(exec_logs.get(key) or "").strip()
+            if not text:
+                continue
+            if show_headers:
+                text = (
+                    f"(branch {pair['branch']}, subgoal {pair['subgoal_idx']})\n{text}"
+                )
+            sections.append(text)
+
+        if sections:
+            node_logs[node_id] = "\n\n".join(sections)
+
+    return node_logs
+
+
+def _extract_top_prompt_text(events: List[Dict[str, Any]]) -> Optional[str]:
+    """
+    Extract a concise run prompt/instruction for display at the top of index.html.
+    Prefers the user task goal embedded in the first English VLM prompt.
+    """
+    for ev in events:
+        if str(ev.get("event", "")) != "vlm_english_subgoals":
+            continue
+        raw = str(ev.get("prompt", "") or "").strip()
+        if not raw:
+            continue
+
+        # Typical format:
+        # "accomplishes the following goal: ``...''."
+        goal_match = re.search(
+            r"accomplishes the following goal:\s*``(.*?)''",
+            raw,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if goal_match:
+            goal = re.sub(r"\s+", " ", goal_match.group(1)).strip()
+            if goal:
+                return goal
+
+        # Fallback: compact leading section of the prompt.
+        compact = re.sub(r"\s+", " ", raw).strip()
+        if compact:
+            return compact[:600] + ("..." if len(compact) > 600 else "")
+    return None
+
+
+def _extract_latest_scene_prompt(events: List[Dict[str, Any]]) -> str:
+    """Return the latest English prompt text that contains scene observation lines."""
+    for ev in reversed(events):
+        if str(ev.get("event", "")) == "vlm_english_subgoals":
+            raw = str(ev.get("prompt", "") or "").strip()
+            if raw:
+                return raw
+    return ""
+
+
+def _extract_movable_names_from_prompt(prompt: str) -> List[str]:
+    """Extract movable object names from `movable: ...` in prompt text."""
+    if not prompt:
+        return []
+    m = re.search(r"^\s*movable:\s*(.+)$", prompt, flags=re.MULTILINE)
+    if not m:
+        return []
+    names = [x.strip() for x in m.group(1).split(",") if x.strip()]
+    return sorted(set(names), key=lambda s: s.lower())
+
+
+def _extract_currently_visible_lines(prompt: str) -> List[str]:
+    """Extract lines inside the `Currently, you can see` fenced block."""
+    if not prompt:
+        return []
+    m = re.search(
+        r"Currently,\s*you can see the following:\s*``(.*?)''",
+        prompt,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not m:
+        return []
+    block = m.group(1).strip()
+    return [ln.strip() for ln in block.splitlines() if ln.strip()]
+
+
+def _build_scene_state_rows(events: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+    """
+    Build final object-state rows from the latest observed scene block.
+    Columns: object, relation, support, room, source.
+    """
+    prompt = _extract_latest_scene_prompt(events)
+    movables = _extract_movable_names_from_prompt(prompt)
+    lines = _extract_currently_visible_lines(prompt)
+
+    rows_by_obj: Dict[str, Dict[str, str]] = {}
+    on_re = re.compile(r"^([A-Za-z0-9_]+)\s+is\s+on\s+([A-Za-z0-9_]+)\.$")
+    in_re = re.compile(r"^([A-Za-z0-9_]+)\s+is\s+in\s+([A-Za-z0-9_]+)\.$")
+    holding_re = re.compile(r"^Robot\s+is\s+holding\s+([A-Za-z0-9_]+)\.$")
+
+    for ln in lines:
+        hm = holding_re.match(ln)
+        if hm:
+            obj = hm.group(1)
+            rows_by_obj[obj] = {
+                "object": obj,
+                "relation": "holding",
+                "support": "agent_0",
+                "room": "unknown",
+                "source": ln,
+            }
+            continue
+        om = on_re.match(ln)
+        if om:
+            obj, support = om.group(1), om.group(2)
+            rows_by_obj[obj] = {
+                "object": obj,
+                "relation": "on",
+                "support": support,
+                "room": "unknown",
+                "source": ln,
+            }
+            continue
+        im = in_re.match(ln)
+        if im:
+            obj, support = im.group(1), im.group(2)
+            rows_by_obj[obj] = {
+                "object": obj,
+                "relation": "in",
+                "support": support,
+                "room": "unknown",
+                "source": ln,
+            }
+            continue
+
+    for obj in movables:
+        if obj not in rows_by_obj:
+            rows_by_obj[obj] = {
+                "object": obj,
+                "relation": "unknown",
+                "support": "unknown",
+                "room": "unknown",
+                "source": "(not visible in final observation block)",
+            }
+
+    return sorted(rows_by_obj.values(), key=lambda r: r["object"].lower())
+
+
+def _build_scene_graph_svg(state_rows: List[Dict[str, str]]) -> str:
+    """Simple static scene-graph SVG: object -> relation -> support."""
+    if not state_rows:
+        return '<p class="hint">(no final scene-state rows available)</p>'
+
+    row_h = 46
+    top = 24
+    width = 980
+    height = top + row_h * max(1, len(state_rows)) + 24
+    x_obj, x_rel, x_sup = 150, 470, 790
+
+    parts: List[str] = [
+        f'<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
+        'xmlns="http://www.w3.org/2000/svg" style="background:#f8f8f8;border:1px solid #bbb;border-radius:6px;">',
+        '<defs><marker id="sgArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">'
+        '<polygon points="0 0, 10 3.5, 0 7" fill="#333"/></marker></defs>',
+    ]
+    for i, row in enumerate(state_rows):
+        y = top + i * row_h
+        obj = html.escape(row["object"])
+        rel = html.escape(row["relation"])
+        sup = html.escape(row["support"])
+        parts.append(
+            f'<line x1="{x_obj + 105}" y1="{y}" x2="{x_rel - 75}" y2="{y}" stroke="#333" stroke-width="1.8" marker-end="url(#sgArrow)"/>'
+        )
+        parts.append(
+            f'<line x1="{x_rel + 75}" y1="{y}" x2="{x_sup - 105}" y2="{y}" stroke="#333" stroke-width="1.8" marker-end="url(#sgArrow)"/>'
+        )
+        parts.append(
+            f'<rect x="{x_obj - 105}" y="{y - 16}" width="210" height="32" rx="10" fill="#d3e3fd" stroke="#174ea6" stroke-width="1.5"/>'
+            f'<text x="{x_obj}" y="{y + 5}" text-anchor="middle" font-size="12" fill="#111">{obj}</text>'
+        )
+        parts.append(
+            f'<rect x="{x_rel - 75}" y="{y - 14}" width="150" height="28" rx="10" fill="#fff3cd" stroke="#9a6700" stroke-width="1.3"/>'
+            f'<text x="{x_rel}" y="{y + 4}" text-anchor="middle" font-size="12" fill="#111">{rel}</text>'
+        )
+        parts.append(
+            f'<rect x="{x_sup - 105}" y="{y - 16}" width="210" height="32" rx="10" fill="#e6f4ea" stroke="#1e8e3e" stroke-width="1.5"/>'
+            f'<text x="{x_sup}" y="{y + 5}" text-anchor="middle" font-size="12" fill="#111">{sup}</text>'
+        )
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def _compute_summary_stats(
+    layout_data: Dict[str, Any],
+    events: List[Dict[str, Any]],
+    episode_runtime_sec: Optional[float] = None,
+) -> Dict[str, Any]:
+    """Compute subgoal/action summary stats for the top of HTML page."""
+    nodes: List[Dict[str, Any]] = layout_data.get("nodes") or []
+    node_by_id: Dict[str, Dict[str, Any]] = {
+        str(n.get("id")): n for n in nodes if n.get("id") is not None
+    }
+    pair_rows: List[Dict[str, Any]] = layout_data.get("pair_to_node") or []
+
+    subgoals_generated = len(pair_rows)
+    subgoals_used = 0
+    subgoals_failed = 0
+    for row in pair_rows:
+        nid = str(row.get("node_id", ""))
+        node = node_by_id.get(nid)
+        if not node:
+            continue
+        st = str(node.get("status", "pending"))
+        if st in ("solved", "already", "failed"):
+            subgoals_used += 1
+        if st == "failed":
+            subgoals_failed += 1
+
+    # Count executed low-level actions from per-subgoal execution logs.
+    action_counter: Counter[str] = Counter()
+    bullet_action_re = re.compile(r"▶\s*\[\d+/\d+\]\s*([A-Za-z_][A-Za-z0-9_-]*)\[")
+    special_action_re = re.compile(r"\bAction:\s*([A-Za-z_][A-Za-z0-9_-]*)\[")
+    for ev in events:
+        if ev.get("event") != "subgoal_execution":
+            continue
+        text = str(ev.get("log_text", "") or "")
+        bullet_matches = list(bullet_action_re.finditer(text))
+        if bullet_matches:
+            for m in bullet_matches:
+                action_counter[m.group(1)] += 1
+        else:
+            for m in special_action_re.finditer(text):
+                action_counter[m.group(1)] += 1
+
+    actions_run_total = int(sum(action_counter.values()))
+    actions_breakdown = dict(sorted(action_counter.items(), key=lambda kv: kv[0].lower()))
+
+    # Replanning count = number of times a reprompt/replan cycle was started.
+    replanning_count = 0
+    for ev in events:
+        if str(ev.get("event", "")) == "reprompt_started":
+            replanning_count += 1
+
+    # VLM requests = number of prompt calls logged (both turns).
+    vlm_requests = 0
+    for ev in events:
+        et = str(ev.get("event", ""))
+        if et in ("vlm_english_subgoals", "vlm_predicate_subgoals"):
+            vlm_requests += 1
+
+    # Prefer evaluation-runner episode runtime (matches trace HTML); else JSONL wall_time span.
+    runtime_sec: Optional[float] = None
+    if episode_runtime_sec is not None:
+        runtime_sec = float(episode_runtime_sec)
+    else:
+        times: List[float] = []
+        for ev in events:
+            t = ev.get("wall_time")
+            if isinstance(t, (int, float)):
+                times.append(float(t))
+        if times:
+            runtime_sec = max(times) - min(times)
+    return {
+        "subgoals_generated": subgoals_generated,
+        "subgoals_used": subgoals_used,
+        "subgoals_failed": subgoals_failed,
+        "replanning_count": replanning_count,
+        "actions_run_total": actions_run_total,
+        "actions_breakdown": actions_breakdown,
+        "runtime_sec": runtime_sec,
+        "vlm_requests": vlm_requests,
+    }
+
+
+def _ensure_failed_node_logs(
+    nodes: List[Dict[str, Any]],
+    exec_logs: Dict[str, str],
+) -> Dict[str, str]:
+    """
+    Ensure failed nodes are clickable with useful diagnostics even when
+    subgoal_execution log_text is unavailable.
+    """
+    merged = dict(exec_logs)
+    for n in nodes:
+        st = str(n.get("status", ""))
+        if st != "failed":
+            continue
+        failure_type = str(n.get("failure_type") or "").strip() or "unknown_failure"
+        failure_msg = str(n.get("failure_msg") or "").strip()
+        label = str(n.get("label") or n.get("id") or "")
+        for pair in _node_pairs(n):
+            key = _pair_log_key(pair["branch"], pair["subgoal_idx"])
+            if key in merged and str(merged[key]).strip():
+                continue
+            text = (
+                f"Subgoal: {label}\n"
+                f"Status: failed\n"
+                f"Failure type: {failure_type}\n"
+            )
+            if failure_msg:
+                text += f"Failure message: {failure_msg}\n"
+            merged[key] = text
+    return merged
+
+
+def render_pddl_baseline_log_dir_to_html(
+    log_dir: str,
+    out_path: Optional[str] = None,
+    episode_runtime_sec: Optional[float] = None,
+    episode_metrics: Optional[Dict[str, Any]] = None,
+) -> Optional[str]:
+    metrics = dict(episode_metrics) if isinstance(episode_metrics, dict) else {}
+    if not metrics:
+        metrics = _load_episode_metrics(log_dir)
+    if episode_runtime_sec is None:
+        episode_runtime_sec = _load_episode_runtime_sec(log_dir)
+    if episode_runtime_sec is None and isinstance(
+        metrics.get("episode_runtime_sec"), (int, float)
+    ):
+        episode_runtime_sec = float(metrics["episode_runtime_sec"])
+    elif episode_runtime_sec is not None:
+        metrics.setdefault("episode_runtime_sec", float(episode_runtime_sec))
+
+    use_default_out_name = out_path is None
+
+    layout_path = os.path.join(log_dir, "media", "planning_tree_layout.json")
+    if not os.path.isfile(layout_path):
+        # Fall back to legacy viewer if layout missing
+        from habitat_llm.vlm_tamp.render_log_html import render_log_dir_to_html
+
+        return render_log_dir_to_html(log_dir, out_path=out_path)
+
+    with open(layout_path, "r", encoding="utf-8") as f:
+        layout_data = json.load(f)
+
+    events = _read_jsonl_events(log_dir)
+    exec_logs = _execution_logs_by_key(events)
+
+    nodes: List[Dict[str, Any]] = layout_data.get("nodes") or []
+    exec_logs = _ensure_failed_node_logs(nodes, exec_logs)
+    node_exec_logs = _node_execution_logs_by_id(nodes, exec_logs)
+    summary = _compute_summary_stats(layout_data, events, episode_runtime_sec)
+    outcome_chips = _outcome_chips_html(metrics)
+    cost_kv = _cost_kv_html(metrics)
+    top_prompt_text = _extract_top_prompt_text(events)
+    scene_state_rows = _build_scene_state_rows(events)
+    scene_graph_svg = _build_scene_graph_svg(scene_state_rows)
+    scene_rows_html = "".join(
+        (
+            "<tr>"
+            f"<td>{html.escape(r['object'])}</td>"
+            f"<td>{html.escape(r['relation'])}</td>"
+            f"<td>{html.escape(r['support'])}</td>"
+            f"<td>{html.escape(r['room'])}</td>"
+            f"<td>{html.escape(r['source'])}</td>"
+            "</tr>"
+        )
+        for r in scene_state_rows
+    ) or '<tr><td colspan="5">(no final scene-state rows available)</td></tr>'
+    lp = layout_data.get("layout") or {}
+    x_spacing = float(lp.get("x_spacing", 280))
+    y_spacing = float(lp.get("y_spacing", 150))
+    margin_x = float(lp.get("margin_x", 120))
+    margin_y = float(lp.get("margin_y", 60))
+
+    # Pixel coords for interactive SVG.
+    px_nodes: List[Dict[str, Any]] = []
+    max_px_x = 0.0
+    max_px_y = 0.0
+    for n in nodes:
+        nx = float(n.get("x", 0)) * x_spacing + margin_x
+        ny = float(n.get("depth", 0)) * y_spacing + margin_y
+        max_px_x = max(max_px_x, nx + 160)
+        max_px_y = max(max_px_y, ny + 50)
+        st = str(n.get("status", "pending"))
+        stroke, fill = _STATUS_HEX.get(st, _STATUS_HEX["default"])
+        full_label = str(n.get("label", n.get("id", "")))
+        node_id = str(n.get("id") or "")
+        key = node_id if node_id in node_exec_logs else None
+        clickable = bool(key and st in ("solved", "already", "failed"))
+        px_nodes.append(
+            {
+                "id": node_id,
+                "nx": nx,
+                "ny": ny,
+                "label": full_label,
+                "full_label": full_label,
+                "stroke": stroke,
+                "fill": fill,
+                "font": _STATUS_FONT_HEX.get(st, "#141414"),
+                "status": st,
+                "log_key": key,
+                "clickable": clickable,
+            }
+        )
+
+    svg_w = int(max(980, max_px_x + margin_x + 80))
+    svg_h = int(max(400, max_px_y + margin_y + 80))
+
+    # Edges from parent_id
+    id_to_px = {p["id"]: (p["nx"], p["ny"]) for p in px_nodes}
+    edges_svg: List[str] = []
+    for n in nodes:
+        pid = n.get("parent_id")
+        cid = n.get("id")
+        if not pid or not cid or pid not in id_to_px or cid not in id_to_px:
+            continue
+        x1, y1 = id_to_px[pid]
+        x2, y2 = id_to_px[cid]
+        edges_svg.append(
+            f'<line x1="{x1:.1f}" y1="{y1 + 28:.1f}" x2="{x2:.1f}" y2="{y2 - 28:.1f}" '
+            f'stroke="#1e1e1e" stroke-width="2" marker-end="url(#arrowhead)"/>'
+        )
+
+    ellipses: List[str] = []
+    for p in px_nodes:
+        rx, ry = 120, 32
+        extra = ""
+        if p["clickable"]:
+            extra = (
+                ' class="sg-node" cursor="pointer" '
+                f'data-log-key="{html.escape(p["log_key"] or "", quote=True)}"'
+            )
+        ellipses.append(
+            f'<g transform="translate({p["nx"]:.1f},{p["ny"]:.1f})"{extra}>'
+            f'<ellipse rx="{rx}" ry="{ry}" fill="{p["fill"]}" stroke="{p["stroke"]}" stroke-width="3"/>'
+            f'<text text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="13" fill="{p["font"]}">'
+            f'{_svg_text_lines(p["label"], blocked=(p["status"] == "blocked"))}</text></g>'
+        )
+
+    logs_json = json.dumps(node_exec_logs)
+    node_log_index = {
+        str(p["log_key"]): str(p["full_label"])
+        for p in px_nodes
+        if p.get("log_key") and str(p.get("log_key")) in node_exec_logs
+    }
+    node_log_index_json = json.dumps(node_log_index)
+    out_path = out_path or os.path.join(
+        log_dir, _default_interactive_pddl_html_basename(log_dir)
+    )
+
+    esc_dir = html.escape(os.path.abspath(log_dir), quote=True)
+    vlm_prompts_txt_rel = "vlm_prompts.txt" if os.path.isfile(
+        os.path.join(log_dir, "vlm_prompts.txt")
+    ) else None
+    vlm_prompts_chat_rel: Optional[str] = None
+    if vlm_prompts_txt_rel:
+        try:
+            from habitat_llm.vlm_tamp.render_vlm_prompts_html import (
+                render_vlm_prompts_chat_html,
+            )
+
+            p_chat = render_vlm_prompts_chat_html(log_dir)
+            if p_chat:
+                vlm_prompts_chat_rel = os.path.basename(p_chat)
+        except Exception:
+            vlm_prompts_chat_rel = None
+    action_counts_text = ", ".join(
+        f"{k}: {v}" for k, v in summary["actions_breakdown"].items()
+    ) or "(none)"
+
+    doc = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PARTNR VLM-TAMP PDDL — interactive tree</title>
+<style>
+body {{ font-family: DejaVu Sans, sans-serif; margin: 0; background: #f0f0f0; color: #000; }}
+#wrap {{ display: flex; flex-wrap: wrap; align-items: flex-start; gap: 12px; padding: 12px; }}
+#panel {{
+  flex: 1 1 420px; min-width: 320px; max-width: 640px; background: #fff; border: 1px solid #ccc;
+  padding: 12px; min-height: 200px; max-height: 90vh; overflow: auto; white-space: pre-wrap; font-size: 12px; color: #000;
+}}
+#panel h2 {{ margin-top: 0; font-size: 14px; color: #000; }}
+#panel pre {{ margin: 0; white-space: pre-wrap; word-break: break-word; color: #000; }}
+#panel .controls {{ margin-bottom: 8px; }}
+#panel .controls button {{
+  border: 1px solid #999;
+  background: #f7f7f7;
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}}
+#panel .controls button:hover {{ background: #efefef; }}
+#all-logs {{
+  display: none;
+  margin-top: 8px;
+  border-top: 1px solid #ddd;
+  padding-top: 8px;
+}}
+#all-logs .entry {{
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}}
+#all-logs .entry-title {{
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #000;
+}}
+#all-logs pre {{
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #000;
+}}
+svg {{ background: #f0f0f0; border: 1px solid #bbb; flex: 2 1 600px; max-width: 100%; }}
+.sg-node:hover ellipse {{ filter: brightness(0.95); }}
+path.arrow {{ fill: #1e1e1e; }}
+code.path {{ font-size: 11px; color: #333; }}
+#node-log-popup {{
+  position: fixed;
+  display: none;
+  z-index: 9999;
+  max-width: 520px;
+  max-height: 320px;
+  overflow: auto;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid #333;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  padding: 10px;
+  white-space: pre-wrap;
+  font-size: 12px;
+  line-height: 1.35;
+}}
+#node-log-popup .title {{ font-weight: 700; margin-bottom: 6px; color: #000; }}
+#node-log-popup .close-btn {{
+  float: right;
+  border: 0;
+  background: transparent;
+  color: #000;
+  font-size: 14px;
+  cursor: pointer;
+}}
+.summary {{
+  margin: 8px 12px 0 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  color: #000;
+  font-size: 13px;
+  line-height: 1.4;
+}}
+.summary .title {{ font-weight: 700; margin-bottom: 4px; }}
+.outcome-row {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0 8px 0;
+}}
+.chip {{
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}}
+.chip-label {{
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+  margin-right: 4px;
+}}
+.chip-value {{ font-weight: 700; }}
+.kv {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  margin-bottom: 6px;
+}}
+.kv span {{ white-space: nowrap; }}
+.kv b {{ font-weight: 700; }}
+.prompt-box {{
+  margin: 8px 12px 0 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  color: #000;
+  font-size: 13px;
+  line-height: 1.45;
+}}
+.prompt-box .title {{ font-weight: 700; margin-bottom: 4px; }}
+.scene-box {{
+  margin: 8px 12px 12px 12px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  color: #000;
+  font-size: 13px;
+  line-height: 1.45;
+}}
+.scene-box .title {{ font-weight: 700; margin-bottom: 8px; }}
+.scene-box table {{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin: 8px 0 10px 0;
+}}
+.scene-box th, .scene-box td {{
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}}
+.scene-box th {{ background: #f5f5f5; }}
+</style>
+</head>
+<body>
+<p><code>{esc_dir}</code></p>
+{(
+        f'<p>VLM prompts: '
+        f'<a href="{html.escape(vlm_prompts_chat_rel, quote=True)}" target="_blank" rel="noopener">chat view</a>'
+        + (
+            f' · <a href="{html.escape(vlm_prompts_txt_rel, quote=True)}" target="_blank" rel="noopener">raw .txt</a>'
+            if vlm_prompts_txt_rel
+            else ""
+        )
+        + "</p>"
+    )
+    if vlm_prompts_chat_rel
+    else (
+        f'<p><a href="{html.escape(vlm_prompts_txt_rel, quote=True)}" target="_blank" rel="noopener">VLM prompts (vlm_prompts.txt)</a></p>'
+        if vlm_prompts_txt_rel
+        else ""
+    )}
+{f'<div class="prompt-box"><div class="title">Prompt</div><div>{html.escape(top_prompt_text)}</div></div>' if top_prompt_text else ''}
+<div class="summary">
+  <div class="title">Run Summary</div>
+  {outcome_chips}
+  {cost_kv}
+  <div>Subgoals generated: {summary["subgoals_generated"]}</div>
+  <div>Subgoals used (green + red): {summary["subgoals_used"]}</div>
+  <div>Failed subgoals (red): {summary["subgoals_failed"]}</div>
+  <div>Replanning count: {summary["replanning_count"]}</div>
+  <div>Runtime (sec): {f'{summary["runtime_sec"]:.2f}' if summary["runtime_sec"] is not None else 'N/A'}</div>
+  <div>VLM requests (Turn 1 + Turn 2): {summary["vlm_requests"]}</div>
+  <div>Actions run: {summary["actions_run_total"]}</div>
+  <div>Action counts: {html.escape(action_counts_text)}</div>
+</div>
+<div id="wrap">
+<svg width="{svg_w}" height="{svg_h}" viewBox="0 0 {svg_w} {svg_h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" class="arrow"/>
+</marker>
+</defs>
+{_svg_legend()}
+{chr(10).join(edges_svg)}
+{chr(10).join(ellipses)}
+</svg>
+<div id="panel">
+<h2>Subgoal execution log</h2>
+<p class="hint">Click a green (solved) or red (failed) subgoal node that has a log.</p>
+<div class="controls">
+  <button type="button" id="toggle-all-logs">Expand all</button>
+</div>
+<pre id="logtext">(no selection)</pre>
+<div id="all-logs"></div>
+</div>
+</div>
+<div id="node-log-popup" aria-live="polite">
+  <button type="button" class="close-btn" id="node-log-close">✕</button>
+  <div class="title">Node log</div>
+  <div id="node-log-content">(no selection)</div>
+</div>
+<div class="scene-box">
+  <div class="title">Final Scene Object States</div>
+  <div>State source: latest <code>Currently, you can see</code> block from VLM turn-1 prompt.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Object</th>
+        <th>Relation</th>
+        <th>Support</th>
+        <th>Room</th>
+        <th>Source line</th>
+      </tr>
+    </thead>
+    <tbody>
+      {scene_rows_html}
+    </tbody>
+  </table>
+  <div class="title">Scene Graph (object -> relation -> support)</div>
+  {scene_graph_svg}
+</div>
+<script id="exec-logs" type="application/json">{logs_json}</script>
+<script id="node-log-index" type="application/json">{node_log_index_json}</script>
+<script>
+(function() {{
+  var data = JSON.parse(document.getElementById('exec-logs').textContent || '{{}}');
+  var nodeLogIndex = JSON.parse(document.getElementById('node-log-index').textContent || '{{}}');
+  var pre = document.getElementById('logtext');
+  var allLogsEl = document.getElementById('all-logs');
+  var toggleAllBtn = document.getElementById('toggle-all-logs');
+  var allExpanded = false;
+  var popup = document.getElementById('node-log-popup');
+  var popupContent = document.getElementById('node-log-content');
+  var popupClose = document.getElementById('node-log-close');
+
+  function hidePopup() {{
+    popup.style.display = 'none';
+  }}
+
+  function showPopup(text, x, y) {{
+    popupContent.textContent = text;
+    popup.style.display = 'block';
+    var margin = 12;
+    var left = x + margin;
+    var top = y + margin;
+    var maxLeft = window.innerWidth - popup.offsetWidth - margin;
+    var maxTop = window.innerHeight - popup.offsetHeight - margin;
+    if (left > maxLeft) left = Math.max(margin, x - popup.offsetWidth - margin);
+    if (top > maxTop) top = Math.max(margin, y - popup.offsetHeight - margin);
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+  }}
+
+  function escapeHtml(s) {{
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }}
+
+  function renderAllLogs() {{
+    var keys = Object.keys(data);
+    keys.sort();
+    if (!keys.length) {{
+      allLogsEl.innerHTML = '<div class="entry"><div class="entry-title">(no logs)</div></div>';
+      return;
+    }}
+    var parts = [];
+    keys.forEach(function(k) {{
+      var title = nodeLogIndex[k] ? (nodeLogIndex[k] + ' [' + k + ']') : ('Subgoal [' + k + ']');
+      parts.push(
+        '<div class="entry">' +
+          '<div class="entry-title">' + escapeHtml(title) + '</div>' +
+          '<pre>' + escapeHtml(data[k]) + '</pre>' +
+        '</div>'
+      );
+    }});
+    allLogsEl.innerHTML = parts.join('');
+  }}
+
+  popupClose.addEventListener('click', function(evt) {{
+    evt.stopPropagation();
+    hidePopup();
+  }});
+
+  document.addEventListener('click', function(evt) {{
+    if (!popup.contains(evt.target) && !evt.target.closest('.sg-node')) {{
+      hidePopup();
+    }}
+  }});
+
+  toggleAllBtn.addEventListener('click', function() {{
+    allExpanded = !allExpanded;
+    if (allExpanded) {{
+      renderAllLogs();
+      allLogsEl.style.display = 'block';
+      toggleAllBtn.textContent = 'Collapse all';
+    }} else {{
+      allLogsEl.style.display = 'none';
+      toggleAllBtn.textContent = 'Expand all';
+    }}
+  }});
+
+  document.querySelectorAll('.sg-node').forEach(function(g) {{
+    g.addEventListener('click', function(evt) {{
+      evt.stopPropagation();
+      var k = g.getAttribute('data-log-key');
+      if (!k || !data[k]) {{
+        pre.textContent = '(no log for this node)';
+        showPopup('(no log for this node)', evt.clientX, evt.clientY);
+        return;
+      }}
+      pre.textContent = data[k];
+      showPopup(data[k], evt.clientX, evt.clientY);
+    }});
+  }});
+}})();
+</script>
+</body>
+</html>
+"""
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(doc)
+    if use_default_out_name:
+        stale_index = os.path.join(log_dir, "index.html")
+        try:
+            if os.path.isfile(stale_index) and os.path.abspath(
+                stale_index
+            ) != os.path.abspath(out_path):
+                os.remove(stale_index)
+        except OSError:
+            pass
+    return out_path
+
+
+def _svg_escape_label(s: str) -> str:
+    s = html.escape(s, quote=True)
+    return s.replace("&#x27;", "'")

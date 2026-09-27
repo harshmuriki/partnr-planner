@@ -15,7 +15,6 @@ from habitat_llm.tools.motor_skills.pick.oracle_pick_skill import OraclePickSkil
 from habitat_llm.tools.motor_skills.place.oracle_place_skill import OraclePlaceSkill
 from habitat_llm.tools.motor_skills.skill import SkillPolicy
 from habitat_llm.utils.grammar import (
-    FURNITURE,
     OBJECT,
     OBJECT_OR_FURNITURE,
     SPATIAL_CONSTRAINT,
@@ -111,7 +110,7 @@ class OracleRearrangeSkill(SkillPolicy):
         """
         none = '("none" | "None")'
         optional_constraint = f'(({SPATIAL_CONSTRAINT} "," WS {OBJECT_OR_FURNITURE} )| ({none} WS "," WS {none}))'
-        return [OBJECT, SPATIAL_RELATION, FURNITURE, optional_constraint]
+        return [OBJECT, SPATIAL_RELATION, OBJECT_OR_FURNITURE, optional_constraint]
 
     def set_target(self, arg_string, env):
         # We follow the format:

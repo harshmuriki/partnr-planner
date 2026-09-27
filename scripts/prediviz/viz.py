@@ -500,6 +500,78 @@ def load_run_data(run_data, episode_id):
     return None
 
 
+def _move_proposition(object_name, receptacle_name, room_name):
+    if receptacle_name and receptacle_name != "floor":
+        return {
+            "function_name": "is_on_top",
+            "args": {
+                "object_names": [object_name],
+                "receptacle_names": [receptacle_name],
+                "number": 1,
+            },
+        }
+    if room_name:
+        return {
+            "function_name": "is_in_room",
+            "args": {
+                "object_names": [object_name],
+                "room_names": [room_name],
+                "number": 1,
+            },
+        }
+    return None
+
+
+def apply_run_placements(episode_data, propositions, placements):
+    """Keep objects at initial furniture; add arrows to actual final furniture."""
+    if not isinstance(placements, dict):
+        return episode_data, propositions
+    initial = placements.get("initial") or {}
+    final = placements.get("final") or {}
+    initial_recep = dict(initial.get("object_to_recep") or {})
+    initial_room = dict(initial.get("object_to_room") or {})
+    if not initial_recep and not initial_room:
+        initial_recep = dict(episode_data.get("object_to_recep") or {})
+        initial_room = dict(episode_data.get("object_to_room") or {})
+    final_recep = dict(final.get("object_to_recep") or {})
+    final_room = dict(final.get("object_to_room") or {})
+
+    object_to_recep = dict(episode_data.get("object_to_recep") or {})
+    object_to_room = dict(episode_data.get("object_to_room") or {})
+    objects = list(episode_data.get("objects") or [])
+    for obj_id, room_id in initial_room.items():
+        object_to_room[obj_id] = room_id
+        if obj_id not in objects:
+            objects.append(obj_id)
+    for obj_id, recep_id in initial_recep.items():
+        object_to_recep[obj_id] = recep_id
+        if obj_id not in objects:
+            objects.append(obj_id)
+        if obj_id not in object_to_room:
+            object_to_room[obj_id] = episode_data.get("recep_to_room", {}).get(
+                recep_id, object_to_room.get(obj_id)
+            )
+
+    extra_props = []
+    all_obj_ids = set(object_to_room) | set(final_recep) | set(final_room)
+    for obj_id in sorted(all_obj_ids):
+        start_recep = initial_recep.get(obj_id, object_to_recep.get(obj_id))
+        start_room = initial_room.get(obj_id, object_to_room.get(obj_id))
+        end_recep = final_recep.get(obj_id, start_recep)
+        end_room = final_room.get(obj_id, start_room)
+        if end_recep == start_recep and end_room == start_room:
+            continue
+        prop = _move_proposition(obj_id, end_recep, end_room)
+        if prop is not None:
+            extra_props.append(prop)
+
+    episode_data = dict(episode_data)
+    episode_data["objects"] = objects
+    episode_data["object_to_recep"] = object_to_recep
+    episode_data["object_to_room"] = object_to_room
+    return episode_data, list(propositions) + extra_props
+
+
 def plot_scene(
     config,
     episode_data,
@@ -512,6 +584,7 @@ def plot_scene(
     object_to_recep=None,
     object_to_room=None,
     object_to_states=None,
+    keep_initial_layout=False,
 ):
     objects = []
     # Initial Objects and States
@@ -568,6 +641,7 @@ def plot_scene(
         receptacle_icon_mapping,
         cropped_receptacle_icon_mapping,
         show_instruction=config.show_instruction,
+        keep_initial_layout=keep_initial_layout,
     )
     step_id_to_path_mapping = {}
     for step_idx, (fig, ax, final_height, final_width) in enumerate(result_fig_data):
@@ -1085,6 +1159,17 @@ def parse_arguments():
         action="store_true",
         help="Save hierarchical JSON file with room -> furniture -> object structure",
     )
+    parser.add_argument(
+        "--keep-initial-layout",
+        action="store_true",
+        help="Draw all objects at initial furniture and arrows to destinations on one frame.",
+    )
+    parser.add_argument(
+        "--placements-json",
+        default=None,
+        type=str,
+        help="JSON with initial/final object_to_recep and object_to_room maps.",
+    )
     return parser.parse_args()
 
 
@@ -1133,6 +1218,18 @@ def main():
             ) = get_episode_data_for_plot(
                 args.metadata_dir, episode_id, loaded_run_data
             )
+            placements = None
+            if args.placements_json:
+                with open(args.placements_json, "r") as f:
+                    loaded_placements = json.load(f)
+                if str(episode_id) in loaded_placements:
+                    placements = loaded_placements[str(episode_id)]
+                elif "initial" in loaded_placements or "final" in loaded_placements:
+                    placements = loaded_placements
+            if placements:
+                episode_data, propositions = apply_run_placements(
+                    episode_data, propositions, placements
+                )
 
             # Save episode_data as JSON inside the folder
             ep_data_f = os.path.join(args.save_path, f"episode_data_{episode_id}.json")
@@ -1159,6 +1256,7 @@ def main():
                 object_to_recep=episode_data["object_to_recep"],
                 object_to_room=episode_data["object_to_room"],
                 object_to_states=episode_data.get("object_to_states", None),
+                keep_initial_layout=args.keep_initial_layout,
             )
 
             # Generate and save top-down map

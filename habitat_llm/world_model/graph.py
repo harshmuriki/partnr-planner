@@ -209,7 +209,7 @@ class Graph:
                 del self.graph[node2][node1]
             else:
                 print(
-                    f"Edge doesn't exist between the two nodes:{node1.name}, {node2.name}"
+                    f"Edge doesn't exist between the two nodes:{node1.name}, {node2.name}. Shouldn't be a problem."
                 )
         else:
             print("Trying to remove edge but, one or both nodes don't exist in graph")

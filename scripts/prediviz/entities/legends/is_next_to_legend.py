@@ -49,11 +49,11 @@ class IsNextToLegend:
         edge_style = {}
         for is_next_to in self.is_next_tos:
             for entity_a in is_next_to[0]:
-                node_label_a = f"{entity_a[0]}"
+                node_label_a = f"L|{entity_a[0]}"
                 if not G.has_node(node_label_a):
                     G.add_node(node_label_a, entity=entity_a, bipartite=0)
             for entity_b in is_next_to[1]:
-                node_label_b = f"{entity_b[0]}"
+                node_label_b = f"R|{entity_b[0]}"
                 if not G.has_node(node_label_b):
                     G.add_node(node_label_b, entity=entity_b, bipartite=1)
 
@@ -62,7 +62,7 @@ class IsNextToLegend:
 
                 # Add edges between all pairs of nodes in entity_a and entity_b
                 for entity_a in is_next_to[0]:
-                    node_label_a = f"{entity_a[0]}"
+                    node_label_a = f"L|{entity_a[0]}"
                     G.add_edge(node_label_a, node_label_b)
                     edge_style[(node_label_a, node_label_b)] = line_style
 
@@ -125,7 +125,7 @@ class IsNextToLegend:
                     midpoint - entity.width / 2,
                     current_height - entity.height / 2,
                 )
-            entities[f"{entity_id}"] = entity
+            entities[node] = entity
             entity.plot(
                 ax,
                 origin,
@@ -211,8 +211,8 @@ class IsNextToLegend:
         # Set the z-order of the rectangle
         rect.set_zorder(-1)
 
-        left_spacing = self.height / self.left_set_length
-        right_spacing = self.height / self.right_set_length
+        left_spacing = self.height / max(self.left_set_length, 1)
+        right_spacing = self.height / max(self.right_set_length, 1)
 
         # Plot the left nodes
         left_midpoint = (

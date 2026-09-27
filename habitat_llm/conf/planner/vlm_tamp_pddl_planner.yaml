@@ -1,0 +1,49 @@
+
+_target_: 'habitat_llm.planner.VlmTampPddlPlanner'
+_recursive_: False
+_partial_: True
+
+plan_config:
+  # PDDL baseline interactive index.html (set true in baselines/single_agent_vlm_tamp_pddl.yaml or evaluation.pddl_baseline).
+  pddl_baseline: False
+  # Number of alternative plan branches to request from the VLM.
+  # On failure the planner backtracks through branches before re-querying.
+  num_branches: 1
+  # How many times to re-query the VLM after all branches are exhausted.
+  max_reprompts: 10
+  # NTAMP: max consecutive execution failures on the same subgoal before branch/VLM
+  # escalation; each retry re-solves PDDL from the current world graph (no VLM).
+  ntamp_max_pddl_replan_retries: 1
+  # Save annotated views during physical Explore; send first/middle/last at replanning.
+  explore_image_interval: 30
+  # Partial-observability mode: if required objects are missing/unlocated in
+  # concept-graph memory, issue Explore[room] before trying symbolic planning.
+  enable_partial_obs_explore: False
+  explore_on_missing_required_objects: False
+  # Execute VLM-generated explore(<room>) subgoals via high-level Explore[room]
+  # as a planner special-case (without modeling explore in PDDL domain).
+  enable_vlm_explore_subgoal: True
+  max_room_explore_passes_per_object: 1
+  # Print step-by-step pipeline output to the terminal while running.
+  verbose: True
+  log_dir: "vlm_tamp_pddl"
+  vlm:
+    type: gpt4v
+    model_name: gpt-4o-mini
+    max_completion_tokens: 1200
+    temperature: 0.2
+    use_images: True
+    # Draw GT 3D bounding boxes (projected to 2D) on the scene image sent to the VLM.
+    use_gt_bboxes: True
+    # 1 = single annotated image; 2 = split labels across two images (same view) when crowded.
+    gt_bbox_image_panels: 1
+    # Write index.html (VLM + PDDL tree viewer) into the episode log dir after plan tree updates.
+    write_log_html: True
+    # Write planning_tree.png into <episode_log_dir>/media/ and include failure labels.
+    write_planning_tree_png: True
+    planning_tree_show_failure_labels: True
+    # failure label text mode: flag | type | detailed
+    planning_tree_failure_label_mode: "flag"
+    # Optional: path to a JSON file for caching VLM responses.
+    # Set to a file path (e.g. "cache/llm_memory.json") to enable.
+    cache_path: null

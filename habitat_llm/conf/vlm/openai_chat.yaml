@@ -1,0 +1,50 @@
+vlm:
+  _target_: habitat_llm.vlm.openai_vlm.OpenAIChat
+  _partial_: True
+
+verbose: True
+
+# The system message helps set the behavior of the assistant.
+system_message: "You are an expert at visual reasoning and task planning. You can analyze images to understand the environment and plan actions accordingly."
+
+# System, User, Assistant and end of turn tags
+system_tag: ""
+user_tag: ""
+assistant_tag: ""
+eot_tag: ""
+
+# Decide whether to keep history
+keep_message_history: False
+
+generation_params:
+  # Vision-capable models: gpt-4o, gpt-4o-mini, gpt-4-turbo
+  model: gpt-4o
+
+  # The messages between the user and the bot
+  #messages        : ''
+
+  # The maximum number of tokens to generate in the completion.
+  max_completion_tokens: 500
+
+  # Sampling temperature between 0 and 2. Higher values will make the output more random,
+  # while lower values like 0.2 will make it more focused and deterministic.
+  temperature: 0
+
+  # An alternative to temperature, nucleus sampling. The model considers the results
+  # of the toklen with top_p probability mass. So 0.1 means only the tokens comprising
+  # the top 10% probability mass are considered.
+  top_p: 1
+
+  # Whether to stream back partial progress
+  stream: False
+
+  # up to 4 sequences that stop the generation
+  stop: "Assigned!"
+
+  # Dictionary that can modify the likelihood of specified tokens appearing in the completion.
+  # logit_bias: {}
+
+  # Other params
+  frequency_penalty: 0
+  presence_penalty: 0
+  request_timeout: 20

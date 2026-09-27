@@ -1,5 +1,9 @@
 # Habitat-LLM Installation Instructions
 
+For transferring local code/data and launching parallel evaluations, follow
+[Server setup and parallel runs](docs/SERVER_SETUP.md). The package versions below
+are the repository's recorded environment; verify them against your server hardware.
+
 ### Requirements:
 - Conda or Mamba
 

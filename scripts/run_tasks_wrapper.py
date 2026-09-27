@@ -3,7 +3,7 @@
 Wrapper script to run multiple tasks N times each.
 
 This script calls planner_demo.py via subprocess for each task N times,
-organizing outputs by run ID (e.g., 1.1.1, 1.1.2, 1.1.3).
+organizing outputs by task folder and run number.
 
 Usage:
     python scripts/run_tasks_wrapper.py --config baseline_evaluation_v1/configs/baseline_runs.yaml
@@ -132,7 +132,10 @@ def run_task(task_config, run_num, base_output_dir, planner_config, global_overr
 
     # Create output directory: base_output_dir/Task_1A/Task_1A_1
     output_dir = Path(base_output_dir) / task_name / run_id
-    output_dir.mkdir(parents=True, exist_ok=True)
+    if not dry_run:
+        if output_dir.exists():
+            shutil.rmtree(output_dir)
+        output_dir.mkdir(parents=True)
 
     # Extract episode_id from the episode JSON file
     episode_id = None
@@ -189,6 +192,23 @@ def run_task(task_config, run_num, base_output_dir, planner_config, global_overr
                                 print(f"     {idx}. {obj_class}")
                     else:
                         print(f"  🍾 Runtime Objects: None (disabled)")
+
+                # Only print runtime subgoals if +use_runtime_subgoals is not explicitly set to False
+                use_subgoals = True
+                for override in (global_overrides or []) + task_config.get("hydra_overrides", []):
+                    if override.strip() in ["+use_runtime_subgoals=False", "use_runtime_subgoals=False"]:
+                        use_subgoals = False
+                        break
+
+                if use_subgoals and runtime_config and 'subgoals' in runtime_config:
+                    subgoals = runtime_config['subgoals']
+                    if isinstance(subgoals, list) and subgoals:
+                        print(f"  🧩 Runtime Subgoals: {len(subgoals)}")
+                        for idx, subgoal in enumerate(subgoals, 1):
+                            print(f"     {idx}. {subgoal}")
+                    elif subgoals:
+                        print("  ⚠ Runtime Subgoals: expected a YAML list")
+
             except Exception as e:
                 print(f"  ⚠ Could not parse runtime config: {e}")
 
@@ -200,7 +220,7 @@ def run_task(task_config, run_num, base_output_dir, planner_config, global_overr
 
     # Build command
     cmd = [
-        "python", "-m", "habitat_llm.examples.planner_demo",
+        sys.executable, "-u", "-m", "habitat_llm.examples.planner_demo",
         f"--config-name={planner_config}",
         f"habitat.dataset.data_path={data_path}",
         f"paths.results_dir={output_dir}",
@@ -211,7 +231,11 @@ def run_task(task_config, run_num, base_output_dir, planner_config, global_overr
     if global_overrides:
         cmd.extend(global_overrides)
 
-    # Runtime config is discovered from the task folder by planner_demo (no override needed)
+    # Prefer the explicit runtime config when provided; otherwise planner_demo
+    # will auto-discover the first YAML in the task folder.
+    if task_config.get("runtime_config"):
+        runtime_config_override = Path(task_config["runtime_config"]).resolve()
+        cmd.append(f"+runtime_config_path={runtime_config_override}")
 
     # For single-episode files, use index 0 (not the episode_id)
     # episode_indices expects array indices, not episode IDs
@@ -230,7 +254,7 @@ def run_task(task_config, run_num, base_output_dir, planner_config, global_overr
         return {"success": True, "run_id": run_id, "dry_run": True}
 
     # Run command
-    timeout_seconds = 60*60  # 60 minutes timeout
+    timeout_seconds = 30*60  # 30 minutes timeout
     try:
         start_time = datetime.now()
 
@@ -259,7 +283,7 @@ def run_task(task_config, run_num, base_output_dir, planner_config, global_overr
         try:
             result = proc.wait(timeout=timeout_seconds)
         except subprocess.TimeoutExpired:
-            print(f"\n⚠ Timeout after {timeout_seconds}s ({timeout_seconds/60:.1f} minutes) - killing process for {run_id}", file=sys.stderr)
+            print(f"\n⚠ Run ended due to TIMEOUT: exceeded {timeout_seconds}s ({timeout_seconds/60:.1f} min) - killing process for {run_id}", file=sys.stderr)
             proc.kill()  # Kill the process
             proc.wait()  # Wait for it to actually terminate
             result = -1  # Set error code
@@ -386,6 +410,11 @@ def main():
         nargs="+",
         help="Only run specific task IDs (e.g., 1.1 1.2 2.1)"
     )
+    parser.add_argument(
+        "--output-dir",
+        help="Override output_base_dir; use a unique directory per parallel worker"
+    )
+
     args = parser.parse_args()
 
     # Load config
@@ -397,7 +426,7 @@ def main():
     with open(config_path) as f:
         config = yaml.safe_load(f)
 
-    base_output_dir = config["output_base_dir"]
+    base_output_dir = args.output_dir or config["output_base_dir"]
     num_runs = config["num_runs_per_task"]
     planner_config = config["planner_config"]
     tasks_raw = config["tasks"]
@@ -459,7 +488,8 @@ def main():
     print(f"{'='*60}\n")
 
     # Create base output directory
-    Path(base_output_dir).mkdir(parents=True, exist_ok=True)
+    if not args.dry_run:
+        Path(base_output_dir).mkdir(parents=True, exist_ok=True)
 
     # Save experiment config
     experiment_config = {
@@ -471,8 +501,9 @@ def main():
         "total_runs": len(tasks) * num_runs,
         "task_ids": [t["task_id"] for t in tasks]
     }
-    with open(Path(base_output_dir) / "experiment_config.json", "w") as f:
-        json.dump(experiment_config, f, indent=2)
+    if not args.dry_run:
+        with open(Path(base_output_dir) / "experiment_config.json", "w") as f:
+            json.dump(experiment_config, f, indent=2)
 
     # Track all results
     all_results = []
@@ -543,12 +574,16 @@ def main():
             / experiment_summary["overall_stats"]["total_runs"]
         )
 
-    with open(summary_file, "w") as f:
-        json.dump(experiment_summary, f, indent=2)
+    if not args.dry_run:
+        with open(summary_file, "w") as f:
+            json.dump(experiment_summary, f, indent=2)
 
     print(f"\n{'='*60}")
     print(f"All runs complete!")
-    print(f"Summary saved to: {summary_file}")
+    if args.dry_run:
+        print("Dry run complete; no files written.")
+    else:
+        print(f"Summary saved to: {summary_file}")
     if not args.dry_run:
         print(f"Overall success rate: {experiment_summary['overall_stats']['overall_success_rate']:.1%}")
     print(f"{'='*60}\n")

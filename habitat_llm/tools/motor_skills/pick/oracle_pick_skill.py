@@ -13,6 +13,7 @@ from habitat_llm.agent.env.actions import find_action_range
 from habitat_llm.tools.motor_skills.skill import SkillPolicy
 from habitat_llm.utils.grammar import OBJECT
 from habitat_llm.utils.sim import (
+    GHOST_OBJECT_PICK_FAILURE,
     check_if_gripper_is_full,
     check_if_the_object_is_held_by_agent,
     check_if_the_object_is_inside_furniture,
@@ -42,6 +43,7 @@ class OraclePickSkill(SkillPolicy):
 
         # Get grasp manager
         self.grasp_mgr = self.env.sim.agents_mgr[self.agent_uid].grasp_mgr
+        self._target_name = None
 
         # Get indices for linear and angular velocities in the action tensor
         self.action_range = find_action_range(
@@ -122,6 +124,7 @@ class OraclePickSkill(SkillPolicy):
             self.env, action, self.grasp_mgr, self.target_handle
         )
         if self.failed:
+            self._remove_ghost_target_if_needed()
             return action, None
 
         # Early exit if the object is not a movable object.
@@ -129,6 +132,7 @@ class OraclePickSkill(SkillPolicy):
             self.env, action, self.target_handle
         )
         if self.failed:
+            self._remove_ghost_target_if_needed()
             return action, None
 
         # Early exit if the object is being held by the other agent.
@@ -140,6 +144,7 @@ class OraclePickSkill(SkillPolicy):
             self.env, action, self.target_handle, self.agent_uid
         )
         if self.failed:
+            self._remove_ghost_target_if_needed()
             return action, None
 
         # Early exit if the object is inside closed furniture.
@@ -154,14 +159,16 @@ class OraclePickSkill(SkillPolicy):
             self.thresh_for_art_state,
         )
         if self.failed:
+            self._remove_ghost_target_if_needed()
             return action, None
 
         # Get the object index.
         obj = sutils.get_obj_from_handle(self.env.sim, self.target_handle)
         if obj is None or obj.is_articulated:
-            raise ValueError(
-                f"Cannot find rigid object with name {self.target_handle} for picking."
-            )
+            self.failed = True
+            self.termination_message = GHOST_OBJECT_PICK_FAILURE
+            self._remove_ghost_target_if_needed()
+            return action, None
         # Early exit if the object is out of reach.
         ee_pos = np.array(self.articulated_agent.ee_transform().translation)
         target_pos = obj.translation
@@ -169,6 +176,24 @@ class OraclePickSkill(SkillPolicy):
         ee_dist_to_target = np.linalg.norm(ee_pos - target_pos)
         if ee_dist_to_target > self._config.grasping_distance:
             self.failed = True
+            base_pos = np.asarray(self.articulated_agent.base_pos, dtype=np.float64)
+            obj_xyz = np.asarray(target_pos, dtype=np.float64)
+            ee_xyz = np.asarray(ee_pos, dtype=np.float64)
+            obj_label = self.target_handle
+            try:
+                obj_label = self.env.world_graph[self.agent_uid].get_node_from_sim_handle(
+                    self.target_handle
+                ).name
+            except Exception:
+                pass
+            print(
+                "[oracle_pick] Not close enough to object.\n"
+                f"  object: {obj_label}  xyz: {obj_xyz.tolist()}\n"
+                f"  robot base xyz: {base_pos.tolist()}\n"
+                f"  end_effector xyz: {ee_xyz.tolist()}\n"
+                f"  ||ee - object|| = {ee_dist_to_target:.4f}  "
+                f"(grasping_distance={self._config.grasping_distance})"
+            )
             self.termination_message = "Failed to pick! Not close enough to the object."
             return action, None
 
@@ -180,6 +205,19 @@ class OraclePickSkill(SkillPolicy):
         self._is_action_issued[cur_batch_idx] = True
 
         return action, None
+
+    def _remove_ghost_target_if_needed(self) -> None:
+        message = self.termination_message or ""
+        is_ghost = message == GHOST_OBJECT_PICK_FAILURE or (
+            "does not have a simulator handle" in message
+            or "Failed to pick! Object does not exist." in message
+        )
+        if not is_ghost:
+            return
+        target_name = self._target_name
+        if not target_name:
+            return
+        self.env.world_graph[self.agent_uid].remove_object_from_graph(target_name)
 
     @property
     def argument_types(self) -> List[str]:

@@ -9,6 +9,9 @@ replan_thresh: 100  # max number of times the LLM is allowed to plan to finish t
 save_video: False
 live_display: False  # Set to True to show live visualization window during execution
 output_dir: ${hydra:runtime.output_dir}
+max_combined_time_s: 600
+combined_time_sim_freq: 120
+generate_prediviz: True
 
 agents:
   agent_0:

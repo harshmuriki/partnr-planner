@@ -15,6 +15,13 @@ oracle_explore:
     # The threshold for encompassed nav skill is overwritten by this number.
     max_skill_steps            : 2400
     force_end_on_timeout       : True
+    # Per-furniture watchdog inside Explore. If nav to one furniture exceeds this,
+    # skip that furniture and continue exploring the room. <=0 disables this.
+    max_nav_steps_per_furniture: 300
+    # If a room has more than this many furniture nodes, randomly sample this many.
+    # <=0 means use all furniture in the room., used for fast-explore mode.
+    max_furniture_samples_per_room: 10
+    skip_failed_furniture      : True
 
     sim_freq                   : 120 # Hz
     enable_backing_up          : False

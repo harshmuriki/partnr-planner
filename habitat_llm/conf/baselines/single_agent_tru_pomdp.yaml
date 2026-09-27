@@ -1,0 +1,34 @@
+# @package _global_
+
+defaults:
+  - /examples/planner_multi_agent_demo_config
+  - override /evaluation: decentralized_evaluation_runner_single_agent
+  - override /planner@evaluation.agents.agent_0.planner: tru_pomdp_planner
+  - override /agent@evaluation.agents.agent_0.config: oracle_rearrange_object_states_agent_motortoolsonly
+  - override /llm@evaluation.agents.agent_0.planner.plan_config.llm: openai_chat
+  - override /world_model@world_model: gt_graph
+  - _self_
+
+
+agent_asymmetry: True
+world_model:
+  partial_obs: True
+  use_gt_object_locations: True
+  use_gt_static_structure: True
+
+evaluation:
+  agents:
+    agent_0:
+      planner:
+        plan_config:
+          llm:
+            generation_params:
+              # The Tree of Hypotheses runs at temperature 0.1 (paper A.5) and
+              # needs room for the A.1 reasoning chain before the JSON answer.
+              temperature: 0.1
+              max_tokens: 4096
+              # OpenAIChat.generate does len() on this, so it must be a string.
+              stop: ""
+  # Combined budget: LLM wall + exact action sim + Explore approx sim (seconds).
+  max_combined_time_s: 600
+  generate_prediviz: True

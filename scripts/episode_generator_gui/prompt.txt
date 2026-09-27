@@ -1,0 +1,63 @@
+You generate PARTNR Habitat episode initializations.
+
+Return ONLY one JSON object. No markdown, no commentary.
+
+Schema:
+{
+  "instruction": "<short natural-language description of the task>",
+  "folder_label": "<3-8 word kebab-case name, e.g. apple-orange-table-to-fridge>",
+  "initial_state": [
+    {
+      "number": 1,
+      "object_classes": ["<object_class>"],
+      "furniture_names": ["<furniture_id>"],
+      "allowed_regions": ["<room_id>"],
+      "location": "on"
+    }
+  ],
+  "goal_state": [
+    {
+      "number": 1,
+      "object_classes": ["<object_class>"],
+      "furniture_names": ["<furniture_id>"],
+      "allowed_regions": ["<room_id>"],
+      "location": "on"
+    }
+  ]
+}
+
+Rules:
+- Use only object classes from OBJECTS.
+- Use only furniture IDs from FURNITURE (e.g. table_4, counter_0). Never invent classes like dining_table or dining_room.
+- Use only room IDs from FURNITURE headers (e.g. living_room_0, kitchen_0). Never use spaces (not "living room").
+- Map everyday names to listed furniture using the product descriptions. Example: "dining table" -> the furniture whose description is a dining table.
+- One object class per entry. number is a positive integer.
+- object_classes, furniture_names, and allowed_regions must each be a JSON list of one string.
+- location is "on" (top of furniture), "within" (inside a cabinet/fridge/drawer), "floor", or "in_room".
+- For initial_state, "within" spawns the object inside that furniture. For goal_state, "within" means the task is to put it inside.
+- START STATE may be a full evaluation spec markdown. If so:
+  - Spawn from "## Initial world state" only. Ignore "## Initial robot memory" for object placement.
+  - Map "## Final expected world state" / "## Success criteria" onto goal_state.
+  - instruction must be the quoted text under "## Task instruction / prompt given".
+  - Spawn distractors, substitutes, and lamps listed in the initial world. Do not spawn objects the spec says are absent (ABS).
+  - "within" / inside a closed receptacle → location "within". Floor → location "floor" and furniture_names ["floor"].
+  - packages → class "box". Do not invent furniture IDs; use IDs from the spec/catalog.
+- Map START STATE onto initial_state (where objects spawn).
+- Map END STATE onto goal_state (desired configuration of those same objects).
+- Every object class in goal_state must appear in initial_state with at least the same count. ABS/SUB: goal uses objects that actually exist (substitute class if the target is missing).
+- If END STATE is empty, copy initial_state into goal_state.
+- Optional on a goal_state entry: "object_states" (e.g. {"is_clean": true, "is_filled": true, "is_powered_off": true}), "next_to": ["<object_class>"], "phase": 0 (integer; later phases must complete after earlier ones).
+- instruction should combine start and end in one sentence unless the spec already provides an instruction quote.
+- folder_label is a short filesystem name: lowercase words, hyphens only. If the spec title is a variant id like T1-ACC-BASE, use that (kebab, e.g. t1-acc-base).
+
+FURNITURE:
+{house_furniture}
+
+OBJECTS:
+{objects_list}
+
+START STATE:
+{user_prompt}
+
+END STATE:
+{goal_prompt}

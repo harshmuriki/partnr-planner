@@ -5,6 +5,7 @@
 # LICENSE file in the root directory of this source tree
 
 import json
+import math
 import random
 import warnings
 from collections import defaultdict
@@ -14,7 +15,10 @@ import habitat.sims.habitat_simulator.sim_utilities as sutils
 import habitat_sim
 import magnum as mn
 from habitat.core.logging import logger
-from habitat.datasets.rearrange.navmesh_utils import get_largest_island_index
+from habitat.datasets.rearrange.navmesh_utils import (
+    get_largest_island_index,
+    is_accessible,
+)
 from habitat.datasets.rearrange.samplers.object_sampler import ObjectSampler
 from habitat.datasets.rearrange.samplers.scene_sampler import SingleSceneSampler
 from habitat_sim.nav import NavMeshSettings
@@ -29,15 +33,28 @@ from habitat.datasets.rearrange.samplers.receptacle import (
     Receptacle,
     ReceptacleSet,
     ReceptacleTracker,
+    get_excluded_recs_from_filter_file,
+    get_recs_from_filter_file,
 )
 from habitat.sims.habitat_simulator.debug_visualizer import (
     DebugObservation,
     DebugVisualizer,
 )
 
+from dataset_generation.benchmark_generation.evaluation_generation.attach_auto_dependencies import (
+    infer_and_attach_dependencies,
+)
+from dataset_generation.benchmark_generation.evaluation_generation.goal_state_propositions import (
+    _normalize_location,
+    build_evaluation_from_goal_state,
+)
 from habitat_llm.agent.env.dataset import CollaborationDatasetV0, CollaborationEpisode
 from habitat_llm.sims.collaboration_sim import initialize_object_state_machine
 from habitat_llm.sims.metadata_interface import MetadataInterface, default_metadata_dict
+from habitat_llm.sims.scene_overrides import (
+    apply_default_link_overrides,
+    get_rec_filter_filepath,
+)
 
 
 def merge_dicts(dict1, dict2):
@@ -100,6 +117,8 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         self._limit_scene_set = None
         self.largest_indoor_island_id = -1
         self.ao_link_map = None
+        self._within_rec_names: set = set()
+        self._hard_excluded_rec_names: set = set()
 
         super().__init__(self.cfg, debug_visualization=debug_visualization)
 
@@ -149,6 +168,10 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         self.target_refs = {}
         self.generation_details_log = {}
         self.phase = 0
+        # parent handle -> world translations of objects already placed on that furniture
+        self.smart_placement_history: Dict[str, List[mn.Vector3]] = {}
+        # sample config "name" -> objects sampled by that config (for "next_to" anchors)
+        self.sampled_objects_by_name: Dict[str, List[ManagedRigidObject]] = {}
 
     def get_and_validate_config_sample_number(
         self, config: Dict[str, Any]
@@ -291,6 +314,7 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         self._reset_samplers()
         self._scene_sampler.scene = scene_id
         self.ep_scene_handle = self.generate_scene()
+        apply_default_link_overrides(self.sim)
         self.phase = 0
 
         # generate the navmesh from the config parameters
@@ -311,6 +335,7 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
             self.sim.pathfinder, self.sim, allow_outdoor=False
         )
         self.ao_link_map = sutils.get_ao_link_id_map(self.sim)
+        self._load_scene_receptacle_filters()
 
         self.generation_details_log["scene"] = scene_id
 
@@ -343,6 +368,7 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         island_id: int = -1,
         allowed_regions: List[habitat_sim.scene.SemanticRegion] = None,
         max_samples: int = 100,
+        near: Optional[ManagedRigidObject] = None,
     ) -> ManagedRigidObject:
         """
         Attempt to sample a valid floor placement for an object.
@@ -352,6 +378,7 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         :param island_id: The navmesh island on which to sample placements. Default -1 samples the full navmesh. Warning: full navmesh may not exclusively be "floor".
         :param allowed_regions: Optionally constrain sampling to a set of pre-determined regions.
         :param max_samples: Maximum number of sampling attempts before reporting failure.
+        :param near: Optionally place the object on the floor just beyond the footprint of this object.
 
         :return: The sampled object or None if placement failed.
         """
@@ -370,9 +397,20 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         while count < max_samples and not snap_success:
             count += 1
             # sample a point
-            nav_point = alt_pathfinder.get_random_navigable_point(
-                island_index=island_id
-            )
+            if near is None:
+                nav_point = alt_pathfinder.get_random_navigable_point(
+                    island_index=island_id
+                )
+            else:
+                min_sep, max_sep = self._next_to_separation(new_obj, near)
+                nav_point = alt_pathfinder.get_random_navigable_point_near(
+                    circle_center=near.translation,
+                    radius=max_sep,
+                    island_index=island_id,
+                )
+                offset = nav_point - near.translation
+                if not np.isfinite(np.array(nav_point)).all() or math.hypot(offset.x, offset.z) < min_sep:
+                    continue
             # validate the region constraints
             if allowed_regions is not None:
                 region_ok = False
@@ -393,6 +431,192 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
             return None
 
         return new_obj
+
+    def _receptacle_up_axis(self, rec: Receptacle) -> int:
+        return int(np.asarray(rec.up_axis).reshape(-1)[0])
+
+    def _receptacle_area(self, rec: Receptacle) -> float:
+        area = getattr(rec, "total_area", None)
+        if area is not None and float(area) > 0.0:
+            return float(area)
+        size = rec.bounds.size()
+        up_axis = self._receptacle_up_axis(rec)
+        horiz = [float(size[i]) for i in range(3) if i != up_axis]
+        if len(horiz) >= 2:
+            return horiz[0] * horiz[1]
+        return float(size.x * size.z)
+
+    def _receptacle_upright_score(self, rec: Receptacle) -> float:
+        rec_down = (
+            rec.get_global_transform(self.sim)
+            .transform_vector(-rec.up)
+            .normalized()
+        )
+        return float(mn.math.dot(rec_down, self.sim.get_gravity().normalized()))
+
+    def _select_primary_receptacles(
+        self, recs: List[Receptacle], require_upright: bool = True
+    ) -> List[Receptacle]:
+        """Keep the largest receptacle mesh per parent furniture."""
+        by_parent: Dict[str, List[Receptacle]] = defaultdict(list)
+        for rec in recs:
+            key = rec.parent_object_handle or rec.unique_name
+            by_parent[key].append(rec)
+        primaries: List[Receptacle] = []
+        for group in by_parent.values():
+            if require_upright:
+                upright = [
+                    rec for rec in group if self._receptacle_upright_score(rec) >= 0.9
+                ]
+                candidates = upright if upright else group
+            else:
+                candidates = group
+            primaries.append(max(candidates, key=self._receptacle_area))
+        return primaries
+
+    def _xz_distance(self, a: mn.Vector3, b: mn.Vector3) -> float:
+        return math.hypot(float(a.x - b.x), float(a.z - b.z))
+
+    def _sample_smart_world_point(
+        self,
+        rec: Receptacle,
+        anchors: List[mn.Vector3],
+        sep_range: Optional[Tuple[float, float]] = None,
+    ) -> mn.Vector3:
+        rec_tf = rec.get_global_transform(self.sim)
+        rec_up = rec_tf.transform_vector(rec.up).normalized()
+        lift = rec_up * 0.08
+        if not anchors:
+            local = mn.Vector3(rec.bounds.center())
+            size = rec.bounds.size()
+            up_axis = self._receptacle_up_axis(rec)
+            jitter = 0.18
+            for axis in range(3):
+                if axis == up_axis:
+                    continue
+                half = 0.5 * float(size[axis])
+                local[axis] = local[axis] + random.uniform(-jitter, jitter) * half
+            return rec_tf.transform_point(local) + lift
+
+        anchor = anchors[0]
+        min_sep, max_sep = sep_range if sep_range is not None else (0.14, 0.28)
+        center_world = rec_tf.transform_point(rec.bounds.center())
+        for _ in range(40):
+            ang = random.uniform(0.0, math.pi * 2.0)
+            dist = random.uniform(min_sep, max_sep)
+            cand = mn.Vector3(
+                float(anchor.x) + dist * math.cos(ang),
+                float(center_world.y),
+                float(anchor.z) + dist * math.sin(ang),
+            )
+            cand = cand + lift
+            if all(self._xz_distance(cand, prev) >= min_sep * 0.85 for prev in anchors):
+                return cand
+        return (
+            mn.Vector3(float(anchor.x) + min_sep, float(center_world.y), float(anchor.z))
+            + lift
+        )
+
+    @staticmethod
+    def _next_to_separation(
+        obj: ManagedRigidObject, partner: ManagedRigidObject
+    ) -> Tuple[float, float]:
+        """Center distance range that keeps footprints apart but "next to" (size-regularized distance of 2-12 cm)."""
+        radius = lambda o: 0.5 * math.hypot(float(o.aabb.size().x), float(o.aabb.size().z))
+        min_sep = radius(obj) + radius(partner) + 0.02
+        return min_sep, min_sep + 0.10
+
+    def _try_smart_placement(
+        self,
+        object_handle: str,
+        rec: Receptacle,
+        anchors: List[mn.Vector3],
+        max_attempts: int = 50,
+        require_nav: bool = True,
+        next_to_obj: Optional[ManagedRigidObject] = None,
+    ) -> Optional[ManagedRigidObject]:
+        otm = self.sim.get_object_template_manager()
+        if not otm.get_library_has_handle(object_handle):
+            return None
+        rom = self.sim.get_rigid_object_manager()
+        new_object = rom.add_object_by_template_handle(object_handle)
+        support_ids = rec.get_support_object_ids(self.sim)
+        min_sep = 0.08 if not require_nav else 0.12
+        sep_range = None
+        if next_to_obj is not None:
+            anchors = [mn.Vector3(next_to_obj.translation)]
+            sep_range = self._next_to_separation(new_object, next_to_obj)
+        for _ in range(max_attempts):
+            new_object.translation = self._sample_smart_world_point(rec, anchors, sep_range)
+            yaw = random.uniform(0.0, math.pi * 2.0)
+            new_object.rotation = mn.Quaternion.rotation(
+                mn.Rad(yaw), mn.Vector3.y_axis()
+            )
+            if not sutils.snap_down(self.sim, new_object, support_ids):
+                continue
+            if any(
+                self._xz_distance(new_object.translation, prev) < min_sep
+                for prev in anchors
+            ):
+                continue
+            if require_nav and not is_accessible(
+                sim=self.sim,
+                point=new_object.translation,
+                height=1.3,
+                nav_to_min_distance=1.0,
+                nav_island=self.largest_indoor_island_id,
+                target_object_ids=[new_object.object_id],
+            ):
+                continue
+            return new_object
+        rom.remove_object_by_handle(new_object.handle)
+        return None
+
+    def _load_scene_receptacle_filters(self) -> None:
+        self._within_rec_names = set()
+        self._hard_excluded_rec_names = set()
+        filter_path = get_rec_filter_filepath(
+            self.sim.metadata_mediator, self.ep_scene_handle
+        )
+        if not filter_path:
+            return
+        self._within_rec_names = set(
+            get_recs_from_filter_file(filter_path, filter_types=["within_set"])
+        )
+        for filter_type in (
+            "manually_filtered",
+            "access_filtered",
+            "stability_filtered",
+        ):
+            self._hard_excluded_rec_names.update(
+                get_recs_from_filter_file(filter_path, filter_types=[filter_type])
+            )
+
+    def _open_articulated_parents(
+        self, recs: List[Receptacle]
+    ) -> List[Tuple[Any, int]]:
+        opened: List[Tuple[Any, int]] = []
+        aom = self.sim.get_articulated_object_manager()
+        seen = set()
+        for rec in recs:
+            handle = rec.parent_object_handle
+            if not handle or handle in seen:
+                continue
+            seen.add(handle)
+            if not aom.get_library_has_handle(handle):
+                continue
+            ao = aom.get_object_by_handle(handle)
+            link = sutils.get_ao_default_link(ao, compute_if_not_found=True)
+            if link is None:
+                continue
+            sutils.open_link(ao, link)
+            opened.append((ao, link))
+            print(f"within_placement: opened {handle} link {link}")
+        return opened
+
+    def _close_articulated_parents(self, opened: List[Tuple[Any, int]]) -> None:
+        for ao, link in opened:
+            sutils.close_link(ao, link)
 
     def sample_objects(self, sample_config: Dict[str, Any], max_tries: int = 1000):
         """
@@ -447,7 +671,8 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
                 - floor as Receptacle (e.g. "furniture_names": ["floor"]) uses navmesh to sample valid navigable placements on the floor
                 - "any" or "all" receptacles specified by empty list (e.g. "furniture_classes": [])
             - Sampling relationships:
-                - (e.g. "location": "on") - we currently support on_top relationship by snap_down rejection sampling. This includes inside drawers.
+                - "location": "on" places on top of furniture (navmesh-reachable).
+                - "location": "within" / "in" / "inside" places in scene within_set interiors (cabinets, fridge, drawers). Articulated parents are opened for sampling then closed so the episode starts shut.
             - Region constraints: optionally constraint sampling to a subset of regions
                 - add (e.g. "allowed_regions": ["kitchen, "living room"]) to restrict sampling to the specified regions
             - Object States: optionally provide a set of specified object states to be applied to all sampled objects
@@ -557,7 +782,7 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         if len(config_obj_exclude_instances) > 0:
             matching_objects = [
                 matching_obj
-                for matching_obj in class_matching_objects
+                for matching_obj in matching_objects
                 if sutils.object_shortname_from_handle(matching_obj)
                 not in config_obj_exclude_instances
             ]
@@ -747,6 +972,32 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         # remove duplicates
         matching_recs = list(set(matching_recs))
 
+        placement = _normalize_location(sample_config)
+        if placement == "within":
+            include_floor = False
+            matching_recs = [
+                rec
+                for rec in matching_recs
+                if rec.unique_name in self._within_rec_names
+                and rec.unique_name not in self._hard_excluded_rec_names
+            ]
+            if not matching_recs:
+                print(
+                    f"Cannot satisfy sample config. No interior (within_set) "
+                    f"receptacles for: {sample_config}."
+                )
+                self.generation_details_log["failure_mode"] = (
+                    "no matching interior receptacles found"
+                )
+                return []
+            phase_details["within_placement"] = True
+            phase_details["within_recs"] = [rec.unique_name for rec in matching_recs]
+        else:
+            # "on" placements must not use interior receptacles such as a closed drawer bottom.
+            matching_recs = [
+                rec for rec in matching_recs if rec.unique_name not in self._within_rec_names
+            ]
+
         # get the parent objects for active receptacles
         rec_objects = [rec.parent_object_handle for rec in matching_recs]
         rec_objects = list(set(rec_objects))
@@ -784,21 +1035,57 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
 
         # create a ReceptacleTracker from the ReceptacleSet
         rec_tracker = ReceptacleTracker({}, {new_sampler_name: rec_set})
-        # load the scene's filter config file to cull disabled Receptacles
-        rec_tracker.init_scene_filters(
-            mm=self.sim.metadata_mediator, scene_handle=self.ep_scene_handle
-        )
+        # Interior recs are often height_filtered; within placement already
+        # dropped manually/access/stability exclusions.
+        if placement != "within":
+            # Same as ReceptacleTracker.init_scene_filters, but honoring project scene overrides.
+            filter_path = get_rec_filter_filepath(
+                self.sim.metadata_mediator, self.ep_scene_handle
+            )
+            if filter_path is not None:
+                filtered_rec_names = get_excluded_recs_from_filter_file(filter_path)
+                for r_set in rec_tracker.recep_sets.values():
+                    r_set.excluded_receptacle_substrings.extend(filtered_rec_names)
+            excluded_rec_names = set()
+            for r_set in rec_tracker.recep_sets.values():
+                excluded_rec_names.update(r_set.excluded_receptacle_substrings)
+            if excluded_rec_names:
+                matching_recs = [
+                    rec
+                    for rec in matching_recs
+                    if rec.unique_name not in excluded_rec_names
+                ]
+
+        use_smart_placement = bool(sample_config.get("smart_placement", True))
+        if use_common_sense_region_objects:
+            use_smart_placement = False
+        primary_recs: List[Receptacle] = []
+        if use_smart_placement and matching_recs:
+            primary_recs = self._select_primary_receptacles(
+                matching_recs, require_upright=(placement != "within")
+            )
+            if primary_recs:
+                matching_recs = primary_recs
+                rec_set.included_receptacle_substrings = [
+                    rec.unique_name for rec in matching_recs
+                ]
+                print(
+                    "smart_placement primaries: "
+                    + ", ".join(rec.unique_name for rec in primary_recs)
+                )
+
         # register our custom ReceptacleSet for this sampling pass in the generator
         self._receptacle_sets[new_sampler_name] = rec_set
 
         # create the ObjectSampler
+        require_nav = placement != "within"
         obj_sampler = ObjectSampler(
             object_set=matching_objects,
             allowed_recep_set_names=[new_sampler_name],
             num_objects=number_range,
             orientation_sample="up",  # objects will only be rotated about Y axis during sampling
-            constrain_to_largest_nav_island=True,  # sample placements must be navigable
-            nav_to_min_distance=1.0,  # object must be reachable from navmesh
+            constrain_to_largest_nav_island=require_nav,
+            nav_to_min_distance=1.0 if require_nav else -1.0,
         )
         obj_sampler.receptacle_instances = self.metadata_interface.receptacles
         self._obj_samplers[new_sampler_name] = obj_sampler
@@ -806,143 +1093,217 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
         ##################################################
         # sample objects
         new_objs: List[Tuple[ManagedRigidObject, Optional[Receptacle]]] = []
+        opened_parents: List[Tuple[Any, int]] = []
+        if placement == "within" and matching_recs:
+            opened_parents = self._open_articulated_parents(matching_recs)
+        next_to_names = sample_config.get("next_to", [])
+        next_to_obj = None
+        if next_to_names:
+            partners = self.sampled_objects_by_name.get(next_to_names[0], [])
+            if not partners:
+                print(f"Cannot satisfy sample config. next_to partner '{next_to_names[0]}' has not been sampled: {sample_config}.")
+                self.generation_details_log["failure_mode"] = "next_to partner missing"
+                return []
+            next_to_obj = partners[0]
         try_count = 0
-        while len(new_objs) < target_number and try_count < max_tries:
-            # if include floor as a possible receptacle to be sampled uniformly (among parent objects)
-            if include_floor and random.randint(0, len(rec_objects)) == len(
-                rec_objects
-            ):
-                # sample from the floor
-                new_obj_handle: str = None
-                obj_allowed_regions: List[habitat_sim.scene.SemanticRegion] = None
-                if use_common_sense_region_objects:
-                    # sample a region and matching object in advance
-                    obj_allowed_regions = [
-                        random.choice(list(allowed_region_objects.keys()))
-                    ]
-                    if len(allowed_region_objects[obj_allowed_regions[-1]]) == 0:
-                        detail_tag = "no objects for region"
-                        if detail_tag not in phase_details:
-                            phase_details[detail_tag] = []
-                        phase_details[detail_tag].append(obj_allowed_regions[-1].id)
-                        try_count += 1
-                        continue
-                    new_obj_handle = random.choice(
-                        allowed_region_objects[obj_allowed_regions[-1]]
-                    )
-                else:
-                    # default behavior
-                    new_obj_handle = random.choice(matching_objects)
-                    obj_allowed_regions = allowed_regions
-
-                new_obj = self.sample_object_placement_on_floor(
-                    new_obj_handle,
-                    island_id=self.largest_indoor_island_id,
-                    allowed_regions=obj_allowed_regions,
-                )
-                if new_obj is not None:
-                    new_objs.append((new_obj, None))
-
-                # TODO: once on_floor is merged, uncomment this part
-                # if not sutils.on_floor(
-                #     self.sim,
-                #     new_obj,
-                #     island_index=self.largest_indoor_island_id,
-                #     ao_link_map=self.ao_link_map,
-                # ):
-                # print("Failed a floor sample b/c placement not on floor...")
-                # TODO: remove the object?
-
-            else:
-                if use_common_sense_region_objects:
-                    # clear the cache
-                    obj_sampler.receptacle_candidates = None
-                    # modify the object and receptacle candidates to restrict generation to known allowed region
-                    obj_allowed_region: habitat_sim.scene.SemanticRegion = (
-                        random.choice(list(allowed_region_objects.keys()))
-                    )
-                    print(f" obj_allowed_region = {obj_allowed_region.id}")
-                    obj_sampler.object_set = allowed_region_objects[obj_allowed_region]
-                    cats = []
-                    for obj in obj_sampler.object_set:
-                        cats.append(
-                            mi.get_object_category(
-                                sutils.object_shortname_from_handle(obj)
-                            )
+        try:
+            while len(new_objs) < target_number and try_count < max_tries:
+                # if include floor as a possible receptacle to be sampled uniformly (among parent objects)
+                if include_floor and random.randint(0, len(rec_objects)) == len(
+                    rec_objects
+                ):
+                    # sample from the floor
+                    new_obj_handle: str = None
+                    obj_allowed_regions: List[habitat_sim.scene.SemanticRegion] = None
+                    if use_common_sense_region_objects:
+                        # sample a region and matching object in advance
+                        obj_allowed_regions = [
+                            random.choice(list(allowed_region_objects.keys()))
+                        ]
+                        if len(allowed_region_objects[obj_allowed_regions[-1]]) == 0:
+                            detail_tag = "no objects for region"
+                            if detail_tag not in phase_details:
+                                phase_details[detail_tag] = []
+                            phase_details[detail_tag].append(obj_allowed_regions[-1].id)
+                            try_count += 1
+                            continue
+                        new_obj_handle = random.choice(
+                            allowed_region_objects[obj_allowed_regions[-1]]
                         )
-                    cats = list(set(cats))
-                    print("available obj cats for region:")
-                    for cat in cats:
-                        print(f"    {cat}")
-                    if len(obj_sampler.object_set) == 0:
-                        detail_tag = "no objects for region"
-                        if detail_tag not in phase_details:
-                            phase_details[detail_tag] = []
-                        phase_details[detail_tag].append(obj_allowed_region.id)
-                        try_count += 1
-                        continue
+                    else:
+                        # default behavior
+                        new_obj_handle = random.choice(matching_objects)
+                        obj_allowed_regions = allowed_regions
 
-                    rec_set.included_receptacle_substrings = [
-                        rec.unique_name
-                        for rec in matching_recs_in_regions[obj_allowed_region]
-                    ]
-                    if len(rec_set.included_receptacle_substrings) == 0:
-                        detail_tag = "no receptacles for region"
-                        if detail_tag not in phase_details:
-                            phase_details[detail_tag] = []
-                        phase_details[detail_tag].append(obj_allowed_region.id)
-                        try_count += 1
-                        continue
-
-                    rec_tracker._receptacle_sets[sampler_name] = rec_set
-                    print("available recs cats in region:")
-                    rec_cats = []
-                    for rec in matching_recs_in_regions[obj_allowed_region]:
-                        rec_cats.append(
-                            mi.get_object_category(
-                                sutils.object_shortname_from_handle(
-                                    rec.parent_object_handle
-                                )
-                            )
-                        )
-                    rec_cats = list(set(rec_cats))
-                    for cat in rec_cats:
-                        print(f"    {cat}")
-
-                # do standard sampling
-                try:
-                    new_obj, receptacle = obj_sampler.single_sample(
-                        self.sim,
-                        rec_tracker,
-                        snap_down=True,
+                    new_obj = self.sample_object_placement_on_floor(
+                        new_obj_handle,
+                        island_id=self.largest_indoor_island_id,
+                        allowed_regions=obj_allowed_regions,
+                        near=next_to_obj,
                     )
                     if new_obj is not None:
-                        logger.info(
-                            f"sampled_object = {mi.get_object_category(sutils.object_shortname_from_handle(new_obj.handle))}"
-                        )
-                        logger.info(
-                            f"sampled_rec = {mi.get_object_category(sutils.object_shortname_from_handle(receptacle.parent_object_handle))}"
-                        )
-                        rec_obj = sutils.get_obj_from_handle(
-                            self.sim, receptacle.parent_object_handle
-                        )
-                        new_obj_regions: List[
-                            Tuple[int, float]
-                        ] = sutils.get_object_regions(self.sim, rec_obj)
-                        obj_region_names = [
-                            mi.region_ix_to_semname[rix] for rix, _ in new_obj_regions
-                        ]
-                        logger.info(f"region(s) = {obj_region_names}")
+                        new_objs.append((new_obj, None))
 
-                        new_objs.append((new_obj, receptacle))
-                except Exception as e:
-                    if "ep gen failed: internal assert" not in phase_details:
-                        phase_details["ep gen failed: internal assert"] = 0
-                        phase_details["internal assertions"] = []
-                    phase_details["ep gen failed: internal assert"] += 1
-                    phase_details["internal assertions"].append(repr(e))
-                    print(f"ep gen failed: internal assert: {repr(e)}")
-            try_count += 1
+                    # TODO: once on_floor is merged, uncomment this part
+                    # if not sutils.on_floor(
+                    #     self.sim,
+                    #     new_obj,
+                    #     island_index=self.largest_indoor_island_id,
+                    #     ao_link_map=self.ao_link_map,
+                    # ):
+                    # print("Failed a floor sample b/c placement not on floor...")
+                    # TODO: remove the object?
+
+                else:
+                    if use_common_sense_region_objects:
+                        # clear the cache
+                        obj_sampler.receptacle_candidates = None
+                        # modify the object and receptacle candidates to restrict generation to known allowed region
+                        obj_allowed_region: habitat_sim.scene.SemanticRegion = (
+                            random.choice(list(allowed_region_objects.keys()))
+                        )
+                        print(f" obj_allowed_region = {obj_allowed_region.id}")
+                        obj_sampler.object_set = allowed_region_objects[obj_allowed_region]
+                        cats = []
+                        for obj in obj_sampler.object_set:
+                            cats.append(
+                                mi.get_object_category(
+                                    sutils.object_shortname_from_handle(obj)
+                                )
+                            )
+                        cats = list(set(cats))
+                        print("available obj cats for region:")
+                        for cat in cats:
+                            print(f"    {cat}")
+                        if len(obj_sampler.object_set) == 0:
+                            detail_tag = "no objects for region"
+                            if detail_tag not in phase_details:
+                                phase_details[detail_tag] = []
+                            phase_details[detail_tag].append(obj_allowed_region.id)
+                            try_count += 1
+                            continue
+
+                        rec_set.included_receptacle_substrings = [
+                            rec.unique_name
+                            for rec in matching_recs_in_regions[obj_allowed_region]
+                        ]
+                        if len(rec_set.included_receptacle_substrings) == 0:
+                            detail_tag = "no receptacles for region"
+                            if detail_tag not in phase_details:
+                                phase_details[detail_tag] = []
+                            phase_details[detail_tag].append(obj_allowed_region.id)
+                            try_count += 1
+                            continue
+
+                        rec_tracker._receptacle_sets[sampler_name] = rec_set
+                        print("available recs cats in region:")
+                        rec_cats = []
+                        for rec in matching_recs_in_regions[obj_allowed_region]:
+                            rec_cats.append(
+                                mi.get_object_category(
+                                    sutils.object_shortname_from_handle(
+                                        rec.parent_object_handle
+                                    )
+                                )
+                            )
+                        rec_cats = list(set(rec_cats))
+                        for cat in rec_cats:
+                            print(f"    {cat}")
+
+                    # do standard sampling
+                    try:
+                        new_obj = None
+                        receptacle = None
+                        if use_smart_placement and primary_recs:
+                            new_obj_handle = random.choice(matching_objects)
+                            preferred_recs = [
+                                rec
+                                for rec in primary_recs
+                                if (rec.parent_object_handle or rec.unique_name)
+                                in self.smart_placement_history
+                            ]
+                            receptacle = random.choice(
+                                preferred_recs if preferred_recs else primary_recs
+                            )
+                            if next_to_obj is not None:
+                                partner_rec = self.object_to_containing_receptacle.get(next_to_obj.handle)
+                                same_rec = [rec for rec in primary_recs if partner_rec is not None and rec.unique_name == partner_rec.unique_name]
+                                if same_rec:
+                                    receptacle = same_rec[0]
+                            rec_key = (
+                                receptacle.parent_object_handle or receptacle.unique_name
+                            )
+                            anchors = self.smart_placement_history.get(rec_key, [])
+                            new_obj = self._try_smart_placement(
+                                new_obj_handle,
+                                receptacle,
+                                anchors,
+                                require_nav=require_nav,
+                                next_to_obj=next_to_obj,
+                            )
+                            if new_obj is not None:
+                                self.smart_placement_history.setdefault(
+                                    rec_key, []
+                                ).append(mn.Vector3(new_obj.translation))
+                                loc_word = "in" if placement == "within" else "on"
+                                print(
+                                    f"smart_placement: placed {new_obj.handle} {loc_word} "
+                                    f"{receptacle.unique_name} at {new_obj.translation}"
+                                )
+                        if new_obj is None and next_to_obj is not None:
+                            # a random fallback placement cannot satisfy "next_to"
+                            try_count += 1
+                            continue
+                        if new_obj is None:
+                            if use_smart_placement and primary_recs:
+                                print(
+                                    "smart_placement: fallback to ObjectSampler "
+                                    f"after failed attempts on {receptacle.unique_name}"
+                                )
+                            new_obj, receptacle = obj_sampler.single_sample(
+                                self.sim,
+                                rec_tracker,
+                                snap_down=True,
+                            )
+                        if new_obj is not None:
+                            logger.info(
+                                f"sampled_object = {mi.get_object_category(sutils.object_shortname_from_handle(new_obj.handle))}"
+                            )
+                            logger.info(
+                                f"sampled_rec = {mi.get_object_category(sutils.object_shortname_from_handle(receptacle.parent_object_handle))}"
+                            )
+                            rec_obj = sutils.get_obj_from_handle(
+                                self.sim, receptacle.parent_object_handle
+                            )
+                            new_obj_regions: List[
+                                Tuple[int, float]
+                            ] = sutils.get_object_regions(self.sim, rec_obj)
+                            obj_region_names = [
+                                mi.region_ix_to_semname[rix] for rix, _ in new_obj_regions
+                            ]
+                            logger.info(f"region(s) = {obj_region_names}")
+
+                            new_objs.append((new_obj, receptacle))
+                    except Exception as e:
+                        if "ep gen failed: internal assert" not in phase_details:
+                            phase_details["ep gen failed: internal assert"] = 0
+                            phase_details["internal assertions"] = []
+                        phase_details["ep gen failed: internal assert"] += 1
+                        phase_details["internal assertions"].append(repr(e))
+                        print(f"ep gen failed: internal assert: {repr(e)}")
+                    try_count += 1
+        finally:
+            # Joint setters teleport drawers rather than simulating closure.
+            # Keep sampled contents in the receptacle's local frame so they
+            # move with the drawer instead of remaining at its open position.
+            contained_transforms = [
+                (obj, rec, rec.get_global_transform(self.sim).inverted() @ obj.transformation)
+                for obj, rec in new_objs
+                if placement == "within" and rec is not None
+            ]
+            self._close_articulated_parents(opened_parents)
+            for obj, rec, local_transform in contained_transforms:
+                obj.transformation = rec.get_global_transform(self.sim) @ local_transform
         # end object generation
 
         if try_count >= max_tries and len(new_objs) < number_range[0]:
@@ -966,6 +1327,10 @@ class LLMRearrangeEpisodeGenerator(RearrangeEpisodeGenerator):
                     ] = obj_state_val
 
         self._record_sampling_results(new_objs, sampler_name=new_sampler_name)
+        if "name" in sample_config:
+            self.sampled_objects_by_name.setdefault(sample_config["name"], []).extend(
+                obj for obj, _ in new_objs
+            )
 
         return new_objs
 
@@ -1526,6 +1891,7 @@ def generate_episode(
                     "scene_id",
                     "file_path",
                     "initial_state",
+                    "goal_state",
                     "episode_id",
                 ],
                 initial_state_dict.items(),
@@ -1540,6 +1906,49 @@ def generate_episode(
                 -1
             ]["template_task_number"]
         ep = generator.finalize_episode(extra_info)
+        if ep is not None:
+            instruction = extra_info.get("instruction") or initial_state_dict.get(
+                "instruction", ""
+            )
+            if instruction:
+                ep.instruction = instruction
+            goal_state = extra_info.get("goal_state") or initial_state_dict.get(
+                "goal_state"
+            )
+            if goal_state:
+                spawned_by_class: Dict[str, List[str]] = defaultdict(list)
+                for obj in generator.ep_sampled_objects:
+                    cat = generator.metadata_interface.get_object_instance_category(
+                        obj
+                    )
+                    if cat:
+                        spawned_by_class[cat].append(obj.handle)
+                furniture_name_to_handle = dict(
+                    generator.metadata_interface.recobj_semname_to_handle
+                )
+                room_name_to_id: Dict[str, str] = {}
+                for (
+                    name,
+                    rix,
+                ) in generator.metadata_interface.region_semname_to_id.items():
+                    room_name_to_id[name] = generator.sim.semantic_scene.regions[
+                        rix
+                    ].id
+                props, constraints, err = build_evaluation_from_goal_state(
+                    goal_state,
+                    spawned_by_class,
+                    furniture_name_to_handle,
+                    room_name_to_id,
+                )
+                if err:
+                    print(f"Failed to compile goal_state: {err}")
+                    generator.generation_details_log["failure_mode"] = err
+                    return None, generator.generation_details_log
+                ep.evaluation_propositions = props
+                ep.evaluation_constraints = constraints
+                packed = CollaborationDatasetV0(episodes=[ep])
+                infer_and_attach_dependencies(packed, override_existing=False)
+                ep = packed.episodes[0]
     success = ep is not None
 
     return ep, generator.generation_details_log
@@ -1557,7 +1966,7 @@ def run_generation_over_proposals(gen_config, metadata_dict, init_state_dicts):
     invalid_init = []
     all_valid_inst = []
     for ix, init_state_dict in enumerate(init_state_dicts):
-        all_valid_inst.append(init_state_dict["instruction"])
+        all_valid_inst.append(init_state_dict.get("instruction", ""))
         ep = None
         max_ep_tries = 10
         ep_try = 0
@@ -1669,10 +2078,12 @@ if __name__ == "__main__":
     init_state_dicts: List[Dict[Any, Any]] = []
     if args.init_state_dicts is not None:
         with open(args.init_state_dicts, "r") as f:
-            # NOTE: expected JSON is a list of structures
-            # {
-            #   "initial_state_dicts": [{<init_state_dict},...]
-            # }
-            init_state_dicts = json.load(f)["initial_state_dicts"]
+            # Accept either a list (filter_instructions output) or
+            # {"initial_state_dicts": [{<init_state_dict>}, ...]}
+            loaded = json.load(f)
+            if isinstance(loaded, list):
+                init_state_dicts = loaded
+            else:
+                init_state_dicts = loaded["initial_state_dicts"]
 
     run_generation_over_proposals(gen_config, metadata_dict, init_state_dicts)

@@ -6,13 +6,16 @@
 
 import os
 import time
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import cv2
 import imageio
 import numpy as np
 
 from habitat_llm.agent.env import EnvironmentInterface
+
+# Optional callback invoked with each RGB frame (H, W, 3) uint8 after overlays.
+FrameCallback = Callable[[np.ndarray], None]
 
 
 class DebugVideoUtil:
@@ -24,13 +27,18 @@ class DebugVideoUtil:
     """
 
     def __init__(
-        self, env_interface_arg: EnvironmentInterface, output_dir: str
+        self,
+        env_interface_arg: EnvironmentInterface,
+        output_dir: str,
+        frame_callback: Optional[FrameCallback] = None,
     ) -> None:
         """
         Construct the DebugVideoUtil instance from an EnvironmentInterface.
 
         :param env_interface_arg: The EnvironmentInterface instance.
         :param output_dir: The desired directory for saving output frames and videos.
+        :param frame_callback: Optional callback invoked with each RGB frame after
+            text overlays (used by the web GUI for live MJPEG streaming).
         """
 
         self.env_interface = env_interface_arg
@@ -41,6 +49,7 @@ class DebugVideoUtil:
         self.frames: List[Any] = []
 
         self.output_dir = output_dir
+        self.frame_callback = frame_callback
 
         self.num_agents = 0
         for _agent_conf in self.env_interface.conf.evaluation.agents.values():
@@ -50,6 +59,10 @@ class DebugVideoUtil:
         self._video_writer = None
         self._video_file_path = None
         self._frame_count = 0
+
+    def get_combined_frames(self, batch: Dict[str, Any]) -> np.ndarray:
+        """Public wrapper for combined third_rgb frames (used by web GUI)."""
+        return self.__get_combined_frames(batch)
 
     def __get_combined_frames(self, batch: Dict[str, Any]) -> np.ndarray:
         """
@@ -190,6 +203,9 @@ class DebugVideoUtil:
         self._video_writer.append_data(frames_concat)
         self._frame_count += 1
 
+        if self.frame_callback is not None:
+            self.frame_callback(frames_concat)
+
         # Keep frames list empty for memory efficiency (backward compatibility)
         # self.frames.append(frames_concat)  # Commented out to save memory
         return
@@ -266,6 +282,7 @@ def execute_skill(
     make_video: bool = True,
     vid_postfix: str = "",
     play_video: bool = True,
+    frame_callback: Optional[FrameCallback] = None,
 ) -> Tuple[Dict[Any, Any], Dict[Any, Any], List[Any]]:
     """
     Execute a high-level skill from a string (e.g. as produced by the planner).
@@ -276,10 +293,13 @@ def execute_skill(
     :param make_video: whether or not to create, save, and display a video of the skill.
     :param vid_postfix: An optional postfix for the video file. For example, the action name.
     :param play_video: Whether or not to immediately play the generated video.
+    :param frame_callback: Optional per-frame RGB callback for live streaming.
     :return: A tuple with two dict(the first contains responses per-agent skill, the second contains the number of skill steps taken) and a list of frames.
     """
     dvu = DebugVideoUtil(
-        llm_env.env_interface, llm_env.env_interface.conf.paths.results_dir
+        llm_env.env_interface,
+        llm_env.env_interface.conf.paths.results_dir,
+        frame_callback=frame_callback,
     )
 
     # Get the env observations

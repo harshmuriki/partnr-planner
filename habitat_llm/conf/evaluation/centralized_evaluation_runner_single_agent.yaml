@@ -6,6 +6,9 @@ defaults:
 type: "centralized"
 truncate_length: 50
 output_dir: ${hydra:runtime.output_dir}
+max_combined_time_s: 600
+combined_time_sim_freq: 120
+generate_prediviz: True
 
 agents:
   agent_0:

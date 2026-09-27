@@ -14,6 +14,7 @@ import copy
 import json
 import os
 import pickle
+import sys
 import time
 from typing import Any, Dict, List, Optional, Union
 
@@ -27,8 +28,25 @@ from habitat_llm.agent.env import EnvironmentInterface
 from habitat_llm.examples.example_utils import DebugVideoUtil
 from habitat_llm.planner.planner import Planner
 from habitat_llm.utils import cprint, rollout_print
+from habitat_llm.utils.episode_cost import (
+    DEFAULT_MAX_COMBINED_TIME_S,
+    DEFAULT_SIM_FREQ,
+    combined_time_breakdown,
+    planner_cost_metrics,
+)
 from habitat_llm.utils.sim import init_agents
 from habitat_llm.world_model import Entity, WorldGraph
+
+
+def _expanded_action_counts(action_name: str) -> Dict[str, int]:
+    """Map composite actions to the counts shown in evaluation summaries."""
+    if action_name == "Rearrange":
+        return {
+            "Navigate": 2,
+            "Pick": 1,
+            "Place": 1,
+        }
+    return {action_name: 1}
 
 
 @attr.s(auto_attribs=True)
@@ -141,6 +159,7 @@ class EvaluationRunner:
         self.dvu = DebugVideoUtil(self.env_interface, self.output_dir)
         self._write_out_world_graph: bool = dump_world_graph
         self._world_graph_write_out_frequency = 5
+        self._last_budget_log_used_s: float = -1.0
 
     def _initialize_planners(self):
         """
@@ -208,6 +227,7 @@ class EvaluationRunner:
         # Reset filenames
         self.episode_filename = ""
         self.current_instruction = ""
+        self._last_budget_log_used_s = -1.0
 
         # Reset planners and the agents owned by the planners
         # This will also reset skills owned by the agents to
@@ -316,8 +336,9 @@ class EvaluationRunner:
 
                 os.makedirs(os.path.dirname(file_path_prompts), exist_ok=True)
 
+                prompt_text = planner_infos[-1]["prompts"][agent.uid]
                 with open(file_path_prompts, "w") as file:
-                    file.write(planner_infos[-1]["prompts"][agent.uid])
+                    file.write(prompt_text)
 
             # -----------------------------------------------
             # Save traces
@@ -333,8 +354,9 @@ class EvaluationRunner:
 
                 os.makedirs(os.path.dirname(file_path_traces), exist_ok=True)
 
+                trace_text = planner_infos[-1]["traces"][agent.uid]
                 with open(file_path_traces, "w") as file:
-                    file.write(planner_infos[-1]["traces"][agent.uid])
+                    file.write(trace_text)
 
         # Log other info from planner
         file_path_json = os.path.join(
@@ -361,6 +383,21 @@ class EvaluationRunner:
             "task": self.current_instruction,
             "steps": [],
         }
+        if os.path.exists(file_path_json):
+            try:
+                with open(file_path_json, "r", encoding="utf-8") as file:
+                    existing_planner_log = json.load(file)
+                if isinstance(existing_planner_log, dict):
+                    planner_log = existing_planner_log
+            except Exception:
+                planner_log = {
+                    "task": self.current_instruction,
+                    "steps": [],
+                }
+        subgoal_instructions = planner_log.setdefault("subgoal_instructions", [])
+        if self.current_instruction not in subgoal_instructions:
+            subgoal_instructions.append(self.current_instruction)
+        start_log_index = len(planner_log.get("steps", []))
 
         # Declare keys to exclude
         keys_to_exclude = ["prompts", "traces", "print", "print_no_tags"]
@@ -372,7 +409,8 @@ class EvaluationRunner:
                 for k, v in sorted(planner_info.items())
                 if k not in keys_to_exclude
             }
-            step_info["log_index"] = i
+            step_info["instruction"] = self.current_instruction
+            step_info["log_index"] = start_log_index + i
             planner_log["steps"].append(step_info)
 
         with open(file_path_json, "w+") as file:
@@ -561,13 +599,94 @@ class EvaluationRunner:
                     -1
                 ].response = response
                 for ah in self.env_interface.agent_action_history[agent_id]:
+                    action_name = ah.action[0] if isinstance(ah.action, tuple) else None
+                    if action_name == "Done":
+                        continue
                     if ah.response is None or len(ah.response) == 0:
                         raise ValueError(
                             f"Agent {agent_id} has a null response on {ah.action}"
                         )
 
+    def _combined_time_limit_s(self) -> float:
+        raw = getattr(
+            self.evaluation_runner_config,
+            "max_combined_time_s",
+            DEFAULT_MAX_COMBINED_TIME_S,
+        )
+        try:
+            return float(raw)
+        except (TypeError, ValueError):
+            return DEFAULT_MAX_COMBINED_TIME_S
+
+    def _combined_sim_freq(self) -> float:
+        raw = getattr(
+            self.evaluation_runner_config, "combined_time_sim_freq", DEFAULT_SIM_FREQ
+        )
+        try:
+            freq = float(raw)
+        except (TypeError, ValueError):
+            return DEFAULT_SIM_FREQ
+        return freq if freq > 0 else DEFAULT_SIM_FREQ
+
+    def _combined_time_status(
+        self,
+        planner_info: Dict[str, Any],
+        action_sim_steps: Dict[str, int],
+    ) -> Dict[str, Any]:
+        metrics = planner_cost_metrics(planner_info)
+        return combined_time_breakdown(
+            llm_planning_time_s=metrics.get("llm_planning_time_s"),
+            action_sim_steps=action_sim_steps,
+            explore_approx_sim_time_s=metrics.get("explore_approx_sim_time_s"),
+            sim_freq=self._combined_sim_freq(),
+            limit_s=self._combined_time_limit_s(),
+        )
+
+    def _store_combined_time_status(
+        self,
+        info: Dict[str, Any],
+        budget_info: Dict[str, Any],
+        status: Dict[str, Any],
+        *,
+        log: bool,
+    ) -> bool:
+        budget_info["combined_time_used_s"] = status["used_s"]
+        budget_info["combined_time_limit_s"] = status["limit_s"]
+        budget_info["combined_time_limit_hit"] = bool(status["exceeded"])
+        budget_info["combined_time_breakdown"] = {
+            "llm_s": status["llm_s"],
+            "action_sim_s": status["action_sim_s"],
+            "explore_approx_s": status["explore_approx_s"],
+        }
+        info.update(budget_info)
+        should_log = log or status["exceeded"]
+        if should_log:
+            used = float(status["used_s"])
+            if status["exceeded"] or abs(used - self._last_budget_log_used_s) >= 0.05:
+                self._last_budget_log_used_s = used
+                limit = float(status["limit_s"])
+                limit_str = f"{limit:.2f}s" if limit > 0 else "disabled"
+                color = "red" if status["exceeded"] else "yellow"
+                cprint(
+                    f"[budget] used {used:.2f}s / {limit_str} "
+                    f"(llm {status['llm_s']:.2f} + actions {status['action_sim_s']:.2f} "
+                    f"+ explore~ {status['explore_approx_s']:.2f})",
+                    color,
+                )
+            if status["exceeded"]:
+                cprint(
+                    f"Run ended due to MAX_COMBINED_TIME: {status['used_s']:.2f}s "
+                    f">= {status['limit_s']:.2f}s "
+                    "(LLM + exact action sim + explore approx sim)",
+                    "red",
+                )
+        return bool(status["exceeded"])
+
     def run_instruction(
-        self, instruction: Optional[str] = None, output_name: str = ""
+        self,
+        instruction: Optional[str] = None,
+        output_name: str = "",
+        preserve_planner_state: bool = False,
     ) -> Dict[str, Any]:
         """
         Runs a single instruction through the planner, taking steps until the task is done.
@@ -586,15 +705,30 @@ class EvaluationRunner:
         # for perception tools
         total_step_count = 1
 
-        # Reset planners and the agents owned by the planners
-        # This will also reset skills owned by the agents to
-        # make eval runner ready for next episode
-        self.reset_planners()
-
         # Initialize metadata
         self.initialize_instruction_metadata(instruction, output_name)
         # Initialize sensor observations
         observations = self.env_interface.get_observations()
+
+        # Reset planners for a fresh instruction unless we are intentionally
+        # continuing the same multi-subgoal planning conversation.
+        if not preserve_planner_state:
+            self.reset_planners()
+        else:
+            planners = []
+            if hasattr(self, "planner"):
+                if isinstance(self.planner, dict):
+                    planners = list(self.planner.values())
+                else:
+                    planners = [self.planner]
+            for planner in planners:
+                if hasattr(planner, "prepare_next_subgoal"):
+                    planner.prepare_next_subgoal(
+                        self.current_instruction,
+                        self.env_interface.world_graph,
+                    )
+                else:
+                    planner.reset()
 
         # Dictionary to store info about episode execution
         # Set default metrics incase the motor skills are never called
@@ -618,6 +752,8 @@ class EvaluationRunner:
         planner_info: Dict[str, Any] = {}
         low_level_actions: List[Dict[str, Any]] = []
         should_end = False
+        budget_info: Dict[str, Any] = {}
+        self._last_budget_log_used_s = -1.0
 
         # Plan until required
         while not should_end:
@@ -674,12 +810,40 @@ class EvaluationRunner:
                     cv2.imshow(self.live_window_name, frame_bgr)
                     cv2.waitKey(1)  # 1ms delay to update the window
 
+                info.update(budget_info)
+                if self._store_combined_time_status(
+                    info,
+                    budget_info,
+                    self._combined_time_status(planner_info, action_sim_steps),
+                    log=False,
+                ):
+                    should_end = True
+                    low_level_actions = {}
+
             #! IMPT: Get next low level actions
             # ? Calls the child (CentralizedEvaluationRunner or DecentralizedEvaluationRunner) method
             # ? that returns the low level actions, planner info and whether the episode should end
-            low_level_actions, planner_info, should_end = self.get_low_level_actions(
-                self.current_instruction, observations, self.env_interface.world_graph
-            )
+            if not should_end:
+                (
+                    low_level_actions,
+                    planner_info,
+                    should_end,
+                ) = self.get_low_level_actions(
+                    self.current_instruction,
+                    observations,
+                    self.env_interface.world_graph,
+                )
+                replanned = False
+                if isinstance(planner_info.get("replanned"), dict):
+                    replanned = any(planner_info["replanned"].values())
+                if self._store_combined_time_status(
+                    info,
+                    budget_info,
+                    self._combined_time_status(planner_info, action_sim_steps),
+                    log=replanned,
+                ):
+                    should_end = True
+                    low_level_actions = {}
 
             # Track actions: count selections and update previous action for sim step counting
             if "high_level_actions" in planner_info:
@@ -689,7 +853,13 @@ class EvaluationRunner:
                         
                         # Count how many times this action was selected (when replanned)
                         if "replanned" in planner_info and planner_info["replanned"].get(agent_id, False):
-                            action_counts[action_name] = action_counts.get(action_name, 0) + 1
+                            for expanded_action_name, increment in _expanded_action_counts(
+                                action_name
+                            ).items():
+                                action_counts[expanded_action_name] = (
+                                    action_counts.get(expanded_action_name, 0)
+                                    + increment
+                                )
                         
                         # Store current action for next iteration's sim step counting
                         prev_action_per_agent[agent_id] = action_name
@@ -699,6 +869,10 @@ class EvaluationRunner:
 
             if total_step_count > curr_env._max_episode_steps:
                 should_end = True
+                print(
+                    f"Run ended due to MAX_EPISODE_STEPS: {total_step_count} > {curr_env._max_episode_steps}",
+                    file=sys.stderr,
+                )
 
             measure_names = [
                 "auto_eval_proposition_tracker",
@@ -800,7 +974,23 @@ class EvaluationRunner:
         info["action_counts"] = action_counts
         info["action_sim_steps"] = action_sim_steps
 
+        # Flatten nested cost metrics (LLM/VLM planning time, Explore approx)
+        # onto info so HTML generation can read them as top-level keys.
+        cost_metrics = planner_info.get("cost_metrics")
+        if isinstance(cost_metrics, dict):
+            info.update(cost_metrics)
+
+        info.update(budget_info)
+        if "combined_time_used_s" not in info:
+            self._store_combined_time_status(
+                info,
+                budget_info,
+                self._combined_time_status(planner_info, action_sim_steps),
+                log=False,
+            )
+
         # Merge dictionaries
         info |= planner_info
+        info.update(budget_info)
 
         return info

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trace Annotator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}" />
+</head>
+<body>
+  <a class="skip-link" href="#annotation-form">Skip to annotation form</a>
+  <header class="app-header">
+    <div class="header-bar">
+      <div class="header-title">
+        <h1>Trace Annotator</h1>
+        <p id="header-progress" class="header-progress">Loading runs…</p>
+        <p class="header-keys">n next · p prev · c comments</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn btn-secondary" id="overview-btn" aria-pressed="false">
+          All tasks
+        </button>
+        <button type="button" class="btn btn-ghost" id="prev-run" aria-label="Previous run">
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+          </svg>
+          <span>Previous</span>
+        </button>
+        <button type="button" class="btn btn-ghost" id="next-run" aria-label="Next run">
+          <span>Next</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="task-metrics" class="task-metrics" hidden></div>
+  </header>
+
+  <main class="app-body">
+    <section class="panel overview-panel" id="overview-panel" hidden aria-labelledby="overview-heading">
+      <div class="overview-head">
+        <div>
+          <h2 id="overview-heading">All tasks</h2>
+          <p id="overview-note" class="help"></p>
+        </div>
+        <button type="button" class="btn btn-ghost" id="overview-close">Back to traces</button>
+      </div>
+      <div id="overview-body" class="overview-body"></div>
+    </section>
+    <div class="workbench">
+      <aside class="panel run-panel" aria-labelledby="run-list-heading">
+      <h2 id="run-list-heading">Runs</h2>
+      <div class="field">
+        <label for="batch-select">Batch folder</label>
+        <select id="batch-select"></select>
+      </div>
+      <div class="field">
+        <span class="field-label" id="task-filter-label">Task</span>
+        <div class="chip-row wrap" id="task-filters" role="group" aria-labelledby="task-filter-label"></div>
+      </div>
+      <div class="field">
+        <label for="run-search">Search runs</label>
+        <input id="run-search" type="search" autocomplete="off" />
+      </div>
+      <div class="field">
+        <span class="field-label" id="status-filter-label">Annotation status</span>
+        <div class="chip-row" role="group" aria-labelledby="status-filter-label">
+          <button type="button" class="chip is-active" data-status="all" aria-pressed="true">All</button>
+          <button type="button" class="chip" data-status="unannotated" aria-pressed="false">Unannotated</button>
+          <button type="button" class="chip" data-status="annotated" aria-pressed="false">Annotated</button>
+        </div>
+      </div>
+      <p id="run-count" class="muted" aria-live="polite"></p>
+      <nav id="run-list" class="run-list" aria-label="Evaluation runs"></nav>
+    </aside>
+
+    <section class="panel timeline-panel" aria-labelledby="timeline-heading">
+      <div id="timeline-empty" class="empty-state">Select a run to read its step log.</div>
+      <div id="timeline" class="timeline-wrap" hidden>
+        <section id="pddl-panel" class="pddl-panel" hidden>
+          <div class="pddl-toolbar">
+            <div class="block-label">VLM-TAMP PDDL</div>
+            <div id="pddl-links" class="chip-row wrap"></div>
+          </div>
+          <iframe id="pddl-frame" class="pddl-frame" title="PDDL planning tree"></iframe>
+        </section>
+        <div class="timeline-split">
+        <div class="timeline-list">
+          <div class="timeline-head">
+            <p class="variant-summary" id="variant-summary"></p>
+            <p class="eyebrow" id="run-meta"></p>
+            <h2 id="timeline-heading"></h2>
+            <div id="outcome-chips" class="chip-row wrap"></div>
+          </div>
+          <div class="step-toolbar">
+            <span class="field-label" id="step-filter-label">Steps</span>
+            <div class="chip-row" role="group" aria-labelledby="step-filter-label">
+              <button type="button" class="chip is-active" data-step-filter="all" aria-pressed="true">All</button>
+              <button type="button" class="chip" data-step-filter="failed" aria-pressed="false">Failed</button>
+              <button type="button" class="chip" data-step-filter="ok" aria-pressed="false">Succeeded</button>
+            </div>
+          </div>
+          <ol id="step-list" class="step-list" role="listbox" aria-label="Trace steps"></ol>
+        </div>
+        <aside class="step-inspector" id="step-inspector" aria-labelledby="inspector-heading">
+          <h2 id="inspector-heading">Step detail</h2>
+          <div id="inspector-empty" class="empty-state">Hover a step to read thought, result, camera, and the world graph.</div>
+          <div id="inspector-body" hidden>
+            <div class="inspector-step-row">
+              <div class="inspector-step-main">
+                <p class="eyebrow" id="inspector-meta"></p>
+                <h3 id="inspector-action"></h3>
+                <span id="inspector-badge" class="badge"></span>
+                <figure class="inspector-image-wrap" id="inspector-image-wrap" hidden>
+                  <img id="inspector-image" alt="" />
+                  <figcaption class="block-label" id="inspector-image-caption">Camera</figcaption>
+                </figure>
+              </div>
+              <div class="inspector-step-text">
+                <div>
+                  <div class="block-label">Thought</div>
+                  <pre class="block" id="inspector-thought"></pre>
+                </div>
+                <div>
+                  <div class="block-label">Result</div>
+                  <pre class="block" id="inspector-result"></pre>
+                </div>
+              </div>
+            </div>
+            <div class="inspector-graph-row">
+              <div class="block-label">World / concept graph</div>
+              <div
+                id="inspector-graph"
+                class="world-graph"
+                role="region"
+                aria-label="Scrollable world or concept graph"
+                tabindex="0"
+              ></div>
+            </div>
+          </div>
+        </aside>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <section class="panel form-panel" id="annotation-form" tabindex="-1" aria-labelledby="form-heading">
+      <h2 id="form-heading">Annotation</h2>
+      <div id="form-empty" class="empty-state">Select a run to score its subtasks.</div>
+      <form id="annotator" hidden novalidate>
+        <div id="error-summary" class="error-summary" role="alert" tabindex="-1" hidden></div>
+        <div class="annotator-grid">
+          <fieldset>
+            <legend>Success criteria</legend>
+            <p id="subtask-count" class="count-line">0 / 0 subtasks done</p>
+            <p id="eval-fill-note" class="help" hidden></p>
+            <div id="criteria-list" class="check-list"></div>
+          </fieldset>
+          <fieldset id="failure-fieldset">
+            <legend>Why it failed</legend>
+            <p class="help">What prevented the task from being completed.</p>
+            <div id="failure-list" class="check-list"></div>
+          </fieldset>
+          <fieldset id="efficiency-fieldset">
+            <legend>Inefficiencies</legend>
+            <p class="help">Unnecessary or avoidable actions during execution.</p>
+            <div id="efficiency-list" class="check-list"></div>
+          </fieldset>
+          <div class="notes-pane">
+            <p id="error-fill-note" class="help" hidden></p>
+            <div class="field">
+              <label for="comments">Notes / comments</label>
+              <textarea id="comments" rows="3"></textarea>
+            </div>
+            <p id="failure-error" class="field-error" hidden></p>
+            <p class="help">Changes save automatically.</p>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="save-btn">Save</button>
+              <button type="button" class="btn btn-secondary" id="save-next-btn">Save and next</button>
+            </div>
+            <p id="save-status" class="save-status" aria-live="polite"></p>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

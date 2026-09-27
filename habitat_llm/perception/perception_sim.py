@@ -30,6 +30,10 @@ from magnum import Vector3
 
 from habitat_llm.perception.perception import Perception
 from habitat_llm.sims.metadata_interface import MetadataInterface
+from habitat_llm.utils.episode_entity_names import (
+    graph_object_name,
+    object_names_by_sim_handle,
+)
 from habitat_llm.utils.sim import get_faucet_points, get_receptacle_dict
 from habitat_llm.world_model import (
     Floor,
@@ -395,6 +399,9 @@ class PerceptionSim(Perception):
         if self.metadata is None:
             raise ValueError("Trying to load objects from sim, but metadata was None")
 
+        names_by_handle = object_names_by_sim_handle(self.sim.ep_info)
+        existing_names = set(self.gt_graph.get_all_node_names() or [])
+
         # Add object nodes to the graph
         for obj_handle, fur_rec_handle in self.sim.ep_info.name_to_receptacle.items():
             sim_obj = sutils.get_obj_from_handle(self.sim, obj_handle)
@@ -411,8 +418,14 @@ class PerceptionSim(Perception):
             # Create properties dict
             properties = {"type": obj_type, "translation": translation, "states": {}}
 
-            # Create object name
-            obj_name = f"{obj_type}_{self.gt_graph.count_nodes_of_type(Object)}"
+            obj_name = graph_object_name(
+                obj_handle,
+                obj_type,
+                self.gt_graph.count_nodes_of_type(Object),
+                names_by_handle,
+                existing_names,
+            )
+            existing_names.add(obj_name)
             self.sim_handle_to_name[obj_handle] = obj_name
 
             # Construct object based on the information
@@ -610,6 +623,35 @@ class PerceptionSim(Perception):
 
             # Add new edge
             self.gt_graph.add_edge(obj_name, rec_name, "on", flip_edge("on"))
+
+        # Movable containers retain their Object identity. Keep the usual
+        # supporting-furniture association and add containment after rebuilding
+        # all object edges, so updating the basket cannot erase its contents.
+        from habitat_llm.utils.movable_containers import container_bounds
+
+        containers = {
+            obj.object_id: node
+            for node in object_node_list
+            for obj in [self.rom.get_object_by_handle(node.sim_handle)]
+            if container_bounds(obj) is not None
+        }
+        if containers:
+            for node in object_node_list:
+                obj = self.rom.get_object_by_handle(node.sim_handle)
+                if any(self.sim.agents_mgr[i].grasp_mgr.snap_idx == obj.object_id
+                       for i in range(self.sim.num_articulated_agents)):
+                    continue
+                for parent_id in sutils.within(self.sim, obj):
+                    if parent_id in containers:
+                        container = containers[parent_id]
+                        # A contained object has no receptacle beneath it, so the position
+                        # lookup falls back to the room floor. Support it where its
+                        # container is supported (e.g. the counter) instead.
+                        support = obj_to_rec.get(container.name)
+                        if support is not None and obj_to_rec.get(node.name) != support:
+                            self.gt_graph.remove_all_edges(node.name)
+                            self.gt_graph.add_edge(node.name, support, "on", flip_edge("on"))
+                        self.gt_graph.add_edge(node, container, "inside", "contains")
 
     def _check_furniture_is_open(self, furniture: Furniture, threshold: float = 0.4) -> bool:
         """
@@ -945,6 +987,16 @@ class PerceptionSim(Perception):
                             furniture.sim_handle, {}
                         ).get("within", [])
                         within_rec_names = [r.unique_name for r in within_recs]
+                        on_rec_names = [
+                            r.unique_name
+                            for r in self.fur_obj_handle_to_recs.get(
+                                furniture.sim_handle, {}
+                            ).get("on", [])
+                        ]
+                        on_known_surface = (
+                            isinstance(parent, Receptacle)
+                            and parent.sim_handle in on_rec_names
+                        )
                         if (
                             isinstance(parent, Receptacle)
                             and parent.sim_handle in within_rec_names
@@ -966,8 +1018,9 @@ class PerceptionSim(Perception):
                         # the object, use the y-position heuristic. If the object's
                         # y is below the furniture's AABB max y, it is physically
                         # inside the furniture body and should not be detected while
-                        # the furniture is closed.
-                        if should_add:
+                        # the furniture is closed. Objects on a known "on" receptacle
+                        # (e.g. the countertop of a tall cabinet unit) are not inside.
+                        if should_add and not on_known_surface:
                             states = furniture.properties.get("states", {})
                             is_open = states.get("is_open")
                             if is_open is not None and not is_open:

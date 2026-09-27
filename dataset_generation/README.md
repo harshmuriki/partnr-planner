@@ -44,6 +44,62 @@ where
 
 See main function of `generate_episodes.py` for defaults and examples of the above configs. Also see `tests/test_episode_generator.py` for an example use of the scripting API.
 
+#### Placement (`location` on `initial_state`)
+
+Each `initial_state` row is passed to `LLMRearrangeEpisodeGenerator.sample_objects`. The `location` field controls **where objects spawn**:
+
+| `location` | Spawn behavior |
+| ---------- | -------------- |
+| `on` (default) | On the largest upright receptacle of the furniture (tabletop). Navmesh-reachable. |
+| `within` / `in` / `inside` | Inside the scene `within_set` interiors (fridge shelves, cabinet interiors, drawers). Articulated parents are opened for sampling, then closed so the episode starts shut. Navmesh reachability is not required until the agent Opens the furniture. |
+| `floor` | On the navmesh floor in `allowed_regions`. |
+
+`within` uses names from `data/hssd-hab/scene_filter_files/<scene_id>.rec_filter.json`. Furniture with no interior recs (e.g. a table) fails with `no matching interior receptacles found`.
+
+Smart placement is on by default (`smart_placement: true`): cluster objects on the same parent, then fall back to Habitat `ObjectSampler.single_sample`.
+
+#### Goal state → evaluation (no eval LLM)
+
+Each episode dict may include `goal_state` with the same row schema as `initial_state`. After a successful spawn, `generate_episode` compiles it with `build_evaluation_from_goal_state` (`dataset_generation/benchmark_generation/evaluation_generation/goal_state_propositions.py`) and attaches propositions + constraints. This skips `generate_evaluations` for custom episodes.
+
+| `location` | Predicate |
+| ---------- | --------- |
+| `on` | `is_on_top` |
+| `within` / `in` / `inside` | `is_inside` |
+| `floor` | `is_on_floor` (+ `is_in_room` if a room is set) |
+| `in_room` | `is_in_room` |
+
+Optional per goal row: `object_states`, `next_to`, `phase`. All propositions get a `TerminalSatisfactionConstraint`. Dependencies are still inferred with `infer_and_attach_dependencies`.
+
+Example `initial_state` / `goal_state` rows:
+
+```json
+{
+  "number": 1,
+  "object_classes": ["apple"],
+  "furniture_names": ["fridge_0"],
+  "allowed_regions": ["kitchen_0"],
+  "location": "within"
+}
+```
+
+The parser (`parse_generated_instructions`) keeps `location`, `object_states`, `phase`, and `next_to`.
+
+#### Custom episodes via GUI
+
+To spawn one episode from start/end text (OpenAI maps onto furniture IDs, Habitat places objects, eval is compiled from `goal_state`):
+
+```bash
+conda activate habitat
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+python scripts/episode_generator_gui/app.py --host 127.0.0.1 --port 5000
+```
+
+See `scripts/episode_generator_gui/README.md`. Save locations:
+
+- Ad-hoc GUI runs: `data/datasets/custom/<scene_id>/<folder-label>_YYYYMMDD_HHMMSS/dataset.json.gz`
+- Baseline eval v2: `baseline_evaluation_v2/episodes/task_<N>/<folder-label>_YYYYMMDD_HHMMSS/dataset.json.gz` (e.g. `task_1/t1-acc-base_20260908_033128/dataset.json.gz`)
+
 #### Free-form generation and guided instruction
 
 You can switch between guided and free-form generation by switching the prompt in `benchmark_gen.yaml`.
@@ -131,6 +187,8 @@ For reference, here is the list of scenes, and scene split used in PARTNR datase
 ```
 
 ## Generate Evaluation Functions
+
+If the episode already has a `goal_state`, propositions are compiled at spawn time (see **Goal state → evaluation** above). Use this LLM eval pipeline when you only have an instruction + init snapshot and need plaintext evals generated.
 
 Once the task and episode initializations have been generated (above), the next step is to generate evaluation functions, pack the dataset, and verify its episodes. The workflow is as follows.
 

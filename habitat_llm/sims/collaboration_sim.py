@@ -9,7 +9,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import habitat.sims.habitat_simulator.sim_utilities as sutils
+from habitat.core.logging import logger
 from habitat.core.registry import registry
+from habitat.datasets.rearrange.samplers.receptacle import (
+    find_receptacles,
+    get_excluded_recs_from_filter_file,
+)
 from habitat.sims.habitat_simulator.object_state_machine import (
     ObjectIsPoweredOn,
     ObjectStateMachine,
@@ -22,6 +27,10 @@ from habitat_llm.sims.metadata_interface import (
     MetadataError,
     MetadataInterface,
     get_metadata_dict_from_config,
+)
+from habitat_llm.sims.scene_overrides import (
+    apply_default_link_overrides,
+    get_rec_filter_filepath,
 )
 from habitat_llm.world_model.object_states import ObjectIsClean, ObjectIsFilled
 
@@ -118,10 +127,38 @@ class CollaborationSim(RearrangeSim):
             for handle, value in handle_value_map.items():
                 set_state_of_obj(get_obj_from_handle(self, handle), state_name, value)
 
+    def _create_recep_info(self, scene_id, ignore_handles):
+        """RearrangeSim._create_recep_info, resolving the receptacle filter file
+        through project scene overrides."""
+        if scene_id not in self._receptacles_cache:
+            scene_filter_filepath = get_rec_filter_filepath(
+                self.metadata_mediator, self.curr_scene_name
+            )
+            exclude_filter_strings = None
+            if scene_filter_filepath is not None:
+                # only "active" receptacles from the filter are parsed
+                exclude_filter_strings = get_excluded_recs_from_filter_file(
+                    scene_filter_filepath
+                )
+            else:
+                logger.warn(
+                    f"The current scene {self.curr_scene_name} has no matching receptacle filter file, all annotated Receptacles will be active."
+                )
+            all_receps = find_receptacles(
+                self,
+                ignore_handles=ignore_handles,
+                exclude_filter_strings=exclude_filter_strings,
+            )
+            self._receptacles_cache[scene_id] = {
+                recep.unique_name: recep for recep in all_receps
+            }
+        return self._receptacles_cache[scene_id]
+
     def reconfigure(
         self, config: "DictConfig", ep_info: "CollaborationEpisode"
     ) -> None:
         super().reconfigure(config, ep_info)
+        apply_default_link_overrides(self)
         # NOTE: config == simulator.
         self.metadata_dict = get_metadata_dict_from_config(config)
         if (

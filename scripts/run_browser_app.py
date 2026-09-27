@@ -66,11 +66,17 @@ def scan_runs_directory() -> List[Dict]:
 
         html_files = list(item.rglob("*.html"))
         run_info["html_count"] = len(html_files)
-        
+
+        # Count txt files
+        txt_files = list(item.rglob("*.txt"))
+        run_info["txt_count"] = len(txt_files)
+
         # Count video files
         video_files = list(item.rglob("*.mp4"))
         run_info["video_count"] = len(video_files)
-        run_info["has_videos"] = len(video_files) > 0
+
+        # Check if run has at least one of each file type
+        run_info["has_files"] = (len(html_files) > 0 and len(txt_files) > 0 and len(video_files) > 0)
 
         # Add annotations
         run_key = run_info["path"]
@@ -203,12 +209,12 @@ HTML_TEMPLATE = """
             border-color: #f39c12;
             background: #fff8e1;
         }
-        .run-card.no-videos {
+        .run-card.no-files {
             opacity: 0.5;
             background: #ffebee;
             border-color: #ef5350;
         }
-        .run-card.no-videos .run-name {
+        .run-card.no-files .run-name {
             color: #c62828;
         }
         .run-header {
@@ -397,7 +403,7 @@ HTML_TEMPLATE = """
                 return;
             }
             container.innerHTML = runs.map(run => `
-                <div class="run-card ${run.starred ? 'starred' : ''} ${!run.has_videos ? 'no-videos' : ''} ${currentRun === run.path ? 'active' : ''}" 
+                <div class="run-card ${run.starred ? 'starred' : ''} ${!run.has_files ? 'no-files' : ''} ${currentRun === run.path ? 'active' : ''}" 
                      onclick="selectRun('${run.path}')">
                     <div class="run-header">
                         <div class="run-name">${run.name}</div>

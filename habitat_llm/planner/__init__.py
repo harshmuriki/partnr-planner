@@ -13,4 +13,12 @@ from habitat_llm.planner.scripted_centralized_planner import (  # noqa: F401
 from habitat_llm.planner.thoughtless_llm_planner import (  # noqa: F401
     ThoughtlessLLMPlanner,
 )
-from habitat_llm.planner.zero_shot_react_planner import ZeroShotReactPlanner
+from habitat_llm.planner.vlm_planner import VLMPlanner  # noqa: F401
+from habitat_llm.planner.zero_shot_react_planner import ZeroShotReactPlanner  # noqa: F401
+from habitat_llm.planner.zero_shot_react_vlm_planner import (  # noqa: F401
+    ZeroShotReactVLMPlanner,
+)
+
+from habitat_llm.planner.vlm_tamp_pddl_planner import VlmTampPddlPlanner  # noqa: F401
+from habitat_llm.planner.custom_approach_planner import CustomApproachPlanner  # noqa: F401
+from habitat_llm.planner.tru_pomdp.planner import TruPOMDPPlanner  # noqa: F401

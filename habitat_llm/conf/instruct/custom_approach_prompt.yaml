@@ -1,0 +1,9 @@
+prompt: |-
+  (CUSTOM APPROACH PLACEHOLDER, USED FOR CONFIG COMPATIBILITY)
+  Subgoals and predicate prompts are generated from `habitat_llm/custom_approach/prompt_templates.py`
+  through `habitat_llm/custom_approach/prompt_builders.py`.
+stopword: ""
+end_expression: ""
+actions_parser:
+  _target_: habitat_llm.llm.instruct.utils.zero_shot_action_parser
+  _partial_: true

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PARTNR Episode Generator</title>
+  <style>
+    :root {
+      --bg: #1a1b26;
+      --panel: #24283b;
+      --text: #c0caf5;
+      --muted: #9aa5ce;
+      --accent: #7aa2f7;
+      --ok: #9ece6a;
+      --err: #f7768e;
+      --border: #414868;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      padding: 1rem 1.5rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 { margin: 0; font-size: 1.2rem; color: var(--accent); }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+    label { display: block; margin-bottom: 0.4rem; color: var(--muted); font-size: 0.9rem; }
+    select, textarea, button {
+      width: 100%;
+      font: inherit;
+      color: var(--text);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    select, textarea { padding: 0.7rem; }
+    textarea { min-height: 110px; resize: vertical; }
+    button {
+      padding: 0.8rem 1rem;
+      background: var(--accent);
+      color: #1a1b26;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+    button:disabled { opacity: 0.6; cursor: wait; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      white-space: pre-wrap;
+      overflow: auto;
+    }
+    .ok { color: var(--ok); }
+    .err { color: var(--err); }
+    a { color: var(--accent); }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PARTNR episode generator</h1>
+  </header>
+  <main>
+    <div>
+      <label for="scene">Scene</label>
+      <select id="scene"></select>
+    </div>
+    <div>
+      <label for="prompt">Start state</label>
+      <textarea id="prompt" placeholder="apple and orange on the dining table"></textarea>
+    </div>
+    <div>
+      <label for="goal">End state</label>
+      <textarea id="goal" placeholder="apple and orange inside the fridge"></textarea>
+    </div>
+    <button id="generate">Generate</button>
+    <div id="status" class="panel hidden"></div>
+    <div id="result" class="panel hidden"></div>
+  </main>
+  <script>
+    const sceneEl = document.getElementById("scene");
+    const promptEl = document.getElementById("prompt");
+    const goalEl = document.getElementById("goal");
+    const generateEl = document.getElementById("generate");
+    const statusEl = document.getElementById("status");
+    const resultEl = document.getElementById("result");
+
+    function show(el, html, cls) {
+      el.classList.remove("hidden");
+      el.className = "panel " + (cls || "");
+      el.innerHTML = html;
+    }
+
+    async function loadScenes() {
+      const res = await fetch("/api/scenes");
+      const data = await res.json();
+      sceneEl.innerHTML = "";
+      for (const id of data.scenes) {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = id;
+        if (id === "107734176_176000019") opt.selected = true;
+        sceneEl.appendChild(opt);
+      }
+    }
+
+    generateEl.addEventListener("click", async () => {
+      generateEl.disabled = true;
+      show(statusEl, "Generating… first scene load can take a while.", "");
+      resultEl.classList.add("hidden");
+      try {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            scene_id: sceneEl.value,
+            prompt: promptEl.value,
+            goal: goalEl.value,
+          }),
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          const missing = [
+            data.missing_objects && data.missing_objects.length ? "objects: " + data.missing_objects.join(", ") : "",
+            data.missing_furniture && data.missing_furniture.length ? "furniture: " + data.missing_furniture.join(", ") : "",
+            data.missing_rooms && data.missing_rooms.length ? "rooms: " + data.missing_rooms.join(", ") : "",
+          ].filter(Boolean).join("\n");
+          show(
+            resultEl,
+            "<div class='err'>" + (data.error || "Generation failed") + "</div>\n" +
+            (missing ? missing + "\n\n" : "") +
+            (data.logs ? data.logs.join("\n") + "\n\n" : "") +
+            (data.debug ? data.debug + "\n\n" : "") +
+            "<strong>Raw LLM</strong>\n" + (data.raw_llm || "") +
+            (data.parsed ? "\n\n<strong>Parsed</strong>\n" + JSON.stringify(data.parsed, null, 2) : "") +
+            (data.spawn_log ? "\n\n<strong>Spawn log</strong>\n" + JSON.stringify(data.spawn_log, null, 2) : ""),
+            "err"
+          );
+          show(statusEl, "Failed", "err");
+          return;
+        }
+        const recs = Object.entries(data.name_to_receptacle || {})
+          .map(([obj, rec]) => obj + " → " + rec)
+          .join("\n");
+        show(
+          resultEl,
+          "<div class='ok'>Episode generated</div>\n" +
+          "<strong>Instruction</strong>\n" + (data.instruction || "") + "\n\n" +
+          "<strong>Initial state</strong>\n" + JSON.stringify(data.parsed && data.parsed.initial_state, null, 2) + "\n\n" +
+          "<strong>Goal state</strong>\n" + JSON.stringify(data.parsed && data.parsed.goal_state, null, 2) + "\n\n" +
+          "<strong>Evaluation propositions</strong>\n" + JSON.stringify(data.evaluation_propositions, null, 2) + "\n\n" +
+          "<strong>Objects</strong>\n" + (data.rigid_objs || []).join("\n") + "\n\n" +
+          "<strong>Object → receptacle</strong>\n" + recs + "\n\n" +
+          (data.debug ? data.debug + "\n\n" : "") +
+          "<a href='/api/download?path=" + encodeURIComponent(data.dataset_path) + "'>Download dataset.json.gz</a>\n\n" +
+          (data.logs ? data.logs.join("\n") : ""),
+          "ok"
+        );
+        show(statusEl, "Done", "ok");
+      } catch (err) {
+        show(statusEl, "Request failed: " + err, "err");
+      } finally {
+        generateEl.disabled = false;
+      }
+    });
+
+    loadScenes();
+  </script>
+</body>
+</html>

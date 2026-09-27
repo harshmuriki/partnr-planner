@@ -135,6 +135,17 @@ class CollaborationDatasetV0(RearrangeDatasetV0):
             self.episodes = episodes
         else:
             # Otherwise, init the dataset with the episode specified in config
+            # Fall back from .json.gz to .json when the compressed file is absent
+            if config:
+                data_p = config.data_path.format(split=config.split)
+                if not os.path.exists(data_p) and data_p.endswith(".json.gz"):
+                    plain = data_p[:-3]
+                    if os.path.exists(plain):
+                        from omegaconf import OmegaConf
+                        OmegaConf.set_struct(config, False)
+                        config.data_path = config.data_path.replace(".json.gz", ".json")
+                        OmegaConf.set_struct(config, True)
+
             if config and not self.check_config_paths_exist(config):
                 data_p = config.data_path.format(split=config.split)
                 scenes_p = config.scenes_dir
@@ -144,6 +155,13 @@ class CollaborationDatasetV0(RearrangeDatasetV0):
 
             check_and_gen_physics_config()
             super(RearrangeDatasetV0, self).__init__(config)
+
+    def _load_from_file(self, fname: str, scenes_dir: str) -> None:
+        if fname.endswith(".json") and not fname.endswith(".json.gz"):
+            with open(fname, "rt") as f:
+                self.from_json(f.read(), scenes_dir=scenes_dir)
+        else:
+            super()._load_from_file(fname, scenes_dir)
 
     def apply_scene_dir_prefix(
         self, episode: CollaborationEpisode, scenes_dir: Optional[str] = None

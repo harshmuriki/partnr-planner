@@ -311,19 +311,28 @@ class MetadataExtractor:
 
         object_handles = list(episode["name_to_receptacle"].keys())
 
+        info = episode.get("info") or {}
+        extra = info.get("extra_info") or {}
+        initial_state = info.get("initial_state") or extra.get("initial_state") or []
+        if isinstance(initial_state, dict):
+            initial_state = list(initial_state.values())
+
         objects = []
         object_cat_to_count: DefaultDict[str, int] = defaultdict(int)
         object_to_room: Dict[str, str] = {}
-        for state_element in episode["info"]["initial_state"]:
+        for state_element in initial_state:
             if (
                 "name" in state_element
                 or "template_task_number" in state_element
-                or len(state_element["object_classes"]) == 0
+                or not state_element.get("object_classes")
             ):  # skip clutter and template transfer state elements
                 continue
 
             obj_name = state_element["object_classes"][0]
-            for _ in range(state_element["number"]):
+            n = state_element.get("number", 1)
+            if isinstance(n, list):
+                n = n[0]
+            for _ in range(int(n)):
                 o = f"{obj_name}_{object_cat_to_count[obj_name]}"
                 object_cat_to_count[obj_name] += 1
                 object_to_room[o] = state_element["allowed_regions"][0]

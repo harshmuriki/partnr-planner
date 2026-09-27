@@ -1,0 +1,7 @@
+{
+  "87ed6d0c785b3245207bb217eb3ee3fc079f8633": {
+    "description": "Open fruit basket; interior measured from the original six-part collision mesh. Bounds are fractions of the object's local bounding box, unaffected by COM recentering.",
+    "lower": [0.12, 0.063, 0.17],
+    "upper": [0.88, 0.76, 0.83]
+  }
+}

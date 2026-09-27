@@ -1,0 +1,47 @@
+
+# @package _global_
+
+defaults:
+  - /examples/planner_multi_agent_demo_config
+  - /instruct@evaluation.agents.agent_0.planner.plan_config.instruct: vlm_tamp_pddl_prompt
+  - override /evaluation: decentralized_evaluation_runner_single_agent
+  - override /planner@evaluation.agents.agent_0.planner: vlm_tamp_pddl_planner
+  - override /agent@evaluation.agents.agent_0.config: oracle_rearrange_object_states_agent_motortoolsonly
+  - override /world_model@world_model: gt_graph
+  - _self_
+
+agent_asymmetry: True
+world_model:
+  partial_obs: True
+  use_gt_object_locations: True
+  use_gt_static_structure: True
+
+evaluation:
+  use_rgb: True
+  # When true: interactive planning-tree HTML (click solved nodes for logs); false = legacy index.html.
+  pddl_baseline: True
+  agents:
+    agent_0:
+      planner:
+        plan_config:
+          pddl_baseline: True
+          num_branches: 1 # Number of different branches generated for each VLM call # This is what is there for default VLM-TAMP paper
+          max_reprompts: 50 # This is total reprompts in the whole episode; Setting the same as partnr-planner=50 (total replans tho)  # From VLM-TAMP paper=2 for every parent
+          ntamp_max_pddl_replan_retries: 3 # PDDL-only replans per subgoal before branch/VLM escalation
+          enable_partial_obs_explore: True # CG memory-driven Explore[room] before PDDL if required objects are missing/unlocated
+          explore_on_missing_required_objects: True
+          enable_vlm_explore_subgoal: True # Execute VLM-generated explore(<room>) via high-level Explore[room]
+          max_room_explore_passes_per_object: 2
+          explore_fast: False # Walk the room to collect real exploration camera views.
+          explore_image_interval: 30 # Sample camera every 30 Explore continuation calls; send up to 3 views.
+          verbose: True
+          log_dir: "vlm_tamp_pddl"
+          vlm:
+            type: gpt4v
+            model_name: gpt-5.6-luna
+            max_completion_tokens: 1200
+            temperature: 0.2
+            reasoning_effort: high
+            use_images: True
+            cache_path: null
+            gt_bbox_image_panels: 2

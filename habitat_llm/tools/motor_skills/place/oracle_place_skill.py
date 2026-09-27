@@ -11,14 +11,15 @@ import torch
 from habitat_llm.agent.env.actions import find_action_range
 from habitat_llm.tools.motor_skills.skill import SkillPolicy
 from habitat_llm.utils.grammar import (
-    FURNITURE,
     OBJECT,
     OBJECT_OR_FURNITURE,
     SPATIAL_CONSTRAINT,
     SPATIAL_RELATION,
 )
 from habitat_llm.utils.sim import ee_distance_to_object
-from habitat_llm.world_model import Floor, Furniture
+from habitat_llm.world_model import Floor, Furniture, Object
+from habitat.sims.habitat_simulator.sim_utilities import get_obj_from_handle
+from habitat_llm.utils.movable_containers import container_bounds, sample_in_container
 
 if TYPE_CHECKING:
     from habitat_llm.agent.env import EnvironmentInterface
@@ -245,10 +246,15 @@ class OraclePlaceSkill(SkillPolicy):
 
         # Early exit if the place_receptacle is not furniture or floor
         # Check for floor as well
-        if not isinstance(self.place_entity, Furniture):
+        container = None
+        if isinstance(self.place_entity, Object) and self.spatial_relation == "within":
+            container = get_obj_from_handle(self.env.sim, self.place_entity.sim_handle)
+            if container is not None and container_bounds(container) is None:
+                container = None
+        if not isinstance(self.place_entity, Furniture) and container is None:
             self.failed = True
             self.termination_message = (
-                "Failed to place! Place receptacle is not furniture or floor."
+                "Failed to place! Destination must be furniture, floor, or an annotated container used with within."
             )
             return action, None
 
@@ -280,9 +286,10 @@ class OraclePlaceSkill(SkillPolicy):
         # Sample place location
         # The return of target_pos is a list
         try:
+            sampler = self.place_entity.sample_place_location if container is None else self._sample_container
             target_poses: List[
                 Tuple[mn.Vector3, mn.Quaternion]
-            ] = self.place_entity.sample_place_location(
+            ] = sampler(
                 self.spatial_relation,
                 self.spatial_constraint,
                 self.reference_object,
@@ -306,7 +313,7 @@ class OraclePlaceSkill(SkillPolicy):
                 # NOTE: we can try sampling again without the spatial constraint to better establish causality.
                 target_poses_no_spatial_constraint: List[
                     Tuple[mn.Vector3, mn.Quaternion]
-                ] = self.place_entity.sample_place_location(
+                ] = sampler(
                     self.spatial_relation,
                     None,
                     None,
@@ -345,6 +352,12 @@ class OraclePlaceSkill(SkillPolicy):
 
         return action, None
 
+    def _sample_container(self, relation, constraint, reference, env, agent, grasp_mgr):
+        container = get_obj_from_handle(env.sim, self.place_entity.sim_handle)
+        poses = sample_in_container(env.sim, container, grasp_mgr.snap_rigid_obj,
+                                    constraint, reference.sim_handle if reference else None)
+        return sorted(poses, key=lambda pose: (pose[0] - mn.Vector3(agent.base_pos)).length())
+
     @property
     def argument_types(self) -> List[str]:
         """
@@ -354,4 +367,4 @@ class OraclePlaceSkill(SkillPolicy):
         """
         none = '("none" | "None")'
         optional_constraint = f'(({SPATIAL_CONSTRAINT} "," WS {OBJECT_OR_FURNITURE} )| ({none} WS "," WS {none}))'
-        return [OBJECT, SPATIAL_RELATION, FURNITURE, optional_constraint]
+        return [OBJECT, SPATIAL_RELATION, OBJECT_OR_FURNITURE, optional_constraint]

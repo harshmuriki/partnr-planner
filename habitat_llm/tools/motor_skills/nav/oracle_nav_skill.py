@@ -207,16 +207,39 @@ class OracleNavSkill(SkillPolicy):
         self.target_pos = None
         furniture_parent_handle = None
         if isinstance(entity, Object):
-            if self._check_if_held_target():
-                # early abort for grasped target Object
-                # NOTE: the above function sets the failure flag and termination message
+            # Resolve handle in the simulator before held-object checks (those call
+            # check_if_the_object_is_held_by_agent → get_obj_from_handle().object_id).
+            if not self.target_handle:
+                self.termination_message = (
+                    f"Object '{target_name}' has no sim handle; cannot navigate to it."
+                )
+                self.failed = True
                 return
 
             sim_obj = get_obj_from_handle(self.env.sim, self.target_handle)
-            target_object_ids.append(sim_obj.object_id)
-
-            # set target position from the world graph
-            self.target_pos = entity.get_property("translation")
+            if sim_obj is None:
+                # Stale-memory objects have no simulator object. Navigate to the
+                # furniture recorded as their parent without mutating the graph.
+                # A later Pick attempt is responsible for removing the stale object.
+                furniture = self.env.world_graph[
+                    self.agent_uid
+                ].find_furniture_for_object(entity)
+                if furniture is None:
+                    self.termination_message = (
+                        f"Object '{target_name}' was not found in the simulator and "
+                        "has no remembered parent furniture."
+                    )
+                    self.failed = True
+                    return
+                self.target_is_set = False
+                return self.set_target(furniture.name, env)
+            else:
+                if self._check_if_held_target():
+                    # early abort for grasped target Object
+                    # NOTE: the above function sets the failure flag and termination message
+                    return
+                target_object_ids.append(sim_obj.object_id)
+                self.target_pos = entity.get_property("translation")
             # first try snapping to the Object center of mass, avoiding occlusion by anything else
             attempts = 0
             # track the nav point to object distance as we do rejection sampling
@@ -489,6 +512,9 @@ class OracleNavSkill(SkillPolicy):
             cprint(f"✓ Navigation SUCCESS: Moving to target '{target_name}'", "green")
             self.env.sim.dynamic_target = self.target_base_pos
             return
+        else:
+            self._logger.warning(f"OracleNavSkill: failed to snap to target '{target_name}'")
+            cprint(f"✗ Navigation FAILED: Could not find a suitable nav target for {target_name}. Possibly inaccessible.", "red")
 
         # if we're here, we failed to find a placement
         self.termination_message = f"Could not find a suitable nav target for {target_name}. Possibly inaccessible."
@@ -533,8 +559,9 @@ class OracleNavSkill(SkillPolicy):
         This should be called every step to early abort in case the target is picked up during nav.
         #NOTE: this function sets the termination message and failed flags before returning the result
         """
-        # Currently it is set to None for floor nodes (which are typed Furniture)
-        if self.target_handle is not None:
+        # Currently it is set to None for floor nodes (which are typed Furniture).
+        # Skip when falsy so we never call sim helpers with an invalid handle.
+        if self.target_handle:
             target_node = self.env.world_graph[self.agent_uid].get_node_from_sim_handle(
                 self.target_handle
             )

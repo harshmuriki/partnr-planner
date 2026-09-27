@@ -73,6 +73,17 @@ class OracleExploreSkill(SkillPolicy):
         self.target_room_name: str = None
         self.fur_queue = []
         self.target_fur_name = None
+        self.max_nav_steps_per_furniture = int(
+            getattr(config, "max_nav_steps_per_furniture", -1)
+        )
+        self.max_furniture_samples_per_room = int(
+            getattr(config, "max_furniture_samples_per_room", 10)
+        )
+        self.skip_failed_furniture = bool(
+            getattr(config, "skip_failed_furniture", True)
+        )
+        self._current_furniture_nav_steps = 0
+        self._skipped_furniture = []
 
     def set_target(self, target_room_name, env):
         """
@@ -89,9 +100,21 @@ class OracleExploreSkill(SkillPolicy):
         # Populate the queue with furniture from this room
         # Only do this when the queue is empty
         if len(self.fur_queue) == 0 and self.target_fur_name is None:
-            self.fur_queue = self.env.world_graph[self.agent_uid].get_furniture_in_room(
+            room_furniture = self.env.world_graph[self.agent_uid].get_furniture_in_room(
                 target_room_name
             )
+            if (
+                self.max_furniture_samples_per_room > 0
+                and len(room_furniture) > self.max_furniture_samples_per_room
+            ):
+                sampled_idxs = np.random.choice(
+                    len(room_furniture),
+                    size=self.max_furniture_samples_per_room,
+                    replace=False,
+                )
+                self.fur_queue = [room_furniture[i] for i in sampled_idxs]
+            else:
+                self.fur_queue = room_furniture
 
         # Set flag to true
         self.target_is_set = True
@@ -113,6 +136,8 @@ class OracleExploreSkill(SkillPolicy):
         self.target_fur_name = None
         self.target_node_reached = False
         self.target_room_name = None
+        self._current_furniture_nav_steps = 0
+        self._skipped_furniture = []
 
         # Get agent pose
         agent_pos = np.array(self.articulated_agent.base_pos)
@@ -180,6 +205,7 @@ class OracleExploreSkill(SkillPolicy):
             # Select next furniture to visit
             fur_node = self.fur_queue.pop(0)
             self.target_fur_name = fur_node.name
+            self._current_furniture_nav_steps = 0
 
             # Reset the nav skill
             self.nav_skill.reset(cur_batch_idx)
@@ -203,10 +229,48 @@ class OracleExploreSkill(SkillPolicy):
             cur_batch_idx,
             deterministic,
         )
+        self._current_furniture_nav_steps += 1
 
         # Fetch termination message from the skill
         self.termination_message = self.nav_skill.termination_message
         self.failed = self.nav_skill.failed
+
+        nav_timed_out = (
+            self.max_nav_steps_per_furniture > 0
+            and self._current_furniture_nav_steps >= self.max_nav_steps_per_furniture
+        )
+        nav_failed = bool(self.nav_skill.failed)
+
+        if (
+            self.skip_failed_furniture
+            and self.target_fur_name is not None
+            and (nav_failed or nav_timed_out)
+        ):
+            skipped_name = self.target_fur_name
+            reason = "nav timeout" if nav_timed_out else "nav failure"
+            self._skipped_furniture.append(skipped_name)
+
+            # Reset nav and advance to the next furniture candidate.
+            self.nav_skill.reset(cur_batch_idx)
+            self.nav_skill.target_is_set = False
+            self.target_fur_name = None
+            self.target_node_reached = False
+            self._current_furniture_nav_steps = 0
+            self.failed = False
+
+            if len(self.fur_queue) > 0:
+                self.termination_message = (
+                    f"Skipping furniture '{skipped_name}' ({reason}); continuing Explore."
+                )
+                return action, hxs
+
+            # No furniture left after skipping this one: finish Explore gracefully.
+            self._is_exploration_done[cur_batch_idx] = True
+            self.termination_message = (
+                f"Finished exploring room '{self.target_room_name}' after skipping "
+                f"'{skipped_name}' ({reason})."
+            )
+            return action, hxs
 
         # print(f"agent {self.agent_uid} is exploring {self.target_fur_name} in {self.target_room_name}, {len(self.fur_queue)}")
 

@@ -26,9 +26,13 @@ from habitat.tasks.rearrange.rearrange_grasp_manager import RearrangeGraspManage
 
 from habitat_llm.agent import Agent
 from habitat_llm.world_model import Furniture, Object, Receptacle
+from habitat_llm.sims.scene_overrides import get_rec_filter_filepath
 
 if TYPE_CHECKING:
     from habitat_llm.agent.env import EnvironmentInterface
+
+
+GHOST_OBJECT_PICK_FAILURE = "Failed to pick! Object does not exist."
 
 
 def init_agents(
@@ -68,7 +72,7 @@ def get_receptacle_dict(
     """
 
     rec_dict: Dict[str, Dict[str, List[HabReceptacle]]] = {}
-    scene_filter_filepath = hab_receptacle.get_scene_rec_filter_filepath(
+    scene_filter_filepath = get_rec_filter_filepath(
         sim.metadata_mediator, sim.curr_scene_name
     )
     within_recs = hab_receptacle.get_recs_from_filter_file(
@@ -99,7 +103,7 @@ def find_receptacles(
     """
 
     receptacles = None
-    scene_filter_filepath = hab_receptacle.get_scene_rec_filter_filepath(
+    scene_filter_filepath = get_rec_filter_filepath(
         sim.metadata_mediator, sim.curr_scene_name
     )
     if filter_receptacles:
@@ -278,8 +282,13 @@ def check_if_gripper_is_full(
     if grasp_mgr.is_grasped:
         rom = env.sim.get_rigid_object_manager()
         grasped_obj_handle = rom.get_object_handle_by_id(grasp_mgr.snap_idx)
-        target_node = env.full_world_graph.get_node_from_sim_handle(target_handle)
-        grasped_node = env.full_world_graph.get_node_from_sim_handle(grasped_obj_handle)
+        try:
+            target_node = env.full_world_graph.get_node_from_sim_handle(target_handle)
+            grasped_node = env.full_world_graph.get_node_from_sim_handle(grasped_obj_handle)
+        except Exception:
+            termination_message = GHOST_OBJECT_PICK_FAILURE
+            failed = True
+            return action_zero, termination_message, failed
         if target_node.name != grasped_node.name:
             termination_message = f"Failed to pick {target_node.name}! The arm is currently grasping {grasped_node.name}. Make the agent place the grasped object first."
         else:
@@ -309,7 +318,12 @@ def check_if_the_object_is_moveable(
     # Early exit if the object is not a movable object.
     # FIXME: this needs to change for objects to be movable in CG version
     # we won't test based on "target_handle" anymore
-    entity = env.full_world_graph.get_node_from_sim_handle(target_handle)
+    try:
+        entity = env.full_world_graph.get_node_from_sim_handle(target_handle)
+    except Exception:
+        termination_message = GHOST_OBJECT_PICK_FAILURE
+        failed = True
+        return action_zero, termination_message, failed
     if not isinstance(entity, Object):
         termination_message = "Failed to pick! This is not a movable object."
         failed = True
@@ -338,7 +352,12 @@ def check_if_the_object_is_inside_furniture(
 
     action_zero = torch.zeros(action.shape, device=action.device)
 
-    entity = env.full_world_graph.get_node_from_sim_handle(target_handle)
+    try:
+        entity = env.full_world_graph.get_node_from_sim_handle(target_handle)
+    except Exception:
+        termination_message = GHOST_OBJECT_PICK_FAILURE
+        failed = True
+        return action_zero, termination_message, failed
 
     # check for a furniture
     fur = env.full_world_graph.find_furniture_for_object(entity)
@@ -351,29 +370,35 @@ def check_if_the_object_is_inside_furniture(
 
     # check the Receptacle
     rec = env.full_world_graph.find_receptacle_for_object(entity)
-    # Check if object is inside ("within") an articulated furniture receptacle.
+    # Check if object is on an "on" or "within" receptacle of the furniture.
+    # Receptacle nodes store the Receptacle unique_name as their sim_handle.
     is_within_receptacle = False
+    is_on_receptacle = False
     if rec is not None:
         rec_groups = env.perception.fur_obj_handle_to_recs.get(fur.sim_handle, {})
-        within_recs = rec_groups.get("within", [])
-        is_within_receptacle = rec.sim_handle in within_recs
+        within_names = {r.unique_name for r in rec_groups.get("within", [])}
+        on_names = {r.unique_name for r in rec_groups.get("on", [])}
+        is_within_receptacle = rec.sim_handle in within_names
+        is_on_receptacle = rec.sim_handle in on_names
 
-    # Additional geometric heuristic:
+    # Additional geometric heuristic for objects not on a known "on" receptacle:
     # If object center Y falls within furniture Y bounds, treat it as potentially
     # inside the furniture volume for pick gating on closed articulated furniture.
+    # Skipped for "on" receptacles such as the countertop of a tall closed cabinet unit.
     is_within_furniture_y_bounds = False
-    try:
-        obj = get_obj_from_handle(env.sim, target_handle)
-        fur_obj = get_obj_from_handle(env.sim, fur.sim_handle)
-        obj_center_y = get_global_keypoints_from_object_id(env.sim, obj.object_id)[0][1]
-        fur_keypoints = get_global_keypoints_from_object_id(env.sim, fur_obj.object_id)
-        fur_y_values = [p[1] for p in fur_keypoints]
-        fur_y_min = min(fur_y_values)
-        fur_y_max = max(fur_y_values)
-        is_within_furniture_y_bounds = fur_y_min <= obj_center_y <= fur_y_max
-    except Exception:
-        # If geometry lookup fails, keep prior behavior based on receptacle type.
-        is_within_furniture_y_bounds = False
+    if not is_on_receptacle:
+        try:
+            obj = get_obj_from_handle(env.sim, target_handle)
+            fur_obj = get_obj_from_handle(env.sim, fur.sim_handle)
+            obj_center_y = get_global_keypoints_from_object_id(env.sim, obj.object_id)[0][1]
+            fur_keypoints = get_global_keypoints_from_object_id(env.sim, fur_obj.object_id)
+            fur_y_values = [p[1] for p in fur_keypoints]
+            fur_y_min = min(fur_y_values)
+            fur_y_max = max(fur_y_values)
+            is_within_furniture_y_bounds = fur_y_min <= obj_center_y <= fur_y_max
+        except Exception:
+            # If geometry lookup fails, keep prior behavior based on receptacle type.
+            is_within_furniture_y_bounds = False
 
     # For articulated furniture, block pick when furniture is closed and either:
     # 1) object is in a "within" receptacle, or
@@ -415,8 +440,18 @@ def check_if_the_object_is_held_by_agent(
     action_zero = torch.zeros(action.shape, device=action.device)
 
     # Fetch the object id
-    obj_idx = get_obj_from_handle(env.sim, target_handle).object_id
-    env.world_graph[this_agent_uid].get_node_from_sim_handle(target_handle).name
+    obj = get_obj_from_handle(env.sim, target_handle)
+    if obj is None:
+        termination_message = GHOST_OBJECT_PICK_FAILURE
+        failed = True
+        return action_zero, termination_message, failed
+    obj_idx = obj.object_id
+    try:
+        env.world_graph[this_agent_uid].get_node_from_sim_handle(target_handle).name
+    except Exception:
+        termination_message = GHOST_OBJECT_PICK_FAILURE
+        failed = True
+        return action_zero, termination_message, failed
 
     for agent_name in env.sim.agents_mgr.agent_names:
         try:

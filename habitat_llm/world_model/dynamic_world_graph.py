@@ -1161,9 +1161,21 @@ class DynamicWorldGraph(WorldGraph):
 
         # Add new edge from object to the receptacle
         # TODO: We should add edge to default receptacle instead of fur
-        self.add_edge(object_node, placement_node, "on", flip_edge("on"))
+        if isinstance(placement_node, Object):
+            self.add_edge(object_node, placement_node, "inside", "contains")
+            furniture = self.find_furniture_for_object(placement_node)
+            if furniture is not None:
+                self.add_edge(object_node, furniture, "on", flip_edge("on"))
+        else:
+            self.add_edge(object_node, placement_node, "on", flip_edge("on"))
         # snap the object to furniture's center in absence of actual location
         object_node.properties["translation"] = placement_node.properties["translation"]
+        # PDDL init uses last_held_object for (holding ?a ?o) and skips (on ?o ?f) while
+        # that flag is set — must clear it after a successful place or the planner still
+        # thinks the object is in hand and may plan spurious place_* to free the gripper.
+        held = agent_node.properties.get("last_held_object")
+        if held is not None and getattr(held, "name", None) == object_node.name:
+            del agent_node.properties["last_held_object"]
         if verbose:
             self._logger.info(
                 f"Moved {object_node.name} from {agent_node.name} to {placement_node.name}"
@@ -1688,10 +1700,10 @@ class DynamicWorldGraph(WorldGraph):
 
         # Filter objects that are too far (likely depth/localization errors)
         if not self.use_gt_object_locations and (detection_distance > self.max_detection_distance):
-            cprint(
-                f"[FILTERED] Object {obj_id_to_category_mapping[object_id]} at distance {detection_distance:.2f}m < threshold {self.max_detection_distance}m",
-                "yellow"
-            )
+            # cprint(
+            #     f"[FILTERED] Object {obj_id_to_category_mapping[object_id]} at distance {detection_distance:.2f}m < threshold {self.max_detection_distance}m",
+            #     "yellow"
+            # )
             return None
 
         if verbose:

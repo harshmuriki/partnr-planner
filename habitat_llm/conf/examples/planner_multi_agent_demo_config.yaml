@@ -52,6 +52,11 @@ evaluation:
   log_data: True
   save_rgb: False
   log_detailed_traces: True
+  # LLM wall-clock + exact action sim time + Explore approx sim time.
+  # Set to 0 to disable. Override: evaluation.max_combined_time_s=300
+  max_combined_time_s: 600
+  combined_time_sim_freq: 120
+  generate_prediviz: True
 
 habitat:
   task:

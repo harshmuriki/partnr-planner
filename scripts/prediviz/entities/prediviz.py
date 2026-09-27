@@ -302,6 +302,7 @@ class PrediViz:
         receptacle_icon_mapping: Dict[str, Any],
         cropped_receptacle_icon_mapping: Dict[str, Any],
         show_instruction: bool = True,
+        keep_initial_layout: bool = False,
     ) -> List[Tuple[plt.Figure, plt.Axes, float, float]]:
         toposort = []
         same_args_data = []
@@ -314,15 +315,16 @@ class PrediViz:
             elif constraint["type"] == "DifferentArgConstraint":
                 diff_args_data.append(constraint["diff_args_data"])
         propositions = self.parse_propositions_and_set_instance_colors(propositions)
+        plot_toposort = [] if keep_initial_layout else toposort
         fig_data = self.scene.plot(
             propositions,
             constraints,
-            toposort,
+            plot_toposort,
         )
 
         self._create_legend_data(
             propositions,
-            toposort,
+            plot_toposort,
             same_args_data,
             diff_args_data,
             cropped_receptacle_icon_mapping,

@@ -8,10 +8,12 @@ _partial_: True
 
 plan_config:
     replanning_threshold: 25 # max number of times the LLM is allowed to plan to finish the task
+    fast_explore: False
     planning_mode: "cot"
     constrained_generation: False
     objects_response: True
-    objects_response_include_states: False
+    objects_response_include_states: True
+    send_action_image: True
     centralized: False
     enable_rag: False # If we want to use RAG or not
     rag_dataset_dir: "" # The path to the rag_data_source_name folder

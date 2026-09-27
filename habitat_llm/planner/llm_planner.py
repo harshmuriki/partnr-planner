@@ -4,6 +4,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree
 
+import os
 import re
 import time
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union
@@ -12,12 +13,21 @@ from habitat.tasks.rearrange.utils import coll_name_matches
 from hydra.utils import instantiate
 
 from habitat_llm.llm.instruct.utils import (
+    draw_agent_rgb_to_pil,
     get_objects_descr,
     get_rearranged_objects_descr,
     get_world_descr,
+    pil_image_to_data_url,
 )
 from habitat_llm.planner.planner import Planner
 from habitat_llm.utils.core import cprint
+from habitat_llm.utils.fast_explore_cost import (
+    estimate_explore_tour,
+    scale_explore_steps,
+    sim_time_from_steps,
+    walk_to_approx_ratio,
+)
+from habitat_llm.utils.llm_usage import fmt_usd, snapshot_from_llm
 from habitat_llm.utils.grammar import (
     FREE_TEXT,
     FURNITURE,
@@ -28,6 +38,7 @@ from habitat_llm.utils.grammar import (
     SPATIAL_CONSTRAINT,
     SPATIAL_RELATION,
 )
+from habitat_llm.world_model import Object, Receptacle
 
 if TYPE_CHECKING:
     from omegaconf import DictConfig
@@ -72,6 +83,18 @@ class LLMPlanner(Planner):
         # any other material in prompt
         self.trace: str = ""
         self.rag: Optional["RAG"] = None
+        self.fast_explore: bool = bool(self.planner_config.get("fast_explore", False))
+        self.llm_planning_time_s: float = 0.0
+        self.last_llm_call_s: float = 0.0
+        self.explore_approx_sim_steps: int = 0
+        self.explore_approx_sim_time_s: float = 0.0
+        self.explore_approx_meters: float = 0.0
+        self.explore_walk_ratio: Optional[float] = None
+        self._explore_calibrating: bool = False
+        self._explore_calib_approx_steps: int = 0
+        self._explore_calib_walked_steps: int = 0
+        self.image_save_dir: Optional[str] = None
+        self.last_action_image_relpath: Optional[str] = None
 
         self.reset()
 
@@ -101,10 +124,118 @@ class LLMPlanner(Planner):
         self.trace: str = ""
         self.curr_obj_states: str = ""
         self.params: Dict[str, Any] = {}
+        self.llm_planning_time_s = 0.0
+        self.last_llm_call_s = 0.0
+        self.explore_approx_sim_steps = 0
+        self.explore_approx_sim_time_s = 0.0
+        self.explore_approx_meters = 0.0
+        self.explore_walk_ratio = None
+        self._explore_calibrating = False
+        self._explore_calib_approx_steps = 0
+        self._explore_calib_walked_steps = 0
+        self.last_action_image_relpath = None
+        tracker = getattr(self.llm, "token_usage", None)
+        if tracker is not None and hasattr(tracker, "reset"):
+            tracker.reset()
 
         # Reset agents
         for agent in self._agents:
             agent.reset()
+
+    def set_image_save_dir(self, save_dir: str) -> None:
+        """Directory for per-replan robot camera PNGs shown in the HTML trace."""
+        self.image_save_dir = save_dir
+        if save_dir:
+            os.makedirs(save_dir, exist_ok=True)
+
+    def _send_action_image_enabled(self) -> bool:
+        cfg = self.planner_config
+        if cfg is None:
+            return False
+        return bool(getattr(cfg, "send_action_image", False))
+
+    def _action_camera_pil(self, observations: Dict[str, Any]):
+        agent_uid = self._agents[0].uid if self._agents else 0
+        env = self.env_interface
+        sim = getattr(env, "sim", None) if env is not None else None
+        if sim is not None:
+            update = getattr(sim, "maybe_update_articulated_agent", None)
+            if callable(update):
+                update()
+            pil_image = draw_agent_rgb_to_pil(sim, agent_uid)
+            if pil_image is not None:
+                return pil_image
+        return None
+
+    def _save_action_image(self, pil_image) -> Optional[str]:
+        if pil_image is None:
+            return None
+        if not self.image_save_dir:
+            conf = getattr(self.env_interface, "conf", None)
+            results_dir = getattr(getattr(conf, "paths", None), "results_dir", None)
+            if not results_dir:
+                return None
+            self.set_image_save_dir(
+                os.path.join(str(results_dir), "dataset", "traces", "0", "images")
+            )
+        os.makedirs(self.image_save_dir, exist_ok=True)
+        filename = f"step_{self.replanning_count:04d}.png"
+        path = os.path.join(self.image_save_dir, filename)
+        pil_image.save(path)
+        self.last_action_image_relpath = os.path.join("images", filename)
+        return self.last_action_image_relpath
+
+    def prepare_next_subgoal(
+        self,
+        instruction: str,
+        world_graph: Dict[int, "WorldGraph"],
+    ) -> None:
+        """Continue planning on the same world state while preserving LLM history."""
+        self.last_high_level_actions = {}
+        self.replan_required = True
+        self.is_done = False
+        self.latest_agent_response = {}
+        self.params = {}
+
+        current_world_graph = world_graph[self._agents[0].uid]
+        world_description = get_world_descr(
+            current_world_graph,
+            agent_uid=self.agents[0].uid,
+            add_state_info=self.planner_config.objects_response_include_states,
+            include_room_name=True,
+            centralized=self.planner_config.centralized,
+        )
+        self.curr_obj_states = get_objects_descr(
+            current_world_graph,
+            self._agents[0].uid,
+            include_room_name=True,
+            add_state_info=self.planner_config.objects_response_include_states,
+            centralized=self.planner_config.centralized,
+        )
+
+        continuation_prompt = (
+            f"{self.planner_config.llm.user_tag}"
+            "Continue from the previous action history and current world state.\n"
+            f"Task: {instruction}\n\n"
+            f"{world_description}\n\n"
+            "What is the next action to make progress towards completing the task?\n"
+            "Return your response in the following format\n\n"
+            "Thought: <reasoning for why you are taking the next action>\n"
+            "<next action call>\n"
+            f"Assigned!\n{self.planner_config.llm.eot_tag}"
+            f"{self.planner_config.llm.assistant_tag}"
+        )
+        if self.curr_prompt and not self.curr_prompt.endswith("\n"):
+            self.curr_prompt += "\n"
+        self.curr_prompt += continuation_prompt
+
+        if self.trace and not self.trace.endswith("\n"):
+            self.trace += "\n"
+        self.trace += (
+            "\n"
+            f"Task: {instruction}\n"
+            "Thought: "
+        )
 
     def build_tool_grammar(self, world_graph: "WorldGraph") -> str:
         """
@@ -565,6 +696,29 @@ class LLMPlanner(Planner):
                     break
         return print_str
 
+    def _llm_prompt_with_action_image(self, observations: Dict[str, Any]):
+        """Text prompt, plus robot camera frame when send_action_image is on."""
+        if not self._send_action_image_enabled():
+            return self.curr_prompt
+        pil_image = self._action_camera_pil(observations)
+        if pil_image is None:
+            try:
+                keys = [str(key) for key in list(observations.keys())[:24]]
+            except Exception:
+                keys = [type(observations).__name__]
+            cprint(
+                "[action_image] no robot RGB found; sending text-only prompt"
+                f" keys={keys}",
+                "yellow",
+            )
+            return self.curr_prompt
+        self._save_action_image(pil_image)
+        text = (
+            self.curr_prompt
+            + "\n[Robot overhead camera after the last action. Use it with the text state.]\n"
+        )
+        return [("text", text), ("image", pil_image_to_data_url(pil_image))]
+
     def replan(
         self,
         instruction: str,
@@ -574,10 +728,11 @@ class LLMPlanner(Planner):
         """
         Replan a high level action using the LLM/VLM
         """
+        prompt = self._llm_prompt_with_action_image(observations)
         # Generate response
         if self.planner_config.get("constrained_generation", False):
             llm_response = self.llm.generate(
-                self.curr_prompt,
+                prompt,
                 self.stopword,
                 generation_args={
                     "grammar_definition": self.build_response_grammar(
@@ -586,7 +741,7 @@ class LLMPlanner(Planner):
                 },
             )
         else:
-            llm_response = self.llm.generate(self.curr_prompt, self.stopword)
+            llm_response = self.llm.generate(prompt, self.stopword)
 
         # Format the response
         # This removes extra text followed by end expression when needed.
@@ -594,6 +749,255 @@ class LLMPlanner(Planner):
 
         info = {"llm_response": llm_response}
         return info
+
+    def _fast_explore_room(
+        self, room_name: str, world_graph: "WorldGraph"
+    ) -> Tuple[bool, str, List[str]]:
+        """Populate the current world graph with GT objects on furniture/floor in a room."""
+        gt = getattr(getattr(self.env_interface, "perception", None), "gt_graph", None)
+        if gt is None:
+            return False, "Fast explore failed: GT graph is unavailable.", []
+
+        try:
+            room_node = gt.get_node_from_name(room_name)
+        except ValueError:
+            return False, f"Fast explore failed: room '{room_name}' was not found.", []
+
+        object_nodes: List[Object] = []
+        relation_lines: List[str] = []
+        seen_objects = set()
+        all_furniture = gt.get_furniture_in_room(room_node)
+
+        for furn in all_furniture:
+            for obj in gt.get_neighbors_of_type(furn, Object):
+                if obj.name in seen_objects:
+                    continue
+                seen_objects.add(obj.name)
+                object_nodes.append(obj)
+                relation_lines.append(f"{obj.name} --[on]--> {furn.name}")
+            for rec in gt.get_neighbors_of_type(furn, Receptacle):
+                if rec.properties.get("type") == "within":
+                    continue
+                for obj in gt.get_neighbors_of_type(rec, Object):
+                    if obj.name in seen_objects:
+                        continue
+                    seen_objects.add(obj.name)
+                    object_nodes.append(obj)
+                    relation_lines.append(f"{obj.name} --[on]--> {furn.name}")
+
+        if object_nodes:
+            subgraph = gt.get_subgraph(object_nodes)
+            world_graph.update(subgraph, partial_obs=True, update_mode="gt")
+
+        summary = (
+            f"Fast explore success in {room_name}: found {len(object_nodes)} object(s) "
+            "on top of furniture/floor."
+        )
+        return True, summary, relation_lines
+
+    def _robot_base_pos(self, agent_uid: int) -> Optional[Any]:
+        try:
+            sim = self.env_interface.sim
+            return sim.agents_mgr[agent_uid].articulated_agent.base_pos
+        except Exception:
+            return None
+
+    def _pathfinder(self) -> Optional[Any]:
+        try:
+            return self.env_interface.sim.pathfinder
+        except Exception:
+            return None
+
+    def _furniture_for_explore(
+        self, room_name: str, world_graph: "WorldGraph"
+    ) -> List[Any]:
+        try:
+            return list(world_graph.get_furniture_in_room(room_name))
+        except (ValueError, KeyError, TypeError):
+            pass
+        gt = getattr(getattr(self.env_interface, "perception", None), "gt_graph", None)
+        if gt is None:
+            return []
+        try:
+            return list(gt.get_furniture_in_room(room_name))
+        except (ValueError, KeyError, TypeError):
+            return []
+
+    def _estimate_explore_tour(
+        self, room_name: str, agent_uid: int, world_graph: "WorldGraph"
+    ) -> Optional[Dict[str, Any]]:
+        try:
+            furniture = self._furniture_for_explore(room_name, world_graph)
+            return estimate_explore_tour(
+                self._pathfinder(),
+                self._robot_base_pos(agent_uid),
+                furniture,
+                room_name=room_name,
+            )
+        except Exception:
+            return None
+
+    def _approx_explore_cost(
+        self, room_name: str, agent_uid: int, world_graph: "WorldGraph"
+    ) -> List[str]:
+        result = self._estimate_explore_tour(room_name, agent_uid, world_graph)
+        if result is None:
+            return [f"[fast_explore] approx tour {room_name}: failed"]
+        raw_steps = int(result["total_steps"])
+        raw_time_s = float(result["total_time_s"])
+        steps = scale_explore_steps(raw_steps, self.explore_walk_ratio)
+        time_s = sim_time_from_steps(steps)
+        self.explore_approx_sim_steps += steps
+        self.explore_approx_sim_time_s += time_s
+        self.explore_approx_meters += float(result["total_meters"])
+        lines = list(result["summary_lines"])
+        if lines:
+            visited = sum(1 for leg in result.get("legs") or [] if not leg.get("skipped"))
+            lines[0] = (
+                f"[fast_explore] approx tour {room_name}: {visited} furniture, "
+                f"{float(result['total_meters']):.1f} m, "
+                f"~{steps} sim steps, ~{time_s:.2f} s sim time"
+            )
+        if self.explore_walk_ratio is not None:
+            lines.append(
+                f"[fast_explore] scaled x{self.explore_walk_ratio:.3f}: "
+                f"{raw_steps} geodesic steps ({raw_time_s:.2f}s) -> "
+                f"{steps} steps ({time_s:.2f}s sim)"
+            )
+        return lines
+
+    def _hla_is_all_explore(
+        self, high_level_actions: Dict[int, Tuple[str, str, str]]
+    ) -> bool:
+        if not high_level_actions:
+            return False
+        for action_tuple in high_level_actions.values():
+            if action_tuple[0] != "Explore" or not action_tuple[1]:
+                return False
+        return True
+
+    def _start_explore_calibration(
+        self,
+        high_level_actions: Dict[int, Tuple[str, str, str]],
+        world_graph: Dict[int, "WorldGraph"],
+    ) -> None:
+        agent_uid, action_tuple = next(iter(high_level_actions.items()))
+        room_name = action_tuple[1]
+        result = self._estimate_explore_tour(
+            room_name, agent_uid, world_graph[agent_uid]
+        )
+        approx_steps = int(result["total_steps"]) if result is not None else 0
+        approx_time_s = float(result["total_time_s"]) if result is not None else 0.0
+        approx_meters = float(result["total_meters"]) if result is not None else 0.0
+        self._explore_calibrating = True
+        self._explore_calib_approx_steps = approx_steps
+        self._explore_calib_walked_steps = 0
+        self.explore_approx_meters += approx_meters
+        cprint(
+            f"[explore_calib] walking Explore[{room_name}] once "
+            f"(geodesic ~{approx_steps} steps / {approx_time_s:.2f}s) "
+            "to measure walked/geodesic ratio",
+            "yellow",
+        )
+        if result is not None:
+            for line in result["summary_lines"]:
+                cprint(line, "cyan")
+
+    def _tick_explore_calibration(self) -> None:
+        if not self._explore_calibrating:
+            return
+        last = self.last_high_level_actions or {}
+        if not any(action_tuple[0] == "Explore" for action_tuple in last.values()):
+            return
+        self._explore_calib_walked_steps += 1
+        self.explore_approx_sim_steps += 1
+        self.explore_approx_sim_time_s = sim_time_from_steps(
+            self.explore_approx_sim_steps
+        )
+
+    def _maybe_finish_explore_calibration(self, responses: Dict[int, str]) -> None:
+        if not self._explore_calibrating:
+            return
+        if not any(responses.values()):
+            return
+        walked = self._explore_calib_walked_steps
+        approx = self._explore_calib_approx_steps
+        ratio = walk_to_approx_ratio(walked, approx)
+        self._explore_calibrating = False
+        walked_time_s = sim_time_from_steps(walked)
+        approx_time_s = sim_time_from_steps(approx)
+        if ratio is None:
+            cprint(
+                f"[explore_calib] skipped ratio "
+                f"(walked {walked} steps / geodesic {approx} steps)",
+                "yellow",
+            )
+            return
+        self.explore_walk_ratio = ratio
+        cprint(
+            f"[explore_calib] walked {walked} steps ({walked_time_s:.2f}s sim) vs "
+            f"geodesic {approx} steps ({approx_time_s:.2f}s) => ratio {ratio:.3f}x "
+            "(applied to later fast Explore estimates)",
+            "yellow",
+        )
+
+    def _cost_metrics(self) -> Dict[str, Any]:
+        # Nested dict so DecentralizedEvaluationRunner can merge planner_info
+        # (it only accepts dict or str values at the top level).
+        metrics: Dict[str, Any] = {
+            "llm_planning_time_s": self.llm_planning_time_s,
+            "last_llm_call_s": self.last_llm_call_s,
+            "llm_call_count": self.replanning_count,
+            "explore_approx_sim_steps": self.explore_approx_sim_steps,
+            "explore_approx_sim_time_s": self.explore_approx_sim_time_s,
+            "explore_approx_meters": self.explore_approx_meters,
+        }
+        metrics.update(snapshot_from_llm(self.llm))
+        if self.explore_walk_ratio is not None:
+            metrics["explore_walk_ratio"] = self.explore_walk_ratio
+        return {"cost_metrics": metrics}
+
+    def _try_fast_explore_actions(
+        self,
+        high_level_actions: Dict[int, Tuple[str, str, str]],
+        world_graph: Dict[int, "WorldGraph"],
+    ) -> Optional[Dict[int, str]]:
+        """Return synthetic responses for fast Explore actions when enabled."""
+        if not self.fast_explore:
+            return None
+        if not self._hla_is_all_explore(high_level_actions):
+            return None
+        if self.explore_walk_ratio is None:
+            if not self._explore_calibrating:
+                self._start_explore_calibration(high_level_actions, world_graph)
+            return None
+
+        responses: Dict[int, str] = {}
+        for agent_uid, action_tuple in high_level_actions.items():
+            room_name = action_tuple[1]
+            agent_world_graph = world_graph[agent_uid]
+            success, summary, relation_lines = self._fast_explore_room(
+                room_name, agent_world_graph
+            )
+            color = "green" if success else "yellow"
+            cprint(f"[fast_explore] {summary}", color)
+            for line in relation_lines:
+                cprint(f"  {line}", "cyan")
+
+            response_text = summary
+            if relation_lines:
+                response_text += "\n" + "\n".join(relation_lines)
+            if success:
+                tour_lines = self._approx_explore_cost(
+                    room_name, agent_uid, agent_world_graph
+                )
+                for line in tour_lines:
+                    cprint(line, "cyan")
+                if tour_lines:
+                    response_text += "\n" + "\n".join(tour_lines)
+            responses[agent_uid] = response_text
+
+        return responses
 
 
     # ! IMPT: Method used to get the next actions.
@@ -631,6 +1035,7 @@ class LLMPlanner(Planner):
                 },
                 "is_done": {agent.uid: self.is_done for agent in self.agents},
             }
+            planner_info.update(self._cost_metrics())
             return {}, planner_info, self.is_done
 
         if self.curr_prompt == "":
@@ -660,11 +1065,11 @@ class LLMPlanner(Planner):
             # to get new low level actions for the same high level action
 
             planner_info["replanned"] = {agent.uid: True for agent in self.agents}
-            if verbose:
-                # calculate the total time of response generation
-                start_time = time.time()
-
+            start_time = time.time()
             response_info = self.replan(instruction, observations, world_graph)
+            elapsed = time.time() - start_time
+            self.last_llm_call_s = elapsed
+            self.llm_planning_time_s += elapsed
             llm_response = response_info["llm_response"]
             # llm_response: 'Thought: Since there are no objects found yet, I should explore the living room first, as it is the shortest path to locate the white table for placing the candle, candle holder, and plant.\nExplore[living_room_1]'
 
@@ -678,10 +1083,20 @@ class LLMPlanner(Planner):
             # parse thought from the response
             thought = self.parse_thought(llm_response)
 
-            if verbose:
-                total_time = time.time() - start_time
-                print(
-                    f"Time taken for LLM response generation: {total_time}; replanning_count: {self.replanning_count}"
+            cprint(
+                f"[timing] LLM call #{self.replanning_count + 1}: {elapsed:.2f}s  "
+                f"(cumulative {self.llm_planning_time_s:.2f}s)",
+                "yellow",
+            )
+            usage = snapshot_from_llm(self.llm)
+            if usage.get("total_tokens"):
+                cost_str = fmt_usd(usage.get("llm_usd"))
+                cprint(
+                    f"[usage] {usage.get('llm_model') or 'model'}  "
+                    f"{usage.get('prompt_tokens', 0)} in / "
+                    f"{usage.get('completion_tokens', 0)} out  "
+                    f"episode {cost_str}",
+                    "yellow",
                 )
 
             # Update prompt with the first response
@@ -731,6 +1146,9 @@ class LLMPlanner(Planner):
                         agent.uid: ("Done", None, None) for agent in self.agents
                     },
                 }
+                planner_info.update(self._cost_metrics())
+                if self.last_action_image_relpath:
+                    planner_info["action_image"] = self.last_action_image_relpath
                 return {}, planner_info, self.is_done
 
             # Parse high level action directives from llm response
@@ -756,10 +1174,21 @@ class LLMPlanner(Planner):
                 cprint(f"Agent {agent_id}: {action_name}[{action_args}]", "yellow")
             cprint("="*80 + "\n", "cyan")
 
-            # Get low level actions and/or responses
-            low_level_actions, responses = self.process_high_level_actions(
-                high_level_actions, observations
+            # Store last executed high level action
+            self.last_high_level_actions = high_level_actions
+
+            fast_explore_responses = self._try_fast_explore_actions(
+                high_level_actions, world_graph
             )
+            if fast_explore_responses is not None:
+                low_level_actions = {}
+                responses = fast_explore_responses
+            else:
+                # Get low level actions and/or responses
+                low_level_actions, responses = self.process_high_level_actions(
+                    high_level_actions, observations
+                )
+                self._maybe_finish_explore_calibration(responses)
 
             # low_level_actions: literally a np array of (290, ) 0s with the action so index 10 = -10.
             # So the actual low-level action is -10 for the movement
@@ -774,8 +1203,6 @@ class LLMPlanner(Planner):
 
             # breakpoint()
 
-            # Store last executed high level action
-            self.last_high_level_actions = high_level_actions
         else:
             planner_info["replanned"] = {agent.uid: False for agent in self.agents}
             # Set thought to None
@@ -786,6 +1213,8 @@ class LLMPlanner(Planner):
             low_level_actions, responses = self.process_high_level_actions(
                 self.last_high_level_actions, observations
             )
+            self._tick_explore_calibration()
+            self._maybe_finish_explore_calibration(responses)
 
         # Log if replanning was done or not before overwriting the value
         planner_info["replan_required"] = {
@@ -816,6 +1245,9 @@ class LLMPlanner(Planner):
         planner_info["agent_states"] = self.get_last_agent_states()
         planner_info["agent_positions"] = self.get_last_agent_positions()
         planner_info["agent_collisions"] = self.get_agent_collisions()
+        planner_info.update(self._cost_metrics())
+        if planner_info.get("replanned") and self.last_action_image_relpath:
+            planner_info["action_image"] = self.last_action_image_relpath
         return low_level_actions, planner_info, self.is_done
 
     def check_if_agent_done(self, llm_response: str) -> bool:

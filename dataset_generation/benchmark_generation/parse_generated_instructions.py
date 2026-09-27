@@ -160,16 +160,10 @@ class InstructionParser:
             "good_parsing": good_parsing,
         }
 
-    def episode_init_valid(
-        self, init_episode, scene_info, add_clutter=False, template_task_number=None
-    ):
-        """
-        Check if the episode initialization is valid
-        """
+    def _parse_state_entries(self, entries, scene_info):
         missing_objects = []
         missing_furniture = []
         missing_room = []
-        missing_spatial_anchor = []
         parsed_init_state = []
         task_relevant_objects = []
         necessary_fields = [
@@ -178,69 +172,103 @@ class InstructionParser:
             "allowed_regions",
             "number",
         ]
+        extra_keys = ("location", "object_states", "phase", "next_to")
 
-        init_state_key = "initial_state"
-        if init_state_key not in init_episode:
-            return False, [], [], [], []
-
-        # check hallucinations in initial state
-        for init_obj in init_episode[init_state_key]:
-            # ensure all init fields are present
+        for init_obj in entries:
             if not all(x in init_obj for x in necessary_fields):
                 continue
 
             try:
-                init_obj["object_classes"] = init_obj["object_classes"][0]
-                init_obj["furniture_names"] = init_obj["furniture_names"][0]
-                init_obj["allowed_regions"] = init_obj["allowed_regions"][0]
+                object_class = init_obj["object_classes"][0]
+                furniture_name = init_obj["furniture_names"][0]
+                allowed_region = init_obj["allowed_regions"][0]
             except BaseException:
                 continue
 
-            # Convert object
-            init_obj["object_classes"] = (
-                init_obj["object_classes"].lower().strip().replace(" ", "_")
-            )
+            object_class = object_class.lower().strip().replace(" ", "_")
+            if object_class in conversion_dict:
+                object_class = conversion_dict[object_class]
 
-            if init_obj["object_classes"] in conversion_dict:
-                init_obj["object_classes"] = conversion_dict[init_obj["object_classes"]]
-
-            if init_obj["object_classes"] not in scene_info["objects"]:
-                missing_objects.append(init_obj["object_classes"])
+            if object_class not in scene_info["objects"]:
+                missing_objects.append(object_class)
             else:
-                task_relevant_objects.append(init_obj["object_classes"])
+                task_relevant_objects.append(object_class)
 
             if (
-                init_obj["furniture_names"] not in scene_info["all_furniture"]
-                and init_obj["furniture_names"] != "floor"
+                furniture_name not in scene_info["all_furniture"]
+                and furniture_name != "floor"
             ):
-                missing_furniture.append(init_obj["furniture_names"])
+                missing_furniture.append(furniture_name)
 
             if (
-                init_obj["allowed_regions"] not in scene_info["furniture"].keys()
-                and init_obj["allowed_regions"] not in scene_info["all_rooms"]
+                allowed_region not in scene_info["furniture"].keys()
+                and allowed_region not in scene_info["all_rooms"]
             ):
-                missing_room.append(init_obj["allowed_regions"])
+                missing_room.append(allowed_region)
 
-            parsed_init_state.append(
-                {
-                    "number": init_obj["number"],
-                    "object_classes": [init_obj["object_classes"]],
-                    "furniture_names": [init_obj["furniture_names"]],
-                    "allowed_regions": [init_obj["allowed_regions"]],
-                }
-            )
+            parsed = {
+                "number": init_obj["number"],
+                "object_classes": [object_class],
+                "furniture_names": [furniture_name],
+                "allowed_regions": [allowed_region],
+            }
+            for key in extra_keys:
+                if key in init_obj:
+                    parsed[key] = init_obj[key]
+            parsed_init_state.append(parsed)
+
+        return (
+            parsed_init_state,
+            task_relevant_objects,
+            missing_objects,
+            missing_furniture,
+            missing_room,
+        )
+
+    def episode_init_valid(
+        self, init_episode, scene_info, add_clutter=False, template_task_number=None
+    ):
+        """
+        Check if the episode initialization is valid
+        """
+        init_state_key = "initial_state"
+        if init_state_key not in init_episode:
+            return False, [], [], [], []
+
+        (
+            parsed_init_state,
+            task_relevant_objects,
+            missing_objects,
+            missing_furniture,
+            missing_room,
+        ) = self._parse_state_entries(init_episode[init_state_key], scene_info)
+
+        if "goal_state" in init_episode:
+            (
+                parsed_goal_state,
+                _,
+                goal_missing_objects,
+                goal_missing_furniture,
+                goal_missing_room,
+            ) = self._parse_state_entries(init_episode["goal_state"], scene_info)
+            missing_objects = missing_objects + goal_missing_objects
+            missing_furniture = missing_furniture + goal_missing_furniture
+            missing_room = missing_room + goal_missing_room
+            if init_episode["goal_state"] and not parsed_goal_state:
+                return False, init_episode, missing_objects, missing_furniture, missing_room
+        else:
+            parsed_goal_state = None
 
         if add_clutter:
             clutter_num = random.randint(1, 5)
             clutter_num = str(clutter_num)
-            ##use the task_relevant_objects list above to control clutter gen
             parsed_init_state.append(
                 {
                     "name": "common sense",
                     "excluded_object_classes": task_relevant_objects,
                     "exclude_existing_objects": True,
                     "number": clutter_num,
-                    "common_sense_object_classes": True,  # this specifies region->object metadata is used for sampling
+                    "common_sense_object_classes": True,
                     "location": "on",
                     "furniture_names": [],
                 },
@@ -256,12 +284,10 @@ class InstructionParser:
         new_init = copy.deepcopy(init_episode)
         del new_init[init_state_key]
         new_init["initial_state"] = parsed_init_state
+        if parsed_goal_state is not None:
+            new_init["goal_state"] = parsed_goal_state
 
-        if (
-            len(missing_objects) > 0
-            or len(missing_furniture) > 0
-            or len(missing_spatial_anchor) > 0
-        ):
+        if len(missing_objects) > 0 or len(missing_furniture) > 0:
             return False, new_init, missing_objects, missing_furniture, missing_room
         else:
             return True, new_init, [], [], []

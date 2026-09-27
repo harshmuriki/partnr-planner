@@ -1,0 +1,49 @@
+# @package _global_
+
+defaults:
+  - /examples/planner_multi_agent_demo_config
+  - /instruct@evaluation.agents.agent_0.planner.plan_config.instruct: custom_approach_prompt
+  - override /evaluation: decentralized_evaluation_runner_single_agent
+  - override /planner@evaluation.agents.agent_0.planner: custom_approach_planner
+  - override /agent@evaluation.agents.agent_0.config: oracle_rearrange_object_states_agent_motortoolsonly
+  - override /world_model@world_model: gt_graph
+  - _self_
+
+agent_asymmetry: True
+world_model:
+  partial_obs: True
+  use_gt_object_locations: True
+  use_gt_static_structure: True
+
+evaluation:
+  use_rgb: True
+  pddl_baseline: True
+  agents:
+    agent_0:
+      planner:
+        plan_config:
+          pddl_baseline: True
+          subgoal_action_backend: vlm
+          custom_action_executor: pddlstream
+          num_branches: 1
+          max_reprompts: 0
+          ntamp_max_pddl_replan_retries: 2
+          max_pddl_replans_per_subgoal: 2
+          max_vlm_action_reprompts_per_subgoal: 2
+          skip_failed_subgoals: True
+          enable_partial_obs_explore: True
+          explore_on_missing_required_objects: True
+          enable_vlm_explore_subgoal: True
+          max_room_explore_passes_per_object: 2
+          explore_fast: True
+          verbose: True
+          print_custom_pipeline_details: False
+          log_dir: "custom_approach"
+          vlm:
+            type: gpt4v
+            model_name: gpt-5.6-luna
+            max_completion_tokens: 1200
+            temperature: 0.2
+            use_images: True
+            cache_path: null
+            gt_bbox_image_panels: 2

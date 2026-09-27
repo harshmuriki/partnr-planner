@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skill Runner</title>
+  <style>
+    :root {
+      --bg: #1a1b26;
+      --panel: #24283b;
+      --text: #c0caf5;
+      --muted: #9aa5ce;
+      --accent: #7aa2f7;
+      --ok: #9ece6a;
+      --err: #f7768e;
+      --warn: #e0af68;
+      --border: #414868;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      padding: 0.75rem 1.15rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    header h1 { margin: 0; font-size: 1.05rem; color: var(--accent); }
+    header .sub { color: var(--muted); font-size: 0.8rem; font-weight: 400; margin-left: 0.5rem; }
+    .status-pill {
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid var(--border);
+      background: #1f2335;
+      max-width: min(52vw, 520px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .status-pill.idle { color: var(--ok); }
+    .status-pill.loading, .status-pill.running { color: var(--warn); }
+    .status-pill.error { color: var(--err); }
+    main {
+      display: grid;
+      grid-template-columns: 280px 330px minmax(0, 1fr);
+      gap: 0.85rem;
+      padding: 0.85rem;
+      height: calc(100vh - 52px);
+      align-items: stretch;
+    }
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr; height: auto; }
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      min-height: 0;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel h2 {
+      margin: 0 0 0.45rem;
+      font-size: 0.92rem;
+      color: var(--accent);
+    }
+    .section { margin-top: 1rem; }
+    .section:first-child { margin-top: 0; }
+    label { display: block; margin: 0.5rem 0 0.28rem; color: var(--muted); font-size: 0.8rem; }
+    select, input, button {
+      width: 100%;
+      font: inherit;
+      color: var(--text);
+      background: #1f2335;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+    }
+    button {
+      background: var(--accent);
+      color: #1a1b26;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      margin-top: 0.55rem;
+    }
+    button.secondary { background: #414868; color: var(--text); }
+    button.danger { background: var(--err); color: #1a1b26; }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .hint { color: var(--muted); font-size: 0.75rem; margin: 0.35rem 0 0; }
+    .meta { font-size: 0.82rem; color: var(--muted); line-height: 1.45; }
+    .meta strong { color: var(--text); }
+    details.advanced {
+      margin-top: 0.55rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    details.advanced summary { cursor: pointer; }
+
+    .tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.65rem; }
+    .tabs button {
+      width: auto;
+      margin: 0;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.78rem;
+      background: #1f2335;
+      color: var(--muted);
+    }
+    .tabs button.active { background: var(--accent); color: #1a1b26; }
+    .tab-page.hidden { display: none; }
+    .tab-page { flex: 1; min-height: 0; overflow: auto; }
+
+    .video-wrap {
+      background: #11131a;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      min-height: 240px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    .gallery { display: grid; gap: 0.75rem; }
+    .gallery video { width: 100%; border-radius: 6px; background: #000; }
+
+    .graph-panel { overflow: hidden; }
+    .graph-tree {
+      flex: 1;
+      overflow: auto;
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+    .graph-tree ul {
+      list-style: none;
+      margin: 0;
+      padding: 0 0 0 0.85rem;
+      border-left: 1px solid var(--border);
+    }
+    .graph-tree > ul { padding-left: 0; border-left: none; }
+    .graph-tree li { margin: 0.08rem 0; }
+    .graph-tree summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      padding: 0.12rem 0.2rem;
+      border-radius: 4px;
+    }
+    .graph-tree summary::-webkit-details-marker { display: none; }
+    .graph-tree summary::before {
+      content: "▸";
+      color: var(--muted);
+      font-size: 0.7rem;
+      width: 0.7rem;
+    }
+    .graph-tree details[open] > summary::before { content: "▾"; }
+    .graph-tree .leaf {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      padding: 0.12rem 0.2rem 0.12rem 1.05rem;
+      border-radius: 4px;
+    }
+    .graph-tree .node-name {
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      width: auto;
+      font: inherit;
+      font-weight: 500;
+      text-align: left;
+      border-radius: 0;
+    }
+    .graph-tree .node-name:hover { color: var(--accent) !important; }
+    .graph-tree .node-name.selected { color: var(--accent) !important; font-weight: 600; }
+    .graph-tree .node-states {
+      color: var(--warn);
+      font-size: 0.68rem;
+      font-family: ui-monospace, monospace;
+      margin-left: 0.2rem;
+    }
+    .graph-tree .t-room,
+    .graph-tree .node-name.t-room { color: #7dcfff; }
+    .graph-tree .t-furn,
+    .graph-tree .node-name.t-furn { color: #e0af68; }
+    .graph-tree .t-obj,
+    .graph-tree .node-name.t-obj { color: #9ece6a; }
+    .graph-tree .t-rec,
+    .graph-tree .node-name.t-rec { color: #bb9af7; }
+    .graph-tree .t-agent,
+    .graph-tree .node-name.t-agent { color: #f7768e; }
+    .legend { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.45rem; font-size: 0.7rem; }
+    .legend .t-room { color: #7dcfff; }
+    .legend .t-furn { color: #e0af68; }
+    .legend .t-obj { color: #9ece6a; }
+    .legend .t-rec { color: #bb9af7; }
+    .legend .t-agent { color: #f7768e; }
+    .graph-empty, .empty { color: var(--muted); font-size: 0.8rem; padding: 0.4rem 0; }
+
+    pre.inspector {
+      margin: 0;
+      max-height: 280px;
+      overflow: auto;
+      font-size: 0.74rem;
+      background: #1f2335;
+      border-radius: 8px;
+      padding: 0.65rem;
+      border: 1px solid var(--border);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .history-item { border-bottom: 1px solid var(--border); padding: 0.45rem 0; font-size: 0.8rem; }
+    .history-item .cmd { color: var(--accent); }
+    .history-item.ok .resp { color: var(--ok); }
+    .history-item.bad .resp { color: var(--err); }
+    .action-counts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.7rem;
+    }
+    .action-chip {
+      background: #1f2335;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.75rem;
+      color: var(--text);
+    }
+    .action-chip strong { color: var(--accent); }
+    .action-chip.total { border-color: var(--accent); }
+    .logs { color: var(--muted); white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.72rem; }
+    .place-fields.hidden { display: none; }
+    .skill-help { color: var(--muted); font-size: 0.75rem; margin-top: 0.3rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Skill Runner<span class="sub">pick a target, run a skill, watch live</span></h1>
+    <div id="statusPill" class="status-pill idle">idle</div>
+  </header>
+  <main>
+    <section class="panel graph-panel">
+      <h2>World</h2>
+      <div class="tabs" id="graphTabs">
+        <button data-graph="gt" class="active">GT</button>
+        <button data-graph="robot">Robot</button>
+      </div>
+      <p class="hint">GT is default. Objects sit under furniture/receptacles — those branches stay open. Click a name to set the skill target.</p>
+      <input id="graphSearch" type="text" placeholder="Filter rooms, objects…" />
+      <div id="graphTree" class="graph-tree">
+        <div class="graph-empty">Load an episode to see the scene graph.</div>
+      </div>
+      <p id="graphCounts" class="hint"></p>
+      <div class="legend">
+        <span class="t-room">room</span>
+        <span class="t-furn">furniture</span>
+        <span class="t-obj">object</span>
+        <span class="t-rec">receptacle</span>
+        <span class="t-agent">agent</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section">
+        <h2>1. Load episode</h2>
+        <label for="episodeSelect">Task</label>
+        <select id="episodeSelect"></select>
+        <button id="loadBtn">Load</button>
+        <p class="hint">Scene load can take ~30s.</p>
+        <div id="episodeMeta" class="meta" style="margin-top:0.6rem;"></div>
+        <details class="advanced">
+          <summary>Custom path / episode id</summary>
+          <label for="customPath">Data path</label>
+          <input id="customPath" type="text" placeholder="baseline_evaluation_v3/episodes/task_1/.../dataset.json.gz" />
+          <div class="row">
+            <div>
+              <label for="episodeId">Episode id</label>
+              <input id="episodeId" type="text" />
+            </div>
+            <div>
+              <label for="episodeIndex">Index</label>
+              <input id="episodeIndex" type="number" min="0" />
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="section">
+        <h2>2. Run skill</h2>
+        <label for="skillSelect">Skill</label>
+        <select id="skillSelect"></select>
+        <p id="skillHelp" class="skill-help"></p>
+        <div class="row">
+          <div>
+            <label for="agentSelect">Who</label>
+            <select id="agentSelect">
+              <option value="0">Robot (0)</option>
+              <option value="1">Human (1)</option>
+            </select>
+          </div>
+          <div>
+            <label for="targetInput">Target</label>
+            <input id="targetInput" list="entityList" placeholder="click in World" />
+            <datalist id="entityList"></datalist>
+          </div>
+        </div>
+        <div id="placeFields" class="place-fields hidden">
+          <label>Place args</label>
+          <input id="placeArgs" placeholder="cup_0,on,counter_22,None,None" />
+          <p class="hint">object, relation, furniture, constraint, reference</p>
+        </div>
+        <button id="runBtn" disabled>Run skill</button>
+        <button id="saveBtn" class="secondary" disabled>Save run</button>
+        <button id="exitBtn" class="danger" disabled>Exit</button>
+        <p id="saveResult" class="hint"></p>
+      </div>
+
+      <div class="section">
+        <h2>3. Details</h2>
+        <div class="tabs" id="detailTabs">
+          <button data-detail="history" class="active">History</button>
+          <button data-detail="inspect">Inspect</button>
+          <button data-detail="logs">Logs</button>
+        </div>
+        <div id="detailHistory" class="tab-page">
+          <div id="actionCounts"></div>
+          <div id="history" class="empty">No skills run yet.</div>
+        </div>
+        <div id="detailInspect" class="tab-page hidden">
+          <div class="tabs" id="inspectorTabs">
+            <button data-kind="entities" class="active">entities</button>
+            <button data-kind="state">state</button>
+            <button data-kind="location">location</button>
+            <button data-kind="articulated">articulated</button>
+            <button data-kind="gt">gt</button>
+          </div>
+          <label for="inspectName">Name filter</label>
+          <input id="inspectName" type="text" placeholder="optional" />
+          <button id="inspectBtn" class="secondary" disabled>Refresh</button>
+          <pre id="inspectorOut" class="inspector" style="margin-top:0.55rem;">Load an episode first.</pre>
+        </div>
+        <div id="detailLogs" class="tab-page hidden">
+          <div id="logs" class="logs empty">No logs yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="tabs" id="viewTabs">
+        <button data-view="live" class="active">Live camera</button>
+        <button data-view="videos">Saved videos</button>
+      </div>
+      <div id="viewLive" class="tab-page">
+        <div class="video-wrap">
+          <img id="liveStream" src="/api/stream" alt="Live third-person cameras" />
+        </div>
+        <p class="hint">Live third-person view. Robot on the left, human on the right. Updates while a skill is running.</p>
+      </div>
+      <div id="viewVideos" class="tab-page hidden">
+        <div id="videoGallery" class="gallery">
+          <div class="empty">Videos appear here after you run a skill.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let currentKind = "entities";
+    let busy = false;
+    let loaded = false;
+    let lastGraphJson = "";
+    let selectedEntity = "";
+    let graphFilter = "";
+    let graphSource = "gt";
+    let lastStatus = null;
+    let skillHelpMap = {};
+    let viewTab = "live";
+
+    function typeClass(type) {
+      const t = (type || "").toLowerCase();
+      if (t.includes("receptacle")) return "t-rec";
+      if (t.includes("object")) return "t-obj";
+      if (t.includes("furniture") || t.includes("floor")) return "t-furn";
+      if (t.includes("room")) return "t-room";
+      if (t.includes("human") || t.includes("robot") || t.includes("spot")) return "t-agent";
+      return "";
+    }
+
+    function isObjectType(type) {
+      const t = (type || "").toLowerCase();
+      return t.includes("object") && !t.includes("receptacle");
+    }
+
+    function countObjects(node) {
+      let n = isObjectType(node && node.type) ? 1 : 0;
+      for (const c of (node && node.children) || []) n += countObjects(c);
+      return n;
+    }
+
+    function nodeMatches(node, q) {
+      if (!q) return true;
+      if ((node.name || "").toLowerCase().includes(q)) return true;
+      const states = node.states || {};
+      for (const [k, v] of Object.entries(states)) {
+        if (String(k).toLowerCase().includes(q) || String(v).toLowerCase().includes(q)) return true;
+      }
+      return (node.children || []).some((c) => nodeMatches(c, q));
+    }
+
+    function asChildNode(item, fallbackType) {
+      if (item == null) return null;
+      if (typeof item === "string") return { name: item, type: fallbackType };
+      return {
+        name: item.name,
+        type: item.type || fallbackType,
+        states: item.states,
+        children: item.children,
+      };
+    }
+
+    function normalizeGraph(graph) {
+      if (!graph) return null;
+      if (graph.root) return graph.root;
+      if (graph.rooms) {
+        return {
+          name: "house",
+          type: "House",
+          children: graph.rooms.map((room) => ({
+            name: room.name,
+            type: room.type || "Room",
+            states: room.states,
+            children: [
+              ...(room.furniture || []).map((furn) => ({
+                name: furn.name,
+                type: furn.type || "Furniture",
+                states: furn.states,
+                children: [
+                  ...(furn.receptacles || []).map((rec) => ({
+                    name: rec.name,
+                    type: rec.type || "Receptacle",
+                    states: rec.states,
+                    children: (rec.objects || []).map((o) => asChildNode(o, "Object")),
+                  })),
+                  ...(furn.objects || []).map((o) => asChildNode(o, "Object")),
+                ],
+              })),
+              ...(room.objects || []).map((o) => asChildNode(o, "Object")),
+            ],
+          })),
+        };
+      }
+      return null;
+    }
+
+    function formatStates(states) {
+      if (!states || typeof states !== "object") return "";
+      const parts = Object.entries(states).map(([k, v]) => k + "=" + v);
+      if (!parts.length) return "";
+      return `<span class="node-states">${escapeHtml(parts.join(", "))}</span>`;
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function renderNodeHtml(node, q, depth) {
+      if (!node || !nodeMatches(node, q)) return "";
+      const children = node.children || [];
+      const visible = q ? children.filter((c) => nodeMatches(c, q)) : children;
+      const cls = typeClass(node.type);
+      const selected = node.name === selectedEntity ? " selected" : "";
+      const objCount = isObjectType(node.type) ? 0 : countObjects(node);
+      const nameBtn =
+        `<button type="button" class="node-name ${cls}${selected}" data-name="${escapeHtml(node.name)}">${escapeHtml(node.name)}</button>` +
+        formatStates(node.states);
+      const open = depth < 2 || !!q || objCount > 0 ? " open" : "";
+      if (!visible.length) {
+        return `<li><div class="leaf ${cls}">${nameBtn}</div></li>`;
+      }
+      return `<li><details${open}><summary class="${cls}">${nameBtn}</summary><ul>${visible.map((c) => renderNodeHtml(c, q, depth + 1)).join("")}</ul></details></li>`;
+    }
+
+    function renderGraph(graph) {
+      const root = normalizeGraph(graph);
+      const el = $("graphTree");
+      if (!root) {
+        el.innerHTML = '<div class="graph-empty">Load an episode to see the scene graph.</div>';
+        lastGraphJson = "";
+        $("graphCounts").textContent = "";
+        return;
+      }
+      const payload = graphSource + "|" + JSON.stringify(root) + "|" + graphFilter;
+      if (payload === lastGraphJson && el.querySelector("ul")) {
+        el.querySelectorAll(".node-name").forEach((btn) => {
+          btn.classList.toggle("selected", btn.dataset.name === selectedEntity);
+        });
+        return;
+      }
+      lastGraphJson = payload;
+      el.innerHTML = `<ul>${renderNodeHtml(root, graphFilter, 0)}</ul>`;
+      const nObj = countObjects(root);
+      $("graphCounts").textContent =
+        nObj + " object" + (nObj === 1 ? "" : "s") + " in this graph";
+    }
+
+    function selectEntity(name) {
+      selectedEntity = name;
+      $("targetInput").value = name;
+      $("graphTree").querySelectorAll(".node-name").forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.name === name);
+      });
+    }
+
+    function graphFromStatus(s) {
+      if (!s) return null;
+      if (graphSource === "robot") return s.robot_graph || null;
+      return s.gt_graph || s.graph || null;
+    }
+
+    function setBusy(isBusy) {
+      busy = isBusy;
+      $("loadBtn").disabled = isBusy;
+      $("runBtn").disabled = isBusy || !loaded;
+      $("saveBtn").disabled = isBusy || !loaded;
+      $("exitBtn").disabled = isBusy || !loaded;
+      $("inspectBtn").disabled = isBusy || !loaded;
+    }
+
+    function setStatus(status, message) {
+      const pill = $("statusPill");
+      pill.className = "status-pill " + (status || "idle");
+      pill.textContent = (status || "idle") + (message ? " — " + message : "");
+    }
+
+    function showView(name) {
+      viewTab = name;
+      $("viewLive").classList.toggle("hidden", name !== "live");
+      $("viewVideos").classList.toggle("hidden", name !== "videos");
+      $("viewTabs").querySelectorAll("button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.view === name);
+      });
+      if (name === "videos") refreshVideos();
+    }
+
+    function showDetail(name) {
+      $("detailHistory").classList.toggle("hidden", name !== "history");
+      $("detailInspect").classList.toggle("hidden", name !== "inspect");
+      $("detailLogs").classList.toggle("hidden", name !== "logs");
+      $("detailTabs").querySelectorAll("button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.detail === name);
+      });
+    }
+
+    async function fetchJSON(url, opts) {
+      const res = await fetch(url, opts);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || res.statusText);
+      return data;
+    }
+
+    async function loadEpisodes() {
+      const data = await fetchJSON("/api/episodes");
+      const sel = $("episodeSelect");
+      sel.innerHTML = "";
+      const blank = document.createElement("option");
+      blank.value = "";
+      blank.textContent = "Choose a task…";
+      sel.appendChild(blank);
+      let currentGroup = null;
+      let groupEl = null;
+      for (const ep of data.episodes) {
+        const group = ep.group || "";
+        if (group && group !== currentGroup) {
+          currentGroup = group;
+          groupEl = document.createElement("optgroup");
+          groupEl.label = group;
+          sel.appendChild(groupEl);
+        }
+        const opt = document.createElement("option");
+        opt.value = ep.path;
+        opt.textContent = ep.label;
+        opt.dataset.runtime = ep.runtime_yaml || "";
+        (groupEl || sel).appendChild(opt);
+      }
+    }
+
+    async function loadSkills() {
+      const data = await fetchJSON("/api/skills");
+      const sel = $("skillSelect");
+      sel.innerHTML = "";
+      const entries = Array.isArray(data.skills)
+        ? data.skills
+        : Object.entries(data.skills || {}).map(([name, help]) => ({ name, help }));
+      skillHelpMap = {};
+      for (const item of entries) {
+        const opt = document.createElement("option");
+        opt.value = item.name;
+        opt.textContent = item.name;
+        sel.appendChild(opt);
+        skillHelpMap[item.name] = item.help || "";
+      }
+      if ([...sel.options].some((o) => o.value === "Navigate")) sel.value = "Navigate";
+      updatePlaceVisibility();
+    }
+
+    function updatePlaceVisibility() {
+      const skill = $("skillSelect").value;
+      $("placeFields").classList.toggle("hidden", skill !== "Place");
+      $("skillHelp").textContent = skillHelpMap[skill] || "";
+    }
+
+    function renderEntities(entities) {
+      const list = $("entityList");
+      list.innerHTML = "";
+      if (!entities || !entities.entity_names) return;
+      for (const name of entities.entity_names) {
+        const opt = document.createElement("option");
+        opt.value = name;
+        list.appendChild(opt);
+      }
+    }
+
+    function renderMeta(episode) {
+      if (!episode || !episode.episode_id) {
+        $("episodeMeta").textContent = "";
+        return;
+      }
+      $("episodeMeta").innerHTML =
+        "<strong>Loaded</strong> episode " + escapeHtml(episode.episode_id) + "<br>" +
+        "<strong>Scene</strong> " + escapeHtml(episode.scene_id) + "<br>" +
+        "<strong>Task</strong> " + escapeHtml(episode.instruction || "(none)");
+    }
+
+    function renderHistory(history) {
+      const el = $("history");
+      const countsEl = $("actionCounts");
+      if (!history || !history.length) {
+        el.className = "empty";
+        el.textContent = "No skills run yet.";
+        countsEl.innerHTML = "";
+        return;
+      }
+      const counts = {};
+      let okCount = 0;
+      let failCount = 0;
+      let totalSteps = 0;
+      for (const h of history) {
+        const skill = (h.command || "").trim().split(/\s+/)[0] || "unknown";
+        if (!counts[skill]) counts[skill] = { n: 0, ok: 0, steps: 0 };
+        counts[skill].n += 1;
+        if (h.ok) {
+          counts[skill].ok += 1;
+          okCount += 1;
+        } else {
+          failCount += 1;
+        }
+        counts[skill].steps += h.skill_steps || 0;
+        totalSteps += h.skill_steps || 0;
+      }
+      const chips = [
+        `<span class="action-chip total"><strong>${history.length}</strong> actions</span>`,
+        `<span class="action-chip">${okCount} ok · ${failCount} failed</span>`,
+        `<span class="action-chip">${totalSteps} sim steps</span>`,
+      ];
+      for (const name of Object.keys(counts).sort()) {
+        const c = counts[name];
+        chips.push(
+          `<span class="action-chip"><strong>${escapeHtml(name)}</strong> ${c.n}` +
+          (c.n !== c.ok ? ` (${c.ok} ok)` : "") +
+          ` · ${c.steps} steps</span>`
+        );
+      }
+      countsEl.innerHTML = `<div class="action-counts">${chips.join("")}</div>`;
+      el.className = "";
+      el.innerHTML = history.slice().reverse().map((h) =>
+        `<div class="history-item ${h.ok ? "ok" : "bad"}">
+          <div class="cmd">${escapeHtml(h.command)}</div>
+          <div class="resp">${escapeHtml(h.response)} <span style="color:var(--muted)">(${h.skill_steps} steps)</span></div>
+        </div>`
+      ).join("");
+    }
+
+    function renderLogs(logs) {
+      const el = $("logs");
+      if (!logs || !logs.length) {
+        el.className = "logs empty";
+        el.textContent = "No logs yet.";
+        return;
+      }
+      el.className = "logs";
+      el.textContent = logs.slice().reverse().join("\n");
+    }
+
+    async function refreshVideos() {
+      try {
+        const data = await fetchJSON("/api/videos");
+        const gallery = $("videoGallery");
+        if (!data.videos.length) {
+          gallery.innerHTML = '<div class="empty">Videos appear here after you run a skill.</div>';
+          return;
+        }
+        gallery.innerHTML = data.videos.map((v) =>
+          `<div>
+            <div class="hint">${escapeHtml(v.name)}</div>
+            <video controls src="/api/video/${encodeURIComponent(v.path)}"></video>
+          </div>`
+        ).join("");
+      } catch (e) {
+        /* ignore */
+      }
+    }
+
+    async function pollStatus() {
+      try {
+        const s = await fetchJSON("/api/status");
+        setStatus(s.status, s.status_message);
+        loaded = !!s.loaded;
+        if (s.status === "loading" || s.status === "running") {
+          setBusy(true);
+        } else if (!busy) {
+          $("runBtn").disabled = !loaded;
+          $("saveBtn").disabled = !loaded;
+          $("exitBtn").disabled = !loaded;
+          $("inspectBtn").disabled = !loaded;
+        }
+        if (s.episode) renderMeta(s.episode);
+        renderHistory(s.history);
+        renderLogs(s.logs);
+        if (s.entities) renderEntities(s.entities);
+        lastStatus = s;
+        renderGraph(graphFromStatus(s));
+      } catch (e) {
+        /* ignore */
+      }
+    }
+
+    async function onLoad() {
+      const selected = $("episodeSelect").selectedOptions[0];
+      const dataPath = ($("customPath").value.trim() || (selected && selected.value) || "").trim();
+      if (!dataPath) {
+        alert("Choose a task first.");
+        return;
+      }
+      const body = { data_path: dataPath };
+      const eid = $("episodeId").value.trim();
+      const eidx = $("episodeIndex").value.trim();
+      if (eid) body.episode_id = eid;
+      if (eidx !== "") body.episode_index = parseInt(eidx, 10);
+      if (selected && selected.dataset.runtime) body.runtime_config_path = selected.dataset.runtime;
+
+      setBusy(true);
+      setStatus("loading", "starting…");
+      try {
+        const result = await fetchJSON("/api/load", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        loaded = true;
+        renderMeta(result.episode);
+        lastStatus = result;
+        renderGraph(graphFromStatus(result));
+        await refreshInspector();
+        await refreshVideos();
+        setStatus("idle", "loaded");
+      } catch (e) {
+        alert("Load failed: " + e.message);
+        setStatus("error", e.message);
+      } finally {
+        setBusy(false);
+        await pollStatus();
+      }
+    }
+
+    async function onRun() {
+      const skill = $("skillSelect").value;
+      let target = $("targetInput").value.trim();
+      if (skill === "Place") target = $("placeArgs").value.trim() || target;
+      if (!target) {
+        alert("Pick a target in the World tree, or type a name.");
+        return;
+      }
+      setBusy(true);
+      setStatus("running", skill);
+      showView("live");
+      try {
+        await fetchJSON("/api/run_skill", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            skill,
+            agent_index: parseInt($("agentSelect").value, 10),
+            target,
+          }),
+        });
+        await refreshInspector();
+        await refreshVideos();
+      } catch (e) {
+        alert("Skill failed: " + e.message);
+      } finally {
+        setBusy(false);
+        await pollStatus();
+      }
+    }
+
+    async function onSave() {
+      setBusy(true);
+      setStatus("idle", "saving…");
+      $("saveResult").textContent = "Saving combined video, path, logs…";
+      try {
+        const result = await fetchJSON("/api/save", { method: "POST" });
+        const n = (result.stats && result.stats.total_actions) || 0;
+        $("saveResult").textContent =
+          "Saved " + n + " actions to " + result.save_dir;
+        await refreshVideos();
+        showView("videos");
+        setStatus("idle", "saved");
+      } catch (e) {
+        $("saveResult").textContent = "Save failed: " + e.message;
+        alert("Save failed: " + e.message);
+      } finally {
+        setBusy(false);
+        await pollStatus();
+      }
+    }
+
+    async function onExit() {
+      if (!confirm("Exit skill runner? This closes the simulator (same as CLI exit).")) {
+        return;
+      }
+      setBusy(true);
+      setStatus("idle", "exiting…");
+      try {
+        const result = await fetchJSON("/api/exit", { method: "POST" });
+        loaded = false;
+        renderHistory(result.history || []);
+        const stats = result.stats || {};
+        $("saveResult").textContent =
+          "Exited. " + (stats.total_actions || 0) + " actions, " +
+          (stats.total_sim_steps || 0) + " sim steps.";
+        setStatus("idle", "exited");
+        $("graphTree").innerHTML = '<div class="graph-empty">Simulator closed.</div>';
+        lastStatus = null;
+      } catch (e) {
+        loaded = false;
+        setStatus("idle", "exited");
+        $("saveResult").textContent = "Exited. Server stopped.";
+      } finally {
+        setBusy(false);
+        $("runBtn").disabled = true;
+        $("saveBtn").disabled = true;
+        $("exitBtn").disabled = true;
+        $("inspectBtn").disabled = true;
+      }
+    }
+
+    async function refreshInspector() {
+      if (!loaded) return;
+      const name = $("inspectName").value.trim();
+      let url = "/api/inspect?kind=" + encodeURIComponent(currentKind);
+      if (name) url += "&name=" + encodeURIComponent(name);
+      try {
+        const data = await fetchJSON(url);
+        $("inspectorOut").textContent = JSON.stringify(data, null, 2);
+        if (currentKind === "entities" && data.entity_names) renderEntities(data);
+      } catch (e) {
+        $("inspectorOut").textContent = "Error: " + e.message;
+      }
+    }
+
+    $("graphTree").addEventListener("click", (ev) => {
+      const btn = ev.target.closest(".node-name");
+      if (!btn) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      selectEntity(btn.dataset.name);
+    });
+    $("graphSearch").addEventListener("input", () => {
+      graphFilter = $("graphSearch").value.trim().toLowerCase();
+      lastGraphJson = "";
+      if (loaded) {
+        fetchJSON("/api/status").then((s) => {
+          lastStatus = s;
+          renderGraph(graphFromStatus(s));
+        }).catch(() => {});
+      }
+    });
+    $("loadBtn").addEventListener("click", onLoad);
+    $("runBtn").addEventListener("click", onRun);
+    $("saveBtn").addEventListener("click", onSave);
+    $("exitBtn").addEventListener("click", onExit);
+    $("skillSelect").addEventListener("change", updatePlaceVisibility);
+    $("inspectBtn").addEventListener("click", refreshInspector);
+    $("viewTabs").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button[data-view]");
+      if (btn) showView(btn.dataset.view);
+    });
+    $("detailTabs").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button[data-detail]");
+      if (btn) showDetail(btn.dataset.detail);
+    });
+    $("graphTabs").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button[data-graph]");
+      if (!btn) return;
+      graphSource = btn.dataset.graph;
+      $("graphTabs").querySelectorAll("button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.graph === graphSource);
+      });
+      lastGraphJson = "";
+      renderGraph(graphFromStatus(lastStatus));
+    });
+    $("inspectorTabs").addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button[data-kind]");
+      if (!btn) return;
+      currentKind = btn.dataset.kind;
+      for (const b of $("inspectorTabs").querySelectorAll("button")) {
+        b.classList.toggle("active", b === btn);
+      }
+      refreshInspector();
+    });
+    $("episodeSelect").addEventListener("change", () => {
+      const selected = $("episodeSelect").selectedOptions[0];
+      if (selected && selected.value) $("customPath").value = selected.value;
+    });
+
+    (async () => {
+      await loadEpisodes();
+      await loadSkills();
+      await pollStatus();
+      setInterval(pollStatus, 2000);
+    })();
+  </script>
+</body>
+</html>

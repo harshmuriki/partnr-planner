@@ -24,6 +24,14 @@ evaluation:
         plan_config:
           constrained_generation: True
           objects_response: True
+          objects_response_include_states: True
+          send_action_image: True
+          fast_explore: True
           replanning_threshold: 50
           llm:
             inference_mode: "rlm"
+  # Combined budget: LLM wall + exact action sim + Explore approx sim (seconds).
+  # Override: evaluation.max_combined_time_s=300   (0 disables)
+  max_combined_time_s: 600
+  generate_prediviz: True
+  use_rgb: True

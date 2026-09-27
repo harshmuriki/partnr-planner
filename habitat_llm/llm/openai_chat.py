@@ -12,9 +12,26 @@ from openai import OpenAI
 import httpx
 
 from habitat_llm.llm.base_llm import BaseLLM, Prompt
+from habitat_llm.utils.llm_usage import TokenUsageTracker, model_name_from_llm
 
 import dotenv
 dotenv.load_dotenv()
+
+_REASONING_EFFORTS = ("none", "low", "medium", "high", "xhigh", "max")
+
+
+def chat_create_kwargs(params) -> dict:
+    """Build OpenAI chat.completions.create kwargs from generation_params."""
+    if not isinstance(params, dict):
+        params = dict(params)
+    kwargs = {"model": params["model"]}
+    effort = params.get("reasoning_effort")
+    model = str(params.get("model") or "")
+    if effort and model.lower().startswith("gpt-5"):
+        effort_name = str(effort).strip().lower()
+        if effort_name in _REASONING_EFFORTS:
+            kwargs["reasoning_effort"] = effort_name
+    return kwargs
 
 def generate_message(multimodal_prompt, image_detail="auto"):
     # Converts the multimodal prompt to the OpenAI format.
@@ -49,13 +66,17 @@ class OpenAIChat(BaseLLM):
         except Exception:
             raise ValueError("No OPENAI API keys provided")
 
-        http_client = httpx.Client(timeout=60.0, follow_redirects=True)
+        http_client = httpx.Client(timeout=180.0, follow_redirects=True)
         self.client = OpenAI(api_key=api_key, http_client=http_client)
         self._validate_conf()
         self.verbose = self.llm_conf.verbose
         self.verbose = True
         self.message_history: List[Dict] = []
         self.keep_message_history = self.llm_conf.keep_message_history
+        self.token_usage = TokenUsageTracker(model_name_from_llm(self))
+        effort = getattr(self.generation_params, "reasoning_effort", None)
+        if effort:
+            self.token_usage.set_reasoning_effort(effort)
 
     def _validate_conf(self):
         if self.generation_params.stream:
@@ -118,10 +139,12 @@ class OpenAIChat(BaseLLM):
             image_detail = "low"  # high/low/auto
             messages.append(generate_message(prompt, image_detail=image_detail))
 
-        text_response = self.client.chat.completions.create(
-            model=params["model"], messages=messages
+        create_kwargs = chat_create_kwargs(params)
+        completion = self.client.chat.completions.create(
+            messages=messages, **create_kwargs
         )
-        text_response = text_response.choices[0].message.content
+        self.token_usage.record_openai(completion, model=params.get("model"))
+        text_response = completion.choices[0].message.content
         self.response = text_response
 
         # Update message history
