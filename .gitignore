@@ -10,6 +10,8 @@ dataset_generation/benchmark_generation/logs/
 episode_checks/
 habitat_llm/outputs/
 outputs/
+results/
+temp/
 third_party/detectron2/
 third_party/Detic/
 wandb/
@@ -134,3 +136,4 @@ logs/*
 .github/*
 *.gz
 scripts/episode_editor/static/*
+baseline_evaluation_v1
