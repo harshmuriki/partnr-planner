@@ -1,12 +1,12 @@
 {
-  "id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+  "id": "5df990062d8b43f3b05c09484cb26e43",
   "variant": "T1-ACC-BASE",
   "status": "completed",
-  "started_at": "2026-09-16T18:19:28.060271+00:00",
-  "completed_at": "2026-09-16T19:05:45.116862+00:00",
-  "action_count": 10,
-  "spec_hash": "4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca",
-  "dataset_hash": "21a1fa9dd3067f4bb0d6738b13413f35be638d06766d2ee3eb877817f5c7d036",
+  "started_at": "2026-09-29T21:43:25.569166+00:00",
+  "completed_at": "2026-09-29T21:43:28.307790+00:00",
+  "action_count": 8,
+  "spec_hash": "4f8156e740a02c42f8bdb12ac9c34be13c6383b1336287c8e9f5e640f35b0328",
+  "dataset_hash": "34aa805467747fcbe25d220ed7d114fe792d830cbb69ec55f01f4cf47e9465c3",
   "metadata": {
     "variant": "T1-ACC-BASE",
     "rooms": [
@@ -24,14 +24,157 @@
       "jug_0",
       "lamp_0"
     ],
-    "spec_hash": "4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca",
+    "spec_hash": "4f8156e740a02c42f8bdb12ac9c34be13c6383b1336287c8e9f5e640f35b0328",
     "robot_memory": "- jug_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
     "dataset": "/home/harshmuriki/Documents/partnr-planner/baseline_evaluation_v3/episodes/task_1/t1-acc-base/dataset.json.gz",
-    "dataset_hash": "21a1fa9dd3067f4bb0d6738b13413f35be638d06766d2ee3eb877817f5c7d036",
+    "dataset_hash": "34aa805467747fcbe25d220ed7d114fe792d830cbb69ec55f01f4cf47e9465c3",
     "episode_id": "T1-ACC-BASE",
     "reports": [],
     "unsupported_criteria": [],
     "available": true,
+    "scene_id": "103997895_171031182",
+    "furniture": {
+      "bedroom_0": [
+        {
+          "name": "chair_0",
+          "description": "Hercules Swivel Glider Recliner, Oyster"
+        },
+        {
+          "name": "chest_of_drawers_0",
+          "description": "Presby Nightstand, White"
+        }
+      ],
+      "bedroom_1": [
+        {
+          "name": "bed_0",
+          "description": "Casa King Storage Bed, Black"
+        },
+        {
+          "name": "shelves_1",
+          "description": "Telegraph Wide Bookcase, Acacia White"
+        },
+        {
+          "name": "table_3",
+          "description": "Telegraph Desk, Acacia White"
+        },
+        {
+          "name": "filing_cabinet_0",
+          "description": "Telegraph 4 Drawer File, Acacia White"
+        }
+      ],
+      "living_room_0": [
+        {
+          "name": "shelves_0",
+          "description": "bookshelf"
+        },
+        {
+          "name": "table_0",
+          "description": "Tulip Table (90cm)"
+        },
+        {
+          "name": "couch_0",
+          "description": "Presley 3 Seater Beige"
+        },
+        {
+          "name": "table_1",
+          "description": "Lincoln Marble 3 In 1 Pack Tables"
+        },
+        {
+          "name": "couch_2",
+          "description": "Presley 2 Seater Beige"
+        }
+      ],
+      "kitchen_0": [
+        {
+          "name": "shelves_0",
+          "description": "bookshelf"
+        },
+        {
+          "name": "cabinet_0",
+          "description": "Kitchen cabinet with hobs and oven"
+        },
+        {
+          "name": "table_2",
+          "description": "Bar"
+        },
+        {
+          "name": "cabinet_1",
+          "description": "Kitchen cabinet with door"
+        },
+        {
+          "name": "cabinet_2",
+          "description": "Kitchen cabinet with 2 doors"
+        },
+        {
+          "name": "cabinet_3",
+          "description": "Kitchen cabinet with drawers"
+        },
+        {
+          "name": "counter_0",
+          "description": "Kitchen island, 60x100x90"
+        },
+        {
+          "name": "cabinet_4",
+          "description": "Kitchen tall cabinet"
+        },
+        {
+          "name": "cabinet_6",
+          "description": "Kitchen cabinet with sink, double"
+        },
+        {
+          "name": "fridge_0",
+          "description": "American fridge freezer"
+        },
+        {
+          "name": "cabinet_7",
+          "description": "Kitchen corner cabinet"
+        }
+      ],
+      "laundryroom/mudroom_0": [
+        {
+          "name": "washer_dryer_0",
+          "description": "1600 spin 8kg load washing machine in silver F1647TD5"
+        },
+        {
+          "name": "washer_dryer_1",
+          "description": "1600 spin 8kg load washing machine in silver F1647TD5"
+        },
+        {
+          "name": "couch_1",
+          "description": "Couch"
+        },
+        {
+          "name": "cabinet_5",
+          "description": "Kitchen Cabinet with sink, 2 doors"
+        }
+      ],
+      "bathroom_0": [
+        {
+          "name": "toilet_0",
+          "description": "Close Coupled Toilet"
+        }
+      ],
+      "bathroom_1": [
+        {
+          "name": "toilet_1",
+          "description": "Cooke & Lewis Romeo Modern Close-Coupled Toilet with Soft Close Seat"
+        },
+        {
+          "name": "cabinet_0",
+          "description": "Kitchen cabinet with hobs and oven"
+        }
+      ],
+      "closet_0": [
+        {
+          "name": "wardrobe_0",
+          "description": "Dublin Combi Wardrobe - Black"
+        },
+        {
+          "name": "wardrobe_1",
+          "description": "Dublin Black Wardrobe - 2 Door - 2 Drawer"
+        }
+      ]
+    },
     "success_criteria": "- is_on_top(jug_0, table_0)\n- is_filled(jug_0)\n- is_powered_off(lamp_0)",
     "propositions": [
       {
@@ -2850,8 +2993,8 @@
       "success": true,
       "percent_complete": 1.0,
       "satisfied_at": [
-        675,
-        560,
+        671,
+        558,
         210
       ],
       "constraint_satisfaction": [
@@ -2925,20 +3068,20 @@
     }
   },
   "error": null,
-  "sim_steps": 676,
+  "sim_steps": 672,
   "steps_complete": 1,
   "artifact_status": "ready",
   "artifact_error": null,
-  "video_bytes": 6482878,
-  "video_sha256": "c20dd6cb6201915b07cea649bb0fdcea45f3d5b066064d440d8bd9a7f8e921bc",
+  "video_bytes": 1319996,
+  "video_sha256": "c479c105cc6afd5d839f93fbbd0ddcc8fb4b68d6a1d62e0d4a820bb3d4f2078d",
   "actions": [
     {
-      "request_id": "1f91524d-f915-42fd-a166-4d84b1e9bd94",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "c420e9480d8f4b0d9d8316b61b16b742",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 1,
       "skill": "Navigate",
       "target": "lamp_0",
-      "started_at": "2026-09-16T18:20:17.003652+00:00",
+      "started_at": "2026-09-29T21:43:25.589065+00:00",
       "result": {
         "command": "Navigate 0 lamp_0",
         "skill": "Navigate",
@@ -2955,12 +3098,12 @@
       }
     },
     {
-      "request_id": "42fc09c9-4318-4e13-a40c-e830ba6cdf2d",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "39e1483d0a1f4cfeb38e9be24c9af4c7",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 2,
       "skill": "PowerOff",
       "target": "lamp_0",
-      "started_at": "2026-09-16T18:20:36.757414+00:00",
+      "started_at": "2026-09-29T21:43:25.607159+00:00",
       "result": {
         "command": "PowerOff 0 lamp_0",
         "skill": "PowerOff",
@@ -2977,12 +3120,12 @@
       }
     },
     {
-      "request_id": "e9623a15-1bcc-420b-9d58-09750d4ba037",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "ca6ceec957994c509252cb654147dcb4",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 3,
       "skill": "Navigate",
       "target": "jug_0",
-      "started_at": "2026-09-16T18:21:19.267860+00:00",
+      "started_at": "2026-09-29T21:43:25.625164+00:00",
       "result": {
         "command": "Navigate 0 jug_0",
         "skill": "Navigate",
@@ -2999,12 +3142,12 @@
       }
     },
     {
-      "request_id": "c5d66f08-b75a-4277-962c-09953cb1bcdd",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "d7c925b9471749419086547886534d52",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 4,
       "skill": "Pick",
       "target": "jug_0",
-      "started_at": "2026-09-16T18:27:47.733799+00:00",
+      "started_at": "2026-09-29T21:43:25.643425+00:00",
       "result": {
         "command": "Pick 0 jug_0",
         "skill": "Pick",
@@ -3021,12 +3164,12 @@
       }
     },
     {
-      "request_id": "eb528ff5-407a-4566-a793-0de7f15fe401",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "918d8464d72640cea33f3e9cc9821d86",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 5,
       "skill": "Navigate",
-      "target": "cabinet_6",
-      "started_at": "2026-09-16T19:02:51.551966+00:00",
+      "target": "cabinet_34",
+      "started_at": "2026-09-29T21:43:25.661321+00:00",
       "result": {
         "command": "Navigate 0 cabinet_34",
         "skill": "Navigate",
@@ -3043,17 +3186,17 @@
       }
     },
     {
-      "request_id": "ba58ac8d-6518-4ace-a912-c96627dcfca8",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "d8da96631ac844a6aa4e00b53fff6b91",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 6,
-      "skill": "Place",
-      "target": "jug_0,on,cabinet_34,None,None",
-      "started_at": "2026-09-16T19:03:43.413130+00:00",
+      "skill": "Fill",
+      "target": "jug_0",
+      "started_at": "2026-09-29T21:43:25.679264+00:00",
       "result": {
-        "command": "Place 0 jug_0,on,cabinet_34,None,None",
-        "skill": "Place",
+        "command": "Fill 0 jug_0",
+        "skill": "Fill",
         "agent_index": 0,
-        "target": "jug_0,on,cabinet_34,None,None",
+        "target": "jug_0",
         "response": "Successful execution!",
         "skill_steps": 2,
         "ok": true,
@@ -3065,39 +3208,39 @@
       }
     },
     {
-      "request_id": "288d0ca6-43a3-4e65-a5f2-a897365d9075",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "6185af4ec0ab44699b282d5ddc637ec1",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 7,
-      "skill": "Fill",
-      "target": "jug_0",
-      "started_at": "2026-09-16T19:04:12.583358+00:00",
+      "skill": "Navigate",
+      "target": "table_0",
+      "started_at": "2026-09-29T21:43:25.697047+00:00",
       "result": {
-        "command": "Fill 0 jug_0",
-        "skill": "Fill",
+        "command": "Navigate 0 table_14",
+        "skill": "Navigate",
         "agent_index": 0,
-        "target": "jug_0",
+        "target": "table_14",
         "response": "Successful execution!",
-        "skill_steps": 2,
+        "skill_steps": 111,
         "ok": true,
         "video": "videos/video-6_.mp4",
         "steps_source": "environment_step_calls",
-        "recorded_frames": 2,
+        "recorded_frames": 111,
         "recording_error": null,
         "ground_truth_video": "clips/0006.mp4"
       }
     },
     {
-      "request_id": "4e2e0eb8-1b93-4206-b1cf-a06dac755fc9",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
+      "request_id": "45001278b2af45d98e793c132cdb46a7",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
       "sequence": 8,
-      "skill": "Pick",
-      "target": "jug_0",
-      "started_at": "2026-09-16T19:04:26.764664+00:00",
+      "skill": "Place",
+      "target": "jug_0,on,table_0,None,None",
+      "started_at": "2026-09-29T21:43:25.714972+00:00",
       "result": {
-        "command": "Pick 0 jug_0",
-        "skill": "Pick",
+        "command": "Place 0 jug_0,on,table_14,None,None",
+        "skill": "Place",
         "agent_index": 0,
-        "target": "jug_0",
+        "target": "jug_0,on,table_14,None,None",
         "response": "Successful execution!",
         "skill_steps": 2,
         "ok": true,
@@ -3107,69 +3250,98 @@
         "recording_error": null,
         "ground_truth_video": "clips/0007.mp4"
       }
-    },
-    {
-      "request_id": "03fc56cf-1179-4040-85b6-83a9ed24e64d",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
-      "sequence": 9,
-      "skill": "Navigate",
-      "target": "table_0",
-      "started_at": "2026-09-16T19:05:19.891952+00:00",
-      "result": {
-        "command": "Navigate 0 table_14",
-        "skill": "Navigate",
-        "agent_index": 0,
-        "target": "table_14",
-        "response": "Successful execution!",
-        "skill_steps": 111,
-        "ok": true,
-        "video": "videos/video-8_.mp4",
-        "steps_source": "environment_step_calls",
-        "recorded_frames": 111,
-        "recording_error": null,
-        "ground_truth_video": "clips/0008.mp4"
-      }
-    },
-    {
-      "request_id": "e9ab29c6-eacc-4a0d-abbf-5075178435c6",
-      "run_id": "63f68ca30d7542c2ab573ae37ba1c8f9",
-      "sequence": 10,
-      "skill": "Place",
-      "target": "jug_0,on,table_0,None,None",
-      "started_at": "2026-09-16T19:05:44.670353+00:00",
-      "result": {
-        "command": "Place 0 jug_0,on,table_14,None,None",
-        "skill": "Place",
-        "agent_index": 0,
-        "target": "jug_0,on,table_14,None,None",
-        "response": "Successful execution!",
-        "skill_steps": 2,
-        "ok": true,
-        "video": "videos/video-9_.mp4",
-        "steps_source": "environment_step_calls",
-        "recorded_frames": 2,
-        "recording_error": null,
-        "ground_truth_video": "clips/0009.mp4"
-      }
     }
   ],
   "schema_version": 2,
+  "criteria_evidence": {
+    "status": "pass",
+    "recorded_status": "pass",
+    "met": 3,
+    "total": 3,
+    "criteria": [
+      {
+        "label": "is_on_top(jug_0, table_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 7,
+            "sequence": 8,
+            "skill": "Place",
+            "target": "jug_0,on,table_0,None,None",
+            "video_time": null,
+            "simulator_step": 671
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 671,
+        "satisfied_at_end": true,
+        "proposition_index": 0
+      },
+      {
+        "label": "is_filled(jug_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 5,
+            "sequence": 6,
+            "skill": "Fill",
+            "target": "jug_0",
+            "video_time": null,
+            "simulator_step": 558
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 558,
+        "satisfied_at_end": true,
+        "proposition_index": 1
+      },
+      {
+        "label": "is_powered_off(lamp_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 1,
+            "sequence": 2,
+            "skill": "PowerOff",
+            "target": "lamp_0",
+            "video_time": null,
+            "simulator_step": 210
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 210,
+        "satisfied_at_end": true,
+        "proposition_index": 2
+      }
+    ],
+    "basis": "Saved evaluator results, including final-state and ordering constraints. Step links mark the first time a requirement became true, not an inferred cause."
+  },
   "simulator_steps_definition": "Sum of per-action environment step calls; reports add zero.",
   "video_playback_fps": 30,
   "room_choices": {
     "jug_0": [
+      "kitchen_0",
       "living_room_0",
       "bedroom_0",
-      "kitchen_0",
       "bedroom_1"
     ],
     "lamp_0": [
-      "living_room_0",
       "bedroom_0",
-      "bedroom_1",
-      "hallway_0"
+      "bedroom_1"
     ]
   },
-  "furniture_choices": {},
+  "furniture_choices": {
+    "jug_0": [
+      "fridge_0",
+      "table_0",
+      "table_1",
+      "table_3"
+    ],
+    "lamp_0": [
+      "chest_of_drawers_0",
+      "shelves_1",
+      "table_3"
+    ]
+  },
   "video": "video.mp4"
 }

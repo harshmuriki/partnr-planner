@@ -1,1 +1,1736 @@
-{"config": null, "episodes": [{"episode_id": "T5-INC-DIS", "scene_id": "106878915_174887025", "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json", "additional_obj_config_paths": ["data/objects/ycb/configs/", "data/objects_ovmm/train_val/ai2thorhab/configs/objects", "data/objects_ovmm/train_val/amazon_berkeley/configs", "data/objects_ovmm/train_val/google_scanned/configs", "data/objects_ovmm/train_val/hssd/configs/objects"], "start_position": [-5.37203, 0.17663, -7.04962], "start_rotation": [0, 0, 0, 1], "info": {"episode_id": "T5-INC-DIS", "is_dynamic": true, "sample_configs": {"0": {"name": "soap_dispenser_0", "number": 1, "object_classes": ["soap_dispenser"], "object_instances": ["Soap_Bottle_26"], "excluded_object_instances": ["B07FFSKHK4", "Soap_Bottle_1", "Soap_Bottle_10", "Soap_Bottle_11", "Soap_Bottle_13", "Soap_Bottle_14", "Soap_Bottle_15", "Soap_Bottle_16", "Soap_Bottle_17", "Soap_Bottle_19", "Soap_Bottle_2", "Soap_Bottle_20", "Soap_Bottle_21", "Soap_Bottle_22", "Soap_Bottle_23", "Soap_Bottle_24", "Soap_Bottle_27", "Soap_Bottle_28", "Soap_Bottle_29", "Soap_Bottle_30", "Soap_Bottle_4", "Soap_Bottle_5", "Soap_Bottle_7", "Soap_Bottle_8"], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}, "1": {"name": "glass_0", "number": 1, "object_classes": ["glass"], "object_instances": ["9428caf70c42e50bb3c3c604eba00c43b8efb58f"], "excluded_object_instances": ["036edf04844210dae3f5afc59165ad4955b3510b", "038920896508242bee4ea865b8ece6c201e4d858", "08c7b32154bd2be6ca30acd3f36eef83f14093f6", "0a75f4c9f12d95998f1e5ceb5399e918ea798233", "0bb625a34e05d6cde6fe76da7535bc5bdc645187", "11abcecb63a82d14a55fc5c31c7aaa0095e65959", "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a", "1ca7e1561d6e217a554a69cee35d79f54210efbd", "1d8c68e142a88354b3f2122f55b0d0531a692822", "2056e0db6d0d28703bb100d63a2d864ffe295b10", "342e1b341104c33d7043365732480ff3a895c86e", "36901b91ca69637a346f6960fb759e2ee3137a63", "3ce41cf0b912a259a5b352d5bf1141ee102640d9", "451db10082188928fc1dd679bfc60002cd15d215", "47a2abe797aaaf6798271125727058b33860f456", "557a40dc33710de63f7694b1b61bfeed6e8169c8", "57206ff682d16e45f0abb873010eef8b1b73d4f7", "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3", "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba", "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52", "5eeb81b42abaf26678aca7a68b9c3837521de5c9", "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9", "6d8cb689ff72a3541b44a4f06522d9af8a2fc849", "705123a0be38cef21403a7f373db0c73b1d49ab6", "713f7728ff51839ceb2fe0e3a42afd5abc78a21f", "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff", "7f4208d306cfb2f43162195c46f59058525d9933", "7fad97a0f7c563828f974d210b9e02ccd5a7dfda", "8095a303ede64878ee48b9033c98fbc373a52a42", "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb", "952ee2c654a116614574c4407d8182a3d2af656a", "991bae3b8af2a9a110e32138d6a63ae1f038c0bc", "9e9c524a5a0e48b10ac64db3205ba7e282b3890d", "Cup_23", "Cup_24", "Cup_25", "Cup_26", "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db", "a9233f1d4e03c3ab2918452f15c9ed6c389be24a", "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629", "afc1f45e551314e36262c8c9caa341fec805e22f", "b09008488fdb3dc94b0be198e64f8577a32af1c6", "b808e79f1fd6afd447a261a1582225a3a4aecb0b", "b8e358f78ada8bc52942ae23f7dbfbb40c754f74", "bba3a6aa50ca40c96680cd4873571b5077e05e85", "c5cfee504a6981913ed99661a89fc226f2b8bfc2", "cb99e067e7b29c10b0dd4af17b50969a94e1796c", "cd31b4fdd82a4e828ef8d81df613750a7891b2c6", "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b", "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae", "deae6afb3e14ad1c829bb9f89d3eae8a34272c42", "e287e12ce31d87baa7b6faadf574ebd5aae505f0", "e4eb86a4385b01025a8bd7256ee3049224262fde", "e99a85fea330ded959c456ac63824608c55c4a2b", "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b", "f04d80ce2525f028590578c9c04f7626ca3f4d94", "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad", "f16d84784094d5618b4147424339d2ede8b22163", "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9", "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794", "fd4b49e473ea5f9b0b4956c606d6079d21038065", "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6", "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d", "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad", "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"], "location": "on", "furniture_names": ["table_2"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": false, "is_filled": false}}, "2": {"name": "glass_1", "number": 1, "object_classes": ["glass"], "object_instances": ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794"], "excluded_object_instances": ["036edf04844210dae3f5afc59165ad4955b3510b", "038920896508242bee4ea865b8ece6c201e4d858", "08c7b32154bd2be6ca30acd3f36eef83f14093f6", "0a75f4c9f12d95998f1e5ceb5399e918ea798233", "0bb625a34e05d6cde6fe76da7535bc5bdc645187", "11abcecb63a82d14a55fc5c31c7aaa0095e65959", "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a", "1ca7e1561d6e217a554a69cee35d79f54210efbd", "1d8c68e142a88354b3f2122f55b0d0531a692822", "2056e0db6d0d28703bb100d63a2d864ffe295b10", "342e1b341104c33d7043365732480ff3a895c86e", "36901b91ca69637a346f6960fb759e2ee3137a63", "3ce41cf0b912a259a5b352d5bf1141ee102640d9", "451db10082188928fc1dd679bfc60002cd15d215", "47a2abe797aaaf6798271125727058b33860f456", "557a40dc33710de63f7694b1b61bfeed6e8169c8", "57206ff682d16e45f0abb873010eef8b1b73d4f7", "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3", "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba", "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52", "5eeb81b42abaf26678aca7a68b9c3837521de5c9", "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9", "6d8cb689ff72a3541b44a4f06522d9af8a2fc849", "705123a0be38cef21403a7f373db0c73b1d49ab6", "713f7728ff51839ceb2fe0e3a42afd5abc78a21f", "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff", "7f4208d306cfb2f43162195c46f59058525d9933", "7fad97a0f7c563828f974d210b9e02ccd5a7dfda", "8095a303ede64878ee48b9033c98fbc373a52a42", "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb", "9428caf70c42e50bb3c3c604eba00c43b8efb58f", "952ee2c654a116614574c4407d8182a3d2af656a", "991bae3b8af2a9a110e32138d6a63ae1f038c0bc", "9e9c524a5a0e48b10ac64db3205ba7e282b3890d", "Cup_23", "Cup_24", "Cup_25", "Cup_26", "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db", "a9233f1d4e03c3ab2918452f15c9ed6c389be24a", "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629", "afc1f45e551314e36262c8c9caa341fec805e22f", "b09008488fdb3dc94b0be198e64f8577a32af1c6", "b808e79f1fd6afd447a261a1582225a3a4aecb0b", "b8e358f78ada8bc52942ae23f7dbfbb40c754f74", "bba3a6aa50ca40c96680cd4873571b5077e05e85", "c5cfee504a6981913ed99661a89fc226f2b8bfc2", "cb99e067e7b29c10b0dd4af17b50969a94e1796c", "cd31b4fdd82a4e828ef8d81df613750a7891b2c6", "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b", "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae", "deae6afb3e14ad1c829bb9f89d3eae8a34272c42", "e287e12ce31d87baa7b6faadf574ebd5aae505f0", "e4eb86a4385b01025a8bd7256ee3049224262fde", "e99a85fea330ded959c456ac63824608c55c4a2b", "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b", "f04d80ce2525f028590578c9c04f7626ca3f4d94", "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad", "f16d84784094d5618b4147424339d2ede8b22163", "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9", "fd4b49e473ea5f9b0b4956c606d6079d21038065", "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6", "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d", "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad", "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"], "location": "on", "furniture_names": ["table_3"], "allowed_regions": ["living_room_0"], "object_states": {"is_clean": false, "is_filled": false}}, "3": {"name": "plate_0", "number": 1, "object_classes": ["plate"], "object_instances": ["Plate_26"], "excluded_object_instances": ["21551881391c2b21c2e1358effa7d6b69cbd435f", "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94", "3b519761173617ee47ca61e25681279ae9fdaba9", "4087db7d03a368aeb48956f358eeee58e0edd7b3", "41753aebe629e7e2fbc8c576ce5865056b824ff7", "46d69ab16b7cd068d424c383955b91e756184130", "5a0ac54dc91ce3d40e4351a0dcfb6b9ffa08fdc2", "624150e8832d1acf256bdf52050ac6226d5c6a5f", "761c161d57068a6f504e8fd35cad5a04663b62f1", "7e067cafd8b96fae4671c0032317763fd9549b80", "7f5e4621caaeae9e3f4fbca6fc84779fa4b9c64f", "878dc86bcc60dec276240e2c7551b73094903127", "8cd9b448815a904b8b3b5817c742620729fe4a7c", "91bfe2681a0d397e267e93e125924c872e6a2159", "Plate_1", "Plate_10", "Plate_11", "Plate_12", "Plate_13", "Plate_14", "Plate_15", "Plate_16", "Plate_17", "Plate_18", "Plate_19", "Plate_2", "Plate_20", "Plate_21", "Plate_22", "Plate_23", "Plate_24", "Plate_25", "Plate_27", "Plate_28", "Plate_29", "Plate_3", "Plate_30", "Plate_4", "Plate_5", "Plate_6", "Plate_7", "Plate_8", "Plate_9", "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring", "Threshold_Dinner_Plate_Square_Rim_White_Porcelain", "b3879123202b611e2287fb8ef66089bcb13e9d69", "b599eb548442db2690265de15d2bf8aa549acd02", "bdd5e488098e1e64921b53aacfc8df260e2f898c", "c717fbe8f10ad354c83f9cfc7ce154ae2fcdf96c", "cc9929ee326793bba8cc58e9120ef2262f087ca4", "db5318d5db53a15c19b290628b82f08a27f5639a", "fed3e9529785079e938d85b35e53c34735cc05c0"], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true}}, "4": {"name": "soap_dish_0", "number": 1, "object_classes": ["soap_dish"], "object_instances": ["Threshold_Bamboo_Ceramic_Soap_Dish"], "excluded_object_instances": [], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}, "5": {"name": "vase_0", "number": 1, "object_classes": ["vase"], "object_instances": ["04f409f17d79445a3afd109c557c6a2702e15cd8"], "excluded_object_instances": ["00386b5179df69aec660a71fb9c65b344857d016", "01f076bf712f7a14ceed10f92a72948c05925858", "0561c92e2635eaaa0ad753cabfb427cfde565ec0", "0875307f7666e4fce7e217849c10c29972d142a7", "0ae9ee903346b3fd69b34228a3340662a173b791", "0aebf7979e3510654f3c16418145ab973c22a381", "0b0df80543773a698cd4ddcf76a7c5acfc4a803d", "0c48040ad6f64c0103c2f1b3133e2760ed8392b7", "0d61b723728d6d5ac05ac53e07372bcc7ff676ce", "1125b9ca061f6deee5d7e8a31cbe46eee10e535d", "1182b246f9dc763f898cf5a47feb003f8905d289", "13fe6d40a8869913ca6623bc6ed25dbcffb7da0d", "1404f8d65e562307f0fead3fd0d408c34f0af26a", "14b8b72a08380f9f7f13fbb0eef83344a2c11c33", "14e43de7e803f8d42e974f35cef746dcb7b57ed9", "1520472dfd763a8cb0f1b2a447bce437827b8776", "15fbefb684c5f988e5ff754bbded98aa80d3542f", "18a2fab4d1fe71c969e654740028d422d18ad9b6", "1ad21d8bf5749da64c01c01848f571e38819c316", "1b4711c1a5a9978cc2e7c57008f3d085c355d145", "1bd20c0904b0a85598a32a2de70c3a2facdf8e4d", "1d6275b17496af0183fe2c158332a8b8d3eea5b7", "1e736736c9417babd8baa34f83b526eac426e842", "20b562393eb8b161d1bfb7b1e9c5c65d277cfe6f", "2252ee7e50a8ff3608007253e73d1137358d125d", "243bad4f4c1bdda1dddf46ac7e54c567289fd38d", "2470231ef2743a97f8159f356337527eef366763", "247538767e1fde11b53e2b41edcf5b066cf0126c", "25daa32e8ec122ad22c8662a137bf444fb8da745", "263cce6bd107ce2e9f259120e38cd27f5dac0bcc", "2b6a6f943bdaf73ef2018a02ceb1720ab04b5b2d", "2b93011397cebb7664a934bb1876f126b70313d0", "2bc5fe4f4fc48aec41c67e34ebe603bbb53b1d01", "2c66d9495affb0273810b7bacd4c87a4b0f90852", "2c9b708ce46c0fa262c9c97f58e4856a792dba5e", "2d686cdf1b2da2c4b61c629bdefdb4a5c6678168", "2fd36b341e66b948ec0cd87264036f7881cedb4b", "310fe43cec6ff66fc0f99cca8443c5cdeca818ad", "334e738f9a75aa50fdc33f0776b43bdea1fccdfe", "3448a0f2142df518fd92e165207bf1d58dd05fa0", "356b8426ceec3110080b71163f586c8a0f15acfb", "371efb7286ca8324dea0d9642b3824783a11aa73", "379ad1f30cbdee03b3ce2a68d11b6b855e746fb7", "3bd1652a8ee18e0dc0985011fef96125f46b1ac4", "40bf81e852fd34c4d390fa68f71d2cafcb91f2f4", "4551602f795cf1b62cea365613c31f56dfe3999c", "463db7d43c592863e0deb15b198bf5747faae86f", "4b67581ca492a2028ccf3064b2824dcc8d104fb0", "4d264b0fb9851427c3bfcc8a92f12d33b30fe5d5", "4d40134bdb82e6e53b72cd912f99835c486e8759", "4fc6a72c3c780fd8c70c0bdd23aa877b0c4f4a7b", "51b55165bde866a2c8d74b46843d2f549135b889", "535fa87debd90c5fedc585161bf019aea7ceda68", "539a80debf42cd0b6b3c3d1d67d9488efa95af45", "55cc6c146898e7fb1c2ea66ac86b04d6566ad1a5", "56a3cb5686d12e4bad648c325ae998def645c997", "5c111a7314a6d708375b5fc1a0d6560d306da7b1", "5d21ea3e7e66c57b22608a848317d807dbde3c3a", "5fd9d34de9562a5891fe0657010d6c7777438db8", "6152354f6498a5bea31b40f720f2cbff10634608", "634a9acb28154794523f83c0ae981b8537ab6d07", "6441c18aab2884608788795c231b96924c6e5523", "64e73ca852efff52e03768163453a7a41e117f43", "6654629c2b0e6e4769e3c911947605375033bde5", "66d17b302cff7b3baffdccbb52f16325ff35c623", "67b71a4ad2610e060ea018855d108362a4d6fbae", "6dd9e51b58072dbd08fbbdf95ce568aacc47ec59", "6f9e025e59a4a4c1991bb6dc7e73ccb985d07c57", "71b30944a9c6ca8077d2ab8903e586a4dd2a3917", "736eebbb72e7ee9ef01d76ae3b0075e55f05ceb5", "77fb3131da84c90973accb42a2ce5d594e5b4987", "7b497caf99a943b669087b3dd4e77be63b3dbc0a", "7d38434695df81af30390db76c89bcc04529b406", "7ec42d263b2ee8d9b0cd09651f32c2ce46982351", "80794dc5fde2b3276714ff40107bce7b909e45c7", "85a26b27d39fe3c8317df4342d0ae32203739b8e", "877384ee8dc4577ccc2dc5b37ee505d2d4af3d0e", "882802e4ffc1f87c16e16d1322c651a849f7743d", "8aa978beb04d130c9d587f9c2858522cbf559703", "8ffc1468a4c10a3badb8b36062d58f5553c02d21", "9150be2ad622edb189333575dd7ecf229f28c490", "91cb2a92d739d4d71c46a12cb744415b90b17047", "94a5de038faeea77c286fbe0af7469d2a2f7792b", "96dec181c78bf169dbe3bb8c0215c383ce30bd3e", "99de5eb0d3e87db48cc5c2c558880d7aa1ec2c2d", "9c09a8ddc8047cdecc332f1368332a2e62a6c784", "9ec28866f43e42093f181e656ef1c89923945808", "B075HR4ZDB", "B075HR7DM7", "B075HR7KY9", "B075HWMC6S", "B075HWX46K", "B075HXJPW6", "B075HXLWT5", "B075HXPFTG", "B078JGHZT3", "B078JGYJTG", "B078JJDPR2", "B078JMJC46", "B078JMJC49", "B07B8NVHX1", "B07B8NZQ68", "B07B8PXTSY", "B07B8VJBCL", "B07B8W8FBV", "B07HSJVP5C", "B07HSLG6WR", "B07HSMVFMP", "B07JLBDT51", "B07JM1K8VH", "B07JM6GHC8", "Vase_Decorative_1", "Vase_Flat_1", "Vase_Flat_2", "Vase_Flat_3", "Vase_Flat_4", "Vase_Flat_5", "Vase_Medium_1", "Vase_Medium_2", "Vase_Medium_3", "Vase_Medium_4", "Vase_Medium_5", "Vase_Open_1", "Vase_Open_2", "Vase_Open_3", "Vase_Tall_1", "Vase_Tall_2", "Vase_Tall_3", "Vase_Tall_4", "Vase_Tall_5", "a043589070ad2a710483ac68aeb242f00ae1e994", "a17f03892b9f71801e057be9db2de908464d1fba", "a1a955a6d0706fa3634c9baea186632791ade20c", "a21f46139ac72eca15b4240cf8055b984d593af1", "aad0bda6fe5e168eaa4dbf1292878b18c54f249b", "acce2a11f70af73275e053fe644a8f608089893c", "adf37dc162377502fc26a64433466f01d182ebf9", "aea09725b176eae21cb59fa852a55174189c11ee", "af357e69163c47f0d376340314809ae12ee0c609", "af753234600031dd1619673de2827b3fb2ae5b72", "b0365152ce8404708c65752b9de332604bdf6063", "b084a1e5e80ece7227672011515ee3b5b33a01d9", "b4c970f1a8fa29e0934f4e8ccd1cb67ad92b0d51", "b5a2e303c9a5cfa54fb5b257cd82926b194e1e26", "b6439d60ffdbd1c1a71ba76e706dcbfc87f2c6df", "b728f6c0506deaea1e8231b629d1e20b0a5fa0f8", "b9b836b51c44ad76b7966ae565ae4910e89c2de6", "bbe510f23f2488ae618cd8c6601f1df4e4edacc8", "c27ffe33c37fb0d58bd76b949f85b4896545e0ed", "c3a6db9251980820f1e2ddcabebf8d21f059e0a4", "c3c8a9a0e1f2037d9e82d2286748cb576b1fd738", "c4776ee9f31d7ab3177be970e35e3f76c44e0f8c", "c4a76da68c72eec12f07b0f047a21a130872a0ba", "c8626f2d3bbeb2f1601a2af656c4610cd99e56fa", "c8af5b98558601d1ea284a89c3578eb39e061c00", "c94029096657382ebca374164eef6746d80bd99e", "cc5281d4600eb70647018d02c92032abf391535f", "d3d2da9dd341d78c1536200b130180b40971bab8", "d6b5822b17434f97ff007e0854cd9385dc79a150", "d8e3ee46b61694958a24ae70fc740f9197aef41e", "dd62a6aafabe4bcc5dc49e61a5d5c87019e1b4c3", "dfcbfd3a7de15b9689dc0580c38f2f0896b6647d", "e05af79080f048e261865dc1f9cf0a80d47deea4", "e60a5e30bb3384125c02cbda6b8aeaffc900b78a", "f161fe4fd2234d49ab5e452f7b4d869ae276330e", "f427ee2c7b7482af6c00918245cad73df5241a94", "f51fd63c6cd12ee673b94946d1450c6afc8713be", "fa5c8c836453388913b0017c4a2e33304373bc31", "fbf828b972d59baba95d1a54e1f95442d7ea0b46", "fc2d461dfe96f499d7c38306747b8000e111b13f", "fead0a77067515bd384f322f81592d868093c8ce", "ff10cb92d3dbd50abc4b4aac608055945bdb31e7", "xxxx0d0ff402xe09fx4188xb9a6xcf5d7e13475e", "xxxx3a4d8840x65eax4986x98f8xb64e2fba5da6", "xxxx3df1391bx35d8x4752xad8exde9f3cf64b31", "xxxx59b79f40x2b52x4d5axb58bx2c8d239b9a1e", "xxxx609fb6c8x44a7x4239xb341xb9880ac81843", "xxxx630c96dfx08d3x4691xbee6x6a40dfda78dc", "xxxx962ed056x74e2x4f30x98ffx26eea6a2adad", "xxxxaab02551x8cf4x48ecxb45fxbc8207ba0eca", "xxxxc5720538x33bbx460cx820cxd375445ef773", "xxxxccb30c58x6dc6x4d15x9e92x1583d4c2562f"], "location": "on", "furniture_names": ["table_2"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}, "6": {"name": "plant_saucer_0", "number": 1, "object_classes": ["plant_saucer"], "object_instances": ["Cole_Hardware_Plant_Saucer_Brown_125"], "excluded_object_instances": ["Cole_Hardware_Plant_Saucer_Glazed_9", "Cole_Hardware_Saucer_Electric", "Cole_Hardware_Saucer_Glazed_6", "Ecoforms_Plant_Container_S14Turquoise", "Ecoforms_Plant_Container_S24NATURAL", "Ecoforms_Plant_Container_S24Turquoise", "Ecoforms_Plant_Plate_S11Turquoise", "Ecoforms_Plant_Saucer_S14MOCHA", "Ecoforms_Plant_Saucer_S14NATURAL", "Ecoforms_Plant_Saucer_S17MOCHA", "Ecoforms_Plant_Saucer_SQ1HARVEST", "Ecoforms_Quadra_Saucer_SQ1_Avocado"], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}}, "object_labels": {}, "extra_info": {"scene_id": "106878915_174887025", "episode_id": "T5-INC-DIS", "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.", "initial_state": [{"name": "soap_dispenser_0", "number": 1, "object_classes": ["soap_dispenser"], "object_instances": ["Soap_Bottle_26"], "excluded_object_instances": ["B07FFSKHK4", "Soap_Bottle_1", "Soap_Bottle_10", "Soap_Bottle_11", "Soap_Bottle_13", "Soap_Bottle_14", "Soap_Bottle_15", "Soap_Bottle_16", "Soap_Bottle_17", "Soap_Bottle_19", "Soap_Bottle_2", "Soap_Bottle_20", "Soap_Bottle_21", "Soap_Bottle_22", "Soap_Bottle_23", "Soap_Bottle_24", "Soap_Bottle_27", "Soap_Bottle_28", "Soap_Bottle_29", "Soap_Bottle_30", "Soap_Bottle_4", "Soap_Bottle_5", "Soap_Bottle_7", "Soap_Bottle_8"], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}, {"name": "glass_0", "number": 1, "object_classes": ["glass"], "object_instances": ["9428caf70c42e50bb3c3c604eba00c43b8efb58f"], "excluded_object_instances": ["036edf04844210dae3f5afc59165ad4955b3510b", "038920896508242bee4ea865b8ece6c201e4d858", "08c7b32154bd2be6ca30acd3f36eef83f14093f6", "0a75f4c9f12d95998f1e5ceb5399e918ea798233", "0bb625a34e05d6cde6fe76da7535bc5bdc645187", "11abcecb63a82d14a55fc5c31c7aaa0095e65959", "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a", "1ca7e1561d6e217a554a69cee35d79f54210efbd", "1d8c68e142a88354b3f2122f55b0d0531a692822", "2056e0db6d0d28703bb100d63a2d864ffe295b10", "342e1b341104c33d7043365732480ff3a895c86e", "36901b91ca69637a346f6960fb759e2ee3137a63", "3ce41cf0b912a259a5b352d5bf1141ee102640d9", "451db10082188928fc1dd679bfc60002cd15d215", "47a2abe797aaaf6798271125727058b33860f456", "557a40dc33710de63f7694b1b61bfeed6e8169c8", "57206ff682d16e45f0abb873010eef8b1b73d4f7", "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3", "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba", "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52", "5eeb81b42abaf26678aca7a68b9c3837521de5c9", "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9", "6d8cb689ff72a3541b44a4f06522d9af8a2fc849", "705123a0be38cef21403a7f373db0c73b1d49ab6", "713f7728ff51839ceb2fe0e3a42afd5abc78a21f", "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff", "7f4208d306cfb2f43162195c46f59058525d9933", "7fad97a0f7c563828f974d210b9e02ccd5a7dfda", "8095a303ede64878ee48b9033c98fbc373a52a42", "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb", "952ee2c654a116614574c4407d8182a3d2af656a", "991bae3b8af2a9a110e32138d6a63ae1f038c0bc", "9e9c524a5a0e48b10ac64db3205ba7e282b3890d", "Cup_23", "Cup_24", "Cup_25", "Cup_26", "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db", "a9233f1d4e03c3ab2918452f15c9ed6c389be24a", "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629", "afc1f45e551314e36262c8c9caa341fec805e22f", "b09008488fdb3dc94b0be198e64f8577a32af1c6", "b808e79f1fd6afd447a261a1582225a3a4aecb0b", "b8e358f78ada8bc52942ae23f7dbfbb40c754f74", "bba3a6aa50ca40c96680cd4873571b5077e05e85", "c5cfee504a6981913ed99661a89fc226f2b8bfc2", "cb99e067e7b29c10b0dd4af17b50969a94e1796c", "cd31b4fdd82a4e828ef8d81df613750a7891b2c6", "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b", "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae", "deae6afb3e14ad1c829bb9f89d3eae8a34272c42", "e287e12ce31d87baa7b6faadf574ebd5aae505f0", "e4eb86a4385b01025a8bd7256ee3049224262fde", "e99a85fea330ded959c456ac63824608c55c4a2b", "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b", "f04d80ce2525f028590578c9c04f7626ca3f4d94", "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad", "f16d84784094d5618b4147424339d2ede8b22163", "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9", "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794", "fd4b49e473ea5f9b0b4956c606d6079d21038065", "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6", "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d", "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad", "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"], "location": "on", "furniture_names": ["table_2"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": false, "is_filled": false}}, {"name": "glass_1", "number": 1, "object_classes": ["glass"], "object_instances": ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794"], "excluded_object_instances": ["036edf04844210dae3f5afc59165ad4955b3510b", "038920896508242bee4ea865b8ece6c201e4d858", "08c7b32154bd2be6ca30acd3f36eef83f14093f6", "0a75f4c9f12d95998f1e5ceb5399e918ea798233", "0bb625a34e05d6cde6fe76da7535bc5bdc645187", "11abcecb63a82d14a55fc5c31c7aaa0095e65959", "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a", "1ca7e1561d6e217a554a69cee35d79f54210efbd", "1d8c68e142a88354b3f2122f55b0d0531a692822", "2056e0db6d0d28703bb100d63a2d864ffe295b10", "342e1b341104c33d7043365732480ff3a895c86e", "36901b91ca69637a346f6960fb759e2ee3137a63", "3ce41cf0b912a259a5b352d5bf1141ee102640d9", "451db10082188928fc1dd679bfc60002cd15d215", "47a2abe797aaaf6798271125727058b33860f456", "557a40dc33710de63f7694b1b61bfeed6e8169c8", "57206ff682d16e45f0abb873010eef8b1b73d4f7", "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3", "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba", "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52", "5eeb81b42abaf26678aca7a68b9c3837521de5c9", "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9", "6d8cb689ff72a3541b44a4f06522d9af8a2fc849", "705123a0be38cef21403a7f373db0c73b1d49ab6", "713f7728ff51839ceb2fe0e3a42afd5abc78a21f", "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff", "7f4208d306cfb2f43162195c46f59058525d9933", "7fad97a0f7c563828f974d210b9e02ccd5a7dfda", "8095a303ede64878ee48b9033c98fbc373a52a42", "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb", "9428caf70c42e50bb3c3c604eba00c43b8efb58f", "952ee2c654a116614574c4407d8182a3d2af656a", "991bae3b8af2a9a110e32138d6a63ae1f038c0bc", "9e9c524a5a0e48b10ac64db3205ba7e282b3890d", "Cup_23", "Cup_24", "Cup_25", "Cup_26", "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db", "a9233f1d4e03c3ab2918452f15c9ed6c389be24a", "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629", "afc1f45e551314e36262c8c9caa341fec805e22f", "b09008488fdb3dc94b0be198e64f8577a32af1c6", "b808e79f1fd6afd447a261a1582225a3a4aecb0b", "b8e358f78ada8bc52942ae23f7dbfbb40c754f74", "bba3a6aa50ca40c96680cd4873571b5077e05e85", "c5cfee504a6981913ed99661a89fc226f2b8bfc2", "cb99e067e7b29c10b0dd4af17b50969a94e1796c", "cd31b4fdd82a4e828ef8d81df613750a7891b2c6", "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b", "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae", "deae6afb3e14ad1c829bb9f89d3eae8a34272c42", "e287e12ce31d87baa7b6faadf574ebd5aae505f0", "e4eb86a4385b01025a8bd7256ee3049224262fde", "e99a85fea330ded959c456ac63824608c55c4a2b", "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b", "f04d80ce2525f028590578c9c04f7626ca3f4d94", "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad", "f16d84784094d5618b4147424339d2ede8b22163", "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9", "fd4b49e473ea5f9b0b4956c606d6079d21038065", "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6", "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d", "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad", "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"], "location": "on", "furniture_names": ["table_3"], "allowed_regions": ["living_room_0"], "object_states": {"is_clean": false, "is_filled": false}}, {"name": "plate_0", "number": 1, "object_classes": ["plate"], "object_instances": ["Plate_26"], "excluded_object_instances": ["21551881391c2b21c2e1358effa7d6b69cbd435f", "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94", "3b519761173617ee47ca61e25681279ae9fdaba9", "4087db7d03a368aeb48956f358eeee58e0edd7b3", "41753aebe629e7e2fbc8c576ce5865056b824ff7", "46d69ab16b7cd068d424c383955b91e756184130", "5a0ac54dc91ce3d40e4351a0dcfb6b9ffa08fdc2", "624150e8832d1acf256bdf52050ac6226d5c6a5f", "761c161d57068a6f504e8fd35cad5a04663b62f1", "7e067cafd8b96fae4671c0032317763fd9549b80", "7f5e4621caaeae9e3f4fbca6fc84779fa4b9c64f", "878dc86bcc60dec276240e2c7551b73094903127", "8cd9b448815a904b8b3b5817c742620729fe4a7c", "91bfe2681a0d397e267e93e125924c872e6a2159", "Plate_1", "Plate_10", "Plate_11", "Plate_12", "Plate_13", "Plate_14", "Plate_15", "Plate_16", "Plate_17", "Plate_18", "Plate_19", "Plate_2", "Plate_20", "Plate_21", "Plate_22", "Plate_23", "Plate_24", "Plate_25", "Plate_27", "Plate_28", "Plate_29", "Plate_3", "Plate_30", "Plate_4", "Plate_5", "Plate_6", "Plate_7", "Plate_8", "Plate_9", "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring", "Threshold_Dinner_Plate_Square_Rim_White_Porcelain", "b3879123202b611e2287fb8ef66089bcb13e9d69", "b599eb548442db2690265de15d2bf8aa549acd02", "bdd5e488098e1e64921b53aacfc8df260e2f898c", "c717fbe8f10ad354c83f9cfc7ce154ae2fcdf96c", "cc9929ee326793bba8cc58e9120ef2262f087ca4", "db5318d5db53a15c19b290628b82f08a27f5639a", "fed3e9529785079e938d85b35e53c34735cc05c0"], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true}}, {"name": "soap_dish_0", "number": 1, "object_classes": ["soap_dish"], "object_instances": ["Threshold_Bamboo_Ceramic_Soap_Dish"], "excluded_object_instances": [], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}, {"name": "vase_0", "number": 1, "object_classes": ["vase"], "object_instances": ["04f409f17d79445a3afd109c557c6a2702e15cd8"], "excluded_object_instances": ["00386b5179df69aec660a71fb9c65b344857d016", "01f076bf712f7a14ceed10f92a72948c05925858", "0561c92e2635eaaa0ad753cabfb427cfde565ec0", "0875307f7666e4fce7e217849c10c29972d142a7", "0ae9ee903346b3fd69b34228a3340662a173b791", "0aebf7979e3510654f3c16418145ab973c22a381", "0b0df80543773a698cd4ddcf76a7c5acfc4a803d", "0c48040ad6f64c0103c2f1b3133e2760ed8392b7", "0d61b723728d6d5ac05ac53e07372bcc7ff676ce", "1125b9ca061f6deee5d7e8a31cbe46eee10e535d", "1182b246f9dc763f898cf5a47feb003f8905d289", "13fe6d40a8869913ca6623bc6ed25dbcffb7da0d", "1404f8d65e562307f0fead3fd0d408c34f0af26a", "14b8b72a08380f9f7f13fbb0eef83344a2c11c33", "14e43de7e803f8d42e974f35cef746dcb7b57ed9", "1520472dfd763a8cb0f1b2a447bce437827b8776", "15fbefb684c5f988e5ff754bbded98aa80d3542f", "18a2fab4d1fe71c969e654740028d422d18ad9b6", "1ad21d8bf5749da64c01c01848f571e38819c316", "1b4711c1a5a9978cc2e7c57008f3d085c355d145", "1bd20c0904b0a85598a32a2de70c3a2facdf8e4d", "1d6275b17496af0183fe2c158332a8b8d3eea5b7", "1e736736c9417babd8baa34f83b526eac426e842", "20b562393eb8b161d1bfb7b1e9c5c65d277cfe6f", "2252ee7e50a8ff3608007253e73d1137358d125d", "243bad4f4c1bdda1dddf46ac7e54c567289fd38d", "2470231ef2743a97f8159f356337527eef366763", "247538767e1fde11b53e2b41edcf5b066cf0126c", "25daa32e8ec122ad22c8662a137bf444fb8da745", "263cce6bd107ce2e9f259120e38cd27f5dac0bcc", "2b6a6f943bdaf73ef2018a02ceb1720ab04b5b2d", "2b93011397cebb7664a934bb1876f126b70313d0", "2bc5fe4f4fc48aec41c67e34ebe603bbb53b1d01", "2c66d9495affb0273810b7bacd4c87a4b0f90852", "2c9b708ce46c0fa262c9c97f58e4856a792dba5e", "2d686cdf1b2da2c4b61c629bdefdb4a5c6678168", "2fd36b341e66b948ec0cd87264036f7881cedb4b", "310fe43cec6ff66fc0f99cca8443c5cdeca818ad", "334e738f9a75aa50fdc33f0776b43bdea1fccdfe", "3448a0f2142df518fd92e165207bf1d58dd05fa0", "356b8426ceec3110080b71163f586c8a0f15acfb", "371efb7286ca8324dea0d9642b3824783a11aa73", "379ad1f30cbdee03b3ce2a68d11b6b855e746fb7", "3bd1652a8ee18e0dc0985011fef96125f46b1ac4", "40bf81e852fd34c4d390fa68f71d2cafcb91f2f4", "4551602f795cf1b62cea365613c31f56dfe3999c", "463db7d43c592863e0deb15b198bf5747faae86f", "4b67581ca492a2028ccf3064b2824dcc8d104fb0", "4d264b0fb9851427c3bfcc8a92f12d33b30fe5d5", "4d40134bdb82e6e53b72cd912f99835c486e8759", "4fc6a72c3c780fd8c70c0bdd23aa877b0c4f4a7b", "51b55165bde866a2c8d74b46843d2f549135b889", "535fa87debd90c5fedc585161bf019aea7ceda68", "539a80debf42cd0b6b3c3d1d67d9488efa95af45", "55cc6c146898e7fb1c2ea66ac86b04d6566ad1a5", "56a3cb5686d12e4bad648c325ae998def645c997", "5c111a7314a6d708375b5fc1a0d6560d306da7b1", "5d21ea3e7e66c57b22608a848317d807dbde3c3a", "5fd9d34de9562a5891fe0657010d6c7777438db8", "6152354f6498a5bea31b40f720f2cbff10634608", "634a9acb28154794523f83c0ae981b8537ab6d07", "6441c18aab2884608788795c231b96924c6e5523", "64e73ca852efff52e03768163453a7a41e117f43", "6654629c2b0e6e4769e3c911947605375033bde5", "66d17b302cff7b3baffdccbb52f16325ff35c623", "67b71a4ad2610e060ea018855d108362a4d6fbae", "6dd9e51b58072dbd08fbbdf95ce568aacc47ec59", "6f9e025e59a4a4c1991bb6dc7e73ccb985d07c57", "71b30944a9c6ca8077d2ab8903e586a4dd2a3917", "736eebbb72e7ee9ef01d76ae3b0075e55f05ceb5", "77fb3131da84c90973accb42a2ce5d594e5b4987", "7b497caf99a943b669087b3dd4e77be63b3dbc0a", "7d38434695df81af30390db76c89bcc04529b406", "7ec42d263b2ee8d9b0cd09651f32c2ce46982351", "80794dc5fde2b3276714ff40107bce7b909e45c7", "85a26b27d39fe3c8317df4342d0ae32203739b8e", "877384ee8dc4577ccc2dc5b37ee505d2d4af3d0e", "882802e4ffc1f87c16e16d1322c651a849f7743d", "8aa978beb04d130c9d587f9c2858522cbf559703", "8ffc1468a4c10a3badb8b36062d58f5553c02d21", "9150be2ad622edb189333575dd7ecf229f28c490", "91cb2a92d739d4d71c46a12cb744415b90b17047", "94a5de038faeea77c286fbe0af7469d2a2f7792b", "96dec181c78bf169dbe3bb8c0215c383ce30bd3e", "99de5eb0d3e87db48cc5c2c558880d7aa1ec2c2d", "9c09a8ddc8047cdecc332f1368332a2e62a6c784", "9ec28866f43e42093f181e656ef1c89923945808", "B075HR4ZDB", "B075HR7DM7", "B075HR7KY9", "B075HWMC6S", "B075HWX46K", "B075HXJPW6", "B075HXLWT5", "B075HXPFTG", "B078JGHZT3", "B078JGYJTG", "B078JJDPR2", "B078JMJC46", "B078JMJC49", "B07B8NVHX1", "B07B8NZQ68", "B07B8PXTSY", "B07B8VJBCL", "B07B8W8FBV", "B07HSJVP5C", "B07HSLG6WR", "B07HSMVFMP", "B07JLBDT51", "B07JM1K8VH", "B07JM6GHC8", "Vase_Decorative_1", "Vase_Flat_1", "Vase_Flat_2", "Vase_Flat_3", "Vase_Flat_4", "Vase_Flat_5", "Vase_Medium_1", "Vase_Medium_2", "Vase_Medium_3", "Vase_Medium_4", "Vase_Medium_5", "Vase_Open_1", "Vase_Open_2", "Vase_Open_3", "Vase_Tall_1", "Vase_Tall_2", "Vase_Tall_3", "Vase_Tall_4", "Vase_Tall_5", "a043589070ad2a710483ac68aeb242f00ae1e994", "a17f03892b9f71801e057be9db2de908464d1fba", "a1a955a6d0706fa3634c9baea186632791ade20c", "a21f46139ac72eca15b4240cf8055b984d593af1", "aad0bda6fe5e168eaa4dbf1292878b18c54f249b", "acce2a11f70af73275e053fe644a8f608089893c", "adf37dc162377502fc26a64433466f01d182ebf9", "aea09725b176eae21cb59fa852a55174189c11ee", "af357e69163c47f0d376340314809ae12ee0c609", "af753234600031dd1619673de2827b3fb2ae5b72", "b0365152ce8404708c65752b9de332604bdf6063", "b084a1e5e80ece7227672011515ee3b5b33a01d9", "b4c970f1a8fa29e0934f4e8ccd1cb67ad92b0d51", "b5a2e303c9a5cfa54fb5b257cd82926b194e1e26", "b6439d60ffdbd1c1a71ba76e706dcbfc87f2c6df", "b728f6c0506deaea1e8231b629d1e20b0a5fa0f8", "b9b836b51c44ad76b7966ae565ae4910e89c2de6", "bbe510f23f2488ae618cd8c6601f1df4e4edacc8", "c27ffe33c37fb0d58bd76b949f85b4896545e0ed", "c3a6db9251980820f1e2ddcabebf8d21f059e0a4", "c3c8a9a0e1f2037d9e82d2286748cb576b1fd738", "c4776ee9f31d7ab3177be970e35e3f76c44e0f8c", "c4a76da68c72eec12f07b0f047a21a130872a0ba", "c8626f2d3bbeb2f1601a2af656c4610cd99e56fa", "c8af5b98558601d1ea284a89c3578eb39e061c00", "c94029096657382ebca374164eef6746d80bd99e", "cc5281d4600eb70647018d02c92032abf391535f", "d3d2da9dd341d78c1536200b130180b40971bab8", "d6b5822b17434f97ff007e0854cd9385dc79a150", "d8e3ee46b61694958a24ae70fc740f9197aef41e", "dd62a6aafabe4bcc5dc49e61a5d5c87019e1b4c3", "dfcbfd3a7de15b9689dc0580c38f2f0896b6647d", "e05af79080f048e261865dc1f9cf0a80d47deea4", "e60a5e30bb3384125c02cbda6b8aeaffc900b78a", "f161fe4fd2234d49ab5e452f7b4d869ae276330e", "f427ee2c7b7482af6c00918245cad73df5241a94", "f51fd63c6cd12ee673b94946d1450c6afc8713be", "fa5c8c836453388913b0017c4a2e33304373bc31", "fbf828b972d59baba95d1a54e1f95442d7ea0b46", "fc2d461dfe96f499d7c38306747b8000e111b13f", "fead0a77067515bd384f322f81592d868093c8ce", "ff10cb92d3dbd50abc4b4aac608055945bdb31e7", "xxxx0d0ff402xe09fx4188xb9a6xcf5d7e13475e", "xxxx3a4d8840x65eax4986x98f8xb64e2fba5da6", "xxxx3df1391bx35d8x4752xad8exde9f3cf64b31", "xxxx59b79f40x2b52x4d5axb58bx2c8d239b9a1e", "xxxx609fb6c8x44a7x4239xb341xb9880ac81843", "xxxx630c96dfx08d3x4691xbee6x6a40dfda78dc", "xxxx962ed056x74e2x4f30x98ffx26eea6a2adad", "xxxxaab02551x8cf4x48ecxb45fxbc8207ba0eca", "xxxxc5720538x33bbx460cx820cxd375445ef773", "xxxxccb30c58x6dc6x4d15x9e92x1583d4c2562f"], "location": "on", "furniture_names": ["table_2"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}, {"name": "plant_saucer_0", "number": 1, "object_classes": ["plant_saucer"], "object_instances": ["Cole_Hardware_Plant_Saucer_Brown_125"], "excluded_object_instances": ["Cole_Hardware_Plant_Saucer_Glazed_9", "Cole_Hardware_Saucer_Electric", "Cole_Hardware_Saucer_Glazed_6", "Ecoforms_Plant_Container_S14Turquoise", "Ecoforms_Plant_Container_S24NATURAL", "Ecoforms_Plant_Container_S24Turquoise", "Ecoforms_Plant_Plate_S11Turquoise", "Ecoforms_Plant_Saucer_S14MOCHA", "Ecoforms_Plant_Saucer_S14NATURAL", "Ecoforms_Plant_Saucer_S17MOCHA", "Ecoforms_Plant_Saucer_SQ1HARVEST", "Ecoforms_Quadra_Saucer_SQ1_Avocado"], "location": "on", "furniture_names": ["cabinet_0"], "allowed_regions": ["kitchen_0"], "object_states": {"is_clean": true, "is_filled": false}}], "obj_info": {"soap_dispenser": "Soap_Bottle_26_:0000", "glass": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000", "plate": "Plate_26_:0000", "soap_dish": "Threshold_Bamboo_Ceramic_Soap_Dish_:0000", "vase": "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000", "plant_saucer": "Cole_Hardware_Plant_Saucer_Brown_125_:0000"}}, "variant_spec": {"variant_id": "T5-INC-DIS", "sha256": "015c84e910900d8832b97317e7821c8536a300427cca13b995fb8db7623c1730", "entity_handles": {"soap_dispenser_0": "Soap_Bottle_26_:0000", "glass_0": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000", "glass_1": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000", "plate_0": "Plate_26_:0000", "soap_dish_0": "Threshold_Bamboo_Ceramic_Soap_Dish_:0000", "vase_0": "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000", "plant_saucer_0": "Cole_Hardware_Plant_Saucer_Brown_125_:0000"}, "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- soap_dish_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to soap_dispenser_0\n- vase_0: on table_2 (kitchen_0), is_clean, is_empty, next to glass_0\n- plant_saucer_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to plate_0", "memory_runtime_applied": false, "unscored_success_text": ["- Distractors (soap_dish_0, vase_0, plant_saucer_0) must not be used in place of the task objects; they have no placement goals."], "seed": 2128781847, "initial_validation": ["soap_dispenser_0: exact asset, initial states, furniture, region checked", "glass_0: exact asset, initial states, furniture, region checked", "glass_1: exact asset, initial states, furniture, region checked", "plate_0: exact asset, initial states, furniture, region checked", "soap_dish_0: exact asset, initial states, furniture, region checked", "vase_0: exact asset, initial states, furniture, region checked", "plant_saucer_0: exact asset, initial states, furniture, region checked"], "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"}}, "ao_states": {}, "rigid_objs": [["Soap_Bottle_26.object_config.json", [[0.75566, -0.00697, -0.65492, -5.27226], [0.00326, 0.99997, -0.00688, 1.02640], [0.65495, 0.00307, 0.75566, -3.15693], [0.00000, 0.00000, 0.00000, 1.00000]]], ["9428caf70c42e50bb3c3c604eba00c43b8efb58f.object_config.json", [[-0.82273, -0.00069, -0.56844, -3.38419], [-0.00077, 1.00000, -0.00009, 0.82263], [0.56844, 0.00036, -0.82273, -3.58258], [0.00000, 0.00000, 0.00000, 1.00000]]], ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.object_config.json", [[0.78359, 0.00013, -0.62128, -1.46465], [-0.00001, 1.00000, 0.00019, 0.84283], [0.62128, -0.00014, 0.78359, -5.13407], [0.00000, 0.00000, 0.00000, 1.00000]]], ["Plate_26.object_config.json", [[0.59991, 0.00000, 0.80007, -5.34628], [-0.00001, 1.00000, 0.00000, 0.91375], [-0.80007, -0.00001, 0.59991, -2.98353], [0.00000, 0.00000, 0.00000, 1.00000]]], ["Threshold_Bamboo_Ceramic_Soap_Dish.object_config.json", [[0.01202, -0.00091, -0.99993, -5.50566], [-0.00066, 1.00000, -0.00091, 0.93207], [0.99993, 0.00067, 0.01202, -3.18023], [0.00000, 0.00000, 0.00000, 1.00000]]], ["04f409f17d79445a3afd109c557c6a2702e15cd8.object_config.json", [[0.84205, 0.00024, 0.53939, -3.46060], [0.00170, 0.99999, -0.00310, 0.86886], [-0.53939, 0.00353, 0.84205, -3.35051], [0.00000, 0.00000, 0.00000, 1.00000]]], ["Cole_Hardware_Plant_Saucer_Brown_125.object_config.json", [[0.73882, 0.00039, -0.67390, -5.16864], [-0.00034, 1.00000, 0.00020, 0.93046], [0.67390, 0.00008, 0.73882, -3.39869], [0.00000, 0.00000, 0.00000, 1.00000]]]], "targets": {}, "markers": [], "target_receptacles": [], "goal_receptacles": [], "name_to_receptacle": {"Soap_Bottle_26_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000", "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001", "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": "183de9f61a9c362d58ac340058ecddc54da18809_:0000|Desk0015_receptacle_mesh.0000", "Plate_26_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000", "Threshold_Bamboo_Ceramic_Soap_Dish_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000", "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001", "Cole_Hardware_Plant_Saucer_Brown_125_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000"}, "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.", "evaluation_propositions": [{"function_name": "is_on_top", "args": {"object_handles": ["9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"], "receptacle_handles": ["29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"], "number": 1}}, {"function_name": "is_on_top", "args": {"object_handles": ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"], "receptacle_handles": ["29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"], "number": 1}}, {"function_name": "is_on_top", "args": {"object_handles": ["Plate_26_:0000"], "receptacle_handles": ["29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"], "number": 1}}, {"function_name": "is_next_to", "args": {"entity_handles_a": ["Plate_26_:0000"], "entity_handles_b": ["9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"], "number": 1, "l2_threshold": 0.50000}}, {"function_name": "is_next_to", "args": {"entity_handles_a": ["Plate_26_:0000"], "entity_handles_b": ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"], "number": 1, "l2_threshold": 0.50000}}, {"function_name": "is_clean", "args": {"object_handles": ["9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"], "number": 1}}, {"function_name": "is_filled", "args": {"object_handles": ["9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"], "number": 1}}, {"function_name": "is_clean", "args": {"object_handles": ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"], "number": 1}}, {"function_name": "is_filled", "args": {"object_handles": ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"], "number": 1}}, {"function_name": "is_next_to", "args": {"entity_handles_a": ["Soap_Bottle_26_:0000"], "entity_handles_b": ["9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"], "number": 1, "l2_threshold": 0.50000}}, {"function_name": "is_next_to", "args": {"entity_handles_a": ["Soap_Bottle_26_:0000"], "entity_handles_b": ["f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"], "number": 1, "l2_threshold": 0.50000}}], "evaluation_proposition_dependencies": [{"proposition_indices": [3], "depends_on": [0, 2], "relation_type": "while_satisfied", "dependency_mode": "any"}, {"proposition_indices": [4], "depends_on": [1, 2], "relation_type": "while_satisfied", "dependency_mode": "any"}], "evaluation_constraints": [{"type": "TemporalConstraint", "args": {"dag_edges": [[9, 5], [10, 7]], "n_propositions": 11}}, {"type": "TerminalSatisfactionConstraint", "args": {"proposition_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8], "n_propositions": 11}}], "object_states": {"is_clean": {"f6853182c26e4d30f2164293adfa77986faae26c_:0002": false, "cd1a32857dd7bbc7d78d214f727a0f07cb71d76c_:0000": false, "82e45a038d4661cde412e372a76816cb6c347d10_:0001": false, "4dc93f5fa533934de0d2aef6b9359dc96417627e_:0001": false, "ef5f1b9208feab193c638fd13ec9f5a1a671be80_:0000": false, "4aedf1697c9095b318e9920ebcd9f465a4b36af9_:0000": false, "adaf50303f95c9ff0a069041673f80cd72469bfb_:0000": false, "4dc93f5fa533934de0d2aef6b9359dc96417627e_:0000": false, "cc3139083fa1ad931a015aaddb24c339e0835f10_:0000": false, "ef99d4c3836c69227f283a986815683d31b4caca_:0000": false, "f6853182c26e4d30f2164293adfa77986faae26c_:0001": false, "Plate_26_:0000": true, "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": false, "ef99d4c3836c69227f283a986815683d31b4caca_:0001": false, "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000": false, "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0002": false, "Soap_Bottle_26_:0000": true, "Cole_Hardware_Plant_Saucer_Brown_125_:0000": true, "e94ede305ff3f873dd34f8e95274bb54679df6b4_:0000": false, "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0001": false, "2a0a496191e11931f00c0cfa0c6603ae30477177_:0000": false, "2a0a496191e11931f00c0cfa0c6603ae30477177_:0001": false, "d564a9dfddaed66661ac318ff1e3c7b62b99f0ee_:0000": false, "5f6564ee5d1e8026846204b071361369f669855c_:0000": false, "xxxxbe0989d6xfc2ax4516xa2c6xb497a6037fb8_:0000": false, "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0001": false, "3220d21b0885b4f0ac2c044d00a76c2ff7844dca_:0000": false, "d4ffac01fb53b35fb167619a53badcfcfdbbdcdf_:0000": false, "679d4207f433ee1bb6030bae48df158a775d2b0b_part_64_:0000": false, "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_5_:0000": false, "cff54dd6df371fea7a23bda408acec1ed26488c6_:0000": false, "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_6_:0000": false, "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0000": false, "973c8db16abb188caa2868a16141b643684e3881_:0000": false, "f6853182c26e4d30f2164293adfa77986faae26c_:0000": false, "34292497a33f039dd556b550e0766a63928f8e58_:0000": false, "e8a8d169c17b2f14008e10642994c92ea35b3946_:0000": false, "8a2d6c76deccf5964e793c0e591b985590bb916a_:0000": false, "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0001": false, "885bf5232852d8ee0c738b1d590ad1958186d1dd_:0000": false, "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0002": false, "Threshold_Bamboo_Ceramic_Soap_Dish_:0000": true, "c1d3ee7e099fbe68b35b5915fa6b4987403650a4_:0000": false, "7663ea1e420810b10770330b87393ecfa6f70889_:0000": false, "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0000": false, "e3d3ed213f437121abf8a1faffa60ae0672cbf25_:0000": false, "2cb375dc30e908a6e4b6545976ad71d2586d6807_:0000": false, "2cb375dc30e908a6e4b6545976ad71d2586d6807_:0001": false, "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0000": false, "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000": false, "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0001": false, "54de8a81569ad75759d3fe685801f354f3d091f3_:0000": false, "a9bb13d8f342efded56484a24b16f896d95a749f_:0000": false, "8718b96e8acda5e530bc0eb72a0d3660778ff59a_:0000": false, "4122c550741deeda8ed0b4da129bab0cd403cae7_:0000": false, "75bcf65091df0ec78dae7f2ab780d950628555fd_:0000": false, "82e45a038d4661cde412e372a76816cb6c347d10_:0000": false, "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000": true, "75bcf65091df0ec78dae7f2ab780d950628555fd_:0002": false, "75bcf65091df0ec78dae7f2ab780d950628555fd_:0003": false, "f7411ceab74991d377e79d79664120d67ff53b71_:0000": false, "75bcf65091df0ec78dae7f2ab780d950628555fd_:0004": false, "2281225b42551fd15d106a76c717d23a3406f63a_:0000": false, "2281225b42551fd15d106a76c717d23a3406f63a_:0001": false, "fe799ce4f050da99c88ef6f994b2197d874cf67d_:0000": false, "xxxxc62548fbx6b78x4f7exa203xb8e973026972_:0000": false, "4a5f3b29cc15b191bb35bfae6c5918087a173827_:0000": false, "b31b3406480c29c8e44613edece1325cb5bd85ae_:0000": false, "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false, "91762e71879d66596716bfa58beca60624e95773_:0000": false, "69f290dc18b7d92985f576f078e3d44bef963c09_:0000": false, "203-2_:0000": false, "75bcf65091df0ec78dae7f2ab780d950628555fd_:0001": false, "4134-11_:0000": false, "3262-5_:0000": false, "3262-5_:0001": false, "4134-12_:0000": false, "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0000": false, "4134-13_:0000": false, "3262-6_:0000": false, "4134-14_:0000": false, "4134-15_:0000": false, "e1d008861be1c6252e581526031b15ca5be867b1_:0000": false, "4134-16_:0000": false, "78a02cbe18b9bac0aedf264e100a73f34fd05023_:0000": false, "183de9f61a9c362d58ac340058ecddc54da18809_:0000": false, "412c833d4428480466b704ce25bf06f519c8cf72_:0000": false, "e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000": false}, "is_powered_on": {"82e45a038d4661cde412e372a76816cb6c347d10_:0001": false, "ef5f1b9208feab193c638fd13ec9f5a1a671be80_:0000": false, "adaf50303f95c9ff0a069041673f80cd72469bfb_:0000": false, "ef99d4c3836c69227f283a986815683d31b4caca_:0000": false, "ef99d4c3836c69227f283a986815683d31b4caca_:0001": false, "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0002": false, "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0001": false, "2a0a496191e11931f00c0cfa0c6603ae30477177_:0000": false, "2a0a496191e11931f00c0cfa0c6603ae30477177_:0001": false, "d564a9dfddaed66661ac318ff1e3c7b62b99f0ee_:0000": false, "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0001": false, "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0000": false, "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0001": false, "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0002": false, "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0000": false, "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0000": false, "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0001": false, "8718b96e8acda5e530bc0eb72a0d3660778ff59a_:0000": false, "82e45a038d4661cde412e372a76816cb6c347d10_:0000": false, "f7411ceab74991d377e79d79664120d67ff53b71_:0000": false, "2281225b42551fd15d106a76c717d23a3406f63a_:0000": false, "2281225b42551fd15d106a76c717d23a3406f63a_:0001": false, "fe799ce4f050da99c88ef6f994b2197d874cf67d_:0000": false, "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false, "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0000": false, "78a02cbe18b9bac0aedf264e100a73f34fd05023_:0000": false}, "is_filled": {"f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": false, "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000": false, "Soap_Bottle_26_:0000": false, "Cole_Hardware_Plant_Saucer_Brown_125_:0000": false, "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_3_:0000": false, "1f148fddeb1bb6e9634f8d8be3c979e0d5405a65_:0000": false, "Threshold_Bamboo_Ceramic_Soap_Dish_:0000": false, "e3d3ed213f437121abf8a1faffa60ae0672cbf25_:0000": false, "3330c15aea09a3653dfef1a26ec300ec11fc319e_:0000": false, "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000": false, "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_2_:0000": false, "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false}}}]}
+{
+  "config": null,
+  "episodes": [
+    {
+      "episode_id": "T5-INC-DIS",
+      "scene_id": "106878915_174887025",
+      "scene_dataset_config": "data/hssd-hab/hssd-hab-partnr.scene_dataset_config.json",
+      "additional_obj_config_paths": [
+        "data/objects/ycb/configs/",
+        "data/objects_ovmm/train_val/ai2thorhab/configs/objects",
+        "data/objects_ovmm/train_val/amazon_berkeley/configs",
+        "data/objects_ovmm/train_val/google_scanned/configs",
+        "data/objects_ovmm/train_val/hssd/configs/objects"
+      ],
+      "start_position": [
+        -5.37203,
+        0.17663,
+        -7.04962
+      ],
+      "start_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "info": {
+        "episode_id": "T5-INC-DIS",
+        "is_dynamic": true,
+        "sample_configs": {
+          "0": {
+            "name": "soap_dispenser_0",
+            "number": 1,
+            "object_classes": [
+              "soap_dispenser"
+            ],
+            "object_instances": [
+              "Soap_Bottle_26"
+            ],
+            "excluded_object_instances": [
+              "B07FFSKHK4",
+              "Soap_Bottle_1",
+              "Soap_Bottle_10",
+              "Soap_Bottle_11",
+              "Soap_Bottle_13",
+              "Soap_Bottle_14",
+              "Soap_Bottle_15",
+              "Soap_Bottle_16",
+              "Soap_Bottle_17",
+              "Soap_Bottle_19",
+              "Soap_Bottle_2",
+              "Soap_Bottle_20",
+              "Soap_Bottle_21",
+              "Soap_Bottle_22",
+              "Soap_Bottle_23",
+              "Soap_Bottle_24",
+              "Soap_Bottle_27",
+              "Soap_Bottle_28",
+              "Soap_Bottle_29",
+              "Soap_Bottle_30",
+              "Soap_Bottle_4",
+              "Soap_Bottle_5",
+              "Soap_Bottle_7",
+              "Soap_Bottle_8"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "1": {
+            "name": "glass_0",
+            "number": 1,
+            "object_classes": [
+              "glass"
+            ],
+            "object_instances": [
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f"
+            ],
+            "excluded_object_instances": [
+              "036edf04844210dae3f5afc59165ad4955b3510b",
+              "038920896508242bee4ea865b8ece6c201e4d858",
+              "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+              "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+              "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+              "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+              "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+              "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+              "1d8c68e142a88354b3f2122f55b0d0531a692822",
+              "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+              "342e1b341104c33d7043365732480ff3a895c86e",
+              "36901b91ca69637a346f6960fb759e2ee3137a63",
+              "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+              "451db10082188928fc1dd679bfc60002cd15d215",
+              "47a2abe797aaaf6798271125727058b33860f456",
+              "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+              "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+              "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+              "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+              "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+              "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+              "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+              "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+              "705123a0be38cef21403a7f373db0c73b1d49ab6",
+              "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+              "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+              "7f4208d306cfb2f43162195c46f59058525d9933",
+              "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+              "8095a303ede64878ee48b9033c98fbc373a52a42",
+              "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+              "952ee2c654a116614574c4407d8182a3d2af656a",
+              "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+              "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+              "Cup_23",
+              "Cup_24",
+              "Cup_25",
+              "Cup_26",
+              "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+              "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+              "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+              "afc1f45e551314e36262c8c9caa341fec805e22f",
+              "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+              "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+              "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+              "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+              "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+              "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+              "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+              "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+              "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+              "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+              "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+              "e4eb86a4385b01025a8bd7256ee3049224262fde",
+              "e99a85fea330ded959c456ac63824608c55c4a2b",
+              "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+              "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+              "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+              "f16d84784094d5618b4147424339d2ede8b22163",
+              "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+              "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+              "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+              "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+              "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+              "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_2"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": false,
+              "is_filled": false
+            }
+          },
+          "2": {
+            "name": "glass_1",
+            "number": 1,
+            "object_classes": [
+              "glass"
+            ],
+            "object_instances": [
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794"
+            ],
+            "excluded_object_instances": [
+              "036edf04844210dae3f5afc59165ad4955b3510b",
+              "038920896508242bee4ea865b8ece6c201e4d858",
+              "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+              "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+              "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+              "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+              "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+              "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+              "1d8c68e142a88354b3f2122f55b0d0531a692822",
+              "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+              "342e1b341104c33d7043365732480ff3a895c86e",
+              "36901b91ca69637a346f6960fb759e2ee3137a63",
+              "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+              "451db10082188928fc1dd679bfc60002cd15d215",
+              "47a2abe797aaaf6798271125727058b33860f456",
+              "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+              "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+              "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+              "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+              "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+              "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+              "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+              "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+              "705123a0be38cef21403a7f373db0c73b1d49ab6",
+              "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+              "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+              "7f4208d306cfb2f43162195c46f59058525d9933",
+              "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+              "8095a303ede64878ee48b9033c98fbc373a52a42",
+              "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+              "952ee2c654a116614574c4407d8182a3d2af656a",
+              "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+              "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+              "Cup_23",
+              "Cup_24",
+              "Cup_25",
+              "Cup_26",
+              "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+              "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+              "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+              "afc1f45e551314e36262c8c9caa341fec805e22f",
+              "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+              "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+              "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+              "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+              "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+              "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+              "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+              "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+              "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+              "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+              "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+              "e4eb86a4385b01025a8bd7256ee3049224262fde",
+              "e99a85fea330ded959c456ac63824608c55c4a2b",
+              "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+              "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+              "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+              "f16d84784094d5618b4147424339d2ede8b22163",
+              "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+              "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+              "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+              "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+              "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+              "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_3"
+            ],
+            "allowed_regions": [
+              "living_room_0"
+            ],
+            "object_states": {
+              "is_clean": false,
+              "is_filled": false
+            }
+          },
+          "3": {
+            "name": "plate_0",
+            "number": 1,
+            "object_classes": [
+              "plate"
+            ],
+            "object_instances": [
+              "Plate_26"
+            ],
+            "excluded_object_instances": [
+              "21551881391c2b21c2e1358effa7d6b69cbd435f",
+              "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94",
+              "3b519761173617ee47ca61e25681279ae9fdaba9",
+              "4087db7d03a368aeb48956f358eeee58e0edd7b3",
+              "41753aebe629e7e2fbc8c576ce5865056b824ff7",
+              "46d69ab16b7cd068d424c383955b91e756184130",
+              "5a0ac54dc91ce3d40e4351a0dcfb6b9ffa08fdc2",
+              "624150e8832d1acf256bdf52050ac6226d5c6a5f",
+              "761c161d57068a6f504e8fd35cad5a04663b62f1",
+              "7e067cafd8b96fae4671c0032317763fd9549b80",
+              "7f5e4621caaeae9e3f4fbca6fc84779fa4b9c64f",
+              "878dc86bcc60dec276240e2c7551b73094903127",
+              "8cd9b448815a904b8b3b5817c742620729fe4a7c",
+              "91bfe2681a0d397e267e93e125924c872e6a2159",
+              "Plate_1",
+              "Plate_10",
+              "Plate_11",
+              "Plate_12",
+              "Plate_13",
+              "Plate_14",
+              "Plate_15",
+              "Plate_16",
+              "Plate_17",
+              "Plate_18",
+              "Plate_19",
+              "Plate_2",
+              "Plate_20",
+              "Plate_21",
+              "Plate_22",
+              "Plate_23",
+              "Plate_24",
+              "Plate_25",
+              "Plate_27",
+              "Plate_28",
+              "Plate_29",
+              "Plate_3",
+              "Plate_30",
+              "Plate_4",
+              "Plate_5",
+              "Plate_6",
+              "Plate_7",
+              "Plate_8",
+              "Plate_9",
+              "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+              "Threshold_Dinner_Plate_Square_Rim_White_Porcelain",
+              "b3879123202b611e2287fb8ef66089bcb13e9d69",
+              "b599eb548442db2690265de15d2bf8aa549acd02",
+              "bdd5e488098e1e64921b53aacfc8df260e2f898c",
+              "c717fbe8f10ad354c83f9cfc7ce154ae2fcdf96c",
+              "cc9929ee326793bba8cc58e9120ef2262f087ca4",
+              "db5318d5db53a15c19b290628b82f08a27f5639a",
+              "fed3e9529785079e938d85b35e53c34735cc05c0"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true
+            }
+          },
+          "4": {
+            "name": "soap_dish_0",
+            "number": 1,
+            "object_classes": [
+              "soap_dish"
+            ],
+            "object_instances": [
+              "Threshold_Bamboo_Ceramic_Soap_Dish"
+            ],
+            "excluded_object_instances": [],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "5": {
+            "name": "vase_0",
+            "number": 1,
+            "object_classes": [
+              "vase"
+            ],
+            "object_instances": [
+              "04f409f17d79445a3afd109c557c6a2702e15cd8"
+            ],
+            "excluded_object_instances": [
+              "00386b5179df69aec660a71fb9c65b344857d016",
+              "01f076bf712f7a14ceed10f92a72948c05925858",
+              "0561c92e2635eaaa0ad753cabfb427cfde565ec0",
+              "0875307f7666e4fce7e217849c10c29972d142a7",
+              "0ae9ee903346b3fd69b34228a3340662a173b791",
+              "0aebf7979e3510654f3c16418145ab973c22a381",
+              "0b0df80543773a698cd4ddcf76a7c5acfc4a803d",
+              "0c48040ad6f64c0103c2f1b3133e2760ed8392b7",
+              "0d61b723728d6d5ac05ac53e07372bcc7ff676ce",
+              "1125b9ca061f6deee5d7e8a31cbe46eee10e535d",
+              "1182b246f9dc763f898cf5a47feb003f8905d289",
+              "13fe6d40a8869913ca6623bc6ed25dbcffb7da0d",
+              "1404f8d65e562307f0fead3fd0d408c34f0af26a",
+              "14b8b72a08380f9f7f13fbb0eef83344a2c11c33",
+              "14e43de7e803f8d42e974f35cef746dcb7b57ed9",
+              "1520472dfd763a8cb0f1b2a447bce437827b8776",
+              "15fbefb684c5f988e5ff754bbded98aa80d3542f",
+              "18a2fab4d1fe71c969e654740028d422d18ad9b6",
+              "1ad21d8bf5749da64c01c01848f571e38819c316",
+              "1b4711c1a5a9978cc2e7c57008f3d085c355d145",
+              "1bd20c0904b0a85598a32a2de70c3a2facdf8e4d",
+              "1d6275b17496af0183fe2c158332a8b8d3eea5b7",
+              "1e736736c9417babd8baa34f83b526eac426e842",
+              "20b562393eb8b161d1bfb7b1e9c5c65d277cfe6f",
+              "2252ee7e50a8ff3608007253e73d1137358d125d",
+              "243bad4f4c1bdda1dddf46ac7e54c567289fd38d",
+              "2470231ef2743a97f8159f356337527eef366763",
+              "247538767e1fde11b53e2b41edcf5b066cf0126c",
+              "25daa32e8ec122ad22c8662a137bf444fb8da745",
+              "263cce6bd107ce2e9f259120e38cd27f5dac0bcc",
+              "2b6a6f943bdaf73ef2018a02ceb1720ab04b5b2d",
+              "2b93011397cebb7664a934bb1876f126b70313d0",
+              "2bc5fe4f4fc48aec41c67e34ebe603bbb53b1d01",
+              "2c66d9495affb0273810b7bacd4c87a4b0f90852",
+              "2c9b708ce46c0fa262c9c97f58e4856a792dba5e",
+              "2d686cdf1b2da2c4b61c629bdefdb4a5c6678168",
+              "2fd36b341e66b948ec0cd87264036f7881cedb4b",
+              "310fe43cec6ff66fc0f99cca8443c5cdeca818ad",
+              "334e738f9a75aa50fdc33f0776b43bdea1fccdfe",
+              "3448a0f2142df518fd92e165207bf1d58dd05fa0",
+              "356b8426ceec3110080b71163f586c8a0f15acfb",
+              "371efb7286ca8324dea0d9642b3824783a11aa73",
+              "379ad1f30cbdee03b3ce2a68d11b6b855e746fb7",
+              "3bd1652a8ee18e0dc0985011fef96125f46b1ac4",
+              "40bf81e852fd34c4d390fa68f71d2cafcb91f2f4",
+              "4551602f795cf1b62cea365613c31f56dfe3999c",
+              "463db7d43c592863e0deb15b198bf5747faae86f",
+              "4b67581ca492a2028ccf3064b2824dcc8d104fb0",
+              "4d264b0fb9851427c3bfcc8a92f12d33b30fe5d5",
+              "4d40134bdb82e6e53b72cd912f99835c486e8759",
+              "4fc6a72c3c780fd8c70c0bdd23aa877b0c4f4a7b",
+              "51b55165bde866a2c8d74b46843d2f549135b889",
+              "535fa87debd90c5fedc585161bf019aea7ceda68",
+              "539a80debf42cd0b6b3c3d1d67d9488efa95af45",
+              "55cc6c146898e7fb1c2ea66ac86b04d6566ad1a5",
+              "56a3cb5686d12e4bad648c325ae998def645c997",
+              "5c111a7314a6d708375b5fc1a0d6560d306da7b1",
+              "5d21ea3e7e66c57b22608a848317d807dbde3c3a",
+              "5fd9d34de9562a5891fe0657010d6c7777438db8",
+              "6152354f6498a5bea31b40f720f2cbff10634608",
+              "634a9acb28154794523f83c0ae981b8537ab6d07",
+              "6441c18aab2884608788795c231b96924c6e5523",
+              "64e73ca852efff52e03768163453a7a41e117f43",
+              "6654629c2b0e6e4769e3c911947605375033bde5",
+              "66d17b302cff7b3baffdccbb52f16325ff35c623",
+              "67b71a4ad2610e060ea018855d108362a4d6fbae",
+              "6dd9e51b58072dbd08fbbdf95ce568aacc47ec59",
+              "6f9e025e59a4a4c1991bb6dc7e73ccb985d07c57",
+              "71b30944a9c6ca8077d2ab8903e586a4dd2a3917",
+              "736eebbb72e7ee9ef01d76ae3b0075e55f05ceb5",
+              "77fb3131da84c90973accb42a2ce5d594e5b4987",
+              "7b497caf99a943b669087b3dd4e77be63b3dbc0a",
+              "7d38434695df81af30390db76c89bcc04529b406",
+              "7ec42d263b2ee8d9b0cd09651f32c2ce46982351",
+              "80794dc5fde2b3276714ff40107bce7b909e45c7",
+              "85a26b27d39fe3c8317df4342d0ae32203739b8e",
+              "877384ee8dc4577ccc2dc5b37ee505d2d4af3d0e",
+              "882802e4ffc1f87c16e16d1322c651a849f7743d",
+              "8aa978beb04d130c9d587f9c2858522cbf559703",
+              "8ffc1468a4c10a3badb8b36062d58f5553c02d21",
+              "9150be2ad622edb189333575dd7ecf229f28c490",
+              "91cb2a92d739d4d71c46a12cb744415b90b17047",
+              "94a5de038faeea77c286fbe0af7469d2a2f7792b",
+              "96dec181c78bf169dbe3bb8c0215c383ce30bd3e",
+              "99de5eb0d3e87db48cc5c2c558880d7aa1ec2c2d",
+              "9c09a8ddc8047cdecc332f1368332a2e62a6c784",
+              "9ec28866f43e42093f181e656ef1c89923945808",
+              "B075HR4ZDB",
+              "B075HR7DM7",
+              "B075HR7KY9",
+              "B075HWMC6S",
+              "B075HWX46K",
+              "B075HXJPW6",
+              "B075HXLWT5",
+              "B075HXPFTG",
+              "B078JGHZT3",
+              "B078JGYJTG",
+              "B078JJDPR2",
+              "B078JMJC46",
+              "B078JMJC49",
+              "B07B8NVHX1",
+              "B07B8NZQ68",
+              "B07B8PXTSY",
+              "B07B8VJBCL",
+              "B07B8W8FBV",
+              "B07HSJVP5C",
+              "B07HSLG6WR",
+              "B07HSMVFMP",
+              "B07JLBDT51",
+              "B07JM1K8VH",
+              "B07JM6GHC8",
+              "Vase_Decorative_1",
+              "Vase_Flat_1",
+              "Vase_Flat_2",
+              "Vase_Flat_3",
+              "Vase_Flat_4",
+              "Vase_Flat_5",
+              "Vase_Medium_1",
+              "Vase_Medium_2",
+              "Vase_Medium_3",
+              "Vase_Medium_4",
+              "Vase_Medium_5",
+              "Vase_Open_1",
+              "Vase_Open_2",
+              "Vase_Open_3",
+              "Vase_Tall_1",
+              "Vase_Tall_2",
+              "Vase_Tall_3",
+              "Vase_Tall_4",
+              "Vase_Tall_5",
+              "a043589070ad2a710483ac68aeb242f00ae1e994",
+              "a17f03892b9f71801e057be9db2de908464d1fba",
+              "a1a955a6d0706fa3634c9baea186632791ade20c",
+              "a21f46139ac72eca15b4240cf8055b984d593af1",
+              "aad0bda6fe5e168eaa4dbf1292878b18c54f249b",
+              "acce2a11f70af73275e053fe644a8f608089893c",
+              "adf37dc162377502fc26a64433466f01d182ebf9",
+              "aea09725b176eae21cb59fa852a55174189c11ee",
+              "af357e69163c47f0d376340314809ae12ee0c609",
+              "af753234600031dd1619673de2827b3fb2ae5b72",
+              "b0365152ce8404708c65752b9de332604bdf6063",
+              "b084a1e5e80ece7227672011515ee3b5b33a01d9",
+              "b4c970f1a8fa29e0934f4e8ccd1cb67ad92b0d51",
+              "b5a2e303c9a5cfa54fb5b257cd82926b194e1e26",
+              "b6439d60ffdbd1c1a71ba76e706dcbfc87f2c6df",
+              "b728f6c0506deaea1e8231b629d1e20b0a5fa0f8",
+              "b9b836b51c44ad76b7966ae565ae4910e89c2de6",
+              "bbe510f23f2488ae618cd8c6601f1df4e4edacc8",
+              "c27ffe33c37fb0d58bd76b949f85b4896545e0ed",
+              "c3a6db9251980820f1e2ddcabebf8d21f059e0a4",
+              "c3c8a9a0e1f2037d9e82d2286748cb576b1fd738",
+              "c4776ee9f31d7ab3177be970e35e3f76c44e0f8c",
+              "c4a76da68c72eec12f07b0f047a21a130872a0ba",
+              "c8626f2d3bbeb2f1601a2af656c4610cd99e56fa",
+              "c8af5b98558601d1ea284a89c3578eb39e061c00",
+              "c94029096657382ebca374164eef6746d80bd99e",
+              "cc5281d4600eb70647018d02c92032abf391535f",
+              "d3d2da9dd341d78c1536200b130180b40971bab8",
+              "d6b5822b17434f97ff007e0854cd9385dc79a150",
+              "d8e3ee46b61694958a24ae70fc740f9197aef41e",
+              "dd62a6aafabe4bcc5dc49e61a5d5c87019e1b4c3",
+              "dfcbfd3a7de15b9689dc0580c38f2f0896b6647d",
+              "e05af79080f048e261865dc1f9cf0a80d47deea4",
+              "e60a5e30bb3384125c02cbda6b8aeaffc900b78a",
+              "f161fe4fd2234d49ab5e452f7b4d869ae276330e",
+              "f427ee2c7b7482af6c00918245cad73df5241a94",
+              "f51fd63c6cd12ee673b94946d1450c6afc8713be",
+              "fa5c8c836453388913b0017c4a2e33304373bc31",
+              "fbf828b972d59baba95d1a54e1f95442d7ea0b46",
+              "fc2d461dfe96f499d7c38306747b8000e111b13f",
+              "fead0a77067515bd384f322f81592d868093c8ce",
+              "ff10cb92d3dbd50abc4b4aac608055945bdb31e7",
+              "xxxx0d0ff402xe09fx4188xb9a6xcf5d7e13475e",
+              "xxxx3a4d8840x65eax4986x98f8xb64e2fba5da6",
+              "xxxx3df1391bx35d8x4752xad8exde9f3cf64b31",
+              "xxxx59b79f40x2b52x4d5axb58bx2c8d239b9a1e",
+              "xxxx609fb6c8x44a7x4239xb341xb9880ac81843",
+              "xxxx630c96dfx08d3x4691xbee6x6a40dfda78dc",
+              "xxxx962ed056x74e2x4f30x98ffx26eea6a2adad",
+              "xxxxaab02551x8cf4x48ecxb45fxbc8207ba0eca",
+              "xxxxc5720538x33bbx460cx820cxd375445ef773",
+              "xxxxccb30c58x6dc6x4d15x9e92x1583d4c2562f"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_2"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "6": {
+            "name": "plant_saucer_0",
+            "number": 1,
+            "object_classes": [
+              "plant_saucer"
+            ],
+            "object_instances": [
+              "Cole_Hardware_Plant_Saucer_Brown_125"
+            ],
+            "excluded_object_instances": [
+              "Cole_Hardware_Plant_Saucer_Glazed_9",
+              "Cole_Hardware_Saucer_Electric",
+              "Cole_Hardware_Saucer_Glazed_6",
+              "Ecoforms_Plant_Container_S14Turquoise",
+              "Ecoforms_Plant_Container_S24NATURAL",
+              "Ecoforms_Plant_Container_S24Turquoise",
+              "Ecoforms_Plant_Plate_S11Turquoise",
+              "Ecoforms_Plant_Saucer_S14MOCHA",
+              "Ecoforms_Plant_Saucer_S14NATURAL",
+              "Ecoforms_Plant_Saucer_S17MOCHA",
+              "Ecoforms_Plant_Saucer_SQ1HARVEST",
+              "Ecoforms_Quadra_Saucer_SQ1_Avocado"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          }
+        },
+        "object_labels": {},
+        "extra_info": {
+          "scene_id": "106878915_174887025",
+          "episode_id": "T5-INC-DIS",
+          "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+          "initial_state": [
+            {
+              "name": "soap_dispenser_0",
+              "number": 1,
+              "object_classes": [
+                "soap_dispenser"
+              ],
+              "object_instances": [
+                "Soap_Bottle_26"
+              ],
+              "excluded_object_instances": [
+                "B07FFSKHK4",
+                "Soap_Bottle_1",
+                "Soap_Bottle_10",
+                "Soap_Bottle_11",
+                "Soap_Bottle_13",
+                "Soap_Bottle_14",
+                "Soap_Bottle_15",
+                "Soap_Bottle_16",
+                "Soap_Bottle_17",
+                "Soap_Bottle_19",
+                "Soap_Bottle_2",
+                "Soap_Bottle_20",
+                "Soap_Bottle_21",
+                "Soap_Bottle_22",
+                "Soap_Bottle_23",
+                "Soap_Bottle_24",
+                "Soap_Bottle_27",
+                "Soap_Bottle_28",
+                "Soap_Bottle_29",
+                "Soap_Bottle_30",
+                "Soap_Bottle_4",
+                "Soap_Bottle_5",
+                "Soap_Bottle_7",
+                "Soap_Bottle_8"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "glass_0",
+              "number": 1,
+              "object_classes": [
+                "glass"
+              ],
+              "object_instances": [
+                "9428caf70c42e50bb3c3c604eba00c43b8efb58f"
+              ],
+              "excluded_object_instances": [
+                "036edf04844210dae3f5afc59165ad4955b3510b",
+                "038920896508242bee4ea865b8ece6c201e4d858",
+                "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+                "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+                "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+                "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+                "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+                "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+                "1d8c68e142a88354b3f2122f55b0d0531a692822",
+                "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+                "342e1b341104c33d7043365732480ff3a895c86e",
+                "36901b91ca69637a346f6960fb759e2ee3137a63",
+                "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+                "451db10082188928fc1dd679bfc60002cd15d215",
+                "47a2abe797aaaf6798271125727058b33860f456",
+                "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+                "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+                "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+                "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+                "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+                "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+                "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+                "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+                "705123a0be38cef21403a7f373db0c73b1d49ab6",
+                "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+                "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+                "7f4208d306cfb2f43162195c46f59058525d9933",
+                "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+                "8095a303ede64878ee48b9033c98fbc373a52a42",
+                "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+                "952ee2c654a116614574c4407d8182a3d2af656a",
+                "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+                "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+                "Cup_23",
+                "Cup_24",
+                "Cup_25",
+                "Cup_26",
+                "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+                "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+                "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+                "afc1f45e551314e36262c8c9caa341fec805e22f",
+                "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+                "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+                "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+                "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+                "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+                "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+                "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+                "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+                "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+                "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+                "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+                "e4eb86a4385b01025a8bd7256ee3049224262fde",
+                "e99a85fea330ded959c456ac63824608c55c4a2b",
+                "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+                "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+                "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+                "f16d84784094d5618b4147424339d2ede8b22163",
+                "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+                "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+                "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+                "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+                "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+                "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+                "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_2"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": false,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "glass_1",
+              "number": 1,
+              "object_classes": [
+                "glass"
+              ],
+              "object_instances": [
+                "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794"
+              ],
+              "excluded_object_instances": [
+                "036edf04844210dae3f5afc59165ad4955b3510b",
+                "038920896508242bee4ea865b8ece6c201e4d858",
+                "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+                "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+                "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+                "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+                "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+                "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+                "1d8c68e142a88354b3f2122f55b0d0531a692822",
+                "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+                "342e1b341104c33d7043365732480ff3a895c86e",
+                "36901b91ca69637a346f6960fb759e2ee3137a63",
+                "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+                "451db10082188928fc1dd679bfc60002cd15d215",
+                "47a2abe797aaaf6798271125727058b33860f456",
+                "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+                "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+                "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+                "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+                "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+                "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+                "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+                "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+                "705123a0be38cef21403a7f373db0c73b1d49ab6",
+                "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+                "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+                "7f4208d306cfb2f43162195c46f59058525d9933",
+                "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+                "8095a303ede64878ee48b9033c98fbc373a52a42",
+                "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+                "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+                "952ee2c654a116614574c4407d8182a3d2af656a",
+                "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+                "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+                "Cup_23",
+                "Cup_24",
+                "Cup_25",
+                "Cup_26",
+                "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+                "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+                "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+                "afc1f45e551314e36262c8c9caa341fec805e22f",
+                "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+                "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+                "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+                "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+                "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+                "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+                "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+                "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+                "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+                "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+                "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+                "e4eb86a4385b01025a8bd7256ee3049224262fde",
+                "e99a85fea330ded959c456ac63824608c55c4a2b",
+                "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+                "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+                "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+                "f16d84784094d5618b4147424339d2ede8b22163",
+                "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+                "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+                "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+                "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+                "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+                "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_3"
+              ],
+              "allowed_regions": [
+                "living_room_0"
+              ],
+              "object_states": {
+                "is_clean": false,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "plate_0",
+              "number": 1,
+              "object_classes": [
+                "plate"
+              ],
+              "object_instances": [
+                "Plate_26"
+              ],
+              "excluded_object_instances": [
+                "21551881391c2b21c2e1358effa7d6b69cbd435f",
+                "32bc37b3c83ce4c3d61f8e64e62934e1cfe82f94",
+                "3b519761173617ee47ca61e25681279ae9fdaba9",
+                "4087db7d03a368aeb48956f358eeee58e0edd7b3",
+                "41753aebe629e7e2fbc8c576ce5865056b824ff7",
+                "46d69ab16b7cd068d424c383955b91e756184130",
+                "5a0ac54dc91ce3d40e4351a0dcfb6b9ffa08fdc2",
+                "624150e8832d1acf256bdf52050ac6226d5c6a5f",
+                "761c161d57068a6f504e8fd35cad5a04663b62f1",
+                "7e067cafd8b96fae4671c0032317763fd9549b80",
+                "7f5e4621caaeae9e3f4fbca6fc84779fa4b9c64f",
+                "878dc86bcc60dec276240e2c7551b73094903127",
+                "8cd9b448815a904b8b3b5817c742620729fe4a7c",
+                "91bfe2681a0d397e267e93e125924c872e6a2159",
+                "Plate_1",
+                "Plate_10",
+                "Plate_11",
+                "Plate_12",
+                "Plate_13",
+                "Plate_14",
+                "Plate_15",
+                "Plate_16",
+                "Plate_17",
+                "Plate_18",
+                "Plate_19",
+                "Plate_2",
+                "Plate_20",
+                "Plate_21",
+                "Plate_22",
+                "Plate_23",
+                "Plate_24",
+                "Plate_25",
+                "Plate_27",
+                "Plate_28",
+                "Plate_29",
+                "Plate_3",
+                "Plate_30",
+                "Plate_4",
+                "Plate_5",
+                "Plate_6",
+                "Plate_7",
+                "Plate_8",
+                "Plate_9",
+                "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring",
+                "Threshold_Dinner_Plate_Square_Rim_White_Porcelain",
+                "b3879123202b611e2287fb8ef66089bcb13e9d69",
+                "b599eb548442db2690265de15d2bf8aa549acd02",
+                "bdd5e488098e1e64921b53aacfc8df260e2f898c",
+                "c717fbe8f10ad354c83f9cfc7ce154ae2fcdf96c",
+                "cc9929ee326793bba8cc58e9120ef2262f087ca4",
+                "db5318d5db53a15c19b290628b82f08a27f5639a",
+                "fed3e9529785079e938d85b35e53c34735cc05c0"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true
+              }
+            },
+            {
+              "name": "soap_dish_0",
+              "number": 1,
+              "object_classes": [
+                "soap_dish"
+              ],
+              "object_instances": [
+                "Threshold_Bamboo_Ceramic_Soap_Dish"
+              ],
+              "excluded_object_instances": [],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "vase_0",
+              "number": 1,
+              "object_classes": [
+                "vase"
+              ],
+              "object_instances": [
+                "04f409f17d79445a3afd109c557c6a2702e15cd8"
+              ],
+              "excluded_object_instances": [
+                "00386b5179df69aec660a71fb9c65b344857d016",
+                "01f076bf712f7a14ceed10f92a72948c05925858",
+                "0561c92e2635eaaa0ad753cabfb427cfde565ec0",
+                "0875307f7666e4fce7e217849c10c29972d142a7",
+                "0ae9ee903346b3fd69b34228a3340662a173b791",
+                "0aebf7979e3510654f3c16418145ab973c22a381",
+                "0b0df80543773a698cd4ddcf76a7c5acfc4a803d",
+                "0c48040ad6f64c0103c2f1b3133e2760ed8392b7",
+                "0d61b723728d6d5ac05ac53e07372bcc7ff676ce",
+                "1125b9ca061f6deee5d7e8a31cbe46eee10e535d",
+                "1182b246f9dc763f898cf5a47feb003f8905d289",
+                "13fe6d40a8869913ca6623bc6ed25dbcffb7da0d",
+                "1404f8d65e562307f0fead3fd0d408c34f0af26a",
+                "14b8b72a08380f9f7f13fbb0eef83344a2c11c33",
+                "14e43de7e803f8d42e974f35cef746dcb7b57ed9",
+                "1520472dfd763a8cb0f1b2a447bce437827b8776",
+                "15fbefb684c5f988e5ff754bbded98aa80d3542f",
+                "18a2fab4d1fe71c969e654740028d422d18ad9b6",
+                "1ad21d8bf5749da64c01c01848f571e38819c316",
+                "1b4711c1a5a9978cc2e7c57008f3d085c355d145",
+                "1bd20c0904b0a85598a32a2de70c3a2facdf8e4d",
+                "1d6275b17496af0183fe2c158332a8b8d3eea5b7",
+                "1e736736c9417babd8baa34f83b526eac426e842",
+                "20b562393eb8b161d1bfb7b1e9c5c65d277cfe6f",
+                "2252ee7e50a8ff3608007253e73d1137358d125d",
+                "243bad4f4c1bdda1dddf46ac7e54c567289fd38d",
+                "2470231ef2743a97f8159f356337527eef366763",
+                "247538767e1fde11b53e2b41edcf5b066cf0126c",
+                "25daa32e8ec122ad22c8662a137bf444fb8da745",
+                "263cce6bd107ce2e9f259120e38cd27f5dac0bcc",
+                "2b6a6f943bdaf73ef2018a02ceb1720ab04b5b2d",
+                "2b93011397cebb7664a934bb1876f126b70313d0",
+                "2bc5fe4f4fc48aec41c67e34ebe603bbb53b1d01",
+                "2c66d9495affb0273810b7bacd4c87a4b0f90852",
+                "2c9b708ce46c0fa262c9c97f58e4856a792dba5e",
+                "2d686cdf1b2da2c4b61c629bdefdb4a5c6678168",
+                "2fd36b341e66b948ec0cd87264036f7881cedb4b",
+                "310fe43cec6ff66fc0f99cca8443c5cdeca818ad",
+                "334e738f9a75aa50fdc33f0776b43bdea1fccdfe",
+                "3448a0f2142df518fd92e165207bf1d58dd05fa0",
+                "356b8426ceec3110080b71163f586c8a0f15acfb",
+                "371efb7286ca8324dea0d9642b3824783a11aa73",
+                "379ad1f30cbdee03b3ce2a68d11b6b855e746fb7",
+                "3bd1652a8ee18e0dc0985011fef96125f46b1ac4",
+                "40bf81e852fd34c4d390fa68f71d2cafcb91f2f4",
+                "4551602f795cf1b62cea365613c31f56dfe3999c",
+                "463db7d43c592863e0deb15b198bf5747faae86f",
+                "4b67581ca492a2028ccf3064b2824dcc8d104fb0",
+                "4d264b0fb9851427c3bfcc8a92f12d33b30fe5d5",
+                "4d40134bdb82e6e53b72cd912f99835c486e8759",
+                "4fc6a72c3c780fd8c70c0bdd23aa877b0c4f4a7b",
+                "51b55165bde866a2c8d74b46843d2f549135b889",
+                "535fa87debd90c5fedc585161bf019aea7ceda68",
+                "539a80debf42cd0b6b3c3d1d67d9488efa95af45",
+                "55cc6c146898e7fb1c2ea66ac86b04d6566ad1a5",
+                "56a3cb5686d12e4bad648c325ae998def645c997",
+                "5c111a7314a6d708375b5fc1a0d6560d306da7b1",
+                "5d21ea3e7e66c57b22608a848317d807dbde3c3a",
+                "5fd9d34de9562a5891fe0657010d6c7777438db8",
+                "6152354f6498a5bea31b40f720f2cbff10634608",
+                "634a9acb28154794523f83c0ae981b8537ab6d07",
+                "6441c18aab2884608788795c231b96924c6e5523",
+                "64e73ca852efff52e03768163453a7a41e117f43",
+                "6654629c2b0e6e4769e3c911947605375033bde5",
+                "66d17b302cff7b3baffdccbb52f16325ff35c623",
+                "67b71a4ad2610e060ea018855d108362a4d6fbae",
+                "6dd9e51b58072dbd08fbbdf95ce568aacc47ec59",
+                "6f9e025e59a4a4c1991bb6dc7e73ccb985d07c57",
+                "71b30944a9c6ca8077d2ab8903e586a4dd2a3917",
+                "736eebbb72e7ee9ef01d76ae3b0075e55f05ceb5",
+                "77fb3131da84c90973accb42a2ce5d594e5b4987",
+                "7b497caf99a943b669087b3dd4e77be63b3dbc0a",
+                "7d38434695df81af30390db76c89bcc04529b406",
+                "7ec42d263b2ee8d9b0cd09651f32c2ce46982351",
+                "80794dc5fde2b3276714ff40107bce7b909e45c7",
+                "85a26b27d39fe3c8317df4342d0ae32203739b8e",
+                "877384ee8dc4577ccc2dc5b37ee505d2d4af3d0e",
+                "882802e4ffc1f87c16e16d1322c651a849f7743d",
+                "8aa978beb04d130c9d587f9c2858522cbf559703",
+                "8ffc1468a4c10a3badb8b36062d58f5553c02d21",
+                "9150be2ad622edb189333575dd7ecf229f28c490",
+                "91cb2a92d739d4d71c46a12cb744415b90b17047",
+                "94a5de038faeea77c286fbe0af7469d2a2f7792b",
+                "96dec181c78bf169dbe3bb8c0215c383ce30bd3e",
+                "99de5eb0d3e87db48cc5c2c558880d7aa1ec2c2d",
+                "9c09a8ddc8047cdecc332f1368332a2e62a6c784",
+                "9ec28866f43e42093f181e656ef1c89923945808",
+                "B075HR4ZDB",
+                "B075HR7DM7",
+                "B075HR7KY9",
+                "B075HWMC6S",
+                "B075HWX46K",
+                "B075HXJPW6",
+                "B075HXLWT5",
+                "B075HXPFTG",
+                "B078JGHZT3",
+                "B078JGYJTG",
+                "B078JJDPR2",
+                "B078JMJC46",
+                "B078JMJC49",
+                "B07B8NVHX1",
+                "B07B8NZQ68",
+                "B07B8PXTSY",
+                "B07B8VJBCL",
+                "B07B8W8FBV",
+                "B07HSJVP5C",
+                "B07HSLG6WR",
+                "B07HSMVFMP",
+                "B07JLBDT51",
+                "B07JM1K8VH",
+                "B07JM6GHC8",
+                "Vase_Decorative_1",
+                "Vase_Flat_1",
+                "Vase_Flat_2",
+                "Vase_Flat_3",
+                "Vase_Flat_4",
+                "Vase_Flat_5",
+                "Vase_Medium_1",
+                "Vase_Medium_2",
+                "Vase_Medium_3",
+                "Vase_Medium_4",
+                "Vase_Medium_5",
+                "Vase_Open_1",
+                "Vase_Open_2",
+                "Vase_Open_3",
+                "Vase_Tall_1",
+                "Vase_Tall_2",
+                "Vase_Tall_3",
+                "Vase_Tall_4",
+                "Vase_Tall_5",
+                "a043589070ad2a710483ac68aeb242f00ae1e994",
+                "a17f03892b9f71801e057be9db2de908464d1fba",
+                "a1a955a6d0706fa3634c9baea186632791ade20c",
+                "a21f46139ac72eca15b4240cf8055b984d593af1",
+                "aad0bda6fe5e168eaa4dbf1292878b18c54f249b",
+                "acce2a11f70af73275e053fe644a8f608089893c",
+                "adf37dc162377502fc26a64433466f01d182ebf9",
+                "aea09725b176eae21cb59fa852a55174189c11ee",
+                "af357e69163c47f0d376340314809ae12ee0c609",
+                "af753234600031dd1619673de2827b3fb2ae5b72",
+                "b0365152ce8404708c65752b9de332604bdf6063",
+                "b084a1e5e80ece7227672011515ee3b5b33a01d9",
+                "b4c970f1a8fa29e0934f4e8ccd1cb67ad92b0d51",
+                "b5a2e303c9a5cfa54fb5b257cd82926b194e1e26",
+                "b6439d60ffdbd1c1a71ba76e706dcbfc87f2c6df",
+                "b728f6c0506deaea1e8231b629d1e20b0a5fa0f8",
+                "b9b836b51c44ad76b7966ae565ae4910e89c2de6",
+                "bbe510f23f2488ae618cd8c6601f1df4e4edacc8",
+                "c27ffe33c37fb0d58bd76b949f85b4896545e0ed",
+                "c3a6db9251980820f1e2ddcabebf8d21f059e0a4",
+                "c3c8a9a0e1f2037d9e82d2286748cb576b1fd738",
+                "c4776ee9f31d7ab3177be970e35e3f76c44e0f8c",
+                "c4a76da68c72eec12f07b0f047a21a130872a0ba",
+                "c8626f2d3bbeb2f1601a2af656c4610cd99e56fa",
+                "c8af5b98558601d1ea284a89c3578eb39e061c00",
+                "c94029096657382ebca374164eef6746d80bd99e",
+                "cc5281d4600eb70647018d02c92032abf391535f",
+                "d3d2da9dd341d78c1536200b130180b40971bab8",
+                "d6b5822b17434f97ff007e0854cd9385dc79a150",
+                "d8e3ee46b61694958a24ae70fc740f9197aef41e",
+                "dd62a6aafabe4bcc5dc49e61a5d5c87019e1b4c3",
+                "dfcbfd3a7de15b9689dc0580c38f2f0896b6647d",
+                "e05af79080f048e261865dc1f9cf0a80d47deea4",
+                "e60a5e30bb3384125c02cbda6b8aeaffc900b78a",
+                "f161fe4fd2234d49ab5e452f7b4d869ae276330e",
+                "f427ee2c7b7482af6c00918245cad73df5241a94",
+                "f51fd63c6cd12ee673b94946d1450c6afc8713be",
+                "fa5c8c836453388913b0017c4a2e33304373bc31",
+                "fbf828b972d59baba95d1a54e1f95442d7ea0b46",
+                "fc2d461dfe96f499d7c38306747b8000e111b13f",
+                "fead0a77067515bd384f322f81592d868093c8ce",
+                "ff10cb92d3dbd50abc4b4aac608055945bdb31e7",
+                "xxxx0d0ff402xe09fx4188xb9a6xcf5d7e13475e",
+                "xxxx3a4d8840x65eax4986x98f8xb64e2fba5da6",
+                "xxxx3df1391bx35d8x4752xad8exde9f3cf64b31",
+                "xxxx59b79f40x2b52x4d5axb58bx2c8d239b9a1e",
+                "xxxx609fb6c8x44a7x4239xb341xb9880ac81843",
+                "xxxx630c96dfx08d3x4691xbee6x6a40dfda78dc",
+                "xxxx962ed056x74e2x4f30x98ffx26eea6a2adad",
+                "xxxxaab02551x8cf4x48ecxb45fxbc8207ba0eca",
+                "xxxxc5720538x33bbx460cx820cxd375445ef773",
+                "xxxxccb30c58x6dc6x4d15x9e92x1583d4c2562f"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_2"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "plant_saucer_0",
+              "number": 1,
+              "object_classes": [
+                "plant_saucer"
+              ],
+              "object_instances": [
+                "Cole_Hardware_Plant_Saucer_Brown_125"
+              ],
+              "excluded_object_instances": [
+                "Cole_Hardware_Plant_Saucer_Glazed_9",
+                "Cole_Hardware_Saucer_Electric",
+                "Cole_Hardware_Saucer_Glazed_6",
+                "Ecoforms_Plant_Container_S14Turquoise",
+                "Ecoforms_Plant_Container_S24NATURAL",
+                "Ecoforms_Plant_Container_S24Turquoise",
+                "Ecoforms_Plant_Plate_S11Turquoise",
+                "Ecoforms_Plant_Saucer_S14MOCHA",
+                "Ecoforms_Plant_Saucer_S14NATURAL",
+                "Ecoforms_Plant_Saucer_S17MOCHA",
+                "Ecoforms_Plant_Saucer_SQ1HARVEST",
+                "Ecoforms_Quadra_Saucer_SQ1_Avocado"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            }
+          ],
+          "obj_info": {
+            "soap_dispenser": "Soap_Bottle_26_:0000",
+            "glass": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000",
+            "plate": "Plate_26_:0000",
+            "soap_dish": "Threshold_Bamboo_Ceramic_Soap_Dish_:0000",
+            "vase": "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000",
+            "plant_saucer": "Cole_Hardware_Plant_Saucer_Brown_125_:0000"
+          }
+        },
+        "variant_spec": {
+          "variant_id": "T5-INC-DIS",
+          "sha256": "50dc7e6e739456c251681cf047eee7f5fdc5a4610c58458f5e61ed4acf7e4053",
+          "entity_handles": {
+            "soap_dispenser_0": "Soap_Bottle_26_:0000",
+            "glass_0": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000",
+            "glass_1": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000",
+            "plate_0": "Plate_26_:0000",
+            "soap_dish_0": "Threshold_Bamboo_Ceramic_Soap_Dish_:0000",
+            "vase_0": "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000",
+            "plant_saucer_0": "Cole_Hardware_Plant_Saucer_Brown_125_:0000"
+          },
+          "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- soap_dish_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to soap_dispenser_0\n- vase_0: on table_2 (kitchen_0), is_clean, is_empty, next to glass_0\n- plant_saucer_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to plate_0",
+          "memory_runtime_applied": false,
+          "unscored_success_text": [
+            "- Distractors (soap_dish_0, vase_0, plant_saucer_0) must not be used in place of the task objects; they have no placement goals."
+          ],
+          "seed": 2128781847,
+          "initial_validation": [
+            "soap_dispenser_0: exact asset, initial states, furniture, region checked",
+            "glass_0: exact asset, initial states, furniture, region checked",
+            "glass_1: exact asset, initial states, furniture, region checked",
+            "plate_0: exact asset, initial states, furniture, region checked",
+            "soap_dish_0: exact asset, initial states, furniture, region checked",
+            "vase_0: exact asset, initial states, furniture, region checked",
+            "plant_saucer_0: exact asset, initial states, furniture, region checked"
+          ],
+          "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"
+        }
+      },
+      "ao_states": {},
+      "rigid_objs": [
+        [
+          "Soap_Bottle_26.object_config.json",
+          [
+            [
+              0.75566,
+              -0.00697,
+              -0.65492,
+              -5.27226
+            ],
+            [
+              0.00326,
+              0.99997,
+              -0.00688,
+              1.0264
+            ],
+            [
+              0.65495,
+              0.00307,
+              0.75566,
+              -3.15693
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "9428caf70c42e50bb3c3c604eba00c43b8efb58f.object_config.json",
+          [
+            [
+              -0.82273,
+              -0.00069,
+              -0.56844,
+              -3.38419
+            ],
+            [
+              -0.00077,
+              1.0,
+              -9e-05,
+              0.82263
+            ],
+            [
+              0.56844,
+              0.00036,
+              -0.82273,
+              -3.58258
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794.object_config.json",
+          [
+            [
+              0.78359,
+              0.00013,
+              -0.62128,
+              -1.46465
+            ],
+            [
+              -1e-05,
+              1.0,
+              0.00019,
+              0.84283
+            ],
+            [
+              0.62128,
+              -0.00014,
+              0.78359,
+              -5.13407
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Plate_26.object_config.json",
+          [
+            [
+              0.59991,
+              0.0,
+              0.80007,
+              -5.34628
+            ],
+            [
+              -1e-05,
+              1.0,
+              0.0,
+              0.91375
+            ],
+            [
+              -0.80007,
+              -1e-05,
+              0.59991,
+              -2.98353
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Threshold_Bamboo_Ceramic_Soap_Dish.object_config.json",
+          [
+            [
+              0.01202,
+              -0.00091,
+              -0.99993,
+              -5.50566
+            ],
+            [
+              -0.00066,
+              1.0,
+              -0.00091,
+              0.93207
+            ],
+            [
+              0.99993,
+              0.00067,
+              0.01202,
+              -3.18023
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "04f409f17d79445a3afd109c557c6a2702e15cd8.object_config.json",
+          [
+            [
+              0.84205,
+              0.00024,
+              0.53939,
+              -3.4606
+            ],
+            [
+              0.0017,
+              0.99999,
+              -0.0031,
+              0.86886
+            ],
+            [
+              -0.53939,
+              0.00353,
+              0.84205,
+              -3.35051
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ],
+        [
+          "Cole_Hardware_Plant_Saucer_Brown_125.object_config.json",
+          [
+            [
+              0.73882,
+              0.00039,
+              -0.6739,
+              -5.16864
+            ],
+            [
+              -0.00034,
+              1.0,
+              0.0002,
+              0.93046
+            ],
+            [
+              0.6739,
+              8e-05,
+              0.73882,
+              -3.39869
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        ]
+      ],
+      "targets": {},
+      "markers": [],
+      "target_receptacles": [],
+      "goal_receptacles": [],
+      "name_to_receptacle": {
+        "Soap_Bottle_26_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000",
+        "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001",
+        "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": "183de9f61a9c362d58ac340058ecddc54da18809_:0000|Desk0015_receptacle_mesh.0000",
+        "Plate_26_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000",
+        "Threshold_Bamboo_Ceramic_Soap_Dish_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000",
+        "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001",
+        "Cole_Hardware_Plant_Saucer_Brown_125_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000"
+      },
+      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+      "evaluation_propositions": [
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+            ],
+            "receptacle_handles": [
+              "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+            ],
+            "receptacle_handles": [
+              "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_on_top",
+          "args": {
+            "object_handles": [
+              "Plate_26_:0000"
+            ],
+            "receptacle_handles": [
+              "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_next_to",
+          "args": {
+            "entity_handles_a": [
+              "Plate_26_:0000"
+            ],
+            "entity_handles_b": [
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+            ],
+            "number": 1,
+            "l2_threshold": 0.5
+          }
+        },
+        {
+          "function_name": "is_next_to",
+          "args": {
+            "entity_handles_a": [
+              "Plate_26_:0000"
+            ],
+            "entity_handles_b": [
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+            ],
+            "number": 1,
+            "l2_threshold": 0.5
+          }
+        },
+        {
+          "function_name": "is_clean",
+          "args": {
+            "object_handles": [
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_filled",
+          "args": {
+            "object_handles": [
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_clean",
+          "args": {
+            "object_handles": [
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_filled",
+          "args": {
+            "object_handles": [
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+            ],
+            "number": 1
+          }
+        },
+        {
+          "function_name": "is_next_to",
+          "args": {
+            "entity_handles_a": [
+              "Soap_Bottle_26_:0000"
+            ],
+            "entity_handles_b": [
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+            ],
+            "number": 1,
+            "l2_threshold": 0.5
+          }
+        },
+        {
+          "function_name": "is_next_to",
+          "args": {
+            "entity_handles_a": [
+              "Soap_Bottle_26_:0000"
+            ],
+            "entity_handles_b": [
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+            ],
+            "number": 1,
+            "l2_threshold": 0.5
+          }
+        }
+      ],
+      "evaluation_proposition_dependencies": [
+        {
+          "proposition_indices": [
+            3
+          ],
+          "depends_on": [
+            0,
+            2
+          ],
+          "relation_type": "while_satisfied",
+          "dependency_mode": "any"
+        },
+        {
+          "proposition_indices": [
+            4
+          ],
+          "depends_on": [
+            1,
+            2
+          ],
+          "relation_type": "while_satisfied",
+          "dependency_mode": "any"
+        }
+      ],
+      "evaluation_constraints": [
+        {
+          "type": "TemporalConstraint",
+          "args": {
+            "dag_edges": [
+              [
+                9,
+                5
+              ],
+              [
+                10,
+                7
+              ]
+            ],
+            "n_propositions": 11
+          }
+        },
+        {
+          "type": "TerminalSatisfactionConstraint",
+          "args": {
+            "proposition_indices": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "n_propositions": 11
+          }
+        }
+      ],
+      "object_states": {
+        "is_clean": {
+          "f6853182c26e4d30f2164293adfa77986faae26c_:0002": false,
+          "cd1a32857dd7bbc7d78d214f727a0f07cb71d76c_:0000": false,
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0001": false,
+          "4dc93f5fa533934de0d2aef6b9359dc96417627e_:0001": false,
+          "ef5f1b9208feab193c638fd13ec9f5a1a671be80_:0000": false,
+          "4aedf1697c9095b318e9920ebcd9f465a4b36af9_:0000": false,
+          "adaf50303f95c9ff0a069041673f80cd72469bfb_:0000": false,
+          "4dc93f5fa533934de0d2aef6b9359dc96417627e_:0000": false,
+          "cc3139083fa1ad931a015aaddb24c339e0835f10_:0000": false,
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0000": false,
+          "f6853182c26e4d30f2164293adfa77986faae26c_:0001": false,
+          "Plate_26_:0000": true,
+          "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": false,
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0001": false,
+          "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0002": false,
+          "Soap_Bottle_26_:0000": true,
+          "Cole_Hardware_Plant_Saucer_Brown_125_:0000": true,
+          "e94ede305ff3f873dd34f8e95274bb54679df6b4_:0000": false,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0001": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0000": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0001": false,
+          "d564a9dfddaed66661ac318ff1e3c7b62b99f0ee_:0000": false,
+          "5f6564ee5d1e8026846204b071361369f669855c_:0000": false,
+          "xxxxbe0989d6xfc2ax4516xa2c6xb497a6037fb8_:0000": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0001": false,
+          "3220d21b0885b4f0ac2c044d00a76c2ff7844dca_:0000": false,
+          "d4ffac01fb53b35fb167619a53badcfcfdbbdcdf_:0000": false,
+          "679d4207f433ee1bb6030bae48df158a775d2b0b_part_64_:0000": false,
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_5_:0000": false,
+          "cff54dd6df371fea7a23bda408acec1ed26488c6_:0000": false,
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_6_:0000": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0000": false,
+          "973c8db16abb188caa2868a16141b643684e3881_:0000": false,
+          "f6853182c26e4d30f2164293adfa77986faae26c_:0000": false,
+          "34292497a33f039dd556b550e0766a63928f8e58_:0000": false,
+          "e8a8d169c17b2f14008e10642994c92ea35b3946_:0000": false,
+          "8a2d6c76deccf5964e793c0e591b985590bb916a_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0001": false,
+          "885bf5232852d8ee0c738b1d590ad1958186d1dd_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0002": false,
+          "Threshold_Bamboo_Ceramic_Soap_Dish_:0000": true,
+          "c1d3ee7e099fbe68b35b5915fa6b4987403650a4_:0000": false,
+          "7663ea1e420810b10770330b87393ecfa6f70889_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0000": false,
+          "e3d3ed213f437121abf8a1faffa60ae0672cbf25_:0000": false,
+          "2cb375dc30e908a6e4b6545976ad71d2586d6807_:0000": false,
+          "2cb375dc30e908a6e4b6545976ad71d2586d6807_:0001": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0000": false,
+          "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0001": false,
+          "54de8a81569ad75759d3fe685801f354f3d091f3_:0000": false,
+          "a9bb13d8f342efded56484a24b16f896d95a749f_:0000": false,
+          "8718b96e8acda5e530bc0eb72a0d3660778ff59a_:0000": false,
+          "4122c550741deeda8ed0b4da129bab0cd403cae7_:0000": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0000": false,
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0000": false,
+          "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000": true,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0002": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0003": false,
+          "f7411ceab74991d377e79d79664120d67ff53b71_:0000": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0004": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0000": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0001": false,
+          "fe799ce4f050da99c88ef6f994b2197d874cf67d_:0000": false,
+          "xxxxc62548fbx6b78x4f7exa203xb8e973026972_:0000": false,
+          "4a5f3b29cc15b191bb35bfae6c5918087a173827_:0000": false,
+          "b31b3406480c29c8e44613edece1325cb5bd85ae_:0000": false,
+          "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false,
+          "91762e71879d66596716bfa58beca60624e95773_:0000": false,
+          "69f290dc18b7d92985f576f078e3d44bef963c09_:0000": false,
+          "203-2_:0000": false,
+          "75bcf65091df0ec78dae7f2ab780d950628555fd_:0001": false,
+          "4134-11_:0000": false,
+          "3262-5_:0000": false,
+          "3262-5_:0001": false,
+          "4134-12_:0000": false,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0000": false,
+          "4134-13_:0000": false,
+          "3262-6_:0000": false,
+          "4134-14_:0000": false,
+          "4134-15_:0000": false,
+          "e1d008861be1c6252e581526031b15ca5be867b1_:0000": false,
+          "4134-16_:0000": false,
+          "78a02cbe18b9bac0aedf264e100a73f34fd05023_:0000": false,
+          "183de9f61a9c362d58ac340058ecddc54da18809_:0000": false,
+          "412c833d4428480466b704ce25bf06f519c8cf72_:0000": false,
+          "e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000": false
+        },
+        "is_powered_on": {
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0001": false,
+          "ef5f1b9208feab193c638fd13ec9f5a1a671be80_:0000": false,
+          "adaf50303f95c9ff0a069041673f80cd72469bfb_:0000": false,
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0000": false,
+          "ef99d4c3836c69227f283a986815683d31b4caca_:0001": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0002": false,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0001": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0000": false,
+          "2a0a496191e11931f00c0cfa0c6603ae30477177_:0001": false,
+          "d564a9dfddaed66661ac318ff1e3c7b62b99f0ee_:0000": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0001": false,
+          "1d438cf2a0be5706ffdbd1489fbfb27f712589a0_:0000": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0001": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0002": false,
+          "211f711ed4f711c1d85f9aae2de4ae2a0163977e_:0000": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0000": false,
+          "63fd7f5ddec3a3c4d98cf4be94c9206ae5a37a63_:0001": false,
+          "8718b96e8acda5e530bc0eb72a0d3660778ff59a_:0000": false,
+          "82e45a038d4661cde412e372a76816cb6c347d10_:0000": false,
+          "f7411ceab74991d377e79d79664120d67ff53b71_:0000": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0000": false,
+          "2281225b42551fd15d106a76c717d23a3406f63a_:0001": false,
+          "fe799ce4f050da99c88ef6f994b2197d874cf67d_:0000": false,
+          "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false,
+          "10df611ce0eb7d957978695c8c8e1da31c58d23b_:0000": false,
+          "78a02cbe18b9bac0aedf264e100a73f34fd05023_:0000": false
+        },
+        "is_filled": {
+          "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": false,
+          "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000": false,
+          "Soap_Bottle_26_:0000": false,
+          "Cole_Hardware_Plant_Saucer_Brown_125_:0000": false,
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_3_:0000": false,
+          "1f148fddeb1bb6e9634f8d8be3c979e0d5405a65_:0000": false,
+          "Threshold_Bamboo_Ceramic_Soap_Dish_:0000": false,
+          "e3d3ed213f437121abf8a1faffa60ae0672cbf25_:0000": false,
+          "3330c15aea09a3653dfef1a26ec300ec11fc319e_:0000": false,
+          "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000": false,
+          "ded915cd6ff75d772c84abbc4ca2bf141d0caa90_part_2_:0000": false,
+          "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000": false
+        }
+      }
+    }
+  ]
+}

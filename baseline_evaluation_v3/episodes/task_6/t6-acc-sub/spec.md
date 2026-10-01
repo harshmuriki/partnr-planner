@@ -61,6 +61,8 @@ Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clea
 - cup_0: on table_7 (dining_room_0), is_clean, is_filled
 - blue_hand_towel_0: on shelves_11 (bathroom_2), is_clean
 - lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on
+- bottle_0: known absent; no water bottle exists anywhere in the scene
+- hand_towel_0: known absent; there is no hand towel besides blue_hand_towel_0
 
 ## Success criteria
 - is_inside(bread_0, microwave_0)

@@ -1,0 +1,24 @@
+sequence,skill,target,simulator_steps,response,video
+1,Explore,kitchen_0,213,Successful execution!,clips/0000.mp4
+2,Navigate,plate_0,41,Successful execution!,clips/0001.mp4
+3,Pick,plate_0,2,Successful execution!,clips/0002.mp4
+4,Navigate,table_0,93,Successful execution!,clips/0003.mp4
+5,Place,"plate_0,on,table_0,none,none",2,Successful execution!,clips/0004.mp4
+6,Navigate,glass_1,119,Successful execution!,clips/0005.mp4
+7,Pick,glass_1,2,Successful execution!,clips/0006.mp4
+8,Navigate,cabinet_0,79,Successful execution!,clips/0007.mp4
+9,Place,"glass_1,on,cabinet_0,next_to,soap_dispenser_0",2,Successful execution!,clips/0008.mp4
+10,Clean,glass_1,2,Successful execution!,clips/0009.mp4
+11,Fill,glass_1,2,Successful execution!,clips/0010.mp4
+12,Pick,glass_1,2,Successful execution!,clips/0011.mp4
+13,Navigate,table_0,69,Successful execution!,clips/0012.mp4
+14,Place,"glass_1,on,table_0,next_to,plate_0",2,Successful execution!,clips/0013.mp4
+15,Navigate,glass_0,117,Successful execution!,clips/0014.mp4
+16,Pick,glass_0,2,Successful execution!,clips/0015.mp4
+17,Navigate,cabinet_0,34,Successful execution!,clips/0016.mp4
+18,Place,"glass_0,on,cabinet_0,next_to,soap_dispenser_0",2,Successful execution!,clips/0017.mp4
+19,Clean,glass_0,2,Successful execution!,clips/0018.mp4
+20,Fill,glass_0,2,Successful execution!,clips/0019.mp4
+21,Pick,glass_0,2,Successful execution!,clips/0020.mp4
+22,Navigate,table_0,68,Successful execution!,clips/0021.mp4
+23,Place,"glass_0,on,table_0,next_to,plate_0",2,Successful execution!,clips/0022.mp4

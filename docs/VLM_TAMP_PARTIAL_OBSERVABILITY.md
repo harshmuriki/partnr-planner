@@ -1,0 +1,22 @@
+# VLM-TAMP adaptation for partial observations
+
+This is a VLM-TAMP-inspired PDDL + Habitat-skill baseline, not an exact reproduction of the paper's fully modeled geometric/kinematic planner. The VLM proposes intermediate goals, PDDL refines them, and Habitat skills execute them. Observation-driven replanning is an explicit extension.
+
+## Information and execution protocol
+
+- The planner uses the configured robot world graph, including supplied initial memory. Known objects stay in prompts outside the current field of view; text uses PARTNR/ReAct’s `get_world_descr` with object states and room names enabled. The prompt distinguishes this memory from camera observations, without adding per-object visibility or inferred state facts to the text. Newly observed facts update memory through the shared environment step, with no planner-specific perception refresh. A missed detection does not establish absence; explicit absence reports require search evidence in the model's explanation.
+- Physical Explore samples annotated third-person views while moving. At most three views (first, temporal midpoint, last) are sent at its information boundary. Annotation masks exclude occluded objects. Label geometry/IDs are simulator-derived, so this is oracle perception, not learned visual recognition.
+- Successful Open triggers replanning from the graph already updated by the shared environment step, a fresh image, and replacement of the remaining plan. This also applies when Open was an internal step of a larger PDDL subgoal. The shared perception interface can reveal opened-container contents using simulator associations; this privilege must be matched or disclosed in comparisons.
+- Execution failure first receives the configured PDDL retries and branch alternatives. Escalation sends a freshly rendered failure-state image.
+- Finishing all subgoals in the active branch stops execution immediately with `plan_completed`, without another observation or VLM completion/continuation request. Explore, Open, and failure replanning still operate at their existing boundaries. During an otherwise triggered VLM request, the model may explicitly return JSON `{"decision":"complete","reason":"..."}` or `{"decision":"unsolvable","reason":"..."}`. Neither a model decision nor finishing a plan establishes ground-truth task success. The planner does not consult evaluator completion scores.
+- Default limits: 20 VLM planning cycles, two searches/inspections per target, three local PDDL execution retries in the baseline configuration, and the shared 600-second combined budget. A revisit is allowed within the per-target bound; repeated searches beyond it are rejected. Invalid/empty model output is reported as a separate stop reason.
+
+## Fair comparisons
+
+Use identical episode variants, initial memory, static-map access, perception privileges, camera availability, Habitat skills, simulator frequency, and overall budgets for competing methods. Do not equate camera-visible objects with all known objects. Do not compare this partial-observation variant to a full-state planner without labeling the latter as privileged. Existing unrelated baseline configurations are unchanged. The current PARTNR/ReAct config uses fast Explore and action images, whereas this adaptation uses physical Explore and up to three annotated views; these are input/protocol differences, even though graph facts come from the same source.
+
+## Logs and accounting
+
+`<run>/vlm_tamp_pddl/observation_history.html` shows replanning reasons, memory snapshots/deltas, exact submitted image paths and model responses. Raw events remain in `vlm_tamp_pddl_log.jsonl`. VLM wall time includes both English and predicate calls. The VLM-TAMP baseline sets `evaluation.exclude_explore_from_time_budget: True`: its 600-second budget counts VLM wall time plus non-Explore action simulation time. Physical Explore steps and their duration remain recorded, with duration reported as `explore_excluded_s` in the budget breakdown. Post-Explore VLM calls still count. End-to-end wall runtime still includes exploration. Other baselines retain their configured accounting; match this budget policy when comparing them.
+
+The 16,384-token completion ceiling avoids empty high-reasoning responses observed at 1,200 and 4,096 tokens. Report the model, reasoning effort, limit and actual usage with results. Unit tests cover the new protocol; the live smoke-test report records actual exercised paths and outcome.

@@ -49,6 +49,7 @@ Move both packages to the living-room center table and place them next to each o
 - box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty
 - box_1: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty
 - knife_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean
+- scissors_0: known absent; no scissors exist anywhere in the scene
 
 ## Success criteria
 - is_on_top(box_0, table_16)

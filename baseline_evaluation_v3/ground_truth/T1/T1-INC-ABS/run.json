@@ -1,0 +1,3227 @@
+{
+  "id": "d01d5d981a14492bac988ff7a580c915",
+  "variant": "T1-INC-ABS",
+  "status": "completed",
+  "started_at": "2026-09-29T18:08:51.174945+00:00",
+  "completed_at": "2026-09-29T18:09:00.788358+00:00",
+  "action_count": 10,
+  "spec_hash": "69759b5b5e9301d7d3338bf037706df0139f00929b49dbbfc2d518159c15e0ee",
+  "dataset_hash": "18ac500948c3f0dc163f44d9e7782e2fc292d923b2ee639f37ba616a9581442b",
+  "metadata": {
+    "variant": "T1-INC-ABS",
+    "rooms": [
+      "living_room_0",
+      "laundryroom/mudroom_0",
+      "bathroom_0",
+      "bedroom_0",
+      "closet_0",
+      "kitchen_0",
+      "bathroom_1",
+      "bedroom_1",
+      "hallway_0"
+    ],
+    "targets": [
+      "lamp_0",
+      "jug_0"
+    ],
+    "spec_hash": "69759b5b5e9301d7d3338bf037706df0139f00929b49dbbfc2d518159c15e0ee",
+    "robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: no record; the robot does not know whether it exists or where it is",
+    "dataset": "/home/harshmuriki/Documents/partnr-planner/baseline_evaluation_v3/episodes/task_1/t1-inc-abs/dataset.json.gz",
+    "dataset_hash": "18ac500948c3f0dc163f44d9e7782e2fc292d923b2ee639f37ba616a9581442b",
+    "episode_id": "T1-INC-ABS",
+    "reports": [
+      "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+    ],
+    "unsupported_criteria": [],
+    "available": true,
+    "scene_id": "103997895_171031182",
+    "furniture": {
+      "bedroom_0": [
+        {
+          "name": "chair_0",
+          "description": "Hercules Swivel Glider Recliner, Oyster"
+        },
+        {
+          "name": "chest_of_drawers_0",
+          "description": "Presby Nightstand, White"
+        }
+      ],
+      "bedroom_1": [
+        {
+          "name": "bed_0",
+          "description": "Casa King Storage Bed, Black"
+        },
+        {
+          "name": "shelves_1",
+          "description": "Telegraph Wide Bookcase, Acacia White"
+        },
+        {
+          "name": "table_3",
+          "description": "Telegraph Desk, Acacia White"
+        },
+        {
+          "name": "filing_cabinet_0",
+          "description": "Telegraph 4 Drawer File, Acacia White"
+        }
+      ],
+      "living_room_0": [
+        {
+          "name": "shelves_0",
+          "description": "bookshelf"
+        },
+        {
+          "name": "table_0",
+          "description": "Tulip Table (90cm)"
+        },
+        {
+          "name": "couch_0",
+          "description": "Presley 3 Seater Beige"
+        },
+        {
+          "name": "table_1",
+          "description": "Lincoln Marble 3 In 1 Pack Tables"
+        },
+        {
+          "name": "couch_2",
+          "description": "Presley 2 Seater Beige"
+        }
+      ],
+      "kitchen_0": [
+        {
+          "name": "shelves_0",
+          "description": "bookshelf"
+        },
+        {
+          "name": "cabinet_0",
+          "description": "Kitchen cabinet with hobs and oven"
+        },
+        {
+          "name": "table_2",
+          "description": "Bar"
+        },
+        {
+          "name": "cabinet_1",
+          "description": "Kitchen cabinet with door"
+        },
+        {
+          "name": "cabinet_2",
+          "description": "Kitchen cabinet with 2 doors"
+        },
+        {
+          "name": "cabinet_3",
+          "description": "Kitchen cabinet with drawers"
+        },
+        {
+          "name": "counter_0",
+          "description": "Kitchen island, 60x100x90"
+        },
+        {
+          "name": "cabinet_4",
+          "description": "Kitchen tall cabinet"
+        },
+        {
+          "name": "cabinet_6",
+          "description": "Kitchen cabinet with sink, double"
+        },
+        {
+          "name": "fridge_0",
+          "description": "American fridge freezer"
+        },
+        {
+          "name": "cabinet_7",
+          "description": "Kitchen corner cabinet"
+        }
+      ],
+      "laundryroom/mudroom_0": [
+        {
+          "name": "washer_dryer_0",
+          "description": "1600 spin 8kg load washing machine in silver F1647TD5"
+        },
+        {
+          "name": "washer_dryer_1",
+          "description": "1600 spin 8kg load washing machine in silver F1647TD5"
+        },
+        {
+          "name": "couch_1",
+          "description": "Couch"
+        },
+        {
+          "name": "cabinet_5",
+          "description": "Kitchen Cabinet with sink, 2 doors"
+        }
+      ],
+      "bathroom_0": [
+        {
+          "name": "toilet_0",
+          "description": "Close Coupled Toilet"
+        }
+      ],
+      "bathroom_1": [
+        {
+          "name": "toilet_1",
+          "description": "Cooke & Lewis Romeo Modern Close-Coupled Toilet with Soft Close Seat"
+        },
+        {
+          "name": "cabinet_0",
+          "description": "Kitchen cabinet with hobs and oven"
+        }
+      ],
+      "closet_0": [
+        {
+          "name": "wardrobe_0",
+          "description": "Dublin Combi Wardrobe - Black"
+        },
+        {
+          "name": "wardrobe_1",
+          "description": "Dublin Black Wardrobe - 2 Door - 2 Drawer"
+        }
+      ]
+    },
+    "success_criteria": "- is_powered_off(lamp_0)\n- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+    "propositions": [
+      {
+        "function_name": "is_powered_off",
+        "args": {
+          "object_handles": [
+            "B07HK83QRB_:0000"
+          ],
+          "number": 1
+        }
+      }
+    ]
+  },
+  "snapshot": {
+    "status": "idle",
+    "status_message": "Explore done: Successful execution!",
+    "loaded": true,
+    "episode": {
+      "episode_id": "T1-INC-ABS",
+      "scene_id": "103997895_171031182",
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "data_path": "/home/harshmuriki/Documents/partnr-planner/baseline_evaluation_v3/episodes/task_1/t1-inc-abs/dataset.json.gz",
+      "runtime_config_path": null,
+      "info": {
+        "episode_id": "T1-INC-ABS",
+        "is_dynamic": true,
+        "sample_configs": {
+          "0": {
+            "name": "lamp_0",
+            "number": 1,
+            "object_classes": [
+              "lamp"
+            ],
+            "object_instances": [
+              "B07HK83QRB"
+            ],
+            "excluded_object_instances": [
+              "B07HK3PNSK"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "chest_of_drawers_0"
+            ],
+            "allowed_regions": [
+              "bedroom_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false,
+              "is_powered_on": true
+            }
+          }
+        },
+        "object_labels": {},
+        "extra_info": {
+          "scene_id": "103997895_171031182",
+          "episode_id": "T1-INC-ABS",
+          "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+          "initial_state": [
+            {
+              "name": "lamp_0",
+              "number": 1,
+              "object_classes": [
+                "lamp"
+              ],
+              "object_instances": [
+                "B07HK83QRB"
+              ],
+              "excluded_object_instances": [
+                "B07HK3PNSK"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "chest_of_drawers_0"
+              ],
+              "allowed_regions": [
+                "bedroom_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false,
+                "is_powered_on": true
+              }
+            }
+          ],
+          "obj_info": {
+            "lamp": "B07HK83QRB_:0000"
+          }
+        },
+        "variant_spec": {
+          "variant_id": "T1-INC-ABS",
+          "sha256": "98668476ace0497107e53e85bf4ddbe93aba18d8986eaf05c363e6e26107dc99",
+          "entity_handles": {
+            "lamp_0": "B07HK83QRB_:0000"
+          },
+          "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: no record; the robot does not know whether it exists or where it is",
+          "memory_runtime_applied": false,
+          "unscored_success_text": [
+            "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+          ],
+          "seed": 1535596943,
+          "initial_validation": [
+            "lamp_0: exact asset, initial states, furniture, region checked"
+          ],
+          "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"
+        }
+      }
+    },
+    "skills": {
+      "Navigate": "Navigate <agent_index> <entity_name>",
+      "Explore": "Explore <agent_index> <room_name>",
+      "Open": "Open <agent_index> <entity_name>",
+      "Close": "Close <agent_index> <entity_name>",
+      "Pick": "Pick <agent_index> <entity_name>",
+      "Place": "Place <agent_index> <entity,relation,furniture,constraint,reference>",
+      "Fill": "Fill <agent_index> <entity_name>",
+      "Pour": "Pour <agent_index> <entity_name>",
+      "Clean": "Clean <agent_index> <entity_name>",
+      "PowerOn": "PowerOn <agent_index> <entity_name>",
+      "PowerOff": "PowerOff <agent_index> <entity_name>"
+    },
+    "entities": {
+      "rooms": [
+        "living_room_1",
+        "laundryroom_1",
+        "bathroom_1",
+        "bedroom_1",
+        "closet_1",
+        "kitchen_1",
+        "bathroom_2",
+        "bedroom_2",
+        "hallway_1",
+        "unknown_room"
+      ],
+      "furniture": [
+        {
+          "name": "floor_living_room_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_laundryroom_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bathroom_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bedroom_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_closet_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_kitchen_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bathroom_2",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bedroom_2",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_hallway_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "chair_9",
+          "sim_handle": "04801d6f327197470d63bfd728d4cf02bd33ec56_:0000"
+        },
+        {
+          "name": "bed_10",
+          "sim_handle": "0ce32f140400176aa09faa2e869adc288dc427ce_:0000"
+        },
+        {
+          "name": "shelves_11",
+          "sim_handle": "252ea1f9106ada162cf68bb61c71efd4a62d4c87_part_3_:0000"
+        },
+        {
+          "name": "washer_dryer_12",
+          "sim_handle": "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0000"
+        },
+        {
+          "name": "washer_dryer_13",
+          "sim_handle": "2c2b2914fc526f6e8bbe65511ecf58bba0027ec0_:0001"
+        },
+        {
+          "name": "table_14",
+          "sim_handle": "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000"
+        },
+        {
+          "name": "toilet_15",
+          "sim_handle": "3bd3f3a882da9283719fe1d238ad49d88760d0c3_:0000"
+        },
+        {
+          "name": "shelves_16",
+          "sim_handle": "499dd12f83d3fcb655a0bc2373e4da020a67008a_:0000"
+        },
+        {
+          "name": "couch_17",
+          "sim_handle": "50bf1434785c2776eac002be0f7c3abeff54709c_:0000"
+        },
+        {
+          "name": "couch_18",
+          "sim_handle": "5d77eeaa7a16e02ef64e3ce74893768cc8389aed_:0000"
+        },
+        {
+          "name": "table_19",
+          "sim_handle": "735845d0674f69f736af7e0f116767a01392f9b8_:0000"
+        },
+        {
+          "name": "toilet_20",
+          "sim_handle": "7ff8c2d48e8d49e2f1504bc83d16ef933cd7163b_:0000"
+        },
+        {
+          "name": "couch_21",
+          "sim_handle": "809aa90d72a9aa73fadef388620c7ca3668f9d00_:0000"
+        },
+        {
+          "name": "unknown_22",
+          "sim_handle": "b395c0b27f34bbdf7bfac33bdcb1946daeb2609b_:0000"
+        },
+        {
+          "name": "cabinet_23",
+          "sim_handle": "db064ef059f7bb0af9f1036e7649e4835a9ff4f5_:0000"
+        },
+        {
+          "name": "table_24",
+          "sim_handle": "dd00b36439864cbfa47440f93d6fc81f91a164d3_:0000"
+        },
+        {
+          "name": "cabinet_25",
+          "sim_handle": "1e414b53eef039690faed7557721dd9ce784ef8c_:0000"
+        },
+        {
+          "name": "table_26",
+          "sim_handle": "319c007ee7d07ca84c797a512ad4a98c9abc42da_:0000"
+        },
+        {
+          "name": "cabinet_27",
+          "sim_handle": "37e59e768eb7f42a0019713374063cb63419a44c_:0000"
+        },
+        {
+          "name": "cabinet_28",
+          "sim_handle": "4f59765435e64524ba5ac8e25427a895fa530311_:0000"
+        },
+        {
+          "name": "counter_29",
+          "sim_handle": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000"
+        },
+        {
+          "name": "cabinet_30",
+          "sim_handle": "90fb388959832dd71fdcad95215f28b077fe4a3d_:0000"
+        },
+        {
+          "name": "cabinet_31",
+          "sim_handle": "ae5bbeab569aed333ee50e683afdbd4d96ec93a6_:0000"
+        },
+        {
+          "name": "chest_of_drawers_32",
+          "sim_handle": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000"
+        },
+        {
+          "name": "unknown_33",
+          "sim_handle": "beec92d1124adb179e9ac35d3955061c93424367_:0000"
+        },
+        {
+          "name": "cabinet_34",
+          "sim_handle": "d4ba31e433421a8ef008208e9b868da12e24a5a5_:0000"
+        },
+        {
+          "name": "unknown_35",
+          "sim_handle": "e837aa175298b2124bccabfbe5fd20fb0e5edca6_:0000"
+        },
+        {
+          "name": "fridge_36",
+          "sim_handle": "ec6d929832a895b456fd6cca745a18c192c41f4b_:0000"
+        },
+        {
+          "name": "wardrobe_37",
+          "sim_handle": "f5bf7b0f14752c987cd026abe7b1238fb25ff9b3_:0000"
+        },
+        {
+          "name": "filing_cabinet_38",
+          "sim_handle": "f70c9cd37e4949edaa532254729fb3153ff6a76f_:0000"
+        },
+        {
+          "name": "wardrobe_39",
+          "sim_handle": "fa786f463631d9e8ab7b794d8df610a233a445eb_:0000"
+        },
+        {
+          "name": "cabinet_40",
+          "sim_handle": "ff698a0cb15de8749c925c8aae3e8cdb8e88aa8f_:0000"
+        }
+      ],
+      "objects": [
+        {
+          "name": "lamp_0",
+          "sim_handle": "B07HK83QRB_:0000"
+        }
+      ],
+      "receptacles": [
+        "rec_chair_9_0",
+        "rec_chair_9_1",
+        "rec_bed_10_0",
+        "rec_bed_10_1",
+        "rec_bed_10_2",
+        "rec_bed_10_3",
+        "rec_bed_10_4",
+        "rec_bed_10_5",
+        "rec_shelves_11_0",
+        "rec_shelves_11_1",
+        "rec_shelves_11_2",
+        "rec_shelves_11_3",
+        "rec_shelves_11_4",
+        "rec_shelves_11_5",
+        "rec_washer_dryer_12_0",
+        "rec_washer_dryer_13_0",
+        "rec_table_14_0",
+        "rec_toilet_15_0",
+        "rec_shelves_16_0",
+        "rec_shelves_16_1",
+        "rec_shelves_16_2",
+        "rec_couch_17_0",
+        "rec_couch_17_1",
+        "rec_couch_17_2",
+        "rec_couch_17_3",
+        "rec_couch_17_4",
+        "rec_couch_17_5",
+        "rec_couch_18_0",
+        "rec_couch_18_1",
+        "rec_table_19_0",
+        "rec_toilet_20_0",
+        "rec_couch_21_0",
+        "rec_couch_21_1",
+        "rec_couch_21_2",
+        "rec_unknown_22_0",
+        "rec_unknown_22_1",
+        "rec_cabinet_23_0",
+        "rec_table_24_0",
+        "rec_cabinet_25_0",
+        "rec_cabinet_25_1",
+        "rec_table_26_0",
+        "rec_table_26_1",
+        "rec_cabinet_27_0",
+        "rec_cabinet_28_0",
+        "rec_cabinet_28_1",
+        "rec_cabinet_28_2",
+        "rec_counter_29_0",
+        "rec_counter_29_1",
+        "rec_cabinet_30_0",
+        "rec_cabinet_30_1",
+        "rec_cabinet_31_0",
+        "rec_cabinet_31_1",
+        "rec_cabinet_31_2",
+        "rec_chest_of_drawers_32_0",
+        "rec_chest_of_drawers_32_1",
+        "rec_unknown_33_0",
+        "rec_unknown_33_1",
+        "rec_cabinet_34_0",
+        "rec_cabinet_34_1",
+        "rec_unknown_35_0",
+        "rec_unknown_35_1",
+        "rec_unknown_35_2",
+        "rec_unknown_35_3",
+        "rec_unknown_35_4",
+        "rec_unknown_35_5",
+        "rec_unknown_35_6",
+        "rec_fridge_36_0",
+        "rec_wardrobe_37_0",
+        "rec_wardrobe_37_1",
+        "rec_filing_cabinet_38_0",
+        "rec_wardrobe_39_0",
+        "rec_cabinet_40_0",
+        "rec_cabinet_40_1"
+      ],
+      "entity_names": [
+        "living_room_1",
+        "laundryroom_1",
+        "bathroom_1",
+        "bedroom_1",
+        "closet_1",
+        "kitchen_1",
+        "bathroom_2",
+        "bedroom_2",
+        "hallway_1",
+        "unknown_room",
+        "floor_living_room_1",
+        "floor_laundryroom_1",
+        "floor_bathroom_1",
+        "floor_bedroom_1",
+        "floor_closet_1",
+        "floor_kitchen_1",
+        "floor_bathroom_2",
+        "floor_bedroom_2",
+        "floor_hallway_1",
+        "chair_9",
+        "bed_10",
+        "shelves_11",
+        "washer_dryer_12",
+        "washer_dryer_13",
+        "table_14",
+        "toilet_15",
+        "shelves_16",
+        "couch_17",
+        "couch_18",
+        "table_19",
+        "toilet_20",
+        "couch_21",
+        "unknown_22",
+        "cabinet_23",
+        "table_24",
+        "cabinet_25",
+        "table_26",
+        "cabinet_27",
+        "cabinet_28",
+        "counter_29",
+        "cabinet_30",
+        "cabinet_31",
+        "chest_of_drawers_32",
+        "unknown_33",
+        "cabinet_34",
+        "unknown_35",
+        "fridge_36",
+        "wardrobe_37",
+        "filing_cabinet_38",
+        "wardrobe_39",
+        "cabinet_40",
+        "lamp_0",
+        "rec_chair_9_0",
+        "rec_chair_9_1",
+        "rec_bed_10_0",
+        "rec_bed_10_1",
+        "rec_bed_10_2",
+        "rec_bed_10_3",
+        "rec_bed_10_4",
+        "rec_bed_10_5",
+        "rec_shelves_11_0",
+        "rec_shelves_11_1",
+        "rec_shelves_11_2",
+        "rec_shelves_11_3",
+        "rec_shelves_11_4",
+        "rec_shelves_11_5",
+        "rec_washer_dryer_12_0",
+        "rec_washer_dryer_13_0",
+        "rec_table_14_0",
+        "rec_toilet_15_0",
+        "rec_shelves_16_0",
+        "rec_shelves_16_1",
+        "rec_shelves_16_2",
+        "rec_couch_17_0",
+        "rec_couch_17_1",
+        "rec_couch_17_2",
+        "rec_couch_17_3",
+        "rec_couch_17_4",
+        "rec_couch_17_5",
+        "rec_couch_18_0",
+        "rec_couch_18_1",
+        "rec_table_19_0",
+        "rec_toilet_20_0",
+        "rec_couch_21_0",
+        "rec_couch_21_1",
+        "rec_couch_21_2",
+        "rec_unknown_22_0",
+        "rec_unknown_22_1",
+        "rec_cabinet_23_0",
+        "rec_table_24_0",
+        "rec_cabinet_25_0",
+        "rec_cabinet_25_1",
+        "rec_table_26_0",
+        "rec_table_26_1",
+        "rec_cabinet_27_0",
+        "rec_cabinet_28_0",
+        "rec_cabinet_28_1",
+        "rec_cabinet_28_2",
+        "rec_counter_29_0",
+        "rec_counter_29_1",
+        "rec_cabinet_30_0",
+        "rec_cabinet_30_1",
+        "rec_cabinet_31_0",
+        "rec_cabinet_31_1",
+        "rec_cabinet_31_2",
+        "rec_chest_of_drawers_32_0",
+        "rec_chest_of_drawers_32_1",
+        "rec_unknown_33_0",
+        "rec_unknown_33_1",
+        "rec_cabinet_34_0",
+        "rec_cabinet_34_1",
+        "rec_unknown_35_0",
+        "rec_unknown_35_1",
+        "rec_unknown_35_2",
+        "rec_unknown_35_3",
+        "rec_unknown_35_4",
+        "rec_unknown_35_5",
+        "rec_unknown_35_6",
+        "rec_fridge_36_0",
+        "rec_wardrobe_37_0",
+        "rec_wardrobe_37_1",
+        "rec_filing_cabinet_38_0",
+        "rec_wardrobe_39_0",
+        "rec_cabinet_40_0",
+        "rec_cabinet_40_1"
+      ]
+    },
+    "graph": {
+      "root": {
+        "name": "house",
+        "type": "House",
+        "children": [
+          {
+            "name": "bathroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_1",
+                "type": "Human"
+              },
+              {
+                "name": "floor_bathroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "toilet_15",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_toilet_15_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bathroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_bathroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "toilet_20",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_toilet_20_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "chair_9",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_chair_9_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_chair_9_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "chest_of_drawers_32",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_chest_of_drawers_32_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "lamp_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_powered_on": false,
+                          "is_filled": false
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_chest_of_drawers_32_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_bedroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "unknown_33",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_33_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_33_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_open": false
+                }
+              },
+              {
+                "name": "unknown_35",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_35_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_5",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_6",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_0",
+                "type": "SpotRobot"
+              },
+              {
+                "name": "bed_10",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_10_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "filing_cabinet_38",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_filing_cabinet_38_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_filled": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_bedroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_16",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_16_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_16_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_16_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_26",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_26_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_table_26_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "closet_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_closet_1",
+                "type": "Floor"
+              },
+              {
+                "name": "wardrobe_37",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_wardrobe_37_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_wardrobe_37_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "wardrobe_39",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_wardrobe_39_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "hallway_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_hallway_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "kitchen_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_23",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_23_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "cabinet_25",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_25_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_25_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_27",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_27_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_28",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_28_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_28_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_28_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_30",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_30_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_30_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_34",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_34_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_34_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_40",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_40_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_40_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "counter_29",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_counter_29_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_counter_29_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_kitchen_1",
+                "type": "Floor"
+              },
+              {
+                "name": "fridge_36",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_fridge_36_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_24",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_24_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "laundryroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_31",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_31_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_31_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_31_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "couch_18",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_18_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_laundryroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "washer_dryer_12",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_12_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              },
+              {
+                "name": "washer_dryer_13",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_13_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "living_room_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "couch_17",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_17_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "couch_21",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_21_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_21_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_21_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_living_room_1",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_11",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_11_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_14",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_14_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_19",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_19_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "unknown_22",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_22_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_22_1",
+                    "type": "Receptacle"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "unknown_room",
+            "type": "Room"
+          }
+        ]
+      },
+      "source": "gt"
+    },
+    "gt_graph": {
+      "root": {
+        "name": "house",
+        "type": "House",
+        "children": [
+          {
+            "name": "bathroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_1",
+                "type": "Human"
+              },
+              {
+                "name": "floor_bathroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "toilet_15",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_toilet_15_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bathroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_bathroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "toilet_20",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_toilet_20_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "chair_9",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_chair_9_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_chair_9_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "chest_of_drawers_32",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_chest_of_drawers_32_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "lamp_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_powered_on": false,
+                          "is_filled": false
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_chest_of_drawers_32_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_bedroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "unknown_33",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_33_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_33_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_open": false
+                }
+              },
+              {
+                "name": "unknown_35",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_35_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_5",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_6",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_0",
+                "type": "SpotRobot"
+              },
+              {
+                "name": "bed_10",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_10_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "filing_cabinet_38",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_filing_cabinet_38_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_filled": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_bedroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_16",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_16_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_16_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_16_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_26",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_26_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_table_26_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "closet_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_closet_1",
+                "type": "Floor"
+              },
+              {
+                "name": "wardrobe_37",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_wardrobe_37_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_wardrobe_37_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "wardrobe_39",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_wardrobe_39_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "hallway_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_hallway_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "kitchen_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_23",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_23_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "cabinet_25",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_25_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_25_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_27",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_27_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_28",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_28_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_28_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_28_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_30",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_30_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_30_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_34",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_34_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_34_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_40",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_40_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_40_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "counter_29",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_counter_29_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_counter_29_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_kitchen_1",
+                "type": "Floor"
+              },
+              {
+                "name": "fridge_36",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_fridge_36_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_24",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_24_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "laundryroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_31",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_31_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_31_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_31_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "couch_18",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_18_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_laundryroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "washer_dryer_12",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_12_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              },
+              {
+                "name": "washer_dryer_13",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_13_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "living_room_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "couch_17",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_17_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "couch_21",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_21_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_21_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_21_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_living_room_1",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_11",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_11_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_14",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_14_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_19",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_19_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "unknown_22",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_22_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_22_1",
+                    "type": "Receptacle"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "unknown_room",
+            "type": "Room"
+          }
+        ]
+      },
+      "source": "gt"
+    },
+    "robot_graph": {
+      "root": {
+        "name": "house",
+        "type": "House",
+        "children": [
+          {
+            "name": "bathroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_1",
+                "type": "Human"
+              },
+              {
+                "name": "floor_bathroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "toilet_15",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_toilet_15_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bathroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_bathroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "toilet_20",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_toilet_20_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "chair_9",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_chair_9_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_chair_9_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "chest_of_drawers_32",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_chest_of_drawers_32_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "lamp_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_powered_on": false,
+                          "is_filled": false
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_chest_of_drawers_32_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_bedroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "unknown_33",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_33_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_33_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_open": false
+                }
+              },
+              {
+                "name": "unknown_35",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_35_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_5",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_35_6",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "bed_10",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_10_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_10_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "filing_cabinet_38",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_filing_cabinet_38_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_filled": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_bedroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_16",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_16_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_16_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_16_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_26",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_26_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_table_26_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "closet_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_closet_1",
+                "type": "Floor"
+              },
+              {
+                "name": "wardrobe_37",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_wardrobe_37_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_wardrobe_37_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "wardrobe_39",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_wardrobe_39_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "hallway_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_hallway_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "kitchen_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_23",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_23_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "cabinet_25",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_25_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_25_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_27",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_27_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_28",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_28_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_28_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_28_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_30",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_30_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_30_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_34",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_34_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_34_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "cabinet_40",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_40_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_40_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "counter_29",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_counter_29_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_counter_29_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_kitchen_1",
+                "type": "Floor"
+              },
+              {
+                "name": "fridge_36",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_fridge_36_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_24",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_24_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "laundryroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_31",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_31_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_31_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_cabinet_31_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "couch_18",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_18_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_laundryroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "washer_dryer_12",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_12_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              },
+              {
+                "name": "washer_dryer_13",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_13_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "living_room_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_0",
+                "type": "SpotRobot"
+              },
+              {
+                "name": "couch_17",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_17_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_17_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "couch_21",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_21_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_21_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_21_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_living_room_1",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_11",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_11_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_11_5",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_14",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_14_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_19",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_19_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "unknown_22",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_unknown_22_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_unknown_22_1",
+                    "type": "Receptacle"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "unknown_room",
+            "type": "Room"
+          }
+        ]
+      },
+      "source": "robot"
+    },
+    "has_frame": true,
+    "robot_pose": {
+      "position": [
+        -2.4642791748046875,
+        0.1792985498905182,
+        -0.528567373752594
+      ],
+      "yaw": 1.1998122930526733
+    },
+    "evaluation": {
+      "success": true,
+      "percent_complete": 1.0,
+      "satisfied_at": [
+        238
+      ],
+      "constraint_satisfaction": [
+        [
+          true
+        ],
+        [
+          true
+        ]
+      ],
+      "current": [
+        true
+      ]
+    },
+    "aliases": {
+      "lamp_0": "lamp_0",
+      "chair_0": "chair_9",
+      "bed_0": "bed_10",
+      "shelves_0": "shelves_11",
+      "washer_dryer_0": "washer_dryer_12",
+      "washer_dryer_1": "washer_dryer_13",
+      "table_0": "table_14",
+      "toilet_0": "toilet_15",
+      "shelves_1": "shelves_16",
+      "couch_0": "couch_17",
+      "couch_1": "couch_18",
+      "table_1": "table_19",
+      "toilet_1": "toilet_20",
+      "couch_2": "couch_21",
+      "cabinet_0": "cabinet_23",
+      "table_2": "table_24",
+      "cabinet_1": "cabinet_25",
+      "table_3": "table_26",
+      "cabinet_2": "cabinet_27",
+      "cabinet_3": "cabinet_28",
+      "counter_0": "counter_29",
+      "cabinet_4": "cabinet_30",
+      "cabinet_5": "cabinet_31",
+      "chest_of_drawers_0": "chest_of_drawers_32",
+      "cabinet_6": "cabinet_34",
+      "fridge_0": "fridge_36",
+      "wardrobe_0": "wardrobe_37",
+      "filing_cabinet_0": "filing_cabinet_38",
+      "wardrobe_1": "wardrobe_39",
+      "cabinet_7": "cabinet_40",
+      "living_room_0": "living_room_1",
+      "floor_living_room_0": "floor_living_room_1",
+      "laundryroom/mudroom_0": "laundryroom_1",
+      "floor_laundryroom_mudroom_0": "floor_laundryroom_1",
+      "bathroom_0": "bathroom_1",
+      "floor_bathroom_0": "floor_bathroom_1",
+      "bedroom_0": "bedroom_1",
+      "floor_bedroom_0": "floor_bedroom_1",
+      "closet_0": "closet_1",
+      "floor_closet_0": "floor_closet_1",
+      "kitchen_0": "kitchen_1",
+      "floor_kitchen_0": "floor_kitchen_1",
+      "bathroom_1": "bathroom_2",
+      "floor_bathroom_1": "floor_bathroom_2",
+      "bedroom_1": "bedroom_2",
+      "floor_bedroom_1": "floor_bedroom_2",
+      "hallway_0": "hallway_1",
+      "floor_hallway_0": "floor_hallway_1"
+    }
+  },
+  "error": null,
+  "sim_steps": 2592,
+  "steps_complete": 1,
+  "artifact_status": "ready",
+  "artifact_error": null,
+  "video_bytes": 5336162,
+  "video_sha256": "6384f41b4aa98175dfc1dd705b2cfb02d496745a4e515adcef253cc578451235",
+  "actions": [
+    {
+      "request_id": "34ab0da118ba49cc91eb495ba7d0fe27",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 1,
+      "skill": "Navigate",
+      "target": "lamp_0",
+      "started_at": "2026-09-29T18:08:51.193900+00:00",
+      "result": {
+        "command": "Navigate 0 lamp_0",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "lamp_0",
+        "response": "Successful execution!",
+        "skill_steps": 237,
+        "ok": true,
+        "video": "videos/video-0_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 237,
+        "recording_error": null,
+        "ground_truth_video": "clips/0000.mp4"
+      }
+    },
+    {
+      "request_id": "1326cd7834654b3fa0900b31e3ecfb61",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 2,
+      "skill": "PowerOff",
+      "target": "lamp_0",
+      "started_at": "2026-09-29T18:08:51.211766+00:00",
+      "result": {
+        "command": "PowerOff 0 lamp_0",
+        "skill": "PowerOff",
+        "agent_index": 0,
+        "target": "lamp_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-1_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0001.mp4"
+      }
+    },
+    {
+      "request_id": "2dbf1f1fc9d740c29675259ee5e0fccb",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 3,
+      "skill": "Explore",
+      "target": "kitchen_0",
+      "started_at": "2026-09-29T18:08:51.229516+00:00",
+      "result": {
+        "command": "Explore 0 kitchen_1",
+        "skill": "Explore",
+        "agent_index": 0,
+        "target": "kitchen_1",
+        "response": "Successful execution!",
+        "skill_steps": 821,
+        "ok": true,
+        "video": "videos/video-2_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 821,
+        "recording_error": null,
+        "ground_truth_video": "clips/0002.mp4"
+      }
+    },
+    {
+      "request_id": "2a46d3fb232c4c0383b420e7837b6c89",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 4,
+      "skill": "Navigate",
+      "target": "fridge_0",
+      "started_at": "2026-09-29T18:08:51.247280+00:00",
+      "result": {
+        "command": "Navigate 0 fridge_36",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "fridge_36",
+        "response": "Successful execution!",
+        "skill_steps": 63,
+        "ok": true,
+        "video": "videos/video-3_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 63,
+        "recording_error": null,
+        "ground_truth_video": "clips/0003.mp4"
+      }
+    },
+    {
+      "request_id": "1fa77b1c8e234159ac3120205a99e216",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 5,
+      "skill": "Open",
+      "target": "fridge_0",
+      "started_at": "2026-09-29T18:08:51.265378+00:00",
+      "result": {
+        "command": "Open 0 fridge_36",
+        "skill": "Open",
+        "agent_index": 0,
+        "target": "fridge_36",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-4_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0004.mp4"
+      }
+    },
+    {
+      "request_id": "aaf1c3c59f8a49cfb2b2038e6bff2a49",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 6,
+      "skill": "Close",
+      "target": "fridge_0",
+      "started_at": "2026-09-29T18:08:51.284126+00:00",
+      "result": {
+        "command": "Close 0 fridge_36",
+        "skill": "Close",
+        "agent_index": 0,
+        "target": "fridge_36",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-5_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0005.mp4"
+      }
+    },
+    {
+      "request_id": "a6ad8bfa3ede4a4ab144a3b709079fa2",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 7,
+      "skill": "Explore",
+      "target": "living_room_0",
+      "started_at": "2026-09-29T18:08:51.302287+00:00",
+      "result": {
+        "command": "Explore 0 living_room_1",
+        "skill": "Explore",
+        "agent_index": 0,
+        "target": "living_room_1",
+        "response": "Successful execution!",
+        "skill_steps": 653,
+        "ok": true,
+        "video": "videos/video-6_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 653,
+        "recording_error": null,
+        "ground_truth_video": "clips/0006.mp4"
+      }
+    },
+    {
+      "request_id": "502d8f4ad8ae480086792ab904775a86",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 8,
+      "skill": "Explore",
+      "target": "bedroom_0",
+      "started_at": "2026-09-29T18:08:51.320645+00:00",
+      "result": {
+        "command": "Explore 0 bedroom_1",
+        "skill": "Explore",
+        "agent_index": 0,
+        "target": "bedroom_1",
+        "response": "Successful execution!",
+        "skill_steps": 438,
+        "ok": true,
+        "video": "videos/video-7_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 438,
+        "recording_error": null,
+        "ground_truth_video": "clips/0007.mp4"
+      }
+    },
+    {
+      "request_id": "12431bacaf974203bf767842f59c3d5c",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 9,
+      "skill": "Explore",
+      "target": "bedroom_1",
+      "started_at": "2026-09-29T18:08:51.338711+00:00",
+      "result": {
+        "command": "Explore 0 bedroom_2",
+        "skill": "Explore",
+        "agent_index": 0,
+        "target": "bedroom_2",
+        "response": "Successful execution!",
+        "skill_steps": 372,
+        "ok": true,
+        "video": "videos/video-8_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 372,
+        "recording_error": null,
+        "ground_truth_video": "clips/0008.mp4"
+      }
+    },
+    {
+      "request_id": "76f637f3fb2242df81b3932010eac84b",
+      "run_id": "d01d5d981a14492bac988ff7a580c915",
+      "sequence": 10,
+      "skill": "ReportAbsence",
+      "target": "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+      "started_at": "2026-09-29T18:08:51.356967+00:00",
+      "result": {
+        "ok": true,
+        "response": "Reported no suitable object; abandoning the absent-object subgoal.",
+        "skill_steps": 0
+      }
+    }
+  ],
+  "schema_version": 2,
+  "criteria_evidence": {
+    "status": "pass",
+    "recorded_status": "pass",
+    "met": 2,
+    "total": 2,
+    "criteria": [
+      {
+        "label": "is_powered_off(lamp_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 1,
+            "sequence": 2,
+            "skill": "PowerOff",
+            "target": "lamp_0",
+            "video_time": null,
+            "simulator_step": 238
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 238,
+        "satisfied_at_end": true,
+        "proposition_index": 0
+      },
+      {
+        "label": "The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 9,
+            "sequence": 10,
+            "skill": "ReportAbsence",
+            "target": "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+            "video_time": null,
+            "simulator_step": null
+          }
+        ],
+        "detail": "Explicit absence report in the saved action list."
+      }
+    ],
+    "basis": "Saved evaluator results, including final-state and ordering constraints. Step links mark the first time a requirement became true, not an inferred cause."
+  },
+  "simulator_steps_definition": "Sum of per-action environment step calls; reports add zero.",
+  "video_playback_fps": 30,
+  "room_choices": {
+    "lamp_0": [
+      "bedroom_0",
+      "bedroom_1"
+    ],
+    "jug_0": [
+      "kitchen_0",
+      "living_room_0",
+      "bedroom_0",
+      "bedroom_1"
+    ]
+  },
+  "furniture_choices": {
+    "lamp_0": [
+      "chest_of_drawers_0",
+      "shelves_1",
+      "table_3"
+    ],
+    "jug_0": [
+      "fridge_0",
+      "table_0",
+      "table_1",
+      "table_3"
+    ]
+  },
+  "video": "video.mp4"
+}

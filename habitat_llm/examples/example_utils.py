@@ -309,7 +309,7 @@ def execute_skill(
 
     # Set up the variables
     skill_steps = 0
-    max_skill_steps = 1500
+    max_skill_steps = 2400  # matches oracle_explore max_skill_steps
     skill_done = None
 
     # While loop for executing skills

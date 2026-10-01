@@ -12,8 +12,17 @@
         "data/objects_ovmm/train_val/google_scanned/configs",
         "data/objects_ovmm/train_val/hssd/configs/objects"
       ],
-      "start_position": [-13.69438, 0.1793, -3.13765],
-      "start_rotation": [0, 0, 0, 1],
+      "start_position": [
+        -13.69438,
+        0.1793,
+        -3.13765
+      ],
+      "start_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
       "info": {
         "episode_id": "T1-INC-ABS",
         "is_dynamic": true,
@@ -21,12 +30,22 @@
           "0": {
             "name": "lamp_0",
             "number": 1,
-            "object_classes": ["lamp"],
-            "object_instances": ["B07HK83QRB"],
-            "excluded_object_instances": ["B07HK3PNSK"],
+            "object_classes": [
+              "lamp"
+            ],
+            "object_instances": [
+              "B07HK83QRB"
+            ],
+            "excluded_object_instances": [
+              "B07HK3PNSK"
+            ],
             "location": "on",
-            "furniture_names": ["chest_of_drawers_0"],
-            "allowed_regions": ["bedroom_0"],
+            "furniture_names": [
+              "chest_of_drawers_0"
+            ],
+            "allowed_regions": [
+              "bedroom_0"
+            ],
             "object_states": {
               "is_clean": true,
               "is_filled": false,
@@ -43,12 +62,22 @@
             {
               "name": "lamp_0",
               "number": 1,
-              "object_classes": ["lamp"],
-              "object_instances": ["B07HK83QRB"],
-              "excluded_object_instances": ["B07HK3PNSK"],
+              "object_classes": [
+                "lamp"
+              ],
+              "object_instances": [
+                "B07HK83QRB"
+              ],
+              "excluded_object_instances": [
+                "B07HK3PNSK"
+              ],
               "location": "on",
-              "furniture_names": ["chest_of_drawers_0"],
-              "allowed_regions": ["bedroom_0"],
+              "furniture_names": [
+                "chest_of_drawers_0"
+              ],
+              "allowed_regions": [
+                "bedroom_0"
+              ],
               "object_states": {
                 "is_clean": true,
                 "is_filled": false,
@@ -62,7 +91,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-INC-ABS",
-          "sha256": "98668476ace0497107e53e85bf4ddbe93aba18d8986eaf05c363e6e26107dc99",
+          "sha256": "69759b5b5e9301d7d3338bf037706df0139f00929b49dbbfc2d518159c15e0ee",
           "entity_handles": {
             "lamp_0": "B07HK83QRB_:0000"
           },
@@ -83,10 +112,30 @@
         [
           "B07HK83QRB.object_config.json",
           [
-            [-0.80444, 0.00013, -0.59403, -2.41087],
-            [7e-5, 1.0, 0.00012, 0.88579],
-            [0.59403, 5e-5, -0.80444, -3.25495],
-            [0.0, 0.0, 0.0, 1.0]
+            [
+              -0.80444,
+              0.00013,
+              -0.59403,
+              -2.41087
+            ],
+            [
+              7e-05,
+              1.0,
+              0.00012,
+              0.88579
+            ],
+            [
+              0.59403,
+              5e-05,
+              -0.80444,
+              -3.25495
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
           ]
         ]
       ],
@@ -102,7 +151,9 @@
         {
           "function_name": "is_powered_off",
           "args": {
-            "object_handles": ["B07HK83QRB_:0000"],
+            "object_handles": [
+              "B07HK83QRB_:0000"
+            ],
             "number": 1
           }
         }
@@ -119,7 +170,9 @@
         {
           "type": "TerminalSatisfactionConstraint",
           "args": {
-            "proposition_indices": [0],
+            "proposition_indices": [
+              0
+            ],
             "n_propositions": 1
           }
         }

@@ -1,0 +1,12 @@
+variant,elapsed_seconds,elapsed_minutes,loaded_at_local,success_at_local,logged_action_count,saved_action_count,source,start_line,end_line
+T6-ACC-ABS,449,7.48,21:19:01,21:26:30,18,18,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/acc_run_t6.log,1,20
+T6-ACC-CON,904,15.07,21:27:10,21:42:14,27,27,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/acc_run_t6.log,22,50
+T6-ACC-SUB,551,9.18,01:26:46,01:35:57,21,21,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_sub.log,3,51
+T6-INC-ABS,1258,20.97,22:01:31,22:22:29,29,29,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_abs.log,1,31
+T6-INC-BASE,1076,17.93,21:42:28,22:00:24,25,25,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_base.log,1,27
+T6-INC-CON,1713,28.55,22:01:56,22:30:29,36,36,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_con.log,1,38
+T6-INC-DIS,1066,17.77,21:43:11,22:00:57,25,25,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_dis.log,1,27
+T6-OUT-ABS,1317,21.95,00:10:57,00:32:54,30,30,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_all4.log,2,126
+T6-OUT-BASE,1136,18.93,00:11:02,00:29:58,26,26,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_all4.log,3,97
+T6-OUT-CON,2098,34.97,00:10:52,00:45:50,39,39,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_all4.log,1,415
+T6-OUT-DIS,1202,20.03,00:11:09,00:31:11,26,26,/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_all4.log,4,110

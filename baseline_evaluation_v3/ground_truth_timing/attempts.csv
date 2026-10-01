@@ -1,0 +1,75 @@
+attempt_id,variant,status,matches_current_recording,match_evidence,run_id,execution_elapsed_seconds,execution_elapsed_minutes,interval_definition,interval_start_local,interval_end_local,recording_to_save_seconds,planned_actions,logged_actions,source,start_line,end_line,notes
+1,T3-ACC-ABS,saved,True,sequence_and_save_clock_match,5e5e787dbd8e46c4a6884b63be55a3a2,36,0.6,loaded_to_success,20:48:11,20:48:47,39,7,7,sources/8e71cf78b6_acc_run.log,1,10,
+2,T3-ACC-CON,incomplete,False,not_matched,,,,,20:49:10,,,12,0,sources/8e71cf78b6_acc_run.log,11,,
+3,T3-ACC-CON,saved,True,sequence_and_save_clock_match,bb461de9b4e64bca9a42dd571d77f0c0,63,1.05,loaded_to_success,20:55:18,20:56:21,67,12,12,sources/d035e0bd88_acc_run_t3con.log,1,15,
+4,T4-ACC-ABS,saved,True,sequence_and_save_clock_match,40be23547fdc4498affb2cdc1ab5a98c,75,1.25,loaded_to_success,21:09:50,21:11:05,78,17,17,sources/c930110a09_acc_run_t4.log,1,20,
+5,T4-ACC-CON,saved,True,sequence_and_save_clock_match,3c95c976dc904ba0a297e374427d793e,115,1.917,loaded_to_success,21:11:30,21:13:25,121,22,22,sources/c930110a09_acc_run_t4.log,21,45,
+6,T5-ACC-ABS,saved,True,sequence_and_save_clock_match,384e2202eef441988d42ef00fda73b34,65,1.083,loaded_to_success,21:13:55,21:15:00,68,19,19,sources/d0ecd5abd4_acc_run_t5.log,1,22,
+7,T5-ACC-CON,saved,True,sequence_and_save_clock_match,92865582c66f40f484d75300c471947e,109,1.817,loaded_to_success,21:15:21,21:17:10,114,26,26,sources/d0ecd5abd4_acc_run_t5.log,23,51,
+8,T6-ACC-ABS,saved,True,sequence_and_save_clock_match,656849a8984a45d89373e745d5a305ba,449,7.483,loaded_to_success,21:19:01,21:26:30,458,18,18,sources/5b5caeb844_acc_run_t6.log,1,21,
+9,T6-ACC-CON,saved,True,sequence_and_save_clock_match,eb221f51a7fa4ba6abbd225cfc1af401,904,15.067,loaded_to_success,21:27:10,21:42:14,925,27,27,sources/5b5caeb844_acc_run_t6.log,22,51,
+10,T2-OUT-ABS,saved,True,sequence_and_save_clock_match,5d49c35aca474e4f9e0febbd67370268,419,6.983,loaded_to_success,01:53:04,02:00:03,443,23,23,sources/ea7e1a5494_run_abs_rerecord.log,1,66,
+11,T2-INC-ABS,saved,True,sequence_and_save_clock_match,caed6647a200413c9aaa7b5d92657d56,319,5.317,loaded_to_success,01:53:08,01:58:27,345,21,21,sources/ea7e1a5494_run_abs_rerecord.log,2,38,
+12,T1-OUT-ABS,incomplete,False,not_matched,,,,,01:59:17,,,18,0,sources/ea7e1a5494_run_abs_rerecord.log,45,,
+13,T1-INC-ABS,incomplete,False,not_matched,,,,,02:00:50,,,17,0,sources/ea7e1a5494_run_abs_rerecord.log,67,,
+14,T6-OUT-CON,saved,True,sequence_and_save_clock_match,15ee2d31aab647ef9e8c3bde35168caa,2098,34.967,loaded_to_success,00:10:52,00:45:50,2158,39,39,sources/fa15b23ab0_run_all4.log,1,440,
+15,T6-OUT-ABS,saved,True,sequence_and_save_clock_match,41012317c3f54c78851d29fc112e0384,1317,21.95,loaded_to_success,00:10:57,00:32:54,1362,30,30,sources/fa15b23ab0_run_all4.log,2,134,
+16,T6-OUT-BASE,saved,True,sequence_and_save_clock_match,c313a14611644c8387ce327e642f21ec,1136,18.933,loaded_to_success,00:11:02,00:29:58,1170,26,26,sources/fa15b23ab0_run_all4.log,3,98,
+17,T6-OUT-DIS,saved,True,sequence_and_save_clock_match,f686473d0ffa4fe4904c6749be9313dd,1202,20.033,loaded_to_success,00:11:09,00:31:11,1239,26,26,sources/fa15b23ab0_run_all4.log,4,115,
+18,T3-OUT-CON,saved,True,sequence_and_save_clock_match,3a54b6df654e4795b8bf36cc7562190c,213,3.55,loaded_to_success,00:30:54,00:34:27,235,17,17,sources/fa15b23ab0_run_all4.log,102,147,
+19,T3-OUT-ABS,saved,True,sequence_and_save_clock_match,5cd73cc3722e488fb41472c22f74d619,209,3.483,loaded_to_success,00:32:08,00:35:37,231,15,15,sources/fa15b23ab0_run_all4.log,118,165,
+20,T3-OUT-BASE,saved,True,sequence_and_save_clock_match,657597994fa347c09074fff64130e7cc,213,3.55,loaded_to_success,00:34:01,00:37:34,235,15,15,sources/fa15b23ab0_run_all4.log,137,189,
+21,T3-OUT-DIS,saved,True,sequence_and_save_clock_match,ae1779924f4a452b96b112b94e0f1a02,222,3.7,loaded_to_success,00:35:11,00:38:53,238,15,15,sources/fa15b23ab0_run_all4.log,152,212,
+22,T3-INC-ABS,saved,True,sequence_and_save_clock_match,caa1600afab14f2d9452877b06eba539,152,2.533,loaded_to_success,00:36:21,00:38:53,183,13,13,sources/fa15b23ab0_run_all4.log,168,213,
+23,T3-INC-CON,saved,True,sequence_and_save_clock_match,746b0ce24a604214a4c621a00eb27c0b,124,2.067,loaded_to_success,00:38:18,00:40:22,135,14,14,sources/fa15b23ab0_run_all4.log,200,253,
+24,T5-OUT-CON,saved,True,sequence_and_save_clock_match,14e4acf9138d4434a71f98380b457d25,124,2.067,loaded_to_success,00:39:32,00:41:36,134,28,28,sources/fa15b23ab0_run_all4.log,214,292,
+25,T5-OUT-ABS,saved,True,sequence_and_save_clock_match,80faaf377c0c4679a8c6ad6960e362f4,142,2.367,loaded_to_success,00:39:46,00:42:08,155,25,25,sources/fa15b23ab0_run_all4.log,219,311,
+26,T5-INC-CON,saved,True,sequence_and_save_clock_match,f8b54ffbc6764437873e8552b8ddd9f2,138,2.3,loaded_to_success,00:40:53,00:43:11,149,27,27,sources/fa15b23ab0_run_all4.log,261,335,
+27,T5-INC-ABS,saved,True,sequence_and_save_clock_match,4f5da7cf5a624cb2b400748bf09abb16,148,2.467,loaded_to_success,00:42:06,00:44:34,161,24,24,sources/fa15b23ab0_run_all4.log,303,385,
+28,T5-OUT-BASE,saved,True,sequence_and_save_clock_match,ce057dd55f23417c85b7e6d05da2b499,128,2.133,loaded_to_success,00:42:43,00:44:51,139,24,24,sources/fa15b23ab0_run_all4.log,319,393,
+29,T5-OUT-DIS,saved,True,sequence_and_save_clock_match,acaface2c587494b8c63dfe8660f0d86,122,2.033,loaded_to_success,00:43:43,00:45:45,131,24,24,sources/fa15b23ab0_run_all4.log,345,418,
+30,T5-INC-BASE,saved,True,sequence_and_save_clock_match,1fa093bd57024fb9af013eeb919f8e08,136,2.267,loaded_to_success,00:45:08,00:47:24,145,23,23,sources/fa15b23ab0_run_all4.log,396,462,
+31,T5-INC-DIS,saved,True,sequence_and_save_clock_match,fc7425e443934a11a7d93f12d2302de8,137,2.283,loaded_to_success,00:45:24,00:47:41,147,23,23,sources/fa15b23ab0_run_all4.log,400,466,
+32,T4-OUT-CON,saved,True,sequence_and_save_clock_match,954c0b0ec9ee452d89e0ae22eed73ba8,276,4.6,loaded_to_success,00:46:26,00:51:02,291,24,24,sources/fa15b23ab0_run_all4.log,426,553,
+33,T4-OUT-ABS,saved,True,sequence_and_save_clock_match,b251399cb08140529ed538093f32949a,199,3.317,loaded_to_success,00:47:14,00:50:33,213,22,22,sources/fa15b23ab0_run_all4.log,452,536,
+34,T4-INC-CON,saved,True,sequence_and_save_clock_match,5e9037866e9246539c708077f562b639,239,3.983,loaded_to_success,00:47:57,00:51:56,254,23,23,sources/fa15b23ab0_run_all4.log,467,569,
+35,T4-INC-ABS,saved,True,sequence_and_save_clock_match,0c9cdbe42c524d21a1d8418b7d7e5f10,182,3.033,loaded_to_success,00:48:16,00:51:18,193,21,21,sources/fa15b23ab0_run_all4.log,468,559,
+36,T4-OUT-BASE,saved,True,sequence_and_save_clock_match,59f778d2a8cd48628390038eedf8e3de,256,4.267,loaded_to_success,00:51:11,00:55:27,270,22,22,sources/fa15b23ab0_run_all4.log,550,640,
+37,T4-OUT-DIS,saved,True,sequence_and_save_clock_match,ce71808ccbcb4e2f8ef11a29ece953cc,258,4.3,loaded_to_success,00:51:43,00:56:01,269,22,22,sources/fa15b23ab0_run_all4.log,562,656,
+38,T4-INC-BASE,saved,True,sequence_and_save_clock_match,68bebd6e2788403e9ce2b47a7b4def08,233,3.883,loaded_to_success,00:51:54,00:55:47,245,21,21,sources/fa15b23ab0_run_all4.log,565,650,
+39,T4-INC-DIS,saved,True,sequence_and_save_clock_match,eb9d3b6743354701be618cce088fd22c,232,3.867,loaded_to_success,00:52:37,00:56:29,240,21,21,sources/fa15b23ab0_run_all4.log,570,662,
+40,T6-OUT-SUB,saved,False,historical_or_unconfirmed,,,,,09:21:10,09:44:42,1452,39,27,sources/1cac3abc56_run_resume.log,1,78,Partial resumed segment; full active execution duration cannot be established.
+41,T1-INC-SUB,saved,False,historical_or_unconfirmed,,,,,09:21:10,09:22:19,91,21,8,sources/1cac3abc56_run_resume.log,2,25,Partial resumed segment; full active execution duration cannot be established.
+42,T1-OUT-SUB,saved,False,historical_or_unconfirmed,,,,,09:21:10,09:22:21,113,22,8,sources/1cac3abc56_run_resume.log,3,26,Partial resumed segment; full active execution duration cannot be established.
+43,T6-INC-SUB,saved,False,historical_or_unconfirmed,,,,,09:21:10,09:41:49,1281,36,23,sources/1cac3abc56_run_resume.log,4,72,Partial resumed segment; full active execution duration cannot be established.
+44,T5-OUT-SUB,saved,True,sequence_and_save_clock_match,9c75fe2377a84a7db4f5dded4946cd1c,164,2.733,loaded_to_success,09:45:46,09:48:30,181,28,28,sources/1cac3abc56_run_resume.log,81,166,
+45,T5-INC-SUB,saved,True,sequence_and_save_clock_match,c4065a80b39a4033b36563c92aef535a,162,2.7,loaded_to_success,09:45:47,09:48:29,171,27,27,sources/1cac3abc56_run_resume.log,82,165,
+46,T5-ACC-SUB,saved,True,sequence_and_save_clock_match,907a2c19a66f4b3cb3f30f8a52f4fcd4,112,1.867,loaded_to_success,09:45:50,09:47:42,120,22,22,sources/1cac3abc56_run_resume.log,83,140,
+47,T1-ACC-SUB,saved,True,sequence_and_save_clock_match,de7bfb43acb44b3db62c98e82408dbb8,91,1.517,loaded_to_success,11:06:56,11:08:27,96,10,10,sources/f70a960ad7_run_t1_acc_sub.log,1,13,
+48,T1-OUT-SUB,incomplete,False,not_matched,,,,,02:05:10,,,22,13,sources/2345b71156_run_t1_sub.log,1,,
+49,T1-INC-SUB,incomplete,False,not_matched,,,,,02:05:17,,,21,12,sources/2345b71156_run_t1_sub.log,2,,
+50,T2-OUT-SUB,saved,True,sequence_and_save_clock_match,c416e51456fb403389bd5a01c61edfb2,452,7.533,loaded_to_success,01:55:56,02:03:28,480,26,26,sources/df3544f3f0_run_t2_sub.log,1,63,
+51,T2-INC-SUB,saved,True,sequence_and_save_clock_match,58babcc9864347e69024ee0ee93c18a6,361,6.017,loaded_to_success,01:56:01,02:02:02,383,24,24,sources/df3544f3f0_run_t2_sub.log,2,47,
+52,T2-ACC-SUB,saved,True,sequence_and_save_clock_match,9292a509c8354c6ba53fc951cf17aebf,111,1.85,loaded_to_success,02:02:49,02:04:40,117,12,12,sources/df3544f3f0_run_t2_sub.log,48,71,
+53,T6-INC-ABS,saved,True,sequence_and_save_clock_match,8d95b8a10e94446a8e30b113661c8aeb,1258,20.967,loaded_to_success,22:01:31,22:22:29,1289,29,29,sources/235430f43e_run_t6_inc_abs.log,1,32,
+54,T6-INC-BASE,saved,True,sequence_and_save_clock_match,04e5b5525e064eb887bd3b4aeee54290,1076,17.933,loaded_to_success,21:42:28,22:00:24,1102,25,25,sources/5ab100c936_run_t6_inc_base.log,1,28,
+55,T6-INC-CON,saved,True,sequence_and_save_clock_match,9dad362033074f57b2d28b853b834f17,1713,28.55,loaded_to_success,22:01:56,22:30:29,1750,36,36,sources/f94ac766ad_run_t6_inc_con.log,1,39,
+56,T6-INC-DIS,saved,True,sequence_and_save_clock_match,42329074fcd344f29e501cb013d02003,1066,17.767,loaded_to_success,21:43:11,22:00:57,1090,25,25,sources/ac453e34c9_run_t6_inc_dis.log,1,28,
+57,T6-OUT-SUB,failed,False,not_matched,,,,,01:26:38,,,39,34,sources/eecbdc8967_run_t6_sub.log,1,,
+58,T6-INC-SUB,failed,False,not_matched,,,,,01:26:43,,,36,31,sources/eecbdc8967_run_t6_sub.log,2,,
+59,T6-ACC-SUB,saved,True,sequence_and_save_clock_match,b97c19c34e04499fa118e41183cc5212,551,9.183,loaded_to_success,01:26:46,01:35:57,566,21,21,sources/eecbdc8967_run_t6_sub.log,3,52,
+60,T6-OUT-SUB,incomplete,False,not_matched,,,,,02:01:59,,,39,11,sources/eea9d0309c_run_t6_sub_retry.log,1,,
+61,T6-INC-SUB,incomplete,False,not_matched,,,,,02:02:04,,,36,12,sources/eea9d0309c_run_t6_sub_retry.log,2,,
+62,T1-OUT-BASE,saved,True,sequence_and_save_clock_match,869b9618b33d44e4b55b4f103b9aecbb,139,2.317,first_action_to_save_request,16:22:14,16:24:33,168,12,12,sources/090d37b15b_record.log,1,14,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+63,T1-OUT-DIS,saved,True,sequence_and_save_clock_match,b51b6a6d65af4c0ab6cfec1050d3bd50,139,2.317,first_action_to_save_request,16:25:04,16:27:23,168,12,12,sources/090d37b15b_record.log,15,28,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+64,T1-OUT-SUB,saved,True,sequence_and_save_clock_match,6f50f645dc584e6a8a9227c8a722a2df,320,5.333,first_action_to_save_request,11:35:03,11:40:23,364,18,18,sources/99ef4e9ac5_record.log,1,20,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+65,T1-INC-SUB,saved,True,sequence_and_save_clock_match,0826ba57065645219bffd412c2feb6a3,314,5.233,first_action_to_save_request,11:41:01,11:46:15,352,17,17,sources/99ef4e9ac5_record.log,21,39,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+66,T1-OUT-ABS,saved,True,sequence_and_save_clock_match,9001d4076daa48c38fb65a5df9fb707a,259,4.317,first_action_to_save_request,11:46:58,11:51:17,294,11,11,sources/99ef4e9ac5_record.log,40,52,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+67,T1-INC-ABS,incomplete,False,not_matched,,,,,11:51:31,,,10,3,sources/99ef4e9ac5_record.log,53,,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+68,T1-INC-ABS,saved,True,sequence_and_save_clock_match,d01d5d981a14492bac988ff7a580c915,260,4.333,first_action_to_save_request,14:04:31,14:08:51,297,10,10,sources/99ef4e9ac5_record.log,58,69,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+69,T1-OUT-CON,saved,True,sequence_and_save_clock_match,cc5b4748bc4343e8a77c8d0c2fef0b59,162,2.7,first_action_to_save_request,14:09:31,14:12:13,193,13,13,sources/99ef4e9ac5_record.log,70,84,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+70,T1-INC-CON,saved,True,sequence_and_save_clock_match,f36bd844b1394a799a2e20eef8a1ae72,148,2.467,first_action_to_save_request,14:12:45,14:15:13,177,12,12,sources/99ef4e9ac5_record.log,85,98,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+71,T1-INC-BASE,saved,True,sequence_and_save_clock_match,8b798a2e15e7413881ff10d27ff689fe,135,2.25,first_action_to_save_request,14:15:45,14:18:00,165,11,11,sources/99ef4e9ac5_record.log,99,111,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+72,T1-INC-DIS,saved,True,sequence_and_save_clock_match,bc61045abcee4dd0ab1548794f2fbec0,144,2.4,first_action_to_save_request,14:18:32,14:20:56,174,11,11,sources/99ef4e9ac5_record.log,112,124,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+73,T7-OUT-BASE,saved,True,sequence_and_save_clock_match,b9a8c4d92aa84d2c8a52abeb83e3dc27,691,11.517,first_action_to_save_request,14:21:29,14:33:00,741,24,24,sources/99ef4e9ac5_record.log,125,150,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.
+74,T7-OUT-DIS,saved,True,sequence_and_save_clock_match,956bc965fbdc4914994c516239c9e320,689,11.483,first_action_to_save_request,14:33:51,14:45:20,739,24,24,sources/99ef4e9ac5_record.log,151,176,Queue total includes sandbox loading and final save; execution interval excludes both when recoverable.

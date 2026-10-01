@@ -1,0 +1,29 @@
+16:21:53 START T1-OUT-BASE: 12 actions
+16:22:14 T1-OUT-BASE 1/12 Navigate table_2
+16:22:29 T1-OUT-BASE 2/12 Explore kitchen_0
+16:23:27 T1-OUT-BASE 3/12 Navigate jug_0
+16:23:33 T1-OUT-BASE 4/12 Pick jug_0
+16:23:36 T1-OUT-BASE 5/12 Navigate cabinet_6
+16:23:42 T1-OUT-BASE 6/12 Place jug_0,on,cabinet_34,none,none
+16:23:45 T1-OUT-BASE 7/12 Fill jug_0
+16:23:48 T1-OUT-BASE 8/12 Pick jug_0
+16:23:51 T1-OUT-BASE 9/12 Navigate table_0
+16:24:06 T1-OUT-BASE 10/12 Place jug_0,on,table_0,none,none
+16:24:09 T1-OUT-BASE 11/12 Navigate lamp_0
+16:24:30 T1-OUT-BASE 12/12 PowerOff lamp_0
+16:24:41 SAVED T1-OUT-BASE: 12 actions / 1141 sim steps
+16:24:43 START T1-OUT-DIS: 12 actions
+16:25:04 T1-OUT-DIS 1/12 Navigate table_2
+16:25:20 T1-OUT-DIS 2/12 Explore kitchen_0
+16:26:17 T1-OUT-DIS 3/12 Navigate jug_0
+16:26:23 T1-OUT-DIS 4/12 Pick jug_0
+16:26:26 T1-OUT-DIS 5/12 Navigate cabinet_6
+16:26:32 T1-OUT-DIS 6/12 Place jug_0,on,cabinet_34,none,none
+16:26:35 T1-OUT-DIS 7/12 Fill jug_0
+16:26:38 T1-OUT-DIS 8/12 Pick jug_0
+16:26:41 T1-OUT-DIS 9/12 Navigate table_0
+16:26:56 T1-OUT-DIS 10/12 Place jug_0,on,table_0,none,none
+16:26:59 T1-OUT-DIS 11/12 Navigate lamp_0
+16:27:20 T1-OUT-DIS 12/12 PowerOff lamp_0
+16:27:31 SAVED T1-OUT-DIS: 12 actions / 1140 sim steps
+16:27:31 QUEUE FINISHED

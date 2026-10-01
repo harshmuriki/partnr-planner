@@ -1,0 +1,15 @@
+sequence,skill,target,simulator_steps,response,video
+1,Navigate,box_0,57,Successful execution!,clips/0000.mp4
+2,Pick,box_0,2,Successful execution!,clips/0001.mp4
+3,Navigate,table_16,127,Successful execution!,clips/0002.mp4
+4,Place,"box_0,on,table_16,none,none",2,Successful execution!,clips/0003.mp4
+5,Navigate,box_1,82,Successful execution!,clips/0004.mp4
+6,Pick,box_1,2,Successful execution!,clips/0005.mp4
+7,Navigate,table_16,80,Successful execution!,clips/0006.mp4
+8,Place,"box_1,on,table_16,next_to,box_0",2,Successful execution!,clips/0007.mp4
+9,Navigate,chest_of_drawers_2,76,Successful execution!,clips/0008.mp4
+10,Open,chest_of_drawers_2,3,Successful execution!,clips/0009.mp4
+11,Pick,scissors_0,2,Successful execution!,clips/0010.mp4
+12,Close,chest_of_drawers_2,3,Successful execution!,clips/0011.mp4
+13,Navigate,table_16,112,Successful execution!,clips/0012.mp4
+14,Place,"scissors_0,on,table_16,next_to,box_1",2,Successful execution!,clips/0013.mp4

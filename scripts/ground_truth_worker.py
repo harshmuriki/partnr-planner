@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / 'scripts/skill_runner_gui'))
 from session import SkillRunnerSession, _json_safe
 import magnum as mn
 import imageio
+import omegaconf
 
 
 def write_json(path, data):
@@ -23,16 +24,51 @@ def write_json(path, data):
 
 
 class GroundTruthSession(SkillRunnerSession):
+    # Ground truth only: oracle_nav.yaml caps Navigate at 600 skill steps, which cuts off long
+    # cross-apartment trips (T6 laundry room -> bathroom_2). Match run_skill's 2400 cap here
+    # instead of editing the shared config the benchmarked planners use. A Navigate that
+    # finished under 600 steps behaves identically with the higher cap.
+    NAVIGATE_MAX_SKILL_STEPS = 2400
+
+    def _compose_config(self, *args, **kwargs):
+        config = super()._compose_config(*args, **kwargs)
+        def raise_nav_cap(node):
+            if isinstance(node, omegaconf.DictConfig):
+                if node.get('name') == 'Navigate' and 'max_skill_steps' in node:
+                    node.max_skill_steps = max(node.max_skill_steps, self.NAVIGATE_MAX_SKILL_STEPS)
+                for key in node.keys():
+                    raise_nav_cap(node._get_node(key))
+            elif isinstance(node, omegaconf.ListConfig):
+                for item in node:
+                    raise_nav_cap(item)
+        with omegaconf.open_dict(config):
+            raise_nav_cap(config.evaluation)
+        return config
+
     def _do_run_skill(self, **kwargs):
         # Count actual low-level step calls even if execute_skill later fails.
         # Its exception path otherwise reports zero steps for a failed attempt.
+        action_started = time.perf_counter()
+        self._action_timing = {'environment_step_wall_seconds': 0.0,
+                               'frame_callback_wall_seconds': 0.0,
+                               'clip_close_wall_seconds': 0.0}
         steps = 0
         env = self.env_interface
         original_step = env.step
         def counted_step(*args, **kw):
             nonlocal steps
             steps += 1
-            return original_step(*args, **kw)
+            step_started = time.perf_counter()
+            try:
+                result = original_step(*args, **kw)
+            finally:
+                self._action_timing['environment_step_wall_seconds'] += time.perf_counter() - step_started
+            # Publish evaluator state during long skills, without stepping again.
+            if time.monotonic() - getattr(self, '_last_evaluation_publish', 0) > 0.15:
+                self._last_evaluation_publish = time.monotonic()
+                write_json(self.ipc_dir / 'evaluation.json', {
+                    'load_id': self.load_id, 'evaluation': self.evaluation()})
+            return result
         clip = self.results_dir / 'clips' / f'{self.command_index:04d}.mp4'
         clip.parent.mkdir(parents=True, exist_ok=True)
         self._recording_error = None
@@ -49,11 +85,15 @@ class GroundTruthSession(SkillRunnerSession):
         finally:
             env.step = original_step
             if self._recording_writer is not None:
+                close_started = time.perf_counter()
                 try:
                     self._recording_writer.close()
                 except Exception as error:
                     self._recording_error = str(error)
+                self._action_timing['clip_close_wall_seconds'] += time.perf_counter() - close_started
                 self._recording_writer = None
+        entry['timing'] = {**self._action_timing, 'action_wall_seconds': time.perf_counter() - action_started}
+        self._action_timing = None
         entry['skill_steps'] = steps
         entry['steps_source'] = 'environment_step_calls'
         entry['recorded_frames'] = self._recording_frames
@@ -78,6 +118,15 @@ class GroundTruthSession(SkillRunnerSession):
         self.active_world_graph = env.world_graph[self.config.robot_agent_uid]
 
     def set_frame_rgb(self, frame):
+        started = time.perf_counter()
+        try:
+            self._record_frame_rgb(frame)
+        finally:
+            timing = getattr(self, '_action_timing', None)
+            if timing is not None:
+                timing['frame_callback_wall_seconds'] += time.perf_counter() - started
+
+    def _record_frame_rgb(self, frame):
         super().set_frame_rgb(frame)
         writer = getattr(self, '_recording_writer', None)
         if writer is not None and not self._recording_error:
@@ -93,23 +142,26 @@ class GroundTruthSession(SkillRunnerSession):
             tmp.write_bytes(self.get_latest_jpeg())
             os.replace(tmp, path)
 
-    def _do_snapshot(self):
-        result = super()._do_snapshot()
-        if not self.loaded:
-            return result
+    def evaluation(self):
         env = self.env_interface.env.habitat_env
-        robot = self.env_interface.sim.get_agent_data(0).articulated_agent
-        result['robot_pose'] = {'position': list(robot.base_pos), 'yaw': float(robot.base_rot)}
         metrics = env.get_metrics()
         tracker = env.task.measurements.measures['task_evaluation_log'].get_metric()
         # The log exposes the same proposition/constraint history used for success.
-        result['evaluation'] = {
+        return {
             'success': bool(metrics.get('task_state_success', False)),
             'percent_complete': float(metrics.get('task_percent_complete', 0)),
             'satisfied_at': _json_safe(tracker['proposition_satisfied_at']),
             'constraint_satisfaction': _json_safe(tracker['constraint_satisfaction']),
             'current': [bool(p.is_satisfied) for p in tracker['state_sequence'][-1]] if tracker['state_sequence'] else [],
         }
+
+    def _do_snapshot(self):
+        result = super()._do_snapshot()
+        if not self.loaded:
+            return result
+        robot = self.env_interface.sim.get_agent_data(0).articulated_agent
+        result['robot_pose'] = {'position': list(robot.base_pos), 'yaw': float(robot.base_rot)}
+        result['evaluation'] = self.evaluation()
         handles = self.env_interface.sim.ep_info.info.get('variant_spec', {}).get('entity_handles', {})
         graph = self.env_interface.perception.gt_graph
         by_handle = {node.sim_handle: node.name for node in graph.get_all_objects()}
@@ -144,11 +196,13 @@ def main():
                 else:
                     session.results_dir = results
                     (results / 'videos').mkdir(parents=True, exist_ok=True)
+                session.load_id = command.get('load_id')
                 session.load_episode(data_path=command['dataset'], episode_id=command['episode_id'])
                 if session.get_latest_jpeg():
                     (results / 'initial.jpg').write_bytes(session.get_latest_jpeg())
                 result = session.call_on_worker('snapshot')
             elif command['op'] == 'skill':
+                command_started = time.perf_counter()
                 snapshot = session.call_on_worker('snapshot')
                 aliases = snapshot.get('aliases', {})
                 def resolve(part):
@@ -157,6 +211,7 @@ def main():
                 target = ','.join(resolve(part) for part in command['target'].split(','))
                 action = session.run_skill(skill=command['skill'], agent_index=0, target=target)
                 result = session.call_on_worker('snapshot')
+                action.setdefault('timing', {})['worker_command_wall_seconds'] = time.perf_counter() - command_started
                 result['action_result'] = action
             else:
                 raise ValueError('Unknown worker command')

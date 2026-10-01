@@ -1,0 +1,11 @@
+20:48:11 T3-ACC-ABS loaded 7 steps
+20:48:21 T3-ACC-ABS  1/7 ok  Navigate book_0  
+20:48:23 T3-ACC-ABS  2/7 ok  Pick book_0  
+20:48:35 T3-ACC-ABS  3/7 ok  Navigate table_0  
+20:48:37 T3-ACC-ABS  4/7 ok  Place book_0,on,table_0,none,none  
+20:48:37 T3-ACC-ABS  5/7 ok  ReportAbsence - The book (book_1) and any acceptable substitute are absent  
+20:48:45 T3-ACC-ABS  6/7 ok  Navigate laptop_0  
+20:48:47 T3-ACC-ABS  7/7 ok  PowerOff laptop_0  
+20:48:47 T3-ACC-ABS evaluation success= True pct= 1.0
+20:48:50 T3-ACC-ABS SAVE {'ok': True, 'message': "Saved 7 actions as this variant's ground truth."}
+20:49:10 T3-ACC-CON loaded 12 steps

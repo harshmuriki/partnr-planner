@@ -1,0 +1,20 @@
+sequence,skill,target,simulator_steps,response,video
+1,ReportAbsence,"- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",0,Reported no suitable object; abandoning the absent-object subgoal.,
+2,Navigate,glass_1,44,Successful execution!,clips/0000.mp4
+3,Pick,glass_1,2,Successful execution!,clips/0001.mp4
+4,Navigate,cabinet_0,110,Successful execution!,clips/0002.mp4
+5,Place,"glass_1,on,cabinet_0,next_to,soap_dispenser_0",2,Successful execution!,clips/0003.mp4
+6,Clean,glass_1,2,Successful execution!,clips/0004.mp4
+7,Fill,glass_1,2,Successful execution!,clips/0005.mp4
+8,Pick,glass_1,2,Successful execution!,clips/0006.mp4
+9,Navigate,table_0,80,Successful execution!,clips/0007.mp4
+10,Place,"glass_1,on,table_0,none,none",2,Successful execution!,clips/0008.mp4
+11,Navigate,glass_0,71,Successful execution!,clips/0009.mp4
+12,Pick,glass_0,2,Successful execution!,clips/0010.mp4
+13,Navigate,cabinet_0,36,Successful execution!,clips/0011.mp4
+14,Place,"glass_0,on,cabinet_0,next_to,soap_dispenser_0",2,Successful execution!,clips/0012.mp4
+15,Clean,glass_0,2,Successful execution!,clips/0013.mp4
+16,Fill,glass_0,2,Successful execution!,clips/0014.mp4
+17,Pick,glass_0,2,Successful execution!,clips/0015.mp4
+18,Navigate,table_0,68,Successful execution!,clips/0016.mp4
+19,Place,"glass_0,on,table_0,next_to,glass_1",2,Successful execution!,clips/0017.mp4

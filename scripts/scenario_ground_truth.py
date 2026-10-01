@@ -1,7 +1,8 @@
-"""Per-variant ground truth: sandbox practice, replayed recording, and one saved ground truth per variant."""
+"""Per-variant ground truth: a live sandbox recording, saved as the one ground truth per variant."""
 import csv
 from contextlib import contextmanager
 from datetime import datetime, timezone
+from functools import wraps
 import gzip
 import hashlib
 import json
@@ -15,7 +16,7 @@ import tempfile
 import threading
 import time
 import uuid
-from scripts.ground_truth_archive import GroundTruthArchive, file_sha256
+from scripts.ground_truth_archive import ALL_TASKS_NOTE, GroundTruthArchive, file_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / 'baseline_evaluation_v3'
@@ -57,7 +58,7 @@ def furniture_catalog(path):
 
 
 def succeeded(skill, result):
-    """Default for whether a sandbox step is replayed: skills that reported success."""
+    """Default for whether a sandbox step is checked (included in packs): skills that reported success."""
     if skill == 'ReportAbsence':
         return True
     if not result or result.get('ok') is False or result.get('error'):
@@ -92,6 +93,9 @@ class GroundTruthStore:
                     updated_at TEXT NOT NULL, PRIMARY KEY(object, scene));
                 CREATE TABLE IF NOT EXISTS notes (
                     scope TEXT PRIMARY KEY, text TEXT NOT NULL, updated_at TEXT NOT NULL);
+                CREATE TABLE IF NOT EXISTS action_packs (
+                    id TEXT PRIMARY KEY, task TEXT NOT NULL, name TEXT NOT NULL, steps TEXT NOT NULL,
+                    source_variant TEXT NOT NULL, updated_at TEXT NOT NULL, UNIQUE(task, name));
             ''')
             # Room annotations are keyed by object name, shared by every variant holding it.
             # Merge the older per-variant rows once; keep that table as the pre-merge record.
@@ -244,6 +248,28 @@ class GroundTruthStore:
             db.execute('INSERT INTO object_rooms VALUES(?,?,?) ON CONFLICT(object) DO UPDATE SET rooms=excluded.rooms,updated_at=excluded.updated_at',
                        (obj, json.dumps(rooms), now()))
 
+    def packs(self, task):
+        with self.connect() as db:
+            return [{**dict(row), 'steps': json.loads(row['steps'])}
+                    for row in db.execute('SELECT * FROM action_packs WHERE task=? ORDER BY name COLLATE NOCASE', (task,))]
+
+    def get_pack(self, pack_id):
+        with self.connect() as db:
+            row = db.execute('SELECT * FROM action_packs WHERE id=?', (pack_id,)).fetchone()
+        return {**dict(row), 'steps': json.loads(row['steps'])} if row else None
+
+    def save_pack(self, task, name, steps, source_variant):
+        """Saving under an existing name in the same task replaces that pack's steps."""
+        with self.connect() as db:
+            db.execute('''INSERT INTO action_packs VALUES(?,?,?,?,?,?) ON CONFLICT(task,name) DO UPDATE SET
+                          steps=excluded.steps,source_variant=excluded.source_variant,updated_at=excluded.updated_at''',
+                       (uuid.uuid4().hex, task, name, json.dumps(steps), source_variant, now()))
+            return dict(db.execute('SELECT id FROM action_packs WHERE task=? AND name=?', (task, name)).fetchone())['id']
+
+    def delete_pack(self, pack_id):
+        with self.connect() as db:
+            return db.execute('DELETE FROM action_packs WHERE id=?', (pack_id,)).rowcount
+
 
 class EpisodeCatalog:
     def __init__(self, base=BASE):
@@ -264,7 +290,8 @@ class EpisodeCatalog:
         scene, furniture = furniture_catalog(self.base / f'specs/{task}/_furniture_catalog.txt')
         with (self.base / 'variant_object_assets.csv').open() as f:
             objects = [dict(row) for row in csv.DictReader(f) if row['Variant_ID'] == variant]
-        targets = [row['Object'].split(' (')[0] for row in objects if row['Label'] in ('target', 'substitute')]
+        # Substitutes are not asked for, so they get no likely rooms or furniture.
+        targets = [row['Object'].split(' (')[0] for row in objects if row['Label'] == 'target']
         absent = re.findall(r'^- (\w+) \([^\n]*\): [^\n]*absent from the scene', text, re.M)
         absent += re.findall(r'^- (\w+): (?:known )?absent', text, re.M)
         targets = list(dict.fromkeys(targets + absent))
@@ -356,31 +383,43 @@ class HabitatWorker:
             self.process.wait(timeout=15)
 
 
-class GroundTruthService:
-    """One simulator shared by all variants.
+def archive_locked(method):
+    @wraps(method)
+    def wrapped(self, *args, **kwargs):
+        with self.archive.lock:
+            return method(self, *args, **kwargs)
+    return wrapped
 
-    Sandbox: load the exact episode and try anything; nothing is saved.
-    Record: reset to the exact start, replay the checked sandbox steps, and save the result
-    only if it completes the spec. A saved recording replaces the variant's previous ground truth.
+
+class GroundTruthService:
+    """One independent simulator and live recording.
+
+    Sandbox: load the exact episode; everything run from then on is being recorded.
+    Save: store that live run (all actions, their clips) as ground truth once it completes the
+    spec. A saved recording replaces the variant's previous ground truth. Nothing is replayed.
     """
 
-    def __init__(self, database=None, worker=None, catalog=None, results_root=None):
-        self.store = GroundTruthStore(database or BASE / 'ground_truth.sqlite3')
-        self.catalog = catalog or EpisodeCatalog()
+    def __init__(self, database=None, worker=None, catalog=None, results_root=None, shared=None, on_rerecord=None):
+        self.store = shared.store if shared else GroundTruthStore(database or BASE / 'ground_truth.sqlite3')
+        self.on_rerecord = shared.on_rerecord if shared else on_rerecord  # Called with a variant whose ground truth was replaced.
+        self.catalog = shared.catalog if shared else catalog or EpisodeCatalog()
         self.worker = worker or HabitatWorker()
         self.lock = threading.Lock()
-        self.results_root = Path(results_root or BASE / 'ground_truth')
-        self.archive = GroundTruthArchive(self.results_root, self.store)
+        self.results_root = shared.results_root if shared else Path(results_root or BASE / 'ground_truth')
+        self.archive = shared.archive if shared else GroundTruthArchive(self.results_root, self.store)
         self.archive_error = None
         self.variant = None      # Variant loaded in the simulator.
         self.meta = None
-        self.mode = None         # 'sandbox' | 'recording' | None
+        self.mode = None         # 'sandbox' | None
         self.phase = ''
-        self.steps = []          # Sandbox attempts; checked ones are replayed when recording.
+        self.steps = []          # Every action since the sandbox opened; checked ones go into packs.
         self.snapshot = {}
+        self.load_id = None
         self.recording = None
         self.last_result = None
         self.error = None
+        if shared:
+            return  # Never run startup cleanup when allocating another live session.
         self.archive.clear_staging()
         saved = {run['variant']: run['id'] for run in self.store.all_ground_truths()}
         for folder in self.results_root.glob('T*/T*-*-*'):
@@ -442,19 +481,29 @@ class GroundTruthService:
         gt = self.store.ground_truth(variant)
         if gt:
             gt['artifacts'] = self.artifact_links(gt)
+            gt['video_duration_sec'] = self.archive.video_duration(gt)
             gt['stale'] = gt['spec_hash'] != meta['spec_hash'] or gt['dataset_hash'] != meta['dataset_hash']
             gt['evaluation'] = gt['snapshot'].get('evaluation')
+            gt['criteria_evidence'] = self.archive.evidence(gt)
             del gt['snapshot'], gt['metadata']
         here = self.variant == variant
+        snapshot = self.snapshot if here else {}
+        if here and self.lock.locked() and self.load_id:
+            try:
+                live = json.loads((self.worker.directory / 'evaluation.json').read_text())
+                if live.get('load_id') == self.load_id:
+                    snapshot = {**snapshot, 'evaluation': live['evaluation']}
+            except (OSError, ValueError, KeyError):
+                pass
         notes = self.store.notes()
         task = variant.split('-')[0]
         return {'meta': meta, 'ground_truth': gt, 'room_choices': self.variant_rooms(meta),
                 'furniture_choices': self.variant_furniture(meta), 'skills': SKILLS,
-                'notes': {'variant': notes.get(variant), 'task': notes.get(task)},
-                'archive_error': self.archive_error,
+                'notes': {'task': notes.get(task), 'all': notes.get(ALL_TASKS_NOTE)},
+                'packs': self.store.packs(task), 'archive_error': self.archive_error,
                 'session': {'variant': self.variant, 'mode': self.mode, 'busy': self.lock.locked(),
                             'phase': self.phase if here else '', 'steps': self.steps if here else [],
-                            'snapshot': self.snapshot if here else {}, 'recording': self.recording if here else None,
+                            'snapshot': snapshot, 'recording': self.recording if here else None,
                             'last_result': self.last_result if here else None, 'error': self.error if here else None}}
 
     def _acquire(self):
@@ -477,8 +526,9 @@ class GroundTruthService:
         return snapshot
 
     def _load(self, meta):
+        self.load_id = uuid.uuid4().hex
         return self._clean(self.worker.call({'op': 'load', 'dataset': meta['dataset'], 'episode_id': meta['episode_id'],
-                                             'results_dir': str(self.worker.session_dir)}))
+                                             'results_dir': str(self.worker.session_dir), 'load_id': self.load_id}))
 
     def _execute(self, skill, target):
         if skill == 'ReportAbsence':
@@ -542,84 +592,123 @@ class GroundTruthService:
                            'keep': succeeded(skill, result)})
 
     def edit_steps(self, variant, payload):
-        """Check/uncheck or remove sandbox steps. Only checked steps are replayed when recording."""
+        """Check/uncheck sandbox steps to choose what a pack saves. Every step that ran stays part
+        of the recording, so steps cannot be removed; reset the sandbox to start over."""
         if variant != self.variant or self.mode != 'sandbox' or self.lock.locked():
             raise ValueError('Steps can only be edited in this variant\'s idle sandbox')
-        if payload.get('clear'):
-            self.steps = []
-            return {'steps': self.steps}
         step = next((s for s in self.steps if s['id'] == payload.get('id')), None)
         if step is None:
             raise ValueError('Unknown step')
-        if payload.get('remove'):
-            self.steps = [s for s in self.steps if s is not step]
-        elif isinstance(payload.get('keep'), bool):
-            step['keep'] = payload['keep']
-        else:
-            raise ValueError('Expected keep, remove, or clear')
+        if not isinstance(payload.get('keep'), bool):
+            raise ValueError('Expected keep')
+        step['keep'] = payload['keep']
         return {'steps': self.steps}
+
+    # ------------------------------------------------------------------ action packs
+    def packs(self, variant, payload):
+        """Named step sequences shared by every variant of a task: {save: name} stores this
+        sandbox's checked steps, {apply: id} runs a pack in this sandbox, {delete: id} removes one."""
+        self.catalog.get(variant)
+        task = variant.split('-')[0]
+        if 'save' in payload:
+            name = payload['save'].strip() if isinstance(payload['save'], str) else ''
+            if not 0 < len(name) <= 80:
+                raise ValueError('Give the pack a name of at most 80 characters')
+            if variant != self.variant or self.mode != 'sandbox' or self.lock.locked():
+                raise ValueError('Open this variant\'s sandbox and wait for it to be idle')
+            steps = [{'skill': s['skill'], 'target': s['target']} for s in self.steps if s['keep']]
+            if not steps:
+                raise ValueError('Check at least one sandbox step to save as a pack')
+            return {'saved': True, 'id': self.store.save_pack(task, name, steps, variant)}
+        if 'delete' in payload:
+            if not self.store.delete_pack(payload['delete']):
+                raise ValueError('Unknown pack')
+            return {'deleted': True}
+        if 'apply' in payload:
+            pack = self.store.get_pack(payload['apply'])
+            if pack is None or pack['task'] != task:
+                raise ValueError(f'Unknown pack for {task}')
+            if variant != self.variant or self.mode != 'sandbox':
+                raise ValueError('Open the sandbox for this variant first')
+            unknown = [s['target'] for s in pack['steps'] if s['skill'] == 'ReportAbsence' and s['target'] not in self.meta['reports']]
+            if unknown:
+                raise ValueError('This pack reports an absence this spec does not ask for: ' + '; '.join(unknown))
+            self._acquire()
+            self.last_result = None
+            self._background(self._pack_job, pack)
+            return {'running': True}
+        raise ValueError('Expected save, apply, or delete')
+
+    def _pack_job(self, pack):
+        """Run the pack's steps in order as ordinary sandbox steps; stop at the first failure."""
+        total = len(pack['steps'])
+        for index, step in enumerate(pack['steps'], 1):
+            self.phase = f"Applying pack “{pack['name']}”: step {index} of {total} · {step['skill']} {step['target']}"
+            try:
+                result = self._execute(step['skill'], step['target'])
+            except Exception as error:
+                result = {'ok': False, 'error': str(error), 'response': str(error)}
+            ok = succeeded(step['skill'], result)
+            self.steps.append({'id': uuid.uuid4().hex, 'skill': step['skill'], 'target': step['target'],
+                               'result': result, 'keep': ok})
+            if not ok:
+                self.last_result = {'ok': False, 'message': f"Pack “{pack['name']}” stopped at step {index} of {total} "
+                                    f"({step['skill']} {step['target']}): {result.get('response') or result.get('error')}"}
+                return
+        self.last_result = {'ok': True, 'message': f"Applied pack “{pack['name']}”: all {total} steps succeeded."}
 
     # ------------------------------------------------------------------ recording
     def record(self, variant):
-        """Reset to the exact start and replay the checked steps; save only a completed replay."""
+        """Save the live sandbox as ground truth: every action run since the sandbox opened, in
+        order, with the clips it already recorded. Nothing is replayed; reset the sandbox to redo."""
         self._acquire()
         try:
             if variant != self.variant or self.mode != 'sandbox':
                 raise ValueError('Open the sandbox for this variant first')
-            kept = [dict(step) for step in self.steps if step['keep']]
-            if not kept:
-                raise ValueError('Check at least one sandbox step to record')
+            if not self.steps:
+                raise ValueError('Run at least one action before saving ground truth')
             meta = self.catalog.get(variant)
             if not meta['available']:
                 raise ValueError(meta['blocked_reason'])
             if (meta['spec_hash'], meta['dataset_hash']) != (self.meta['spec_hash'], self.meta['dataset_hash']):
                 raise ValueError('The spec or episode changed since the sandbox opened. Reset the sandbox first.')
+            evaluation = self.snapshot.get('evaluation', {})
+            reported = {s['target'] for s in self.steps if s['skill'] == 'ReportAbsence'}
+            if not evaluation.get('success'):
+                raise ValueError(f"Not saved: the sandbox has reached {round(evaluation.get('percent_complete', 0) * 100)}% of the spec")
+            if [r for r in meta['reports'] if r not in reported]:
+                raise ValueError('Not saved: the absence report is missing')
+            if meta['unsupported_criteria']:
+                raise ValueError('Not saved: this spec has requirements that cannot be evaluated yet')
             run_id = self.store.new_recording(meta)
         except Exception:
             self.lock.release()
             raise
-        self.meta, self.mode, self.last_result = meta, 'recording', None
-        self.recording = {'run_id': run_id, 'total': len(kept), 'done': 0}
-        self.phase = 'Resetting the episode to its exact start…'
-        self._background(self._record_job, run_id, meta, kept)
+        self.meta, self.last_result = meta, None
+        self.phase = 'Saving the ground truth and video…'
+        self._background(self._record_job, run_id, meta, [dict(step) for step in self.steps])
         return {'recording': True}
 
-    def _record_job(self, run_id, meta, kept):
-        replayed = []
+    def _record_job(self, run_id, meta, steps):
         try:
-            self.snapshot = self._load(meta)
-            for index, step in enumerate(kept, 1):
-                self.phase = f"Replaying step {index} of {len(kept)}: {step['skill']} {step['target']}"
-                result = self._execute(step['skill'], step['target'])
-                self.store.add_action(run_id, index, step['skill'], step['target'], result)
-                replayed.append({'id': uuid.uuid4().hex, 'skill': step['skill'], 'target': step['target'],
-                                 'result': result, 'keep': True})
-                self.recording['done'] = index
-            evaluation = self.snapshot.get('evaluation', {})
-            reported = {s['target'] for s in replayed if s['skill'] == 'ReportAbsence'}
-            missing_reports = [r for r in meta['reports'] if r not in reported]
-            if evaluation.get('success') and not missing_reports and not meta['unsupported_criteria']:
-                replaced = self.store.ground_truth(meta['variant']) is not None
-                self.phase = 'Saving the ground truth and video…'
-                self._save(run_id, meta)
-                self.last_result = {'ok': True, 'message': 'Saved as this variant\'s ground truth'
-                                    + (', replacing the previous one.' if replaced else '.')}
-            else:
-                self.store.discard(run_id)
-                why = (f"the replay reached {round(evaluation.get('percent_complete', 0) * 100)}% of the spec"
-                       if not evaluation.get('success') else 'the absence report is missing' if missing_reports
-                       else 'this spec has requirements that cannot be evaluated yet')
-                self.last_result = {'ok': False, 'message': f'Not saved: {why}. The previous ground truth is unchanged.'}
+            for index, step in enumerate(steps, 1):
+                self.store.add_action(run_id, index, step['skill'], step['target'], step['result'])
+            replaced = self.store.ground_truth(meta['variant']) is not None
+            self._save(run_id, meta)
+            flag_error = None
+            if replaced and self.on_rerecord:
+                try:
+                    self.on_rerecord(meta['variant'])
+                except Exception as error:
+                    flag_error = error
+            self.last_result = {'ok': True, 'message': f'Saved {len(steps)} actions as this variant\'s ground truth'
+                                + (', replacing the previous one; it needs human re-verification.' if replaced else '.')
+                                + (f' Could not flag it for re-verification: {flag_error}' if flag_error else '')}
         except Exception as error:
             self.store.discard(run_id)
-            self.last_result = {'ok': False, 'message': f'Recording failed and nothing was saved: {error}'}
-        finally:
-            # The simulator now holds the replay's end state, so the sandbox continues from it.
-            if replayed:
-                self.steps = replayed
-            self.mode = 'sandbox' if self.snapshot.get('loaded') else None
-            self.recording = None
+            self.last_result = {'ok': False, 'message': f'Saving failed and nothing was saved: {error}'}
 
+    @archive_locked
     def _save(self, run_id, meta):
         staging = self.archive.staging(meta['variant'])
         shutil.rmtree(staging, ignore_errors=True)
@@ -647,13 +736,14 @@ class GroundTruthService:
             self.archive_error = str(error)
 
     # ------------------------------------------------------------------ assumption notes
+    @archive_locked
     def save_notes(self, variant, payload):
-        """Free-text assumptions for this variant, or shared by every variant of its task."""
+        """Free-text assumptions for this variant's task (e.g. T4), or shared by every task (T1-T7)."""
         self.catalog.get(variant)
         scope, text = payload.get('scope'), payload.get('text')
-        if scope not in ('variant', 'task') or not isinstance(text, str) or len(text) > 20000:
-            raise ValueError('Expected scope variant/task and at most 20,000 characters of text')
-        key = variant if scope == 'variant' else variant.split('-')[0]
+        if scope not in ('task', 'all') or not isinstance(text, str) or len(text) > 20000:
+            raise ValueError('Expected scope task/all and at most 20,000 characters of text')
+        key = variant.split('-')[0] if scope == 'task' else ALL_TASKS_NOTE
         self.store.save_note(key, text)
         try:
             self.archive.notes(self.store.notes())
@@ -662,6 +752,7 @@ class GroundTruthService:
         return {'saved': True, 'note': self.store.notes().get(key)}
 
     # ------------------------------------------------------------------ room annotations
+    @archive_locked
     def rooms(self, variant, payload):
         meta = self.catalog.get(variant)
         obj, rooms = payload.get('object'), payload.get('rooms')
@@ -674,6 +765,7 @@ class GroundTruthService:
         self._refresh_shared(obj, variant)
         return {'saved': True}
 
+    @archive_locked
     def furniture(self, variant, payload):
         """Ranked likely furniture for a target, shared by every variant in the same apartment."""
         meta = self.catalog.get(variant)
@@ -696,3 +788,105 @@ class GroundTruthService:
             meta = run['metadata'] if run else {}
             if obj in meta.get('targets', []):
                 self.archive.refresh_variant(row['variant'], *self.choices(row['variant'], meta))
+
+
+class GroundTruthSessions:
+    """Bounded pool, one explicitly addressed live recording per variant.
+
+    The registry lock covers dispatch, not background simulator work. Session services
+    share durable storage and the archive lock, but never workers or recording state.
+    """
+    def __init__(self, max_sessions=2, worker_factory=HabitatWorker, **kwargs):
+        if max_sessions < 1:
+            raise ValueError('max_sessions must be at least 1')
+        self.max_sessions = max_sessions
+        self.worker_factory = worker_factory
+        self.shared = GroundTruthService(worker=worker_factory(), **kwargs)
+        self.sessions = {}
+        self.lock = threading.RLock()
+
+    def _check(self, variant, session_id):
+        entry = self.sessions.get(variant)
+        if session_id is not None and (not entry or entry[0] != session_id):
+            raise ValueError('This sandbox session has changed or closed. Refresh before retrying.')
+        return entry
+
+    def state(self, variant):
+        with self.lock:
+            entry = self.sessions.get(variant)
+            service = entry[1] if entry else self.shared
+            sessions = [{'id': key, 'variant': name, 'busy': item.lock.locked(), 'phase': item.phase}
+                        for name, (key, item) in self.sessions.items()]
+            session_id = entry[0] if entry else None
+        state = service.state(variant)
+        state['archive_error'] = state['archive_error'] or self.shared.archive_error
+        state['session']['id'] = session_id
+        state['sessions'] = sessions
+        state['max_sessions'] = self.max_sessions
+        return state
+
+    def frame(self, variant, session_id=None):
+        with self.lock:
+            entry = self._check(variant, session_id)
+            return entry[1].worker.frame() if entry else None
+
+    def dispatch(self, variant, operation, payload):
+        # Annotation exports may wait for a video save. Do not hold up unrelated
+        # simulator dispatch while they wait for the shared archive lock.
+        annotations = {'notes': 'save_notes', 'rooms': 'rooms', 'furniture': 'furniture'}
+        if operation in annotations:
+            with self.lock:
+                self._check(variant, payload.get('session_id'))
+            return getattr(self.shared, annotations[operation])(variant, payload)
+        with self.lock:
+            entry = self._check(variant, payload.get('session_id'))
+            if operation == 'sandbox':
+                if not entry:
+                    meta = self.shared.catalog.get(variant)
+                    if not meta['available']:
+                        raise ValueError(meta['blocked_reason'])
+                    if len(self.sessions) >= self.max_sessions:
+                        names = ', '.join(self.sessions)
+                        raise ValueError(f'All {self.max_sessions} sandbox slots are in use ({names}). Close one sandbox first.')
+                    service = GroundTruthService(worker=self.worker_factory(), shared=self.shared)
+                    entry = (uuid.uuid4().hex, service)
+                    self.sessions[variant] = entry
+                try:
+                    result = entry[1].sandbox(variant)
+                except Exception:
+                    if entry[1].variant is None:
+                        entry[1].worker.close()
+                        del self.sessions[variant]
+                    raise
+                # A reset creates a new generation: reject late commands from the old run.
+                session_id = uuid.uuid4().hex
+                self.sessions[variant] = (session_id, entry[1])
+                return {**result, 'session_id': session_id}
+            if operation == 'close':
+                if not entry:
+                    raise ValueError('No sandbox is open for this variant')
+                service = entry[1]
+                if service.lock.locked():
+                    raise ValueError('Wait for this sandbox operation to finish before closing it')
+                service.worker.close()
+                shutil.rmtree(service.worker.directory, ignore_errors=True)
+                del self.sessions[variant]
+                return {'closed': True}
+            methods = {'record': 'record', 'action': 'action', 'steps': 'edit_steps',
+                       'packs': 'packs', 'notes': 'save_notes', 'rooms': 'rooms', 'furniture': 'furniture'}
+            if operation not in methods:
+                raise ValueError('Unknown sandbox operation')
+            needs_session = operation in ('record', 'action', 'steps') or (operation == 'packs' and ('apply' in payload or 'save' in payload))
+            if needs_session and not entry:
+                raise ValueError('Open the sandbox for this variant first')
+            service = entry[1] if entry else self.shared
+            method = getattr(service, methods[operation])
+            return method(variant) if operation == 'record' else method(variant, payload)
+
+    def close(self):
+        # Finish outstanding operations before shutting down their workers.
+        with self.lock:
+            for _, service in self.sessions.values():
+                with service.lock:
+                    service.worker.close()
+            self.shared.worker.close()

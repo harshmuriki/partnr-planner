@@ -222,7 +222,7 @@
   "unscored_success_text": [
     "- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
   ],
-  "spec_sha256": "b812bcf4d48b5b25585d847dfe4d3136b87e14065e88d9861a356464a8577545",
+  "spec_sha256": "e0131bbfcd62bddf7f00b79a69058b1322530ea00c3736eb8073c8bb9896912a",
   "initial_robot_memory": "- jug_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0\n- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0",
   "memory_runtime_applied": false,
   "issues": [],

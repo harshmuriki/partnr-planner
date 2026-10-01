@@ -162,7 +162,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-INC-CON",
-          "sha256": "bcc50666c23139a38acabe16d2bd7ab84b16fb105520dc50bd9ca980ea2a572a",
+          "sha256": "8cb7f88a99dfc664103bd5d4e677082df2fbd1512d9f329cda30fd70c2844a98",
           "entity_handles": {
             "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
             "lamp_0": "B07HK83QRB_:0000"

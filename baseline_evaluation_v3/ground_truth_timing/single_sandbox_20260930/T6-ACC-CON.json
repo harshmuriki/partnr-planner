@@ -1,0 +1,1147 @@
+{
+  "variant": "T6-ACC-CON",
+  "status": "saved",
+  "started_at": "2026-10-01T02:48:34.268040+00:00",
+  "old_run_id": "eb221f51a7fa4ba6abbd225cfc1af401",
+  "actions": [
+    {
+      "sequence": 1,
+      "skill": "Navigate",
+      "target": "cabinet_1",
+      "submitted_at": "2026-10-01T02:49:08.423836+00:00",
+      "observed_wall_seconds": 53.63588774809614,
+      "completed_at": "2026-10-01T02:50:02.059732+00:00",
+      "result": {
+        "command": "Navigate 0 cabinet_72",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "cabinet_72",
+        "response": "Successful execution!",
+        "skill_steps": 201,
+        "ok": true,
+        "video": "videos/video-0_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 46.31835955707356,
+          "frame_callback_wall_seconds": 2.143193955067545,
+          "clip_close_wall_seconds": 0.3386572878807783,
+          "action_wall_seconds": 53.43902785470709,
+          "worker_command_wall_seconds": 53.4411923289299
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 201,
+        "recording_error": null,
+        "ground_truth_video": "clips/0000.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:02.059870+00:00",
+        "load_average": [
+          5.53,
+          5.39,
+          5.12
+        ],
+        "MemAvailable": "7172104 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 2,
+      "skill": "Open",
+      "target": "cabinet_1",
+      "submitted_at": "2026-10-01T02:50:02.061774+00:00",
+      "observed_wall_seconds": 1.3434536787681282,
+      "completed_at": "2026-10-01T02:50:03.405236+00:00",
+      "result": {
+        "command": "Open 0 cabinet_72",
+        "skill": "Open",
+        "agent_index": 0,
+        "target": "cabinet_72",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-1_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.7537828041240573,
+          "frame_callback_wall_seconds": 0.0925839263945818,
+          "clip_close_wall_seconds": 0.030344755854457617,
+          "action_wall_seconds": 1.0479251816868782,
+          "worker_command_wall_seconds": 1.0503720878623426
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0001.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:03.405397+00:00",
+        "load_average": [
+          5.8,
+          5.45,
+          5.14
+        ],
+        "MemAvailable": "7190044 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 3,
+      "skill": "Pick",
+      "target": "bread_0",
+      "submitted_at": "2026-10-01T02:50:03.408149+00:00",
+      "observed_wall_seconds": 1.1311486740596592,
+      "completed_at": "2026-10-01T02:50:04.539306+00:00",
+      "result": {
+        "command": "Pick 0 bread_0",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "bread_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-2_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.5415149871259928,
+          "frame_callback_wall_seconds": 0.08882913878187537,
+          "clip_close_wall_seconds": 0.030342963989824057,
+          "action_wall_seconds": 0.8066320633515716,
+          "worker_command_wall_seconds": 0.8090667789801955
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0002.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:04.539427+00:00",
+        "load_average": [
+          5.8,
+          5.45,
+          5.14
+        ],
+        "MemAvailable": "7195440 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 4,
+      "skill": "Close",
+      "target": "cabinet_1",
+      "submitted_at": "2026-10-01T02:50:04.541496+00:00",
+      "observed_wall_seconds": 1.3347947890870273,
+      "completed_at": "2026-10-01T02:50:05.876299+00:00",
+      "result": {
+        "command": "Close 0 cabinet_72",
+        "skill": "Close",
+        "agent_index": 0,
+        "target": "cabinet_72",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-3_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.7996970466338098,
+          "frame_callback_wall_seconds": 0.11119055282324553,
+          "clip_close_wall_seconds": 0.030348673928529024,
+          "action_wall_seconds": 1.1261626351624727,
+          "worker_command_wall_seconds": 1.128899501170963
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0003.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:05.876446+00:00",
+        "load_average": [
+          5.8,
+          5.45,
+          5.14
+        ],
+        "MemAvailable": "7198064 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 5,
+      "skill": "Navigate",
+      "target": "microwave_0",
+      "submitted_at": "2026-10-01T02:50:05.879127+00:00",
+      "observed_wall_seconds": 27.198586894664913,
+      "completed_at": "2026-10-01T02:50:33.077723+00:00",
+      "result": {
+        "command": "Navigate 0 microwave_108",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "microwave_108",
+        "response": "Successful execution!",
+        "skill_steps": 89,
+        "ok": true,
+        "video": "videos/video-4_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 23.506053570192307,
+          "frame_callback_wall_seconds": 0.938475972507149,
+          "clip_close_wall_seconds": 0.35392723279073834,
+          "action_wall_seconds": 27.013955727685243,
+          "worker_command_wall_seconds": 27.0163094131276
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 89,
+        "recording_error": null,
+        "ground_truth_video": "clips/0004.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:33.077841+00:00",
+        "load_average": [
+          5.63,
+          5.43,
+          5.14
+        ],
+        "MemAvailable": "7031196 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 6,
+      "skill": "Open",
+      "target": "microwave_0",
+      "submitted_at": "2026-10-01T02:50:33.079822+00:00",
+      "observed_wall_seconds": 1.3456926099024713,
+      "completed_at": "2026-10-01T02:50:34.425523+00:00",
+      "result": {
+        "command": "Open 0 microwave_108",
+        "skill": "Open",
+        "agent_index": 0,
+        "target": "microwave_108",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-5_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.722469940315932,
+          "frame_callback_wall_seconds": 0.1029151282273233,
+          "clip_close_wall_seconds": 0.030493838246911764,
+          "action_wall_seconds": 1.026873981114477,
+          "worker_command_wall_seconds": 1.0293980231508613
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0005.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:34.425641+00:00",
+        "load_average": [
+          5.63,
+          5.43,
+          5.14
+        ],
+        "MemAvailable": "7028920 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 7,
+      "skill": "Place",
+      "target": "bread_0,within,microwave_0,none,none",
+      "submitted_at": "2026-10-01T02:50:34.427803+00:00",
+      "observed_wall_seconds": 5.979779240209609,
+      "completed_at": "2026-10-01T02:50:40.407591+00:00",
+      "result": {
+        "command": "Place 0 bread_0,within,microwave_108,none,none",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "bread_0,within,microwave_108,none,none",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-6_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.521873701363802,
+          "frame_callback_wall_seconds": 0.07650484517216682,
+          "clip_close_wall_seconds": 0.030357785988599062,
+          "action_wall_seconds": 5.7421361450105906,
+          "worker_command_wall_seconds": 5.744605758227408
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0006.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:40.407705+00:00",
+        "load_average": [
+          5.58,
+          5.42,
+          5.14
+        ],
+        "MemAvailable": "7037176 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 8,
+      "skill": "Close",
+      "target": "microwave_0",
+      "submitted_at": "2026-10-01T02:50:40.409724+00:00",
+      "observed_wall_seconds": 1.1270004389807582,
+      "completed_at": "2026-10-01T02:50:41.536732+00:00",
+      "result": {
+        "command": "Close 0 microwave_108",
+        "skill": "Close",
+        "agent_index": 0,
+        "target": "microwave_108",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-7_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.6919800685718656,
+          "frame_callback_wall_seconds": 0.09829141339287162,
+          "clip_close_wall_seconds": 0.030348503962159157,
+          "action_wall_seconds": 0.9969297950156033,
+          "worker_command_wall_seconds": 0.9995026146061718
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0007.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:41.536872+00:00",
+        "load_average": [
+          5.58,
+          5.42,
+          5.14
+        ],
+        "MemAvailable": "7037916 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 9,
+      "skill": "Open",
+      "target": "microwave_0",
+      "submitted_at": "2026-10-01T02:50:41.539325+00:00",
+      "observed_wall_seconds": 1.3427874129265547,
+      "completed_at": "2026-10-01T02:50:42.882120+00:00",
+      "result": {
+        "command": "Open 0 microwave_108",
+        "skill": "Open",
+        "agent_index": 0,
+        "target": "microwave_108",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-8_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.7173336879350245,
+          "frame_callback_wall_seconds": 0.09675301378592849,
+          "clip_close_wall_seconds": 0.030379768926650286,
+          "action_wall_seconds": 1.0203416990116239,
+          "worker_command_wall_seconds": 1.0230570719577372
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0008.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:42.882244+00:00",
+        "load_average": [
+          5.38,
+          5.38,
+          5.12
+        ],
+        "MemAvailable": "7045444 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 10,
+      "skill": "Pick",
+      "target": "bread_0",
+      "submitted_at": "2026-10-01T02:50:42.884577+00:00",
+      "observed_wall_seconds": 0.9089598557911813,
+      "completed_at": "2026-10-01T02:50:43.793545+00:00",
+      "result": {
+        "command": "Pick 0 bread_0",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "bread_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-9_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.4915777640417218,
+          "frame_callback_wall_seconds": 0.08639855915680528,
+          "clip_close_wall_seconds": 0.030350446235388517,
+          "action_wall_seconds": 0.7628854466602206,
+          "worker_command_wall_seconds": 0.7653319360688329
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0009.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:43.793697+00:00",
+        "load_average": [
+          5.38,
+          5.38,
+          5.12
+        ],
+        "MemAvailable": "7054088 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 11,
+      "skill": "Close",
+      "target": "microwave_0",
+      "submitted_at": "2026-10-01T02:50:43.796654+00:00",
+      "observed_wall_seconds": 1.3406884679570794,
+      "completed_at": "2026-10-01T02:50:45.137353+00:00",
+      "result": {
+        "command": "Close 0 microwave_108",
+        "skill": "Close",
+        "agent_index": 0,
+        "target": "microwave_108",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-10_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.7321447478607297,
+          "frame_callback_wall_seconds": 0.09533803025260568,
+          "clip_close_wall_seconds": 0.030343397986143827,
+          "action_wall_seconds": 1.0320674302056432,
+          "worker_command_wall_seconds": 1.0345655432902277
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0010.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:50:45.137487+00:00",
+        "load_average": [
+          5.38,
+          5.38,
+          5.12
+        ],
+        "MemAvailable": "7046584 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 12,
+      "skill": "Navigate",
+      "target": "table_11",
+      "submitted_at": "2026-10-01T02:50:45.139990+00:00",
+      "observed_wall_seconds": 76.89568370999768,
+      "completed_at": "2026-10-01T02:52:02.035681+00:00",
+      "result": {
+        "command": "Navigate 0 table_115",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "table_115",
+        "response": "Successful execution!",
+        "skill_steps": 278,
+        "ok": true,
+        "video": "videos/video-11_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 67.64986558584496,
+          "frame_callback_wall_seconds": 2.8679537130519748,
+          "clip_close_wall_seconds": 0.35948761785402894,
+          "action_wall_seconds": 76.76048077177256,
+          "worker_command_wall_seconds": 76.76303582405671
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 278,
+        "recording_error": null,
+        "ground_truth_video": "clips/0011.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:52:02.035804+00:00",
+        "load_average": [
+          4.6,
+          5.14,
+          5.06
+        ],
+        "MemAvailable": "7167676 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 13,
+      "skill": "Place",
+      "target": "bread_0,on,table_11,none,none",
+      "submitted_at": "2026-10-01T02:52:02.038265+00:00",
+      "observed_wall_seconds": 1.5722330450080335,
+      "completed_at": "2026-10-01T02:52:03.610505+00:00",
+      "result": {
+        "command": "Place 0 bread_0,on,table_115,none,none",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "bread_0,on,table_115,none,none",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-12_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.5760991252027452,
+          "frame_callback_wall_seconds": 0.08535934519022703,
+          "clip_close_wall_seconds": 0.030395724810659885,
+          "action_wall_seconds": 1.3993219188414514,
+          "worker_command_wall_seconds": 1.4020840106531978
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0012.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:52:03.610620+00:00",
+        "load_average": [
+          4.71,
+          5.16,
+          5.07
+        ],
+        "MemAvailable": "7185564 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 14,
+      "skill": "Navigate",
+      "target": "fridge_0",
+      "submitted_at": "2026-10-01T02:52:03.612838+00:00",
+      "observed_wall_seconds": 133.96461853664368,
+      "completed_at": "2026-10-01T02:54:17.577465+00:00",
+      "result": {
+        "command": "Navigate 0 fridge_82",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "fridge_82",
+        "response": "Successful execution!",
+        "skill_steps": 501,
+        "ok": true,
+        "video": "videos/video-13_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 117.62048438983038,
+          "frame_callback_wall_seconds": 5.204309198539704,
+          "clip_close_wall_seconds": 0.36013428308069706,
+          "action_wall_seconds": 133.69392987107858,
+          "worker_command_wall_seconds": 133.69653240498155
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 501,
+        "recording_error": null,
+        "ground_truth_video": "clips/0013.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:54:17.577600+00:00",
+        "load_average": [
+          4.77,
+          4.96,
+          5.0
+        ],
+        "MemAvailable": "7096360 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 15,
+      "skill": "Open",
+      "target": "fridge_0",
+      "submitted_at": "2026-10-01T02:54:17.580134+00:00",
+      "observed_wall_seconds": 1.1258819089271128,
+      "completed_at": "2026-10-01T02:54:18.706026+00:00",
+      "result": {
+        "command": "Open 0 fridge_82",
+        "skill": "Open",
+        "agent_index": 0,
+        "target": "fridge_82",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-14_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.6647733552381396,
+          "frame_callback_wall_seconds": 0.09427009196951985,
+          "clip_close_wall_seconds": 0.04047101130709052,
+          "action_wall_seconds": 0.9666482368484139,
+          "worker_command_wall_seconds": 0.9694536859169602
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0014.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:54:18.706145+00:00",
+        "load_average": [
+          4.71,
+          4.95,
+          4.99
+        ],
+        "MemAvailable": "7121628 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 16,
+      "skill": "Pick",
+      "target": "bottle_0",
+      "submitted_at": "2026-10-01T02:54:18.708606+00:00",
+      "observed_wall_seconds": 0.9008201980032027,
+      "completed_at": "2026-10-01T02:54:19.609433+00:00",
+      "result": {
+        "command": "Pick 0 bottle_0",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "bottle_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-15_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.43916970398277044,
+          "frame_callback_wall_seconds": 0.09881767863407731,
+          "clip_close_wall_seconds": 0.030341619160026312,
+          "action_wall_seconds": 0.7310155890882015,
+          "worker_command_wall_seconds": 0.7339804829098284
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0015.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:54:19.609550+00:00",
+        "load_average": [
+          4.71,
+          4.95,
+          4.99
+        ],
+        "MemAvailable": "7124556 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 17,
+      "skill": "Close",
+      "target": "fridge_0",
+      "submitted_at": "2026-10-01T02:54:19.611851+00:00",
+      "observed_wall_seconds": 1.1288962359540164,
+      "completed_at": "2026-10-01T02:54:20.740755+00:00",
+      "result": {
+        "command": "Close 0 fridge_82",
+        "skill": "Close",
+        "agent_index": 0,
+        "target": "fridge_82",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-16_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.6316925967112184,
+          "frame_callback_wall_seconds": 0.08986266795545816,
+          "clip_close_wall_seconds": 0.04042717209085822,
+          "action_wall_seconds": 0.9451165548525751,
+          "worker_command_wall_seconds": 0.9475998370908201
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0016.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:54:20.740891+00:00",
+        "load_average": [
+          4.71,
+          4.95,
+          4.99
+        ],
+        "MemAvailable": "7142676 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 18,
+      "skill": "Navigate",
+      "target": "table_11",
+      "submitted_at": "2026-10-01T02:54:20.743610+00:00",
+      "observed_wall_seconds": 144.21022766968235,
+      "completed_at": "2026-10-01T02:56:44.953847+00:00",
+      "result": {
+        "command": "Navigate 0 table_115",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "table_115",
+        "response": "Successful execution!",
+        "skill_steps": 509,
+        "ok": true,
+        "video": "videos/video-17_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 128.0144251063466,
+          "frame_callback_wall_seconds": 5.2521836762316525,
+          "clip_close_wall_seconds": 0.35275261336937547,
+          "action_wall_seconds": 144.17550811497495,
+          "worker_command_wall_seconds": 144.17839436698705
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 509,
+        "recording_error": null,
+        "ground_truth_video": "clips/0017.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:56:44.953987+00:00",
+        "load_average": [
+          5.14,
+          4.91,
+          4.97
+        ],
+        "MemAvailable": "7122400 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 19,
+      "skill": "Place",
+      "target": "bottle_0,on,table_11,next_to,bread_0",
+      "submitted_at": "2026-10-01T02:56:44.956634+00:00",
+      "observed_wall_seconds": 2.2207178622484207,
+      "completed_at": "2026-10-01T02:56:47.177360+00:00",
+      "result": {
+        "command": "Place 0 bottle_0,on,table_115,next_to,bread_0",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "bottle_0,on,table_115,next_to,bread_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-18_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.6202408876270056,
+          "frame_callback_wall_seconds": 0.07442772621288896,
+          "clip_close_wall_seconds": 0.030348733067512512,
+          "action_wall_seconds": 1.999058396089822,
+          "worker_command_wall_seconds": 2.001583124976605
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0018.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:56:47.177516+00:00",
+        "load_average": [
+          5.14,
+          4.91,
+          4.97
+        ],
+        "MemAvailable": "7159656 kB",
+        "SwapFree": "0 kB"
+      }
+    },
+    {
+      "sequence": 20,
+      "skill": "Navigate",
+      "target": "cabinet_23",
+      "submitted_at": "2026-10-01T02:56:47.180891+00:00",
+      "observed_wall_seconds": 137.45458453986794,
+      "completed_at": "2026-10-01T02:59:04.635486+00:00",
+      "result": {
+        "command": "Navigate 0 cabinet_116",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "cabinet_116",
+        "response": "Successful execution!",
+        "skill_steps": 518,
+        "ok": true,
+        "video": "videos/video-19_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 120.80298314010724,
+          "frame_callback_wall_seconds": 5.268387618940324,
+          "clip_close_wall_seconds": 0.31938902335241437,
+          "action_wall_seconds": 137.17685972806066,
+          "worker_command_wall_seconds": 137.17991764796898
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 518,
+        "recording_error": null,
+        "ground_truth_video": "clips/0019.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:59:04.635622+00:00",
+        "load_average": [
+          4.04,
+          4.54,
+          4.82
+        ],
+        "MemAvailable": "7135704 kB",
+        "SwapFree": "4 kB"
+      }
+    },
+    {
+      "sequence": 21,
+      "skill": "Open",
+      "target": "cabinet_23",
+      "submitted_at": "2026-10-01T02:59:04.638306+00:00",
+      "observed_wall_seconds": 1.1377909108996391,
+      "completed_at": "2026-10-01T02:59:05.776107+00:00",
+      "result": {
+        "command": "Open 0 cabinet_116",
+        "skill": "Open",
+        "agent_index": 0,
+        "target": "cabinet_116",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-20_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.7282884600572288,
+          "frame_callback_wall_seconds": 0.0935745663009584,
+          "clip_close_wall_seconds": 0.020275339018553495,
+          "action_wall_seconds": 1.0154458852484822,
+          "worker_command_wall_seconds": 1.0178805370815098
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0020.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:59:05.776285+00:00",
+        "load_average": [
+          4.04,
+          4.54,
+          4.82
+        ],
+        "MemAvailable": "7148860 kB",
+        "SwapFree": "4 kB"
+      }
+    },
+    {
+      "sequence": 22,
+      "skill": "Pick",
+      "target": "hand_towel_0",
+      "submitted_at": "2026-10-01T02:59:05.779970+00:00",
+      "observed_wall_seconds": 0.9110564370639622,
+      "completed_at": "2026-10-01T02:59:06.691036+00:00",
+      "result": {
+        "command": "Pick 0 hand_towel_0",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "hand_towel_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-21_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.5235315710306168,
+          "frame_callback_wall_seconds": 0.09682437870651484,
+          "clip_close_wall_seconds": 0.020308876875787973,
+          "action_wall_seconds": 0.7975748516619205,
+          "worker_command_wall_seconds": 0.8006821498274803
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0021.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:59:06.691178+00:00",
+        "load_average": [
+          4.04,
+          4.54,
+          4.82
+        ],
+        "MemAvailable": "7143296 kB",
+        "SwapFree": "4 kB"
+      }
+    },
+    {
+      "sequence": 23,
+      "skill": "Close",
+      "target": "cabinet_23",
+      "submitted_at": "2026-10-01T02:59:06.694140+00:00",
+      "observed_wall_seconds": 1.1330194170586765,
+      "completed_at": "2026-10-01T02:59:07.827170+00:00",
+      "result": {
+        "command": "Close 0 cabinet_116",
+        "skill": "Close",
+        "agent_index": 0,
+        "target": "cabinet_116",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-22_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.7720326697453856,
+          "frame_callback_wall_seconds": 0.07957703620195389,
+          "clip_close_wall_seconds": 0.030353832058608532,
+          "action_wall_seconds": 1.0539153567515314,
+          "worker_command_wall_seconds": 1.0563254998996854
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0022.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T02:59:07.827350+00:00",
+        "load_average": [
+          4.04,
+          4.54,
+          4.82
+        ],
+        "MemAvailable": "7155252 kB",
+        "SwapFree": "4 kB"
+      }
+    },
+    {
+      "sequence": 24,
+      "skill": "Navigate",
+      "target": "table_11",
+      "submitted_at": "2026-10-01T02:59:07.831106+00:00",
+      "observed_wall_seconds": 145.21812755288556,
+      "completed_at": "2026-10-01T03:01:33.049243+00:00",
+      "result": {
+        "command": "Navigate 0 table_115",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "table_115",
+        "response": "Successful execution!",
+        "skill_steps": 498,
+        "ok": true,
+        "video": "videos/video-23_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 129.28347017243505,
+          "frame_callback_wall_seconds": 5.112723712343723,
+          "clip_close_wall_seconds": 0.31446736585348845,
+          "action_wall_seconds": 145.00514636095613,
+          "worker_command_wall_seconds": 145.0083723012358
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 498,
+        "recording_error": null,
+        "ground_truth_video": "clips/0023.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T03:01:33.049409+00:00",
+        "load_average": [
+          4.47,
+          4.64,
+          4.82
+        ],
+        "MemAvailable": "9070300 kB",
+        "SwapFree": "4 kB"
+      }
+    },
+    {
+      "sequence": 25,
+      "skill": "Place",
+      "target": "hand_towel_0,on,table_11,next_to,bread_0",
+      "submitted_at": "2026-10-01T03:01:33.053050+00:00",
+      "observed_wall_seconds": 3.5807656049728394,
+      "completed_at": "2026-10-01T03:01:36.633824+00:00",
+      "result": {
+        "command": "Place 0 hand_towel_0,on,table_115,next_to,bread_0",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "hand_towel_0,on,table_115,next_to,bread_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-24_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.5265309177339077,
+          "frame_callback_wall_seconds": 0.07336816005408764,
+          "clip_close_wall_seconds": 0.030357662122696638,
+          "action_wall_seconds": 3.2729267422109842,
+          "worker_command_wall_seconds": 3.2755366060882807
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0024.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T03:01:36.633989+00:00",
+        "load_average": [
+          4.47,
+          4.64,
+          4.82
+        ],
+        "MemAvailable": "9100644 kB",
+        "SwapFree": "4 kB"
+      }
+    },
+    {
+      "sequence": 26,
+      "skill": "Navigate",
+      "target": "lamp_living_0",
+      "submitted_at": "2026-10-01T03:01:36.637698+00:00",
+      "observed_wall_seconds": 96.32243035407737,
+      "completed_at": "2026-10-01T03:03:12.960137+00:00",
+      "result": {
+        "command": "Navigate 0 lamp_living_0",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "lamp_living_0",
+        "response": "Successful execution!",
+        "skill_steps": 349,
+        "ok": true,
+        "video": "videos/video-25_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 84.6447124844417,
+          "frame_callback_wall_seconds": 3.598177251406014,
+          "clip_close_wall_seconds": 0.33426045905798674,
+          "action_wall_seconds": 96.06129750376567,
+          "worker_command_wall_seconds": 96.06489124102518
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 349,
+        "recording_error": null,
+        "ground_truth_video": "clips/0025.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T03:03:12.960276+00:00",
+        "load_average": [
+          5.12,
+          4.79,
+          4.85
+        ],
+        "MemAvailable": "9161220 kB",
+        "SwapFree": "4 kB"
+      }
+    },
+    {
+      "sequence": 27,
+      "skill": "PowerOff",
+      "target": "lamp_living_0",
+      "submitted_at": "2026-10-01T03:03:12.963237+00:00",
+      "observed_wall_seconds": 0.9067865931428969,
+      "completed_at": "2026-10-01T03:03:13.870034+00:00",
+      "result": {
+        "command": "PowerOff 0 lamp_living_0",
+        "skill": "PowerOff",
+        "agent_index": 0,
+        "target": "lamp_living_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-26_.mp4",
+        "timing": {
+          "environment_step_wall_seconds": 0.456357317045331,
+          "frame_callback_wall_seconds": 0.08987822802737355,
+          "clip_close_wall_seconds": 0.03030474204570055,
+          "action_wall_seconds": 0.7296855980530381,
+          "worker_command_wall_seconds": 0.7322057657875121
+        },
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0026.mp4"
+      },
+      "resources": {
+        "utc": "2026-10-01T03:03:13.870172+00:00",
+        "load_average": [
+          5.11,
+          4.79,
+          4.85
+        ],
+        "MemAvailable": "9150628 kB",
+        "SwapFree": "4 kB"
+      }
+    }
+  ],
+  "resources_start": {
+    "utc": "2026-10-01T02:48:34.268160+00:00",
+    "load_average": [
+      6.08,
+      5.44,
+      5.11
+    ],
+    "MemAvailable": "8690148 kB",
+    "SwapFree": "0 kB"
+  },
+  "max_sandboxes": 1,
+  "poll_interval_seconds": 0.2,
+  "load_wall_seconds": 28.364925778005272,
+  "session_id": "3689e47e32824a969cfa166fe878ae4a",
+  "execution_started_at": "2026-10-01T02:49:08.423797+00:00",
+  "execution_elapsed_seconds": 845.4462184631266,
+  "execution_completed_at": "2026-10-01T03:03:13.872950+00:00",
+  "action_wall_seconds": 839.7988694398664,
+  "worker_command_wall_seconds": 839.8707765438594,
+  "environment_step_wall_seconds": 729.7514453586191,
+  "frame_callback_wall_seconds": 32.11016958532855,
+  "clip_close_wall_seconds": 3.3099707309156656,
+  "save_wall_seconds": 18.45200930396095,
+  "run_id": "2e1591dc9b7f4205bebbbbb9e7c00bbf",
+  "completed_at": "2026-10-01T03:03:32.396198+00:00",
+  "sim_steps": 2991,
+  "evaluation": {
+    "success": true,
+    "percent_complete": 1.0,
+    "satisfied_at": [
+      593,
+      1613,
+      2639,
+      1595,
+      2639,
+      0,
+      0,
+      2990,
+      302
+    ],
+    "constraint_satisfaction": [
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    ],
+    "current": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false
+    ]
+  },
+  "resources_end": {
+    "utc": "2026-10-01T03:03:32.396328+00:00",
+    "load_average": [
+      5.9,
+      5.0,
+      4.92
+    ],
+    "MemAvailable": "9063900 kB",
+    "SwapFree": "4 kB"
+  }
+}

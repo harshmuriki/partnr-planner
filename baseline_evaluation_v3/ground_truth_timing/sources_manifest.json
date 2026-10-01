@@ -1,0 +1,377 @@
+[
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/acc_run.log",
+    "archived_source": "sources/8e71cf78b6_acc_run.log",
+    "sha256": "8e71cf78b69bda76d85d58d9e27d5d6991bfddcf467d5a9b54937eb22d2a19f5"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/acc_run_t3con.log",
+    "archived_source": "sources/d035e0bd88_acc_run_t3con.log",
+    "sha256": "d035e0bd8831e7eeba61fb17e5680c4620da6329ec2bb6059696de8b7972f948"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/acc_run_t4.log",
+    "archived_source": "sources/c930110a09_acc_run_t4.log",
+    "sha256": "c930110a09d786d4848b8519e498d4b27eca7ecfbb2adc7a610ab3805313eb1c"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/acc_run_t5.log",
+    "archived_source": "sources/d0ecd5abd4_acc_run_t5.log",
+    "sha256": "d0ecd5abd4dbc01d797f85b19f8bbe0da3be63ccd00a17ae4a197214dfb48379"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/acc_run_t6.log",
+    "archived_source": "sources/5b5caeb844_acc_run_t6.log",
+    "sha256": "5b5caeb8443b650fea1c64942c67e0f21e5bdf0bdf4ca659fa3ab4cd468182e2"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_abs_rerecord.log",
+    "archived_source": "sources/ea7e1a5494_run_abs_rerecord.log",
+    "sha256": "ea7e1a5494bd03de2038f5d4ffbc1cf4442a56cec3311be9f051a2d412892796"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_all4.log",
+    "archived_source": "sources/fa15b23ab0_run_all4.log",
+    "sha256": "fa15b23ab087a7941a36425c39cd6065ac90d23aaa2ce1c4aa24417e8d61cbbe"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_resume.log",
+    "archived_source": "sources/1cac3abc56_run_resume.log",
+    "sha256": "1cac3abc56347700d0b8ce2bebae477fbc4cb1dd3ef5a1bc91e8090f6de11b10"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t1_acc_sub.log",
+    "archived_source": "sources/f70a960ad7_run_t1_acc_sub.log",
+    "sha256": "f70a960ad746b5e40f6af12e89fb229b31f195116099d4348d4a85215eb926fe"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t1_sub.log",
+    "archived_source": "sources/2345b71156_run_t1_sub.log",
+    "sha256": "2345b71156334f8a9cf36f98cc5d521039fb391c2cc4f03f74985765b3f9bafa"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t2_sub.log",
+    "archived_source": "sources/df3544f3f0_run_t2_sub.log",
+    "sha256": "df3544f3f0974be495d2bff0ce4998f6230b52f266995f9c32db97a90ec4406c"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_abs.log",
+    "archived_source": "sources/235430f43e_run_t6_inc_abs.log",
+    "sha256": "235430f43e145170648a7e6ea58d23a939bd03fa9ea1bb9d72f6e8415ff63d70"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_base.log",
+    "archived_source": "sources/5ab100c936_run_t6_inc_base.log",
+    "sha256": "5ab100c93619db409c8482cabf0e0383674e6d06b7dc02bab6834de8c04f4f40"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_con.log",
+    "archived_source": "sources/f94ac766ad_run_t6_inc_con.log",
+    "sha256": "f94ac766ad7a1a7e78cf40b2fd166764c5c41843986eb47243880526591e5100"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_inc_dis.log",
+    "archived_source": "sources/ac453e34c9_run_t6_inc_dis.log",
+    "sha256": "ac453e34c9ae87c2d7c6a9dd22d9860ac7a458d245eca0eb81dd0bc358ae5dfe"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_sub.log",
+    "archived_source": "sources/eecbdc8967_run_t6_sub.log",
+    "sha256": "eecbdc8967f2db22143fe1c0391d47c245c7330d70c43910e553c5ea63ac27b3"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a3d101e7-1c41-4bc6-8ea6-6faaa50d0f48/scratchpad/run_t6_sub_retry.log",
+    "archived_source": "sources/eea9d0309c_run_t6_sub_retry.log",
+    "sha256": "eea9d0309cdc21c9501bbe506d2f3a015d80fb6b4c9adcfdb4111e113d669cda"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a717b5db-54b9-4324-a930-aa9da21e8bea/scratchpad/gt-out-nav-jug/record.log",
+    "archived_source": "sources/090d37b15b_record.log",
+    "sha256": "090d37b15bba98be7142f66e69689ebdabca9702b17fa70cb75f513fc8ac3a0c"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/record.log",
+    "archived_source": "sources/99ef4e9ac5_record.log",
+    "sha256": "99ef4e9ac5aaf562de90e37bd2660a42454df8685056fc416ee5078914cced6b"
+  },
+  {
+    "source": "/tmp/t7-rerecord/viewer.log",
+    "source_first_line": 480,
+    "source_last_line": 796,
+    "archived_source": "sources/fcb668d97b_http_T1-ACC-DIS.log",
+    "sha256": "fcb668d97b0e73631f5e022075050aa3d8707fdbc1610690a6118d4926dd5175",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/server.log",
+    "source_first_line": 412,
+    "source_last_line": 518,
+    "archived_source": "sources/e903827910_http_T1-INC-ABS.log",
+    "sha256": "e903827910a694abb45b600bda39e602518b7c2552787e5eba16068c220ed9b4",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/server.log",
+    "source_first_line": 535,
+    "source_last_line": 615,
+    "archived_source": "sources/02ad10f100_http_T1-OUT-CON.log",
+    "sha256": "02ad10f1006c695861f88a6b3f86d2cecbf45345faa4d9c5ca1163400dd67dfd",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/server.log",
+    "source_first_line": 630,
+    "source_last_line": 703,
+    "archived_source": "sources/96f7482980_http_T1-INC-CON.log",
+    "sha256": "96f7482980936d29f591278f6bf927046643676c24f62e50aa6630ef03bb049f",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/server.log",
+    "source_first_line": 718,
+    "source_last_line": 785,
+    "archived_source": "sources/ec797ec97c_http_T1-INC-BASE.log",
+    "sha256": "ec797ec97c34d01009411593661c7a0f1df7d413f7c9e4bd6703a548607a46a2",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/server.log",
+    "source_first_line": 800,
+    "source_last_line": 870,
+    "archived_source": "sources/69ad58212f_http_T1-INC-DIS.log",
+    "sha256": "69ad58212f16037454efad743c24d19adc8205d4bca8527692e7bd58053453ee",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/server.log",
+    "source_first_line": 886,
+    "source_last_line": 1163,
+    "archived_source": "sources/f0fc9650ca_http_T7-OUT-BASE.log",
+    "sha256": "f0fc9650ca6f3ef972529916cf14353f204b69c0f8fbb9dcc107adf0dbf0d606",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/gt-no-pre-explore-nav/server.log",
+    "source_first_line": 1183,
+    "source_last_line": 1459,
+    "archived_source": "sources/2dcfa16bfb_http_T7-OUT-DIS.log",
+    "sha256": "2dcfa16bfb8fdf35320276169f5bc09146dbb3c87a75610127b04379358538da",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 20044,
+    "source_last_line": 20431,
+    "archived_source": "sources/13d681df98_http_T3-ACC-BASE.log",
+    "sha256": "13d681df98311266dfd91120f606f936c07e95b7e2e1a105488dfea19fa0d001",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 21107,
+    "source_last_line": 22223,
+    "archived_source": "sources/0d125519a0_http_T3-INC-BASE.log",
+    "sha256": "0d125519a0ab5d2697136d38d6ab1848881db6e2c04f8d557e7d9ccd5f12cfd1",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 22624,
+    "source_last_line": 22823,
+    "archived_source": "sources/6637481253_http_T3-ACC-DIS.log",
+    "sha256": "66374812535e73581e8a109d3443a60bf9bffdf4ef5d175f579e5166b7ef99fb",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 22929,
+    "source_last_line": 23369,
+    "archived_source": "sources/e1f3d4a29e_http_T3-INC-DIS.log",
+    "sha256": "e1f3d4a29eb43de92d47c502ff4c34878fd17a6504f2149a41f02b91b723d29a",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 25958,
+    "source_last_line": 26371,
+    "archived_source": "sources/ce2d43f37e_http_T5-ACC-BASE.log",
+    "sha256": "ce2d43f37e17d04aea8072b62d4005ae8ca78f3dcba8cd56511ad0d11022cf69",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 25996,
+    "source_last_line": 26586,
+    "archived_source": "sources/db257a3019_http_T4-ACC-BASE.log",
+    "sha256": "db257a30195d3224542e3988777807d99a7450934b3fb42522fe23594e15f20c",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 26513,
+    "source_last_line": 26872,
+    "archived_source": "sources/770941e157_http_T5-ACC-DIS.log",
+    "sha256": "770941e1575d831ac1b7768c2945a556a737cfe369829818b105adea413a1a3f",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 26700,
+    "source_last_line": 27137,
+    "archived_source": "sources/b5327dc32b_http_T4-ACC-DIS.log",
+    "sha256": "b5327dc32b1e4dc176c6299efa484f052d1c8fc3523f4e107d79b363500098aa",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 27216,
+    "source_last_line": 28748,
+    "archived_source": "sources/96ab475835_http_T6-ACC-BASE.log",
+    "sha256": "96ab475835f891bb2e5941ea832ffee3daff0a04b01f289d4480389e8fb9d366",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 28898,
+    "source_last_line": 29928,
+    "archived_source": "sources/08859bbd9b_http_T6-ACC-DIS.log",
+    "sha256": "08859bbd9bd0d2312166076bca2a133280ac0521fd537bd3b0ece28a8f246944",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 47805,
+    "source_last_line": 47865,
+    "archived_source": "sources/d46ddba3c5_http_T3-ACC-ABS.log",
+    "sha256": "d46ddba3c531ff4e5c199fce29571d10f7aec3b9ebceecf1d65bfda4f3fbffc4",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 48429,
+    "source_last_line": 48597,
+    "archived_source": "sources/be1e552244_http_T3-ACC-CON.log",
+    "sha256": "be1e5522441b7e531ec0cb09b5d673b16fbd83bb51215ad38b992b323baff7ad",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 49937,
+    "source_last_line": 50134,
+    "archived_source": "sources/dedeab3c73_http_T4-ACC-ABS.log",
+    "sha256": "dedeab3c7338a8d0cdc2b551daa58a41bef94cfb2be5c7348c7ec9b0f203e1a8",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 50204,
+    "source_last_line": 50422,
+    "archived_source": "sources/cf2cef2b57_http_T4-ACC-CON.log",
+    "sha256": "cf2cef2b57f9b977f5f2b077bf2d8c690b7921bd30d638ac647e77f2cad901a9",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 50483,
+    "source_last_line": 50633,
+    "archived_source": "sources/3c9de6736c_http_T5-ACC-ABS.log",
+    "sha256": "3c9de6736c0406c96171c6870762f5cc4a9e17f1a3b7b50fe08af5f8da70c1e7",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 50660,
+    "source_last_line": 50940,
+    "archived_source": "sources/0f74ef12c4_http_T5-ACC-CON.log",
+    "sha256": "0f74ef12c492972c9f04f6bf53ddbb2fd890ab8644c20078f71216d84ed21de2",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 51049,
+    "source_last_line": 51680,
+    "archived_source": "sources/db0172c11d_http_T6-ACC-ABS.log",
+    "sha256": "db0172c11d0bec5f16bbeb84da1a9648dc6fd05b8f8a38813cfa55785ef4d611",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 51704,
+    "source_last_line": 53311,
+    "archived_source": "sources/37127c8877_http_T6-ACC-CON.log",
+    "sha256": "37127c88774ab7dfae29876671dcfddab325fda77af0b1595bfacc5f11dfa7b0",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 53326,
+    "source_last_line": 55374,
+    "archived_source": "sources/cb9ba466a4_http_T6-INC-BASE.log",
+    "sha256": "cb9ba466a4649cf2eaa24f3e8cfebef0152246caef2b10f8449b9efc0f5b3280",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 53441,
+    "source_last_line": 55446,
+    "archived_source": "sources/e70bf48589_http_T6-INC-DIS.log",
+    "sha256": "e70bf48589f5fbebd7fb07804d19d7ca5af3fd0675064e9ebeaeefbd1a52b0f0",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 55545,
+    "source_last_line": 57869,
+    "archived_source": "sources/050a95339b_http_T6-INC-ABS.log",
+    "sha256": "050a95339b82512829d624e8d8a080815ac298dbe88e94e902e1f27cc41108a7",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/3f42dced-5533-4540-ac46-cfa425679fd4/scratchpad/viewer.log",
+    "source_first_line": 55583,
+    "source_last_line": 58561,
+    "archived_source": "sources/45c57e4c3e_http_T6-INC-CON.log",
+    "sha256": "45c57e4c3e6886691094b90de858c8baad5fea385b090c411a5efd5b78f59932",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/f1617818-28ff-455e-a341-f19653912698/scratchpad/viewer.log",
+    "source_first_line": 1211,
+    "source_last_line": 2067,
+    "archived_source": "sources/a370cabbd6_http_T1-ACC-CON.log",
+    "sha256": "a370cabbd6e2aca5a653273d18d885a0507153a0a69d65ed74d85e675ed3fd7e",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/f1617818-28ff-455e-a341-f19653912698/scratchpad/viewer.log",
+    "source_first_line": 7343,
+    "source_last_line": 8768,
+    "archived_source": "sources/7fafc969cf_http_T7-INC-BASE.log",
+    "sha256": "7fafc969cfec3256e3ebec8b8f585aeb96b4672a582eaae89250011ad7573f1c",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/f1617818-28ff-455e-a341-f19653912698/scratchpad/viewer.log",
+    "source_first_line": 8904,
+    "source_last_line": 11380,
+    "archived_source": "sources/31bfc4072f_http_T7-INC-DIS.log",
+    "sha256": "31bfc4072fa67608cb14cc3c8324c263e5af713637921e5be5b34cb05c6c43cd",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a717b5db-54b9-4324-a930-aa9da21e8bea/scratchpad/viewer.log",
+    "source_first_line": 578,
+    "source_last_line": 1249,
+    "archived_source": "sources/a4fe721cac_http_T1-OUT-BASE.log",
+    "sha256": "a4fe721cac050c6b4fbb354761d3a1559b2a6163269e89c577b807b9a0a46ac9",
+    "extraction": "successful action requests and matching record request only"
+  },
+  {
+    "source": "/tmp/claude-1002/-home-harshmuriki-Documents-partnr-planner/a717b5db-54b9-4324-a930-aa9da21e8bea/scratchpad/viewer.log",
+    "source_first_line": 1529,
+    "source_last_line": 1830,
+    "archived_source": "sources/110d4d73fb_http_T1-OUT-DIS.log",
+    "sha256": "110d4d73fb0011cd3dd5b5e23f2ca6c23a029c8a9e0f7b775f5b17b9806f745a",
+    "extraction": "successful action requests and matching record request only"
+  }
+]

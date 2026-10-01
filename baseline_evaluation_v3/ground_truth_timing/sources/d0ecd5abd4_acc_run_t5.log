@@ -1,0 +1,52 @@
+21:13:55 T5-ACC-ABS loaded 19 steps
+21:13:55 T5-ACC-ABS  1/19 ok  ReportAbsence - The plate (plate_0) and any acceptable substitute are abse  
+21:14:01 T5-ACC-ABS  2/19 ok  Navigate glass_1  
+21:14:03 T5-ACC-ABS  3/19 ok  Pick glass_1  
+21:14:13 T5-ACC-ABS  4/19 ok  Navigate cabinet_0  
+21:14:15 T5-ACC-ABS  5/19 ok  Place glass_1,on,cabinet_0,next_to,soap_dispenser_0  
+21:14:17 T5-ACC-ABS  6/19 ok  Clean glass_1  
+21:14:19 T5-ACC-ABS  7/19 ok  Fill glass_1  
+21:14:21 T5-ACC-ABS  8/19 ok  Pick glass_1  
+21:14:29 T5-ACC-ABS  9/19 ok  Navigate table_0  
+21:14:31 T5-ACC-ABS 10/19 ok  Place glass_1,on,table_0,none,none  
+21:14:38 T5-ACC-ABS 11/19 ok  Navigate glass_0  
+21:14:40 T5-ACC-ABS 12/19 ok  Pick glass_0  
+21:14:44 T5-ACC-ABS 13/19 ok  Navigate cabinet_0  
+21:14:46 T5-ACC-ABS 14/19 ok  Place glass_0,on,cabinet_0,next_to,soap_dispenser_0  
+21:14:48 T5-ACC-ABS 15/19 ok  Clean glass_0  
+21:14:50 T5-ACC-ABS 16/19 ok  Fill glass_0  
+21:14:52 T5-ACC-ABS 17/19 ok  Pick glass_0  
+21:14:58 T5-ACC-ABS 18/19 ok  Navigate table_0  
+21:15:00 T5-ACC-ABS 19/19 ok  Place glass_0,on,table_0,next_to,glass_1  
+21:15:00 T5-ACC-ABS evaluation success= True pct= 1.0
+21:15:03 T5-ACC-ABS SAVE {'ok': True, 'message': "Saved 19 actions as this variant's ground truth."}
+21:15:21 T5-ACC-CON loaded 26 steps
+21:15:33 T5-ACC-CON  1/26 ok  Navigate cabinet_0  
+21:15:35 T5-ACC-CON  2/26 ok  Open cabinet_0  
+21:15:37 T5-ACC-CON  3/26 ok  Pick soap_dispenser_0  
+21:15:39 T5-ACC-CON  4/26 ok  Place soap_dispenser_0,on,cabinet_0,none,none  
+21:15:41 T5-ACC-CON  5/26 ok  Pick plate_0  
+21:15:43 T5-ACC-CON  6/26 ok  Close cabinet_0  
+21:15:53 T5-ACC-CON  7/26 ok  Navigate table_0  
+21:15:55 T5-ACC-CON  8/26 ok  Place plate_0,on,table_0,none,none  
+21:16:03 T5-ACC-CON  9/26 ok  Navigate glass_1  
+21:16:05 T5-ACC-CON 10/26 ok  Pick glass_1  
+21:16:15 T5-ACC-CON 11/26 ok  Navigate cabinet_0  
+21:16:17 T5-ACC-CON 12/26 ok  Place glass_1,on,cabinet_0,next_to,soap_dispenser_0  
+21:16:19 T5-ACC-CON 13/26 ok  Clean glass_1  
+21:16:21 T5-ACC-CON 14/26 ok  Fill glass_1  
+21:16:23 T5-ACC-CON 15/26 ok  Pick glass_1  
+21:16:31 T5-ACC-CON 16/26 ok  Navigate table_0  
+21:16:34 T5-ACC-CON 17/26 ok  Place glass_1,on,table_0,next_to,plate_0  
+21:16:44 T5-ACC-CON 18/26 ok  Navigate glass_0  
+21:16:46 T5-ACC-CON 19/26 ok  Pick glass_0  
+21:16:52 T5-ACC-CON 20/26 ok  Navigate cabinet_0  
+21:16:54 T5-ACC-CON 21/26 ok  Place glass_0,on,cabinet_0,next_to,soap_dispenser_0  
+21:16:56 T5-ACC-CON 22/26 ok  Clean glass_0  
+21:16:58 T5-ACC-CON 23/26 ok  Fill glass_0  
+21:17:00 T5-ACC-CON 24/26 ok  Pick glass_0  
+21:17:08 T5-ACC-CON 25/26 ok  Navigate table_0  
+21:17:10 T5-ACC-CON 26/26 ok  Place glass_0,on,table_0,next_to,plate_0  
+21:17:10 T5-ACC-CON evaluation success= True pct= 1.0
+21:17:15 T5-ACC-CON SAVE {'ok': True, 'message': "Saved 26 actions as this variant's ground truth."}
+21:17:15 DONE {'T5-ACC-ABS': True, 'T5-ACC-CON': True}

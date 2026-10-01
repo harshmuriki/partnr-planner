@@ -1,0 +1,25 @@
+{
+  "book_0": [
+    "shelves_0",
+    "shelves_1",
+    "bed_0",
+    "table_1",
+    "stand_0",
+    "bed_1"
+  ],
+  "book_1": [
+    "shelves_0",
+    "shelves_1",
+    "bed_0",
+    "table_1",
+    "stand_0",
+    "bed_1"
+  ],
+  "laptop_0": [
+    "table_0",
+    "table_3",
+    "couch_0",
+    "table_2",
+    "bed_0"
+  ]
+}

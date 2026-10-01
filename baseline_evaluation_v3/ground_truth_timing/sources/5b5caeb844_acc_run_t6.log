@@ -1,0 +1,52 @@
+21:19:01 T6-ACC-ABS loaded 18 steps
+21:19:39 T6-ACC-ABS  1/18 ok  Navigate bread_0  
+21:19:41 T6-ACC-ABS  2/18 ok  Pick bread_0  
+21:20:03 T6-ACC-ABS  3/18 ok  Navigate microwave_0  
+21:20:05 T6-ACC-ABS  4/18 ok  Open microwave_0  
+21:20:11 T6-ACC-ABS  5/18 ok  Place bread_0,within,microwave_0,none,none  
+21:20:13 T6-ACC-ABS  6/18 ok  Close microwave_0  
+21:20:15 T6-ACC-ABS  7/18 ok  Open microwave_0  
+21:20:17 T6-ACC-ABS  8/18 ok  Pick bread_0  
+21:20:19 T6-ACC-ABS  9/18 ok  Close microwave_0  
+21:21:50 T6-ACC-ABS 10/18 ok  Navigate table_11  
+21:21:52 T6-ACC-ABS 11/18 ok  Place bread_0,on,table_11,none,none  
+21:23:23 T6-ACC-ABS 12/18 ok  Navigate bottle_0  
+21:23:25 T6-ACC-ABS 13/18 ok  Pick bottle_0  
+21:24:49 T6-ACC-ABS 14/18 ok  Navigate table_11  
+21:24:53 T6-ACC-ABS 15/18 ok  Place bottle_0,on,table_11,next_to,bread_0  
+21:24:53 T6-ACC-ABS 16/18 ok  ReportAbsence - The hand_towel (hand_towel_0) and any acceptable substitut  
+21:26:28 T6-ACC-ABS 17/18 ok  Navigate lamp_living_0  
+21:26:30 T6-ACC-ABS 18/18 ok  PowerOff lamp_living_0  
+21:26:30 T6-ACC-ABS evaluation success= True pct= 1.0
+21:26:39 T6-ACC-ABS SAVE {'ok': True, 'message': "Saved 18 actions as this variant's ground truth."}
+21:27:10 T6-ACC-CON loaded 27 steps
+21:28:06 T6-ACC-CON  1/27 ok  Navigate cabinet_1  
+21:28:08 T6-ACC-CON  2/27 ok  Open cabinet_1  
+21:28:10 T6-ACC-CON  3/27 ok  Pick bread_0  
+21:28:12 T6-ACC-CON  4/27 ok  Close cabinet_1  
+21:28:42 T6-ACC-CON  5/27 ok  Navigate microwave_0  
+21:28:44 T6-ACC-CON  6/27 ok  Open microwave_0  
+21:28:50 T6-ACC-CON  7/27 ok  Place bread_0,within,microwave_0,none,none  
+21:28:52 T6-ACC-CON  8/27 ok  Close microwave_0  
+21:28:54 T6-ACC-CON  9/27 ok  Open microwave_0  
+21:28:56 T6-ACC-CON 10/27 ok  Pick bread_0  
+21:28:58 T6-ACC-CON 11/27 ok  Close microwave_0  
+21:30:19 T6-ACC-CON 12/27 ok  Navigate table_11  
+21:30:21 T6-ACC-CON 13/27 ok  Place bread_0,on,table_11,none,none  
+21:32:42 T6-ACC-CON 14/27 ok  Navigate fridge_0  
+21:32:44 T6-ACC-CON 15/27 ok  Open fridge_0  
+21:32:46 T6-ACC-CON 16/27 ok  Pick bottle_0  
+21:32:48 T6-ACC-CON 17/27 ok  Close fridge_0  
+21:35:19 T6-ACC-CON 18/27 ok  Navigate table_11  
+21:35:23 T6-ACC-CON 19/27 ok  Place bottle_0,on,table_11,next_to,bread_0  
+21:37:48 T6-ACC-CON 20/27 ok  Navigate cabinet_23  
+21:37:50 T6-ACC-CON 21/27 ok  Open cabinet_23  
+21:37:52 T6-ACC-CON 22/27 ok  Pick hand_towel_0  
+21:37:54 T6-ACC-CON 23/27 ok  Close cabinet_23  
+21:40:25 T6-ACC-CON 24/27 ok  Navigate table_11  
+21:40:29 T6-ACC-CON 25/27 ok  Place hand_towel_0,on,table_11,next_to,bread_0  
+21:42:12 T6-ACC-CON 26/27 ok  Navigate lamp_living_0  
+21:42:14 T6-ACC-CON 27/27 ok  PowerOff lamp_living_0  
+21:42:14 T6-ACC-CON evaluation success= True pct= 1.0
+21:42:35 T6-ACC-CON SAVE {'ok': True, 'message': "Saved 27 actions as this variant's ground truth."}
+21:42:35 DONE {'T6-ACC-ABS': True, 'T6-ACC-CON': True}

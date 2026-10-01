@@ -219,7 +219,7 @@
     "plate_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "8af14a2d377bd81921f3630b78fecc899ded22fe7b42bcd2f19babf46af54c9c",
+  "spec_sha256": "e04e7bc5e3a74021d81b2ec5024bf11b07d1e3d114b405edd2f4545b9d563d3a",
   "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty",
   "memory_runtime_applied": false,
   "issues": [],

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metrics · Scenario viewer</title>
+<link rel="stylesheet" href="metrics.css">
+<script src="video_durations.js?v=1" defer></script>
+<script src="metrics.js?v=measured-time-4" defer></script>
+</head>
+<body>
+<header><nav class="viewer-tabs" aria-label="Scenario viewer"><a class="task-btn" href="scenario_viewer.html#T1-ACC-BASE">T1</a><a class="task-btn" href="scenario_viewer.html#T2-ACC-BASE">T2</a><a class="task-btn" href="scenario_viewer.html#T3-ACC-BASE">T3</a><a class="task-btn" href="scenario_viewer.html#T4-ACC-BASE">T4</a><a class="task-btn" href="scenario_viewer.html#T5-ACC-BASE">T5</a><a class="task-btn" href="scenario_viewer.html#T6-ACC-BASE">T6</a><a class="task-btn" href="scenario_viewer.html#T7-ACC-BASE">T7</a><a class="task-btn metric-tab active" href="metrics.html" aria-current="page">Metrics</a></nav></header>
+<main>
+<h1>Metrics</h1>
+<p>Compare saved recordings across tasks, memory conditions, and scenario variants.</p>
+<div class="controls">
+<label>Task<select id="task"><option value="">All tasks</option></select></label>
+<label>Memory<select id="mem"><option value="">All memory conditions</option><option>ACC</option><option>INC</option><option>OUT</option></select></label>
+<label>Scenario<select id="axis"><option value="">All scenarios</option></select></label>
+<label>Compare metric<select id="metric"><option value="execution_elapsed_seconds">Elapsed recording time</option><option value="action_wall_seconds">Active skill time</option><option value="action_count">Actions</option><option value="sim_steps">Simulator steps</option><option value="video_duration_sec">Video time</option><option value="Navigate">Navigate actions</option><option value="Explore">Explore actions</option><option value="Open">Open actions</option><option value="Close">Close actions</option></select></label>
+<button id="refresh">Refresh</button><button id="export" disabled>Export CSV</button>
+</div>
+<p id="status" role="status">Loading saved recordings…</p>
+<div id="summary" class="summary"></div>
+<section><h2>Average time per task</h2><p>Elapsed time is the measured or recovered recording session interval, including action processing, rendering, encoding, and polling; HTTP-derived intervals can include human pauses. It excludes scene loading and final saving. Active skill time is measured inside the simulator worker and includes skill execution, rendering, and encoding; it excludes loading, final saving, and gaps between commands. Video time is playback length. New single-sandbox measurements are labeled separately from historical timings collected under different machine loads. Missing or replaced recordings have no elapsed value and are excluded from averages. Coverage shows timed / saved recordings. All averages follow the filters; the overall average weights each available recording equally.</p><div id="task-times" class="scroll"></div><p>Interval definitions and evidence: <a href="../ground_truth_timing/README.md">timing audit</a>.</p></section>
+<section><h2>Variant comparison</h2><div id="matrix" class="scroll"></div></section>
+<section><h2>Recordings</h2><p>Δ compares the selected metric with the same task and memory’s BASE recording. All submitted actions in a saved recording count, including failed attempts. Incomplete simulator totals are excluded from comparisons and means.</p><div id="records" class="scroll"></div></section>
+<section><h2>Measured per-action timings</h2><p>Environment step calls and frame callbacks are components of active skill time, not additional times to add to it. They do not fully separate physics, rendering, encoding, or world-model work. Loading and saving are reported separately.</p><div id="action-times" class="scroll"></div></section>
+
+</main>
+</body></html>

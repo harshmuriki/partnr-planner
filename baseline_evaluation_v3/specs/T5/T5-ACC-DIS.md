@@ -98,6 +98,6 @@ Get soap to clean both glasses, fill them, and place them on the living-room tab
 - The scene has no dining room and a single kitchen cabinet: the dining table is table_2 (kitchen_0), the kitchen counter / sink area is the top of cabinet_0, and both the lower and upper closed cabinets are cabinet_0's interior.
 - glass_0 is the selected glass (on the dining table); glass_1 starts on the living-room console table_3 so the two glasses are on different tables. The destination living-room table is table_0.
 - Sheet note: 'Uncertainty targets' says 'one bottle', but every memory cell varies the selected glass; glass_0 is used.
-- Cleaning and filling the glasses need a faucet-marked object within 1.5 m. This scene's faucet objects are bathroom vanities, a bath mixer and a freestanding bath (bathroom_1, near washer_dryer_0); the kitchen cabinet has no faucet markers. Reachability is not verified.
+- Cleaning and filling the glasses need a faucet-marked object within 1.5 m. The usable faucet is the kitchen sink cabinet cabinet_0 (kitchen_0); cleaning and filling there are verified in the simulator.
 - Soap use has no skill or object state, so it is scored as bringing the soap: soap_dispenser_0 must be next to each glass before that glass becomes clean. The soap does not need to stay there; its final location is not scored.
 - The Accurate, Incomplete and Outdated versions of this variant spawn exactly the same objects, assets, placements and states; only the robot's initial memory differs.

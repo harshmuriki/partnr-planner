@@ -69,3 +69,55 @@
 .gt-furniture-group .gt-room-options label { align-items: flex-start; max-width: 100%; }
 .gt-furniture-group .gt-room-options label input { margin-top: 2px; }
 .gt-room-ranking label .gt-help { font-size: 11px; }
+
+/* Live completion and the saved replay share a stable, uncluttered stage. */
+#groundTruthPanel [hidden] { display: none !important; }
+#groundTruthPanel button { transition: background-color .16s, border-color .16s, box-shadow .16s; }
+#groundTruthPanel button:hover:not(:disabled) { border-color: var(--accent); box-shadow: 0 2px 8px #0000000d; }
+#groundTruthPanel :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+#groundTruthPanel button:disabled { cursor: default; }
+.gt-completion { position: sticky; top: 12px; z-index: 5; padding: 16px 18px; margin: 16px 0; border: 1px solid var(--border); border-radius: 12px; background: #f5f8ff; box-shadow: 0 4px 18px #00000008; }
+.gt-completion strong { display: block; font-size: 16px; }
+.gt-completion p { font-size: 13px; margin: 6px 0 10px; }
+.gt-completion.is-complete { background: #ecfdf3; border-color: #86d6a6; color: #146338; }
+.gt-completion progress { width: 100%; height: 7px; accent-color: var(--accent); display: block; }
+.gt-completion.is-complete progress { accent-color: #15924f; }
+.gt-playback { margin: 16px 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg); }
+.gt-playback-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 4px 16px 12px; }
+.gt-playback-heading a { font-size: 12px; }
+.gt-playback video { display: block; width: 100%; background: #151b28; }
+.gt-now-playing { padding: 12px 16px; margin: 0; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.gt-timeline { border-top: 1px solid var(--border); padding: 12px 16px; }
+.gt-timeline summary { cursor: pointer; font-size: 12px; color: var(--muted); }
+#gtChapters { list-style: none; padding: 0; margin: 10px 0 0; max-height: 240px; overflow: auto; }
+#groundTruthPanel #gtChapters button { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 10px; align-items: center; width: 100%; text-align: left; margin-bottom: 4px; border-color: transparent; background: transparent; font-size: 12px; overflow-wrap: anywhere; }
+#groundTruthPanel #gtChapters button[aria-current] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.gt-chapter-number { text-align: center; font-variant-numeric: tabular-nums; }
+#gtChapters time { color: var(--muted); font-variant-numeric: tabular-nums; }
+.gt-camera { display: block; }
+@media (prefers-reduced-motion: reduce) { #groundTruthPanel button { transition: none; } }
+
+.gt-evidence { border: 1px solid var(--border); border-radius: 12px; margin: 16px 0; padding: 14px 16px; }
+.gt-evidence-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+#groundTruthPanel .gt-evidence-heading h3 { margin: 0; font-size: 16px; }
+#gtEvidenceSummary { font-size: 13px; line-height: 1.5; }
+.gt-evidence-badge { display: inline-block; flex-shrink: 0; border-radius: 20px; padding: 4px 9px; background: #eef1f5; color: #475569; font-size: 11px; font-weight: 700; }
+.gt-evidence-pass { background: #e4f7eb; color: #166534; }
+.gt-evidence-fail { background: #fee9e7; color: #a42222; }
+.gt-evidence-outdated, .gt-evidence-unknown { background: #fff3d1; color: #7a4b00; }
+.gt-evidence-rows { list-style: none; padding: 0; margin: 0; }
+.gt-criterion { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 16px; border-top: 1px solid var(--border); padding: 12px 0; }
+.gt-criterion-label { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.gt-criterion p { margin: 0 0 7px; }
+.gt-evidence-links { display: flex; flex-wrap: wrap; gap: 6px; }
+#groundTruthPanel .gt-evidence-links button { font-size: 12px; text-align: left; color: var(--accent); background: var(--accent-soft); overflow-wrap: anywhere; }
+.gt-evidence-links time { color: var(--muted); white-space: nowrap; margin-left: 6px; font-variant-numeric: tabular-nums; }
+@media (max-width: 650px) { .gt-criterion { grid-template-columns: 1fr; gap: 8px; } }
+
+.gt-pack-save { display: flex; gap: 8px; flex-wrap: wrap; }
+.gt-pack-save input { flex: 1 1 220px; min-width: 0; }
+.gt-packs > li > details { min-width: 0; }
+.gt-packs summary { cursor: pointer; }
+.gt-pack-steps { margin: 6px 0 2px; padding-left: 22px; color: var(--muted); }
+.gt-pack-actions { display: flex; gap: 6px; align-items: center; align-self: start; }
+.gt-steps .gt-unchecked label b { color: var(--muted); }

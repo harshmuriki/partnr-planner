@@ -1,0 +1,19 @@
+{
+  "bread_0": [
+    "kitchen_0",
+    "dining_room_0"
+  ],
+  "bottle_0": [
+    "kitchen_0",
+    "dining_room_0",
+    "garage_0"
+  ],
+  "lamp_living_0": [
+    "living_room_0"
+  ],
+  "hand_towel_0": [
+    "bathroom_0",
+    "bathroom_2",
+    "laundryroom/mudroom_0"
+  ]
+}

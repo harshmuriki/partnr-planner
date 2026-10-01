@@ -1,0 +1,10 @@
+sequence,skill,target,simulator_steps,response,video
+1,Navigate,box_0,57,Successful execution!,clips/0000.mp4
+2,Pick,box_0,2,Successful execution!,clips/0001.mp4
+3,Navigate,table_16,127,Successful execution!,clips/0002.mp4
+4,Place,"box_0,on,table_16,none,none",2,Successful execution!,clips/0003.mp4
+5,Navigate,box_1,82,Successful execution!,clips/0004.mp4
+6,Pick,box_1,2,Successful execution!,clips/0005.mp4
+7,Navigate,table_16,80,Successful execution!,clips/0006.mp4
+8,Place,"box_1,on,table_16,next_to,box_0",2,Successful execution!,clips/0007.mp4
+9,ReportAbsence,"- The scissors (scissors_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",0,Reported no suitable object; abandoning the absent-object subgoal.,

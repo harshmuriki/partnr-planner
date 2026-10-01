@@ -1,0 +1,19 @@
+{
+  "soap_dispenser_0": [
+    "kitchen_0",
+    "bathroom_0",
+    "bathroom_1"
+  ],
+  "glass_0": [
+    "kitchen_0",
+    "living_room_0"
+  ],
+  "glass_1": [
+    "kitchen_0",
+    "living_room_0"
+  ],
+  "plate_0": [
+    "kitchen_0",
+    "living_room_0"
+  ]
+}

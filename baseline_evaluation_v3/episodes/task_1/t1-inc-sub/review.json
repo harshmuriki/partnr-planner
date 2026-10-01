@@ -116,7 +116,7 @@
   "unscored_success_text": [
     "- Using pitcher_0 in place of the missing jug_0 counts as success; do not require or invent a jug."
   ],
-  "spec_sha256": "a3555be54ca252a6f9c9fb0153ec57488aad86214e2470a88da102872288479a",
+  "spec_sha256": "2e60a3ef0b8be5c112b5dfaa1b98081cf25d01fa3d5d48233de6bff624d31a40",
   "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],

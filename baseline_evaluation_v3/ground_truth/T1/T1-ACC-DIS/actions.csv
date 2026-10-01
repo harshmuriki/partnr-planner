@@ -1,0 +1,9 @@
+sequence,skill,target,simulator_steps,response,video
+1,Navigate,lamp_0,217,Successful execution!,clips/0000.mp4
+2,PowerOff,lamp_0,2,Successful execution!,clips/0001.mp4
+3,Navigate,jug_0,304,Successful execution!,clips/0002.mp4
+4,Pick,jug_0,2,Successful execution!,clips/0003.mp4
+5,Navigate,cabinet_34,58,Successful execution!,clips/0004.mp4
+6,Fill,jug_0,2,Successful execution!,clips/0005.mp4
+7,Navigate,table_0,147,Successful execution!,clips/0006.mp4
+8,Place,"jug_0,on,table_0,None,None",2,Successful execution!,clips/0007.mp4

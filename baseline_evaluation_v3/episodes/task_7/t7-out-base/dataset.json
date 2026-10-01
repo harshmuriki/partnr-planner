@@ -446,7 +446,7 @@
         },
         "variant_spec": {
           "variant_id": "T7-OUT-BASE",
-          "sha256": "2ad63153d6b817a436492242d171095351e4cc02696b76bfc18baea815c22399",
+          "sha256": "09f94616641bcf4f56923e2a1d942b5268a3453b5cf58cf8ea58edaae75842f7",
           "entity_handles": {
             "toy_truck_0": "FIRE_ENGINE_:0000",
             "stuffed_toy_0": "b3e8be210978ec373be6eb5fcffec36c6a9712e6_:0000",

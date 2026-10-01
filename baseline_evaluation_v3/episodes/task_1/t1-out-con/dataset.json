@@ -162,7 +162,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-OUT-CON",
-          "sha256": "87cc751165e19e0febb7193de44964863e1b087a704e04a9e1d45c825d551333",
+          "sha256": "880b819a7fd9f392a0ae24ff9d39c17b62fd57c96ee2109abc4c0494830d7e3c",
           "entity_handles": {
             "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
             "lamp_0": "B07HK83QRB_:0000"

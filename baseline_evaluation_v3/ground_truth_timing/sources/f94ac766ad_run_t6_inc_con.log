@@ -1,0 +1,40 @@
+22:01:56 T6-INC-CON loaded 36 steps
+22:06:16 T6-INC-CON  1/36 ok  Explore kitchen_0  
+22:06:40 T6-INC-CON  2/36 ok  Navigate cabinet_1  
+22:06:42 T6-INC-CON  3/36 ok  Open cabinet_1  
+22:06:44 T6-INC-CON  4/36 ok  Pick bread_0  
+22:06:46 T6-INC-CON  5/36 ok  Close cabinet_1  
+22:07:14 T6-INC-CON  6/36 ok  Navigate microwave_0  
+22:07:16 T6-INC-CON  7/36 ok  Open microwave_0  
+22:07:22 T6-INC-CON  8/36 ok  Place bread_0,within,microwave_0,none,none  
+22:07:24 T6-INC-CON  9/36 ok  Close microwave_0  
+22:07:26 T6-INC-CON 10/36 ok  Open microwave_0  
+22:07:28 T6-INC-CON 11/36 ok  Pick bread_0  
+22:07:31 T6-INC-CON 12/36 ok  Close microwave_0  
+22:08:59 T6-INC-CON 13/36 ok  Navigate table_11  
+22:09:01 T6-INC-CON 14/36 ok  Place bread_0,on,table_11,none,none  
+22:11:22 T6-INC-CON 15/36 ok  Explore dining_room_0  
+22:15:32 T6-INC-CON 16/36 ok  Explore garage_0  
+22:16:02 T6-INC-CON 17/36 ok  Navigate fridge_0  
+22:16:04 T6-INC-CON 18/36 ok  Open fridge_0  
+22:16:06 T6-INC-CON 19/36 ok  Pick bottle_0  
+22:16:08 T6-INC-CON 20/36 ok  Close fridge_0  
+22:18:38 T6-INC-CON 21/36 ok  Navigate table_11  
+22:18:42 T6-INC-CON 22/36 ok  Place bottle_0,on,table_11,next_to,bread_0  
+22:19:46 T6-INC-CON 23/36 ok  Explore bathroom_0  
+22:21:55 T6-INC-CON 24/36 ok  Explore bathroom_2  
+22:25:10 T6-INC-CON 25/36 ok  Explore laundryroom/mudroom_0  
+22:25:25 T6-INC-CON 26/36 ok  Navigate cabinet_19  
+22:25:27 T6-INC-CON 27/36 ok  Open cabinet_19  
+22:25:29 T6-INC-CON 28/36 ok  Close cabinet_19  
+22:25:45 T6-INC-CON 29/36 ok  Navigate cabinet_23  
+22:25:47 T6-INC-CON 30/36 ok  Open cabinet_23  
+22:25:49 T6-INC-CON 31/36 ok  Pick hand_towel_0  
+22:25:51 T6-INC-CON 32/36 ok  Close cabinet_23  
+22:28:38 T6-INC-CON 33/36 ok  Navigate table_11  
+22:28:42 T6-INC-CON 34/36 ok  Place hand_towel_0,on,table_11,next_to,bread_0  
+22:30:27 T6-INC-CON 35/36 ok  Navigate lamp_living_0  
+22:30:29 T6-INC-CON 36/36 ok  PowerOff lamp_living_0  
+22:30:29 T6-INC-CON evaluation success= True pct= 1.0
+22:31:06 T6-INC-CON SAVE {'ok': True, 'message': "Saved 36 actions as this variant's ground truth."}
+22:31:06 DONE {'T6-INC-CON': True}

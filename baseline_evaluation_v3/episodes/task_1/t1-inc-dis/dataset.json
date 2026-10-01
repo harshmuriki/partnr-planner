@@ -642,7 +642,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-INC-DIS",
-          "sha256": "0943597a85ab7572181c653b25736757f973a19e9e1de4945753866eea34f3d4",
+          "sha256": "6a02bf7a804f23c204b0264856add6ba9467031d5ed4b49ee59a4df327de2252",
           "entity_handles": {
             "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
             "lamp_0": "B07HK83QRB_:0000",

@@ -446,7 +446,7 @@
         },
         "variant_spec": {
           "variant_id": "T7-ACC-BASE",
-          "sha256": "c38f075ab331476225dfcf23c98938025330420decc0e681c4a0ac53590136b9",
+          "sha256": "56e7310b385e5a8836cb1a6611f03c75012a2436152c4337986434dfb65db609",
           "entity_handles": {
             "toy_truck_0": "FIRE_ENGINE_:0000",
             "stuffed_toy_0": "b3e8be210978ec373be6eb5fcffec36c6a9712e6_:0000",

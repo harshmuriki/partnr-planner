@@ -1,0 +1,17 @@
+{
+  "box_0": [
+    "entryway/foyer/lobby_0",
+    "hallway_0",
+    "living_room_0"
+  ],
+  "box_1": [
+    "entryway/foyer/lobby_0",
+    "hallway_0",
+    "living_room_0"
+  ],
+  "scissors_0": [
+    "kitchen_0",
+    "office_0",
+    "entryway/foyer/lobby_0"
+  ]
+}

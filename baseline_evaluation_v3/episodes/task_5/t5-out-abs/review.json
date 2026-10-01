@@ -165,7 +165,7 @@
   "unscored_success_text": [
     "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
   ],
-  "spec_sha256": "256db5d00ecca0b93c44436afdfaa17b8a13995efde8b695036ca11ae9caad4b",
+  "spec_sha256": "c93f3883e48eb1ef6fdf96ae090d0db9844b515f8e7963cfb8e9f87cafd231f4",
   "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record; the object is not actually in the scene",
   "memory_runtime_applied": false,
   "issues": [],

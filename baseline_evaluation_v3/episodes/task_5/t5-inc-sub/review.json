@@ -221,7 +221,7 @@
   "unscored_success_text": [
     "- Using plate_black_0 in place of the missing plate_0 counts as success; do not require or invent a plate."
   ],
-  "spec_sha256": "b4b306be93bb30089f3866ecd1029b197377693d629a4a601c239939b4bcc64f",
+  "spec_sha256": "e53ececefb7dd03fcaa30a50773cccbc026092b4b014805e911f62e44a686948",
   "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty",
   "memory_runtime_applied": false,
   "issues": [],

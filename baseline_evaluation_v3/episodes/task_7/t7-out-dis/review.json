@@ -280,9 +280,7 @@
         "states": {
           "is_clean": true
         },
-        "next_to": [
-          "plate_0"
-        ],
+        "next_to": [],
         "closed": []
       },
       "position": [
@@ -373,11 +371,10 @@
   "unscored_success_text": [
     "- Distractors (clean_plate_0, cushion_0) must not be used in place of the task objects; they have no placement goals."
   ],
-  "spec_sha256": "224f80d841cb3a52916908ee1fd00476f057189fbe02f034e1212c19e28199e7",
+  "spec_sha256": "9f80ce8447afa481a2b45b205a2efdf54be73ac9075a2db1a656b943652b3d25",
   "initial_robot_memory": "- toy_truck_0: on table_8 (bedroom_3), is_clean, is_empty, is_powered_off, stale record\n- stuffed_toy_0: on table_8 (bedroom_3), is_clean, stale record\n- plate_0: on table_0 (living_room_0), is_dirty, stale record\n- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on\n- clean_plate_0: on cabinet_5 (kitchen_0), is_clean, next to plate_0\n- cushion_0: on couch_0 (living_room_0), is_clean, next to stuffed_toy_0",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

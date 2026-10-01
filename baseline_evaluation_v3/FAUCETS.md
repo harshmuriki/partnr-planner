@@ -19,19 +19,21 @@ collects them with `get_faucet_points` ([utils/sim.py](../habitat_llm/utils/sim.
 both rigid and articulated objects, and marks the owning furniture with the `faucet`
 component in the world graph.
 
-**You cannot fill an object you are carrying.** The navigate sub-skill aborts with
-"Failed! This object is already held by this agent"
-([oracle_nav_skill.py:231](../habitat_llm/tools/motor_skills/nav/oracle_nav_skill.py#L231)).
-Put the object down at the sink first. In the ground-truth runner that is:
+**You can fill (or clean) an object you are carrying.** Verified live on 2026-09-29 in the
+T1 and T5 sandboxes: holding the object and standing at the sink satisfies both distance
+checks, so there is no need to put it down first. In the ground-truth runner that is:
 
 ```
-Pick   jug_0
-Place  jug_0,on,cabinet_6,none,none      # any receptacle of the sink cabinet
-Fill   jug_0
+Pick      jug_0
+Navigate  cabinet_34     # T1 kitchen sink (reachable directly; no cabinet_6 hop needed)
+Fill      jug_0
 ```
 
-The baseline planner's own few-shot example does the same thing with
-`Rearrange[jug_0, on, counter_10, None, None]` followed by `Fill[jug_0]`.
+A held object also counts for `is_next_to` (0.5 m horizontal), but where the robot stands
+is not controllable, so do not rely on it. In T5 a held glass at `cabinet_0` (or at
+`soap_dispenser_0`) satisfied `is_next_to(soap_dispenser_0, glass_1)` but never `glass_0`
+(tested 2026-09-29), so T5 keeps `Place glass,on,cabinet_0,next_to,soap_dispenser_0` before
+Clean/Fill.
 
 ## Usable faucets, by scene
 
@@ -71,19 +73,17 @@ mixer), T3/T5 4 (two vanities, a bath mixer, a freestanding bath), T4 2 (a vanit
 kitchen "Sink" model), T6 9 (three vanities, two bath fillers, four shower fittings),
 T7 4 (three vanities, a shower).
 
-## The specs get this wrong
+## Spec notes (fixed 2026-09-29)
 
-[T1-ACC-BASE.md:58](specs/T1/T1-ACC-BASE.md#L58) states "This scene's faucet objects are a
-double washbasin and a bathtub; no kitchen furniture carries faucet markers", and
-[T5-ACC-BASE.md:81](specs/T5/T5-ACC-BASE.md#L81) states "the kitchen cabinet has no faucet
-markers". Both are wrong, and in the same way: the scan behind those notes read rigid
+The T1 and T5 specs used to say the kitchen furniture has no faucet markers and point at the
+bathroom washbasin/bathtub instead. The scan behind those notes read rigid
 `.object_config.json` files only and missed articulated furniture, whose markers live in
-`.ao_config.json` under `data/hssd-hab/urdf/<asset>/`.
+`.ao_config.json` under `data/hssd-hab/urdf/<asset>/`. All 30 T1/T5 specs now name the
+kitchen sink cabinet (T1 `cabinet_6`, T5 `cabinet_0`). Only the notes section changed; the
+stored spec/dataset hashes were updated in place, so episodes and ground truths were kept.
 
-The two objects those notes point at are the ones that cannot be used at all, and the
-kitchen sink cabinets they deny are the only ones that can. The ground-truth path for T1
-and T5 is the kitchen sink, not a trip to the bathroom. Every spec carrying this note
-(all T1 and T5 variants) needs it regenerated.
+In T1 the spec catalog's `cabinet_6` and the runtime world graph's `cabinet_34` are the same
+sink cabinet (same handle `d4ba31e433421a8ef008208e9b868da12e24a5a5_:0000`).
 
 ## Unnamed entities in the T1 tree
 

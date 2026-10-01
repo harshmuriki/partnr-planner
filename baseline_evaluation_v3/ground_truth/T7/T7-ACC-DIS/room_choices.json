@@ -1,0 +1,18 @@
+{
+  "toy_truck_0": [
+    "living_room_0"
+  ],
+  "stuffed_toy_0": [
+    "living_room_0"
+  ],
+  "plate_0": [
+    "kitchen_0",
+    "living_room_0"
+  ],
+  "lamp_living_0": [
+    "living_room_0"
+  ],
+  "lamp_kitchen_0": [
+    "kitchen_0"
+  ]
+}

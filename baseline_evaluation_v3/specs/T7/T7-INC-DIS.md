@@ -61,7 +61,7 @@ Put away all toys from the living room into the wardrobe, wash and put away the 
 - plate_0: within cabinet_7 (kitchen_0), is_clean
 - lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_off
 - lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_off
-- clean_plate_0: on cabinet_5 (kitchen_0), is_clean, next to plate_0
+- clean_plate_0: on cabinet_5 (kitchen_0), is_clean
 - cushion_0: on couch_0 (living_room_0), is_clean
 
 ## Initial robot memory
@@ -91,5 +91,5 @@ Put away all toys from the living room into the wardrobe, wash and put away the 
 - The sink is the kitchen sink cabinet cabinet_5; the living-room sofa is couch_0; the wardrobe is wardrobe_0 (bedroom_3). Kitchen cabinet_8 has no interior receptacle, so the dishes are put away inside the kitchen corner cabinet cabinet_7 (the narrow island cabinet is too small for plate_0).
 - The dining table used for stale memory is table_0 (living_room_0). floor_living_room_0 denotes the living-room floor.
 - The sheet also lists a toy airplane, doll, toy animal, a second dirty plate and a bowl; they are not in variant_object_assets.csv, so they are not spawned.
-- Washing plate_0 needs a faucet-marked object within 1.5 m. This scene's faucet objects are bathroom vanities and a shower; the kitchen sink cabinet (cabinet_5) has no faucet markers. Reachability is not verified.
+- Washing plate_0 needs a faucet-marked object within 1.5 m. The usable faucet is the kitchen sink cabinet cabinet_5 (kitchen_0); the robot can wash the plate in place there, without moving it onto the sink first (verified in the simulator).
 - The Accurate, Incomplete and Outdated versions of this variant spawn exactly the same objects, assets, placements and states; only the robot's initial memory differs.

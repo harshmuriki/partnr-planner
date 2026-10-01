@@ -172,11 +172,10 @@
   "unscored_success_text": [
     "- Using knife_0 in place of the missing scissors_0 counts as success; do not require or invent a scissors."
   ],
-  "spec_sha256": "2a0f106fa0d44d8b03399b4969e388eda42d4b44ca11ebe8bcb0eaa93bbca440",
-  "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- box_1: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- knife_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean",
+  "spec_sha256": "2bd919c996e2c14901bd86273758dc93989723a6dab3b74fd1e705139bb76ffd",
+  "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- box_1: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- knife_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean\n- scissors_0: known absent; no scissors exist anywhere in the scene",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

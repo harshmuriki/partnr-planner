@@ -1915,7 +1915,7 @@
         },
         "variant_spec": {
           "variant_id": "T7-ACC-DIS",
-          "sha256": "7a7463dfd2e5363849e2596b1a7817e857c8f6a2d943a9a9dc097fdff6d3a055",
+          "sha256": "5a903c89561edf2f0959f18cc1900250e0378436c46cf1509b5c534d400e2f16",
           "entity_handles": {
             "toy_truck_0": "FIRE_ENGINE_:0000",
             "stuffed_toy_0": "b3e8be210978ec373be6eb5fcffec36c6a9712e6_:0000",

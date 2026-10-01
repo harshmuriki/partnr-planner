@@ -38,10 +38,10 @@ class OtherApartmentCatalog(FakeCatalog):
         return {**super().get(variant), 'rooms': ['kitchen_0', 'garage_0']}
 
 
-def make_clip(path, color):
+def make_clip(path, color, frames=6):
     path.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-f', 'lavfi',
-                    '-i', f'color=c={color}:s=64x64:r=30:d=0.2', '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
+                    '-i', f'color=c={color}:s=64x64:r=30', '-frames:v', str(frames), '-c:v', 'libx264', '-pix_fmt', 'yuv420p',
                     str(path)], check=True)
 
 
@@ -133,7 +133,83 @@ class GroundTruthTests(unittest.TestCase):
         self.assertEqual(len(state['session']['steps']), 3)
         self.assertEqual(self.service.state('T3-ACC-BASE')['session']['steps'], [])
 
-    def test_record_replays_only_checked_steps_from_a_fresh_load(self):
+    def test_action_pack_saves_checked_steps_and_applies_in_another_variant(self):
+        self.sandbox()
+        self.act()
+        self.act(target='nowhere')
+        self.act('PowerOff')
+        self.service.packs('T1-ACC-BASE', {'save': ' Lamp off '})
+        packs = self.service.state('T1-INC-BASE')['packs']
+        self.assertEqual([(p['name'], p['source_variant']) for p in packs], [('Lamp off', 'T1-ACC-BASE')])
+        self.assertEqual(packs[0]['steps'], [{'skill': 'Navigate', 'target': 'lamp_0'}, {'skill': 'PowerOff', 'target': 'lamp_0'}])
+        self.assertEqual(self.service.state('T2-ACC-BASE')['packs'], [])
+        with self.assertRaises(ValueError):
+            self.service.packs('T1-INC-BASE', {'apply': packs[0]['id']})  # Needs this variant's sandbox.
+        self.sandbox('T1-INC-BASE')
+        self.act('Explore', 'kitchen_0', variant='T1-INC-BASE')
+        self.service.packs('T1-INC-BASE', {'apply': packs[0]['id']})
+        self.idle()
+        self.assertEqual([(s['skill'], s['keep']) for s in self.service.steps], [('Explore', True), ('Navigate', True), ('PowerOff', True)])
+        self.assertTrue(self.service.last_result['ok'])
+        self.assertEqual(self.runs(), ([], 0))
+        with self.assertRaises(ValueError):
+            self.service.packs('T2-ACC-BASE', {'apply': packs[0]['id']})  # Packs belong to one task.
+
+    def test_action_pack_stops_at_first_failure_and_can_be_replaced_or_deleted(self):
+        self.sandbox()
+        self.act()
+        self.service.packs('T1-ACC-BASE', {'save': 'route'})
+        self.act(target='nowhere')
+        self.service.edit_steps('T1-ACC-BASE', {'id': self.service.steps[-1]['id'], 'keep': True})
+        self.act('PowerOff')
+        self.service.packs('T1-ACC-BASE', {'save': 'route'})  # Same name replaces the pack.
+        pack, = self.service.state('T1-ACC-BASE')['packs']
+        self.assertEqual(len(pack['steps']), 3)
+        self.sandbox()
+        self.service.packs('T1-ACC-BASE', {'apply': pack['id']})
+        self.idle()
+        self.assertEqual([(s['target'], s['keep']) for s in self.service.steps], [('lamp_0', True), ('nowhere', False)])
+        self.assertFalse(self.service.last_result['ok'])
+        self.assertIn('step 2 of 3', self.service.last_result['message'])
+        self.service.packs('T1-ACC-BASE', {'delete': pack['id']})
+        self.assertEqual(self.service.state('T1-ACC-BASE')['packs'], [])
+        for payload in ({'save': ''}, {'save': 'x' * 81}, {'delete': 'missing'}, {}):
+            with self.assertRaises(ValueError):
+                self.service.packs('T1-ACC-BASE', payload)
+
+    def test_action_pack_with_absence_report_needs_a_matching_spec(self):
+        self.sandbox('T1-ACC-ABS')
+        self.act('ReportAbsence', 'report absence', variant='T1-ACC-ABS')
+        self.service.packs('T1-ACC-ABS', {'save': 'report'})
+        pack, = self.service.state('T1-ACC-ABS')['packs']
+        self.sandbox('T1-ACC-BASE')
+        with self.assertRaises(ValueError):
+            self.service.packs('T1-ACC-BASE', {'apply': pack['id']})
+        self.assertFalse(self.service.lock.locked())
+
+    def test_live_evaluation_is_current_episode_only_and_does_not_save(self):
+        self.sandbox()
+        original = dict(self.service.snapshot)
+        path = self.worker.directory / 'evaluation.json'
+        self.service.lock.acquire()
+        try:
+            live = {'success': True, 'percent_complete': 1}
+            path.write_text(json.dumps({'load_id': self.service.load_id, 'evaluation': live}))
+            state = self.service.state('T1-ACC-BASE')
+            self.assertEqual(state['session']['snapshot']['evaluation'], live)
+            self.assertIsNone(state['ground_truth'])
+            self.assertEqual(self.service.snapshot, original)
+            self.assertEqual(self.service.state('T7-ACC-BASE')['session']['snapshot'], {})
+            # A previous episode's completion must never leak into a fresh load.
+            path.write_text(json.dumps({'load_id': 'old-load', 'evaluation': live}))
+            self.assertEqual(self.service.state('T1-ACC-BASE')['session']['snapshot'], original)
+            path.write_text('{invalid')
+            self.assertEqual(self.service.state('T1-ACC-BASE')['session']['snapshot'], original)
+        finally:
+            self.service.lock.release()
+        self.assertEqual(self.runs(), ([], 0))
+
+    def test_save_keeps_the_live_run_without_replaying(self):
         self.sandbox()
         self.act()
         self.act(target='nowhere')
@@ -142,23 +218,25 @@ class GroundTruthTests(unittest.TestCase):
         self.service.edit_steps('T1-ACC-BASE', {'id': self.service.steps[2]['id'], 'keep': False})
         self.worker.calls.clear()
         self.assertTrue(self.record()['ok'])
-        self.assertEqual(self.worker.calls[0]['op'], 'load')
-        self.assertEqual([(c['skill'], c['target']) for c in self.worker.calls[1:]],
-                         [('Navigate', 'lamp_0'), ('PowerOff', 'lamp_0')])
+        self.assertEqual(self.worker.calls, [])  # No reset and no replay.
         gt = self.service.store.ground_truth('T1-ACC-BASE')
-        self.assertEqual((gt['action_count'], gt['sim_steps']), (2, 6))
-        self.assertEqual([a['sequence'] for a in gt['actions']], [1, 2])
-        # The sandbox continues from the replay's end state with the replayed steps.
+        # Every action that ran is saved, in order, including failed and unchecked ones.
+        self.assertEqual([(a['skill'], a['target']) for a in gt['actions']],
+                         [('Navigate', 'lamp_0'), ('Navigate', 'nowhere'), ('Pick', 'jug_0'), ('PowerOff', 'lamp_0')])
+        self.assertEqual((gt['action_count'], gt['sim_steps']), (4, 12))
         self.assertEqual(self.service.mode, 'sandbox')
-        self.assertEqual([s['skill'] for s in self.service.steps], ['Navigate', 'PowerOff'])
+        self.assertEqual(len(self.service.steps), 4)
         folder = self.root/'archive/T1/T1-ACC-BASE'
         self.assertEqual(json.loads((folder/'run.json').read_text())['id'], gt['id'])
         self.assertIn('PowerOff', (folder/'actions.csv').read_text())
 
     def test_new_recording_replaces_the_only_ground_truth(self):
+        flagged = []
+        self.service.on_rerecord = flagged.append
         self.sandbox()
         self.act('PowerOff')
         self.record()
+        self.assertEqual(flagged, [])  # A first recording needs no re-verification.
         first = self.service.store.ground_truth('T1-ACC-BASE')['id']
         self.act('Navigate', 'jug_0')
         self.record()
@@ -167,6 +245,7 @@ class GroundTruthTests(unittest.TestCase):
         self.assertEqual(second['action_count'], 2)
         self.assertEqual(self.runs(), ([('T1-ACC-BASE', 'completed')], 2))
         self.assertIn('replacing', self.service.last_result['message'])
+        self.assertEqual(flagged, ['T1-ACC-BASE'])
         reopened = GroundTruthStore(self.root/'test.sqlite3')
         self.assertIsNone(reopened.get_run(first))
         self.assertEqual(len(reopened.all_ground_truths()), 1)
@@ -174,39 +253,44 @@ class GroundTruthTests(unittest.TestCase):
             with reopened.connect() as db:
                 db.execute("INSERT INTO runs(id,variant,status,started_at,spec_hash,dataset_hash,metadata) VALUES('x','T1-ACC-BASE','completed','t','s','d','{}')")
 
-    def test_incomplete_replay_saves_nothing_and_keeps_previous(self):
+    def test_incomplete_run_cannot_be_saved_and_keeps_previous(self):
         self.sandbox()
         self.act('PowerOff')
         self.record()
         saved = self.service.store.ground_truth('T1-ACC-BASE')['id']
-        self.service.sandbox('T1-ACC-BASE')  # Reset: the lamp is on again.
+        self.service.sandbox('T1-ACC-BASE')  # Reset: the lamp is on again and the recording restarts.
         self.idle()
+        self.assertEqual(self.service.steps, [])
         self.act('Navigate')
-        result = self.record()
-        self.assertFalse(result['ok'])
-        self.assertIn('50%', result['message'])
+        with self.assertRaisesRegex(ValueError, '50%'):
+            self.service.record('T1-ACC-BASE')
+        self.assertFalse(self.service.lock.locked())
         self.assertEqual(self.service.store.ground_truth('T1-ACC-BASE')['id'], saved)
         self.assertEqual(self.runs(), ([('T1-ACC-BASE', 'completed')], 1))
 
-    def test_simulator_failure_during_recording_saves_nothing(self):
+    def test_archive_failure_while_saving_saves_nothing(self):
         self.sandbox()
         self.act('PowerOff')
-        self.worker.crash = True
-        result = self.record()
+        original = self.service._save
+        self.service._save = lambda *args: (_ for _ in ()).throw(OSError('disk full'))
+        try:
+            result = self.record()
+        finally:
+            self.service._save = original
         self.assertFalse(result['ok'])
         self.assertEqual(self.runs(), ([], 0))
-        self.assertEqual(len(self.service.steps), 1)  # Sandbox steps survive a failed recording.
+        self.assertEqual(len(self.service.steps), 1)  # The live run is still there to save again.
 
-    def test_steps_can_be_removed_and_cleared_and_record_needs_a_checked_step(self):
+    def test_steps_cannot_be_removed_and_save_needs_an_action(self):
         self.sandbox()
-        self.act()
-        self.act('PowerOff')
-        self.service.edit_steps('T1-ACC-BASE', {'id': self.service.steps[0]['id'], 'remove': True})
-        self.assertEqual([s['skill'] for s in self.service.steps], ['PowerOff'])
-        self.service.edit_steps('T1-ACC-BASE', {'clear': True})
         with self.assertRaises(ValueError):
             self.service.record('T1-ACC-BASE')
         self.assertFalse(self.service.lock.locked())
+        self.act('PowerOff')
+        for payload in ({'id': self.service.steps[0]['id'], 'remove': True}, {'clear': True}):
+            with self.assertRaises(ValueError):
+                self.service.edit_steps('T1-ACC-BASE', payload)
+        self.assertEqual(len(self.service.steps), 1)
 
     def test_actions_need_this_variants_sandbox_and_duplicates_run_once(self):
         with self.assertRaises(ValueError):
@@ -222,7 +306,8 @@ class GroundTruthTests(unittest.TestCase):
     def test_absence_report_required_and_counted(self):
         self.sandbox('T1-ACC-ABS')
         self.act('PowerOff', variant='T1-ACC-ABS')
-        self.assertFalse(self.record('T1-ACC-ABS')['ok'])
+        with self.assertRaisesRegex(ValueError, 'absence report'):
+            self.service.record('T1-ACC-ABS')
         self.act('ReportAbsence', 'report absence', variant='T1-ACC-ABS')
         self.assertTrue(self.record('T1-ACC-ABS')['ok'])
         gt = self.service.store.ground_truth('T1-ACC-ABS')
@@ -240,14 +325,47 @@ class GroundTruthTests(unittest.TestCase):
         self.assertEqual(gt['artifact_status'], 'ready')
         self.assertEqual((gt['video_bytes'], gt['video_sha256']), (video.stat().st_size, file_sha256(video)))
         probe = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-count_frames',
-            '-show_entries', 'stream=nb_read_frames', '-of', 'json', str(video)]))
+            '-show_entries', 'stream=nb_read_frames,avg_frame_rate,duration', '-of', 'json', str(video)]))
         self.assertEqual(int(probe['streams'][0]['nb_read_frames']), 12)
         self.assertTrue((self.root/'archive/T1/T1-ACC-BASE/clips/0001.mp4').exists())
+        stream = probe['streams'][0]
+        self.assertEqual(stream['avg_frame_rate'], '30/1')
+        self.assertAlmostEqual(float(stream['duration']), 12 / 30, places=5)
+        indexed = json.loads((self.root/'archive/index.json').read_text())['ground_truths']
+        saved = next(run for run in indexed if run['variant'] == 'T1-ACC-BASE')
+        self.assertAlmostEqual(saved['video_duration_sec'], 12 / 30, places=2)
+        self.assertAlmostEqual(self.service.state('T1-ACC-BASE')['ground_truth']['video_duration_sec'], 12 / 30, places=2)
+        self.assertIn('video_duration_sec', (self.root/'archive/index.csv').read_text().splitlines()[0])
         self.assertIn(gt['video_sha256'][:12], self.service.state('T1-ACC-BASE')['ground_truth']['artifacts']['video'])
         video.unlink()
         self.make_service()
         self.assertTrue(video.exists())
         self.assertEqual(GroundTruthStore(self.root/'test.sqlite3').ground_truth('T1-ACC-BASE')['video_sha256'], file_sha256(video))
+
+    def test_short_action_clips_keep_every_frame_in_order_at_constant_rate(self):
+        folder = self.root / 'timing'
+        actions = []
+        expected = []
+        for index, (color, rgb, count) in enumerate([
+                ('red', (255, 0, 0), 19), ('blue', (0, 0, 255), 2),
+                ('green', (0, 128, 0), 3), ('white', (255, 255, 255), 7)]):
+            name = f'{index}.mp4'
+            make_clip(folder / name, color, count)
+            actions.append({'sequence': index + 1, 'result': {'ground_truth_video': name, 'skill_steps': count}})
+            expected.extend([rgb] * count)
+        self.service.archive.video(folder, actions)
+        video = folder / 'video.mp4'
+        stream = json.loads(subprocess.check_output(['ffprobe', '-v', 'error', '-count_frames',
+            '-show_entries', 'stream=nb_read_frames,avg_frame_rate,duration', '-of', 'json', str(video)]))['streams'][0]
+        self.assertEqual(int(stream['nb_read_frames']), len(expected))
+        self.assertEqual(stream['avg_frame_rate'], '30/1')
+        self.assertAlmostEqual(float(stream['duration']), len(expected) / 30, places=5)
+        pixels = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', str(video),
+            '-vf', 'scale=1:1', '-pix_fmt', 'rgb24', '-f', 'rawvideo', '-'])
+        self.assertEqual(len(pixels), len(expected) * 3)
+        for index, rgb in enumerate(expected):
+            self.assertTrue(all(abs(actual - channel) < 10 for actual, channel
+                in zip(pixels[index * 3:index * 3 + 3], rgb)), f'Frame {index} changed order')
 
     def test_missing_video_keeps_the_saved_actions(self):
         self.sandbox()
@@ -349,21 +467,22 @@ class GroundTruthTests(unittest.TestCase):
         self.assertEqual(other.state('T6-ACC-BASE')['room_choices']['jug_0'], ['garage_0'])
         self.assertEqual(self.service.store.object_rooms()['jug_0'], ['garage_0', 'bedroom_0'])
 
-    def test_assumption_notes_per_variant_and_task_persist_and_export(self):
-        self.service.save_notes('T1-ACC-BASE', {'scope': 'variant', 'text': 'Jug counts as full after one Fill.'})
-        self.service.save_notes('T1-INC-SUB', {'scope': 'task', 'text': 'Only the bedroom lamp counts.'})
+    def test_assumption_notes_per_task_and_all_tasks_persist_and_export(self):
+        self.service.save_notes('T1-ACC-BASE', {'scope': 'task', 'text': 'Jug counts as full after one Fill.'})
+        self.service.save_notes('T1-INC-SUB', {'scope': 'all', 'text': 'Only the bedroom lamp counts.'})
         state = self.service.state('T1-ACC-BASE')
-        self.assertEqual(state['notes']['variant']['text'], 'Jug counts as full after one Fill.')
-        self.assertEqual(state['notes']['task']['text'], 'Only the bedroom lamp counts.')
-        self.assertIsNone(self.service.state('T1-ACC-ABS')['notes']['variant'])
+        self.assertEqual(state['notes']['task']['text'], 'Jug counts as full after one Fill.')
+        self.assertEqual(state['notes']['all']['text'], 'Only the bedroom lamp counts.')
+        self.assertEqual(self.service.state('T1-ACC-ABS')['notes']['task']['text'], 'Jug counts as full after one Fill.')
         self.assertIsNone(self.service.state('T3-ACC-BASE')['notes']['task'])
-        self.assertEqual(GroundTruthStore(self.root/'test.sqlite3').notes()['T1']['text'], 'Only the bedroom lamp counts.')
+        self.assertEqual(self.service.state('T3-ACC-BASE')['notes']['all']['text'], 'Only the bedroom lamp counts.')
+        store = GroundTruthStore(self.root/'test.sqlite3')  # Reopening must not fold task notes into All tasks.
+        self.assertEqual(sorted(store.notes()), ['ALL', 'T1'])
         exported = (self.root/'archive/assumptions.md').read_text()
-        self.assertIn('## T1 (whole task)', exported)
-        self.assertLess(exported.index('## T1 (whole task)'), exported.index('## T1-ACC-BASE'))
-        self.service.save_notes('T1-ACC-BASE', {'scope': 'variant', 'text': '  '})
-        self.assertIsNone(self.service.state('T1-ACC-BASE')['notes']['variant'])
-        for payload in ({'scope': 'global', 'text': 'x'}, {'scope': 'task', 'text': 'x' * 20001}, {'scope': 'task'}):
+        self.assertLess(exported.index('## All tasks (T1-T7)'), exported.index('## T1 (every variant)'))
+        self.service.save_notes('T1-INC-SUB', {'scope': 'task', 'text': '  '})
+        self.assertIsNone(self.service.state('T1-ACC-BASE')['notes']['task'])
+        for payload in ({'scope': 'variant', 'text': 'x'}, {'scope': 'all', 'text': 'x' * 20001}, {'scope': 'all'}):
             with self.assertRaises(ValueError):
                 self.service.save_notes('T1-ACC-BASE', payload)
 

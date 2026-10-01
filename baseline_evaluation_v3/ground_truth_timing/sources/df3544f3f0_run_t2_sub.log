@@ -1,0 +1,72 @@
+01:55:56 T2-OUT-SUB loaded 26 steps
+01:56:01 T2-INC-SUB loaded 24 steps
+01:56:08 T2-OUT-SUB  1/26 ok  Navigate box_0  
+01:56:10 T2-OUT-SUB  2/26 ok  Pick box_0  
+01:56:13 T2-INC-SUB  1/24 ok  Navigate box_0  
+01:56:15 T2-INC-SUB  2/24 ok  Pick box_0  
+01:56:33 T2-OUT-SUB  3/26 ok  Navigate table_16  
+01:56:35 T2-OUT-SUB  4/26 ok  Place box_0,on,table_16,none,none  
+01:56:38 T2-INC-SUB  3/24 ok  Navigate table_16  
+01:56:40 T2-INC-SUB  4/24 ok  Place box_0,on,table_16,none,none  
+01:56:45 T2-OUT-SUB  5/26 ok  Navigate floor_living_room_0  
+01:57:18 T2-INC-SUB  5/24 ok  Explore entryway/foyer/lobby_0  
+01:57:28 T2-INC-SUB  6/24 ok  Navigate box_1  
+01:57:30 T2-INC-SUB  7/24 ok  Pick box_1  
+01:57:31 T2-OUT-SUB  6/26 ok  Explore entryway/foyer/lobby_0  
+01:57:43 T2-OUT-SUB  7/26 ok  Navigate box_1  
+01:57:46 T2-OUT-SUB  8/26 ok  Pick box_1  
+01:57:51 T2-INC-SUB  8/24 ok  Navigate table_16  
+01:57:53 T2-INC-SUB  9/24 ok  Place box_1,on,table_16,next_to,box_0  
+01:58:10 T2-OUT-SUB  9/26 ok  Navigate table_16  
+01:58:12 T2-OUT-SUB 10/26 ok  Place box_1,on,table_16,next_to,box_0  
+01:58:30 T2-OUT-SUB 11/26 ok  Navigate table_0  
+01:59:22 T2-INC-SUB 10/24 ok  Explore kitchen_0  
+01:59:24 T2-INC-SUB 11/24 ok  Navigate cabinet_0  
+01:59:26 T2-INC-SUB 12/24 ok  Open cabinet_0  
+01:59:28 T2-INC-SUB 13/24 ok  Close cabinet_0  
+01:59:38 T2-INC-SUB 14/24 ok  Navigate cabinet_1  
+01:59:40 T2-INC-SUB 15/24 ok  Open cabinet_1  
+01:59:42 T2-INC-SUB 16/24 ok  Close cabinet_1  
+02:00:08 T2-OUT-SUB 12/26 ok  Explore kitchen_0  
+02:01:11 T2-INC-SUB 17/24 ok  Explore office_0  
+02:01:33 T2-OUT-SUB 13/26 ok  Explore office_0  
+02:01:36 T2-INC-SUB 18/24 ok  Navigate chest_of_drawers_2  
+02:01:38 T2-INC-SUB 19/24 ok  Open chest_of_drawers_2  
+02:01:40 T2-INC-SUB 20/24 ok  Close chest_of_drawers_2  
+02:01:46 T2-INC-SUB 21/24 ok  Navigate knife_0  
+02:01:48 T2-INC-SUB 22/24 ok  Pick knife_0  
+02:02:00 T2-INC-SUB 23/24 ok  Navigate table_16  
+02:02:02 T2-INC-SUB 24/24 ok  Place knife_0,on,table_16,next_to,box_1  
+02:02:02 T2-INC-SUB evaluation success= True pct= 1.0
+02:02:07 T2-OUT-SUB 14/26 ok  Navigate cabinet_0  
+02:02:09 T2-OUT-SUB 15/26 ok  Open cabinet_0  
+02:02:11 T2-OUT-SUB 16/26 ok  Close cabinet_0  
+02:02:19 T2-OUT-SUB 17/26 ok  Navigate cabinet_1  
+02:02:21 T2-OUT-SUB 18/26 ok  Open cabinet_1  
+02:02:23 T2-OUT-SUB 19/26 ok  Close cabinet_1  
+02:02:24 T2-INC-SUB SAVE {'ok': True, 'message': "Saved 24 actions as this variant's ground truth."}
+02:02:49 T2-ACC-SUB loaded 12 steps
+02:02:58 T2-OUT-SUB 20/26 ok  Navigate chest_of_drawers_2  
+02:03:00 T2-OUT-SUB 21/26 ok  Open chest_of_drawers_2  
+02:03:01 T2-ACC-SUB  1/12 ok  Navigate box_0  
+02:03:02 T2-OUT-SUB 22/26 ok  Close chest_of_drawers_2  
+02:03:03 T2-ACC-SUB  2/12 ok  Pick box_0  
+02:03:08 T2-OUT-SUB 23/26 ok  Navigate knife_0  
+02:03:10 T2-OUT-SUB 24/26 ok  Pick knife_0  
+02:03:25 T2-ACC-SUB  3/12 ok  Navigate table_16  
+02:03:26 T2-OUT-SUB 25/26 ok  Navigate table_16  
+02:03:27 T2-ACC-SUB  4/12 ok  Place box_0,on,table_16,none,none  
+02:03:28 T2-OUT-SUB 26/26 ok  Place knife_0,on,table_16,next_to,box_1  
+02:03:28 T2-OUT-SUB evaluation success= True pct= 1.0
+02:03:46 T2-ACC-SUB  5/12 ok  Navigate box_1  
+02:03:48 T2-ACC-SUB  6/12 ok  Pick box_1  
+02:03:56 T2-OUT-SUB SAVE {'ok': True, 'message': "Saved 26 actions as this variant's ground truth."}
+02:04:02 T2-ACC-SUB  7/12 ok  Navigate table_16  
+02:04:04 T2-ACC-SUB  8/12 ok  Place box_1,on,table_16,next_to,box_0  
+02:04:18 T2-ACC-SUB  9/12 ok  Navigate knife_0  
+02:04:20 T2-ACC-SUB 10/12 ok  Pick knife_0  
+02:04:38 T2-ACC-SUB 11/12 ok  Navigate table_16  
+02:04:40 T2-ACC-SUB 12/12 ok  Place knife_0,on,table_16,next_to,box_1  
+02:04:40 T2-ACC-SUB evaluation success= True pct= 1.0
+02:04:46 T2-ACC-SUB SAVE {'ok': True, 'message': "Saved 12 actions as this variant's ground truth."}
+02:04:46 DONE {'T2-INC-SUB': True, 'T2-OUT-SUB': True, 'T2-ACC-SUB': True}

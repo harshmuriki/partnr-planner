@@ -1,0 +1,26 @@
+sequence,skill,target,simulator_steps,response,video
+1,Explore,kitchen_0,923,Successful execution!,clips/0000.mp4
+2,Navigate,bread_0,128,Successful execution!,clips/0001.mp4
+3,Pick,bread_0,2,Successful execution!,clips/0002.mp4
+4,Navigate,microwave_0,74,Successful execution!,clips/0003.mp4
+5,Open,microwave_0,3,Successful execution!,clips/0004.mp4
+6,Place,"bread_0,within,microwave_0,none,none",2,Successful execution!,clips/0005.mp4
+7,Close,microwave_0,3,Successful execution!,clips/0006.mp4
+8,Open,microwave_0,3,Successful execution!,clips/0007.mp4
+9,Pick,bread_0,2,Successful execution!,clips/0008.mp4
+10,Close,microwave_0,3,Successful execution!,clips/0009.mp4
+11,Navigate,table_11,285,Successful execution!,clips/0010.mp4
+12,Place,"bread_0,on,table_11,none,none",2,Successful execution!,clips/0011.mp4
+13,Explore,dining_room_0,481,Successful execution!,clips/0012.mp4
+14,Navigate,bottle_0,138,Successful execution!,clips/0013.mp4
+15,Pick,bottle_0,2,Successful execution!,clips/0014.mp4
+16,Navigate,table_11,270,Successful execution!,clips/0015.mp4
+17,Place,"bottle_0,on,table_11,next_to,bread_0",2,Successful execution!,clips/0016.mp4
+18,Explore,bathroom_0,256,Successful execution!,clips/0017.mp4
+19,Explore,bathroom_2,417,Successful execution!,clips/0018.mp4
+20,Navigate,hand_towel_0,68,Successful execution!,clips/0019.mp4
+21,Pick,hand_towel_0,2,Successful execution!,clips/0020.mp4
+22,Navigate,table_11,127,Successful execution!,clips/0021.mp4
+23,Place,"hand_towel_0,on,table_11,next_to,bread_0",2,Successful execution!,clips/0022.mp4
+24,Navigate,lamp_living_0,322,Successful execution!,clips/0023.mp4
+25,PowerOff,lamp_living_0,2,Successful execution!,clips/0024.mp4

@@ -382,7 +382,7 @@
   "unscored_success_text": [
     "- Distractors (soap_dish_0, vase_0, plant_saucer_0) must not be used in place of the task objects; they have no placement goals."
   ],
-  "spec_sha256": "015c84e910900d8832b97317e7821c8536a300427cca13b995fb8db7623c1730",
+  "spec_sha256": "50dc7e6e739456c251681cf047eee7f5fdc5a4610c58458f5e61ed4acf7e4053",
   "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- soap_dish_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to soap_dispenser_0\n- vase_0: on table_2 (kitchen_0), is_clean, is_empty, next to glass_0\n- plant_saucer_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to plate_0",
   "memory_runtime_applied": false,
   "issues": [],

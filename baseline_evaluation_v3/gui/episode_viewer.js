@@ -52,7 +52,7 @@
         body.querySelector('#episodeVisibility').textContent=view.target_visible ? (view.label.startsWith('Interior') ? 'Camera inside the closed container; saved objects and door positions are unchanged. Scroll to zoom; drag to pan.' : 'Object visible from this camera. Scroll to zoom; drag to pan.') : 'Object may be occluded by furniture from this camera. Try another angle; closed containers remain closed in these images.';
         fit();
       };
-      const spatial = s => `${s.relation} ${s.furniture} (${s.room})`;
+      const spatial = s => s ? `${s.relation} ${s.furniture} (${s.room})` : 'not scored';
       const stateWords = states => Object.entries(states || {}).map(([k, val]) => ({
         is_clean: val ? 'clean' : 'dirty', is_filled: val ? 'filled' : 'empty', is_powered_on: val ? 'on' : 'off',
       }[k] || `${k}=${val}`)).join(', ') || 'none';

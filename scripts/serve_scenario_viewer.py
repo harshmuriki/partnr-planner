@@ -15,11 +15,11 @@ import socket
 import sys
 import tempfile
 import threading
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.scenario_ground_truth import GroundTruthService
+from scripts.scenario_ground_truth import GroundTruthSessions
 API_PATH = "/baseline_evaluation_v3/api/human-reviews"
 REVIEW_FILE = ROOT / "baseline_evaluation_v3/human_verification.json"
 
@@ -68,14 +68,33 @@ class ReviewStore:
             }}
         if not set(changes).issubset(self.variants):
             raise ValueError("Unknown scenario")
+
+        def apply(reviews):
+            for variant, record in changes.items():
+                # Keep unchecked records, so old browser imports cannot re-check them.
+                if importing and variant in reviews:
+                    continue
+                previous = reviews.get(variant, {})
+                # A re-recording stays flagged until someone verifies the variant again.
+                if not record["verified"] and previous.get("needs_review"):
+                    record.update(needs_review=True, rerecorded_at=previous["rerecorded_at"])
+                reviews[variant] = record
+        return self._write(apply)
+
+    def flag_rerecorded(self, variant):
+        """Revoke verification after a saved ground truth is replaced, until re-verified."""
+        if variant not in self.variants:
+            return None
+        stamp = datetime.now(timezone.utc).isoformat()
+        return self._write(lambda reviews: reviews.__setitem__(variant, {
+            "verified": False, "needs_review": True, "rerecorded_at": stamp, "updated_at": stamp}))
+
+    def _write(self, apply):
         # Separate lock file survives atomic replacement and coordinates processes.
         with self.path.with_suffix(".lock").open("a") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX)
             data = self.read()
-            for variant, record in changes.items():
-                # Keep unchecked records, so old browser imports cannot re-check them.
-                if not importing or variant not in data["reviews"]:
-                    data["reviews"][variant] = record
+            apply(data["reviews"])
             name = None
             try:
                 with tempfile.NamedTemporaryFile(mode="w", dir=self.path.parent,
@@ -98,9 +117,69 @@ class ViewerHandler(SimpleHTTPRequestHandler):
         self.ground_truth = ground_truth
         super().__init__(*args, directory=str(ROOT), **kwargs)
 
+    def send_head(self):
+        """Serve byte ranges so the browser can seek without downloading the whole MP4."""
+        self._video_bytes_remaining = None
+        path = Path(self.translate_path(self.path))
+        if path.suffix.lower() != '.mp4' or not path.is_file():
+            return super().send_head()
+        import re
+        stream = path.open('rb')
+        size = os.fstat(stream.fileno()).st_size
+        start, end, status = 0, size - 1, 200
+        requested = self.headers.get('Range') if not self.headers.get('If-Range') else None
+        if requested:
+            match = re.fullmatch(r'bytes=(\d*)-(\d*)', requested.strip())
+            try:
+                if not match or not any(match.groups()):
+                    raise ValueError('Invalid range')
+                first, last = match.groups()
+                if first:
+                    start = int(first)
+                    end = min(int(last), size - 1) if last else size - 1
+                else:
+                    if int(last) <= 0:
+                        raise ValueError('Invalid suffix')
+                    start = max(0, size - int(last))
+                if start > end or start >= size:
+                    raise ValueError('Unsatisfiable range')
+                status = 206
+            except ValueError:
+                stream.close()
+                self.send_response(416)
+                self.send_header('Content-Range', f'bytes */{size}')
+                self.send_header('Content-Length', '0')
+                self.end_headers()
+                return None
+        self.send_response(status)
+        self.send_header('Content-Type', 'video/mp4')
+        self.send_header('Accept-Ranges', 'bytes')
+        self.send_header('Content-Length', str(max(0, end - start + 1)))
+        self.send_header('Last-Modified', self.date_time_string(os.fstat(stream.fileno()).st_mtime))
+        if status == 206:
+            self.send_header('Content-Range', f'bytes {start}-{end}/{size}')
+        self.end_headers()
+        stream.seek(start)
+        self._video_bytes_remaining = max(0, end - start + 1)
+        return stream
+
+    def copyfile(self, source, outputfile):
+        try:
+            if self._video_bytes_remaining is None:
+                return super().copyfile(source, outputfile)
+            remaining = self._video_bytes_remaining
+            while remaining:
+                block = source.read(min(1 << 16, remaining))
+                if not block:
+                    break
+                outputfile.write(block)
+                remaining -= len(block)
+        except (BrokenPipeError, ConnectionResetError):
+            pass  # Normal when seeking or leaving a video mid-download.
+
     def ground_truth_route(self):
         import re
-        return re.fullmatch(r'/baseline_evaluation_v3/api/ground-truth/(T[1-7]-(?:ACC|INC|OUT)-[A-Z]+)(?:/(sandbox|action|steps|record|rooms|furniture|notes|frame))?', urlsplit(self.path).path)
+        return re.fullmatch(r'/baseline_evaluation_v3/api/ground-truth/(T[1-7]-(?:ACC|INC|OUT)-[A-Z]+)(?:/(sandbox|close|action|steps|record|rooms|furniture|notes|packs|frame))?', urlsplit(self.path).path)
 
     def send_json(self, data, status=200):
         body = json.dumps(data).encode()
@@ -119,7 +198,8 @@ class ViewerHandler(SimpleHTTPRequestHandler):
             try:
                 variant, operation = route.groups()
                 if operation == 'frame':
-                    frame = self.ground_truth.worker.frame() if self.ground_truth.variant == variant else None
+                    session_id = parse_qs(urlsplit(self.path).query).get('session_id', [None])[0]
+                    frame = self.ground_truth.frame(variant, session_id)
                     if not frame:
                         return self.send_error(404, 'No live frame yet')
                     self.send_response(200)
@@ -162,21 +242,10 @@ class ViewerHandler(SimpleHTTPRequestHandler):
                 if not isinstance(payload, dict):
                     raise ValueError('Expected a JSON object')
                 variant, operation = route.groups()
-                if operation == 'sandbox':
-                    return self.send_json(self.ground_truth.sandbox(variant), 202)
-                if operation == 'record':
-                    return self.send_json(self.ground_truth.record(variant), 202)
-                if operation == 'steps':
-                    return self.send_json(self.ground_truth.edit_steps(variant, payload))
-                if operation == 'action':
-                    return self.send_json(self.ground_truth.action(variant, payload), 202)
-                if operation == 'notes':
-                    return self.send_json(self.ground_truth.save_notes(variant, payload))
-                if operation == 'furniture':
-                    return self.send_json(self.ground_truth.furniture(variant, payload))
-                if operation == 'rooms':
-                    return self.send_json(self.ground_truth.rooms(variant, payload))
-                return self.send_error(405)
+                if operation not in ('sandbox', 'close', 'record', 'steps', 'action', 'notes', 'furniture', 'rooms', 'packs'):
+                    return self.send_error(405)
+                result = self.ground_truth.dispatch(variant, operation, payload)
+                return self.send_json(result, 202 if operation in ('sandbox', 'record', 'action') or result.get('running') else 200)
             self.send_json(self.store.update(payload))
         except (ValueError, TypeError, AttributeError) as error:
             self.send_json({"error": str(error)}, 400)
@@ -189,7 +258,10 @@ def main():
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--bind", default="localhost", help="localhost serves IPv4 and IPv6 loopback in one process")
     parser.add_argument("--habitat-python", help="Python executable from the Habitat environment")
+    parser.add_argument("--max-sandboxes", type=int, default=2, help="Maximum concurrent Habitat recording sessions (default: 2)")
     args = parser.parse_args()
+    if args.max_sandboxes < 1:
+        parser.error("--max-sandboxes must be at least 1")
     with (ROOT / "baseline_evaluation_v3/variant_object_assets.csv").open() as csv_file:
         variants = {row["Variant_ID"] for row in csv.DictReader(csv_file)}
     store = ReviewStore(REVIEW_FILE, variants)
@@ -206,7 +278,8 @@ def main():
         servers = [stack.enter_context((IPv6Server if ':' in address else ThreadingHTTPServer)(
             (address, args.port), ViewerHandler)) for address in addresses]
         from scripts.scenario_ground_truth import HabitatWorker
-        ground_truth = GroundTruthService(worker=HabitatWorker(args.habitat_python))
+        ground_truth = GroundTruthSessions(max_sessions=args.max_sandboxes, worker_factory=lambda: HabitatWorker(args.habitat_python),
+                                           on_rerecord=store.flag_rerecorded)
         for server in servers:
             server.RequestHandlerClass = partial(ViewerHandler, store=store, ground_truth=ground_truth)
         for server in servers[1:]:
@@ -219,7 +292,7 @@ def main():
         finally:
             for server in servers[1:]:
                 server.shutdown()
-            ground_truth.worker.close()
+            ground_truth.close()
 
 
 if __name__ == "__main__":

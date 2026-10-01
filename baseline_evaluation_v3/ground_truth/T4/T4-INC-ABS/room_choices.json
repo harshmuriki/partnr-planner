@@ -1,0 +1,22 @@
+{
+  "apple_1": [
+    "kitchen_0"
+  ],
+  "orange_0": [
+    "kitchen_0"
+  ],
+  "basket_0": [
+    "kitchen_0",
+    "living_room_0"
+  ],
+  "bottle_0": [
+    "kitchen_0"
+  ],
+  "bottle_1": [
+    "kitchen_0",
+    "living_room_0"
+  ],
+  "apple_0": [
+    "kitchen_0"
+  ]
+}

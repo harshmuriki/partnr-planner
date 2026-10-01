@@ -45,6 +45,7 @@ Turn off all the lights in the bedroom and bring a full jug of water to the livi
 ## Initial robot memory
 - pitcher_0: on counter_0 (kitchen_0), is_clean, is_empty
 - lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on
+- jug_0: known absent; no jug exists anywhere in the scene
 
 ## Success criteria
 - is_on_top(pitcher_0, table_0)
@@ -60,5 +61,5 @@ Turn off all the lights in the bedroom and bring a full jug of water to the livi
 - The scene has no dining room: the kitchen bar table (table_2) stands in for the dining table where Outdated memory places the jug.
 - The bedroom whose lights are turned off is bedroom_0 (the bedroom with a nightstand for the lamp); its lights are the spawned lamp_0.
 - The living-room table is the Tulip table table_0.
-- Filling needs the robot within 1.5 m of a faucet-marked object. This scene's faucet objects are a double washbasin and a bathtub; no kitchen furniture carries faucet markers. Reachability is not verified.
+- Filling needs the robot within 1.5 m of a faucet-marked object. The usable faucet is the kitchen sink cabinet cabinet_6 (kitchen_0), which the runtime world graph names cabinet_34; the robot can fill the jug while holding it there (verified in the simulator). A second sink, cabinet_5, is in laundryroom/mudroom_0.
 - The Accurate, Incomplete and Outdated versions of this variant spawn exactly the same objects, assets, placements and states; only the robot's initial memory differs.

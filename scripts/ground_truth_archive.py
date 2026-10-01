@@ -3,6 +3,7 @@ import csv
 import hashlib
 import html
 import io
+from functools import lru_cache
 import json
 import os
 from pathlib import Path
@@ -12,7 +13,10 @@ import subprocess
 import tempfile
 import threading
 
+from scripts.ground_truth_evidence import criteria_evidence
+
 RUN_ID = re.compile(r'[0-9a-f]{32}')
+ALL_TASKS_NOTE = 'ALL'  # notes row shared by every task, T1-T7
 
 
 def atomic_write(path, text):
@@ -42,12 +46,61 @@ def file_sha256(path):
     return digest.hexdigest()
 
 
+def format_duration(seconds):
+    if seconds is None:
+        return ''
+    tenths = int(round(max(0.0, float(seconds)) * 10))
+    minutes, rest = divmod(tenths, 600)
+    return f'{minutes}m {rest / 10:04.1f}s' if minutes else f'{rest / 10:.1f}s'
+
+
+@lru_cache(maxsize=256)
+def _video_duration_sec(path, size, modified):
+    """Media duration of the saved MP4, excluding time spent paused between actions."""
+    result = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+        '-of', 'default=noprint_wrappers=1:nokey=1', path],
+        check=True, capture_output=True, text=True, timeout=15)
+    duration = float(result.stdout.strip())
+    if duration < 0:
+        raise ValueError(f'negative video duration: {duration}')
+    return round(duration, 3)
+
+
+@lru_cache(maxsize=16)
+def video_frame_times(path, checksum, modified):
+    """Actual presentation timestamps also cover legacy concatenated variable-timing MP4s."""
+    result = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0',
+        '-show_entries', 'frame=best_effort_timestamp_time', '-of', 'json', str(path)],
+        check=True, capture_output=True, timeout=30)
+    return tuple(float(frame['best_effort_timestamp_time']) for frame in json.loads(result.stdout)['frames'])
+
+
 class GroundTruthArchive:
     def __init__(self, root, store):
         self.root = Path(root)
         self.store = store
         self.lock = threading.RLock()
         self.root.mkdir(parents=True, exist_ok=True)
+
+    def video_duration(self, run):
+        if run.get('artifact_status') != 'ready':
+            return None
+        video = self.directory(run['variant']) / 'video.mp4'
+        try:
+            stat = video.stat()
+            return _video_duration_sec(str(video), stat.st_size, stat.st_mtime_ns)
+        except (OSError, ValueError, subprocess.SubprocessError):
+            return None
+
+    def evidence(self, run):
+        video = self.directory(run['variant']) / 'video.mp4'
+        times = ()
+        if run.get('artifact_status') == 'ready':
+            try:
+                times = video_frame_times(video, run.get('video_sha256'), video.stat().st_mtime_ns)
+            except (OSError, ValueError, KeyError, subprocess.SubprocessError):
+                pass  # Criteria remain available; disable unverified video positions.
+        return criteria_evidence(run, frame_times=times)
 
     def directory(self, variant):
         return self.root / variant.split('-')[0] / variant
@@ -119,7 +172,12 @@ class GroundTruthArchive:
             # ffconcat quoting also supports repository paths containing apostrophes.
             listing = folder / '.video-clips.txt'
             listing.write_text(''.join("file '" + str(p).replace("'", "'\\''") + "'\n" for p in clips))
-            args += ['-f', 'concat', '-safe', '0', '-i', str(listing), '-c', 'copy']
+            # Independent MP4 clips round their durations differently. Reset timestamps
+            # from decoded frame order to avoid gaps/drift at the action boundaries.
+            # Preserve every recorded frame; no interpolation or speed changes.
+            args += ['-f', 'concat', '-safe', '0', '-i', str(listing),
+                     '-vf', 'setpts=N/(30*TB)', '-r', '30', '-c:v', 'libx264',
+                     '-preset', 'veryfast', '-crf', '18', '-pix_fmt', 'yuv420p', '-an']
         else:
             initial = folder / 'initial.jpg'
             if not initial.exists():
@@ -160,6 +218,7 @@ class GroundTruthArchive:
             folder.mkdir(parents=True, exist_ok=True)
             export = dict(run)
             export['schema_version'] = 2
+            export['criteria_evidence'] = self.evidence(run)
             export['simulator_steps_definition'] = 'Sum of per-action environment step calls; reports add zero.'
             export['video_playback_fps'] = 30
             # Rooms at the moment this ground truth was saved; current choices live in room_choices.json.
@@ -183,9 +242,9 @@ class GroundTruthArchive:
     def notes(self, notes):
         """Readable copy of every assumption note; SQLite remains the source of truth."""
         with self.lock:
-            lines = ['# Assumptions', '', 'Written in the scenario viewer. Task notes apply to every variant of that task.', '']
-            for scope, note in sorted(notes.items(), key=lambda item: (item[0].split('-')[0], '-' in item[0], item[0])):
-                lines += [f"## {scope}{'' if '-' in scope else ' (whole task)'}", '', f"_Updated {note['updated_at']}_", '', note['text'].rstrip(), '']
+            lines = ['# Assumptions', '', 'Written in the scenario viewer. A task note (e.g. T4) applies to every variant of that task; the All tasks note applies to T1-T7.', '']
+            for scope, note in sorted(notes.items(), key=lambda item: (item[0] != ALL_TASKS_NOTE, item[0])):
+                lines += [f"## {'All tasks (T1-T7)' if scope == ALL_TASKS_NOTE else scope + ('' if '-' in scope else ' (every variant)')}", '', note['text'].rstrip(), '']
             atomic_write(self.root / 'assumptions.md', '\n'.join(lines))
 
     def refresh_variant(self, variant, room_choices, furniture_choices=None):
@@ -196,9 +255,14 @@ class GroundTruthArchive:
 
     def index(self):
         with self.lock:
-            runs = self.store.all_ground_truths()
+            runs = []
+            for run in self.store.all_ground_truths():
+                item = dict(run)
+                item['video_duration_sec'] = self.video_duration(item)
+                runs.append(item)
             columns = ['variant', 'id', 'completed_at', 'action_count', 'sim_steps', 'steps_complete',
-                       'artifact_status', 'artifact_error', 'video_bytes', 'video_sha256', 'spec_hash', 'dataset_hash']
+                       'video_duration_sec', 'artifact_status', 'artifact_error', 'video_bytes', 'video_sha256',
+                       'spec_hash', 'dataset_hash']
             stream = io.StringIO()
             writer = csv.DictWriter(stream, fieldnames=columns)
             writer.writeheader()
@@ -211,13 +275,14 @@ class GroundTruthArchive:
                 video = f'<a href="{base}video.mp4">Watch video</a>' if run['artifact_status'] == 'ready' else html.escape(run['artifact_status'])
                 rows.append(f"<tr><td>{html.escape(run['variant'])}</td>"
                             f"<td>{run['action_count']}</td><td>{run['sim_steps']}{'' if run['steps_complete'] else ' (partial)'}</td>"
+                            f"<td>{html.escape(format_duration(run['video_duration_sec']))}</td>"
                             f'<td>{video}</td><td><a href="{base}run.json">Run JSON</a> · '
                             f'<a href="{base}actions.csv">Actions CSV</a> · <a href="{base}">Files</a></td></tr>')
             atomic_write(self.root / 'index.html', '''<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ground-truth archive</title><style>body{font:14px system-ui;margin:32px;color:#222}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:10px;border-bottom:1px solid #ddd}a{color:#2563eb}.scroll{overflow:auto}</style>
-<h1>Ground-truth archive</h1><p>One saved ground truth per variant. Recording a variant again replaces its previous ground truth.</p>
+<h1>Ground-truth archive</h1><p>One saved ground truth per variant. Recording a variant again replaces its previous ground truth. Video time is the saved MP4 duration.</p>
 <p><a href="index.csv">Download all (CSV)</a> · <a href="index.json">All (JSON)</a> · <a href="../gui/scenario_viewer.html">Scenario viewer</a></p>
-<div class="scroll"><table><thead><tr><th>Variant</th><th>Actions</th><th>Simulator steps</th><th>Video</th><th>Data</th></tr></thead><tbody>''' + ''.join(rows) + '</tbody></table></div>')
+<div class="scroll"><table><thead><tr><th>Variant</th><th>Actions</th><th>Simulator steps</th><th>Video time</th><th>Video</th><th>Data</th></tr></thead><tbody>''' + ''.join(rows) + '</tbody></table></div>')
             atomic_write(self.root / 'README.md', '''# Ground-truth archive
 
 Open index.html through the scenario viewer server, or use index.csv/index.json for analysis.
@@ -225,8 +290,8 @@ Open index.html through the scenario viewer server, or use index.csv/index.json 
 Layout: T<task>/<variant>/run.json, actions.csv, video.mp4, initial.jpg, clips/, room_choices.json,
 furniture_choices.json (ranked likely furniture per target; shared by variants in the same apartment).
 There is exactly one ground truth per variant. Recording again replaces it; no history is kept.
-Ground truth is recorded by replaying the checked sandbox steps from the episode's exact start.
-Sandbox (practice) actions are never saved.
+Ground truth is the live sandbox run: every action from the episode's exact start, as it happened
+(failed attempts included), saved without replaying once it completes the spec.
 Run JSON includes action results, evaluation state, spec/dataset hashes, video size/SHA-256,
 and room choices at the time it was saved. Reports add zero simulator steps.
 

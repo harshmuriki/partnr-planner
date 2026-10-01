@@ -162,7 +162,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-ACC-BASE",
-          "sha256": "4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca",
+          "sha256": "4f8156e740a02c42f8bdb12ac9c34be13c6383b1336287c8e9f5e640f35b0328",
           "entity_handles": {
             "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
             "lamp_0": "B07HK83QRB_:0000"

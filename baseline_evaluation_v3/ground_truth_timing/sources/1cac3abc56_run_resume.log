@@ -1,0 +1,167 @@
+09:21:10 T6-OUT-SUB resuming at step 13/39
+09:21:10 T1-INC-SUB resuming at step 14/21
+09:21:10 T1-OUT-SUB resuming at step 15/22
+09:21:10 T6-INC-SUB resuming at step 14/36
+09:21:12 T6-OUT-SUB 13/39 ok  Place bread_0,on,table_11,none,none 
+09:21:38 T6-OUT-SUB 14/39 ok  Navigate table_5 
+09:21:44 T1-OUT-SUB 15/22 ok  Navigate pitcher_0 
+09:21:44 T1-INC-SUB 14/21 ok  Navigate pitcher_0 
+09:21:46 T1-OUT-SUB 16/22 ok  Pick pitcher_0 
+09:21:46 T1-INC-SUB 15/21 ok  Pick pitcher_0 
+09:21:54 T1-OUT-SUB 17/22 ok  Navigate cabinet_6 
+09:21:54 T1-INC-SUB 16/21 ok  Navigate cabinet_6 
+09:21:56 T1-OUT-SUB 18/22 ok  Place pitcher_0,on,cabinet_34,none,none 
+09:21:56 T1-INC-SUB 17/21 ok  Place pitcher_0,on,cabinet_34,none,none 
+09:21:58 T1-OUT-SUB 19/22 ok  Fill pitcher_0 
+09:21:58 T1-INC-SUB 18/21 ok  Fill pitcher_0 
+09:22:00 T1-OUT-SUB 20/22 ok  Pick pitcher_0 
+09:22:00 T1-INC-SUB 19/21 ok  Pick pitcher_0 
+09:22:17 T1-INC-SUB 20/21 ok  Navigate table_0 
+09:22:19 T1-OUT-SUB 21/22 ok  Navigate table_0 
+09:22:19 T1-INC-SUB 21/21 ok  Place pitcher_0,on,table_0,none,none 
+09:22:19 T1-INC-SUB evaluation success= True
+09:22:21 T1-OUT-SUB 22/22 ok  Place pitcher_0,on,table_0,none,none 
+09:22:21 T1-OUT-SUB evaluation success= True
+09:22:41 T1-INC-SUB SAVE {'ok': True, 'message': "Saved 21 actions as this variant's ground truth."}
+09:23:03 T1-OUT-SUB SAVE {'ok': True, 'message': "Saved 22 actions as this variant's ground truth."}
+09:24:26 T6-OUT-SUB 15/39 ok  Explore dining_room_0 
+09:25:27 T6-INC-SUB 14/36 ok  Explore garage_0 
+09:26:05 T6-INC-SUB 15/36 ok  Navigate fridge_0 
+09:26:07 T6-INC-SUB 16/36 ok  Open fridge_0 
+09:26:09 T6-INC-SUB 17/36 ok  Close fridge_0 
+09:27:48 T6-INC-SUB 18/36 ok  Navigate cup_0 
+09:27:50 T6-INC-SUB 19/36 ok  Pick cup_0 
+09:28:16 T6-OUT-SUB 16/39 ok  Explore garage_0 
+09:28:42 T6-OUT-SUB 17/39 ok  Navigate fridge_0 
+09:28:44 T6-OUT-SUB 18/39 ok  Open fridge_0 
+09:28:46 T6-OUT-SUB 19/39 ok  Close fridge_0 
+09:29:21 T6-INC-SUB 20/36 ok  Navigate table_11 
+09:29:23 T6-INC-SUB 21/36 ok  Place cup_0,on,table_11,next_to,bread_0 
+09:30:25 T6-OUT-SUB 20/39 ok  Navigate cup_0 
+09:30:27 T6-OUT-SUB 21/39 ok  Pick cup_0 
+09:30:33 T6-INC-SUB 22/36 ok  Explore bathroom_0 
+09:31:56 T6-OUT-SUB 22/39 ok  Navigate table_11 
+09:32:00 T6-OUT-SUB 23/39 ok  Place cup_0,on,table_11,next_to,bread_0 
+09:32:22 T6-INC-SUB 23/36 ok  Explore bathroom_2 
+09:32:24 T6-OUT-SUB 24/39 ok  Navigate chair_9 
+09:33:26 T6-OUT-SUB 25/39 ok  Explore bathroom_0 
+09:35:27 T6-OUT-SUB 26/39 ok  Explore bathroom_2 
+09:35:33 T6-INC-SUB 24/36 ok  Explore laundryroom/mudroom_0 
+09:35:48 T6-INC-SUB 25/36 ok  Navigate cabinet_19 
+09:35:50 T6-INC-SUB 26/36 ok  Open cabinet_19 
+09:35:52 T6-INC-SUB 27/36 ok  Close cabinet_19 
+09:36:10 T6-INC-SUB 28/36 ok  Navigate cabinet_23 
+09:36:12 T6-INC-SUB 29/36 ok  Open cabinet_23 
+09:36:14 T6-INC-SUB 30/36 ok  Close cabinet_23 
+09:38:29 T6-OUT-SUB 27/39 ok  Explore laundryroom/mudroom_0 
+09:38:35 T6-OUT-SUB 28/39 ok  Navigate cabinet_19 
+09:38:37 T6-OUT-SUB 29/39 ok  Open cabinet_19 
+09:38:39 T6-OUT-SUB 30/39 ok  Close cabinet_19 
+09:38:51 T6-OUT-SUB 31/39 ok  Navigate cabinet_23 
+09:38:53 T6-OUT-SUB 32/39 ok  Open cabinet_23 
+09:38:55 T6-OUT-SUB 33/39 ok  Close cabinet_23 
+09:39:13 T6-INC-SUB 31/36 ok  Navigate blue_hand_towel_0 
+09:39:15 T6-INC-SUB 32/36 ok  Pick blue_hand_towel_0 
+09:40:06 T6-INC-SUB 33/36 ok  Navigate table_11 
+09:40:10 T6-INC-SUB 34/36 ok  Place blue_hand_towel_0,on,table_11,next_to,bread_0 
+09:41:46 T6-INC-SUB 35/36 ok  Navigate lamp_living_0 
+09:41:49 T6-INC-SUB 36/36 ok  PowerOff lamp_living_0 
+09:41:49 T6-INC-SUB evaluation success= True
+09:41:59 T6-OUT-SUB 34/39 ok  Navigate blue_hand_towel_0 
+09:42:01 T6-OUT-SUB 35/39 ok  Pick blue_hand_towel_0 
+09:42:31 T6-INC-SUB SAVE {'ok': True, 'message': "Saved 36 actions as this variant's ground truth."}
+09:43:03 T6-OUT-SUB 36/39 ok  Navigate table_11 
+09:43:07 T6-OUT-SUB 37/39 ok  Place blue_hand_towel_0,on,table_11,next_to,bread_0 
+09:44:40 T6-OUT-SUB 38/39 ok  Navigate lamp_living_0 
+09:44:42 T6-OUT-SUB 39/39 ok  PowerOff lamp_living_0 
+09:44:42 T6-OUT-SUB evaluation success= True
+09:45:22 T6-OUT-SUB SAVE {'ok': True, 'message': "Saved 39 actions as this variant's ground truth."}
+09:45:22 RESUMED {'T1-INC-SUB': True, 'T1-OUT-SUB': True, 'T6-INC-SUB': True, 'T6-OUT-SUB': True}
+09:45:22 hop retry for: none
+09:45:46 T5-OUT-SUB loaded 28 steps
+09:45:47 T5-INC-SUB loaded 27 steps
+09:45:50 T5-ACC-SUB loaded 22 steps
+09:45:57 T5-OUT-SUB  1/28 ok  Navigate table_2  
+09:46:05 T5-ACC-SUB  1/22 ok  Navigate plate_black_0  
+09:46:07 T5-ACC-SUB  2/22 ok  Pick plate_black_0  
+09:46:10 T5-INC-SUB  1/27 ok  Explore kitchen_0  
+09:46:11 T5-OUT-SUB  2/28 ok  Explore kitchen_0  
+09:46:13 T5-OUT-SUB  3/28 ok  Navigate cabinet_0  
+09:46:15 T5-OUT-SUB  4/28 ok  Open cabinet_0  
+09:46:17 T5-ACC-SUB  3/22 ok  Navigate table_0  
+09:46:17 T5-OUT-SUB  5/28 ok  Close cabinet_0  
+09:46:18 T5-INC-SUB  2/27 ok  Navigate cabinet_0  
+09:46:19 T5-ACC-SUB  4/22 ok  Place plate_black_0,on,table_0,none,none  
+09:46:20 T5-INC-SUB  3/27 ok  Open cabinet_0  
+09:46:22 T5-INC-SUB  4/27 ok  Close cabinet_0  
+09:46:29 T5-ACC-SUB  5/22 ok  Navigate glass_1  
+09:46:31 T5-ACC-SUB  6/22 ok  Pick glass_1  
+09:46:45 T5-ACC-SUB  7/22 ok  Navigate cabinet_0  
+09:46:47 T5-ACC-SUB  8/22 ok  Place glass_1,on,cabinet_0,next_to,soap_dispenser_0  
+09:46:49 T5-ACC-SUB  9/22 ok  Clean glass_1  
+09:46:49 T5-OUT-SUB  6/28 ok  Explore living_room_0  
+09:46:50 T5-INC-SUB  5/27 ok  Explore living_room_0  
+09:46:51 T5-ACC-SUB 10/22 ok  Fill glass_1  
+09:46:53 T5-ACC-SUB 11/22 ok  Pick glass_1  
+09:46:57 T5-OUT-SUB  7/28 ok  Navigate plate_black_0  
+09:46:59 T5-OUT-SUB  8/28 ok  Pick plate_black_0  
+09:47:00 T5-INC-SUB  6/27 ok  Navigate plate_black_0  
+09:47:01 T5-ACC-SUB 12/22 ok  Navigate table_0  
+09:47:02 T5-INC-SUB  7/27 ok  Pick plate_black_0  
+09:47:03 T5-ACC-SUB 13/22 ok  Place glass_1,on,table_0,next_to,plate_black_0  
+09:47:07 T5-OUT-SUB  9/28 ok  Navigate table_0  
+09:47:09 T5-OUT-SUB 10/28 ok  Place plate_black_0,on,table_0,none,none  
+09:47:10 T5-INC-SUB  8/27 ok  Navigate table_0  
+09:47:12 T5-INC-SUB  9/27 ok  Place plate_black_0,on,table_0,none,none  
+09:47:13 T5-ACC-SUB 14/22 ok  Navigate glass_0  
+09:47:15 T5-ACC-SUB 15/22 ok  Pick glass_0  
+09:47:19 T5-OUT-SUB 11/28 ok  Navigate glass_1  
+09:47:20 T5-INC-SUB 10/27 ok  Navigate glass_1  
+09:47:21 T5-ACC-SUB 16/22 ok  Navigate cabinet_0  
+09:47:22 T5-OUT-SUB 12/28 ok  Pick glass_1  
+09:47:22 T5-INC-SUB 11/27 ok  Pick glass_1  
+09:47:23 T5-ACC-SUB 17/22 ok  Place glass_0,on,cabinet_0,next_to,soap_dispenser_0  
+09:47:25 T5-ACC-SUB 18/22 ok  Clean glass_0  
+09:47:27 T5-ACC-SUB 19/22 ok  Fill glass_0  
+09:47:30 T5-ACC-SUB 20/22 ok  Pick glass_0  
+09:47:34 T5-OUT-SUB 13/28 ok  Navigate cabinet_0  
+09:47:35 T5-INC-SUB 12/27 ok  Navigate cabinet_0  
+09:47:36 T5-OUT-SUB 14/28 ok  Place glass_1,on,cabinet_0,next_to,soap_dispenser_0  
+09:47:37 T5-INC-SUB 13/27 ok  Place glass_1,on,cabinet_0,next_to,soap_dispenser_0  
+09:47:38 T5-OUT-SUB 15/28 ok  Clean glass_1  
+09:47:39 T5-INC-SUB 14/27 ok  Clean glass_1  
+09:47:40 T5-ACC-SUB 21/22 ok  Navigate table_0  
+09:47:40 T5-OUT-SUB 16/28 ok  Fill glass_1  
+09:47:41 T5-INC-SUB 15/27 ok  Fill glass_1  
+09:47:42 T5-ACC-SUB 22/22 ok  Place glass_0,on,table_0,next_to,plate_black_0  
+09:47:42 T5-ACC-SUB evaluation success= True pct= 1.0
+09:47:42 T5-OUT-SUB 17/28 ok  Pick glass_1  
+09:47:43 T5-INC-SUB 16/27 ok  Pick glass_1  
+09:47:50 T5-ACC-SUB SAVE {'ok': True, 'message': "Saved 22 actions as this variant's ground truth."}
+09:47:53 T5-INC-SUB 17/27 ok  Navigate table_0  
+09:47:54 T5-OUT-SUB 18/28 ok  Navigate table_0  
+09:47:55 T5-INC-SUB 18/27 ok  Place glass_1,on,table_0,next_to,plate_black_0  
+09:47:56 T5-OUT-SUB 19/28 ok  Place glass_1,on,table_0,next_to,plate_black_0  
+09:48:05 T5-INC-SUB 19/27 ok  Navigate glass_0  
+09:48:06 T5-OUT-SUB 20/28 ok  Navigate glass_0  
+09:48:07 T5-INC-SUB 20/27 ok  Pick glass_0  
+09:48:08 T5-OUT-SUB 21/28 ok  Pick glass_0  
+09:48:11 T5-INC-SUB 21/27 ok  Navigate cabinet_0  
+09:48:12 T5-OUT-SUB 22/28 ok  Navigate cabinet_0  
+09:48:13 T5-INC-SUB 22/27 ok  Place glass_0,on,cabinet_0,next_to,soap_dispenser_0  
+09:48:14 T5-OUT-SUB 23/28 ok  Place glass_0,on,cabinet_0,next_to,soap_dispenser_0  
+09:48:15 T5-INC-SUB 23/27 ok  Clean glass_0  
+09:48:16 T5-OUT-SUB 24/28 ok  Clean glass_0  
+09:48:17 T5-INC-SUB 24/27 ok  Fill glass_0  
+09:48:18 T5-OUT-SUB 25/28 ok  Fill glass_0  
+09:48:19 T5-INC-SUB 25/27 ok  Pick glass_0  
+09:48:20 T5-OUT-SUB 26/28 ok  Pick glass_0  
+09:48:27 T5-INC-SUB 26/27 ok  Navigate table_0  
+09:48:28 T5-OUT-SUB 27/28 ok  Navigate table_0  
+09:48:29 T5-INC-SUB 27/27 ok  Place glass_0,on,table_0,next_to,plate_black_0  
+09:48:29 T5-INC-SUB evaluation success= True pct= 1.0
+09:48:30 T5-OUT-SUB 28/28 ok  Place glass_0,on,table_0,next_to,plate_black_0  
+09:48:30 T5-OUT-SUB evaluation success= True pct= 1.0
+09:48:38 T5-INC-SUB SAVE {'ok': True, 'message': "Saved 27 actions as this variant's ground truth."}
+09:48:47 T5-OUT-SUB SAVE {'ok': True, 'message': "Saved 28 actions as this variant's ground truth."}
+09:48:47 DONE {'T1-INC-SUB': True, 'T1-OUT-SUB': True, 'T6-INC-SUB': True, 'T6-OUT-SUB': True, 'T5-ACC-SUB': True, 'T5-INC-SUB': True, 'T5-OUT-SUB': True}

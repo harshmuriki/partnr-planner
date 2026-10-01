@@ -1915,7 +1915,7 @@
         },
         "variant_spec": {
           "variant_id": "T7-OUT-DIS",
-          "sha256": "224f80d841cb3a52916908ee1fd00476f057189fbe02f034e1212c19e28199e7",
+          "sha256": "9f80ce8447afa481a2b45b205a2efdf54be73ac9075a2db1a656b943652b3d25",
           "entity_handles": {
             "toy_truck_0": "FIRE_ENGINE_:0000",
             "stuffed_toy_0": "b3e8be210978ec373be6eb5fcffec36c6a9712e6_:0000",

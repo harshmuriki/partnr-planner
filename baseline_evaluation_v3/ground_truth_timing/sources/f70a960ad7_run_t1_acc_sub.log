@@ -1,0 +1,14 @@
+11:06:56 T1-ACC-SUB loaded 10 steps
+11:07:20 T1-ACC-SUB  1/10 ok  Navigate lamp_0  
+11:07:22 T1-ACC-SUB  2/10 ok  PowerOff lamp_0  
+11:07:52 T1-ACC-SUB  3/10 ok  Navigate pitcher_0  
+11:07:54 T1-ACC-SUB  4/10 ok  Pick pitcher_0  
+11:08:03 T1-ACC-SUB  5/10 ok  Navigate cabinet_6  
+11:08:05 T1-ACC-SUB  6/10 ok  Place pitcher_0,on,cabinet_34,none,none  
+11:08:07 T1-ACC-SUB  7/10 ok  Fill pitcher_0  
+11:08:09 T1-ACC-SUB  8/10 ok  Pick pitcher_0  
+11:08:25 T1-ACC-SUB  9/10 ok  Navigate table_0  
+11:08:27 T1-ACC-SUB 10/10 ok  Place pitcher_0,on,table_0,none,none  
+11:08:27 T1-ACC-SUB evaluation success= True pct= 1.0
+11:08:32 T1-ACC-SUB SAVE {'ok': True, 'message': "Saved 10 actions as this variant's ground truth."}
+11:08:32 DONE {'T1-ACC-SUB': True}

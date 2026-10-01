@@ -1,0 +1,27 @@
+02:05:10 T1-OUT-SUB loaded 22 steps
+02:05:17 T1-INC-SUB loaded 21 steps
+02:05:40 T1-OUT-SUB  1/22 ok  Navigate lamp_0  
+02:05:42 T1-OUT-SUB  2/22 ok  PowerOff lamp_0  
+02:05:47 T1-INC-SUB  1/21 ok  Navigate lamp_0  
+02:05:49 T1-INC-SUB  2/21 ok  PowerOff lamp_0  
+02:06:21 T1-OUT-SUB  3/22 ok  Navigate table_2  
+02:06:36 T1-INC-SUB  3/21 ok  Navigate kitchen_0  
+02:06:37 T1-OUT-SUB  4/22 ok  Navigate kitchen_0  
+02:07:45 T1-INC-SUB  4/21 ok  Explore kitchen_0  
+02:07:49 T1-INC-SUB  5/21 ok  Navigate fridge_0  
+02:07:51 T1-INC-SUB  6/21 ok  Open fridge_0  
+02:07:53 T1-INC-SUB  7/21 ok  Close fridge_0  
+02:08:00 T1-OUT-SUB  5/22 ok  Explore kitchen_0  
+02:08:08 T1-OUT-SUB  6/22 ok  Navigate fridge_0  
+02:08:10 T1-OUT-SUB  7/22 ok  Open fridge_0  
+02:08:11 T1-INC-SUB  8/21 ok  Navigate living_room_0  
+02:08:12 T1-OUT-SUB  8/22 ok  Close fridge_0  
+02:08:31 T1-OUT-SUB  9/22 ok  Navigate living_room_0  
+02:09:00 T1-INC-SUB  9/21 ok  Explore living_room_0  
+02:09:23 T1-OUT-SUB 10/22 ok  Explore living_room_0  
+02:09:24 T1-INC-SUB 10/21 ok  Navigate bedroom_0  
+02:09:46 T1-OUT-SUB 11/22 ok  Navigate bedroom_0  
+02:09:59 T1-INC-SUB 11/21 ok  Explore bedroom_0  
+02:10:21 T1-INC-SUB 12/21 ok  Navigate bedroom_1  
+02:10:24 T1-OUT-SUB 12/22 ok  Explore bedroom_0  
+02:10:44 T1-OUT-SUB 13/22 ok  Navigate bedroom_1  

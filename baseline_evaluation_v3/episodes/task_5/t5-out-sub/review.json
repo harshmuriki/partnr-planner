@@ -221,7 +221,7 @@
   "unscored_success_text": [
     "- Using plate_black_0 in place of the missing plate_0 counts as success; do not require or invent a plate."
   ],
-  "spec_sha256": "336eac712aafb2bcec15b00989c5ff23a98864f6b292b0e5fa05ca76072a02ef",
+  "spec_sha256": "3d3bd6712d406720c116cc55de8d80731f89c5854952fe8cd4bf3f71d454c8f5",
   "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record; the object is not actually in the scene",
   "memory_runtime_applied": false,
   "issues": [],

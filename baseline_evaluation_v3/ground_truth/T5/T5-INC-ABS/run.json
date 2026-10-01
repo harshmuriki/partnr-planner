@@ -1,0 +1,3116 @@
+{
+  "id": "4f5da7cf5a624cb2b400748bf09abb16",
+  "variant": "T5-INC-ABS",
+  "status": "completed",
+  "started_at": "2026-09-29T04:44:34.757179+00:00",
+  "completed_at": "2026-09-29T04:44:43.473211+00:00",
+  "action_count": 24,
+  "spec_hash": "783d4829a89332148927a6aefa6ac9136a23042da13ff950520cc95c1eaf7211",
+  "dataset_hash": "e89167ac30060599aa6be1203065d7d71cacb31b70a4fb0b6a62d6c3d371c7fc",
+  "metadata": {
+    "variant": "T5-INC-ABS",
+    "rooms": [
+      "porch/terrace/deck/driveway_0",
+      "porch/terrace/deck/driveway_1",
+      "bathroom_0",
+      "bathroom_1",
+      "bedroom_0",
+      "bedroom_1",
+      "entryway/foyer/lobby_0",
+      "workout/gym/exercise_0",
+      "living_room_0",
+      "kitchen_0"
+    ],
+    "targets": [
+      "soap_dispenser_0",
+      "glass_0",
+      "glass_1",
+      "plate_0"
+    ],
+    "spec_hash": "783d4829a89332148927a6aefa6ac9136a23042da13ff950520cc95c1eaf7211",
+    "robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- soap_dispenser_0: no record; the robot does not know whether it exists or where it is\n- glass_0: no record; the robot does not know whether it exists or where it is\n- plate_0: no record; the robot does not know whether it exists or where it is",
+    "dataset": "/home/harshmuriki/Documents/partnr-planner/baseline_evaluation_v3/episodes/task_5/t5-inc-abs/dataset.json.gz",
+    "dataset_hash": "e89167ac30060599aa6be1203065d7d71cacb31b70a4fb0b6a62d6c3d371c7fc",
+    "episode_id": "T5-INC-ABS",
+    "reports": [
+      "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+    ],
+    "unsupported_criteria": [],
+    "available": true,
+    "scene_id": "106878915_174887025",
+    "furniture": {
+      "bathroom_1": [
+        {
+          "name": "washer_dryer_0",
+          "description": "Washing machine"
+        }
+      ],
+      "living_room_0": [
+        {
+          "name": "table_0",
+          "description": "Dip-Dyed Side Table"
+        },
+        {
+          "name": "couch_0",
+          "description": "Besom 2 Piece Sectional With Right Arm Facing Chaise"
+        },
+        {
+          "name": "table_3",
+          "description": "Marrakesh Console Table"
+        },
+        {
+          "name": "fridge_0",
+          "description": "Samsung Fridge Freezer RL41WGPS Silver Effect"
+        }
+      ],
+      "bedroom_0": [
+        {
+          "name": "shelves_0",
+          "description": "John Lewis Mitchell Floating Shelves, Small"
+        },
+        {
+          "name": "shelves_1",
+          "description": "bookshelf"
+        },
+        {
+          "name": "stool_0",
+          "description": "Uphostered Stool"
+        },
+        {
+          "name": "bed_0",
+          "description": "Dream bed"
+        }
+      ],
+      "bedroom_1": [
+        {
+          "name": "table_1",
+          "description": "Small African Table"
+        },
+        {
+          "name": "bed_1",
+          "description": "Dream bed"
+        },
+        {
+          "name": "stand_0",
+          "description": "BESTA TV storage combination"
+        }
+      ],
+      "kitchen_0": [
+        {
+          "name": "table_2",
+          "description": "SKOGSTA Dining table"
+        },
+        {
+          "name": "cabinet_0",
+          "description": "Kitchen"
+        },
+        {
+          "name": "fridge_0",
+          "description": "Samsung Fridge Freezer RL41WGPS Silver Effect"
+        }
+      ]
+    },
+    "success_criteria": "- is_on_top(glass_0, table_0)\n- is_on_top(glass_1, table_0)\n- is_next_to(soap_dispenser_0, glass_0)\n- is_clean(glass_0)\n- order: is_next_to(soap_dispenser_0, glass_0) before is_clean(glass_0)\n- is_filled(glass_0)\n- is_next_to(soap_dispenser_0, glass_1)\n- is_clean(glass_1)\n- order: is_next_to(soap_dispenser_0, glass_1) before is_clean(glass_1)\n- is_filled(glass_1)\n- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+    "propositions": [
+      {
+        "function_name": "is_on_top",
+        "args": {
+          "object_handles": [
+            "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+          ],
+          "receptacle_handles": [
+            "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+          ],
+          "number": 1
+        }
+      },
+      {
+        "function_name": "is_on_top",
+        "args": {
+          "object_handles": [
+            "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+          ],
+          "receptacle_handles": [
+            "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+          ],
+          "number": 1
+        }
+      },
+      {
+        "function_name": "is_clean",
+        "args": {
+          "object_handles": [
+            "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+          ],
+          "number": 1
+        }
+      },
+      {
+        "function_name": "is_filled",
+        "args": {
+          "object_handles": [
+            "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+          ],
+          "number": 1
+        }
+      },
+      {
+        "function_name": "is_clean",
+        "args": {
+          "object_handles": [
+            "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+          ],
+          "number": 1
+        }
+      },
+      {
+        "function_name": "is_filled",
+        "args": {
+          "object_handles": [
+            "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+          ],
+          "number": 1
+        }
+      },
+      {
+        "function_name": "is_next_to",
+        "args": {
+          "entity_handles_a": [
+            "Soap_Bottle_26_:0000"
+          ],
+          "entity_handles_b": [
+            "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+          ],
+          "number": 1,
+          "l2_threshold": 0.5
+        }
+      },
+      {
+        "function_name": "is_next_to",
+        "args": {
+          "entity_handles_a": [
+            "Soap_Bottle_26_:0000"
+          ],
+          "entity_handles_b": [
+            "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+          ],
+          "number": 1,
+          "l2_threshold": 0.5
+        }
+      }
+    ]
+  },
+  "snapshot": {
+    "status": "idle",
+    "status_message": "Place done: Successful execution!",
+    "loaded": true,
+    "episode": {
+      "episode_id": "T5-INC-ABS",
+      "scene_id": "106878915_174887025",
+      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+      "data_path": "/home/harshmuriki/Documents/partnr-planner/baseline_evaluation_v3/episodes/task_5/t5-inc-abs/dataset.json.gz",
+      "runtime_config_path": null,
+      "info": {
+        "episode_id": "T5-INC-ABS",
+        "is_dynamic": true,
+        "sample_configs": {
+          "0": {
+            "name": "soap_dispenser_0",
+            "number": 1,
+            "object_classes": [
+              "soap_dispenser"
+            ],
+            "object_instances": [
+              "Soap_Bottle_26"
+            ],
+            "excluded_object_instances": [
+              "B07FFSKHK4",
+              "Soap_Bottle_1",
+              "Soap_Bottle_10",
+              "Soap_Bottle_11",
+              "Soap_Bottle_13",
+              "Soap_Bottle_14",
+              "Soap_Bottle_15",
+              "Soap_Bottle_16",
+              "Soap_Bottle_17",
+              "Soap_Bottle_19",
+              "Soap_Bottle_2",
+              "Soap_Bottle_20",
+              "Soap_Bottle_21",
+              "Soap_Bottle_22",
+              "Soap_Bottle_23",
+              "Soap_Bottle_24",
+              "Soap_Bottle_27",
+              "Soap_Bottle_28",
+              "Soap_Bottle_29",
+              "Soap_Bottle_30",
+              "Soap_Bottle_4",
+              "Soap_Bottle_5",
+              "Soap_Bottle_7",
+              "Soap_Bottle_8"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "cabinet_0"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": true,
+              "is_filled": false
+            }
+          },
+          "1": {
+            "name": "glass_0",
+            "number": 1,
+            "object_classes": [
+              "glass"
+            ],
+            "object_instances": [
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f"
+            ],
+            "excluded_object_instances": [
+              "036edf04844210dae3f5afc59165ad4955b3510b",
+              "038920896508242bee4ea865b8ece6c201e4d858",
+              "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+              "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+              "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+              "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+              "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+              "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+              "1d8c68e142a88354b3f2122f55b0d0531a692822",
+              "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+              "342e1b341104c33d7043365732480ff3a895c86e",
+              "36901b91ca69637a346f6960fb759e2ee3137a63",
+              "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+              "451db10082188928fc1dd679bfc60002cd15d215",
+              "47a2abe797aaaf6798271125727058b33860f456",
+              "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+              "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+              "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+              "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+              "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+              "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+              "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+              "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+              "705123a0be38cef21403a7f373db0c73b1d49ab6",
+              "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+              "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+              "7f4208d306cfb2f43162195c46f59058525d9933",
+              "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+              "8095a303ede64878ee48b9033c98fbc373a52a42",
+              "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+              "952ee2c654a116614574c4407d8182a3d2af656a",
+              "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+              "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+              "Cup_23",
+              "Cup_24",
+              "Cup_25",
+              "Cup_26",
+              "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+              "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+              "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+              "afc1f45e551314e36262c8c9caa341fec805e22f",
+              "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+              "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+              "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+              "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+              "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+              "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+              "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+              "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+              "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+              "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+              "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+              "e4eb86a4385b01025a8bd7256ee3049224262fde",
+              "e99a85fea330ded959c456ac63824608c55c4a2b",
+              "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+              "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+              "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+              "f16d84784094d5618b4147424339d2ede8b22163",
+              "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+              "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+              "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+              "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+              "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+              "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_2"
+            ],
+            "allowed_regions": [
+              "kitchen_0"
+            ],
+            "object_states": {
+              "is_clean": false,
+              "is_filled": false
+            }
+          },
+          "2": {
+            "name": "glass_1",
+            "number": 1,
+            "object_classes": [
+              "glass"
+            ],
+            "object_instances": [
+              "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794"
+            ],
+            "excluded_object_instances": [
+              "036edf04844210dae3f5afc59165ad4955b3510b",
+              "038920896508242bee4ea865b8ece6c201e4d858",
+              "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+              "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+              "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+              "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+              "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+              "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+              "1d8c68e142a88354b3f2122f55b0d0531a692822",
+              "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+              "342e1b341104c33d7043365732480ff3a895c86e",
+              "36901b91ca69637a346f6960fb759e2ee3137a63",
+              "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+              "451db10082188928fc1dd679bfc60002cd15d215",
+              "47a2abe797aaaf6798271125727058b33860f456",
+              "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+              "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+              "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+              "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+              "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+              "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+              "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+              "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+              "705123a0be38cef21403a7f373db0c73b1d49ab6",
+              "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+              "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+              "7f4208d306cfb2f43162195c46f59058525d9933",
+              "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+              "8095a303ede64878ee48b9033c98fbc373a52a42",
+              "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+              "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+              "952ee2c654a116614574c4407d8182a3d2af656a",
+              "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+              "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+              "Cup_23",
+              "Cup_24",
+              "Cup_25",
+              "Cup_26",
+              "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+              "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+              "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+              "afc1f45e551314e36262c8c9caa341fec805e22f",
+              "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+              "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+              "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+              "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+              "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+              "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+              "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+              "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+              "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+              "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+              "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+              "e4eb86a4385b01025a8bd7256ee3049224262fde",
+              "e99a85fea330ded959c456ac63824608c55c4a2b",
+              "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+              "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+              "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+              "f16d84784094d5618b4147424339d2ede8b22163",
+              "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+              "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+              "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+              "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+              "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+              "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+            ],
+            "location": "on",
+            "furniture_names": [
+              "table_3"
+            ],
+            "allowed_regions": [
+              "living_room_0"
+            ],
+            "object_states": {
+              "is_clean": false,
+              "is_filled": false
+            }
+          }
+        },
+        "object_labels": {},
+        "extra_info": {
+          "scene_id": "106878915_174887025",
+          "episode_id": "T5-INC-ABS",
+          "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+          "initial_state": [
+            {
+              "name": "soap_dispenser_0",
+              "number": 1,
+              "object_classes": [
+                "soap_dispenser"
+              ],
+              "object_instances": [
+                "Soap_Bottle_26"
+              ],
+              "excluded_object_instances": [
+                "B07FFSKHK4",
+                "Soap_Bottle_1",
+                "Soap_Bottle_10",
+                "Soap_Bottle_11",
+                "Soap_Bottle_13",
+                "Soap_Bottle_14",
+                "Soap_Bottle_15",
+                "Soap_Bottle_16",
+                "Soap_Bottle_17",
+                "Soap_Bottle_19",
+                "Soap_Bottle_2",
+                "Soap_Bottle_20",
+                "Soap_Bottle_21",
+                "Soap_Bottle_22",
+                "Soap_Bottle_23",
+                "Soap_Bottle_24",
+                "Soap_Bottle_27",
+                "Soap_Bottle_28",
+                "Soap_Bottle_29",
+                "Soap_Bottle_30",
+                "Soap_Bottle_4",
+                "Soap_Bottle_5",
+                "Soap_Bottle_7",
+                "Soap_Bottle_8"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "cabinet_0"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": true,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "glass_0",
+              "number": 1,
+              "object_classes": [
+                "glass"
+              ],
+              "object_instances": [
+                "9428caf70c42e50bb3c3c604eba00c43b8efb58f"
+              ],
+              "excluded_object_instances": [
+                "036edf04844210dae3f5afc59165ad4955b3510b",
+                "038920896508242bee4ea865b8ece6c201e4d858",
+                "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+                "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+                "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+                "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+                "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+                "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+                "1d8c68e142a88354b3f2122f55b0d0531a692822",
+                "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+                "342e1b341104c33d7043365732480ff3a895c86e",
+                "36901b91ca69637a346f6960fb759e2ee3137a63",
+                "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+                "451db10082188928fc1dd679bfc60002cd15d215",
+                "47a2abe797aaaf6798271125727058b33860f456",
+                "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+                "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+                "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+                "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+                "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+                "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+                "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+                "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+                "705123a0be38cef21403a7f373db0c73b1d49ab6",
+                "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+                "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+                "7f4208d306cfb2f43162195c46f59058525d9933",
+                "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+                "8095a303ede64878ee48b9033c98fbc373a52a42",
+                "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+                "952ee2c654a116614574c4407d8182a3d2af656a",
+                "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+                "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+                "Cup_23",
+                "Cup_24",
+                "Cup_25",
+                "Cup_26",
+                "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+                "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+                "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+                "afc1f45e551314e36262c8c9caa341fec805e22f",
+                "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+                "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+                "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+                "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+                "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+                "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+                "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+                "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+                "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+                "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+                "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+                "e4eb86a4385b01025a8bd7256ee3049224262fde",
+                "e99a85fea330ded959c456ac63824608c55c4a2b",
+                "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+                "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+                "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+                "f16d84784094d5618b4147424339d2ede8b22163",
+                "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+                "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794",
+                "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+                "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+                "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+                "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+                "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_2"
+              ],
+              "allowed_regions": [
+                "kitchen_0"
+              ],
+              "object_states": {
+                "is_clean": false,
+                "is_filled": false
+              }
+            },
+            {
+              "name": "glass_1",
+              "number": 1,
+              "object_classes": [
+                "glass"
+              ],
+              "object_instances": [
+                "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794"
+              ],
+              "excluded_object_instances": [
+                "036edf04844210dae3f5afc59165ad4955b3510b",
+                "038920896508242bee4ea865b8ece6c201e4d858",
+                "08c7b32154bd2be6ca30acd3f36eef83f14093f6",
+                "0a75f4c9f12d95998f1e5ceb5399e918ea798233",
+                "0bb625a34e05d6cde6fe76da7535bc5bdc645187",
+                "11abcecb63a82d14a55fc5c31c7aaa0095e65959",
+                "180b7d1568055fbd98a2beea6e4ebf87cc3cc13a",
+                "1ca7e1561d6e217a554a69cee35d79f54210efbd",
+                "1d8c68e142a88354b3f2122f55b0d0531a692822",
+                "2056e0db6d0d28703bb100d63a2d864ffe295b10",
+                "342e1b341104c33d7043365732480ff3a895c86e",
+                "36901b91ca69637a346f6960fb759e2ee3137a63",
+                "3ce41cf0b912a259a5b352d5bf1141ee102640d9",
+                "451db10082188928fc1dd679bfc60002cd15d215",
+                "47a2abe797aaaf6798271125727058b33860f456",
+                "557a40dc33710de63f7694b1b61bfeed6e8169c8",
+                "57206ff682d16e45f0abb873010eef8b1b73d4f7",
+                "5987a90f46b36e79028cc46a90fa39bc0b9cb2a3",
+                "5abb2927ea06f2e203f8a6a6b6ae686951c2b8ba",
+                "5c574ca2d0488f3c0d093b2ed98f14b4621ddf52",
+                "5eeb81b42abaf26678aca7a68b9c3837521de5c9",
+                "6a16a8ab35222e408cc16e76ceb32d2b6daf3bd9",
+                "6d8cb689ff72a3541b44a4f06522d9af8a2fc849",
+                "705123a0be38cef21403a7f373db0c73b1d49ab6",
+                "713f7728ff51839ceb2fe0e3a42afd5abc78a21f",
+                "7e9324504cfeeb3f274b1fa923bc0c8d7c6fcdff",
+                "7f4208d306cfb2f43162195c46f59058525d9933",
+                "7fad97a0f7c563828f974d210b9e02ccd5a7dfda",
+                "8095a303ede64878ee48b9033c98fbc373a52a42",
+                "80b1ffbe7ec9e1a52084d11a4ed6881f0a6c45bb",
+                "9428caf70c42e50bb3c3c604eba00c43b8efb58f",
+                "952ee2c654a116614574c4407d8182a3d2af656a",
+                "991bae3b8af2a9a110e32138d6a63ae1f038c0bc",
+                "9e9c524a5a0e48b10ac64db3205ba7e282b3890d",
+                "Cup_23",
+                "Cup_24",
+                "Cup_25",
+                "Cup_26",
+                "a4654ee5e9322c13bf2c85cb8e2c988c7c4365db",
+                "a9233f1d4e03c3ab2918452f15c9ed6c389be24a",
+                "ae6a4b5afdecc959fdfc8abd4c20a5eef6754629",
+                "afc1f45e551314e36262c8c9caa341fec805e22f",
+                "b09008488fdb3dc94b0be198e64f8577a32af1c6",
+                "b808e79f1fd6afd447a261a1582225a3a4aecb0b",
+                "b8e358f78ada8bc52942ae23f7dbfbb40c754f74",
+                "bba3a6aa50ca40c96680cd4873571b5077e05e85",
+                "c5cfee504a6981913ed99661a89fc226f2b8bfc2",
+                "cb99e067e7b29c10b0dd4af17b50969a94e1796c",
+                "cd31b4fdd82a4e828ef8d81df613750a7891b2c6",
+                "ce8c564ea9c0c35b4471f30d0a05a1e42b2c2e4b",
+                "d0013d74e62fab22d3ebf6788dc6d7aacb13a6ae",
+                "deae6afb3e14ad1c829bb9f89d3eae8a34272c42",
+                "e287e12ce31d87baa7b6faadf574ebd5aae505f0",
+                "e4eb86a4385b01025a8bd7256ee3049224262fde",
+                "e99a85fea330ded959c456ac63824608c55c4a2b",
+                "ea1077f65aea8ec9e385ff8ef1a385e01a20a77b",
+                "f04d80ce2525f028590578c9c04f7626ca3f4d94",
+                "f0fcdbcf659234717b03b5ff7fd76c1bbd7302ad",
+                "f16d84784094d5618b4147424339d2ede8b22163",
+                "f737d0e07f2927d7b4f43abb3a7267adfa5e3cf9",
+                "fd4b49e473ea5f9b0b4956c606d6079d21038065",
+                "xxxx04ce6371xf141x45dcx8d79xf7c193d2a1b6",
+                "xxxx6c766532xa291x4bd4xa75fx2ef35a0e008d",
+                "xxxx82261fccxf2d8x4aacxbf4axb3a0a222dbad",
+                "xxxxf16549ddx025ax48bdxa70dx755da3ec8608"
+              ],
+              "location": "on",
+              "furniture_names": [
+                "table_3"
+              ],
+              "allowed_regions": [
+                "living_room_0"
+              ],
+              "object_states": {
+                "is_clean": false,
+                "is_filled": false
+              }
+            }
+          ],
+          "obj_info": {
+            "soap_dispenser": "Soap_Bottle_26_:0000",
+            "glass": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+          }
+        },
+        "variant_spec": {
+          "variant_id": "T5-INC-ABS",
+          "sha256": "45caf52b1b72d8d8aacc76784690709ef0ec5793b8bb3b20470c30f928ece728",
+          "entity_handles": {
+            "soap_dispenser_0": "Soap_Bottle_26_:0000",
+            "glass_0": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000",
+            "glass_1": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+          },
+          "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- soap_dispenser_0: no record; the robot does not know whether it exists or where it is\n- glass_0: no record; the robot does not know whether it exists or where it is\n- plate_0: no record; the robot does not know whether it exists or where it is",
+          "memory_runtime_applied": false,
+          "unscored_success_text": [
+            "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+          ],
+          "seed": 2269317864,
+          "initial_validation": [
+            "soap_dispenser_0: exact asset, initial states, furniture, region checked",
+            "glass_0: exact asset, initial states, furniture, region checked",
+            "glass_1: exact asset, initial states, furniture, region checked"
+          ],
+          "source_workbook_sha256": "f4fca4484041e4eca9d617d9dd2688f4625f7bf086bcade960628fcbe291857d"
+        }
+      }
+    },
+    "skills": {
+      "Navigate": "Navigate <agent_index> <entity_name>",
+      "Explore": "Explore <agent_index> <room_name>",
+      "Open": "Open <agent_index> <entity_name>",
+      "Close": "Close <agent_index> <entity_name>",
+      "Pick": "Pick <agent_index> <entity_name>",
+      "Place": "Place <agent_index> <entity,relation,furniture,constraint,reference>",
+      "Fill": "Fill <agent_index> <entity_name>",
+      "Pour": "Pour <agent_index> <entity_name>",
+      "Clean": "Clean <agent_index> <entity_name>",
+      "PowerOn": "PowerOn <agent_index> <entity_name>",
+      "PowerOff": "PowerOff <agent_index> <entity_name>"
+    },
+    "entities": {
+      "rooms": [
+        "porch_1",
+        "porch_2",
+        "bathroom_1",
+        "bathroom_2",
+        "bedroom_1",
+        "bedroom_2",
+        "entryway_1",
+        "workout_1",
+        "living_room_1",
+        "kitchen_1",
+        "unknown_room"
+      ],
+      "furniture": [
+        {
+          "name": "floor_porch_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_porch_2",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bathroom_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bathroom_2",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bedroom_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_bedroom_2",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_entryway_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_workout_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_living_room_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "floor_kitchen_1",
+          "sim_handle": "floor"
+        },
+        {
+          "name": "washer_dryer_10",
+          "sim_handle": "16c33cffd5b62d0d5df5ed6dd607f690ce2ee7c7_:0000"
+        },
+        {
+          "name": "table_11",
+          "sim_handle": "29c4cb616586ab3b47d648b08b40a74a9b2c083f_:0000"
+        },
+        {
+          "name": "shelves_12",
+          "sim_handle": "3220d21b0885b4f0ac2c044d00a76c2ff7844dca_:0000"
+        },
+        {
+          "name": "table_13",
+          "sim_handle": "4a5f3b29cc15b191bb35bfae6c5918087a173827_:0000"
+        },
+        {
+          "name": "shelves_14",
+          "sim_handle": "679d4207f433ee1bb6030bae48df158a775d2b0b_part_64_:0000"
+        },
+        {
+          "name": "stool_15",
+          "sim_handle": "8a2d6c76deccf5964e793c0e591b985590bb916a_:0000"
+        },
+        {
+          "name": "table_16",
+          "sim_handle": "91762e71879d66596716bfa58beca60624e95773_:0000"
+        },
+        {
+          "name": "bed_17",
+          "sim_handle": "a9bb13d8f342efded56484a24b16f896d95a749f_:0000"
+        },
+        {
+          "name": "couch_18",
+          "sim_handle": "b31b3406480c29c8e44613edece1325cb5bd85ae_:0000"
+        },
+        {
+          "name": "bed_19",
+          "sim_handle": "e1d008861be1c6252e581526031b15ca5be867b1_:0000"
+        },
+        {
+          "name": "table_20",
+          "sim_handle": "183de9f61a9c362d58ac340058ecddc54da18809_:0000"
+        },
+        {
+          "name": "cabinet_21",
+          "sim_handle": "412c833d4428480466b704ce25bf06f519c8cf72_:0000"
+        },
+        {
+          "name": "fridge_22",
+          "sim_handle": "78a02cbe18b9bac0aedf264e100a73f34fd05023_:0000"
+        },
+        {
+          "name": "stand_23",
+          "sim_handle": "e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000"
+        }
+      ],
+      "objects": [
+        {
+          "name": "soap_dispenser_0",
+          "sim_handle": "Soap_Bottle_26_:0000"
+        },
+        {
+          "name": "glass_0",
+          "sim_handle": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000"
+        },
+        {
+          "name": "glass_1",
+          "sim_handle": "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000"
+        }
+      ],
+      "receptacles": [
+        "rec_washer_dryer_10_0",
+        "rec_table_11_0",
+        "rec_shelves_12_0",
+        "rec_table_13_0",
+        "rec_shelves_14_0",
+        "rec_shelves_14_1",
+        "rec_shelves_14_2",
+        "rec_shelves_14_3",
+        "rec_stool_15_0",
+        "rec_table_16_0",
+        "rec_table_16_1",
+        "rec_bed_17_0",
+        "rec_bed_17_1",
+        "rec_bed_17_2",
+        "rec_couch_18_0",
+        "rec_couch_18_1",
+        "rec_couch_18_2",
+        "rec_couch_18_3",
+        "rec_couch_18_4",
+        "rec_couch_18_5",
+        "rec_couch_18_6",
+        "rec_couch_18_7",
+        "rec_couch_18_8",
+        "rec_bed_19_0",
+        "rec_bed_19_1",
+        "rec_bed_19_2",
+        "rec_table_20_0",
+        "rec_table_20_1",
+        "rec_cabinet_21_0",
+        "rec_cabinet_21_1",
+        "rec_fridge_22_0",
+        "rec_fridge_22_1",
+        "rec_stand_23_0",
+        "rec_stand_23_1",
+        "rec_stand_23_2",
+        "rec_stand_23_3"
+      ],
+      "entity_names": [
+        "porch_1",
+        "porch_2",
+        "bathroom_1",
+        "bathroom_2",
+        "bedroom_1",
+        "bedroom_2",
+        "entryway_1",
+        "workout_1",
+        "living_room_1",
+        "kitchen_1",
+        "unknown_room",
+        "floor_porch_1",
+        "floor_porch_2",
+        "floor_bathroom_1",
+        "floor_bathroom_2",
+        "floor_bedroom_1",
+        "floor_bedroom_2",
+        "floor_entryway_1",
+        "floor_workout_1",
+        "floor_living_room_1",
+        "floor_kitchen_1",
+        "washer_dryer_10",
+        "table_11",
+        "shelves_12",
+        "table_13",
+        "shelves_14",
+        "stool_15",
+        "table_16",
+        "bed_17",
+        "couch_18",
+        "bed_19",
+        "table_20",
+        "cabinet_21",
+        "fridge_22",
+        "stand_23",
+        "soap_dispenser_0",
+        "glass_0",
+        "glass_1",
+        "rec_washer_dryer_10_0",
+        "rec_table_11_0",
+        "rec_shelves_12_0",
+        "rec_table_13_0",
+        "rec_shelves_14_0",
+        "rec_shelves_14_1",
+        "rec_shelves_14_2",
+        "rec_shelves_14_3",
+        "rec_stool_15_0",
+        "rec_table_16_0",
+        "rec_table_16_1",
+        "rec_bed_17_0",
+        "rec_bed_17_1",
+        "rec_bed_17_2",
+        "rec_couch_18_0",
+        "rec_couch_18_1",
+        "rec_couch_18_2",
+        "rec_couch_18_3",
+        "rec_couch_18_4",
+        "rec_couch_18_5",
+        "rec_couch_18_6",
+        "rec_couch_18_7",
+        "rec_couch_18_8",
+        "rec_bed_19_0",
+        "rec_bed_19_1",
+        "rec_bed_19_2",
+        "rec_table_20_0",
+        "rec_table_20_1",
+        "rec_cabinet_21_0",
+        "rec_cabinet_21_1",
+        "rec_fridge_22_0",
+        "rec_fridge_22_1",
+        "rec_stand_23_0",
+        "rec_stand_23_1",
+        "rec_stand_23_2",
+        "rec_stand_23_3"
+      ]
+    },
+    "graph": {
+      "root": {
+        "name": "house",
+        "type": "House",
+        "children": [
+          {
+            "name": "bathroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_1",
+                "type": "Human"
+              },
+              {
+                "name": "floor_bathroom_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "bathroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_bathroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "washer_dryer_10",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_10_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "bed_17",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_17_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_17_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_17_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_bedroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_12",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_12_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "shelves_14",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_14_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_3",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "stool_15",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_stool_15_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "bed_19",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_19_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_19_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_19_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_bedroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "stand_23",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_stand_23_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_3",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_13",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_13_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "entryway_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_entryway_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "kitchen_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_21",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_21_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "soap_dispenser_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": false
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_cabinet_21_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_kitchen_1",
+                "type": "Floor"
+              },
+              {
+                "name": "table_16",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_16_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_table_16_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "living_room_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_0",
+                "type": "SpotRobot"
+              },
+              {
+                "name": "couch_18",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_18_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_5",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_6",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_7",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_8",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_living_room_1",
+                "type": "Floor"
+              },
+              {
+                "name": "fridge_22",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_fridge_22_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_fridge_22_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_11",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_11_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "glass_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": true
+                        }
+                      },
+                      {
+                        "name": "glass_1",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": true
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_20",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_20_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_table_20_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "porch_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_porch_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "porch_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_porch_2",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "unknown_room",
+            "type": "Room"
+          },
+          {
+            "name": "workout_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_workout_1",
+                "type": "Floor"
+              }
+            ]
+          }
+        ]
+      },
+      "source": "gt"
+    },
+    "gt_graph": {
+      "root": {
+        "name": "house",
+        "type": "House",
+        "children": [
+          {
+            "name": "bathroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_1",
+                "type": "Human"
+              },
+              {
+                "name": "floor_bathroom_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "bathroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_bathroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "washer_dryer_10",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_10_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "bed_17",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_17_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_17_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_17_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_bedroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_12",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_12_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "shelves_14",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_14_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_3",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "stool_15",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_stool_15_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "bed_19",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_19_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_19_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_19_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_bedroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "stand_23",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_stand_23_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_3",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_13",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_13_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "entryway_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_entryway_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "kitchen_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_21",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_21_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "soap_dispenser_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": false
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_cabinet_21_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_kitchen_1",
+                "type": "Floor"
+              },
+              {
+                "name": "table_16",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_16_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_table_16_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "living_room_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_0",
+                "type": "SpotRobot"
+              },
+              {
+                "name": "couch_18",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_18_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_5",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_6",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_7",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_8",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_living_room_1",
+                "type": "Floor"
+              },
+              {
+                "name": "fridge_22",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_fridge_22_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_fridge_22_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_11",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_11_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "glass_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": true
+                        }
+                      },
+                      {
+                        "name": "glass_1",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": true
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_20",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_20_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_table_20_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "porch_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_porch_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "porch_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_porch_2",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "unknown_room",
+            "type": "Room"
+          },
+          {
+            "name": "workout_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_workout_1",
+                "type": "Floor"
+              }
+            ]
+          }
+        ]
+      },
+      "source": "gt"
+    },
+    "robot_graph": {
+      "root": {
+        "name": "house",
+        "type": "House",
+        "children": [
+          {
+            "name": "bathroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_1",
+                "type": "Human"
+              },
+              {
+                "name": "floor_bathroom_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "bathroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_bathroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "washer_dryer_10",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_washer_dryer_10_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_filled": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "bed_17",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_17_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_17_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_17_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_bedroom_1",
+                "type": "Floor"
+              },
+              {
+                "name": "shelves_12",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_12_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "shelves_14",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_shelves_14_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_shelves_14_3",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "stool_15",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_stool_15_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "bedroom_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "bed_19",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_bed_19_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_19_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_bed_19_2",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_bedroom_2",
+                "type": "Floor"
+              },
+              {
+                "name": "stand_23",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_stand_23_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_stand_23_3",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_13",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_13_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "entryway_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_entryway_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "kitchen_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "cabinet_21",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_cabinet_21_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "soap_dispenser_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": false
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_cabinet_21_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "floor_kitchen_1",
+                "type": "Floor"
+              },
+              {
+                "name": "table_16",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_16_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "glass_0",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_table_16_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "living_room_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "agent_0",
+                "type": "SpotRobot"
+              },
+              {
+                "name": "couch_18",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_couch_18_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_1",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_2",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_3",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_4",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_5",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_6",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_7",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_couch_18_8",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "floor_living_room_1",
+                "type": "Floor"
+              },
+              {
+                "name": "fridge_22",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_fridge_22_0",
+                    "type": "Receptacle"
+                  },
+                  {
+                    "name": "rec_fridge_22_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_powered_on": false,
+                  "is_open": false
+                }
+              },
+              {
+                "name": "table_11",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_11_0",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false
+                }
+              },
+              {
+                "name": "table_20",
+                "type": "Furniture",
+                "children": [
+                  {
+                    "name": "rec_table_20_0",
+                    "type": "Receptacle",
+                    "children": [
+                      {
+                        "name": "glass_1",
+                        "type": "Object",
+                        "states": {
+                          "is_clean": true,
+                          "is_filled": true
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "rec_table_20_1",
+                    "type": "Receptacle"
+                  }
+                ],
+                "states": {
+                  "is_clean": false,
+                  "is_open": false
+                }
+              }
+            ]
+          },
+          {
+            "name": "porch_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_porch_1",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "porch_2",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_porch_2",
+                "type": "Floor"
+              }
+            ]
+          },
+          {
+            "name": "unknown_room",
+            "type": "Room"
+          },
+          {
+            "name": "workout_1",
+            "type": "Room",
+            "children": [
+              {
+                "name": "floor_workout_1",
+                "type": "Floor"
+              }
+            ]
+          }
+        ]
+      },
+      "source": "robot"
+    },
+    "has_frame": true,
+    "robot_pose": {
+      "position": [
+        -4.34611701965332,
+        0.17663457989692688,
+        -6.629113674163818
+      ],
+      "yaw": 0.96607506275177
+    },
+    "evaluation": {
+      "success": true,
+      "percent_complete": 1.0,
+      "satisfied_at": [
+        1168,
+        951,
+        1086,
+        1088,
+        853,
+        855,
+        1084,
+        845
+      ],
+      "constraint_satisfaction": [
+        [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      ],
+      "current": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
+    },
+    "aliases": {
+      "soap_dispenser_0": "soap_dispenser_0",
+      "glass_0": "glass_0",
+      "glass_1": "glass_1",
+      "washer_dryer_0": "washer_dryer_10",
+      "table_0": "table_11",
+      "shelves_0": "shelves_12",
+      "table_1": "table_13",
+      "shelves_1": "shelves_14",
+      "stool_0": "stool_15",
+      "table_2": "table_16",
+      "bed_0": "bed_17",
+      "couch_0": "couch_18",
+      "bed_1": "bed_19",
+      "table_3": "table_20",
+      "cabinet_0": "cabinet_21",
+      "fridge_0": "fridge_22",
+      "stand_0": "stand_23",
+      "table_20": "table_20",
+      "porch/terrace/deck/driveway_0": "porch_1",
+      "floor_porch_terrace_deck_driveway_0": "floor_porch_1",
+      "porch/terrace/deck/driveway_1": "porch_2",
+      "floor_porch_terrace_deck_driveway_1": "floor_porch_2",
+      "bathroom_0": "bathroom_1",
+      "floor_bathroom_0": "floor_bathroom_1",
+      "bathroom_1": "bathroom_2",
+      "floor_bathroom_1": "floor_bathroom_2",
+      "bedroom_0": "bedroom_1",
+      "floor_bedroom_0": "floor_bedroom_1",
+      "bedroom_1": "bedroom_2",
+      "floor_bedroom_1": "floor_bedroom_2",
+      "entryway/foyer/lobby_0": "entryway_1",
+      "floor_entryway_foyer_lobby_0": "floor_entryway_1",
+      "workout/gym/exercise_0": "workout_1",
+      "floor_workout_gym_exercise_0": "floor_workout_1",
+      "living_room_0": "living_room_1",
+      "floor_living_room_0": "floor_living_room_1",
+      "kitchen_0": "kitchen_1",
+      "floor_kitchen_0": "floor_kitchen_1"
+    }
+  },
+  "error": null,
+  "sim_steps": 1169,
+  "steps_complete": 1,
+  "artifact_status": "ready",
+  "artifact_error": null,
+  "video_bytes": 2698055,
+  "video_sha256": "e44cb904aeb993fc9a5e99e2e0b522b10df23ed0a8f7636312b7e816e87c291e",
+  "actions": [
+    {
+      "request_id": "c11771c0a0854e1686ad15c10a0e7f5d",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 1,
+      "skill": "Explore",
+      "target": "kitchen_0",
+      "started_at": "2026-09-29T04:44:34.776426+00:00",
+      "result": {
+        "command": "Explore 0 kitchen_1",
+        "skill": "Explore",
+        "agent_index": 0,
+        "target": "kitchen_1",
+        "response": "Successful execution!",
+        "skill_steps": 246,
+        "ok": true,
+        "video": "videos/video-0_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 246,
+        "recording_error": null,
+        "ground_truth_video": "clips/0000.mp4"
+      }
+    },
+    {
+      "request_id": "20c31a06d39d4d5ba267a792cfbeb091",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 2,
+      "skill": "Navigate",
+      "target": "cabinet_0",
+      "started_at": "2026-09-29T04:44:34.800876+00:00",
+      "result": {
+        "command": "Navigate 0 cabinet_21",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "cabinet_21",
+        "response": "Successful execution!",
+        "skill_steps": 65,
+        "ok": true,
+        "video": "videos/video-1_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 65,
+        "recording_error": null,
+        "ground_truth_video": "clips/0001.mp4"
+      }
+    },
+    {
+      "request_id": "14ad0cc4ccec4c00b91588c617e3cfcb",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 3,
+      "skill": "Open",
+      "target": "cabinet_0",
+      "started_at": "2026-09-29T04:44:34.821119+00:00",
+      "result": {
+        "command": "Open 0 cabinet_21",
+        "skill": "Open",
+        "agent_index": 0,
+        "target": "cabinet_21",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-2_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0002.mp4"
+      }
+    },
+    {
+      "request_id": "b34c417866b64f8f977e65509388bd42",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 4,
+      "skill": "Close",
+      "target": "cabinet_0",
+      "started_at": "2026-09-29T04:44:34.839600+00:00",
+      "result": {
+        "command": "Close 0 cabinet_21",
+        "skill": "Close",
+        "agent_index": 0,
+        "target": "cabinet_21",
+        "response": "Successful execution!",
+        "skill_steps": 3,
+        "ok": true,
+        "video": "videos/video-3_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 3,
+        "recording_error": null,
+        "ground_truth_video": "clips/0003.mp4"
+      }
+    },
+    {
+      "request_id": "15441b814bee4fc5be29a2f8c7055082",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 5,
+      "skill": "Explore",
+      "target": "living_room_0",
+      "started_at": "2026-09-29T04:44:34.867167+00:00",
+      "result": {
+        "command": "Explore 0 living_room_1",
+        "skill": "Explore",
+        "agent_index": 0,
+        "target": "living_room_1",
+        "response": "Successful execution!",
+        "skill_steps": 318,
+        "ok": true,
+        "video": "videos/video-4_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 318,
+        "recording_error": null,
+        "ground_truth_video": "clips/0004.mp4"
+      }
+    },
+    {
+      "request_id": "d722d24f7d67442b8847af0ddc9e0061",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 6,
+      "skill": "ReportAbsence",
+      "target": "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+      "started_at": "2026-09-29T04:44:34.890991+00:00",
+      "result": {
+        "ok": true,
+        "response": "Reported no suitable object; abandoning the absent-object subgoal.",
+        "skill_steps": 0
+      }
+    },
+    {
+      "request_id": "57ec2e16748148909775a2c6918d9ced",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 7,
+      "skill": "Navigate",
+      "target": "glass_1",
+      "started_at": "2026-09-29T04:44:34.909239+00:00",
+      "result": {
+        "command": "Navigate 0 glass_1",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "glass_1",
+        "response": "Successful execution!",
+        "skill_steps": 103,
+        "ok": true,
+        "video": "videos/video-5_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 103,
+        "recording_error": null,
+        "ground_truth_video": "clips/0005.mp4"
+      }
+    },
+    {
+      "request_id": "ea5577b87ab74fdaa582c72827ddbf33",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 8,
+      "skill": "Pick",
+      "target": "glass_1",
+      "started_at": "2026-09-29T04:44:34.927585+00:00",
+      "result": {
+        "command": "Pick 0 glass_1",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "glass_1",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-6_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0006.mp4"
+      }
+    },
+    {
+      "request_id": "fb1496be981b414caf85e474b093670b",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 9,
+      "skill": "Navigate",
+      "target": "cabinet_0",
+      "started_at": "2026-09-29T04:44:34.951375+00:00",
+      "result": {
+        "command": "Navigate 0 cabinet_21",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "cabinet_21",
+        "response": "Successful execution!",
+        "skill_steps": 110,
+        "ok": true,
+        "video": "videos/video-7_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 110,
+        "recording_error": null,
+        "ground_truth_video": "clips/0007.mp4"
+      }
+    },
+    {
+      "request_id": "6f32d71819ba4aba92681650d1a11d26",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 10,
+      "skill": "Place",
+      "target": "glass_1,on,cabinet_0,next_to,soap_dispenser_0",
+      "started_at": "2026-09-29T04:44:34.969418+00:00",
+      "result": {
+        "command": "Place 0 glass_1,on,cabinet_21,next_to,soap_dispenser_0",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "glass_1,on,cabinet_21,next_to,soap_dispenser_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-8_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0008.mp4"
+      }
+    },
+    {
+      "request_id": "bb9a5abf4b3a4610859ebc3228ff9269",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 11,
+      "skill": "Clean",
+      "target": "glass_1",
+      "started_at": "2026-09-29T04:44:34.987857+00:00",
+      "result": {
+        "command": "Clean 0 glass_1",
+        "skill": "Clean",
+        "agent_index": 0,
+        "target": "glass_1",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-9_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0009.mp4"
+      }
+    },
+    {
+      "request_id": "747d2ef6d69e4e94902186ae77b68de3",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 12,
+      "skill": "Fill",
+      "target": "glass_1",
+      "started_at": "2026-09-29T04:44:35.005961+00:00",
+      "result": {
+        "command": "Fill 0 glass_1",
+        "skill": "Fill",
+        "agent_index": 0,
+        "target": "glass_1",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-10_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0010.mp4"
+      }
+    },
+    {
+      "request_id": "d8ea6deef72b42a6810b8491134168df",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 13,
+      "skill": "Pick",
+      "target": "glass_1",
+      "started_at": "2026-09-29T04:44:35.024868+00:00",
+      "result": {
+        "command": "Pick 0 glass_1",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "glass_1",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-11_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0011.mp4"
+      }
+    },
+    {
+      "request_id": "a8c751fe8ce04209bc78de1f248eb4d5",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 14,
+      "skill": "Navigate",
+      "target": "table_0",
+      "started_at": "2026-09-29T04:44:35.043338+00:00",
+      "result": {
+        "command": "Navigate 0 table_11",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "table_11",
+        "response": "Successful execution!",
+        "skill_steps": 92,
+        "ok": true,
+        "video": "videos/video-12_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 92,
+        "recording_error": null,
+        "ground_truth_video": "clips/0012.mp4"
+      }
+    },
+    {
+      "request_id": "5a53fa35f83d4f188df4003d306b06e4",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 15,
+      "skill": "Place",
+      "target": "glass_1,on,table_0,none,none",
+      "started_at": "2026-09-29T04:44:35.067985+00:00",
+      "result": {
+        "command": "Place 0 glass_1,on,table_11,none,none",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "glass_1,on,table_11,none,none",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-13_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0013.mp4"
+      }
+    },
+    {
+      "request_id": "755ca583cb9d475cbf6329ca62c51f1f",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 16,
+      "skill": "Navigate",
+      "target": "glass_0",
+      "started_at": "2026-09-29T04:44:35.086482+00:00",
+      "result": {
+        "command": "Navigate 0 glass_0",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "glass_0",
+        "response": "Successful execution!",
+        "skill_steps": 101,
+        "ok": true,
+        "video": "videos/video-14_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 101,
+        "recording_error": null,
+        "ground_truth_video": "clips/0014.mp4"
+      }
+    },
+    {
+      "request_id": "033bbcabf8c64cac82d297d252f9d40e",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 17,
+      "skill": "Pick",
+      "target": "glass_0",
+      "started_at": "2026-09-29T04:44:35.105121+00:00",
+      "result": {
+        "command": "Pick 0 glass_0",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "glass_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-15_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0015.mp4"
+      }
+    },
+    {
+      "request_id": "abb4f217d70f414782e8ab31bbffc8dd",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 18,
+      "skill": "Navigate",
+      "target": "cabinet_0",
+      "started_at": "2026-09-29T04:44:35.124080+00:00",
+      "result": {
+        "command": "Navigate 0 cabinet_21",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "cabinet_21",
+        "response": "Successful execution!",
+        "skill_steps": 28,
+        "ok": true,
+        "video": "videos/video-16_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 28,
+        "recording_error": null,
+        "ground_truth_video": "clips/0016.mp4"
+      }
+    },
+    {
+      "request_id": "df13197e1b314aa8a210859425d328b5",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 19,
+      "skill": "Place",
+      "target": "glass_0,on,cabinet_0,next_to,soap_dispenser_0",
+      "started_at": "2026-09-29T04:44:35.147374+00:00",
+      "result": {
+        "command": "Place 0 glass_0,on,cabinet_21,next_to,soap_dispenser_0",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "glass_0,on,cabinet_21,next_to,soap_dispenser_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-17_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0017.mp4"
+      }
+    },
+    {
+      "request_id": "ec5939ad38d1451fad6874bac726a70d",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 20,
+      "skill": "Clean",
+      "target": "glass_0",
+      "started_at": "2026-09-29T04:44:35.165815+00:00",
+      "result": {
+        "command": "Clean 0 glass_0",
+        "skill": "Clean",
+        "agent_index": 0,
+        "target": "glass_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-18_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0018.mp4"
+      }
+    },
+    {
+      "request_id": "ceff112582474ab0861032959a5ed531",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 21,
+      "skill": "Fill",
+      "target": "glass_0",
+      "started_at": "2026-09-29T04:44:35.185400+00:00",
+      "result": {
+        "command": "Fill 0 glass_0",
+        "skill": "Fill",
+        "agent_index": 0,
+        "target": "glass_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-19_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0019.mp4"
+      }
+    },
+    {
+      "request_id": "a3579041e29f46d494af9c2736e7da3c",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 22,
+      "skill": "Pick",
+      "target": "glass_0",
+      "started_at": "2026-09-29T04:44:35.204221+00:00",
+      "result": {
+        "command": "Pick 0 glass_0",
+        "skill": "Pick",
+        "agent_index": 0,
+        "target": "glass_0",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-20_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0020.mp4"
+      }
+    },
+    {
+      "request_id": "e55c2de2bd314e96be112c8eea8d1a5b",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 23,
+      "skill": "Navigate",
+      "target": "table_0",
+      "started_at": "2026-09-29T04:44:35.224909+00:00",
+      "result": {
+        "command": "Navigate 0 table_11",
+        "skill": "Navigate",
+        "agent_index": 0,
+        "target": "table_11",
+        "response": "Successful execution!",
+        "skill_steps": 76,
+        "ok": true,
+        "video": "videos/video-21_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 76,
+        "recording_error": null,
+        "ground_truth_video": "clips/0021.mp4"
+      }
+    },
+    {
+      "request_id": "1cea0bef503243088d6609f4de604d39",
+      "run_id": "4f5da7cf5a624cb2b400748bf09abb16",
+      "sequence": 24,
+      "skill": "Place",
+      "target": "glass_0,on,table_0,next_to,glass_1",
+      "started_at": "2026-09-29T04:44:35.243431+00:00",
+      "result": {
+        "command": "Place 0 glass_0,on,table_11,next_to,glass_1",
+        "skill": "Place",
+        "agent_index": 0,
+        "target": "glass_0,on,table_11,next_to,glass_1",
+        "response": "Successful execution!",
+        "skill_steps": 2,
+        "ok": true,
+        "video": "videos/video-22_.mp4",
+        "steps_source": "environment_step_calls",
+        "recorded_frames": 2,
+        "recording_error": null,
+        "ground_truth_video": "clips/0022.mp4"
+      }
+    }
+  ],
+  "schema_version": 2,
+  "criteria_evidence": {
+    "status": "pass",
+    "recorded_status": "pass",
+    "met": 11,
+    "total": 11,
+    "criteria": [
+      {
+        "label": "is_on_top(glass_0, table_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 23,
+            "sequence": 24,
+            "skill": "Place",
+            "target": "glass_0,on,table_0,next_to,glass_1",
+            "video_time": 38.9,
+            "simulator_step": 1168
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 1168,
+        "satisfied_at_end": true,
+        "proposition_index": 0
+      },
+      {
+        "label": "is_on_top(glass_1, table_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 14,
+            "sequence": 15,
+            "skill": "Place",
+            "target": "glass_1,on,table_0,none,none",
+            "video_time": 31.666667,
+            "simulator_step": 951
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 951,
+        "satisfied_at_end": true,
+        "proposition_index": 1
+      },
+      {
+        "label": "is_next_to(soap_dispenser_0, glass_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 18,
+            "sequence": 19,
+            "skill": "Place",
+            "target": "glass_0,on,cabinet_0,next_to,soap_dispenser_0",
+            "video_time": 36.1,
+            "simulator_step": 1084
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. This is an intermediate requirement; it need not remain true at the end.",
+        "first_satisfied_at": 1084,
+        "satisfied_at_end": false,
+        "proposition_index": 6
+      },
+      {
+        "label": "is_clean(glass_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 19,
+            "sequence": 20,
+            "skill": "Clean",
+            "target": "glass_0",
+            "video_time": 36.166667,
+            "simulator_step": 1086
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 1086,
+        "satisfied_at_end": true,
+        "proposition_index": 2
+      },
+      {
+        "label": "order: is_next_to(soap_dispenser_0, glass_0) before is_clean(glass_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 18,
+            "sequence": 19,
+            "skill": "Place",
+            "target": "glass_0,on,cabinet_0,next_to,soap_dispenser_0",
+            "video_time": 36.1,
+            "simulator_step": 1084
+          },
+          {
+            "action_index": 19,
+            "sequence": 20,
+            "skill": "Clean",
+            "target": "glass_0",
+            "video_time": 36.166667,
+            "simulator_step": 1086
+          }
+        ],
+        "detail": "The first requirement must be satisfied before the second. Links follow that order."
+      },
+      {
+        "label": "is_filled(glass_0)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 20,
+            "sequence": 21,
+            "skill": "Fill",
+            "target": "glass_0",
+            "video_time": 36.233333,
+            "simulator_step": 1088
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 1088,
+        "satisfied_at_end": true,
+        "proposition_index": 3
+      },
+      {
+        "label": "is_next_to(soap_dispenser_0, glass_1)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 8,
+            "sequence": 9,
+            "skill": "Navigate",
+            "target": "cabinet_0",
+            "video_time": 28.133333,
+            "simulator_step": 845
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. This is an intermediate requirement; it need not remain true at the end.",
+        "first_satisfied_at": 845,
+        "satisfied_at_end": false,
+        "proposition_index": 7
+      },
+      {
+        "label": "is_clean(glass_1)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 10,
+            "sequence": 11,
+            "skill": "Clean",
+            "target": "glass_1",
+            "video_time": 28.4,
+            "simulator_step": 853
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 853,
+        "satisfied_at_end": true,
+        "proposition_index": 4
+      },
+      {
+        "label": "order: is_next_to(soap_dispenser_0, glass_1) before is_clean(glass_1)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 8,
+            "sequence": 9,
+            "skill": "Navigate",
+            "target": "cabinet_0",
+            "video_time": 28.133333,
+            "simulator_step": 845
+          },
+          {
+            "action_index": 10,
+            "sequence": 11,
+            "skill": "Clean",
+            "target": "glass_1",
+            "video_time": 28.4,
+            "simulator_step": 853
+          }
+        ],
+        "detail": "The first requirement must be satisfied before the second. Links follow that order."
+      },
+      {
+        "label": "is_filled(glass_1)",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 11,
+            "sequence": 12,
+            "skill": "Fill",
+            "target": "glass_1",
+            "video_time": 28.466667,
+            "simulator_step": 855
+          }
+        ],
+        "detail": "First satisfied during the recorded step below. Still satisfied at the end.",
+        "first_satisfied_at": 855,
+        "satisfied_at_end": true,
+        "proposition_index": 5
+      },
+      {
+        "label": "The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+        "status": "pass",
+        "evidence": [
+          {
+            "action_index": 5,
+            "sequence": 6,
+            "skill": "ReportAbsence",
+            "target": "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
+            "video_time": 21.166667,
+            "simulator_step": null
+          }
+        ],
+        "detail": "Explicit absence report in the saved action list."
+      }
+    ],
+    "basis": "Saved evaluator results, including final-state and ordering constraints. Step links mark the first time a requirement became true, not an inferred cause."
+  },
+  "simulator_steps_definition": "Sum of per-action environment step calls; reports add zero.",
+  "video_playback_fps": 30,
+  "room_choices": {
+    "soap_dispenser_0": [
+      "kitchen_0",
+      "bathroom_0",
+      "bathroom_1"
+    ],
+    "glass_0": [
+      "kitchen_0",
+      "living_room_0"
+    ],
+    "glass_1": [
+      "kitchen_0",
+      "living_room_0"
+    ],
+    "plate_0": [
+      "kitchen_0",
+      "living_room_0"
+    ]
+  },
+  "furniture_choices": {
+    "soap_dispenser_0": [
+      "cabinet_0"
+    ],
+    "glass_0": [
+      "table_2",
+      "cabinet_0",
+      "table_0",
+      "table_3"
+    ],
+    "glass_1": [
+      "table_2",
+      "cabinet_0",
+      "table_0",
+      "table_3"
+    ],
+    "plate_0": [
+      "cabinet_0",
+      "table_2",
+      "table_0"
+    ]
+  },
+  "video": "video.mp4"
+}

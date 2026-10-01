@@ -218,11 +218,10 @@
     "- Using blue_hand_towel_0 in place of the missing hand_towel_0 counts as success; do not require or invent a hand_towel.",
     "- Using cup_0 in place of the missing bottle_0 counts as success; do not require or invent a bottle."
   ],
-  "spec_sha256": "07f16cd75c95a36c9028a0282ffbce5f0009e9606a458c6c5cb0c67ef480e799",
-  "initial_robot_memory": "- bread_0: on counter_0 (kitchen_0)\n- cup_0: on table_7 (dining_room_0), is_clean, is_filled\n- blue_hand_towel_0: on shelves_11 (bathroom_2), is_clean\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on",
+  "spec_sha256": "2b917caee32b2c7a3cfb36e6ed269acb36b93dd409e96ce021ce6e787bdfcfe5",
+  "initial_robot_memory": "- bread_0: on counter_0 (kitchen_0)\n- cup_0: on table_7 (dining_room_0), is_clean, is_filled\n- blue_hand_towel_0: on shelves_11 (bathroom_2), is_clean\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on\n- bottle_0: known absent; no water bottle exists anywhere in the scene\n- hand_towel_0: known absent; there is no hand towel besides blue_hand_towel_0",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

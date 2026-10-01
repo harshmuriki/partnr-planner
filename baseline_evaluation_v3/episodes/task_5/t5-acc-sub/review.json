@@ -221,11 +221,10 @@
   "unscored_success_text": [
     "- Using plate_black_0 in place of the missing plate_0 counts as success; do not require or invent a plate."
   ],
-  "spec_sha256": "422b030b282b30f97cc69fb5323917f95cf0715f7f8f90a2961866e449164d92",
-  "initial_robot_memory": "- soap_dispenser_0: on cabinet_0 (kitchen_0), is_clean, is_empty\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_black_0: on cabinet_0 (kitchen_0), is_clean",
+  "spec_sha256": "ce44e667e181e7fb774d4bcc8494bc15c57b744f3710a870507748bebf411e8e",
+  "initial_robot_memory": "- soap_dispenser_0: on cabinet_0 (kitchen_0), is_clean, is_empty\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_black_0: on cabinet_0 (kitchen_0), is_clean\n- plate_0: known absent; no white plate exists anywhere in the scene",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

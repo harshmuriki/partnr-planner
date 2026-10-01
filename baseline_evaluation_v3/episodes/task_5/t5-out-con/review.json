@@ -22,17 +22,7 @@
           "cabinet_0"
         ]
       },
-      "expected": {
-        "relation": "within",
-        "furniture": "cabinet_0",
-        "room": "kitchen_0",
-        "states": {
-          "is_clean": true,
-          "is_filled": false
-        },
-        "next_to": [],
-        "closed": []
-      },
+      "expected": null,
       "position": [
         -5.294839859008789,
         0.24528999626636505,
@@ -223,12 +213,11 @@
     "plate_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "25310d5172fcdd8eadf6cc21a75b9bc80b8d5b699f6b1c992c1800b7234854b1",
+  "spec_sha256": "6e48cc6ca516e5099804961a10a52fc9f433dcae2e05f90aeb78e72b966fcc31",
   "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
   "benchmark_ready": false,
-  "reused_sample": "T5-ACC-CON",
-  "runtime_verified": true
+  "reused_sample": "T5-ACC-CON"
 }

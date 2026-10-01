@@ -1,0 +1,1798 @@
+[
+  {
+    "variant": "T6-OUT-CON",
+    "old_run_id": "15ee2d31aab647ef9e8c3bde35168caa",
+    "spec_hash": "5b0f50a18b7831b4c7c0ee71b614a5fdc9db3cc4f97e17f2e905e0ab1f90e1d3",
+    "dataset_hash": "f77e726ee27ff79309c6d7c8a17898aed39a03e8daeb9e08e2f3ab442745c4a8",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "table_7"
+      },
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_5"
+      },
+      {
+        "skill": "Explore",
+        "target": "dining_room_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "garage_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Open",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Close",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "chair_9"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Explore",
+        "target": "laundryroom/mudroom_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-ACC-ABS",
+    "old_run_id": "656849a8984a45d89373e745d5a305ba",
+    "spec_hash": "ee98970307c66ba4465ab032e1b2283e11ab4240a9078cd8bb4475805b4ab42e",
+    "dataset_hash": "d1548d0b26377b96c3c8b30dfd0993593797225e3bdd8f0726b55096096e55a5",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "ReportAbsence",
+        "target": "- The hand_towel (hand_towel_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-ACC-BASE",
+    "old_run_id": "60975db5a2d14f6da6de6f11e9beab77",
+    "spec_hash": "4fe346eab5ddf121e2fcf1b2de052a360416f9be663c95fa8444e896af70a72d",
+    "dataset_hash": "83cd975a1283dde7c6264016f3ec929b9002c4ae1addf083d2320e2fc67ae693",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-ACC-CON",
+    "old_run_id": "eb221f51a7fa4ba6abbd225cfc1af401",
+    "spec_hash": "f300911fb688553f16586c4cb3b7bc7df4ab56444228f9f53745d58759342cf0",
+    "dataset_hash": "90537efc134d28e0390e4af1f223eaa54eb7bbea9a2eec1a409f587dd5011c18",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Open",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Close",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-ACC-DIS",
+    "old_run_id": "81ef5411915f48a4810d64cba630d5c5",
+    "spec_hash": "4b4a46c6f1e9e153ddd220687fca3d3a71e715bbb2a79bff60d1bc20451e2481",
+    "dataset_hash": "df8f94b9ae87feba27b20d3ee1e05ac43f81b7ce354d42e5e90ab31e50e4af75",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-ACC-SUB",
+    "old_run_id": "470b570e2355484ca6729ece08461ac9",
+    "spec_hash": "2b917caee32b2c7a3cfb36e6ed269acb36b93dd409e96ce021ce6e787bdfcfe5",
+    "dataset_hash": "5098bbbdf8bab94ee4ffb9aeace1175f75b18328574ed12da28eba9387ceda1c",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cup_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "cup_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "cup_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "blue_hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "blue_hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "blue_hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-INC-ABS",
+    "old_run_id": "8d95b8a10e94446a8e30b113661c8aeb",
+    "spec_hash": "30304ffdab82fd1c213b57ebe2cf8cad4352ceec00ca958e72e091643aa9cfdf",
+    "dataset_hash": "dac45a8ac370d5be950fbb575d5786fd9bf75992530a4898b42d0718f899c2fd",
+    "steps": [
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Explore",
+        "target": "dining_room_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Explore",
+        "target": "laundryroom/mudroom_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "ReportAbsence",
+        "target": "- The hand_towel (hand_towel_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-INC-BASE",
+    "old_run_id": "04e5b5525e064eb887bd3b4aeee54290",
+    "spec_hash": "7dc44cbc0c8351f0e70f6eaf189271e3050ee970c199e121acd43d7f2ddb789c",
+    "dataset_hash": "8b1dd73b2f2ce125cd23e65399a03b03eec67d1605d1c13d6c813518f488dafd",
+    "steps": [
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Explore",
+        "target": "dining_room_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Navigate",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-INC-CON",
+    "old_run_id": "9dad362033074f57b2d28b853b834f17",
+    "spec_hash": "5237192e4d15592a89602c53e81d7ff11d2da93fab9c4a51d1d00d09a98e5686",
+    "dataset_hash": "4ddb256bd4b16fbbe6ab441db3669a8d1a435e11ef9a802b1eb6e2675ee68ac7",
+    "steps": [
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_1"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Explore",
+        "target": "dining_room_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "garage_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Open",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Close",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Explore",
+        "target": "laundryroom/mudroom_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-INC-DIS",
+    "old_run_id": "42329074fcd344f29e501cb013d02003",
+    "spec_hash": "40aa87e438a958859730a37cfed18049d0fb448149ab7e19b58954d1e7e743bc",
+    "dataset_hash": "eb709ee92ded2a51a7f4ef3d0cdbc8f8b164d4c63e77636d96fdb7238afb0b86",
+    "steps": [
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Explore",
+        "target": "dining_room_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Navigate",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-INC-SUB",
+    "old_run_id": "acd6e5cd189441758c75986bd654dcd5",
+    "spec_hash": "83b5c38063bbc2df64420e760e9cc700b896231e429d64cd8aea61f2212d4c81",
+    "dataset_hash": "6bfe9dbffa3d85105b026466425a15fc40ed3aad60a4d337e443c050ffac2561",
+    "steps": [
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Explore",
+        "target": "dining_room_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "garage_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Open",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Close",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cup_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "cup_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "cup_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Explore",
+        "target": "laundryroom/mudroom_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Navigate",
+        "target": "blue_hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "blue_hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "blue_hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-OUT-ABS",
+    "old_run_id": "41012317c3f54c78851d29fc112e0384",
+    "spec_hash": "bc0f6417c93c51738602ee4ad6948cfaabab74180574b08851c0ed22d5fcabcc",
+    "dataset_hash": "d640394ea5f94d134c9921937768eb5105f80b77aa803da0df47152ad83a2011",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "table_7"
+      },
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "chair_9"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Explore",
+        "target": "laundryroom/mudroom_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "ReportAbsence",
+        "target": "- The hand_towel (hand_towel_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-OUT-BASE",
+    "old_run_id": "c313a14611644c8387ce327e642f21ec",
+    "spec_hash": "5ac7e92b8fb25717521c7c4b5ac1da771aa026d3698cee31b49945e2bc8f3857",
+    "dataset_hash": "c0c177e31170127b1aeb7254f128cdf8459b928e31a3afa240783986142dc132",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "table_7"
+      },
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "chair_9"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Navigate",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-OUT-DIS",
+    "old_run_id": "f686473d0ffa4fe4904c6749be9313dd",
+    "spec_hash": "43a11f0a88c3276af5192b66629d7a733e46a07330fe10267ab59b3ccb21acba",
+    "dataset_hash": "6750465cf616a08b692c7057e1e36bfba39db6bd41b44faee8828ca46dd0611f",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "table_7"
+      },
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bottle_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bottle_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "chair_9"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Navigate",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  },
+  {
+    "variant": "T6-OUT-SUB",
+    "old_run_id": "77861854f18c4a5c8b9deda3a3a6f48b",
+    "spec_hash": "b621b6cd77865037663a77445519c06ad3af34e8fb7251f3829404c4cbb0cfa7",
+    "dataset_hash": "692cc66c459af97076e4798bceaf22c39abefe23f2614f086093cd12f131e215",
+    "steps": [
+      {
+        "skill": "Navigate",
+        "target": "table_7"
+      },
+      {
+        "skill": "Explore",
+        "target": "kitchen_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,within,microwave_0,none,none"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Open",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "bread_0"
+      },
+      {
+        "skill": "Close",
+        "target": "microwave_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "bread_0,on,table_11,none,none"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_5"
+      },
+      {
+        "skill": "Explore",
+        "target": "dining_room_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "garage_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Open",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Close",
+        "target": "fridge_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cup_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "cup_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "cup_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "chair_9"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_0"
+      },
+      {
+        "skill": "Explore",
+        "target": "bathroom_2"
+      },
+      {
+        "skill": "Explore",
+        "target": "laundryroom/mudroom_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_19"
+      },
+      {
+        "skill": "Navigate",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Open",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Close",
+        "target": "cabinet_23"
+      },
+      {
+        "skill": "Navigate",
+        "target": "blue_hand_towel_0"
+      },
+      {
+        "skill": "Pick",
+        "target": "blue_hand_towel_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "table_11"
+      },
+      {
+        "skill": "Place",
+        "target": "blue_hand_towel_0,on,table_11,next_to,bread_0"
+      },
+      {
+        "skill": "Navigate",
+        "target": "lamp_living_0"
+      },
+      {
+        "skill": "PowerOff",
+        "target": "lamp_living_0"
+      }
+    ]
+  }
+]

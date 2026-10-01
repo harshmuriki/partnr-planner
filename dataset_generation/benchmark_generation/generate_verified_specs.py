@@ -301,7 +301,7 @@ def render_views(gen, spec, handles, directory):
                 Image.fromarray(obs.obs_data[:,:,:3]).save(directory/name, quality=88)
                 views.append(dict(label=suffix, image=name, target_visible=visible))
             result.append(dict(entity=entity, asset=spec['entities'][entity]['asset'], handle=handle,
-                initial=state, expected=spec['final'][entity], position=list(map(float,p)), views=views,
+                initial=state, expected=spec['final'].get(entity), position=list(map(float,p)), views=views,
                 receptacle=gen.object_to_containing_receptacle[handle].unique_name if gen.object_to_containing_receptacle[handle] else 'floor'))
     finally:
         dbv.remove_dbv_agent()

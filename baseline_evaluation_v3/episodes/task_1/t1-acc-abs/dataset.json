@@ -12,8 +12,17 @@
         "data/objects_ovmm/train_val/google_scanned/configs",
         "data/objects_ovmm/train_val/hssd/configs/objects"
       ],
-      "start_position": [-13.69438, 0.1793, -3.13765],
-      "start_rotation": [0, 0, 0, 1],
+      "start_position": [
+        -13.69438,
+        0.1793,
+        -3.13765
+      ],
+      "start_rotation": [
+        0,
+        0,
+        0,
+        1
+      ],
       "info": {
         "episode_id": "T1-ACC-ABS",
         "is_dynamic": true,
@@ -21,12 +30,22 @@
           "0": {
             "name": "lamp_0",
             "number": 1,
-            "object_classes": ["lamp"],
-            "object_instances": ["B07HK83QRB"],
-            "excluded_object_instances": ["B07HK3PNSK"],
+            "object_classes": [
+              "lamp"
+            ],
+            "object_instances": [
+              "B07HK83QRB"
+            ],
+            "excluded_object_instances": [
+              "B07HK3PNSK"
+            ],
             "location": "on",
-            "furniture_names": ["chest_of_drawers_0"],
-            "allowed_regions": ["bedroom_0"],
+            "furniture_names": [
+              "chest_of_drawers_0"
+            ],
+            "allowed_regions": [
+              "bedroom_0"
+            ],
             "object_states": {
               "is_clean": true,
               "is_filled": false,
@@ -43,12 +62,22 @@
             {
               "name": "lamp_0",
               "number": 1,
-              "object_classes": ["lamp"],
-              "object_instances": ["B07HK83QRB"],
-              "excluded_object_instances": ["B07HK3PNSK"],
+              "object_classes": [
+                "lamp"
+              ],
+              "object_instances": [
+                "B07HK83QRB"
+              ],
+              "excluded_object_instances": [
+                "B07HK3PNSK"
+              ],
               "location": "on",
-              "furniture_names": ["chest_of_drawers_0"],
-              "allowed_regions": ["bedroom_0"],
+              "furniture_names": [
+                "chest_of_drawers_0"
+              ],
+              "allowed_regions": [
+                "bedroom_0"
+              ],
               "object_states": {
                 "is_clean": true,
                 "is_filled": false,
@@ -62,7 +91,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-ACC-ABS",
-          "sha256": "a0ac09570796f0a0c90a7c09e9c457ce83cad4eef6e1a8efef0b6943b6ac0dc2",
+          "sha256": "7cd0680436dcf8f3db235840e29601e51a7f580741ed733d8668bc22db5feff3",
           "entity_handles": {
             "lamp_0": "B07HK83QRB_:0000"
           },
@@ -83,10 +112,30 @@
         [
           "B07HK83QRB.object_config.json",
           [
-            [-0.80444, 0.00013, -0.59403, -2.41087],
-            [7e-5, 1.0, 0.00012, 0.88579],
-            [0.59403, 5e-5, -0.80444, -3.25495],
-            [0.0, 0.0, 0.0, 1.0]
+            [
+              -0.80444,
+              0.00013,
+              -0.59403,
+              -2.41087
+            ],
+            [
+              7e-05,
+              1.0,
+              0.00012,
+              0.88579
+            ],
+            [
+              0.59403,
+              5e-05,
+              -0.80444,
+              -3.25495
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
           ]
         ]
       ],
@@ -102,7 +151,9 @@
         {
           "function_name": "is_powered_off",
           "args": {
-            "object_handles": ["B07HK83QRB_:0000"],
+            "object_handles": [
+              "B07HK83QRB_:0000"
+            ],
             "number": 1
           }
         }
@@ -119,7 +170,9 @@
         {
           "type": "TerminalSatisfactionConstraint",
           "args": {
-            "proposition_indices": [0],
+            "proposition_indices": [
+              0
+            ],
             "n_propositions": 1
           }
         }

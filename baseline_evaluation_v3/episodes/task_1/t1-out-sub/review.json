@@ -116,7 +116,7 @@
   "unscored_success_text": [
     "- Using pitcher_0 in place of the missing jug_0 counts as success; do not require or invent a jug."
   ],
-  "spec_sha256": "fd30a80b6eaf7ebff43e9ba1f7e899537a4a0372f408fd281f2f60b753004e20",
+  "spec_sha256": "f32de7e04515d34de243028c97cd682161ca6afeebe04af31f83bbfe2a6946b6",
   "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record; the object is not actually in the scene",
   "memory_runtime_applied": false,
   "issues": [],

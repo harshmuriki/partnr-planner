@@ -318,9 +318,7 @@
         "states": {
           "is_clean": true
         },
-        "next_to": [
-          "apple_0"
-        ],
+        "next_to": [],
         "closed": []
       },
       "position": [
@@ -372,9 +370,7 @@
           "is_clean": true,
           "is_filled": false
         },
-        "next_to": [
-          "bottle_0"
-        ],
+        "next_to": [],
         "closed": []
       },
       "position": [
@@ -416,11 +412,10 @@
   "unscored_success_text": [
     "- Distractors (toy_fruit_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
   ],
-  "spec_sha256": "29588564ccb56bc9a8147e4ed7d4a5b5c11bf7b7380a31c9c72ece146ea8ba4a",
+  "spec_sha256": "999cef0b08352a327dd04ceb1bbb0fe33623553c5e14ce72a9757d27a967ddb7",
   "initial_robot_memory": "- apple_0: on table_4 (living_room_0), is_clean, stale record\n- apple_1: on table_4 (living_room_0), is_clean, stale record\n- orange_0: on table_4 (living_room_0), stale record\n- basket_0: on counter_0 (kitchen_0), is_clean, is_empty\n- bottle_0: on table_4 (living_room_0), is_clean, is_empty, stale record\n- bottle_1: on table_4 (living_room_0), is_clean, is_empty, stale record\n- toy_fruit_0: on counter_0 (kitchen_0), is_clean, next to apple_0\n- spray_bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty, next to bottle_0",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 6,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

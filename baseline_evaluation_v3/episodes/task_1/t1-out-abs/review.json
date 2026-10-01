@@ -65,7 +65,7 @@
   "unscored_success_text": [
     "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
   ],
-  "spec_sha256": "f58e15161074d351229534c2c0f5494927cad7fa228320f0a1ec4245876b1dee",
+  "spec_sha256": "5d3861adc2d81d0b0cbf87c0656663b207163c7c8f862442906c1152dac52844",
   "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record; the object is not actually in the scene",
   "memory_runtime_applied": false,
   "issues": [],

@@ -1,0 +1,29 @@
+21:43:11 T6-INC-DIS loaded 25 steps
+21:47:37 T6-INC-DIS  1/25 ok  Explore kitchen_0  
+21:48:15 T6-INC-DIS  2/25 ok  Navigate bread_0  
+21:48:17 T6-INC-DIS  3/25 ok  Pick bread_0  
+21:48:41 T6-INC-DIS  4/25 ok  Navigate microwave_0  
+21:48:43 T6-INC-DIS  5/25 ok  Open microwave_0  
+21:48:49 T6-INC-DIS  6/25 ok  Place bread_0,within,microwave_0,none,none  
+21:48:51 T6-INC-DIS  7/25 ok  Close microwave_0  
+21:48:53 T6-INC-DIS  8/25 ok  Open microwave_0  
+21:48:55 T6-INC-DIS  9/25 ok  Pick bread_0  
+21:48:57 T6-INC-DIS 10/25 ok  Close microwave_0  
+21:50:22 T6-INC-DIS 11/25 ok  Navigate table_11  
+21:50:24 T6-INC-DIS 12/25 ok  Place bread_0,on,table_11,none,none  
+21:52:45 T6-INC-DIS 13/25 ok  Explore dining_room_0  
+21:53:26 T6-INC-DIS 14/25 ok  Navigate bottle_0  
+21:53:28 T6-INC-DIS 15/25 ok  Pick bottle_0  
+21:54:46 T6-INC-DIS 16/25 ok  Navigate table_11  
+21:54:50 T6-INC-DIS 17/25 ok  Place bottle_0,on,table_11,next_to,bread_0  
+21:56:07 T6-INC-DIS 18/25 ok  Explore bathroom_0  
+21:58:04 T6-INC-DIS 19/25 ok  Explore bathroom_2  
+21:58:26 T6-INC-DIS 20/25 ok  Navigate hand_towel_0  
+21:58:28 T6-INC-DIS 21/25 ok  Pick hand_towel_0  
+21:59:10 T6-INC-DIS 22/25 ok  Navigate table_11  
+21:59:14 T6-INC-DIS 23/25 ok  Place hand_towel_0,on,table_11,next_to,bread_0  
+22:00:55 T6-INC-DIS 24/25 ok  Navigate lamp_living_0  
+22:00:57 T6-INC-DIS 25/25 ok  PowerOff lamp_living_0  
+22:00:57 T6-INC-DIS evaluation success= True pct= 1.0
+22:01:21 T6-INC-DIS SAVE {'ok': True, 'message': "Saved 25 actions as this variant's ground truth."}
+22:01:21 DONE {'T6-INC-DIS': True}

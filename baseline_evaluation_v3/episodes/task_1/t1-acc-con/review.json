@@ -116,7 +116,7 @@
     "lamp_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "7b8c14d8e0ab38c29145c793a3a51d811e6b308a3695a9c1cc8fc41f366e84b4",
+  "spec_sha256": "89f94044bd1b8aa8e28e4c004da0398cea2010e06068765d7f1aa1930396d806",
   "initial_robot_memory": "- jug_0: within fridge_0 (kitchen_0), is_clean, is_empty, fridge_0 starts closed\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],

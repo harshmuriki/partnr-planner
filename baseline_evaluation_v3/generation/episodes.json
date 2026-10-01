@@ -13,7 +13,7 @@
       "unscored_success_text": [
         "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
       ],
-      "spec_sha256": "a0ac09570796f0a0c90a7c09e9c457ce83cad4eef6e1a8efef0b6943b6ac0dc2",
+      "spec_sha256": "7cd0680436dcf8f3db235840e29601e51a7f580741ed733d8668bc22db5feff3",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: known absent; no jug or acceptable substitute (pitcher) exists anywhere in the scene",
       "memory_runtime_applied": false,
       "issues": [],
@@ -34,7 +34,7 @@
         "lamp_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "4c53780ecde2add4b8fd00d74f4513cdf7dbc9837f9ce7402ca3f31748bf51ca",
+      "spec_sha256": "4f8156e740a02c42f8bdb12ac9c34be13c6383b1336287c8e9f5e640f35b0328",
       "initial_robot_memory": "- jug_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -55,7 +55,7 @@
         "lamp_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "7b8c14d8e0ab38c29145c793a3a51d811e6b308a3695a9c1cc8fc41f366e84b4",
+      "spec_sha256": "89f94044bd1b8aa8e28e4c004da0398cea2010e06068765d7f1aa1930396d806",
       "initial_robot_memory": "- jug_0: within fridge_0 (kitchen_0), is_clean, is_empty, fridge_0 starts closed\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -80,7 +80,7 @@
       "unscored_success_text": [
         "- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "b812bcf4d48b5b25585d847dfe4d3136b87e14065e88d9861a356464a8577545",
+      "spec_sha256": "e0131bbfcd62bddf7f00b79a69058b1322530ea00c3736eb8073c8bb9896912a",
       "initial_robot_memory": "- jug_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0\n- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0",
       "memory_runtime_applied": false,
       "issues": [],
@@ -103,14 +103,13 @@
       "unscored_success_text": [
         "- Using pitcher_0 in place of the missing jug_0 counts as success; do not require or invent a jug."
       ],
-      "spec_sha256": "eb500e3c9a4210c79a7c24b68a577d7fc83b7156dcfc5bf956e559add9d2bc16",
-      "initial_robot_memory": "- pitcher_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
+      "spec_sha256": "9df055e18f3d2840dc84f0af1f4b0f118c43b935d2a65d8e8c594e7c073c9056",
+      "initial_robot_memory": "- pitcher_0: on counter_0 (kitchen_0), is_clean, is_empty\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: known absent; no jug exists anywhere in the scene",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "review": "episodes/task_1/t1-acc-sub/review.json",
-      "benchmark_ready": false,
-      "runtime_verified": true
+      "benchmark_ready": false
     },
     "T1-INC-ABS": {
       "variant": "T1-INC-ABS",
@@ -125,7 +124,7 @@
       "unscored_success_text": [
         "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
       ],
-      "spec_sha256": "98668476ace0497107e53e85bf4ddbe93aba18d8986eaf05c363e6e26107dc99",
+      "spec_sha256": "69759b5b5e9301d7d3338bf037706df0139f00929b49dbbfc2d518159c15e0ee",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: no record; the robot does not know whether it exists or where it is",
       "memory_runtime_applied": false,
       "issues": [],
@@ -146,7 +145,7 @@
         "lamp_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "3a84734ea7c501705850f7caebd2a7bf3f368c63677c8916073dfc606296554c",
+      "spec_sha256": "8d16bcdcaed792ab80600b94f74c0dcc8e1dd4d6eaa11ab9ceffd72425353643",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -167,7 +166,7 @@
         "lamp_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "bcc50666c23139a38acabe16d2bd7ab84b16fb105520dc50bd9ca980ea2a572a",
+      "spec_sha256": "8cb7f88a99dfc664103bd5d4e677082df2fbd1512d9f329cda30fd70c2844a98",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -192,7 +191,7 @@
       "unscored_success_text": [
         "- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "0943597a85ab7572181c653b25736757f973a19e9e1de4945753866eea34f3d4",
+      "spec_sha256": "6a02bf7a804f23c204b0264856add6ba9467031d5ed4b49ee59a4df327de2252",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0\n- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0",
       "memory_runtime_applied": false,
       "issues": [],
@@ -215,7 +214,7 @@
       "unscored_success_text": [
         "- Using pitcher_0 in place of the missing jug_0 counts as success; do not require or invent a jug."
       ],
-      "spec_sha256": "a3555be54ca252a6f9c9fb0153ec57488aad86214e2470a88da102872288479a",
+      "spec_sha256": "2e60a3ef0b8be5c112b5dfaa1b98081cf25d01fa3d5d48233de6bff624d31a40",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -237,7 +236,7 @@
       "unscored_success_text": [
         "- The jug (jug_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
       ],
-      "spec_sha256": "f58e15161074d351229534c2c0f5494927cad7fa228320f0a1ec4245876b1dee",
+      "spec_sha256": "5d3861adc2d81d0b0cbf87c0656663b207163c7c8f862442906c1152dac52844",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record; the object is not actually in the scene",
       "memory_runtime_applied": false,
       "issues": [],
@@ -258,7 +257,7 @@
         "lamp_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "baca36bdee15187a413318efc58f6dbedb4878b48ac1b7f691ca2c0f1e41fa7f",
+      "spec_sha256": "52adc6fa2ef0a754e5aa8187c244a94d001eac53416afd828081e9c9c11a20b6",
       "initial_robot_memory": "- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -279,7 +278,7 @@
         "lamp_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "87cc751165e19e0febb7193de44964863e1b087a704e04a9e1d45c825d551333",
+      "spec_sha256": "880b819a7fd9f392a0ae24ff9d39c17b62fd57c96ee2109abc4c0494830d7e3c",
       "initial_robot_memory": "- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -304,7 +303,7 @@
       "unscored_success_text": [
         "- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "d876ef182b1dfa0101465c5a54cedd8896b17a59dfd6e8e53bc1b8d01148e772",
+      "spec_sha256": "edcd364e0a689bf7b9da87201f1c65b34fdfb4cc9413d141e14b93f6f07688fe",
       "initial_robot_memory": "- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0\n- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0",
       "memory_runtime_applied": false,
       "issues": [],
@@ -327,7 +326,7 @@
       "unscored_success_text": [
         "- Using pitcher_0 in place of the missing jug_0 counts as success; do not require or invent a jug."
       ],
-      "spec_sha256": "fd30a80b6eaf7ebff43e9ba1f7e899537a4a0372f408fd281f2f60b753004e20",
+      "spec_sha256": "f32de7e04515d34de243028c97cd682161ca6afeebe04af31f83bbfe2a6946b6",
       "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record; the object is not actually in the scene",
       "memory_runtime_applied": false,
       "issues": [],
@@ -445,14 +444,13 @@
       "unscored_success_text": [
         "- Using knife_0 in place of the missing scissors_0 counts as success; do not require or invent a scissors."
       ],
-      "spec_sha256": "2a0f106fa0d44d8b03399b4969e388eda42d4b44ca11ebe8bcb0eaa93bbca440",
-      "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- box_1: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- knife_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean",
+      "spec_sha256": "2bd919c996e2c14901bd86273758dc93989723a6dab3b74fd1e705139bb76ffd",
+      "initial_robot_memory": "- box_0: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- box_1: floor floor_entryway_foyer_lobby_0 (entryway/foyer/lobby_0), is_clean, is_empty\n- knife_0: on chest_of_drawers_2 (entryway/foyer/lobby_0), is_clean\n- scissors_0: known absent; no scissors exist anywhere in the scene",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "benchmark_ready": false,
-      "review": "episodes/task_2/t2-acc-sub/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_2/t2-acc-sub/review.json"
     },
     "T2-INC-ABS": {
       "variant": "T2-INC-ABS",
@@ -1067,14 +1065,13 @@
       "unscored_success_text": [
         "- Distractors (toy_fruit_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "b0ed03692de34d88117617d70882285e11c1f82035cb2ae4d70416aebbdaed3a",
+      "spec_sha256": "ca3aa1be7319c92d5835b88e12e43b137f714cf7de2c5f1186c289a2aaf82d6d",
       "initial_robot_memory": "- apple_0: on counter_0 (kitchen_0), is_clean\n- apple_1: on counter_0 (kitchen_0), is_clean\n- orange_0: on counter_0 (kitchen_0)\n- basket_0: on counter_0 (kitchen_0), is_clean, is_empty\n- bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty\n- bottle_1: on cabinet_1 (kitchen_0), is_clean, is_empty\n- toy_fruit_0: on counter_0 (kitchen_0), is_clean, next to apple_0\n- spray_bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty, next to bottle_0",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 6,
       "benchmark_ready": false,
-      "review": "episodes/task_4/t4-acc-dis/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_4/t4-acc-dis/review.json"
     },
     "T4-INC-ABS": {
       "variant": "T4-INC-ABS",
@@ -1172,14 +1169,13 @@
       "unscored_success_text": [
         "- Distractors (toy_fruit_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "67342b3a7d2599f53076b9dc4df3e019f7f8706b43eba73e5735c8c528d19199",
+      "spec_sha256": "957842f5c154ec0986f64efffb8444dee4b389c7f972f5651010f60e708a602e",
       "initial_robot_memory": "- basket_0: on counter_0 (kitchen_0), is_clean, is_empty\n- toy_fruit_0: on counter_0 (kitchen_0), is_clean, next to apple_0\n- spray_bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty, next to bottle_0",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 6,
       "benchmark_ready": false,
-      "review": "episodes/task_4/t4-inc-dis/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_4/t4-inc-dis/review.json"
     },
     "T4-OUT-ABS": {
       "variant": "T4-OUT-ABS",
@@ -1277,14 +1273,13 @@
       "unscored_success_text": [
         "- Distractors (toy_fruit_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "29588564ccb56bc9a8147e4ed7d4a5b5c11bf7b7380a31c9c72ece146ea8ba4a",
+      "spec_sha256": "999cef0b08352a327dd04ceb1bbb0fe33623553c5e14ce72a9757d27a967ddb7",
       "initial_robot_memory": "- apple_0: on table_4 (living_room_0), is_clean, stale record\n- apple_1: on table_4 (living_room_0), is_clean, stale record\n- orange_0: on table_4 (living_room_0), stale record\n- basket_0: on counter_0 (kitchen_0), is_clean, is_empty\n- bottle_0: on table_4 (living_room_0), is_clean, is_empty, stale record\n- bottle_1: on table_4 (living_room_0), is_clean, is_empty, stale record\n- toy_fruit_0: on counter_0 (kitchen_0), is_clean, next to apple_0\n- spray_bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty, next to bottle_0",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 6,
       "benchmark_ready": false,
-      "review": "episodes/task_4/t4-out-dis/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_4/t4-out-dis/review.json"
     },
     "T5-ACC-ABS": {
       "variant": "T5-ACC-ABS",
@@ -1301,7 +1296,7 @@
       "unscored_success_text": [
         "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
       ],
-      "spec_sha256": "ff24790405cf7c5c5d1f82aeaecb026462ed3105a5cf74ab8ee3ac2b3b7a62ac",
+      "spec_sha256": "50366f0545987d45ff0f26da2005caca390e426357a6a8bc9aef850aa50c8fbf",
       "initial_robot_memory": "- soap_dispenser_0: on cabinet_0 (kitchen_0), is_clean, is_empty\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: known absent; no plate or acceptable substitute (black plate) exists anywhere in the scene",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1324,7 +1319,7 @@
         "plate_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "9d012ff5d0806ff81dec52670bb957e830702911ee40f1d36d9e70419c57c995",
+      "spec_sha256": "d13fc30a978682ec15e7f486d9c7d19e9b3ec30480790fb37167adcdc882fe0c",
       "initial_robot_memory": "- soap_dispenser_0: on cabinet_0 (kitchen_0), is_clean, is_empty\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on cabinet_0 (kitchen_0), is_clean",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1347,14 +1342,13 @@
         "plate_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "6c5329f40c62aa09845e70b8b6c02d154eff32da4bc1a523da57864c59376568",
+      "spec_sha256": "5ce05df2665ca1b27e5dbf61c416f30644b320d1f8a3dfd29e5a2d4e6bfb1a9d",
       "initial_robot_memory": "- soap_dispenser_0: within cabinet_0 (kitchen_0), is_clean, is_empty, cabinet_0 starts closed\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: within cabinet_0 (kitchen_0), is_clean, cabinet_0 starts closed",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "review": "episodes/task_5/t5-acc-con/review.json",
-      "benchmark_ready": false,
-      "runtime_verified": true
+      "benchmark_ready": false
     },
     "T5-ACC-DIS": {
       "variant": "T5-ACC-DIS",
@@ -1375,7 +1369,7 @@
       "unscored_success_text": [
         "- Distractors (soap_dish_0, vase_0, plant_saucer_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "eb8bc47dc13590956690bc326c8ef165088a4728085e9ab75b3e65c04b7b5872",
+      "spec_sha256": "25051f290fe5de2cad46885dc8ccf17da77d77c64fa92b98227b82e5d1ef9336",
       "initial_robot_memory": "- soap_dispenser_0: on cabinet_0 (kitchen_0), is_clean, is_empty\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on cabinet_0 (kitchen_0), is_clean\n- soap_dish_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to soap_dispenser_0\n- vase_0: on table_2 (kitchen_0), is_clean, is_empty, next to glass_0\n- plant_saucer_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to plate_0",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1400,14 +1394,13 @@
       "unscored_success_text": [
         "- Using plate_black_0 in place of the missing plate_0 counts as success; do not require or invent a plate."
       ],
-      "spec_sha256": "422b030b282b30f97cc69fb5323917f95cf0715f7f8f90a2961866e449164d92",
-      "initial_robot_memory": "- soap_dispenser_0: on cabinet_0 (kitchen_0), is_clean, is_empty\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_black_0: on cabinet_0 (kitchen_0), is_clean",
+      "spec_sha256": "ce44e667e181e7fb774d4bcc8494bc15c57b744f3710a870507748bebf411e8e",
+      "initial_robot_memory": "- soap_dispenser_0: on cabinet_0 (kitchen_0), is_clean, is_empty\n- glass_0: on table_2 (kitchen_0), is_dirty, is_empty\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_black_0: on cabinet_0 (kitchen_0), is_clean\n- plate_0: known absent; no white plate exists anywhere in the scene",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "review": "episodes/task_5/t5-acc-sub/review.json",
-      "benchmark_ready": false,
-      "runtime_verified": true
+      "benchmark_ready": false
     },
     "T5-INC-ABS": {
       "variant": "T5-INC-ABS",
@@ -1424,7 +1417,7 @@
       "unscored_success_text": [
         "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
       ],
-      "spec_sha256": "45caf52b1b72d8d8aacc76784690709ef0ec5793b8bb3b20470c30f928ece728",
+      "spec_sha256": "783d4829a89332148927a6aefa6ac9136a23042da13ff950520cc95c1eaf7211",
       "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- soap_dispenser_0: no record; the robot does not know whether it exists or where it is\n- glass_0: no record; the robot does not know whether it exists or where it is\n- plate_0: no record; the robot does not know whether it exists or where it is",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1447,7 +1440,7 @@
         "plate_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "8af14a2d377bd81921f3630b78fecc899ded22fe7b42bcd2f19babf46af54c9c",
+      "spec_sha256": "e04e7bc5e3a74021d81b2ec5024bf11b07d1e3d114b405edd2f4545b9d563d3a",
       "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1470,14 +1463,13 @@
         "plate_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "875786eac3c1e0e1afd84c3d13335ad86e32c5952f2cddb8883cde693bae2d0c",
+      "spec_sha256": "b560c88765c92c1ecb8332ba0aa2b5ae4adace524f89b80e51a71cfdb88096b8",
       "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "review": "episodes/task_5/t5-inc-con/review.json",
-      "benchmark_ready": false,
-      "runtime_verified": true
+      "benchmark_ready": false
     },
     "T5-INC-DIS": {
       "variant": "T5-INC-DIS",
@@ -1498,7 +1490,7 @@
       "unscored_success_text": [
         "- Distractors (soap_dish_0, vase_0, plant_saucer_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "015c84e910900d8832b97317e7821c8536a300427cca13b995fb8db7623c1730",
+      "spec_sha256": "50dc7e6e739456c251681cf047eee7f5fdc5a4610c58458f5e61ed4acf7e4053",
       "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- soap_dish_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to soap_dispenser_0\n- vase_0: on table_2 (kitchen_0), is_clean, is_empty, next to glass_0\n- plant_saucer_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to plate_0",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1523,7 +1515,7 @@
       "unscored_success_text": [
         "- Using plate_black_0 in place of the missing plate_0 counts as success; do not require or invent a plate."
       ],
-      "spec_sha256": "b4b306be93bb30089f3866ecd1029b197377693d629a4a601c239939b4bcc64f",
+      "spec_sha256": "e53ececefb7dd03fcaa30a50773cccbc026092b4b014805e911f62e44a686948",
       "initial_robot_memory": "- glass_1: on table_3 (living_room_0), is_dirty, is_empty",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1547,7 +1539,7 @@
       "unscored_success_text": [
         "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
       ],
-      "spec_sha256": "256db5d00ecca0b93c44436afdfaa17b8a13995efde8b695036ca11ae9caad4b",
+      "spec_sha256": "c93f3883e48eb1ef6fdf96ae090d0db9844b515f8e7963cfb8e9f87cafd231f4",
       "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record; the object is not actually in the scene",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1570,7 +1562,7 @@
         "plate_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "a4e628618a15197eb33266f8d81e480cca1a6524d278a8ccab3e98635c853f41",
+      "spec_sha256": "c768aada7b4bfcfcb51b7cfc671163ca8ed16f78b1db708eeeb69c91fcc96a1b",
       "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1593,15 +1585,14 @@
         "plate_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "25310d5172fcdd8eadf6cc21a75b9bc80b8d5b699f6b1c992c1800b7234854b1",
+      "spec_sha256": "6e48cc6ca516e5099804961a10a52fc9f433dcae2e05f90aeb78e72b966fcc31",
       "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "benchmark_ready": false,
       "reused_sample": "T5-ACC-CON",
-      "review": "episodes/task_5/t5-out-con/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_5/t5-out-con/review.json"
     },
     "T5-OUT-DIS": {
       "variant": "T5-OUT-DIS",
@@ -1622,7 +1613,7 @@
       "unscored_success_text": [
         "- Distractors (soap_dish_0, vase_0, plant_saucer_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "f4868b81df0e7702b32c1de6764d7b239f824ead9306df19f33ce917cb71b559",
+      "spec_sha256": "bfef18dc90b1420c216d759f39604f174609e7a201b2d43e35dcdd469546139f",
       "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record\n- soap_dish_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to soap_dispenser_0\n- vase_0: on table_2 (kitchen_0), is_clean, is_empty, next to glass_0\n- plant_saucer_0: on cabinet_0 (kitchen_0), is_clean, is_empty, next to plate_0",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1647,7 +1638,7 @@
       "unscored_success_text": [
         "- Using plate_black_0 in place of the missing plate_0 counts as success; do not require or invent a plate."
       ],
-      "spec_sha256": "336eac712aafb2bcec15b00989c5ff23a98864f6b292b0e5fa05ca76072a02ef",
+      "spec_sha256": "3d3bd6712d406720c116cc55de8d80731f89c5854952fe8cd4bf3f71d454c8f5",
       "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record; the object is not actually in the scene",
       "memory_runtime_applied": false,
       "issues": [],
@@ -1771,14 +1762,13 @@
         "- Using blue_hand_towel_0 in place of the missing hand_towel_0 counts as success; do not require or invent a hand_towel.",
         "- Using cup_0 in place of the missing bottle_0 counts as success; do not require or invent a bottle."
       ],
-      "spec_sha256": "07f16cd75c95a36c9028a0282ffbce5f0009e9606a458c6c5cb0c67ef480e799",
-      "initial_robot_memory": "- bread_0: on counter_0 (kitchen_0)\n- cup_0: on table_7 (dining_room_0), is_clean, is_filled\n- blue_hand_towel_0: on shelves_11 (bathroom_2), is_clean\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on",
+      "spec_sha256": "2b917caee32b2c7a3cfb36e6ed269acb36b93dd409e96ce021ce6e787bdfcfe5",
+      "initial_robot_memory": "- bread_0: on counter_0 (kitchen_0)\n- cup_0: on table_7 (dining_room_0), is_clean, is_filled\n- blue_hand_towel_0: on shelves_11 (bathroom_2), is_clean\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on\n- bottle_0: known absent; no water bottle exists anywhere in the scene\n- hand_towel_0: known absent; there is no hand towel besides blue_hand_towel_0",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "benchmark_ready": false,
-      "review": "episodes/task_6/t6-acc-sub/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_6/t6-acc-sub/review.json"
     },
     "T6-INC-ABS": {
       "variant": "T6-INC-ABS",
@@ -2043,7 +2033,7 @@
         "lamp_kitchen_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "c38f075ab331476225dfcf23c98938025330420decc0e681c4a0ac53590136b9",
+      "spec_sha256": "56e7310b385e5a8836cb1a6611f03c75012a2436152c4337986434dfb65db609",
       "initial_robot_memory": "- toy_truck_0: floor floor_living_room_0 (living_room_0), is_clean, is_empty, is_powered_off\n- stuffed_toy_0: on couch_0 (living_room_0), is_clean\n- plate_0: on cabinet_5 (kitchen_0), is_dirty\n- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -2071,14 +2061,13 @@
       "unscored_success_text": [
         "- Distractors (clean_plate_0, cushion_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "7a7463dfd2e5363849e2596b1a7817e857c8f6a2d943a9a9dc097fdff6d3a055",
+      "spec_sha256": "5a903c89561edf2f0959f18cc1900250e0378436c46cf1509b5c534d400e2f16",
       "initial_robot_memory": "- toy_truck_0: floor floor_living_room_0 (living_room_0), is_clean, is_empty, is_powered_off\n- stuffed_toy_0: on couch_0 (living_room_0), is_clean\n- plate_0: on cabinet_5 (kitchen_0), is_dirty\n- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on\n- clean_plate_0: on cabinet_5 (kitchen_0), is_clean, next to plate_0\n- cushion_0: on couch_0 (living_room_0), is_clean, next to stuffed_toy_0",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "benchmark_ready": false,
-      "review": "episodes/task_7/t7-acc-dis/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_7/t7-acc-dis/review.json"
     },
     "T7-INC-BASE": {
       "variant": "T7-INC-BASE",
@@ -2095,7 +2084,7 @@
         "lamp_kitchen_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "24fd360eea05e993ca08da940ec51b4c4ffdacd440dad7fc3a8be2694906bc43",
+      "spec_sha256": "8a81a550128343dd1e5aafbfa19b716c8a53ab1bd9bb5700f3e190a153542f7e",
       "initial_robot_memory": "- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -2123,14 +2112,13 @@
       "unscored_success_text": [
         "- Distractors (clean_plate_0, cushion_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "62b06c0d6e99bca55c53817e94958d0e9d6e4abd528e987b8f68dfb63896d0fe",
+      "spec_sha256": "47130f2758ff0cff2af7417324ead3b27359775b71b2e2d46e0f7b387a02d97b",
       "initial_robot_memory": "- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on\n- clean_plate_0: on cabinet_5 (kitchen_0), is_clean, next to plate_0\n- cushion_0: on couch_0 (living_room_0), is_clean, next to stuffed_toy_0",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "benchmark_ready": false,
-      "review": "episodes/task_7/t7-inc-dis/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_7/t7-inc-dis/review.json"
     },
     "T7-OUT-BASE": {
       "variant": "T7-OUT-BASE",
@@ -2147,7 +2135,7 @@
         "lamp_kitchen_0: exact asset, initial states, furniture, region checked"
       ],
       "unscored_success_text": [],
-      "spec_sha256": "2ad63153d6b817a436492242d171095351e4cc02696b76bfc18baea815c22399",
+      "spec_sha256": "09f94616641bcf4f56923e2a1d942b5268a3453b5cf58cf8ea58edaae75842f7",
       "initial_robot_memory": "- toy_truck_0: on table_8 (bedroom_3), is_clean, is_empty, is_powered_off, stale record\n- stuffed_toy_0: on table_8 (bedroom_3), is_clean, stale record\n- plate_0: on table_0 (living_room_0), is_dirty, stale record\n- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on",
       "memory_runtime_applied": false,
       "issues": [],
@@ -2175,14 +2163,13 @@
       "unscored_success_text": [
         "- Distractors (clean_plate_0, cushion_0) must not be used in place of the task objects; they have no placement goals."
       ],
-      "spec_sha256": "224f80d841cb3a52916908ee1fd00476f057189fbe02f034e1212c19e28199e7",
+      "spec_sha256": "9f80ce8447afa481a2b45b205a2efdf54be73ac9075a2db1a656b943652b3d25",
       "initial_robot_memory": "- toy_truck_0: on table_8 (bedroom_3), is_clean, is_empty, is_powered_off, stale record\n- stuffed_toy_0: on table_8 (bedroom_3), is_clean, stale record\n- plate_0: on table_0 (living_room_0), is_dirty, stale record\n- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on\n- clean_plate_0: on cabinet_5 (kitchen_0), is_clean, next to plate_0\n- cushion_0: on couch_0 (living_room_0), is_clean, next to stuffed_toy_0",
       "memory_runtime_applied": false,
       "issues": [],
       "attempts": 1,
       "benchmark_ready": false,
-      "review": "episodes/task_7/t7-out-dis/review.json",
-      "runtime_verified": true
+      "review": "episodes/task_7/t7-out-dis/review.json"
     }
   }
 }

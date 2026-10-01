@@ -1,0 +1,94 @@
+01:26:38 T6-OUT-SUB loaded 39 steps
+01:26:43 T6-INC-SUB loaded 36 steps
+01:26:46 T6-ACC-SUB loaded 21 steps
+01:27:08 T6-OUT-SUB  1/39 ok  Navigate table_7  
+01:27:26 T6-ACC-SUB  1/21 ok  Navigate bread_0  
+01:27:29 T6-ACC-SUB  2/21 ok  Pick bread_0  
+01:27:45 T6-ACC-SUB  3/21 ok  Navigate microwave_0  
+01:27:47 T6-ACC-SUB  4/21 ok  Open microwave_0  
+01:27:55 T6-ACC-SUB  5/21 ok  Place bread_0,within,microwave_0,none,none  
+01:27:57 T6-ACC-SUB  6/21 ok  Close microwave_0  
+01:27:59 T6-ACC-SUB  7/21 ok  Open microwave_0  
+01:28:01 T6-ACC-SUB  8/21 ok  Pick bread_0  
+01:28:03 T6-ACC-SUB  9/21 ok  Close microwave_0  
+01:29:28 T6-ACC-SUB 10/21 ok  Navigate table_11  
+01:29:30 T6-ACC-SUB 11/21 ok  Place bread_0,on,table_11,none,none  
+01:30:59 T6-ACC-SUB 12/21 ok  Navigate cup_0  
+01:31:01 T6-ACC-SUB 13/21 ok  Pick cup_0  
+01:31:08 T6-INC-SUB  1/36 ok  Explore kitchen_0  
+01:31:36 T6-INC-SUB  2/36 ok  Navigate bread_0  
+01:31:38 T6-INC-SUB  3/36 ok  Pick bread_0  
+01:31:41 T6-OUT-SUB  2/39 ok  Explore kitchen_0  
+01:31:54 T6-INC-SUB  4/36 ok  Navigate microwave_0  
+01:31:56 T6-INC-SUB  5/36 ok  Open microwave_0  
+01:32:04 T6-INC-SUB  6/36 ok  Place bread_0,within,microwave_0,none,none  
+01:32:06 T6-INC-SUB  7/36 ok  Close microwave_0  
+01:32:08 T6-INC-SUB  8/36 ok  Open microwave_0  
+01:32:10 T6-INC-SUB  9/36 ok  Pick bread_0  
+01:32:12 T6-INC-SUB 10/36 ok  Close microwave_0  
+01:32:31 T6-ACC-SUB 14/21 ok  Navigate table_11  
+01:32:35 T6-ACC-SUB 15/21 ok  Place cup_0,on,table_11,next_to,bread_0  
+01:32:36 T6-OUT-SUB  3/39 ok  Navigate bread_0  
+01:32:38 T6-OUT-SUB  4/39 ok  Pick bread_0  
+01:32:58 T6-OUT-SUB  5/39 ok  Navigate microwave_0  
+01:33:00 T6-OUT-SUB  6/39 ok  Open microwave_0  
+01:33:06 T6-OUT-SUB  7/39 ok  Place bread_0,within,microwave_0,none,none  
+01:33:08 T6-OUT-SUB  8/39 ok  Close microwave_0  
+01:33:10 T6-OUT-SUB  9/39 ok  Open microwave_0  
+01:33:12 T6-OUT-SUB 10/39 ok  Pick bread_0  
+01:33:14 T6-OUT-SUB 11/39 ok  Close microwave_0  
+01:33:22 T6-ACC-SUB 16/21 ok  Navigate blue_hand_towel_0  
+01:33:24 T6-ACC-SUB 17/21 ok  Pick blue_hand_towel_0  
+01:33:35 T6-INC-SUB 11/36 ok  Navigate table_11  
+01:33:37 T6-INC-SUB 12/36 ok  Place bread_0,on,table_11,none,none  
+01:34:10 T6-ACC-SUB 18/21 ok  Navigate table_11  
+01:34:14 T6-ACC-SUB 19/21 ok  Place blue_hand_towel_0,on,table_11,next_to,bread_0  
+01:34:45 T6-OUT-SUB 12/39 ok  Navigate table_11  
+01:34:47 T6-OUT-SUB 13/39 ok  Place bread_0,on,table_11,none,none  
+01:35:09 T6-OUT-SUB 14/39 ok  Navigate table_5  
+01:35:55 T6-ACC-SUB 20/21 ok  Navigate lamp_living_0  
+01:35:57 T6-ACC-SUB 21/21 ok  PowerOff lamp_living_0  
+01:35:57 T6-ACC-SUB evaluation success= True pct= 1.0
+01:36:12 T6-ACC-SUB SAVE {'ok': True, 'message': "Saved 21 actions as this variant's ground truth."}
+01:36:12 T6-INC-SUB 13/36 ok  Explore dining_room_0  
+01:37:46 T6-OUT-SUB 15/39 ok  Explore dining_room_0  
+01:40:10 T6-INC-SUB 14/36 ok  Explore garage_0  
+01:40:46 T6-INC-SUB 15/36 ok  Navigate fridge_0  
+01:40:49 T6-INC-SUB 16/36 ok  Open fridge_0  
+01:40:51 T6-INC-SUB 17/36 ok  Close fridge_0  
+01:41:36 T6-OUT-SUB 16/39 ok  Explore garage_0  
+01:42:04 T6-OUT-SUB 17/39 ok  Navigate fridge_0  
+01:42:06 T6-OUT-SUB 18/39 ok  Open fridge_0  
+01:42:08 T6-OUT-SUB 19/39 ok  Close fridge_0  
+01:42:29 T6-INC-SUB 18/36 ok  Navigate cup_0  
+01:42:31 T6-INC-SUB 19/36 ok  Pick cup_0  
+01:43:47 T6-OUT-SUB 20/39 ok  Navigate cup_0  
+01:43:49 T6-OUT-SUB 21/39 ok  Pick cup_0  
+01:44:02 T6-INC-SUB 20/36 ok  Navigate table_11  
+01:44:04 T6-INC-SUB 21/36 ok  Place cup_0,on,table_11,next_to,bread_0  
+01:45:13 T6-INC-SUB 22/36 ok  Explore bathroom_0  
+01:45:16 T6-OUT-SUB 22/39 ok  Navigate table_11  
+01:45:20 T6-OUT-SUB 23/39 ok  Place cup_0,on,table_11,next_to,bread_0  
+01:45:44 T6-OUT-SUB 24/39 ok  Navigate chair_9  
+01:46:47 T6-OUT-SUB 25/39 ok  Explore bathroom_0  
+01:47:01 T6-INC-SUB 23/36 ok  Explore bathroom_2  
+01:48:45 T6-OUT-SUB 26/39 ok  Explore bathroom_2  
+01:50:11 T6-INC-SUB 24/36 ok  Explore laundryroom/mudroom_0  
+01:50:23 T6-INC-SUB 25/36 ok  Navigate cabinet_19  
+01:50:25 T6-INC-SUB 26/36 ok  Open cabinet_19  
+01:50:27 T6-INC-SUB 27/36 ok  Close cabinet_19  
+01:50:45 T6-INC-SUB 28/36 ok  Navigate cabinet_23  
+01:50:47 T6-INC-SUB 29/36 ok  Open cabinet_23  
+01:50:49 T6-INC-SUB 30/36 ok  Close cabinet_23  
+01:51:47 T6-OUT-SUB 27/39 ok  Explore laundryroom/mudroom_0  
+01:51:53 T6-OUT-SUB 28/39 ok  Navigate cabinet_19  
+01:51:55 T6-OUT-SUB 29/39 ok  Open cabinet_19  
+01:51:57 T6-OUT-SUB 30/39 ok  Close cabinet_19  
+01:52:09 T6-OUT-SUB 31/39 ok  Navigate cabinet_23  
+01:52:11 T6-OUT-SUB 32/39 ok  Open cabinet_23  
+01:52:13 T6-OUT-SUB 33/39 ok  Close cabinet_23  
+01:53:55 T6-INC-SUB 31/36 FAIL Navigate blue_hand_towel_0  Unexpected failure! - Skill took too long to finish.
+01:53:55 T6-INC-SUB closed WITHOUT saving
+01:55:25 T6-OUT-SUB 34/39 FAIL Navigate blue_hand_towel_0  Unexpected failure! - Skill took too long to finish.
+01:55:25 T6-OUT-SUB closed WITHOUT saving
+01:55:25 DONE {'T6-ACC-SUB': True, 'T6-INC-SUB': False, 'T6-OUT-SUB': False}

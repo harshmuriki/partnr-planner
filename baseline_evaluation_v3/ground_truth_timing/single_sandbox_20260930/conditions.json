@@ -1,0 +1,10 @@
+{
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.31",
+  "logical_cpus": 8,
+  "cpu_model": "Intel(R) Core(TM) i7-7700K CPU @ 4.20GHz",
+  "gpu": "NVIDIA GeForce GTX 1060 6GB, 6144 MiB, 580.95.05",
+  "conditions": "One sandbox enforced; prescribed saved sequences; recording/rendering unchanged; other desktop applications left running because their use is unknown and available RAM is sufficient. No baseline/planner jobs active at launch.",
+  "backup": "before/",
+  "queue": "queue.json",
+  "poll_interval_seconds": 0.2
+}

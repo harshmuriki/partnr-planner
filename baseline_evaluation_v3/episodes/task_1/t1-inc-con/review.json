@@ -116,7 +116,7 @@
     "lamp_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "bcc50666c23139a38acabe16d2bd7ab84b16fb105520dc50bd9ca980ea2a572a",
+  "spec_sha256": "8cb7f88a99dfc664103bd5d4e677082df2fbd1512d9f329cda30fd70c2844a98",
   "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],

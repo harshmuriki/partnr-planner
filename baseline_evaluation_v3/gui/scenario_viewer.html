@@ -35,6 +35,9 @@
     padding: 14px 24px; z-index: 20;
   }
   .tabbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .viewer-tabs { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+  .metric-tab { text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+  .metric-tab::before { content: ""; width: 15px; height: 15px; background: currentColor; clip-path: polygon(0 100%,0 55%,23% 55%,23% 100%,38% 100%,38% 28%,62% 28%,62% 100%,77% 100%,77% 0,100% 0,100% 100%); }
   #taskTabs { display: flex; gap: 14px; flex-wrap: wrap; }
   .task-btn {
     padding: 9px 20px; border: 1.5px solid var(--border); border-radius: 999px; background: #fff;
@@ -43,6 +46,7 @@
   }
   .task-btn:hover { border-color: var(--accent); color: var(--accent); }
   .task-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #videoTimes { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
 
   main { max-width: 1180px; margin: 0 auto; padding: 26px 20px 70px; }
   .status { background: #fff7e6; color: #92400e; border: 1px solid #f5d9a8; border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; font-size: 13px; }
@@ -95,6 +99,17 @@
   .review-row input { width: 18px; height: 18px; accent-color: var(--acc-c); cursor: pointer; flex-shrink: 0; }
   .review-row a { color: var(--accent); font: 12px ui-monospace, monospace; padding: 4px 0; }
   .review-mark { color: var(--acc-c); font-size: 11px; margin-left: auto; }
+  .review-row.rerecorded { background: var(--inc-bg); }
+  .review-row.rerecorded .review-mark { color: var(--inc-c); font-weight: 700; }
+  .pill-rerecorded { background: var(--inc-bg); color: var(--inc-c); }
+  .review-row.unreviewed .review-mark { color: var(--accent); font-weight: 700; }
+  .pill-unreviewed { background: var(--accent-soft); color: var(--accent); }
+  button.cell-btn { position: relative; }
+  button.cell-btn.rerecorded::after {
+    content: ""; position: absolute; top: 3px; right: 3px; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--inc-c); box-shadow: 0 0 0 1.5px #fff;
+  }
+  button.cell-btn.unreviewed::after { background: var(--accent); }
   #detail { scroll-margin-top: 110px; }
   /* Too narrow to give up a column: the drawer floats over the content instead. */
   @media (max-width: 900px) {
@@ -151,6 +166,7 @@
   .pill-mem-INC { background: var(--inc-bg); color: var(--inc-c); }
   .pill-mem-OUT { background: var(--out-bg); color: var(--out-c); }
   .pill-axis { background: var(--accent-soft); color: #3730a3; }
+  .pill-time { background: #eef2f7; color: #334155; text-transform: none; }
   .label-target { background: var(--target-bg); color: var(--target); }
   .label-substitute { background: var(--sub-bg); color: var(--sub); }
   .label-distractor { background: var(--dist-bg); color: var(--dist); }
@@ -243,7 +259,7 @@
 <body>
 <div id="tabbar">
   <div class="tabbar-inner">
-    <div id="taskTabs"></div>
+    <nav class="viewer-tabs" aria-label="Scenario viewer"><div id="taskTabs"></div><a class="task-btn metric-tab" href="metrics.html">Metrics</a></nav>
     <button id="reviewToggle" type="button" aria-expanded="false" aria-controls="reviewPanel"
             title="Verified" aria-label="Verified">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -259,6 +275,7 @@
 <main>
   <div id="status" class="status" role="status" hidden></div>
   <div id="matrixWrap">
+    <p id="videoTimes"></p>
     <table class="matrix" id="matrixTable"></table>
   </div>
   <div id="detail">
@@ -301,8 +318,9 @@
 
 <link rel="stylesheet" href="episode_viewer.css?v=20260915-summary">
 <script src="episode_viewer.js?v=20260915-summary"></script>
-<link rel="stylesheet" href="ground_truth.css?v=8-furniture">
-<script src="ground_truth.js?v=13-furniture"></script>
+<link rel="stylesheet" href="ground_truth.css?v=12-live-recording">
+<script src="video_durations.js?v=1"></script>
+<script src="ground_truth.js?v=22-video-time"></script>
 <script>
 const CSV_URL = "../variant_object_assets.csv";
 const GIF_ROOT = "../../data/hssd-hab/metadata/object_gifs/";
@@ -355,8 +373,24 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": 
 // used only for drawer preferences and importing checks from the old viewer.
 const REVIEW_PREFIX = "partnr.baseline_evaluation_v3.human_review.v1.";
 const REVIEW_OPEN_KEY = REVIEW_PREFIX + "panel_open";
+const REVIEW_COLLAPSED_KEY = REVIEW_PREFIX + "collapsed_tasks";
 const REVIEW_API = "../api/human-reviews";
 let humanReviews = new Map();
+let rerecordedReviews = new Map(); // Ground truth replaced since the last human verification.
+let recordedVariants = new Set();  // Variants with a saved ground truth, from the archive index.
+
+async function loadRecordedVariants() {
+  try {
+    const response = await fetch("../ground_truth/index.json", {cache: "no-store"});
+    if (!response.ok) return;
+    recordedVariants = new Set(((await response.json()).ground_truths || []).map(run => run.variant));
+  } catch (_) {} // Keep the last known set; this flag is advisory.
+}
+
+// Recorded but never checked; a re-recording has its own, stronger flag.
+function isUnreviewed(id) {
+  return recordedVariants.has(id) && !humanReviews.has(id) && !rerecordedReviews.has(id);
+}
 let reviewBusy = false;
 let reviewReady = false;
 
@@ -385,6 +419,9 @@ function applyHumanReviews(data) {
   humanReviews = new Map(Object.entries(data.reviews)
     .filter(([id, record]) => variants.has(id) && record.verified === true)
     .map(([id, record]) => [id, record.updated_at]));
+  rerecordedReviews = new Map(Object.entries(data.reviews)
+    .filter(([id, record]) => variants.has(id) && record.needs_review === true)
+    .map(([id, record]) => [id, record.rerecorded_at]));
   reviewReady = true;
 }
 
@@ -393,6 +430,7 @@ async function loadHumanReviews() {
   reviewBusy = true;
   try {
     let data = await reviewRequest();
+    await loadRecordedVariants();
     const legacy = {};
     try {
       for (const id of variants.keys()) {
@@ -432,10 +470,21 @@ async function setHumanReview(id, checked) {
   }
 }
 
+// Collapsed task groups are a per-browser convenience, shared by every tab of this viewer.
+function collapsedReviewTasks() {
+  try { return new Set(JSON.parse(localStorage.getItem(REVIEW_COLLAPSED_KEY) || "[]")); } catch (_) { return new Set(); }
+}
+
+function applyCollapsedReviewTasks() {
+  const collapsed = collapsedReviewTasks();
+  document.querySelectorAll(".review-task").forEach(group => { group.open = !collapsed.has(group.dataset.task); });
+}
+
 function buildReviewChecklist() {
   loadHumanReviews();
+  const collapsed = collapsedReviewTasks();
   document.getElementById("reviewList").innerHTML = tasks.map(task => `
-    <details class="review-task" open>
+    <details class="review-task" data-task="${esc(task)}"${collapsed.has(task) ? "" : " open"}>
       <summary>${esc(task)} <span class="review-task-count" data-review-task="${esc(task)}"></span></summary>
       <div class="review-items">${taskVariants(task).map(v => `
         <div class="review-row" data-review-id="${esc(v.id)}">
@@ -444,6 +493,13 @@ function buildReviewChecklist() {
           <span class="review-mark"></span>
         </div>`).join("")}</div>
     </details>`).join("");
+  document.querySelectorAll(".review-task").forEach(group => {
+    group.addEventListener("toggle", () => {
+      const collapsed = collapsedReviewTasks();
+      if (group.open) collapsed.delete(group.dataset.task); else collapsed.add(group.dataset.task);
+      try { localStorage.setItem(REVIEW_COLLAPSED_KEY, JSON.stringify([...collapsed])); } catch (_) {}
+    });
+  });
   document.querySelectorAll(".review-row").forEach(row => {
     row.querySelector("input").addEventListener("change", e => setHumanReview(row.dataset.reviewId, e.target.checked));
     row.querySelector("a").addEventListener("click", e => {
@@ -465,8 +521,16 @@ function buildReviewChecklist() {
   setReviewOpen(wasOpen, { remember: false });
 }
 
+function rerecordedNote(id) {
+  const when = new Date(rerecordedReviews.get(id));
+  return `Ground truth re-recorded ${isNaN(when) ? "" : when.toLocaleString() + " "}since last verification; needs review`;
+}
+
 function updateHumanReviews() {
-  document.getElementById("reviewProgress").textContent = `${humanReviews.size} / ${variants.size} verified`;
+  const unreviewed = [...variants.keys()].filter(isUnreviewed).length;
+  const pending = (rerecordedReviews.size ? ` · ${rerecordedReviews.size} re-recorded` : "")
+    + (unreviewed ? ` · ${unreviewed} recorded, unchecked` : "");
+  document.getElementById("reviewProgress").textContent = `${humanReviews.size} / ${variants.size} verified${pending}`;
   document.querySelectorAll("[data-review-task]").forEach(el => {
     const list = taskVariants(el.dataset.reviewTask);
     el.textContent = `${list.filter(v => humanReviews.has(v.id)).length} / ${list.length} verified`;
@@ -481,9 +545,28 @@ function updateHumanReviews() {
     const link = row.querySelector("a");
     if (id === currentVariantId) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
-    row.querySelector(".review-mark").textContent = verified ? "Verified" : "";
-    row.title = verified ? `Human verified ${new Date(humanReviews.get(id)).toLocaleString()}` : "Not yet human verified";
+    const rerecorded = rerecordedReviews.has(id);
+    const unreviewed = isUnreviewed(id);
+    row.classList.toggle("rerecorded", rerecorded);
+    row.classList.toggle("unreviewed", unreviewed);
+    row.querySelector(".review-mark").textContent = verified ? "Verified" : rerecorded ? "Re-recorded" : unreviewed ? "Recorded" : "";
+    row.title = verified ? "Human verified" : rerecorded ? rerecordedNote(id)
+      : unreviewed ? "Ground truth recorded; not yet human verified" : "Not yet human verified";
   });
+  document.querySelectorAll("button.cell-btn[data-vid]").forEach(btn => {
+    const rerecorded = rerecordedReviews.has(btn.dataset.vid);
+    const unreviewed = isUnreviewed(btn.dataset.vid);
+    btn.classList.toggle("rerecorded", rerecorded);
+    btn.classList.toggle("unreviewed", unreviewed);
+    btn.title = btn.dataset.baseTitle + (rerecorded ? " · re-recorded, needs review" : unreviewed ? " · recorded, not yet verified" : "");
+  });
+  const pill = document.getElementById("rerecordedPill");
+  if (pill) {
+    pill.hidden = !rerecordedReviews.has(currentVariantId);
+    pill.title = pill.hidden ? "" : rerecordedNote(currentVariantId);
+  }
+  const unreviewedPill = document.getElementById("unreviewedPill");
+  if (unreviewedPill) unreviewedPill.hidden = !isUnreviewed(currentVariantId);
   document.getElementById("reviewBadge").textContent = reviewReady ? `${humanReviews.size}/${variants.size}` : "Offline";
 }
 
@@ -501,6 +584,8 @@ document.getElementById("reviewClose").addEventListener("click", () => {
   setReviewOpen(false);
   document.getElementById("reviewToggle").focus();
 });
+// Other tabs of this browser follow the drawer's collapsed task groups.
+window.addEventListener("storage", e => { if (e.key === REVIEW_COLLAPSED_KEY) applyCollapsedReviewTasks(); });
 // Refresh other browsers' edits, including after returning to a background tab.
 setInterval(() => { if (!document.hidden) loadHumanReviews(); }, 5000);
 window.addEventListener("focus", loadHumanReviews);
@@ -563,6 +648,7 @@ async function loadCsv() {
     status.textContent = skipped.length ? `Skipped ${skipped.length} unreadable CSV row(s): ${skipped.slice(0, 5).join(", ")}` : "";
     buildReviewChecklist();
     renderAll();
+    loadVideoTimes();
   } catch (error) {
     status.hidden = false;
     status.innerHTML = `Could not load <code>variant_object_assets.csv</code> (${esc(error.message)}). ` +
@@ -570,6 +656,27 @@ async function loadCsv() {
   }
 }
 
+let videoTimes = new Map(), videoTimesState = "Reading video times…";
+async function loadVideoTimes() {
+  try {
+    const response = await fetch("../ground_truth/index.json", {cache: "no-store"});
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const runs = (await response.json()).ground_truths || [];
+    videoTimes = await window.groundTruthVideoDurations("../ground_truth/", runs);
+    const missing = runs.filter(run => !videoTimes.has(run.variant)).length;
+    videoTimesState = `Time taken = length of each variant's saved ground-truth video (${videoTimes.size} videos${missing ? `, ${missing} unreadable` : ""}).`;
+  } catch (error) {
+    videoTimesState = `Video times unavailable (${error.message}).`;
+  }
+  if (window.applyVideoDurations) window.applyVideoDurations(videoTimes);
+  if (tasks.length) { renderMatrix(); updateHumanReviews(); updateTimePill(); }
+}
+function updateTimePill() {
+  const pill = document.getElementById("timePill");
+  if (!pill) return;
+  pill.hidden = !videoTimes.has(currentVariantId);
+  pill.textContent = pill.hidden ? "" : `Time ${window.formatVideoTime(videoTimes.get(currentVariantId))}`;
+}
 function renderTabs() {
   const wrap = document.getElementById("taskTabs");
   wrap.innerHTML = "";
@@ -583,6 +690,8 @@ function renderTabs() {
 }
 
 function renderMatrix() {
+  document.getElementById("videoTimes").textContent = videoTimesState;
+
   const table = document.getElementById("matrixTable");
   table.innerHTML = "";
 
@@ -632,8 +741,11 @@ function renderMatrix() {
       } else {
         const btn = document.createElement("button");
         btn.className = "cell-btn" + (c.axis === "BASE" ? " is-base" : "") + (vid === currentVariantId ? " selected" : "");
-        btn.innerHTML = `${esc(c.axis)}<span class="n">${v.objects.length} obj</span>`;
-        btn.title = `${vid} · ${v.objects.length} objects`;
+        const time = videoTimes.get(vid);
+        const timeLabel = time === undefined ? "no video" : window.formatVideoTime(time);
+        btn.innerHTML = `${esc(c.axis)}<span class="n">${v.objects.length} obj</span><span class="n">${esc(timeLabel)}</span>`;
+        btn.dataset.vid = vid;
+        btn.dataset.baseTitle = btn.title = `${vid} · ${v.objects.length} objects · ${timeLabel}`;
         btn.onclick = () => { currentVariantId = vid; renderAll(); };
         td.appendChild(btn);
       }
@@ -662,7 +774,10 @@ function renderDetail() {
   top.innerHTML = `
     <h1>${esc(v.id)}</h1>
     <span class="pill pill-mem-${esc(v.mem)}">${esc(MEM_LABEL[v.mem] || v.mem)}</span>
-    <span class="pill pill-axis">${esc(v.axis)}</span>`;
+    <span class="pill pill-axis">${esc(v.axis)}</span>
+    <span id="timePill" class="pill pill-time" title="Length of the saved ground-truth video" hidden></span>
+    <span id="rerecordedPill" class="pill pill-rerecorded" hidden>Re-recorded · needs review</span>
+    <span id="unreviewedPill" class="pill pill-unreviewed" hidden title="Ground truth recorded; not yet human verified">Recorded · not verified</span>`;
 
   const labelClass = l => LABEL_ORDER.includes(l) ? `label-${l}` : "label-unknown";
   const rank = l => { const i = LABEL_ORDER.indexOf(l); return i < 0 ? LABEL_ORDER.length : i; };
@@ -912,6 +1027,7 @@ function renderAll() {
   renderMatrix();
   renderDetail();
   updateHumanReviews();
+  updateTimePill();
   if (currentVariantId) history.replaceState(null, "", "#" + currentVariantId);
 }
 
@@ -943,6 +1059,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+document.addEventListener("visibilitychange", () => { if (!document.hidden && tasks.length) loadVideoTimes(); });
 loadCsv();
 </script>
 </body>

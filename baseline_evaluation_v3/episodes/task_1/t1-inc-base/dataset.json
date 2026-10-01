@@ -162,7 +162,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-INC-BASE",
-          "sha256": "3a84734ea7c501705850f7caebd2a7bf3f368c63677c8916073dfc606296554c",
+          "sha256": "8d16bcdcaed792ab80600b94f74c0dcc8e1dd4d6eaa11ab9ceffd72425353643",
           "entity_handles": {
             "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
             "lamp_0": "B07HK83QRB_:0000"

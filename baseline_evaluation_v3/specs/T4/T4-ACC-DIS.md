@@ -60,8 +60,8 @@ Put all the 3 fruits in the fruit basket and the 2 drink containers on the kitch
 - basket_0: on counter_0 (kitchen_0), is_clean, is_empty
 - bottle_0: on counter_0 (kitchen_0), is_clean, is_empty
 - bottle_1: on counter_0 (kitchen_0), is_clean, is_empty
-- toy_fruit_0: on counter_0 (kitchen_0), is_clean, next to apple_0
-- spray_bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty, next to bottle_0
+- toy_fruit_0: on counter_0 (kitchen_0), is_clean
+- spray_bottle_0: on cabinet_1 (kitchen_0), is_clean, is_empty
 
 ## Initial robot memory
 - apple_0: on counter_0 (kitchen_0), is_clean

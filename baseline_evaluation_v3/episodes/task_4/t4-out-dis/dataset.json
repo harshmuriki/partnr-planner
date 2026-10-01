@@ -708,7 +708,7 @@
         },
         "variant_spec": {
           "variant_id": "T4-OUT-DIS",
-          "sha256": "29588564ccb56bc9a8147e4ed7d4a5b5c11bf7b7380a31c9c72ece146ea8ba4a",
+          "sha256": "999cef0b08352a327dd04ceb1bbb0fe33623553c5e14ce72a9757d27a967ddb7",
           "entity_handles": {
             "apple_0": "Apple_26_:0000",
             "apple_1": "Apple_4_:0000",

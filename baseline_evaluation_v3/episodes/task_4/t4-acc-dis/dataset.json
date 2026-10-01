@@ -708,7 +708,7 @@
         },
         "variant_spec": {
           "variant_id": "T4-ACC-DIS",
-          "sha256": "b0ed03692de34d88117617d70882285e11c1f82035cb2ae4d70416aebbdaed3a",
+          "sha256": "ca3aa1be7319c92d5835b88e12e43b137f714cf7de2c5f1186c289a2aaf82d6d",
           "entity_handles": {
             "apple_0": "Apple_26_:0000",
             "apple_1": "Apple_4_:0000",
