@@ -1334,6 +1334,15 @@ textarea {
   color: var(--color-ok);
 }
 
+.badge-skipped {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.step.is-skipped {
+  border-left: 3px solid #3b82f6;
+}
+
 .badge-fail {
   background: var(--color-fail-bg);
   color: var(--color-destructive);

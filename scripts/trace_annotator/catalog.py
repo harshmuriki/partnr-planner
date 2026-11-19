@@ -9,6 +9,8 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
+from habitat_llm.action_result import mark_react_skip, annotate_react_steps
+from habitat_llm.termination import termination_from_trace
 
 FAILURE_LABELS = [
     {
@@ -163,6 +165,8 @@ def _matches_any(message: str, patterns: Sequence[re.Pattern[str]]) -> bool:
 
 
 def _failed_step_message(step: Dict[str, Any]) -> str:
+    if step.get("skipped"):
+        return ""
     result = str(step.get("result") or "").strip()
     if not result:
         return ""
@@ -202,6 +206,8 @@ def infer_trace_issues(
 
     for step in steps:
         if not isinstance(step, dict):
+            continue
+        if step.get("skipped"):
             continue
         action = str(step.get("action") or "").strip()
         args = str(step.get("args") or "").strip()
@@ -318,7 +324,7 @@ def parse_react_trace_file(trace_path: str) -> Dict[str, Any]:
         )
         forward_section = content[action_match.end() : forward_end]
         result_match = re.search(
-            r"Assigned!Result:\s*(.*?)(?=\n(?:Objects:|Thought:|[A-Z][a-z]+\[|$))",
+            r"Assigned!Result:\s*(.*?)(?=\n(?:Robot SG before action:|Objects:|Thought:|Termination:|[A-Z][a-z]+\[|$))",
             forward_section,
             re.DOTALL,
         )
@@ -329,11 +335,12 @@ def parse_react_trace_file(trace_path: str) -> Dict[str, Any]:
                 step["success"] = True
             else:
                 step["success"] = infer_react_success(result)
+            mark_react_skip(step)
         elif action_name == "Done":
             step["success"] = True
 
         objects_match = re.search(
-            r"Objects:\s*(.*?)(?=\n(?:Thought:|[A-Z][a-z]+\[|$))",
+            r"Objects:\s*(.*?)(?=\n(?:Robot SG before action:|Thought:|Termination:|[A-Z][a-z]+\[|$))",
             forward_section,
             re.DOTALL,
         )
@@ -343,7 +350,9 @@ def parse_react_trace_file(trace_path: str) -> Dict[str, Any]:
                 step["objects"] = objects_text
         steps.append(step)
 
-    return {"task": task, "steps": steps, "total_steps": len(steps)}
+    annotate_react_steps(steps, content, trace_path)
+    return {"task": task, "steps": steps, "total_steps": len(steps),
+            "termination": termination_from_trace(content)}
 
 
 def infer_pddl_step_success(block_lines: Sequence[str], action_name: str) -> bool:
@@ -448,8 +457,12 @@ def parse_pddl_trace_file(trace_path: str) -> Dict[str, Any]:
     return {"task": task, "steps": steps, "total_steps": len(steps)}
 
 
+# Planners that write VLM-TAMP-style logs; each name is also its run log folder.
+PDDL_STYLE_PLANNERS = ("vlm_tamp_pddl", "rail_planner")
+
+
 def parse_eval_trace_file(trace_path: str, planner: str = "react") -> Dict[str, Any]:
-    if planner == "vlm_tamp_pddl":
+    if planner in PDDL_STYLE_PLANNERS:
         return parse_pddl_trace_file(trace_path)
     return parse_react_trace_file(trace_path)
 
@@ -668,6 +681,7 @@ def parse_variant_folder(name: str) -> Dict[str, Any]:
 
 BATCH_LABELS = {
     "vlm_tamp_pddl": "VLM-TAMP PDDL",
+    "rail_planner": "Rail planner",
 }
 
 
@@ -688,9 +702,18 @@ def _skip_trace_path(trace_path: Path) -> bool:
     return any(part.startswith("outputs_") for part in trace_path.parts)
 
 
-def load_pddl_episode_metrics(run_dir: Path) -> Dict[str, Any]:
-    path = Path(run_dir) / "vlm_tamp_pddl" / "unknown" / "episode_metrics.json"
-    if not path.is_file():
+def pddl_log_dir(run_dir: Path, planner: str = "vlm_tamp_pddl") -> Optional[Path]:
+    """<run>/<planner>/unknown (legacy layout) or <run>/<planner> (current)."""
+    for path in (Path(run_dir) / planner / "unknown", Path(run_dir) / planner):
+        if path.is_dir():
+            return path
+    return None
+
+
+def load_pddl_episode_metrics(run_dir: Path, planner: str = "vlm_tamp_pddl") -> Dict[str, Any]:
+    log_dir = pddl_log_dir(run_dir, planner)
+    path = log_dir / "episode_metrics.json" if log_dir else None
+    if path is None or not path.is_file():
         return {}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -716,10 +739,10 @@ def load_pddl_episode_metrics(run_dir: Path) -> Dict[str, Any]:
 
 
 def find_pddl_artifacts(
-    run_dir: Path, files_root: Path
+    run_dir: Path, files_root: Path, planner: str = "vlm_tamp_pddl"
 ) -> Optional[Dict[str, Any]]:
-    unknown = Path(run_dir) / "vlm_tamp_pddl" / "unknown"
-    if not unknown.is_dir():
+    unknown = pddl_log_dir(run_dir, planner)
+    if unknown is None:
         return None
     try:
         rel_dir = unknown.resolve().relative_to(Path(files_root).resolve()).as_posix()
@@ -743,7 +766,7 @@ def find_pddl_artifacts(
         "prompts_html": (unknown / "vlm_prompts.html").is_file(),
         "prompts_txt": (unknown / "vlm_prompts.txt").is_file(),
         "image_names": image_names,
-        "metrics": load_pddl_episode_metrics(run_dir),
+        "metrics": load_pddl_episode_metrics(run_dir, planner),
     }
 
 
@@ -1724,8 +1747,8 @@ class RunCatalog:
                 subtasks_done = 0
                 subtasks_source = "pending"
             pddl_bundle = None
-            if planner == "vlm_tamp_pddl":
-                pddl_bundle = find_pddl_artifacts(run_dir, files_root)
+            if planner in PDDL_STYLE_PLANNERS:
+                pddl_bundle = find_pddl_artifacts(run_dir, files_root, planner)
                 pddl_metrics = (pddl_bundle or {}).get("metrics") or {}
                 if metrics.get("runtime") is None:
                     metrics["runtime"] = pddl_metrics.get("episode_runtime_sec")

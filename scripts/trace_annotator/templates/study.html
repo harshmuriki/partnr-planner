@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planner study annotation</title><link rel="stylesheet" href="/static/study.css"></head>
+<body><header><h1>Planner study annotation</h1><p id="model"></p>
+<nav><button id="dashboardTab">Comparison</button><button id="reviewTab">Review runs</button><button id="refresh">Refresh</button></nav></header>
+<div id="message" role="status"></div><section id="filters" class="card"></section>
+<main id="dashboard"><div id="cards" class="cards"></div><p>Charts use saved human reviews. Drafts and missing evidence are never treated as issue-free runs. Counts and denominators follow the current filters.</p>
+<div class="exports" id="exports"></div><div id="charts" class="grid"></div></main>
+<main id="review" hidden><div class="review-grid"><aside class="card"><label><input type="checkbox" id="pilotOnly" checked> Pilot only</label><p id="listCount"></p><div id="runList"></div></aside>
+<section id="editor" class="card"><p>Select a run to review its evidence and draft.</p></section></div></main>
+<dialog id="evidenceDialog"><button id="closeEvidence">Close evidence</button><div id="evidenceDialogContent"></div></dialog>
+<script src="/static/study.js"></script></body></html>

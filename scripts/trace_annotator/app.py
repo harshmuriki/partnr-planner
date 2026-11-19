@@ -46,6 +46,7 @@ from catalog import (  # noqa: E402
 
 DEFAULT_LOGS_ROOT = PROJECT_ROOT / "results" / "baseline_evaluation_v3_react"
 DEFAULT_PDDL_ROOT = PROJECT_ROOT / "results" / "baseline_evaluation_v3_vlm_tamp_pddl"
+DEFAULT_RAIL_ROOT = PROJECT_ROOT / "results" / "baseline_evaluation_v3_rail_planner"
 EPISODES_ROOT = PROJECT_ROOT / "baseline_evaluation_v3" / "episodes"
 
 app = Flask(
@@ -102,21 +103,27 @@ catalog: Optional[RunCatalog] = None
 
 
 def pddl_extra_sources(logs_root: Path) -> list:
-    scan_root = (DEFAULT_PDDL_ROOT / "luna_high_all").resolve()
     logs = logs_root.resolve()
-    if not scan_root.is_dir():
-        return []
-    if logs == scan_root or logs == DEFAULT_PDDL_ROOT.resolve():
-        return []
-    return [
-        {
-            "prefix": "vlm_tamp_pddl/",
-            "root": scan_root,
-            "planner": "vlm_tamp_pddl",
-            "batch": "vlm_tamp_pddl",
-            "files_root": DEFAULT_PDDL_ROOT.resolve(),
-        }
-    ]
+    sources = []
+    for planner, default_root in (
+        ("vlm_tamp_pddl", DEFAULT_PDDL_ROOT),
+        ("rail_planner", DEFAULT_RAIL_ROOT),
+    ):
+        scan_root = (default_root / "luna_high_all").resolve()
+        if not scan_root.is_dir():
+            continue
+        if logs == scan_root or logs == default_root.resolve():
+            continue
+        sources.append(
+            {
+                "prefix": f"{planner}/",
+                "root": scan_root,
+                "planner": planner,
+                "batch": planner,
+                "files_root": default_root.resolve(),
+            }
+        )
+    return sources
 
 
 def make_catalog(logs_root: Path) -> RunCatalog:
@@ -174,8 +181,9 @@ def _serialize_step(
     run_id: str,
     image_count: int,
 ) -> Dict[str, Any]:
+    skipped = bool(step.get("skipped"))
     success = step.get("success")
-    if success is None:
+    if success is None and not skipped:
         success = infer_react_success(str(step.get("result") or ""))
     image_url = None
     if image_count > 0 and index <= image_count:
@@ -196,7 +204,8 @@ def _serialize_step(
         "result": result,
         "objects": step.get("objects") or "",
         "object_states": parse_object_states(str(step.get("objects") or "")),
-        "success": bool(success),
+        "success": None if skipped else bool(success),
+        "skipped": skipped,
         "image_url": image_url,
     }
 

@@ -323,7 +323,7 @@
     if (state.batch) return runs;
     const seen = new Map();
     for (const run of runs) {
-      if (run.planner === "vlm_tamp_pddl") continue;
+      if (run.planner === "vlm_tamp_pddl" || run.planner === "rail_planner") continue;
       const key = `${run.task_number}|${run.axis}|${run.kind}`;
       const existing = seen.get(key);
       if (!existing || (run.batch === "luna_high_states_images" && existing.batch !== "luna_high_states_images")) {
@@ -1802,7 +1802,9 @@
     const chips = [
       run.planner === "vlm_tamp_pddl"
         ? `<span class="outcome">VLM-TAMP PDDL</span>`
-        : "",
+        : run.planner === "rail_planner"
+          ? `<span class="outcome">Rail planner</span>`
+          : "",
       `<span class="outcome">${success ? "Evaluator success" : "Evaluator fail"} · ${formatPercent(run.task_state_success)}</span>`,
       `<span class="outcome">complete ${formatPercent(run.task_percent_complete)}</span>`,
       `<span class="outcome">${run.total_steps} steps</span>`,
@@ -1868,8 +1870,9 @@
 
   function visibleSteps() {
     const steps = state.detail?.steps || [];
-    if (state.stepFilter === "failed") return steps.filter((step) => !step.success);
+    if (state.stepFilter === "failed") return steps.filter((step) => !step.success && !step.skipped);
     if (state.stepFilter === "ok") return steps.filter((step) => step.success);
+    if (state.stepFilter === "skipped") return steps.filter((step) => step.skipped);
     return steps;
   }
 
@@ -1893,12 +1896,12 @@
     const action = `${step.action}[${step.args}]`;
     els.inspectorEmpty.hidden = true;
     els.inspectorBody.hidden = false;
-    els.inspector.classList.toggle("is-fail", !ok);
+    els.inspector.classList.toggle("is-fail", !ok && !step.skipped);
     const subgoal = step.subgoal ? ` · ${step.subgoal}` : "";
     els.inspectorMeta.textContent = `Step ${step.index} of ${state.detail?.total_steps ?? steps.length}${subgoal}`;
     els.inspectorAction.textContent = action;
-    els.inspectorBadge.textContent = ok ? "Succeeded" : "Failed";
-    els.inspectorBadge.className = `badge ${ok ? "badge-ok" : "badge-fail"}`;
+    els.inspectorBadge.textContent = step.skipped ? "Skipped" : ok ? "Succeeded" : "Failed";
+    els.inspectorBadge.className = `badge ${step.skipped ? "badge-skipped" : ok ? "badge-ok" : "badge-fail"}`;
     els.inspectorThought.textContent = step.thought || "No thought recorded.";
     els.inspectorResult.textContent = step.result || "No result recorded.";
     renderWorldGraph(step);
@@ -2037,20 +2040,20 @@
           ? `<span class="step-cam" title="Has camera frame">cam</span>`
           : "";
         return `
-          <li class="step ${ok ? "is-ok" : "is-fail"}" data-step-index="${step.index}" tabindex="0" role="option" aria-selected="false">
+          <li class="step ${step.skipped ? "is-skipped" : ok ? "is-ok" : "is-fail"}" data-step-index="${step.index}" tabindex="0" role="option" aria-selected="false">
             <div class="step-head">
               <span class="step-num">${step.index}</span>
               <span class="step-action">${escapeHtml(action)}</span>
               <span class="step-preview">${escapeHtml(preview)}</span>
               ${camera}
-              <span class="badge ${ok ? "badge-ok" : "badge-fail"}">${ok ? "Succeeded" : "Failed"}</span>
+              <span class="badge ${step.skipped ? "badge-skipped" : ok ? "badge-ok" : "badge-fail"}">${step.skipped ? "Skipped" : ok ? "Succeeded" : "Failed"}</span>
             </div>
           </li>
         `;
       })
       .join("");
     const stillVisible = steps.some((step) => step.index === state.inspectedIndex);
-    const fallback = steps.find((step) => !step.success) || steps[0];
+    const fallback = steps.find((step) => !step.success && !step.skipped) || steps[0];
     inspectStep(stillVisible ? state.inspectedIndex : fallback.index);
   }
 
