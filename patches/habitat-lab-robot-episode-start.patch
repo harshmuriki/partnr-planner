@@ -1,0 +1,39 @@
+diff --git a/habitat-lab/habitat/tasks/rearrange/rearrange_task.py b/habitat-lab/habitat/tasks/rearrange/rearrange_task.py
+index 5caaaa4f8..32bc6a26f 100644
+--- a/habitat-lab/habitat/tasks/rearrange/rearrange_task.py
++++ b/habitat-lab/habitat/tasks/rearrange/rearrange_task.py
+@@ -5,6 +5,7 @@
+ # LICENSE file in the root directory of this source tree.
+ 
+ import copy
++import math
+ import os.path as osp
+ from collections import OrderedDict
+ from typing import Any, Dict, List, Tuple, Union
+@@ -179,7 +180,26 @@ class RearrangeTask(NavigationTask):
+                 self._articulated_agent_pos_start
+             )
+ 
++    def _saved_episode_start(self) -> Tuple[np.ndarray, float]:
++        """Pose stored on the episode. Same point and yaw on every reset."""
++        episode = self._sim.ep_info
++        x, y, z, w = (float(v) for v in episode.start_rotation)
++        yaw = math.atan2(2 * (w * y + x * z), 1 - 2 * (y * y + z * z))
++        return np.array(episode.start_position, dtype=np.float64), yaw
++
+     def _set_articulated_agent_start(self, agent_idx: int) -> None:
++        # Agent 0 is the robot. Its start comes from the episode, not a fresh
++        # navmesh sample or a cache of a previous sample.
++        if agent_idx == 0 and self._sim.ep_info is not None:
++            articulated_agent_pos, articulated_agent_rot = (
++                self._saved_episode_start()
++            )
++            articulated_agent = self._sim.get_agent_data(
++                agent_idx
++            ).articulated_agent
++            articulated_agent.base_pos = articulated_agent_pos
++            articulated_agent.base_rot = articulated_agent_rot
++            return
+         articulated_agent_start = self._get_cached_articulated_agent_start(
+             agent_idx
+         )

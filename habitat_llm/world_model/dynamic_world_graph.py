@@ -1022,6 +1022,10 @@ class DynamicWorldGraph(WorldGraph):
             dynamic_agent_node.properties["translation"] = agent_node.properties[
                 "translation"
             ].copy()
+            if "initial_room" in agent_node.properties:
+                dynamic_agent_node.properties["initial_room"] = agent_node.properties[
+                    "initial_room"
+                ]
             self.add_agent_node_and_update_room(dynamic_agent_node)
 
     def _set_sim_handles_for_non_privileged_graph(self, perception: "PerceptionObs"):

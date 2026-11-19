@@ -45,8 +45,12 @@ from habitat_llm.agent.env.dataset import CollaborationDatasetV0
 from habitat_llm.utils import cprint, fix_config, setup_config
 from habitat_llm.utils.episode_cost import combined_time_breakdown, planner_cost_metrics
 from habitat_llm.utils.llm_usage import fmt_usd
+from habitat_llm.utils.run_log import tee_to_run_log
 from habitat_llm.custom_approach import render_custom_subgoal_log_html
-from habitat_llm.vlm_tamp.output_paths import aggregate_outputs_dir_from_results_dir
+from habitat_llm.vlm_tamp.output_paths import (
+    aggregate_outputs_dir_from_results_dir,
+    export_html_with_relative_assets,
+)
 from habitat_llm.vlm_tamp.render_pddl_baseline_html import (
     EPISODE_METRICS_JSON,
     render_pddl_baseline_log_dir_to_html,
@@ -58,23 +62,6 @@ from habitat_baselines.utils.info_dict import extract_scalars_from_info
 # append the path of the
 # parent directory
 sys.path.append("..")
-
-
-class _TeeStream:
-    """Write to a real stream while copying into a file (for terminal + log.txt)."""
-
-    def __init__(self, real_stream, mirror_file):
-        self._real = real_stream
-        self._mirror = mirror_file
-
-    def write(self, data):
-        self._real.write(data)
-        self._mirror.write(data)
-        return len(data)
-
-    def flush(self):
-        self._real.flush()
-        self._mirror.flush()
 
 
 def _run_root_log_txt_path(config) -> str:
@@ -89,23 +76,8 @@ def _tee_stdout_stderr_to_run_log(config, header: str):
     Still prints to the original terminal streams.
     """
     log_path = _run_root_log_txt_path(config)
-    parent = os.path.dirname(log_path)
-    if parent:
-        os.makedirs(parent, exist_ok=True)
-    with open(log_path, "a", encoding="utf-8") as logf:
-        ts = time.strftime("%Y-%m-%d %H:%M:%S")
-        logf.write(f"\n{'='*80}\n{header}\n{ts}\n{'='*80}\n")
-        logf.flush()
-        old_out, old_err = sys.stdout, sys.stderr
-        tee_out = _TeeStream(old_out, logf)
-        tee_err = _TeeStream(old_err, logf)
-        try:
-            with contextlib.redirect_stdout(tee_out), contextlib.redirect_stderr(tee_err):
-                yield
-        finally:
-            end_ts = time.strftime("%Y-%m-%d %H:%M:%S")
-            logf.write(f"\n--- end: {header} @ {end_ts} ---\n")
-            logf.flush()
+    with tee_to_run_log(log_path, header):
+        yield
 
 
 def get_output_file(config, env_interface):
@@ -246,7 +218,7 @@ def _copy_pddl_interactive_html_to_outputs_dir(
         copied = 0
         for src in sorted(results_parent.rglob("*_pddl.html")):
             dest = out_dir / src.name
-            shutil.copy2(src, dest)
+            export_html_with_relative_assets(src, dest)
             copied += 1
 
         cprint("✓ Copied PDDL HTML files to aggregate folder:", "green")
@@ -260,7 +232,7 @@ def _find_planning_tree_image(trace_file_path: str) -> Optional[str]:
     Find planning_tree.png near a trace file for PDDL runs.
     Typical layout:
       <run_root>/<task>/traces/0/trace-...txt
-      <run_root>/vlm_tamp_pddl/media/planning_tree.png
+      <run_root>/vlm_tamp_pddl/media/planning_tree.png  (rail_planner/ for RailPlanner)
     """
     try:
         t = Path(trace_file_path).resolve()
@@ -272,7 +244,7 @@ def _find_planning_tree_image(trace_file_path: str) -> Optional[str]:
                 continue
             for img in base.rglob("planning_tree.png"):
                 p = str(img)
-                if "/vlm_tamp_pddl/" in p and "/media/" in p:
+                if ("/vlm_tamp_pddl/" in p or "/rail_planner/" in p) and "/media/" in p:
                     return p
     except Exception:
         return None
@@ -830,6 +802,7 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
             print("Error initializing the environment")
             if config.evaluation.log_data:
                 save_exception_message(config, env_interface)
+            raise
     else:
         env_interface = None
         initial_object_snapshot = {}
@@ -1088,7 +1061,9 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
             except Exception as e:
                 print("An error occurred inside of this method:", e)
                 # Ensure video is saved even if exception occurs
-                if config.evaluation.save_video and hasattr(eval_runner, 'dvu') and len(eval_runner.dvu.frames) > 0:
+                if config.evaluation.save_video and hasattr(eval_runner, 'dvu') and (
+                    eval_runner.dvu._video_writer is not None or eval_runner.dvu.frames
+                ):
                     try:
                         eval_runner.dvu._make_video(play=False, postfix=eval_runner.episode_filename)
                     except Exception as video_error:
@@ -1275,6 +1250,8 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
                 prompt_tokens = None
                 completion_tokens = None
                 cached_tokens = None
+                cache_write_tokens = None
+                llm_usd_is_estimate = None
                 llm_usd = None
                 llm_usd_source = None
                 llm_reasoning_effort = None
@@ -1328,6 +1305,12 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
                     cached_tokens = trace_info.get(
                         "cached_tokens", cost_metrics.get("cached_tokens")
                     )
+                    cache_write_tokens = trace_info.get(
+                        "cache_write_tokens", cost_metrics.get("cache_write_tokens")
+                    )
+                    llm_usd_is_estimate = trace_info.get(
+                        "llm_usd_is_estimate", cost_metrics.get("llm_usd_is_estimate")
+                    )
                     llm_usd = trace_info.get("llm_usd", cost_metrics.get("llm_usd"))
                     llm_usd_source = trace_info.get(
                         "llm_usd_source", cost_metrics.get("llm_usd_source")
@@ -1367,6 +1350,8 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
                     "prompt_tokens": prompt_tokens,
                     "completion_tokens": completion_tokens,
                     "cached_tokens": cached_tokens,
+                    "cache_write_tokens": cache_write_tokens,
+                    "llm_usd_is_estimate": llm_usd_is_estimate,
                     "llm_usd": llm_usd,
                     "llm_usd_source": llm_usd_source,
                     "llm_reasoning_effort": llm_reasoning_effort,
@@ -1402,6 +1387,8 @@ def run_planner(config, dataset: CollaborationDatasetV0 = None, conn=None):
                                 "prompt_tokens": prompt_tokens,
                                 "completion_tokens": completion_tokens,
                                 "cached_tokens": cached_tokens,
+                                "cache_write_tokens": cache_write_tokens,
+                                "llm_usd_is_estimate": llm_usd_is_estimate,
                                 "llm_usd": llm_usd,
                                 "llm_usd_source": llm_usd_source,
                                 "llm_planning_time_s": llm_planning_time_s,

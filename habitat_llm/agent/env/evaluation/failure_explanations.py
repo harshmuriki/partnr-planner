@@ -76,6 +76,12 @@ def derive_proposition_str(
         room = get_room_class(prop, mi)
         return f"{obj}{should_txt} moved to the {room}"
 
+    if prop.function_name == "is_waited_inside":
+        obj = get_object_class(prop, mi)
+        furn = get_furniture_class(prop, mi)
+        verb = "should have completed" if should else "completed"
+        return f"The robot {verb} Wait while {obj} remained inside the {furn}"
+
     if prop.function_name == "is_inside":
         obj = get_object_class(prop, mi)
         furn = get_furniture_class(prop, mi)

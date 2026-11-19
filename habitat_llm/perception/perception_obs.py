@@ -46,8 +46,15 @@ class PerceptionObs(PerceptionSim):
     grounds the location based on depth images being streamed by the agents.
     """
 
-    def __init__(self, sim, metadata_dict: Dict[str, str], *args, **kwargs):
-        super().__init__(sim, metadata_dict=metadata_dict, detectors=["gt_panoptic"])
+    def __init__(
+        self, sim, metadata_dict: Dict[str, str], *args, scene_info=None, **kwargs
+    ):
+        super().__init__(
+            sim,
+            metadata_dict=metadata_dict,
+            detectors=["gt_panoptic"],
+            scene_info=scene_info,
+        )
 
         # a list of cached images for debugging
         self._iteration = 0

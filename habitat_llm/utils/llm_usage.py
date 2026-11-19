@@ -4,11 +4,22 @@ import re
 from typing import Any, Dict, Optional
 
 # Standard short-context API rates, USD per 1M tokens.
-# Source: OpenAI API pricing (2026-09). Long-context surcharge applied per request.
+# Source: https://developers.openai.com/api/docs/guides/prompt-caching
+# Cache-write rates checked 2026-10-02; surcharges apply per request.
 MODEL_PRICES_PER_M: Dict[str, Dict[str, float]] = {
-    "gpt-5.6-luna": {"input": 0.20, "cached": 0.02, "output": 1.20},
-    "gpt-5.6-terra": {"input": 2.00, "cached": 0.20, "output": 12.00},
-    "gpt-5.6-sol": {"input": 4.00, "cached": 0.40, "output": 20.00},
+    "gpt-5.6-luna": {
+        "input": 0.20, "cached": 0.02, "cache_write": 0.25, "output": 1.20,
+    },
+    "gpt-5.6-terra": {
+        "input": 2.00, "cached": 0.20, "cache_write": 2.50, "output": 12.00,
+    },
+    "gpt-5.6-sol": {
+        "input": 4.00, "cached": 0.40, "cache_write": 5.00, "output": 20.00,
+    },
+    # https://developers.openai.com/api/docs/models/gpt-6-astra, checked 2026-11-10
+    "gpt-6-astra": {
+        "input": 10.00, "cached": 1.00, "cache_write": 12.50, "output": 50.00,
+    },
     "gpt-5.2": {"input": 1.75, "cached": 0.175, "output": 14.00},
     "gpt-4o-mini": {"input": 0.15, "cached": 0.075, "output": 0.60},
     "gpt-4o": {"input": 2.50, "cached": 1.25, "output": 10.00},
@@ -16,6 +27,8 @@ MODEL_PRICES_PER_M: Dict[str, Dict[str, float]] = {
 }
 
 GPT56_LONG_CONTEXT_TOKENS = 272_000
+# Models billed 2x input/cache and 1.5x output for the whole request above that many prompt tokens.
+LONG_CONTEXT_SURCHARGE_PREFIXES = ("gpt-5.6", "gpt-6-astra")
 CHARS_PER_TOKEN_ESTIMATE = 4.0
 
 
@@ -47,15 +60,19 @@ def _int_or_zero(value: Any) -> int:
     return max(0, number)
 
 
-def usage_from_openai_payload(payload: Any) -> Dict[str, int]:
-    """Parse OpenAI chat.completions usage (SDK object or dict)."""
+def usage_from_openai_payload(payload: Any) -> Dict[str, Optional[int]]:
+    """Parse Chat Completions or Responses usage, preserving missing write counts."""
+    empty = {
+        "prompt_tokens": 0, "completion_tokens": 0,
+        "cached_tokens": 0, "cache_write_tokens": None,
+    }
     if payload is None:
-        return {"prompt_tokens": 0, "completion_tokens": 0, "cached_tokens": 0}
+        return empty
     usage = getattr(payload, "usage", None)
     if usage is None and isinstance(payload, dict):
         usage = payload.get("usage", payload)
     if usage is None:
-        return {"prompt_tokens": 0, "completion_tokens": 0, "cached_tokens": 0}
+        return empty
 
     def _get(obj: Any, key: str, default: Any = 0) -> Any:
         if obj is None:
@@ -64,16 +81,24 @@ def usage_from_openai_payload(payload: Any) -> Dict[str, int]:
             return obj.get(key, default)
         return getattr(obj, key, default)
 
-    prompt = _int_or_zero(_get(usage, "prompt_tokens"))
-    completion = _int_or_zero(_get(usage, "completion_tokens"))
-    details = _get(usage, "prompt_tokens_details", None)
+    prompt = _int_or_zero(_get(usage, "prompt_tokens", _get(usage, "input_tokens")))
+    completion = _int_or_zero(
+        _get(usage, "completion_tokens", _get(usage, "output_tokens"))
+    )
+    details = _get(usage, "prompt_tokens_details", None) or _get(
+        usage, "input_tokens_details", None
+    )
     cached = _int_or_zero(_get(details, "cached_tokens") if details is not None else 0)
     if cached > prompt:
         cached = prompt
+    writes = _get(details, "cache_write_tokens", None)
+    if writes is not None:
+        writes = min(_int_or_zero(writes), prompt - cached)
     return {
         "prompt_tokens": prompt,
         "completion_tokens": completion,
         "cached_tokens": cached,
+        "cache_write_tokens": writes,
     }
 
 
@@ -82,6 +107,7 @@ def request_cost_usd(
     prompt_tokens: int,
     completion_tokens: int,
     cached_tokens: int = 0,
+    cache_write_tokens: Optional[int] = None,
 ) -> Optional[float]:
     prices = prices_for_model(model)
     if prices is None:
@@ -89,16 +115,22 @@ def request_cost_usd(
     prompt = _int_or_zero(prompt_tokens)
     completion = _int_or_zero(completion_tokens)
     cached = min(_int_or_zero(cached_tokens), prompt)
-    uncached = prompt - cached
+    writes = min(_int_or_zero(cache_write_tokens), prompt - cached)
+    uncached = prompt - cached - writes
     in_rate = prices["input"]
     cached_rate = prices.get("cached", in_rate)
+    write_rate = prices.get("cache_write", in_rate)
     out_rate = prices["output"]
     name = normalize_model_name(model).lower()
-    if prompt > GPT56_LONG_CONTEXT_TOKENS and name.startswith("gpt-5.6"):
+    if prompt > GPT56_LONG_CONTEXT_TOKENS and name.startswith(LONG_CONTEXT_SURCHARGE_PREFIXES):
         in_rate *= 2.0
         cached_rate *= 2.0
+        write_rate *= 2.0
         out_rate *= 1.5
-    return (uncached * in_rate + cached * cached_rate + completion * out_rate) / 1_000_000.0
+    return (
+        uncached * in_rate + cached * cached_rate
+        + writes * write_rate + completion * out_rate
+    ) / 1_000_000.0
 
 
 def fmt_usd(value: Any) -> str:
@@ -149,6 +181,9 @@ class TokenUsageTracker:
         self.prompt_tokens = 0
         self.completion_tokens = 0
         self.cached_tokens = 0
+        self.cache_write_tokens = 0
+        self.calls_with_cache_write_usage = 0
+        self.missing_cache_write_cost = False
         self.usd = 0.0
         self.has_api_usage = False
         self.unknown_price = False
@@ -164,21 +199,6 @@ class TokenUsageTracker:
         if name:
             self.reasoning_effort = name
 
-    def reset(self) -> None:
-        self.calls = 0
-        self.prompt_tokens = 0
-        self.completion_tokens = 0
-        self.cached_tokens = 0
-        self.usd = 0.0
-        self.has_api_usage = False
-        self.unknown_price = False
-        self.source = ""
-
-    def set_model(self, model: Any) -> None:
-        name = normalize_model_name(model)
-        if name:
-            self.model = name
-
     def record(
         self,
         *,
@@ -186,26 +206,39 @@ class TokenUsageTracker:
         prompt_tokens: int = 0,
         completion_tokens: int = 0,
         cached_tokens: int = 0,
+        cache_write_tokens: Optional[int] = None,
         source: str = "api",
     ) -> None:
         if model:
             self.set_model(model)
         prompt = _int_or_zero(prompt_tokens)
         completion = _int_or_zero(completion_tokens)
-        cached = _int_or_zero(cached_tokens)
+        cached = min(_int_or_zero(cached_tokens), prompt)
+        writes = min(_int_or_zero(cache_write_tokens), prompt - cached)
         if prompt == 0 and completion == 0:
             return
         self.calls += 1
         self.prompt_tokens += prompt
         self.completion_tokens += completion
         self.cached_tokens += cached
+        if cache_write_tokens is not None:
+            self.calls_with_cache_write_usage += 1
+            self.cache_write_tokens += writes
+        else:
+            prices = prices_for_model(self.model)
+            if (
+                prices
+                and prices.get("cache_write", prices["input"]) > prices["input"]
+                and prompt > cached
+            ):
+                self.missing_cache_write_cost = True
         if source == "api":
             self.has_api_usage = True
         if not self.source:
             self.source = source
         elif self.source != source:
             self.source = "mixed"
-        cost = request_cost_usd(self.model, prompt, completion, cached)
+        cost = request_cost_usd(self.model, prompt, completion, cached, writes)
         if cost is None:
             self.unknown_price = True
         else:
@@ -229,6 +262,17 @@ class TokenUsageTracker:
             "prompt_tokens": self.prompt_tokens,
             "completion_tokens": self.completion_tokens,
             "cached_tokens": self.cached_tokens,
+            # Partial reporting is not a known zero or a complete episode total.
+            "cache_write_tokens": (
+                self.cache_write_tokens
+                if self.calls and self.calls_with_cache_write_usage == self.calls
+                else None
+            ),
+            "cache_write_tokens_reported": self.cache_write_tokens,
+            "llm_calls_with_cache_write_usage": self.calls_with_cache_write_usage,
+            "llm_usd_is_estimate": (
+                self.missing_cache_write_cost or source in ("estimated", "mixed")
+            ),
             "total_tokens": total,
             "llm_calls_with_usage": self.calls,
         }
@@ -241,6 +285,7 @@ class TokenUsageTracker:
         prices = prices_for_model(self.model)
         if prices is not None:
             out["input_usd_per_m"] = prices["input"]
+            out["cache_write_usd_per_m"] = prices.get("cache_write", prices["input"])
             out["output_usd_per_m"] = prices["output"]
         return out
 

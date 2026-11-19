@@ -33,6 +33,9 @@ class WaitSkill(SkillPolicy):
         ].articulated_agent
 
     def reset(self, batch_idxs):
+        tracker = getattr(self.env.sim, "_wait_evaluation_tracker", None)
+        if tracker is not None:
+            tracker.cancel(self.agent_uid)
         super().reset(batch_idxs)
         self.steps = 0
         self.steps_elapsed = torch.zeros(self._batch_size)
@@ -42,6 +45,9 @@ class WaitSkill(SkillPolicy):
         return
 
     def set_target(self, wait_time, env):
+        tracker = getattr(self.env.sim, "_wait_evaluation_tracker", None)
+        if tracker is not None:
+            tracker.begin(self.agent_uid)
         # TODO: Revert from hardcoded thresh to specific in future.
         # self.step_threshold = int(self._config.sim_freq) * self.get_number(wait_time) * 60
         self.step_threshold = int(self._config.sim_freq) * 5
@@ -71,7 +77,13 @@ class WaitSkill(SkillPolicy):
         masks,
         batch_idx,
     ) -> torch.BoolTensor:
-        return (self.steps_elapsed[batch_idx] > self.step_threshold).to(masks.device)
+        done = (self.steps_elapsed[batch_idx] > self.step_threshold).to(masks.device)
+        tracker = getattr(self.env.sim, "_wait_evaluation_tracker", None)
+        if tracker is not None:
+            tracker.sample(self.agent_uid)
+            if bool(done) and not self.failed:
+                tracker.complete(self.agent_uid)
+        return done
 
     def get_state_description(self):
         """Method to get a string describing the state for this tool"""

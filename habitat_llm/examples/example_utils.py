@@ -9,10 +9,10 @@ import time
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import cv2
-import imageio
 import numpy as np
 
 from habitat_llm.agent.env import EnvironmentInterface
+from habitat_llm.utils.episode_video import open_video_writer, resize_video_frame
 
 # Optional callback invoked with each RGB frame (H, W, 3) uint8 after overlays.
 FrameCallback = Callable[[np.ndarray], None]
@@ -59,6 +59,12 @@ class DebugVideoUtil:
         self._video_writer = None
         self._video_file_path = None
         self._frame_count = 0
+        video_config = self.env_interface.conf.evaluation
+        self.video_width = int(getattr(video_config, "video_width", 1280))
+        self.video_height = int(getattr(video_config, "video_height", 720))
+        self.video_fps = int(getattr(video_config, "video_fps", 30))
+        self.video_crf = int(getattr(video_config, "video_crf", 28))
+        self.video_preset = str(getattr(video_config, "video_preset", "ultrafast"))
 
     def get_combined_frames(self, batch: Dict[str, Any]) -> np.ndarray:
         """Public wrapper for combined third_rgb frames (used by web GUI)."""
@@ -114,7 +120,7 @@ class DebugVideoUtil:
         :param thoughts: Optional dict mapping agent indices to reasoning/thoughts.
         """
         frames_concat = self.__get_combined_frames(observations)
-        frames_concat = np.ascontiguousarray(frames_concat)
+        frames_concat = resize_video_frame(frames_concat, self.video_width, self.video_height)
 
         # Get frame dimensions for text placement
         height, width = frames_concat.shape[:2]
@@ -193,10 +199,8 @@ class DebugVideoUtil:
                 postfix = f"temp_{int(time.time())}"
             self._video_file_path = f"{self.output_dir}/videos/video-{postfix}.mp4"
             os.makedirs(f"{self.output_dir}/videos", exist_ok=True)
-            self._video_writer = imageio.get_writer(
-                self._video_file_path,
-                fps=30,
-                quality=4,
+            self._video_writer = open_video_writer(
+                self._video_file_path, self.video_fps, self.video_crf, self.video_preset,
             )
 
         # Write frame immediately to disk (incremental writing)
@@ -233,13 +237,11 @@ class DebugVideoUtil:
             out_file = f"{self.output_dir}/videos/video-{postfix}.mp4"
             print(f"Saving video to {out_file}")
             os.makedirs(f"{self.output_dir}/videos", exist_ok=True)
-            writer = imageio.get_writer(
-                out_file,
-                fps=30,
-                quality=4,
+            writer = open_video_writer(
+                out_file, self.video_fps, self.video_crf, self.video_preset,
             )
             for frame in self.frames:
-                writer.append_data(frame)
+                writer.append_data(resize_video_frame(frame, self.video_width, self.video_height))
             writer.close()
             print(f"Saved video to {out_file} ({len(self.frames)} frames)")
 

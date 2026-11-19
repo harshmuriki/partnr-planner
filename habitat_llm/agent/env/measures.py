@@ -88,6 +88,13 @@ class AutoEvalPropositionTracker(Measure):
         self._ao_link_map = sim_utilities.get_ao_link_id_map(self._sim)
 
         self._propositions = copy.deepcopy(episode.evaluation_propositions)
+        # Replace the evidence store on every episode reset (including retries of
+        # the same episode). Skill resets only discard an unfinished wait.
+        from habitat_llm.agent.env.evaluation.wait_tracker import WaitEvaluationTracker
+
+        self._sim._wait_evaluation_tracker = WaitEvaluationTracker(
+            self._sim, self._propositions, self._ao_link_map
+        )
         self._dependencies = copy.deepcopy(episode.evaluation_proposition_dependencies)
         self._constraints = copy.deepcopy(episode.evaluation_constraints)
         self._state_sequence = []

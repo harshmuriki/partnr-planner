@@ -55,6 +55,60 @@ def load_remembered_object_names(data_path: Optional[str]) -> List[str]:
     return [record.entity for record in load_remembered_object_records(data_path)]
 
 
+def load_initial_memory_prompt(data_path: Optional[str], gt_graph=None) -> str:
+    """Build startup memory for selected objects from simulator ground truth.
+
+    These statements are not graph entities or current sensor detections. Older
+    files' viewer placements are ignored. OUT uses the existing graph description
+    and remembered placements without a separate startup memory block.
+    """
+    path = resolve_initial_robot_memory_path(data_path)
+    if path is None:
+        return ""
+    with open(path, encoding="utf-8") as handle:
+        payload = json.load(handle)
+    if "-OUT-" in payload.get("variant", ""):
+        return ""
+    statements = payload.get("initial_memory", [])
+    if not isinstance(statements, list) or not all(isinstance(x, str) for x in statements):
+        raise ValueError(f"initial_memory must be a list of statements: {path}")
+    # Old files may still contain viewer placements. Never use them as a
+    # fallback for live locations; only explicit absence statements survive.
+    items = ([text for text in statements if ": known absent" in text]
+             if "-ACC-" in payload.get("variant", "") else [])
+    records = load_remembered_object_records(data_path)
+    if records:
+        if gt_graph is None:
+            raise ValueError("Initial memory requires the episode's ground-truth graph")
+        from habitat_llm.llm.instruct.utils import get_objects_descr, state_dict_to_string
+        from habitat_llm.world_model import WorldGraph
+
+        objects = []
+        for record in records:
+            node = _find_object_node(gt_graph, record)
+            if not isinstance(node, Object):
+                items.append(f"{record.entity}: known absent; not present in the startup ground-truth graph")
+                continue
+            objects.append(node)
+        graph = WorldGraph(gt_graph.get_subgraph(objects).graph)
+        if objects:
+            locations = get_objects_descr(graph, include_room_name=True, add_state_info=True)
+            items = locations.splitlines() + items
+        # Include current container states (e.g. closed), rather than the
+        # scenario viewer's static 'starts closed' descriptions.
+        for furniture in sorted(graph.get_all_furnitures(), key=lambda node: node.name):
+            states = furniture.properties.get("states", {})
+            if states:
+                items.append(f"{furniture.name}: {state_dict_to_string(states)}")
+    if not items:
+        return ""
+    return (
+        "Initial robot memory (at episode start):\n"
+        + "\n".join(f"- {item}" for item in items)
+        + "\nObjects explicitly known absent are not available action targets.\n\n"
+    )
+
+
 def load_remembered_object_refs(
     data_path: Optional[str],
 ) -> List[Tuple[str, Optional[str]]]:

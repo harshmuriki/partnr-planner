@@ -216,6 +216,37 @@ class SimBasedPredicates:
         return PropositionResult(False, info)
 
     @classmethod
+    def is_waited_inside(
+        cls,
+        sim: CollaborationSim,
+        object_handles: List[str],
+        receptacle_handles: List[str],
+        number: int = 1,
+        is_same_receptacle: bool = False,
+        *args,
+        **kwargs,
+    ) -> PropositionResult:
+        """An explicit Wait completed with the object inside throughout the wait.
+
+        Evidence persists after removal of the object, for intermediate task
+        steps such as waiting for bread in a microwave before serving it.
+        """
+        if len(object_handles) > 1 or len(receptacle_handles) > 1:
+            return cls.set_predicate(
+                cls.is_waited_inside, sim, object_handles, receptacle_handles,
+                number=number, is_same_entity_b=is_same_receptacle,
+                default_info={"object_handles": "", "receptacle_handles": ""},
+            )
+        tracker = getattr(sim, "_wait_evaluation_tracker", None)
+        satisfied = tracker is not None and (
+            object_handles[0], receptacle_handles[0]
+        ) in tracker.completed
+        return PropositionResult(satisfied, {
+            "object_handles": object_handles[0] if satisfied else "",
+            "receptacle_handles": receptacle_handles[0] if satisfied else "",
+        })
+
+    @classmethod
     def is_in_room(
         cls,
         sim: CollaborationSim,

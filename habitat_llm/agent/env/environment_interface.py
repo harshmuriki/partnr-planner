@@ -35,6 +35,7 @@ from habitat_llm.sims.metadata_interface import get_metadata_dict_from_config
 from habitat_llm.utils.core import separate_agent_idx
 from habitat_llm.utils.initial_robot_memory import (
     apply_outdated_placements,
+    load_initial_memory_prompt,
     load_remembered_object_records,
     load_scene_info,
 )
@@ -154,10 +155,18 @@ class EnvironmentInterface:
         This method initializes perception and world graph
         """
         # Create instance of perception
+        data_path = None
+        if hasattr(self.conf, "habitat") and hasattr(self.conf.habitat, "dataset"):
+            data_path = getattr(self.conf.habitat.dataset, "data_path", None)
+        scene_info = load_scene_info(data_path)
         if self.perception_mode == "gt":
-            self.perception = PerceptionSim(self.sim, self.metadata_dict)
+            self.perception = PerceptionSim(
+                self.sim, self.metadata_dict, scene_info=scene_info
+            )
         else:
-            self.perception = PerceptionObs(self.sim, self.metadata_dict)
+            self.perception = PerceptionObs(
+                self.sim, self.metadata_dict, scene_info=scene_info
+            )
         # Set the partial observability flag
         self.partial_obs = self.conf.world_model.partial_obs
 
@@ -304,17 +313,20 @@ class EnvironmentInterface:
 
     def _seed_initial_robot_memory(self) -> None:
         """Copy remembered objects from GT into the agent's partial-obs world graph."""
-        if not self.partial_obs:
-            return
         data_path = None
         if hasattr(self.conf, "habitat") and hasattr(self.conf.habitat, "dataset"):
             data_path = getattr(self.conf.habitat.dataset, "data_path", None)
-        remembered = load_remembered_object_records(data_path)
-        if not remembered:
-            return
         gt = getattr(self.perception, "gt_graph", None)
         if gt is None:
             gt = self.full_world_graph
+        initial_memory = load_initial_memory_prompt(data_path, gt)
+        for graph in self.world_graph.values():
+            graph.initial_robot_memory_prompt = initial_memory
+        if not self.partial_obs:
+            return
+        remembered = load_remembered_object_records(data_path)
+        if not remembered:
+            return
         object_nodes = []
         missing = []
         for record in remembered:
@@ -349,25 +361,14 @@ class EnvironmentInterface:
                     subgraph, True, self.wm_update_mode, add_only=True
                 )
         scene_info = load_scene_info(data_path)
-        stale_names = []
-        for agent_key in self.world_graph:
-            warnings = apply_outdated_placements(
-                self.world_graph[agent_key],
-                gt,
-                remembered,
-                scene_info,
-            )
-            for warning in warnings:
+        for graph in self.world_graph.values():
+            for warning in apply_outdated_placements(graph, gt, remembered, scene_info):
                 cprint("⚠ initial_robot_memory: " + warning, "yellow")
-        for record in remembered:
-            if record.outdated_location:
-                stale_names.append(record.entity)
         named = [node.name for node in object_nodes] + [
-            name for name in stale_names if name not in [node.name for node in object_nodes]
+            record.entity for record in remembered if record.outdated_location
         ]
         if named:
-            extra = f" (stale: {', '.join(stale_names)})" if stale_names else ""
-            cprint("Initial robot memory objects: " + ", ".join(named) + extra, "green")
+            cprint("Initial robot memory objects: " + ", ".join(named), "green")
 
     def get_observations(self):
         """
@@ -385,6 +386,7 @@ class EnvironmentInterface:
         :param move_to_next_episode: by default, reset moves to the next episode. If set to False, will reset the environment to the same episode.
         :param episode_id: If set, reset the environment to a given episode id. Otherwise, moves to the next episode.
         """
+        self._annotation_evidence = None
         if not move_to_next_episode:
             # We set this variable to reset the environment but stay in the same episode
             self.env.env.env._env.current_episode = (
@@ -1509,6 +1511,20 @@ class EnvironmentInterface:
 
         # Update world graphs
         self.update_world_graphs(obs)
+
+        progress = getattr(self, "_episode_progress", None)
+        if progress is not None:
+            progress.simulator_step(info)
+
+        # Skills/exploration can step internally without returning to the runner.
+        # Save the evaluator state here so an outer wall timeout retains progress.
+        evidence = getattr(self, "_annotation_evidence", None)
+        if evidence is not None:
+            from habitat_llm.utils.annotation_evidence import evaluator_snapshot
+            evidence.checkpoint(lambda: evaluator_snapshot(
+                self.env.env.env._env.task.measurements.measures,
+                self.full_world_graph,
+            ))
 
         return obs, reward, done, info
 

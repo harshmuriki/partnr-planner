@@ -31,12 +31,23 @@ SINGLE_STEP_PROMPT_HEADER = "Solve the given multi-agent planning problem as bes
 STOP_WORD = "<end_act>"
 
 
+def get_initial_agent_descr(world_graph):
+    """Describe the robot's spawn room using the episode's graph room names."""
+    try:
+        robot = world_graph.get_spot_robot()
+    except ValueError:
+        return ""
+    room = robot.properties.get("initial_room")
+    return f"Initial agent location:\n{robot.name}: {room}\n\n" if room else ""
+
+
 def get_world_descr(
     world_graph,
     agent_uid=0,
     include_room_name=False,
     add_state_info=False,
     centralized=False,
+    include_initial_agent_location=False,
 ):
     """
     Builds a string description of the environment from the world graph for single step planners.
@@ -63,7 +74,12 @@ def get_world_descr(
     objs_info = get_objects_descr(
         world_graph, agent_uid, include_room_name, add_state_info, centralized
     )
-    return f"Furniture:\n{house_info}\n{faucet_info}\nObjects:\n{objs_info}"
+    initial_agent_info = (
+        get_initial_agent_descr(world_graph) if include_initial_agent_location else ""
+    )
+    if include_initial_agent_location:
+        initial_agent_info += getattr(world_graph, "initial_robot_memory_prompt", "")
+    return f"{initial_agent_info}Furniture:\n{house_info}\n{faucet_info}\nObjects:\n{objs_info}"
 
 
 def state_dict_to_string(state_dict):
@@ -139,6 +155,9 @@ def get_objects_descr(
             else:
                 furn_node = world_graph.find_furniture_for_object(obj)
                 furn_name = "unknown" if furn_node is None else furn_node.name
+                relation = world_graph.get_object_furniture_relation(obj)
+                if relation:
+                    furn_name = f"{relation} {furn_name}"
                 if include_room_name:
                     obj_info += obj.name + ": " + furn_name + " in " + room_name
                 else:

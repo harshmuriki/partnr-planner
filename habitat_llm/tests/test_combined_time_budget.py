@@ -113,7 +113,7 @@ def test_explore_can_be_excluded_without_disabling_the_budget(physical):
     assert at_limit["exceeded"]
 
 
-def test_runner_honors_vlm_explore_exclusion_and_records_it():
+def test_runner_counts_vlm_explore_towards_budget_and_records_it():
     from pathlib import Path
     from omegaconf import OmegaConf
     from habitat_llm.evaluation.evaluation_runner import EvaluationRunner
@@ -125,8 +125,8 @@ def test_runner_honors_vlm_explore_exclusion_and_records_it():
     steps = {"Navigate": 240, "Explore": 432000}
     status = runner._combined_time_status(planner_info, steps)
     info = {}
-    assert not runner._store_combined_time_status(info, {}, status, log=False)
-    assert info["exclude_explore_from_time_budget"] is True
-    assert info["combined_time_used_s"] == 592
-    assert info["combined_time_breakdown"]["explore_excluded_s"] == 3600
+    assert runner._store_combined_time_status(info, {}, status, log=False)
+    assert info["exclude_explore_from_time_budget"] is False
+    assert info["combined_time_used_s"] == 4192
+    assert info["combined_time_breakdown"]["explore_excluded_s"] == 0
     assert steps["Explore"] == 432000

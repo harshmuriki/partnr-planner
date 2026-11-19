@@ -5,6 +5,11 @@ defaults:
 type: "decentralized"
 truncate_length: 50  # max characters in file name, long files names can raise OS errors
 save_video: True
+video_width: 1280
+video_height: 720
+video_fps: 30
+video_crf: 28
+video_preset: ultrafast
 output_dir: ${hydra:runtime.output_dir}
 max_combined_time_s: 600
 combined_time_sim_freq: 120

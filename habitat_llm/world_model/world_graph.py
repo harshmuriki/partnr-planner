@@ -192,22 +192,20 @@ class WorldGraph(Graph):
             all_furn = ", ".join(furn_names)
             house_info += k + ": " + all_furn + "\n"
 
-        ## get objects held by the agent
-        spot_node = self.get_spot_robot()
-        human_node = self.get_human()
-
         ## locations of objects in the house
         objs_info = ""
         all_objs = self.get_all_objects()
         for obj in all_objs:
             if self.is_object_with_agent(obj, agent_type="robot"):
-                objs_info += obj.name + ": " + spot_node.name + "\n"
+                objs_info += obj.name + ": " + self.get_spot_robot().name + "\n"
             elif self.is_object_with_agent(obj, agent_type="human"):
-                objs_info += obj.name + ": " + human_node.name + "\n"
+                objs_info += obj.name + ": " + self.get_human().name + "\n"
             else:
                 furniture = self.find_furniture_for_object(obj)
                 if furniture is not None:
-                    objs_info += obj.name + ": " + furniture.name + "\n"
+                    relation = self.get_object_furniture_relation(obj)
+                    location = f"{relation} {furniture.name}" if relation else furniture.name
+                    objs_info += obj.name + ": " + location + "\n"
                 else:
                     # No parent in graph (e.g. fake/added objects, or unknown under
                     # agent asymmetry / concept_graph / non_privileged)
@@ -290,6 +288,29 @@ class WorldGraph(Graph):
                 f"No furniture for object with name {obj.name} was found in the graph"
             )
         return None
+
+    def get_object_furniture_relation(self, obj: Object) -> Optional[str]:
+        """Return 'inside' or 'on' relative to the object's parent furniture.
+
+        An 'on' edge to a 'within' receptacle means inside its furniture.
+        Unknown relations stay unknown; furniture names do not imply placement.
+        """
+        furniture = self.find_furniture_for_object(obj)
+        if furniture is None or self.is_object_with_agent(obj):
+            return None
+        relations = set()
+        for neighbor, edge in self.graph[obj].items():
+            if neighbor == furniture:
+                relations.add(edge)
+            elif isinstance(neighbor, Receptacle) and furniture in self.graph[neighbor]:
+                if edge in {"on", "in", "inside", "within"}:
+                    relations.add(edge)
+                    rec_type = neighbor.properties.get("type")
+                    if rec_type in {"on", "in", "inside", "within"}:
+                        relations.add(rec_type)
+        if relations & {"in", "inside", "within"}:
+            return "inside"
+        return "on" if "on" in relations else None
 
     def find_receptacle_for_object(self, obj):
         """

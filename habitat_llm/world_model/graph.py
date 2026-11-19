@@ -86,7 +86,7 @@ class Graph:
         This method returns the node with matching name
         """
         for node in self.graph:
-            if node.name == node_name:
+            if node.name == node_name or node_name in node.properties.get("aliases", ()):
                 return node
 
         raise ValueError(f"Node with name {node_name} not present in the graph")
@@ -110,7 +110,10 @@ class Graph:
 
         # Reason if the input is of type string
         if isinstance(input_node, str):
-            return any(node.name == input_node for node in self.graph)
+            return any(
+                node.name == input_node or input_node in node.properties.get("aliases", ())
+                for node in self.graph
+            )
 
         # Reason if the input is not string
         return input_node in self.graph

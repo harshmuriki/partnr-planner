@@ -11,7 +11,7 @@ simulator partial-observation condition which generates ground-truth world-graph
 only the entities discovered so far by the agents."""
 
 import copy
-from typing import TYPE_CHECKING, Dict, List, Optional, Set, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Union
 
 if TYPE_CHECKING:
     pass
@@ -31,6 +31,7 @@ from magnum import Vector3
 from habitat_llm.perception.perception import Perception
 from habitat_llm.sims.metadata_interface import MetadataInterface
 from habitat_llm.utils.episode_entity_names import (
+    furniture_names_by_sim_handle,
     graph_object_name,
     object_names_by_sim_handle,
 )
@@ -59,7 +60,11 @@ class PerceptionSim(Perception):
 
     # Parameterized Constructor
     def __init__(
-        self, sim: RearrangeSim, metadata_dict: Dict[str, str] = None, detectors=None
+        self,
+        sim: RearrangeSim,
+        metadata_dict: Dict[str, str] = None,
+        detectors=None,
+        scene_info: Optional[Dict[str, Any]] = None,
     ):
         # Call base class constructor
         super().__init__(detectors)
@@ -72,6 +77,7 @@ class PerceptionSim(Perception):
         if not sim:
             raise ValueError("Cannot construct PerceptionSim with sim as None")
         self.sim = sim
+        self.scene_info = scene_info or {}
 
         # Container to store mapping from parent furniture object handles to child receptacles
         self.fur_obj_handle_to_recs: Dict[str, Dict[str, List[HabReceptacle]]] = None
@@ -241,6 +247,11 @@ class PerceptionSim(Perception):
 
         # Add room nodes to the graph
         region_names = {}
+        # Resolve both saved and generated furniture names before adding rooms:
+        # GUI/ad-hoc datasets may not have a sibling scene_info.json.
+        furniture_names = set(self._get_furniture_names_by_handle().values()) | set(
+            self.scene_info.get("receptacle_to_handle") or {}
+        )
         if len(self.sim.semantic_scene.regions) == 0:
             raise ValueError(
                 f"No regions found in the scene: {self.sim.ep_info['scene_id']}"
@@ -252,6 +263,10 @@ class PerceptionSim(Perception):
                 region_names[region_name] = 0
             region_names[region_name] = region_names[region_name] + 1
             room_name = f"{region_name}_{region_names[region_name]}"
+            if room_name in furniture_names:
+                room_name = f"{region_name}_room_{region_names[region_name]}"
+                while room_name in furniture_names or self.gt_graph.has_node(room_name):
+                    room_name += "_room"
 
             # Add a valid point on floor as room location
             point_on_floor = sutils.get_floor_point_in_region(self.sim, region_idx)
@@ -300,6 +315,23 @@ class PerceptionSim(Perception):
                 self.gt_graph.add_node(floor)
                 self.gt_graph.add_edge(floor, room, "inside", flip_edge("inside"))
 
+    def _get_furniture_names_by_handle(self) -> Dict[str, str]:
+        """Resolve furniture identity once, before allocating any room names."""
+        cached = getattr(self, "_furniture_names_by_handle", None)
+        if cached is not None:
+            return cached
+        self.fur_obj_handle_to_recs = get_receptacle_dict(
+            self.sim, list(self.receptacles.values())
+        )
+        names = furniture_names_by_sim_handle(self.scene_info)
+        if any(handle not in names for handle in self.fur_obj_handle_to_recs):
+            self.metadata_interface.refresh_scene_caches(self.sim)
+            names = furniture_names_by_sim_handle(
+                self.scene_info, self.metadata_interface.recobj_semname_to_handle
+            )
+        self._furniture_names_by_handle = names
+        return names
+
     def add_furniture_and_receptacles_to_gt_graph(self) -> None:
         """
         Adds all furniture and corresponding receptacles to the graph during graph initialization
@@ -312,9 +344,10 @@ class PerceptionSim(Perception):
         # Get faucet locations
         faucet_points = get_faucet_points(self.sim)
 
-        # Get dict mapping furniture sim handles to "on" and "within" sets containing lists of HabReceptacles
-        self.fur_obj_handle_to_recs = get_receptacle_dict(
-            self.sim, list(self.receptacles.values())
+        names_by_handle = self._get_furniture_names_by_handle()
+        existing_names = set(self.gt_graph.get_all_node_names() or [])
+        reserved_names = set(names_by_handle.values()) | set(
+            self.scene_info.get("receptacle_to_handle") or {}
         )
 
         # Iterate through furniture to rec dict and populate the graph
@@ -325,10 +358,21 @@ class PerceptionSim(Perception):
                 furniture_sim_handle, "type"
             )
 
-            # Generate name for furniture
-            furniture_name = (
-                f"{furniture_type}_{self.gt_graph.count_nodes_of_type(Furniture)}"
-            )
+            # Saved names identify furniture by handle, independent of graph
+            # insertion order and the number of floors in this scene.
+            furniture_name = names_by_handle.get(furniture_sim_handle)
+            if furniture_name is None:
+                furniture_name = graph_object_name(
+                    furniture_sim_handle,
+                    furniture_type,
+                    0,
+                    existing_names=existing_names | reserved_names,
+                )
+            if furniture_name in existing_names:
+                raise ValueError(
+                    f"Furniture name collides with graph node: {furniture_name}"
+                )
+            existing_names.add(furniture_name)
 
             # Create properties dict
             properties = {
@@ -344,6 +388,17 @@ class PerceptionSim(Perception):
 
             # Create furniture instance and receptacle instance
             fur = Furniture(furniture_name, properties, furniture_sim_handle)
+
+            # Old runtime names (cabinet_34) still appear in saved ground-truth
+            # actions. They resolve to the spec name of the same furniture.
+            legacy_names = [
+                alias
+                for alias, target in (self.scene_info.get("spec_furniture_aliases") or {}).items()
+                if isinstance(target, dict) and target.get("runtime_name") == furniture_name
+            ]
+            if legacy_names:
+                fur.properties["aliases"] = legacy_names
+                existing_names.update(legacy_names)
 
             # Add furniture to the graph
             self.gt_graph.add_node(fur)
@@ -529,6 +584,9 @@ class PerceptionSim(Perception):
                 if region.contains(agent.properties["translation"]):
                     room_name = self.region_id_to_name[region.id]
                     break
+
+            # Snapshot the spawn room before any navigation or exploration.
+            agent.properties["initial_room"] = room_name or "unknown_room"
 
             # Add agent to unknown room if a valid room is not found
             if room_name == None:

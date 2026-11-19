@@ -15,6 +15,10 @@ user_tag : ""
 assistant_tag : ""
 eot_tag : ""
 
+# Per-run USD spend cap (list prices, see habitat_llm/utils/llm_usage.py); null = no cap.
+# When reached, the planner stops calling the API and ends with "Final Thought: Exit!".
+max_cost_usd : null
+
 # Decide whether to keep history
 keep_message_history   : False
 

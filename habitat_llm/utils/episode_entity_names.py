@@ -1,8 +1,33 @@
-"""Map simulator object handles to episode logical names from dataset.json."""
+"""Map simulator handles to logical names from episode and scene metadata."""
 
 from __future__ import annotations
 
 from typing import Any, Dict, Optional
+
+
+def furniture_names_by_sim_handle(
+    scene_info: Dict[str, Any],
+    generated_names: Optional[Dict[str, str]] = None,
+) -> Dict[str, str]:
+    """Prefer saved scene names; fill missing handles from generation metadata.
+
+    Explicit spec aliases refer to the same node as their canonical runtime_name.
+    Reserve all saved names so newly discovered furniture cannot steal them.
+    """
+    saved = scene_info.get("receptacle_to_handle") or {}
+    aliases = scene_info.get("spec_furniture_aliases") or {}
+    names: Dict[str, str] = {}
+    for name, handle in saved.items():
+        canonical = aliases.get(name, {}).get("runtime_name")
+        if canonical and saved.get(canonical) == handle:
+            continue
+        names.setdefault(handle, name)
+    reserved = set(saved)
+    for name, handle in (generated_names or {}).items():
+        if handle not in names and name not in reserved:
+            names[handle] = name
+            reserved.add(name)
+    return names
 
 
 def episode_info_dict(ep_info: Any) -> Dict[str, Any]:

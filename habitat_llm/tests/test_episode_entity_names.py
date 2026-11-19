@@ -1,7 +1,37 @@
 from habitat_llm.utils.episode_entity_names import (
+    furniture_names_by_sim_handle,
     graph_object_name,
     object_names_by_sim_handle,
 )
+
+
+def test_saved_furniture_names_override_generation_order():
+    scene = {"receptacle_to_handle": {"table_11": "desk", "cabinet_5": "sink"}}
+    generated = {"table_0": "desk", "cabinet_0": "sink", "couch_0": "sofa"}
+    assert furniture_names_by_sim_handle(scene, generated) == {
+        "desk": "table_11",
+        "sink": "cabinet_5",
+        "sofa": "couch_0",
+    }
+
+
+def test_furniture_names_without_scene_info_use_generation_mapping():
+    assert furniture_names_by_sim_handle({}, {"table_0": "desk"}) == {"desk": "table_0"}
+
+
+def test_furniture_alias_does_not_replace_canonical_name():
+    scene = {
+        "receptacle_to_handle": {"table_16": "coffee", "table_2": "coffee"},
+        "spec_furniture_aliases": {"table_16": {"runtime_name": "table_2"}},
+    }
+    assert furniture_names_by_sim_handle(scene) == {"coffee": "table_2"}
+
+
+def test_generated_furniture_cannot_take_saved_name_for_another_handle():
+    scene = {"receptacle_to_handle": {"table_0": "saved-desk"}}
+    assert furniture_names_by_sim_handle(scene, {"table_0": "new-table"}) == {
+        "saved-desk": "table_0"
+    }
 
 
 def test_object_names_from_entity_handles():

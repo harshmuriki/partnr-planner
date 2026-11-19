@@ -34,6 +34,9 @@ from habitat_llm.utils.episode_cost import (
     combined_time_breakdown,
     planner_cost_metrics,
 )
+from habitat_llm.utils.object_state_report import snapshot_objects, write_object_state_report
+from habitat_llm.utils.llm_cost_report import bind_episode_cost_report, record_episode_costs
+from habitat_llm.utils.episode_progress import checkpoint_episode, start_episode_progress
 from habitat_llm.utils.sim import init_agents
 from habitat_llm.world_model import Entity, WorldGraph
 
@@ -229,6 +232,13 @@ class EvaluationRunner:
         self.current_instruction = ""
         self._last_budget_log_used_s = -1.0
 
+        if hasattr(self, "_episode_progress"):
+            del self._episode_progress
+        if hasattr(self, "_episode_cost_ledger"):
+            del self._episode_cost_ledger
+        if hasattr(self, "_initial_object_states"):
+            del self._initial_object_states
+
         # Reset planners and the agents owned by the planners
         # This will also reset skills owned by the agents to
         # make eval runner ready for next episode
@@ -317,6 +327,13 @@ class EvaluationRunner:
 
         :param planner_infos: List of dictionaries containing planner information at each step
         """
+        progress = getattr(self, "_episode_progress", None)
+        if progress is not None:
+            progress.flush()
+            if self.evaluation_runner_config.log_detailed_traces:
+                self._save_detailed_traces()
+            return
+
         # Print logging
         print("\nLogging planner data ...")
 
@@ -420,14 +437,14 @@ class EvaluationRunner:
         if self.evaluation_runner_config.log_detailed_traces:
             self._save_detailed_traces()
 
-    def _save_detailed_traces(self) -> None:
+    def _save_detailed_traces(self, validate: bool = True) -> None:
         """
         Save detailed traces to a pickle file containing instruction, action history and state history.
         """
         for actions in self.env_interface.agent_action_history.values():
             # don't check the last action because if you hit the max sim step count no result will be logged
             for action in actions[:-1]:
-                if action.response in [None, ""] and action.action[0] != "Done":
+                if validate and action.response in [None, ""] and action.action[0] != "Done":
                     action_history_string = "\n".join(
                         [f"{a.action}: {a.response}" for a in actions]
                     )
@@ -448,8 +465,10 @@ class EvaluationRunner:
 
         os.makedirs(os.path.dirname(file_path_detailed_trace), exist_ok=True)
 
-        with open(file_path_detailed_trace, "wb") as file:
+        temporary = file_path_detailed_trace + ".tmp"
+        with open(temporary, "wb") as file:
             pickle.dump(result, file)
+        os.replace(temporary, file_path_detailed_trace)
 
     def _make_td_video(self) -> None:
         """
@@ -692,6 +711,18 @@ class EvaluationRunner:
                 )
         return bool(status["exceeded"])
 
+    def _save_object_state_report(self, status="completed", initial_only=False):
+        if not hasattr(self, "_initial_object_states"):
+            return
+        return write_object_state_report(
+            self.output_dir, self.episode_filename, self.current_instruction,
+            self._initial_object_states,
+            {} if initial_only else snapshot_objects(self.env_interface),
+            status=status,
+        )
+
+    @record_episode_costs
+    @checkpoint_episode
     def run_instruction(
         self,
         instruction: Optional[str] = None,
@@ -717,8 +748,17 @@ class EvaluationRunner:
 
         # Initialize metadata
         self.initialize_instruction_metadata(instruction, output_name)
+        bind_episode_cost_report(self)
+        start_episode_progress(self, preserve_planner_state)
+        # Keep the original snapshot across sequential subgoals of one episode.
+        if not preserve_planner_state or not hasattr(self, "_initial_object_states"):
+            self._initial_object_states = snapshot_objects(self.env_interface)
+        self._save_object_state_report(status="running", initial_only=True)
         # Initialize sensor observations
         observations = self.env_interface.get_observations()
+        if self.evaluation_runner_config.save_video:
+            # Include the starting scene even if the planner immediately finishes.
+            self.dvu._store_for_video(observations, {}, postfix=self.episode_filename)
 
         # Reset planners for a fresh instruction unless we are intentionally
         # continuing the same multi-subgoal planning conversation.
@@ -757,8 +797,31 @@ class EvaluationRunner:
         # Track previous action to count sim steps correctly
         prev_action_per_agent = {}
 
-        # List to store planner logs at each step
+        # Keep only the latest bulky prompt/trace; the progress writer owns history.
         planner_infos = []
+        # Persist evaluator evidence separately from planner inputs, including runs
+        # killed by the outer wall-clock timeout before normal log teardown.
+        from habitat_llm.utils.annotation_evidence import (
+            AnnotationEvidenceWriter,
+            evaluator_snapshot,
+        )
+        annotation_evidence = AnnotationEvidenceWriter(
+            self.output_dir, self.episode_filename, self.current_instruction
+        )
+        self.env_interface._annotation_evidence = annotation_evidence
+        annotation_evidence.checkpoint(
+            lambda: evaluator_snapshot(
+                self.env_interface.env.env.env._env.task.measurements.measures,
+                self.env_interface.full_world_graph,
+            ), initial=True,
+        )
+        annotation_evidence.record(
+            {"total_step_count": 0},
+            evaluator_snapshot=lambda: evaluator_snapshot(
+                self.env_interface.env.env.env._env.task.measurements.measures,
+                self.env_interface.full_world_graph,
+            ),
+        )
         planner_info: Dict[str, Any] = {}
         low_level_actions: List[Dict[str, Any]] = []
         should_end = False
@@ -933,12 +996,22 @@ class EvaluationRunner:
                 }
 
             # Update agent state and action history
+            annotation_evidence.record(
+                planner_info,
+                evaluator_snapshot=lambda: evaluator_snapshot(
+                    curr_env.task.measurements.measures, self.env_interface.full_world_graph
+                ),
+                final=should_end,
+            )
             copy_planner_info = copy.deepcopy(planner_info)
             self.update_agent_state_history(copy_planner_info)
             self.update_agent_action_history(copy_planner_info)
 
-            # Append planner info to history
-            planner_infos.append(copy_planner_info)
+            # The incremental writer persists the complete step history.
+            planner_infos[:] = [copy_planner_info]
+            action_boundary = self._episode_progress.record(copy_planner_info)
+            if action_boundary and self.evaluation_runner_config.log_detailed_traces:
+                self._save_detailed_traces(validate=False)
 
             # Increment while loop step count
             total_step_count += 1
@@ -964,6 +1037,9 @@ class EvaluationRunner:
         #     and self.evaluation_runner_config.do_print
         # ):
         #     rollout_print(planner_info["print"])
+
+        object_report = self._save_object_state_report()
+        print(f"Initial/final object states written to: {object_report}")
 
         # Make video
         if self.evaluation_runner_config.save_video:

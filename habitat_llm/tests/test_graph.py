@@ -20,6 +20,11 @@ def test_get_node_from_name():
     graph.add_node(test_node)
     assert graph.get_node_from_name(test_node.name) == test_node
 
+    aliased = Entity("cabinet_6", {"type": "cabinet", "aliases": ["cabinet_34"]})
+    graph.add_node(aliased)
+    assert graph.get_node_from_name("cabinet_34") is aliased
+    assert graph.has_node("cabinet_34")
+
 
 def test_get_node_from_sim_handle():
     graph = Graph()

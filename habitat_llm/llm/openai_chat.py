@@ -13,6 +13,9 @@ import httpx
 
 from habitat_llm.llm.base_llm import BaseLLM, Prompt
 from habitat_llm.utils.llm_usage import TokenUsageTracker, model_name_from_llm
+from habitat_llm.utils.llm_cost_report import (
+    billing_http_request, billing_http_response, record_api_response, track_model_call,
+)
 
 import dotenv
 dotenv.load_dotenv()
@@ -27,7 +30,7 @@ def chat_create_kwargs(params) -> dict:
     kwargs = {"model": params["model"]}
     effort = params.get("reasoning_effort")
     model = str(params.get("model") or "")
-    if effort and model.lower().startswith("gpt-5"):
+    if effort and model.lower().startswith(("gpt-5", "gpt-6")):
         effort_name = str(effort).strip().lower()
         if effort_name in _REASONING_EFFORTS:
             kwargs["reasoning_effort"] = effort_name
@@ -66,7 +69,10 @@ class OpenAIChat(BaseLLM):
         except Exception:
             raise ValueError("No OPENAI API keys provided")
 
-        http_client = httpx.Client(timeout=180.0, follow_redirects=True)
+        http_client = httpx.Client(
+            timeout=180.0, follow_redirects=True,
+            event_hooks={"request": [billing_http_request], "response": [billing_http_response]},
+        )
         self.client = OpenAI(api_key=api_key, http_client=http_client)
         self._validate_conf()
         self.verbose = self.llm_conf.verbose
@@ -74,6 +80,7 @@ class OpenAIChat(BaseLLM):
         self.message_history: List[Dict] = []
         self.keep_message_history = self.llm_conf.keep_message_history
         self.token_usage = TokenUsageTracker(model_name_from_llm(self))
+        self.budget_exhausted = False
         effort = getattr(self.generation_params, "reasoning_effort", None)
         if effort:
             self.token_usage.set_reasoning_effort(effort)
@@ -139,11 +146,24 @@ class OpenAIChat(BaseLLM):
             image_detail = "low"  # high/low/auto
             messages.append(generate_message(prompt, image_detail=image_detail))
 
+        # Per-run spend cap (llm.max_cost_usd): once reached, make no more calls and end the plan.
+        max_cost = self.llm_conf.get("max_cost_usd", None)
+        if max_cost is not None and self.token_usage.usd >= float(max_cost):
+            self.budget_exhausted = True
+            print(f"LLM cost cap reached: ${self.token_usage.usd:.4f} >= ${float(max_cost):.2f}; "
+                  "no further API calls.", flush=True)
+            self.response = "Final Thought: Exit!"
+            return self.response
+
         create_kwargs = chat_create_kwargs(params)
-        completion = self.client.chat.completions.create(
-            messages=messages, **create_kwargs
-        )
-        self.token_usage.record_openai(completion, model=params.get("model"))
+        with track_model_call(params["model"], source="OpenAIChat") as billing_call:
+            completion = self.client.chat.completions.create(
+                messages=messages, **create_kwargs
+            )
+            # Also covers mock/custom SDK transports without HTTP event hooks.
+            if billing_call is not None and not billing_call.http_requests:
+                record_api_response(completion, request_id=getattr(completion, "_request_id", None))
+            self.token_usage.record_openai(completion, model=params.get("model"))
         text_response = completion.choices[0].message.content
         self.response = text_response
 
