@@ -42,7 +42,9 @@ SHARDS="${SHARDS:-$([[ -n "$SMOKE" ]] && echo 1 || echo 8)}"
 REPEATS="${REPEATS:-1}"
 TIME_LIMIT="${TIME_LIMIT:-$([[ -n "$SMOKE" ]] && echo 01:00:00 || echo 12:00:00)}"
 HABITAT_PYTHON="${HABITAT_PYTHON:-$HOME/miniconda3/envs/habitat/bin/python}"
-TAG="${TAG:-skynet_$(date +%Y%m%d_%H%M%S)$([[ -n "$SMOKE" ]] && echo _smoke)}"
+smoke_suffix=""
+[[ -n "$SMOKE" ]] && smoke_suffix="_smoke"
+TAG="${TAG:-skynet_$(date +%Y%m%d_%H%M%S)${smoke_suffix}}"
 OUT="$REPO/baseline_evaluation_v3/ground_truth_timing/$TAG"
 
 # ---- preflight: files only, nothing heavy on the login node

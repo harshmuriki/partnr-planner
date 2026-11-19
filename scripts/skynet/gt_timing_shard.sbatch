@@ -5,8 +5,7 @@
 #SBATCH --job-name=gt-timing
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --gpus-per-task=1
-#SBATCH --constraint=a40
+#SBATCH --gpus-per-task=a40:1
 #SBATCH --cpus-per-task=15
 #SBATCH --mem=48G
 #SBATCH --requeue

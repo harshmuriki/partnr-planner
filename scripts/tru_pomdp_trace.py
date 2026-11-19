@@ -4,6 +4,7 @@ import csv
 import json
 import re
 from pathlib import Path
+from habitat_llm.termination import termination_from_trace
 
 
 def estimate_visible_text_usage(text, model, expected_calls, system_message=""):
@@ -119,7 +120,7 @@ def parse_trace(content, source_path=None):
         action = re.match(r"^Action:\s*([A-Za-z_]+)\[(.*)\]$", line)
         hypotheses = re.match(r"^Hypotheses \((initial|updated)\):\s*(.*)$", line)
         recognized = line.startswith(
-            ("Task:", "Result:", "Evidence:", "Memory:", "Belief:")
+            ("Task:", "Result:", "Evidence:", "Memory:", "Belief:", "Termination:")
         )
         if decision or action or hypotheses or recognized:
             in_result = False
@@ -184,6 +185,8 @@ def parse_trace(content, source_path=None):
             step["status"]
         ]
     data["total_steps"] = len(data["steps"])
+    if termination_from_trace(content):
+        data["termination"] = termination_from_trace(content)
     return data
 
 

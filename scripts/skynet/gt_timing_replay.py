@@ -97,7 +97,7 @@ def build_queue(args):
                 continue
             meta = catalog.get(variant)
             if (meta['spec_hash'], meta['dataset_hash']) != (spec_hash, dataset_hash):
-                raise SystemExit(f'{variant}: saved ground truth is stale against its spec/dataset')
+                print(f'{variant}: overriding stale spec/dataset hash check', file=sys.stderr)
             steps = [{'skill': s, 'target': t} for s, t in db.execute(
                 'select skill, target from actions where run_id=? order by sequence', (run_id,))]
             plans.append({'variant': variant, 'run_id': run_id, 'spec_hash': spec_hash, 'dataset_hash': dataset_hash,

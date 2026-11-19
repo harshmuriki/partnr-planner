@@ -13,7 +13,7 @@ networkx
 nltk
 numba==0.60.0
 numpy==1.26.4
-openai==1.10.0
+openai==1.109.1
 pandas
 peft==0.13.1
 protobuf==3.20.1
@@ -23,6 +23,7 @@ scikit-fmm
 scikit-image
 sentence-transformers==2.7.0
 tiktoken
+tensorboard==2.17.1
 tqdm>=4.0.0
 transformers==4.46.2
 trl==0.11.2

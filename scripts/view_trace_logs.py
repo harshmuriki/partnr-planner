@@ -23,6 +23,8 @@ from habitat_llm.utils.episode_cost import (
     fmt_steps,
 )
 from habitat_llm.utils.llm_usage import fmt_usd
+from habitat_llm.action_result import mark_react_skip, annotate_react_steps
+from habitat_llm.termination import termination_from_trace
 
 
 _PDDL_FAILURE_MARKERS = (
@@ -65,7 +67,7 @@ def _normalize_action_counts(action_counts: Dict[str, int]) -> Dict[str, int]:
     return normalized_counts
 
 
-def _parse_trace_file_react(content: str) -> Dict[str, Any]:
+def _parse_trace_file_react(content: str, trace_path=None) -> Dict[str, Any]:
     """Parse legacy ReAct-style trace format."""
     # Extract task (first line)
     task = ""
@@ -76,7 +78,7 @@ def _parse_trace_file_react(content: str) -> Dict[str, Any]:
     steps = []
 
     # Find all actions first - this ensures we don't miss any
-    action_pattern = r'([A-Z][a-z]+)\[([^\]]*)\]'
+    action_pattern = r'(?m)^[ \t]*([A-Z][A-Za-z]*)\[([^\]\n]*)\]'
     action_matches = list(re.finditer(action_pattern, content))
 
     for i, action_match in enumerate(action_matches):
@@ -90,17 +92,16 @@ def _parse_trace_file_react(content: str) -> Dict[str, Any]:
         # Find thought before this action (look backwards up to 2000 chars or to previous action)
         lookback_start = action_matches[i-1].end() if i > 0 else 0
         lookback_section = content[lookback_start:action_start]
-        thought_match = re.search(r'Thought:\s*(.*?)(?=\n(?:[A-Z][a-z]+\[|Assigned!|$))', lookback_section, re.DOTALL)
-        if thought_match:
-            thought = thought_match.group(1).strip()
-            thought = re.sub(r'^Thought:\s*', '', thought).strip()
-            step['thought'] = thought
+        thoughts = re.findall(r'^Thought:[ \t]*(.*)$', lookback_section, re.M)
+        thought = next((item.strip() for item in reversed(thoughts) if item.strip()), '')
+        if thought:
+            step['thought'] = re.sub(r'^Thought:\s*', '', thought).strip()
 
         # Find result after this action (look forward to next action or end)
         forward_end = action_matches[i+1].start() if i < len(action_matches) - 1 else len(content)
         forward_section = content[action_end:forward_end]
 
-        result_match = re.search(r'Assigned!Result:\s*(.*?)(?=\n(?:Objects:|Thought:|[A-Z][a-z]+\[|$))', forward_section, re.DOTALL)
+        result_match = re.search(r'Assigned!Result:\s*(.*?)(?=\n(?:Robot SG before action:|Objects:|Thought:|Termination:|[A-Z][a-z]+\[|$))', forward_section, re.DOTALL)
         if result_match:
             result = result_match.group(1).strip()
             step['result'] = result
@@ -109,12 +110,13 @@ def _parse_trace_file_react(content: str) -> Dict[str, Any]:
                 step['success'] = True
             else:
                 step['success'] = 'Successful' in result or 'success' in result.lower()
+            mark_react_skip(step)
         elif action_name == "Done":
             # Done action without result is still successful
             step['success'] = True
 
         # Find objects after result
-        objects_match = re.search(r'Objects:\s*(.*?)(?=\n(?:Thought:|[A-Z][a-z]+\[|$))', forward_section, re.DOTALL)
+        objects_match = re.search(r'Objects:\s*(.*?)(?=\n(?:Robot SG before action:|Thought:|Termination:|[A-Z][a-z]+\[|$))', forward_section, re.DOTALL)
         if objects_match:
             objects_text = objects_match.group(1).strip()
             if objects_text and objects_text != 'No objects found yet':
@@ -122,6 +124,7 @@ def _parse_trace_file_react(content: str) -> Dict[str, Any]:
 
         steps.append(step)
 
+    annotate_react_steps(steps, content, trace_path)
     return {
         'task': task,
         'steps': steps,
@@ -231,12 +234,14 @@ def parse_trace_file(trace_file: str, is_pddl_run: bool = False) -> Dict[str, An
     ):
         from scripts.tru_pomdp_trace import parse_trace
 
-        return parse_trace(content, source_path=Path(trace_file).resolve())
-    if is_pddl_run:
+        parsed = parse_trace(content, source_path=Path(trace_file).resolve())
+    elif is_pddl_run:
         parsed = _parse_trace_file_pddl(content)
     else:
-        parsed = _parse_trace_file_react(content)
+        parsed = _parse_trace_file_react(content, trace_file)
     parsed.update(_explore_metrics_from_text(content))
+    if termination_from_trace(content):
+        parsed["termination"] = termination_from_trace(content)
     return parsed
 
 
@@ -580,11 +585,18 @@ def generate_html(
         )
 
     task = html.escape(str(trace_data.get("task", "No task")))
+    termination_message = (trace_data.get("termination") or {}).get("message", "")
+    termination_html = (
+        '<div class="termination-notice" role="status">' + html.escape(termination_message) + '</div>'
+        if termination_message else ''
+    )
     steps = trace_data.get("steps", [])
     total_steps = trace_data.get("total_steps", 0)
 
     if not isinstance(steps, list):
         steps = []
+    if not is_pddl_run and not is_tru_run:
+        steps = [mark_react_skip(dict(s)) if isinstance(s, dict) else s for s in steps]
     if not isinstance(total_steps, (int, float)) or total_steps < 0:
         total_steps = len(steps)
 
@@ -641,7 +653,11 @@ def generate_html(
     )
 
     successes = sum(1 for s in steps if isinstance(s, dict) and s.get("success", False))
-    success_rate = (successes / total_steps * 100) if total_steps > 0 else 0
+    skipped = sum(1 for s in steps if isinstance(s, dict) and s.get("skipped", False))
+    scored_steps = total_steps - skipped
+    success_rate = (successes / scored_steps * 100) if scored_steps > 0 else 0
+    failures = sum(1 for s in steps if isinstance(s, dict)
+                   and s.get("success") is False and not s.get("skipped"))
 
     freq = sim_freq if isinstance(sim_freq, (int, float)) and sim_freq > 0 else DEFAULT_SIM_FREQ
 
@@ -867,6 +883,8 @@ def generate_html(
         step_class = "success" if success else "failure"
         if is_tru_run and success is None:
             status_class, status_text, step_class = "status-unknown", "Unknown", "unknown"
+        if step.get("skipped"):
+            status_class, status_text, step_class = "status-skipped", "Skipped", "skipped"
 
         action_display = f"{action}[{args}]" if args else action
         action_display_esc = html.escape(action_display)
@@ -921,8 +939,11 @@ def generate_html(
             result_preview = result_preview[:69] + "..."
         result_preview_esc = html.escape(result_preview)
 
+        known_before = {True: "true", False: "false"}.get(step.get("target_in_robot_sg_before_action"), "unknown")
+        skip_policy = html.escape(step.get("react_skip_policy", "robot_sg_before_action"), quote=True)
+        evidence_source = html.escape(step.get("pre_action_robot_sg_source", "unavailable"), quote=True)
         steps_html += f"""
-                <div class="step {step_class}" data-status="{step_class}">
+                <div class="step {step_class}" data-status="{step_class}" data-target-known-before-action="{known_before}" data-robot-sg-source="{evidence_source}" data-react-skip-policy="{skip_policy}">
                     <div class="step-action-row" onclick="toggleStep(this.parentElement)">
                         <span class="step-number">{step_num}</span>
                         {camera_thumb_html}
@@ -1298,6 +1319,7 @@ def generate_html(
 
         .step.success {{ border-left: 3px solid #10b981; }}
         .step.failure {{ border-left: 3px solid #ef4444; }}
+        .step.skipped {{ border-left: 3px solid #3b82f6; }}
 
         .step-action-row {{
             padding: 3px 8px;
@@ -1378,6 +1400,8 @@ def generate_html(
 
         .status-success {{ background: #d1fae5; color: #065f46; }}
         .status-failure {{ background: #fee2e2; color: #991b1b; }}
+        .status-skipped {{ background: #dbeafe; color: #1e40af; }}
+        .termination-notice {{ background: #fef3c7; color: #92400e; padding: 12px; margin: 12px 0; border-radius: 6px; font-weight: 600; }}
         .status-unknown {{ background: #f3f4f6; color: #4b5563; }}
 
         .step-expand {{
@@ -1426,8 +1450,11 @@ def generate_html(
                 <h1>{task}</h1>
             </div>
             <div class="header-path">{file_path}</div>
+            {termination_html}
             <div class="outcome-row">
-                <div class="chip"><span class="chip-label">Success</span><span class="chip-value">{success_rate:.1f}% ({successes}/{total_steps})</span></div>
+                <div class="chip"><span class="chip-label">Success</span><span class="chip-value">{success_rate:.1f}% ({successes}/{scored_steps})</span></div>
+                <div class="chip"><span class="chip-label">Failures</span><span class="chip-value">{failures}</span></div>
+                <div class="chip"><span class="chip-label">Skipped</span><span class="chip-value">{skipped}</span></div>
                 <div class="chip"><span class="chip-label">task_percent_complete</span><span class="chip-value">{task_pct_str}</span></div>
                 <div class="chip"><span class="chip-label">task_state_success</span><span class="chip-value">{task_ok_str}</span></div>
                 <div class="chip"><span class="chip-label">Model</span><span class="chip-value">{model_str}</span></div>
@@ -1513,6 +1540,7 @@ def generate_html(
                     <button class="btn filter-btn" onclick="filterSteps('all')">All</button>
                     <button class="btn filter-btn" onclick="filterSteps('success')">Success</button>
                     <button class="btn filter-btn" onclick="filterSteps('failure')">Failures</button>
+                    <button class="btn filter-btn" onclick="filterSteps('skipped')">Skipped</button>
                 </div>
                 <div class="steps">
 {steps_html}

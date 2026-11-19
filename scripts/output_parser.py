@@ -8,6 +8,7 @@ import re
 import sys
 from typing import List, Dict, Optional
 from pathlib import Path
+from habitat_llm.action_result import mark_react_skip, annotate_react_steps
 
 
 class TraceParser:
@@ -42,8 +43,8 @@ class TraceParser:
         # Split by "Thought:" markers
         thought_pattern = r'Thought:\s*(.*?)(?=Thought:|Action:|$|Assigned!)'
         action_pattern = r'([A-Za-z]+)\[([^\]]*)\]'
-        result_pattern = r'Assigned!Result:\s*(.*?)(?=Objects:|Thought:|$)'
-        objects_pattern = r'Objects:\s*(.*?)(?=Thought:|Action:|$)'
+        result_pattern = r'Assigned!Result:\s*(.*?)(?=Robot SG before action:|Objects:|Thought:|$)'
+        objects_pattern = r'Objects:\s*(.*?)(?=Robot SG before action:|Thought:|Action:|$)'
 
         # Find all thoughts
         thoughts = re.findall(thought_pattern, full_text, re.DOTALL)
@@ -90,7 +91,7 @@ class TraceParser:
                 step['action_args'] = action_match.group(2)
 
             # Extract result
-            result_match = re.search(r'Assigned!Result:\s*(.*?)(?=Objects:|Thought:|$)', section, re.DOTALL)
+            result_match = re.search(r'Assigned!Result:\s*(.*?)(?=Robot SG before action:|Objects:|Thought:|$)', section, re.DOTALL)
             if result_match:
                 result_text = result_match.group(1).strip()
                 step['result'] = result_text
@@ -98,9 +99,10 @@ class TraceParser:
                 if 'Unexpected failure' in result_text or 'Failed' in result_text:
                     step['success'] = False
                     step['error'] = result_text.replace('Unexpected failure! -', '').strip()
+                mark_react_skip(step)
 
             # Extract objects
-            objects_match = re.search(r'Objects:\s*(.*?)(?=Thought:|Action:|$)', section, re.DOTALL)
+            objects_match = re.search(r'Objects:\s*(.*?)(?=Robot SG before action:|Thought:|Action:|$)', section, re.DOTALL)
             if objects_match:
                 objects_text = objects_match.group(1).strip()
                 # Remove "Thought:" if it appears at the end (concatenated without newline)
@@ -108,10 +110,12 @@ class TraceParser:
                 objects_text = objects_text.strip()
                 step['objects'] = self._parse_objects(objects_text)
 
-            if step:
+            if 'action_name' in step:
                 step['step_num'] = step_num
                 self.steps.append(step)
                 step_num += 1
+
+        annotate_react_steps(self.steps, content, self.trace_file)
 
     def _parse_objects(self, objects_text: str) -> List[Dict]:
         """Parse objects text into structured format."""
@@ -218,6 +222,8 @@ class TraceParser:
             # Result
             if 'result' in step:
                 status = "✅ SUCCESS" if step.get('success', False) else "❌ FAILURE"
+                if step.get('skipped'):
+                    status = "⏭ SKIPPED"
                 output_lines.append(f"{status}:")
                 if step.get('error'):
                     output_lines.append(f"   Error: {step['error']}")
