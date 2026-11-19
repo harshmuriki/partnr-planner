@@ -19,5 +19,6 @@
       "memory_status": "outdated",
       "outdated_location": "on table_1 (bedroom_1)"
     }
-  ]
+  ],
+  "initial_memory_source": "remembered_stale_locations"
 }

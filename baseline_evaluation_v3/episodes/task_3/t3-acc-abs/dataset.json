@@ -332,7 +332,7 @@
         },
         "variant_spec": {
           "variant_id": "T3-ACC-ABS",
-          "sha256": "ce163c6984b1e4c7d3520acbfbf3e11feb1bd562883cb36fa95d5702a70fe768",
+          "sha256": "f46a8471f8c613a8d1add0552edb81d999aca5ea7689a480ffe20c859357a122",
           "entity_handles": {
             "book_0": "Book_17_:0000",
             "laptop_0": "Laptop_2_:0000"
@@ -419,7 +419,7 @@
         "Book_17_:0000": "e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0001",
         "Laptop_2_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001"
       },
-      "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+      "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",

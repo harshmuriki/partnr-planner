@@ -136,7 +136,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-INC-SUB",
-          "sha256": "2e60a3ef0b8be5c112b5dfaa1b98081cf25d01fa3d5d48233de6bff624d31a40",
+          "sha256": "9a25251321ad3762e68858f5d2fe0896c8fcf2235f1623502b147e4c0039b661",
           "entity_handles": {
             "pitcher_0": "Threshold_Porcelain_Pitcher_White_:0000",
             "lamp_0": "B07HK83QRB_:0000"
@@ -223,7 +223,7 @@
         "Threshold_Porcelain_Pitcher_White_:0000": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000",
         "B07HK83QRB_:0000": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
       },
-      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",
@@ -232,7 +232,8 @@
               "Threshold_Porcelain_Pitcher_White_:0000"
             ],
             "receptacle_handles": [
-              "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000"
+              "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000",
+              "735845d0674f69f736af7e0f116767a01392f9b8_:0000"
             ],
             "number": 1
           }

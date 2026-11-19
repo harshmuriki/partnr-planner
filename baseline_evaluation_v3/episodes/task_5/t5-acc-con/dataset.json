@@ -637,7 +637,7 @@
         },
         "variant_spec": {
           "variant_id": "T5-ACC-CON",
-          "sha256": "5ce05df2665ca1b27e5dbf61c416f30644b320d1f8a3dfd29e5a2d4e6bfb1a9d",
+          "sha256": "d1e18d92de8076e15fabeef85b44e55a6f585ecc4151b221c6d76a5e2e99b7d6",
           "entity_handles": {
             "soap_dispenser_0": "Soap_Bottle_26_:0000",
             "glass_0": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000",
@@ -786,7 +786,7 @@
         "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": "183de9f61a9c362d58ac340058ecddc54da18809_:0000|Desk0015_receptacle_mesh.0000",
         "Plate_26_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_inside_door01_receptacle_mesh.0000"
       },
-      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",

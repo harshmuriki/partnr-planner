@@ -36,5 +36,6 @@
       "memory_status": "outdated",
       "outdated_location": "on table_4 (living_room_0)"
     }
-  ]
+  ],
+  "initial_memory_source": "remembered_stale_locations"
 }

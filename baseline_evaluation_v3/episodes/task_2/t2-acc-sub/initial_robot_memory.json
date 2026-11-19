@@ -13,5 +13,9 @@
       "entity": "knife_0",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [
+    "scissors_0: known absent; no scissors exist anywhere in the scene"
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

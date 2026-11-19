@@ -23,8 +23,8 @@
       },
       "expected": {
         "relation": "within",
-        "furniture": "wardrobe_91",
-        "room": "bedroom_3",
+        "furniture": "wardrobe_2",
+        "room": "closet_0",
         "states": {
           "is_clean": true,
           "is_filled": false,
@@ -73,8 +73,8 @@
       },
       "expected": {
         "relation": "within",
-        "furniture": "wardrobe_91",
-        "room": "bedroom_3",
+        "furniture": "wardrobe_2",
+        "room": "closet_0",
         "states": {
           "is_clean": true
         },
@@ -267,7 +267,7 @@
     "lamp_kitchen_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "8a81a550128343dd1e5aafbfa19b716c8a53ab1bd9bb5700f3e190a153542f7e",
+  "spec_sha256": "89ed0ec1728d763d98cad9ffb322f149b31ddc565f595bb63166eb2659d89d65",
   "initial_robot_memory": "- lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_on\n- lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],

@@ -1,7 +1,7 @@
 # T5-ACC-CON
 
 ## Base task
-Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.
+Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.
 
 ## Scene
 - scene_id: 106878915_174887025
@@ -14,7 +14,7 @@ Get soap to clean both glasses, fill them, and place them on the living-room tab
   - table_0 — living_room_0 — Dip-Dyed Side Table
 
 ## Task instruction / prompt given
-"Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them."
+"Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them."
 
 ## Affected object(s)
 - soap_dispenser_0 (soap_dispenser, asset Soap_Bottle_26): uncertainty target.

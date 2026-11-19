@@ -19,5 +19,6 @@
       "outdated_location": "on table_0 (dining_room_0)",
       "present_in_scene": false
     }
-  ]
+  ],
+  "initial_memory_source": "remembered_stale_locations"
 }

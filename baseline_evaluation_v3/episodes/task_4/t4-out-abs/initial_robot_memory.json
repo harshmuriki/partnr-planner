@@ -37,5 +37,6 @@
       "outdated_location": "on table_4 (living_room_0)",
       "present_in_scene": false
     }
-  ]
+  ],
+  "initial_memory_source": "remembered_stale_locations"
 }

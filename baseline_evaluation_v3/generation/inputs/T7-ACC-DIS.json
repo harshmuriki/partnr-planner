@@ -3,7 +3,7 @@
     {
       "scene_id": "102816756",
       "episode_id": "T7-ACC-DIS",
-      "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from sink, and turn off the living-room and kitchen lights.",
+      "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
       "initial_state": [
         {
           "name": "toy_truck_0",

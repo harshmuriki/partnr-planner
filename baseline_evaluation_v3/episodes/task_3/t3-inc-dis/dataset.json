@@ -630,7 +630,7 @@
         },
         "variant_spec": {
           "variant_id": "T3-INC-DIS",
-          "sha256": "2c141e5b3878ea4a9671d9128daf45e77a1cb0c244ae68d5368927c25bf91cf9",
+          "sha256": "3bfc1e13f60b55942c35de5493ece4829cfddef3d828332a07f2b2d8961aa7cc",
           "entity_handles": {
             "book_0": "Book_17_:0000",
             "book_1": "Book_20_:0000",
@@ -813,7 +813,7 @@
         "B01B254OVC_:0000": "e1d008861be1c6252e581526031b15ca5be867b1_:0000|receptacle_mesh_e1d008861be1c6252e581526031b15ca5be867b1.0002",
         "Cellphone_5_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0000"
       },
-      "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+      "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",

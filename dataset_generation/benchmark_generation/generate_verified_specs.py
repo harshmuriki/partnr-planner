@@ -168,10 +168,13 @@ def compile_success(spec, handles, furniture):
             continue
         name, raw = m.groups()
         args = [a.strip() for a in raw.split(',')]
-        if name in ['is_on_top', 'is_inside']:
+        if name in ['is_on_top', 'is_inside', 'is_waited_inside']:
             # Pickupable containers are episode entities, not scene furniture.
-            destination = handles[args[1]] if args[1] in handles else furniture[args[1]]
-            kw = dict(object_handles=[handles[args[0]]], receptacle_handles=[destination], number=1)
+            destinations = [
+                handles[target] if target in handles else furniture[target]
+                for target in args[1].split(' or ')
+            ]
+            kw = dict(object_handles=[handles[args[0]]], receptacle_handles=destinations, number=1)
         elif name == 'is_next_to':
             kw = dict(entity_handles_a=[handles[args[0]]], entity_handles_b=[handles[args[1]]], number=1, l2_threshold=0.5)
         elif name in ['is_clean','is_dirty','is_filled','is_empty','is_powered_on','is_powered_off','is_on_floor']:

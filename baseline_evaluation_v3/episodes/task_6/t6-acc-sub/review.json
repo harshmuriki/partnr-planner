@@ -218,7 +218,7 @@
     "- Using blue_hand_towel_0 in place of the missing hand_towel_0 counts as success; do not require or invent a hand_towel.",
     "- Using cup_0 in place of the missing bottle_0 counts as success; do not require or invent a bottle."
   ],
-  "spec_sha256": "2b917caee32b2c7a3cfb36e6ed269acb36b93dd409e96ce021ce6e787bdfcfe5",
+  "spec_sha256": "7e30a9d18c23c9c0f6f46637e0370b6b71309da98eb88d0d95da8fedb30f27ef",
   "initial_robot_memory": "- bread_0: on counter_0 (kitchen_0)\n- cup_0: on table_7 (dining_room_0), is_clean, is_filled\n- blue_hand_towel_0: on shelves_11 (bathroom_2), is_clean\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on\n- bottle_0: known absent; no water bottle exists anywhere in the scene\n- hand_towel_0: known absent; there is no hand towel besides blue_hand_towel_0",
   "memory_runtime_applied": false,
   "issues": [],

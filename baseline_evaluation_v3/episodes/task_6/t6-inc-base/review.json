@@ -215,11 +215,10 @@
     "lamp_living_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "7dc44cbc0c8351f0e70f6eaf189271e3050ee970c199e121acd43d7f2ddb789c",
+  "spec_sha256": "9edb8262e3f8c7cd240b1cf8b490a49003ea76e97c59ac203ff45ed16a838332",
   "initial_robot_memory": "- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

@@ -159,7 +159,7 @@
     "laptop_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "441a3163301f72a12dfe31eaa542c9342b728ffac061bbec944131aaf7df12d6",
+  "spec_sha256": "27a9bd5a158051be2236466fa98c162eb4d2118efc0c5438ff304d5c46f2d1c2",
   "initial_robot_memory": "- book_0: on table_2 (kitchen_0), is_clean, stale record\n- book_1: on table_2 (kitchen_0), is_clean, stale record\n- laptop_0: on table_1 (bedroom_1), is_clean, is_powered_on, stale record",
   "memory_runtime_applied": false,
   "issues": [],

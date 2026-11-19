@@ -21,5 +21,6 @@
       "entity": "bottle_1",
       "in_initial_robot_memory": false
     }
-  ]
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

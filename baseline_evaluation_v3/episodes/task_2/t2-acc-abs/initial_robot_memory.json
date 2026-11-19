@@ -9,5 +9,9 @@
       "entity": "box_1",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [
+    "scissors_0: known absent; no scissors or acceptable substitute (knife) exists anywhere in the scene"
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

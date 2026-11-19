@@ -1164,7 +1164,7 @@
         },
         "variant_spec": {
           "variant_id": "T5-OUT-DIS",
-          "sha256": "bfef18dc90b1420c216d759f39604f174609e7a201b2d43e35dcdd469546139f",
+          "sha256": "0f36ff17c46227ee87735ef18a69c7b8b4e8c6366cd03f92f0ff3023621ef43d",
           "entity_handles": {
             "soap_dispenser_0": "Soap_Bottle_26_:0000",
             "glass_0": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000",
@@ -1411,7 +1411,7 @@
         "04f409f17d79445a3afd109c557c6a2702e15cd8_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001",
         "Cole_Hardware_Plant_Saucer_Brown_125_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000"
       },
-      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",

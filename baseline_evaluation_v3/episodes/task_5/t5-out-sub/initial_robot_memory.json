@@ -30,5 +30,6 @@
       "outdated_location": "on table_2 (kitchen_0)",
       "present_in_scene": false
     }
-  ]
+  ],
+  "initial_memory_source": "remembered_stale_locations"
 }

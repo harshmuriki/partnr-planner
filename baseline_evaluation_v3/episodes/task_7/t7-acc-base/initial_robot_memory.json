@@ -21,5 +21,7 @@
       "entity": "lamp_kitchen_0",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [],
+  "initial_memory_source": "ground_truth_at_start"
 }

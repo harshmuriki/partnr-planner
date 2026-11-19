@@ -530,7 +530,7 @@
         },
         "variant_spec": {
           "variant_id": "T3-OUT-CON",
-          "sha256": "cd0e67a3ce158cbdb37af0bbdc7106a7bc9fc7d56bc5448283249428f2e517a7",
+          "sha256": "ecfe6e12af0dad75d510497c5827d49f995365cff76ca9fa0010e0ac5ac5eed4",
           "entity_handles": {
             "book_0": "Book_17_:0000",
             "book_1": "Book_20_:0000",
@@ -647,7 +647,7 @@
         "Book_20_:0000": "e194cb80e9941fcf08be2185146d4dccf9d532c2_:0000|tv_cabinet0001_drawer01_receptacle_mesh.0000",
         "Laptop_2_:0000": "91762e71879d66596716bfa58beca60624e95773_:0000|receptacle_mesh_91762e71879d66596716bfa58beca60624e95773.0001"
       },
-      "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+      "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",

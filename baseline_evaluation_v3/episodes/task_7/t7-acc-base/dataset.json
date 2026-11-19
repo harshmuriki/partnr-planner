@@ -233,7 +233,7 @@
         "extra_info": {
           "scene_id": "102816756",
           "episode_id": "T7-ACC-BASE",
-          "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from sink, and turn off the living-room and kitchen lights.",
+          "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
           "initial_state": [
             {
               "name": "toy_truck_0",
@@ -446,7 +446,7 @@
         },
         "variant_spec": {
           "variant_id": "T7-ACC-BASE",
-          "sha256": "56e7310b385e5a8836cb1a6611f03c75012a2436152c4337986434dfb65db609",
+          "sha256": "2dad5bac8bce0eae0525d688fefe06b33d4e0a141190cfdae464f2675e9193e3",
           "entity_handles": {
             "toy_truck_0": "FIRE_ENGINE_:0000",
             "stuffed_toy_0": "b3e8be210978ec373be6eb5fcffec36c6a9712e6_:0000",
@@ -627,30 +627,20 @@
         "B07HK83QRB_:0000": "d60340031eacc7eba62900753ddb800d5d022e69_:0000|receptacle_mesh_d60340031eacc7eba62900753ddb800d5d022e69.0000",
         "B07HK3PNSK_:0000": "465c339f405bf0f55e0c316820958dee1126dabd_:0000|kitchen_island_cabinet0007_top_receptacle_mesh.0000"
       },
-      "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from sink, and turn off the living-room and kitchen lights.",
+      "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
       "evaluation_propositions": [
         {
           "function_name": "is_inside",
           "args": {
             "object_handles": [
-              "FIRE_ENGINE_:0000"
-            ],
-            "receptacle_handles": [
-              "0546a524f6584d5beeaf8a72b3df494f9ceeec90_:0001"
-            ],
-            "number": 1
-          }
-        },
-        {
-          "function_name": "is_inside",
-          "args": {
-            "object_handles": [
+              "FIRE_ENGINE_:0000",
               "b3e8be210978ec373be6eb5fcffec36c6a9712e6_:0000"
             ],
             "receptacle_handles": [
-              "0546a524f6584d5beeaf8a72b3df494f9ceeec90_:0001"
+              "f19f4eb60204eef42a4dc3b073ef9006916a2c0b_:0000"
             ],
-            "number": 1
+            "number": 2,
+            "is_same_receptacle": true
           }
         },
         {
@@ -660,7 +650,15 @@
               "Threshold_Bistro_Ceramic_Dinner_Plate_Ruby_Ring_:0000"
             ],
             "receptacle_handles": [
-              "a19b47699883e5841599452274d671a1bb2c775e_:0000"
+              "33c1689bc5fb3b6f599f261ad069d9510804deb9_:0000",
+              "33c1689bc5fb3b6f599f261ad069d9510804deb9_:0001",
+              "424d7e7d258370736e6cfdbad2b253e521f80c79_:0000",
+              "42c2fce42ed600de5f0c6919ba47fe97e60ab673_:0000",
+              "42c2fce42ed600de5f0c6919ba47fe97e60ab673_:0001",
+              "6acafe4f37b17ff0c33d22c8dc3fede1bddc67de_:0000",
+              "77af27c6a414131f13d2aac55153720028fd4ed5_:0000",
+              "a19b47699883e5841599452274d671a1bb2c775e_:0000",
+              "bdab4ca579230f7652590bc19fa00a35701857ef_:0000"
             ],
             "number": 1
           }
@@ -699,7 +697,7 @@
           "type": "TemporalConstraint",
           "args": {
             "dag_edges": [],
-            "n_propositions": 6
+            "n_propositions": 5
           }
         },
         {
@@ -710,10 +708,9 @@
               1,
               2,
               3,
-              4,
-              5
+              4
             ],
-            "n_propositions": 6
+            "n_propositions": 5
           }
         }
       ],

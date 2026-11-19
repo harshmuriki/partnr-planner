@@ -112,7 +112,7 @@
   "unscored_success_text": [
     "- The book (book_1) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
   ],
-  "spec_sha256": "ce163c6984b1e4c7d3520acbfbf3e11feb1bd562883cb36fa95d5702a70fe768",
+  "spec_sha256": "f46a8471f8c613a8d1add0552edb81d999aca5ea7689a480ffe20c859357a122",
   "initial_robot_memory": "- book_0: on bed_1 (bedroom_1), is_clean\n- laptop_0: on table_2 (kitchen_0), is_clean, is_powered_on\n- book_1: known absent; there is no book besides book_0 and no acceptable substitute anywhere in the scene",
   "memory_runtime_applied": false,
   "issues": [],

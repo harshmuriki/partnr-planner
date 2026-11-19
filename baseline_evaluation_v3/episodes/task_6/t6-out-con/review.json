@@ -221,11 +221,10 @@
     "lamp_living_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "5b0f50a18b7831b4c7c0ee71b614a5fdc9db3cc4f97e17f2e905e0ab1f90e1d3",
+  "spec_sha256": "71b12fed2ca393113719fdb2f61739f597205baae8c01be7d98aa5910e02d542",
   "initial_robot_memory": "- bread_0: on table_7 (dining_room_0), stale record\n- bottle_0: on table_5 (bedroom_2), is_clean, is_filled, stale record\n- hand_towel_0: on chair_9 (bedroom_2), is_clean, stale record\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

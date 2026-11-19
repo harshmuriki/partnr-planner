@@ -267,7 +267,7 @@
   "unscored_success_text": [
     "- Distractors (folder_0, phone_0) must not be used in place of the task objects; they have no placement goals."
   ],
-  "spec_sha256": "7373a92ff09a79112680bb35ca56be30a0ee5b80ac94759d4cddd085579c196e",
+  "spec_sha256": "6e029ead30df6e9fe0f75abb7215485f7dfd37320576bc2d58ecc20eb42b1130",
   "initial_robot_memory": "- book_0: on bed_1 (bedroom_1), is_clean\n- book_1: on table_1 (bedroom_1), is_clean\n- laptop_0: on table_2 (kitchen_0), is_clean, is_powered_on\n- folder_0: on bed_1 (bedroom_1), is_clean, next to book_0\n- phone_0: on table_2 (kitchen_0), is_clean, is_powered_on, next to laptop_0",
   "memory_runtime_applied": false,
   "issues": [],

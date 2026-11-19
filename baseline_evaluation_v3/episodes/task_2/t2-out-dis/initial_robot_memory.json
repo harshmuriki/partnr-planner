@@ -33,5 +33,6 @@
       "in_initial_robot_memory": true,
       "memory_status": "accurate"
     }
-  ]
+  ],
+  "initial_memory_source": "remembered_stale_locations"
 }

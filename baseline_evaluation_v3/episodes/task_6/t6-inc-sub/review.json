@@ -218,11 +218,10 @@
     "- Using blue_hand_towel_0 in place of the missing hand_towel_0 counts as success; do not require or invent a hand_towel.",
     "- Using cup_0 in place of the missing bottle_0 counts as success; do not require or invent a bottle."
   ],
-  "spec_sha256": "83b5c38063bbc2df64420e760e9cc700b896231e429d64cd8aea61f2212d4c81",
+  "spec_sha256": "35c4fd64697757987a8924316915c343779dca3e98f9130ab7b1f4cfd644ef7d",
   "initial_robot_memory": "- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

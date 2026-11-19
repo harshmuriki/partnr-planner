@@ -165,11 +165,10 @@
   "unscored_success_text": [
     "- The hand_towel (hand_towel_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
   ],
-  "spec_sha256": "30304ffdab82fd1c213b57ebe2cf8cad4352ceec00ca958e72e091643aa9cfdf",
+  "spec_sha256": "3b40d956e41e3086b5ded780236ca9e1e1f60286a518e32f597f6d0e467aec7a",
   "initial_robot_memory": "- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on\n- bread_0: no record; the robot does not know whether it exists or where it is\n- bottle_0: no record; the robot does not know whether it exists or where it is\n- hand_towel_0: no record; the robot does not know whether it exists or where it is",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

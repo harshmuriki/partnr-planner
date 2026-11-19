@@ -22,7 +22,7 @@
       },
       "expected": {
         "relation": "on",
-        "furniture": "table_0",
+        "furniture": "table_0 or table_1",
         "room": "living_room_0",
         "states": {
           "is_clean": true,
@@ -116,7 +116,7 @@
   "unscored_success_text": [
     "- Using pitcher_0 in place of the missing jug_0 counts as success; do not require or invent a jug."
   ],
-  "spec_sha256": "f32de7e04515d34de243028c97cd682161ca6afeebe04af31f83bbfe2a6946b6",
+  "spec_sha256": "f5942a1f0e24527186f3dca0a6cd6a11ccf8e579ddbaf8ba002f4fbf687cef9d",
   "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record; the object is not actually in the scene",
   "memory_runtime_applied": false,
   "issues": [],

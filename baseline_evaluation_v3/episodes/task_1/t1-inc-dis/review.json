@@ -22,7 +22,7 @@
       },
       "expected": {
         "relation": "on",
-        "furniture": "table_0",
+        "furniture": "table_0 or table_1",
         "room": "living_room_0",
         "states": {
           "is_clean": true,
@@ -222,7 +222,7 @@
   "unscored_success_text": [
     "- Distractors (vase_0, spray_bottle_0) must not be used in place of the task objects; they have no placement goals."
   ],
-  "spec_sha256": "6a02bf7a804f23c204b0264856add6ba9467031d5ed4b49ee59a4df327de2252",
+  "spec_sha256": "a59d3e9cd0f111bc6a0fe30071b41e8e1a96fd7fcb08f25e2b45aff713a14936",
   "initial_robot_memory": "- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on\n- vase_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0\n- spray_bottle_0: on counter_0 (kitchen_0), is_clean, is_empty, next to jug_0",
   "memory_runtime_applied": false,
   "issues": [],

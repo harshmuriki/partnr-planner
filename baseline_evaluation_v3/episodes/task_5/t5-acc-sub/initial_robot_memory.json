@@ -17,5 +17,9 @@
       "entity": "plate_black_0",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [
+    "plate_0: known absent; no white plate exists anywhere in the scene"
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

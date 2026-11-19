@@ -13,5 +13,9 @@
       "entity": "lamp_living_0",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [
+    "hand_towel_0: known absent; no hand towel or acceptable substitute (blue hand towel) exists anywhere in the scene"
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

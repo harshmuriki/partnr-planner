@@ -368,11 +368,10 @@
   "unscored_success_text": [
     "- Distractors (dirty_hand_towel_0, bread_25_0, supplement_bottle_0) must not be used in place of the task objects; they have no placement goals."
   ],
-  "spec_sha256": "43a11f0a88c3276af5192b66629d7a733e46a07330fe10267ab59b3ccb21acba",
+  "spec_sha256": "c5ae198a72ba0c533a66db852406612a350e8aab57f083b86e5d99b7e62f2aec",
   "initial_robot_memory": "- bread_0: on table_7 (dining_room_0), stale record\n- bottle_0: on table_5 (bedroom_2), is_clean, is_filled, stale record\n- hand_towel_0: on chair_9 (bedroom_2), is_clean, stale record\n- lamp_living_0: on table_2 (living_room_0), is_clean, is_empty, is_powered_on\n- dirty_hand_towel_0: on shelves_11 (bathroom_2), is_dirty, next to hand_towel_0\n- bread_25_0: on counter_0 (kitchen_0), next to bread_0\n- supplement_bottle_0: on table_7 (dining_room_0), is_clean, is_empty, next to bottle_0",
   "memory_runtime_applied": false,
   "issues": [],
   "attempts": 1,
-  "benchmark_ready": false,
-  "runtime_verified": true
+  "benchmark_ready": false
 }

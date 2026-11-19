@@ -1,4 +1,7 @@
 {
+  "spec_furniture_aliases": {
+    "cabinet_34": {"runtime_name": "cabinet_6"}
+  },
   "objects": [
     "sponge",
     "spectacles",

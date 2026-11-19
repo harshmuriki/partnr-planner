@@ -91,7 +91,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-OUT-ABS",
-          "sha256": "5d3861adc2d81d0b0cbf87c0656663b207163c7c8f862442906c1152dac52844",
+          "sha256": "417cfa03c8d7838a870fce685534d1dd68fd52253d2acd5b8c72828bc9787cc3",
           "entity_handles": {
             "lamp_0": "B07HK83QRB_:0000"
           },
@@ -146,7 +146,7 @@
       "name_to_receptacle": {
         "B07HK83QRB_:0000": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
       },
-      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
       "evaluation_propositions": [
         {
           "function_name": "is_powered_off",

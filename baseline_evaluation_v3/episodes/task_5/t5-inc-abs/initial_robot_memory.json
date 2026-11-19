@@ -13,5 +13,6 @@
       "entity": "glass_1",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

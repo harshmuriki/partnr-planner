@@ -1,11 +1,11 @@
 # T7-OUT-DIS
 
 ## Base task
-Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from sink, and turn off the living-room and kitchen lights.
+Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.
 
 ## Scene
 - scene_id: 102816756
-- rooms used: bedroom_3, living_room_0, kitchen_0
+- rooms used: bedroom_3, living_room_0, kitchen_0, closet_0
 - furniture used (id — room — catalog description):
   - table_8 — bedroom_3 — Dino Dresser, White
   - table_0 — living_room_0 — Palerma Extendable Dining Table, White
@@ -13,11 +13,11 @@ Put away all toys from the living room into the wardrobe, wash and put away the 
   - cabinet_5 — kitchen_0 — Kitchen cabinet with sink, double
   - table_3 — living_room_0 — Plinth Coffee Table, Carrara
   - counter_0 — kitchen_0 — Kitchen island, 90x150x90
-  - wardrobe_0 — bedroom_3 — Designer Double Wardrobe White &amp; White Gloss
+  - wardrobe_2 — closet_0 — Betrib Wardrobe
   - cabinet_7 — kitchen_0 — Kitchen corner cabinet
 
 ## Task instruction / prompt given
-"Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from sink, and turn off the living-room and kitchen lights."
+"Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights."
 
 ## Affected object(s)
 - toy_truck_0 (toy_fire_truck, asset FIRE_ENGINE): uncertainty target.
@@ -43,7 +43,7 @@ Put away all toys from the living room into the wardrobe, wash and put away the 
 - Memory in this version: robot memory places toy_truck_0, stuffed_toy_0, plate_0 at stale locations.
 
 ## Information supplied in instruction
-- Specified: the toys in the living room, the wardrobe, washing and putting away the dirty dishes from the sink, and the living-room and kitchen lights.
+- Specified: the toys in the living room, the closet's wardrobe, washing and putting away the dirty dishes from the sink, and the living-room and kitchen lights.
 - Not specified: where each object currently is; the robot relies on its memory or exploration.
 
 ## Initial world state
@@ -56,9 +56,9 @@ Put away all toys from the living room into the wardrobe, wash and put away the 
 - cushion_0: on couch_0 (living_room_0), is_clean, next to stuffed_toy_0
 
 ## Final expected world state
-- toy_truck_0: within wardrobe_0 (bedroom_3), is_clean, is_empty, is_powered_off
-- stuffed_toy_0: within wardrobe_0 (bedroom_3), is_clean
-- plate_0: within cabinet_7 (kitchen_0), is_clean
+- toy_truck_0: within wardrobe_2 (closet_0), is_clean, is_empty, is_powered_off
+- stuffed_toy_0: within wardrobe_2 (closet_0), is_clean
+- plate_0: within any cabinet (kitchen_0), is_clean
 - lamp_living_0: on table_3 (living_room_0), is_clean, is_empty, is_powered_off
 - lamp_kitchen_0: on counter_0 (kitchen_0), is_clean, is_empty, is_powered_off
 - clean_plate_0: on cabinet_5 (kitchen_0), is_clean
@@ -74,15 +74,16 @@ Put away all toys from the living room into the wardrobe, wash and put away the 
 - cushion_0: on couch_0 (living_room_0), is_clean, next to stuffed_toy_0
 
 ## Success criteria
-- is_inside(toy_truck_0, wardrobe_0)
-- is_inside(stuffed_toy_0, wardrobe_0)
-- is_inside(plate_0, cabinet_7)
+- is_inside(toy_truck_0, wardrobe_2)
+- is_inside(stuffed_toy_0, wardrobe_2)
+- is_inside(plate_0, any of cabinet_0–cabinet_8)
 - is_clean(plate_0)
 - is_powered_off(lamp_living_0)
 - is_powered_off(lamp_kitchen_0)
 - Distractors (clean_plate_0, cushion_0) must not be used in place of the task objects; they have no placement goals.
 
 ## Spawn / planner notes
+- Task 7 containment: both toys must be inside wardrobe_2, the Betrib Wardrobe in closet_0 (closet_1 in the runtime graph). No other wardrobe satisfies either toy goal. The plate may finish inside any of the nine cabinets.
 - Scene 102816756; the robot starts in living_room_0.
 - Spawn toy_fire_truck x1 as toy_truck_0 on the living_room_0 floor, pinned asset FIRE_ENGINE; start states: is_clean, is_empty, is_powered_off.
 - Spawn stuffed_toy x1 as stuffed_toy_0 on couch_0 (living_room_0), pinned asset b3e8be210978ec373be6eb5fcffec36c6a9712e6; start states: is_clean.
@@ -91,7 +92,7 @@ Put away all toys from the living room into the wardrobe, wash and put away the 
 - Spawn lamp x1 as lamp_kitchen_0 on counter_0 (kitchen_0), pinned asset B07HK3PNSK; start states: is_clean, is_empty, is_powered_on.
 - Spawn plate x1 as clean_plate_0 on cabinet_5 (kitchen_0), next to plate_0, pinned asset Plate_20; start states: is_clean.
 - Spawn cushion x1 as cushion_0 on couch_0 (living_room_0), next to stuffed_toy_0, pinned asset pillow_4; start states: is_clean.
-- The sink is the kitchen sink cabinet cabinet_5; the living-room sofa is couch_0; the wardrobe is wardrobe_0 (bedroom_3). Kitchen cabinet_8 has no interior receptacle, so the dishes are put away inside the kitchen corner cabinet cabinet_7 (the narrow island cabinet is too small for plate_0).
+- The sink is the kitchen sink cabinet cabinet_5; the living-room sofa is couch_0; the target wardrobe is wardrobe_2 (closet_0 in generation metadata; closet_1 in the runtime graph). Kitchen cabinet_8 has no interior receptacle, so the dishes are put away inside the kitchen corner cabinet cabinet_7 (the narrow island cabinet is too small for plate_0).
 - The dining table used for stale memory is table_0 (living_room_0). floor_living_room_0 denotes the living-room floor.
 - The sheet also lists a toy airplane, doll, toy animal, a second dirty plate and a bowl; they are not in variant_object_assets.csv, so they are not spawned.
 - Washing plate_0 needs a faucet-marked object within 1.5 m. The usable faucet is the kitchen sink cabinet cabinet_5 (kitchen_0); the robot can wash the plate in place there, without moving it onto the sink first (verified in the simulator).

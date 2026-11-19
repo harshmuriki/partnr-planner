@@ -13,5 +13,9 @@
       "entity": "glass_1",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [
+    "plate_0: known absent; no plate or acceptable substitute (black plate) exists anywhere in the scene"
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

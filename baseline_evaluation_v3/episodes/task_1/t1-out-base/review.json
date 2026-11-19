@@ -22,7 +22,7 @@
       },
       "expected": {
         "relation": "on",
-        "furniture": "table_0",
+        "furniture": "table_0 or table_1",
         "room": "living_room_0",
         "states": {
           "is_clean": true,
@@ -114,7 +114,7 @@
     "lamp_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "52adc6fa2ef0a754e5aa8187c244a94d001eac53416afd828081e9c9c11a20b6",
+  "spec_sha256": "02347289138646313d58583d9833762a9141d18abb71b8167513ee10c21a1657",
   "initial_robot_memory": "- jug_0: on table_2 (kitchen_0), is_clean, is_empty, stale record\n- lamp_0: on chest_of_drawers_0 (bedroom_0), is_clean, is_empty, is_powered_on",
   "memory_runtime_applied": false,
   "issues": [],

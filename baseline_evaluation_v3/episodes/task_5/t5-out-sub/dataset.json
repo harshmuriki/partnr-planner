@@ -637,7 +637,7 @@
         },
         "variant_spec": {
           "variant_id": "T5-OUT-SUB",
-          "sha256": "3d3bd6712d406720c116cc55de8d80731f89c5854952fe8cd4bf3f71d454c8f5",
+          "sha256": "8c5808ddb3d0b1ea1891e5a4063bddba5e8a80f31967c3150102faf4bb869bae",
           "entity_handles": {
             "soap_dispenser_0": "Soap_Bottle_26_:0000",
             "glass_0": "9428caf70c42e50bb3c3c604eba00c43b8efb58f_:0000",
@@ -788,7 +788,7 @@
         "f9ce9e87b840524cfd4404f4a0cfc52d88f2c794_:0000": "183de9f61a9c362d58ac340058ecddc54da18809_:0000|Desk0015_receptacle_mesh.0000",
         "21551881391c2b21c2e1358effa7d6b69cbd435f_:0000": "412c833d4428480466b704ce25bf06f519c8cf72_:0000|Kitchen0001_countertop_receptacle_mesh.0000"
       },
-      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+      "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",

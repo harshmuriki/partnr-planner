@@ -1,7 +1,7 @@
 # T6-OUT-SUB
 
 ## Base task
-Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.
+Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.
 
 ## Scene
 - scene_id: 104348010_171512832
@@ -17,7 +17,7 @@ Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clea
   - microwave_0 — kitchen_0 — Samsung Convection Oven with Microwave and Grill.
 
 ## Task instruction / prompt given
-"Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights."
+"Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights."
 
 ## Affected object(s)
 - bread_0 (bread, asset Bread_8): uncertainty target.
@@ -64,6 +64,8 @@ Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clea
 
 ## Success criteria
 - is_inside(bread_0, microwave_0)
+- is_waited_inside(bread_0, microwave_0)
+- order: is_waited_inside(bread_0, microwave_0) before is_on_top(bread_0, table_11)
 - is_on_top(bread_0, table_11)
 - order: is_inside(bread_0, microwave_0) before is_on_top(bread_0, table_11)
 - is_on_top(cup_0, table_11)
@@ -77,7 +79,7 @@ Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clea
 - Using cup_0 in place of the missing bottle_0 counts as success; do not require or invent a bottle.
 
 ## Spawn / planner notes
-- Scene 104348010_171512832; the robot starts in living_room_0.
+- Scene 104348010_171512832; the robot starts in bedroom_2.
 - Spawn bread x1 as bread_0 on counter_0 (kitchen_0), pinned asset Bread_8; start states: no object states.
 - Spawn cup x1 as cup_0 on table_7 (dining_room_0), pinned asset ed95f32cc00075ceed5bd4b593d2a06a444c0eec; start states: is_clean, is_filled.
 - Spawn hand_towel x1 as blue_hand_towel_0 on shelves_11 (bathroom_2), pinned asset Tag_Dishtowel_Dobby_Stripe_Blue_18_x_26; start states: is_clean.
@@ -86,5 +88,5 @@ Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clea
 - Do not spawn hand_towel_0 (hand_towel) in this variant.
 - The master-bedroom desk is the vanity desk table_11 (bedroom_2); 'master' has no scene referent, so the instruction says 'bedroom'. The living-room lights are the spawned lamp_living_0.
 - The scene's fridge is in the garage (fridge_0). Kitchen cabinet_0 has no interior receptacle, so the bread cabinet is cabinet_1. No bathroom furniture has an interior receptacle, so the towel cabinet is cabinet_23 in the laundry room.
-- The sheet's 'baguette' distractor is bread_25_0 (Bread_25). Heating has no skill or object state, so it is scored as a microwave visit: bread_0 must be placed inside microwave_0 (kitchen_0) before it is placed on table_11, and it does not need to remain in the microwave.
+- The sheet's 'baguette' distractor is bread_25_0 (Bread_25). Heating has no object state, so evaluation requires bread_0 to be placed inside microwave_0 (kitchen_0), followed by a completed Wait action while the bread remains inside throughout, before delivery to table_11. The existing Wait skill duration is unchanged; microwave power and door state are not additional requirements. Bread need not remain in the microwave at episode end.
 - The Accurate, Incomplete and Outdated versions of this variant spawn exactly the same objects, assets, placements and states; only the robot's initial memory differs.

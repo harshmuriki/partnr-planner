@@ -5,5 +5,9 @@
       "entity": "lamp_0",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [
+    "jug_0: known absent; no jug or acceptable substitute (pitcher) exists anywhere in the scene"
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

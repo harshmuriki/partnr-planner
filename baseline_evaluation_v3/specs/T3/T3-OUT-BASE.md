@@ -1,7 +1,7 @@
 # T3-OUT-BASE
 
 ## Base task
-Collect the 2 green books & place them on the living room table and turn off the laptop as well.
+Collect the 2 green books & place them on the living room side table and turn off the laptop as well.
 
 ## Scene
 - scene_id: 106878915_174887025
@@ -13,7 +13,7 @@ Collect the 2 green books & place them on the living room table and turn off the
   - table_0 — living_room_0 — Dip-Dyed Side Table
 
 ## Task instruction / prompt given
-"Collect the 2 green books & place them on the living room table and turn off the laptop as well."
+"Collect the 2 green books & place them on the living room side table and turn off the laptop as well."
 
 ## Affected object(s)
 - book_0 (book, asset Book_17): uncertainty target.

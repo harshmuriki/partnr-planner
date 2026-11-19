@@ -162,7 +162,7 @@
         },
         "variant_spec": {
           "variant_id": "T1-OUT-BASE",
-          "sha256": "52adc6fa2ef0a754e5aa8187c244a94d001eac53416afd828081e9c9c11a20b6",
+          "sha256": "02347289138646313d58583d9833762a9141d18abb71b8167513ee10c21a1657",
           "entity_handles": {
             "jug_0": "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000",
             "lamp_0": "B07HK83QRB_:0000"
@@ -247,7 +247,7 @@
         "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000": "559f21c7f5628a83b31d616e90bdcc02e7744731_:0000|Kitchen_Cabinet0030_top_receptacle_mesh.0000",
         "B07HK83QRB_:0000": "b759f0cf80e62d9701b18edb6791d2172cf11c36_:0000|Vanity_Table0001_receptacle_mesh.0000"
       },
-      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+      "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
       "evaluation_propositions": [
         {
           "function_name": "is_on_top",
@@ -256,7 +256,8 @@
               "264b8bf954ce7d7d2f0c135151bcb6bf6b11acb4_:0000"
             ],
             "receptacle_handles": [
-              "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000"
+              "2f38b4f83d8a77af0eb36406b0f00df98cef5e47_:0000",
+              "735845d0674f69f736af7e0f116767a01392f9b8_:0000"
             ],
             "number": 1
           }

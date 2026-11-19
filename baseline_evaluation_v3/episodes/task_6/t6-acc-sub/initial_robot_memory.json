@@ -17,5 +17,10 @@
       "entity": "lamp_living_0",
       "in_initial_robot_memory": true
     }
-  ]
+  ],
+  "initial_memory": [
+    "bottle_0: known absent; no water bottle exists anywhere in the scene",
+    "hand_towel_0: known absent; there is no hand towel besides blue_hand_towel_0"
+  ],
+  "initial_memory_source": "ground_truth_at_start"
 }

@@ -35,7 +35,7 @@ def parse_spec(path):
     for heading in ['Initial world state', 'Final expected world state']:
         states[heading] = {}
         for line in section(text, heading).splitlines():
-            m = re.fullmatch(r'- (\w+): (on|within|floor) (\w+) \(([^)]+)\)(?:, (.*))?', line)
+            m = re.fullmatch(r'- (\w+): (on|within|floor) (\w+(?: or \w+)*) \(([^)]+)\)(?:, (.*))?', line)
             if not m:
                 raise ValueError(f'{path}: unsupported {heading} line: {line}')
             entity, relation, furniture, room, rest = m.groups()

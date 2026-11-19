@@ -219,7 +219,7 @@
     "plate_0: exact asset, initial states, furniture, region checked"
   ],
   "unscored_success_text": [],
-  "spec_sha256": "c768aada7b4bfcfcb51b7cfc671163ca8ed16f78b1db708eeeb69c91fcc96a1b",
+  "spec_sha256": "474fc8bb268ff8edb742838171497e0ff9335e7ecb0685805f66eef5254feeb9",
   "initial_robot_memory": "- soap_dispenser_0: on washer_dryer_0 (bathroom_1), is_clean, is_empty, stale record\n- glass_0: on cabinet_0 (kitchen_0), is_dirty, is_empty, stale record\n- glass_1: on table_3 (living_room_0), is_dirty, is_empty\n- plate_0: on table_2 (kitchen_0), is_clean, stale record",
   "memory_runtime_applied": false,
   "issues": [],
