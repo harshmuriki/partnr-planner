@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error Viewer</title>
+<!--
+  Built by build_viewer.py from the findings CSVs; all run data is embedded below.
+  Trace and run-folder links are relative to /coc/flash5. To use them, serve it:
+    python3 -m http.server 8010 --bind 127.0.0.1 --directory /coc/flash5
+  and open http://localhost:8010/garavindan3/uncertainty_classifier/viewer/error_viewer.html
+-->
+<style>
+  :root {
+    --bg: #f6f6f4; --panel: #ffffff; --border: #e2e2df; --border-soft: #ececea;
+    --text: #1a1a1a; --muted: #6b6b68; --accent: #2563eb; --accent-soft: #eaf0fe;
+    --acc-c: #15803d; --inc-c: #b45309; --out-c: #b91c1c;
+    --acc-bg: #e8f7ee; --inc-bg: #fef3e2; --out-bg: #fdeaea;
+    --fail-c: #b91c1c; --fail-bg: #fdeaea; --ineff-c: #b45309; --ineff-bg: #fef3e2;
+    --ok-c: #15803d; --ok-bg: #e8f7ee;
+    --hl: #fff4c2; --hl-strong: #fde68a;
+    --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a;
+    --series-4: #7c4dcc; --series-5: #c2417f; --series-6: #a87b12; --series-7: #6b7280; --series-8: #0e8f99;
+    --grid: #ecebe7;
+    --seq-0: #f3f6fb; --seq-1: #cde2fb; --seq-2: #9ec5f4; --seq-3: #6da7ec; --seq-4: #3987e5; --seq-5: #256abf; --seq-6: #184f95;
+    --drawer-w: 560px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      --bg: #141413; --panel: #1c1c1b; --border: #34342f; --border-soft: #2a2a27;
+      --text: #f2f2ef; --muted: #a3a29b; --accent: #5b8def; --accent-soft: #1d2a45;
+      --acc-c: #4ade80; --inc-c: #fbbf24; --out-c: #f87171;
+      --acc-bg: #16301f; --inc-bg: #3a2a0d; --out-bg: #3a1717;
+      --fail-c: #f87171; --fail-bg: #3a1717; --ineff-c: #fbbf24; --ineff-bg: #3a2a0d;
+      --ok-c: #4ade80; --ok-bg: #16301f;
+      --hl: #3d3517; --hl-strong: #5a4b14;
+      --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+      --series-4: #9b74e0; --series-5: #d9619a; --series-6: #c99a2e; --series-7: #9ca3af; --series-8: #22b3be;
+      --grid: #2c2c29;
+      --seq-0: #1f2329; --seq-1: #0d366b; --seq-2: #104281; --seq-3: #1c5cab; --seq-4: #2a78d6; --seq-5: #5598e7; --seq-6: #9ec5f4;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); transition: padding-right .18s ease; }
+  body.drawer-open { padding-right: var(--drawer-w); }
+  code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+  a { color: var(--accent); }
+
+  /* ---------- top bar ---------- */
+  #topbar { position: sticky; top: 0; z-index: 20; background: var(--panel); border-bottom: 1px solid var(--border); padding: 12px 24px; }
+  .bar-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .bar-row + .bar-row { margin-top: 10px; }
+  h1 { font-size: 17px; margin: 0 8px 0 0; }
+  .task-btn { padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 999px; background: var(--panel); cursor: pointer; font-size: 13px; font-weight: 700; color: var(--muted); }
+  .task-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .task-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .fgroup { display: flex; align-items: center; gap: 5px; }
+  .fgroup > span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-right: 2px; }
+  .chip { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--panel); color: var(--muted); font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .chip.on { border-color: var(--accent); color: var(--text); background: var(--accent-soft); }
+  .chip .sw { width: 9px; height: 9px; border-radius: 2px; }
+  .reset { margin-left: auto; font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; text-decoration: underline; }
+
+  main { max-width: 1240px; margin: 0 auto; padding: 22px 20px 70px; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 18px; }
+  .panel h2 { font-size: 15px; margin: 0 0 2px; }
+  .panel .sub { color: var(--muted); font-size: 12.5px; margin: 0 0 12px; }
+
+  /* ---------- stat tiles ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  .tile { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+  .tile .k { font-size: 11.5px; color: var(--muted); }
+  .tile .v { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .tile .d { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+  @media (max-width: 980px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- bar charts ---------- */
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin-bottom: 10px; flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+  .vchart { display: flex; gap: 8px; }
+  .vaxis { height: 200px; display: flex; flex-direction: column; justify-content: space-between; font-size: 10.5px; color: var(--muted); text-align: right; min-width: 30px; transform: translateY(-6px); }
+  .vplot { display: flex; gap: 22px; overflow-x: auto; padding-bottom: 4px; }
+  .vsection { display: flex; flex-direction: column; }
+  .vgroups { display: flex; gap: 14px; }
+  .vgroup { display: flex; flex-direction: column; align-items: center; width: 84px; }
+  .vcols { height: 200px; width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 3px; border-bottom: 1px solid var(--border);
+    background: repeating-linear-gradient(180deg, var(--grid) 0 1px, transparent 1px 25%); }
+  .vbar { width: 14px; min-height: 2px; border-radius: 4px 4px 0 0; cursor: pointer; }
+  .vbar:hover { filter: brightness(1.1); }
+  .vbar { position: relative; }
+  .vbar .vval { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); padding-bottom: 3px;
+    font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; pointer-events: none; }
+  .metric-chart .vcols { gap: 4px; }
+  .metric-chart .vchart { margin-top: 18px; }
+  .metric-chart .vplot { overflow: visible; }
+  .metric-chart .vgroup { width: 250px; }
+  .metric-chart .vbar { width: 38px; }
+  .metric-chart .vlab { font-weight: 600; }
+  .vlab { font-size: 11.5px; text-align: center; margin-top: 6px; cursor: pointer; line-height: 1.25; }
+  .vlab:hover, .vtitle:hover { color: var(--accent); }
+  .vtitle { font-weight: 700; font-size: 12.5px; text-align: center; border-top: 2px solid var(--border); margin-top: 8px; padding-top: 4px; cursor: pointer; }
+
+  /* ---------- heatmaps ---------- */
+  .hm-wrap { overflow-x: auto; }
+  table.hm { border-collapse: separate; border-spacing: 2px; font-size: 12px; }
+  table.hm th { font-weight: 600; color: var(--muted); padding: 4px 6px; white-space: nowrap; }
+  table.hm th.row { text-align: right; color: var(--text); font-weight: 500; }
+  table.hm td { min-width: 54px; height: 30px; text-align: center; border-radius: 4px; font-variant-numeric: tabular-nums; cursor: pointer; }
+  table.hm td:hover { outline: 2px solid var(--accent); }
+  table.hm td.na { color: var(--muted); cursor: default; }
+  table.hm td.na:hover { outline: none; }
+  table.hm tr.sep th, table.hm tr.sep td { padding-top: 8px; }
+  table.hm th.wrap { white-space: normal; max-width: 76px; font-size: 11px; vertical-align: bottom; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .seg button { border: none; background: var(--panel); color: var(--muted); font-size: 12px; padding: 5px 11px; cursor: pointer; }
+  .bar-row .seg { margin-bottom: 0; }
+  .seg button.on { background: var(--accent-soft); color: var(--text); font-weight: 600; }
+  .hm-scale { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-top: 8px; }
+  .hm-scale span.s { width: 22px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  /* ---------- runs table ---------- */
+  .tbl-tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+  .tbl-tools input, .tbl-tools select { font: inherit; font-size: 13px; padding: 6px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); }
+  .tbl-tools input { width: 240px; }
+  .active-filter { font-size: 12px; background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; display: none; }
+  .active-filter button { border: none; background: none; cursor: pointer; color: var(--muted); margin-left: 4px; }
+  table.runs { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.runs th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  table.runs td { padding: 7px 8px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  table.runs tbody tr { cursor: pointer; }
+  table.runs tbody tr:hover { background: var(--accent-soft); }
+  table.runs tbody tr.sel { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+  .pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 999px; margin: 1px 2px 1px 0; white-space: nowrap; }
+  .pill.failure { color: var(--fail-c); background: var(--fail-bg); }
+  .pill.inefficiency { color: var(--ineff-c); background: var(--ineff-bg); }
+  .pill.ok { color: var(--ok-c); background: var(--ok-bg); }
+  .pill.bad { color: var(--fail-c); background: var(--fail-bg); }
+  .pill.judge { color: var(--accent); background: var(--accent-soft); }
+  .pill.ACC { color: var(--acc-c); background: var(--acc-bg); }
+  .pill.INC { color: var(--inc-c); background: var(--inc-bg); }
+  .pill.OUT { color: var(--out-c); background: var(--out-bg); }
+  .bl { display: inline-flex; align-items: center; gap: 6px; }
+  .bl i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+  .more { margin-top: 10px; text-align: center; }
+  .more button { font: inherit; font-size: 13px; padding: 6px 14px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); cursor: pointer; }
+  .muted { color: var(--muted); }
+
+  /* ---------- drawer ---------- */
+  #drawer { position: fixed; top: 0; right: 0; bottom: 0; width: var(--drawer-w); z-index: 40; background: var(--panel); border-left: 1px solid var(--border); transform: translateX(100%); visibility: hidden; transition: transform .18s ease, visibility .18s ease; display: flex; flex-direction: column; }
+  body.drawer-open #drawer { transform: none; visibility: visible; }
+  #dHead { padding: 14px 18px 12px; border-bottom: 1px solid var(--border); }
+  #dHead .row1 { display: flex; align-items: center; gap: 8px; }
+  #dHead h3 { margin: 0; font-size: 15px; flex: 1; word-break: break-all; }
+  #dClose { border: 1px solid var(--border); background: var(--panel); border-radius: 8px; cursor: pointer; padding: 4px 9px; color: var(--muted); font-size: 14px; }
+  #dHead .meta { margin-top: 6px; font-size: 12px; color: var(--muted); }
+  #dHead .instr { margin-top: 8px; font-size: 12.5px; font-style: italic; }
+  #dHead .links { margin-top: 8px; display: flex; gap: 12px; font-size: 12.5px; flex-wrap: wrap; }
+  #dBody { overflow-y: auto; padding: 14px 18px 30px; flex: 1; }
+  .dsec { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 6px; }
+  .dsec:first-child { margin-top: 0; }
+  .finding { border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; margin-bottom: 7px; cursor: pointer; }
+  .finding:hover { border-color: var(--accent); }
+  .finding.on { border-color: var(--accent); background: var(--accent-soft); }
+  .finding .ev { font-size: 12px; margin-top: 4px; word-break: break-word; }
+  .finding .hint { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .attr { margin-top: 7px; padding: 6px 8px; border-left: 3px solid var(--border); border-radius: 4px; font-size: 12px; cursor: pointer; }
+  .attr:hover { border-left-color: var(--accent); }
+  .attr.on { border-left-color: var(--accent); background: var(--hl); }
+  .attr .ev { margin-top: 3px; word-break: break-word; }
+  ol.steps { list-style: none; padding: 0; margin: 0; font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; }
+  ol.steps li { display: grid; grid-template-columns: 34px 1fr auto; gap: 6px; padding: 3px 6px; border-radius: 4px; }
+  ol.steps li .n { color: var(--muted); text-align: right; }
+  ol.steps li .r { font-family: -apple-system, sans-serif; font-size: 10.5px; font-weight: 600; }
+  ol.steps li .r.f { color: var(--fail-c); }
+  ol.steps li .r.s { color: var(--muted); font-weight: 400; }
+  ol.steps li.hl { background: var(--hl); }
+  ol.steps li.hl.hl2 { background: var(--hl-strong); }
+  #traceBox { margin-top: 8px; white-space: pre-wrap; font-family: ui-monospace, Menlo, monospace; font-size: 11px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px; max-height: 480px; overflow: auto; display: none; }
+  .tbtn { font: inherit; font-size: 12px; padding: 4px 10px; border: 1px solid var(--border); border-radius: 7px; background: var(--panel); color: var(--text); cursor: pointer; }
+
+  #batchSel { font: inherit; font-size: 13px; font-weight: 600; padding: 6px 9px; border: 1px solid var(--border); border-radius: 9px; background: var(--panel); color: var(--text); }
+
+  #tip { position: fixed; z-index: 60; pointer-events: none; background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 7px 9px; font-size: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.12); display: none; max-width: 300px; }
+  #tip b { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<header id="topbar">
+  <div class="bar-row">
+    <h1>Error Viewer</h1>
+    <select id="batchSel"></select>
+    <div id="taskTabs" class="bar-row" style="gap:8px"></div>
+  </div>
+  <div class="bar-row" id="filters"></div>
+</header>
+
+<main>
+<div id="dashboard">
+  <div class="tiles" id="tiles"></div>
+
+  <div>
+    <section class="panel">
+      <h2>Overall Metrics by Baseline</h2>
+      <p class="sub">Mean over the filtered runs of each baseline, all on a 0–1 scale. Success: share of runs that met the success criteria.
+        Completion: share of goal propositions met. SPL_act and TC-SPL_act weight success and completion by
+        A<sub>ref</sub> / max(A, A<sub>ref</sub>) (definitions under Task Metrics below). Click a bar to list that baseline's runs.</p>
+      <div class="legend" id="legend0"></div>
+      <div id="metricBars" class="metric-chart"></div>
+    </section>
+    <section class="panel">
+      <h2>Failure Category Prevalence by Baseline</h2>
+      <p class="sub">Share of <b>all</b> of each baseline's runs with each failure category (failure categories are only checked on failed runs). A run can have several. Click a bar to list those runs.</p>
+      <div class="legend" id="legend1"></div>
+      <div id="failBars"></div>
+    </section>
+    <section class="panel">
+      <h2>Inefficiency Category Prevalence by Baseline</h2>
+      <p class="sub">Share of each baseline's runs (successful or not) with each inefficiency category (Unnecessary Action includes Repeated Action unless shown separately). Click a bar to list those runs.</p>
+      <div class="seg" id="repeatSeg"></div>
+      <div class="legend" id="legend2"></div>
+      <div id="ineffBars"></div>
+      <div class="muted" id="ineffNote" style="font-size:11px;text-align:right"></div>
+    </section>
+  </div>
+  <div style="height:18px"></div>
+
+  <section class="panel">
+    <h2>Error Category Prevalence by Baseline and Condition</h2>
+    <p class="sub">Share of runs with each category, split by the chosen dimension. Failures are a share of <b>failed</b> runs in that column; inefficiencies a share of all runs. Unnecessary Action includes Repeated Action unless shown separately. Click a cell to list those runs.</p>
+    <div class="seg" id="dimSeg"></div>
+    <div class="seg" id="heatRepeatSeg"></div>
+    <div class="hm-wrap" id="labelHeat"></div>
+    <div class="muted" id="heatNote" style="font-size:11px;text-align:right"></div>
+    <div class="hm-scale" id="scale1"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Task Metrics by Baseline and Condition</h2>
+    <p class="sub">Mean over runs, by baseline and the same dimension. <b>Success</b>: share of runs that met the task's success criteria.
+      <b>Completion</b>: share of goal propositions met (timeouts keep partial completion).
+      <b>SPL_act</b> = S · A<sub>ref</sub> / max(A, A<sub>ref</sub>) and <b>TC-SPL_act</b> = C · A<sub>ref</sub> / max(A, A<sub>ref</sub>), where A is the run's recorded skill attempts
+      (failures included, Rearrange counted as 4, Done/ReportAbsence excluded) and A<sub>ref</sub> the human ground-truth action count of the variant.</p>
+    <div class="bar-row" style="margin-bottom:12px"><div class="seg" id="metricSeg"></div></div>
+    <div class="hm-wrap" id="successHeat"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Judge-Attributed Causes by Module and Baseline</h2>
+    <p class="sub">The LLM judge's attributions by module, by baseline. Tick modules to compare their error types instead, or show all error types. Each attribution counts once, under the module and error type the judge gave it; that includes attributions for errors no rule flagged ("extra", counted in the hover). An observed error can get several attributions. Click a bar or label to list those runs.</p>
+    <div class="bar-row" style="margin-bottom:12px">
+      <div class="seg" id="judgeViewSeg"></div>
+      <div class="fgroup" id="judgeModules"></div>
+      <div class="seg" id="judgeMeasureSeg" style="margin-left:auto"></div>
+    </div>
+    <div class="legend" id="legend4"></div>
+    <div id="judgeBars"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Observed Error Category vs. Judge-Attributed Cause</h2>
+    <p class="sub">Attributions for each observed-error label (column) by the error type the judge gave (row). Rows follow the modules ticked above. "Extra" holds errors no rule flagged. Click a cell to list those runs.</p>
+    <div class="hm-wrap" id="judgeHeat"></div>
+  </section>
+</div>
+
+  <section class="panel" id="runsPanel">
+    <h2>Runs</h2>
+    <p class="sub">Click a run to see its findings, the actions each finding points at, and its trace.</p>
+    <div class="tbl-tools">
+      <input id="search" placeholder="Search run id or evidence…">
+      <select id="labelSel"></select>
+      <span class="active-filter" id="activeFilter"></span>
+      <span class="muted" id="count" style="font-size:12px;margin-left:auto"></span>
+    </div>
+    <table class="runs">
+      <thead><tr><th>Run ID</th><th>Baseline</th><th>Memory</th><th>Outcome</th><th>Completion</th><th>SPL_act</th><th>TC-SPL_act</th><th>Actions</th><th>Labels</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="more"><button id="moreBtn">Show more</button></div>
+  </section>
+</main>
+
+<aside id="drawer" aria-label="Run details">
+  <div id="dHead"></div>
+  <div id="dBody"></div>
+</aside>
+<div id="tip"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const ALL_BASELINES = ["react", "vlm-tamp", "tru-pomdp", "rail", "rail-oracle-fix", "rail-eopfb", "rail-trig", "rail-oracle-eop"];
+const BL_NAME = { "react": "ReAct", "tru-pomdp": "TRU-POMDP", "vlm-tamp": "VLM-TAMP", "rail": "Rail",
+  "rail-oracle-fix": "Rail + placement oracle", "rail-eopfb": "Rail + EoP feedback",
+  "rail-trig": "Rail + replan-trigger oracle", "rail-oracle-eop": "Rail + placement oracle + EoP feedback" };
+const BL_VAR = { "react": "--series-1", "tru-pomdp": "--series-2", "vlm-tamp": "--series-3", "rail": "--series-4",
+  "rail-oracle-fix": "--series-5", "rail-eopfb": "--series-6", "rail-trig": "--series-7", "rail-oracle-eop": "--series-8" };
+const ALL_MEMORY = ["ACC", "INC", "OUT"];
+const ALL_UNCERTAINTY = ["BASE", "ABS", "CON", "DIS", "SUB"];
+const categories = kind => [...new Set(DATA.rules.filter(([k]) => k === kind).map(([, c]) => c))];
+const FAILURES = categories("failure");
+const INEFFICIENCIES = categories("inefficiency");
+const UNNECESSARY_ONLY = "Unnecessary Action*";
+const REPEATS_NOTE = "* does not include repeated actions";
+const ineffCategories = split => split
+  ? INEFFICIENCIES.flatMap(c => c === "Unnecessary Action" ? [UNNECESSARY_ONLY, "Repeated Action"] : [c])
+  : INEFFICIENCIES;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const pct = (n, d) => d ? Math.round(100 * n / d) : null;
+const MODULES = Object.keys(DATA.taxonomy);
+const JUDGE_PAIRS = MODULES.flatMap(m => DATA.taxonomy[m].map(t => [m, t]));
+const NO_CAUSE = "No cause found", EXTRA = "Extra";
+// A judge attribution is [finding index or null for "extra", module, error type, step, evidence, description, confidence].
+const causeOf = a => a[2] ?? NO_CAUSE;
+const observedOf = (r, a) => a[0] === null ? EXTRA : r.findings[a[0]][2];
+
+for (const batch of DATA.batches) for (const r of batch.runs) {
+  r.attrs = r.judge?.attributions ?? [];
+  r.categories = { failure: new Set(), inefficiency: new Set() };
+  r.labels = new Set();
+  for (const [kind, category, label] of r.findings) { r.categories[kind].add(category); r.labels.add(label); }
+  r.has = (kind, category) => category === "Repeated Action" ? r.labels.has(category)
+    : category === UNNECESSARY_ONLY ? r.labels.has("Unnecessary Action")
+    : r.categories[kind].has(category);
+}
+
+let RUNS, BASELINES, TASKS, MEMORY, UNCERTAINTY, JUDGE_TYPES;
+function setBatch(i) {
+  RUNS = DATA.batches[i].runs;
+  JUDGE_TYPES = JUDGE_PAIRS.filter(([m, t]) => RUNS.some(r => r.attrs.some(a => a[1] === m && a[2] === t)));
+  BASELINES = ALL_BASELINES.filter(b => RUNS.some(r => r.baseline === b));
+  TASKS = [...new Set(RUNS.map(r => r.task))].sort();
+  MEMORY = ALL_MEMORY.filter(m => RUNS.some(r => r.memory === m));
+  UNCERTAINTY = ALL_UNCERTAINTY.filter(u => RUNS.some(r => r.uncertainty === u));
+  // Runs table order: task, then uncertainty, then memory, then baseline, then repeat, so a
+  // run folder's repeats sit together and each uncertainty's folders sit next to each other.
+  const order = [r => TASKS.indexOf(r.task), r => UNCERTAINTY.indexOf(r.uncertainty),
+    r => MEMORY.indexOf(r.memory), r => BASELINES.indexOf(r.baseline), r => r.repeat];
+  RUNS.sort((a, b) => { for (const key of order) { const d = key(a) - key(b); if (d) return d; } return 0; });
+  resetFilters();
+  closeRun();
+}
+const batchSel = document.getElementById("batchSel");
+batchSel.innerHTML = DATA.batches.map((b, i) => `<option value="${i}" title="${b.results_dir}">${b.name} (${b.runs.length} runs)</option>`).join("");
+batchSel.onchange = e => { setBatch(+e.target.value); render(); };
+
+/* ---------- state ---------- */
+const state = { metric: "success", dim: "task", splitBars: false, splitHeat: false, judgeModules: new Set(), judgeShare: false, shown: 100, open: null, activeFinding: null };
+function resetFilters() {
+  Object.assign(state, { task: "All", baseline: new Set(BASELINES), memory: new Set(MEMORY), uncertainty: new Set(UNCERTAINTY), outcome: "all", focus: null, labelSel: "", search: "", shown: 100 });
+  document.getElementById("search").value = "";
+}
+const filtered = () => RUNS.filter(r =>
+  (state.task === "All" || r.task === state.task) && state.baseline.has(r.baseline) &&
+  state.memory.has(r.memory) && state.uncertainty.has(r.uncertainty) &&
+  (state.outcome === "all" || (state.outcome === "ok") === r.success));
+
+/* ---------- top bar ---------- */
+function buildTop() {
+  const tabs = document.getElementById("taskTabs");
+  tabs.innerHTML = "";
+  for (const t of ["All", ...TASKS]) {
+    const b = document.createElement("button");
+    b.className = "task-btn" + (state.task === t ? " active" : "");
+    b.textContent = t === "All" ? "All tasks" : t;
+    b.onclick = () => { state.task = t; state.focus = null; render(); };
+    tabs.appendChild(b);
+  }
+  const f = document.getElementById("filters");
+  f.innerHTML = "";
+  const group = (name, key, values, labelOf, swatch) => {
+    const g = document.createElement("div"); g.className = "fgroup";
+    g.innerHTML = `<span>${name}</span>`;
+    for (const v of values) {
+      const c = document.createElement("button");
+      c.className = "chip" + (state[key].has(v) ? " on" : "");
+      c.innerHTML = (swatch ? `<i class="sw" style="background:var(${swatch(v)})"></i>` : "") + labelOf(v);
+      c.onclick = () => {
+        if (state[key].has(v) && state[key].size > 1) state[key].delete(v); else state[key].add(v);
+        state.focus = null; render();
+      };
+      g.appendChild(c);
+    }
+    f.appendChild(g);
+  };
+  group("Baseline", "baseline", BASELINES, v => BL_NAME[v], v => BL_VAR[v]);
+  group("Memory", "memory", MEMORY, v => v);
+  group("Uncertainty", "uncertainty", UNCERTAINTY, v => v);
+  const g = document.createElement("div"); g.className = "fgroup";
+  g.innerHTML = "<span>Outcome</span>";
+  for (const [v, l] of [["all", "All"], ["ok", "Succeeded"], ["fail", "Failed"]]) {
+    const c = document.createElement("button");
+    c.className = "chip" + (state.outcome === v ? " on" : "");
+    c.textContent = l;
+    c.onclick = () => { state.outcome = v; state.focus = null; render(); };
+    g.appendChild(c);
+  }
+  f.appendChild(g);
+  const reset = document.createElement("button");
+  reset.className = "reset"; reset.textContent = "Reset filters";
+  reset.onclick = () => { resetFilters(); render(); };
+  f.appendChild(reset);
+}
+
+/* ---------- tiles ---------- */
+function buildTiles(runs) {
+  const failed = runs.filter(r => !r.success);
+  const explained = failed.filter(r => r.categories.failure.size);
+  const anyIneff = runs.filter(r => r.categories.inefficiency.size).length;
+  const tiles = [
+    ["Runs", runs.length, `${new Set(runs.map(r => r.variant)).size} variants`],
+    ["Success rate", runs.length ? pct(runs.length - failed.length, runs.length) + "%" : "–", `${runs.length - failed.length} succeeded, ${failed.length} failed`],
+    ["Failed runs explained", failed.length ? pct(explained.length, failed.length) + "%" : "–", `${failed.length - explained.length} failed runs with no failure`],
+    ["Runs with an inefficiency", runs.length ? pct(anyIneff, runs.length) + "%" : "–", `${anyIneff} of ${runs.length}`],
+    ...[["completion", "Mean completion"], ["spl_act", "SPL_act"], ["tc_spl_act", "TC-SPL_act"]].map(([key, name]) => {
+      const m = meanMetric(runs, key);
+      return [name, m ? m.mean.toFixed(2) : "–", m ? `mean over ${m.n} runs` : "no data"];
+    }),
+  ];
+  document.getElementById("tiles").innerHTML = tiles.map(([k, v, d]) =>
+    `<div class="tile"><div class="k">${k}</div><div class="v">${v}</div><div class="d">${d}</div></div>`).join("");
+}
+
+/* ---------- tooltips ---------- */
+const tip = document.getElementById("tip");
+function showTip(e, html) { tip.innerHTML = html; tip.style.display = "block"; moveTip(e); }
+function moveTip(e) {
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + w > innerWidth - 8) x = e.clientX - w - 14;
+  if (y + h > innerHeight - 8) y = e.clientY - h - 14;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => tip.style.display = "none";
+function hover(el, html) { el.onmouseenter = e => showTip(e, html); el.onmousemove = moveTip; el.onmouseleave = hideTip; }
+
+/* ---------- grouped bars ---------- */
+function legend(id, baselines) {
+  document.getElementById(id).innerHTML = baselines.map(b => `<span><i style="background:var(${BL_VAR[b]})"></i>${BL_NAME[b]}</span>`).join("");
+}
+function columnChart(el, sections, scale, tick, unit) {
+  el.innerHTML = "";
+  const chart = document.createElement("div"); chart.className = "vchart";
+  chart.innerHTML = `<div class="vaxis">${[1, .75, .5, .25, 0].map(t => `<span>${tick(t * scale)}</span>`).join("")}</div>`;
+  const plot = document.createElement("div"); plot.className = "vplot";
+  for (const section of sections) {
+    const sec = document.createElement("div"); sec.className = "vsection";
+    const groups = document.createElement("div"); groups.className = "vgroups";
+    for (const row of section.rows) {
+      const group = document.createElement("div"); group.className = "vgroup";
+      const cols = document.createElement("div"); cols.className = "vcols";
+      for (const v of row.bars) {
+        const bar = document.createElement("div"); bar.className = "vbar";
+        bar.style.height = (100 * v.value / scale) + "%";
+        bar.style.background = `var(${BL_VAR[v.b]})`;
+        if (!v.n) bar.style.opacity = .25;
+        if (v.label !== undefined) { const t = document.createElement("span"); t.className = "vval"; t.textContent = v.label; bar.appendChild(t); }
+        hover(bar, v.hover);
+        bar.onclick = v.onclick;
+        cols.appendChild(bar);
+      }
+      const lab = document.createElement("div"); lab.className = "vlab"; lab.textContent = row.name;
+      lab.onclick = row.onclick;
+      group.append(cols, lab);
+      groups.appendChild(group);
+    }
+    sec.appendChild(groups);
+    if (section.title) {
+      const title = document.createElement("div"); title.className = "vtitle"; title.textContent = section.title.name;
+      title.onclick = section.title.onclick;
+      sec.appendChild(title);
+    }
+    plot.appendChild(sec);
+  }
+  chart.appendChild(plot);
+  el.appendChild(chart);
+  const note = document.createElement("div"); note.className = "muted"; note.style.cssText = "font-size:11px;margin-top:4px";
+  note.textContent = "y-axis: " + unit;
+  el.appendChild(note);
+}
+function buildBars(id, runs, kind, categories, failedOnly) {
+  const bls = BASELINES.filter(b => state.baseline.has(b));
+  const rows = categories.map(category => ({
+    name: category, onclick: () => focus({ kind, category }),
+    bars: bls.map(b => {
+      const pool = runs.filter(r => r.baseline === b && (!failedOnly || !r.success));
+      const n = pool.filter(r => r.has(kind, category)).length;
+      return { b, n, value: pool.length ? n / pool.length : 0, onclick: () => focus({ kind, category, baseline: b }),
+        hover: `<b>${BL_NAME[b]}</b> · ${category}<br><b>${pct(n, pool.length) ?? 0}%</b> of ${failedOnly ? "failed " : ""}runs (${n} of ${pool.length})` };
+    }),
+  }));
+  const max = Math.max(0.05, ...rows.flatMap(r => r.bars.map(v => v.value)));
+  columnChart(document.getElementById(id), [{ title: null, rows }], Math.ceil(max / 0.05) * 0.05,
+    v => Math.round(v * 100) + "%", `share of ${failedOnly ? "failed " : ""}runs with the category`);
+}
+
+function buildMetricBars(runs) {
+  const bls = BASELINES.filter(b => state.baseline.has(b));
+  const rows = METRICS.map(([key, name]) => ({
+    name,
+    bars: bls.map(b => {
+      const pool = runs.filter(r => r.baseline === b);
+      const m = meanMetric(pool, key);
+      return { b, n: m ? m.n : 0, value: m ? m.mean : 0, label: m ? m.mean.toFixed(2) : "–",
+        onclick: () => focus({ category: `${name} · ${BL_NAME[b]}`, test: r => r.baseline === b }),
+        hover: `<b>${BL_NAME[b]}</b> · ${name}<br><b>${m ? m.mean.toFixed(3) : "–"}</b>` +
+          (m ? ` mean over ${m.n} run${m.n === 1 ? "" : "s"}` : " (no runs)") };
+    }),
+  }));
+  columnChart(document.getElementById("metricBars"), [{ title: null, rows }], 1, v => v.toFixed(2), "mean over runs (0–1)");
+}
+
+/* ---------- heatmaps ---------- */
+const DIMS = {
+  task: { name: "Task", values: () => TASKS, key: "task" },
+  memory: { name: "Memory", values: () => MEMORY, key: "memory" },
+  uncertainty: { name: "Uncertainty", values: () => UNCERTAINTY, key: "uncertainty" },
+  baseline: { name: "Baseline", values: () => BASELINES, key: "baseline", label: v => BL_NAME[v] },
+};
+function seqColor(p) {
+  if (p === null) return "transparent";
+  const steps = ["--seq-0", "--seq-1", "--seq-2", "--seq-3", "--seq-4", "--seq-5", "--seq-6"];
+  const i = p <= 0 ? 0 : Math.min(6, 1 + Math.floor(p * 6));
+  return `var(${steps[i]})`;
+}
+function inkFor(p) { return p !== null && p >= 0.5 ? "#fff" : "var(--text)"; }
+function buildSeg(id, options, isOn, pick) {
+  const seg = document.getElementById(id);
+  seg.innerHTML = "";
+  for (const [k, name] of options) {
+    const b = document.createElement("button");
+    b.className = isOn(k) ? "on" : ""; b.textContent = name;
+    b.onclick = () => { pick(k); render(); };
+    seg.appendChild(b);
+  }
+}
+function buildLabelHeat(runs) {
+  const dim = DIMS[state.dim];
+  const cols = dim.values().filter(v => runs.some(r => r[dim.key] === v));
+  const lab = v => dim.label ? dim.label(v) : v;
+  let html = `<table class="hm"><thead><tr><th></th>${cols.map(c => `<th>${lab(c)}</th>`).join("")}</tr></thead><tbody>`;
+  const section = (kind, categories, failedOnly, first) => {
+    categories.forEach((category, i) => {
+      html += `<tr class="${i === 0 && !first ? "sep" : ""}"><th class="row"><span class="pill ${kind}">${kind === "failure" ? "F" : "I"}</span> ${category}</th>`;
+      for (const c of cols) {
+        const pool = runs.filter(r => r[dim.key] === c && (!failedOnly || !r.success));
+        const n = pool.filter(r => r.has(kind, category)).length;
+        const p = pool.length ? n / pool.length : null;
+        html += p === null
+          ? `<td class="na">–</td>`
+          : `<td style="background:${seqColor(p)};color:${inkFor(p)}" data-kind="${kind}" data-category="${category}" data-col="${c}" data-n="${n}" data-d="${pool.length}">${Math.round(p * 100)}</td>`;
+      }
+      html += "</tr>";
+    });
+  };
+  section("failure", FAILURES, true, true);
+  section("inefficiency", ineffCategories(state.splitHeat), false, false);
+  html += "</tbody></table>";
+  const el = document.getElementById("labelHeat");
+  el.innerHTML = html;
+  el.querySelectorAll("td[data-category]").forEach(td => {
+    const { kind, category, col, n, d } = td.dataset;
+    hover(td, `<b>${category}</b> · ${dim.name} ${lab(col)}<br><b>${pct(+n, +d)}%</b> of ${kind === "failure" ? "failed " : ""}runs (${n} of ${d})`);
+    td.onclick = () => focus({ kind, category, dimKey: dim.key, dimVal: col });
+  });
+  document.getElementById("scale1").innerHTML = "0%" +
+    ["--seq-0", "--seq-1", "--seq-2", "--seq-3", "--seq-4", "--seq-5", "--seq-6"].map(s => `<span class="s" style="background:var(${s})"></span>`).join("") + "100% · cell values are percentages";
+}
+const METRICS = [["success", "Success"], ["completion", "Completion"], ["spl_act", "SPL_act"], ["tc_spl_act", "TC-SPL_act"]];
+const METRIC_NAME = Object.fromEntries(METRICS);
+// Mean of a metric over runs that have it (success counts as 0/1); null when none do.
+function meanMetric(runs, key) {
+  const vals = runs.map(r => key === "success" ? (r.success ? 1 : 0) : r[key]).filter(v => v !== null && v !== undefined);
+  return vals.length ? { mean: vals.reduce((a, b) => a + b, 0) / vals.length, n: vals.length } : null;
+}
+const fmtMetric = (key, v) => v === null || v === undefined ? "–" : key === "success" ? Math.round(v * 100) + "%" : v.toFixed(2);
+function buildSuccessHeat(runs) {
+  buildSeg("metricSeg", METRICS, k => state.metric === k, k => state.metric = k);
+  const key = state.metric;
+  const dim = state.dim === "baseline" ? DIMS.task : DIMS[state.dim];
+  const cols = dim.values().filter(v => runs.some(r => r[dim.key] === v));
+  const bls = BASELINES.filter(b => state.baseline.has(b));
+  let html = `<table class="hm"><thead><tr><th></th>${cols.map(c => `<th>${c}</th>`).join("")}<th>All</th></tr></thead><tbody>`;
+  for (const b of bls) {
+    html += `<tr><th class="row"><span class="bl"><i style="background:var(${BL_VAR[b]})"></i>${BL_NAME[b]}</span></th>`;
+    for (const c of [...cols, null]) {
+      const pool = runs.filter(r => r.baseline === b && (c === null || r[dim.key] === c));
+      const m = meanMetric(pool, key);
+      const p = m && m.mean;
+      const n = pool.filter(r => r.success).length;
+      html += !m ? `<td class="na">–</td>`
+        : `<td style="background:${seqColor(p)};color:${inkFor(p)}" data-b="${b}" data-col="${c ?? ""}" data-n="${n}" data-d="${pool.length}" data-v="${p}" data-k="${m.n}">${key === "success" ? Math.round(p * 100) : p.toFixed(2)}</td>`;
+    }
+    html += "</tr>";
+  }
+  html += "</tbody></table>";
+  const el = document.getElementById("successHeat");
+  el.innerHTML = html;
+  el.querySelectorAll("td[data-b]").forEach(td => {
+    const { b, col, n, d, v, k } = td.dataset;
+    hover(td, `<b>${BL_NAME[b]}</b>${col ? ` · ${dim.name} ${col}` : ""}<br>` + (key === "success"
+      ? `<b>${pct(+n, +d)}%</b> succeeded (${n} of ${d})`
+      : `mean ${METRIC_NAME[key]} <b>${(+v).toFixed(3)}</b> over ${k} of ${d} runs`));
+    td.style.cursor = "default";
+  });
+}
+/* ---------- judge ---------- */
+function buildJudgeControls() {
+  buildSeg("judgeViewSeg", [["modules", "Modules"], ["types", "All error types"]],
+    k => k === "modules" ? !state.judgeModules.size : state.judgeModules.size === MODULES.length,
+    k => state.judgeModules = new Set(k === "modules" ? [] : MODULES));
+  buildSeg("judgeMeasureSeg", [[false, "Count"], [true, "Share"]], k => state.judgeShare === k, k => state.judgeShare = k);
+  const g = document.getElementById("judgeModules");
+  g.innerHTML = "<span>Error types of</span>";
+  for (const m of MODULES) {
+    const c = document.createElement("button");
+    c.className = "chip" + (state.judgeModules.has(m) ? " on" : "");
+    c.textContent = m;
+    c.onclick = () => { state.judgeModules.has(m) ? state.judgeModules.delete(m) : state.judgeModules.add(m); render(); };
+    g.appendChild(c);
+  }
+}
+function buildJudgeBars(runs) {
+  const bls = BASELINES.filter(b => state.baseline.has(b));
+  const moduleRow = m => ({ name: m, test: a => a[1] === m });
+  const rows = state.judgeModules.size
+    ? MODULES.filter(m => state.judgeModules.has(m)).flatMap(m => [{ ...moduleRow(m), heading: true },
+      ...DATA.taxonomy[m].map(t => ({ name: t, module: m, test: a => a[1] === m && a[2] === t }))])
+    : MODULES.map(moduleRow);
+  rows.push({ name: NO_CAUSE, test: a => !a[2] });
+  const pools = bls.map(b => runs.filter(r => r.baseline === b).flatMap(r => r.attrs));
+  for (const row of rows) row.vals = bls.map((b, i) => {
+    const attrs = pools[i].filter(row.test), d = pools[i].length;
+    return { b, n: attrs.length, d, extra: attrs.filter(a => a[0] === null).length, v: state.judgeShare ? (d ? attrs.length / d : 0) : attrs.length };
+  });
+  const max = Math.max(...rows.filter(r => !r.heading).flatMap(r => r.vals.map(v => v.v)));
+  const scale = state.judgeShare ? Math.ceil(Math.max(0.05, max) / 0.05) * 0.05 : Math.ceil(Math.max(1, max) / 4) * 4;
+  const nameOf = row => row.module ? `${row.module} · ${row.name}` : row.name;
+  const focusOn = (row, b) => focus({ category: "Judge: " + nameOf(row), baseline: b,
+    test: r => (!b || r.baseline === b) && r.attrs.some(row.test) });
+  const sections = [];
+  for (const row of rows) {
+    if (row.heading) { sections.push({ title: { name: row.name, onclick: () => focusOn(row) }, rows: [] }); continue; }
+    if (row.name === NO_CAUSE || !sections.length) sections.push({ title: null, rows: [] });
+    sections.at(-1).rows.push({ name: row.name, onclick: () => focusOn(row), bars: row.vals.map(v => ({
+      b: v.b, n: v.n, value: v.v, onclick: () => focusOn(row, v.b),
+      hover: `<b>${BL_NAME[v.b]}</b> · ${nameOf(row)}<br><b>${v.n}</b> attribution${v.n === 1 ? "" : "s"}${v.extra ? ` (${v.extra} extra)` : ""}, ` +
+        `<b>${pct(v.n, v.d) ?? 0}%</b> of ${BL_NAME[v.b]}'s ${v.d} attributions`,
+    })) });
+  }
+  columnChart(document.getElementById("judgeBars"), sections, scale,
+    v => state.judgeShare ? Math.round(v * 100) + "%" : Math.round(v), state.judgeShare ? "share of the baseline's attributions" : "attributions");
+}
+function buildJudgeHeat(runs) {
+  const counts = new Map(), colTotals = new Map();
+  for (const r of runs) for (const a of r.attrs) {
+    const key = causeOf(a) + "|" + observedOf(r, a);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+    colTotals.set(observedOf(r, a), (colTotals.get(observedOf(r, a)) ?? 0) + 1);
+  }
+  const cols = [...new Set(DATA.rules.map(([, , label]) => label)), EXTRA].filter(c => colTotals.has(c));
+  const rows = [...JUDGE_TYPES.filter(([m]) => !state.judgeModules.size || state.judgeModules.has(m)), [null, NO_CAUSE]];
+  let html = `<table class="hm"><thead><tr><th></th>${cols.map(c => `<th class="wrap">${c}</th>`).join("")}</tr></thead><tbody>`;
+  rows.forEach(([m, t], i) => {
+    html += `<tr class="${i && m !== rows[i - 1][0] ? "sep" : ""}"><th class="row">${m ? `<span class="muted">${m} ·</span> ` : ""}${t}</th>`;
+    for (const c of cols) {
+      const n = counts.get(t + "|" + c) ?? 0, p = n / colTotals.get(c);
+      html += n ? `<td style="background:${seqColor(p)};color:${inkFor(p)}" data-t="${t}" data-c="${c}" data-n="${n}">${n}</td>` : `<td class="na"></td>`;
+    }
+    html += "</tr>";
+  });
+  html += "</tbody></table>";
+  const el = document.getElementById("judgeHeat");
+  el.innerHTML = cols.length ? html : `<div class="muted" style="font-size:13px">No judge attributions for these runs.</div>`;
+  el.querySelectorAll("td[data-t]").forEach(td => {
+    const { t, c, n } = td.dataset;
+    hover(td, `<b>${t}</b> → ${c}<br><b>${n}</b> attribution${n === "1" ? "" : "s"}, ${pct(+n, colTotals.get(c))}% of the ${c} attributions`);
+    td.onclick = () => focus({ category: `Judge: ${t} → ${c}`, test: r => r.attrs.some(a => causeOf(a) === t && observedOf(r, a) === c) });
+  });
+}
+
+/* ---------- runs table ---------- */
+function focus(f) {
+  state.focus = f; state.shown = 100;
+  renderTable();
+  document.getElementById("runsPanel").scrollIntoView({ behavior: "smooth" });
+}
+function buildLabelSel() {
+  const sel = document.getElementById("labelSel");
+  const opts = [["", "All labels"], ["none:failure", "Failed, no failure label"],
+    ...DATA.rules.map(([kind, , label]) => [label, (kind === "failure" ? "Failure · " : "Inefficiency · ") + label])];
+  sel.innerHTML = opts.map(([v, l]) => `<option value="${v}" ${state.labelSel === v ? "selected" : ""}>${l}</option>`).join("");
+}
+function tableRuns() {
+  let runs = filtered();
+  const f = state.focus;
+  if (f) runs = runs.filter(f.test || (r => r.has(f.kind, f.category) && (!f.baseline || r.baseline === f.baseline) &&
+    (!f.dimKey || r[f.dimKey] === f.dimVal) && (f.kind !== "failure" || !r.success)));
+  if (state.labelSel === "none:failure") runs = runs.filter(r => !r.success && !r.categories.failure.size);
+  else if (state.labelSel) runs = runs.filter(r => r.labels.has(state.labelSel));
+  const q = state.search.trim().toLowerCase();
+  if (q) runs = runs.filter(r => r.id.toLowerCase().includes(q) || r.findings.some(x => x[3].toLowerCase().includes(q)));
+  return runs;
+}
+function renderTable() {
+  const runs = tableRuns();
+  const af = document.getElementById("activeFilter");
+  const f = state.focus;
+  if (f) {
+    af.style.display = "inline-block";
+    af.innerHTML = `${f.category}${f.baseline ? " · " + BL_NAME[f.baseline] : ""}${f.dimKey ? " · " + f.dimVal : ""}<button title="Clear">✕</button>`;
+    af.querySelector("button").onclick = () => { state.focus = null; renderTable(); };
+  } else af.style.display = "none";
+  document.getElementById("count").textContent = `${runs.length} run${runs.length === 1 ? "" : "s"}`;
+  const body = document.getElementById("tbody");
+  body.innerHTML = runs.slice(0, state.shown).map(r => {
+    const counts = new Map();
+    for (const [kind, , label] of r.findings) counts.set(label, [kind, (counts.get(label)?.[1] ?? 0) + 1]);
+    const pills = [...counts].map(([label, [kind, n]]) => `<span class="pill ${kind}">${label}${n > 1 ? " ×" + n : ""}</span>`).join("") || `<span class="muted">none</span>`;
+    return `<tr data-id="${r.id}" class="${state.open === r.id ? "sel" : ""}">
+      <td class="mono">${r.id}</td>
+      <td><span class="bl"><i style="background:var(${BL_VAR[r.baseline]})"></i>${BL_NAME[r.baseline]}</span></td>
+      <td><span class="pill ${r.memory}">${r.memory}</span></td>
+      <td>${r.success ? `<span class="pill ok">succeeded</span>` : `<span class="pill bad">failed</span>`} <span class="muted">${r.ended === "stopped" ? "" : r.ended}</span></td>
+      <td>${fmtMetric("completion", r.completion)}</td><td>${fmtMetric("spl_act", r.spl_act)}</td><td>${fmtMetric("tc_spl_act", r.tc_spl_act)}</td>
+      <td>${r.steps.length}</td><td>${pills}</td></tr>`;
+  }).join("");
+  body.querySelectorAll("tr").forEach(tr => tr.onclick = () => openRun(tr.dataset.id));
+  document.getElementById("moreBtn").style.display = runs.length > state.shown ? "" : "none";
+}
+document.getElementById("moreBtn").onclick = () => { state.shown += 200; renderTable(); };
+document.getElementById("search").oninput = e => { state.search = e.target.value; state.shown = 100; renderTable(); };
+document.getElementById("labelSel").onchange = e => { state.labelSel = e.target.value; state.shown = 100; renderTable(); };
+
+/* ---------- drawer ---------- */
+// Actions a finding points at, by action id in its evidence:
+//   "kept searching … (aK)" → every action after aK
+//   "(aX-aY)"               → aX..aY
+//   "aK"                    → aK
+// Otherwise, every action that mentions an object named in the evidence.
+function stepsFor(run, evidence) {
+  const hit = new Set();
+  const ids = run.steps.map(([id]) => id);
+  const search = evidence.match(/^kept searching.*\(a(\d+)\)$/);
+  if (search) ids.forEach(id => { if (id > +search[1]) hit.add(id); });
+  for (const m of evidence.matchAll(/\(a(\d+)-a(\d+)\)/g)) ids.forEach(id => { if (id >= +m[1] && id <= +m[2]) hit.add(id); });
+  if (!hit.size) for (const m of evidence.matchAll(/\ba(\d+)\b/g)) hit.add(+m[1]);
+  if (!hit.size) {
+    const names = new Set(evidence.match(/\b[a-z][a-z0-9_]*_\d+\b/g) || []);
+    run.steps.forEach(([id, s]) => { for (const nm of names) if (s.includes(nm)) hit.add(id); });
+  }
+  return hit;
+}
+function openRun(id) {
+  const r = RUNS.find(x => x.id === id);
+  state.open = id; state.activeFinding = null;
+  document.body.classList.add("drawer-open");
+  document.querySelectorAll("#tbody tr").forEach(tr => tr.classList.toggle("sel", tr.dataset.id === id));
+  const links = [
+    r.trace_html ? `<a href="${r.trace_html}" target="_blank" rel="noopener">Open trace ↗</a>`
+      : r.trace_txt && `<a href="${r.trace_txt}" target="_blank" rel="noopener">Open trace text ↗</a>`,
+    r.folder && `<a href="${r.folder}/" target="_blank" rel="noopener">Run folder ↗</a>`,
+  ].filter(Boolean).join("");
+  document.getElementById("dHead").innerHTML = `
+    <div class="row1"><h3>${r.id}</h3><button id="dClose" title="Close">✕</button></div>
+    <div class="meta"><span class="bl"><i style="background:var(${BL_VAR[r.baseline]})"></i>${BL_NAME[r.baseline]}</span> ·
+      <span class="pill ${r.memory}">${r.memory}</span> ${r.uncertainty} ·
+      ${r.success ? `<span class="pill ok">succeeded</span>` : `<span class="pill bad">failed</span>`}
+      · ended: ${r.ended} · ${r.steps.length} actions · ${r.runtime}s</div>
+    <div class="meta">completion ${fmtMetric("completion", r.completion)} · SPL_act ${fmtMetric("spl_act", r.spl_act)} ·
+      TC-SPL_act ${fmtMetric("tc_spl_act", r.tc_spl_act)} · ${r.action_count ?? "–"} counted actions vs ${r.reference_actions ?? "–"} in the human reference</div>
+    <div class="instr">“${r.instruction}”</div>
+    <div class="links">${links}</div>
+    ${r.trace_html ? "" : `<div class="muted" style="font-size:12px;margin-top:6px">No trace page: ${r.ended === "time limit"
+      ? "the run was killed at the time limit, before the trace page is written at the end of the episode."
+      : "none was written for this run."} ${r.trace_txt ? "The trace text is still available." : ""}</div>`}`;
+  document.getElementById("dClose").onclick = closeRun;
+  const attrsOf = test => r.attrs.map((a, j) => test(a) ? attrHtml(a, j) : "").join("");
+  const findings = r.findings.length ? r.findings.map(([kind, , label, ev], i) => `
+    <div class="finding" data-i="${i}"><span class="pill ${kind}">${kind}</span> <b>${label}</b>
+      <div class="ev">${escapeHtml(ev)}</div>
+      <div class="hint">Click to highlight the actions this points at</div>${attrsOf(a => a[0] === i)}</div>`).join("")
+    : `<div class="muted" style="font-size:13px">No rule fired on this run.</div>`;
+  const extras = attrsOf(a => a[0] === null);
+  const judge = !r.judge ? "" : `<div class="dsec">Judge</div>` + (r.judge.failed
+    ? `<div class="muted" style="font-size:13px">The judge failed on this run: ${escapeHtml(r.judge.failed)}</div>`
+    : `<div style="font-size:12.5px">${escapeHtml(r.judge.reasoning)}</div>` +
+      (extras ? `<div class="dsec">Errors the judge found that no rule flagged</div>${extras}` : ""));
+  document.getElementById("dBody").innerHTML = `
+    <div class="dsec">Findings</div>${findings}${judge}
+    <div class="dsec">Actions (numbered as the rules number them)</div>
+    <ol class="steps">${r.steps.map(([id, s, ok]) =>
+      `<li data-i="${id}"><span class="n">a${id}</span><span>${escapeHtml(s)}</span><span class="r ${ok ? "s" : "f"}">${ok ? "ok" : "failed"}</span></li>`).join("") || '<li class="muted">No actions</li>'}</ol>
+    <div class="dsec">Trace</div>
+    <button class="tbtn" id="traceBtn" ${r.trace_txt ? "" : "disabled"}>Show trace text</button>
+    <div id="traceBox"></div>`;
+  // state.activeFinding is a finding's index, or "j<k>" for the run's k-th judge attribution.
+  const activate = key => {
+    state.activeFinding = state.activeFinding === key ? null : key;
+    document.querySelectorAll(".finding").forEach(x => x.classList.toggle("on", +x.dataset.i === state.activeFinding));
+    document.querySelectorAll(".attr").forEach(x => x.classList.toggle("on", "j" + x.dataset.j === state.activeFinding));
+    document.querySelectorAll(".finding .hint").forEach(x => x.textContent = "Click to highlight the actions this points at");
+  };
+  const highlight = hit => {
+    let first = null;
+    document.querySelectorAll("ol.steps li").forEach(li => {
+      const on = hit.has(+li.dataset.i);
+      li.classList.toggle("hl", on); li.classList.toggle("hl2", on);
+      if (on && first === null) first = li;
+    });
+    if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+  document.querySelectorAll(".finding").forEach(el => el.onclick = () => {
+    const i = +el.dataset.i;
+    activate(i);
+    const hit = state.activeFinding === null ? new Set() : stepsFor(r, r.findings[i][3]);
+    if (state.activeFinding !== null) el.querySelector(".hint").textContent = hit.size
+      ? `${hit.size} action${hit.size === 1 ? "" : "s"} highlighted below`
+      : "Nothing to highlight: this finding is about something that never happened (an action never attempted, or an object never found or moved)";
+    highlight(hit);
+  });
+  document.querySelectorAll(".attr").forEach(el => el.onclick = e => {
+    e.stopPropagation();
+    activate("j" + el.dataset.j);
+    const step = r.attrs[+el.dataset.j][3];
+    highlight(state.activeFinding !== null && /^a\d+$/.test(step ?? "") ? new Set([+step.slice(1)]) : new Set());
+  });
+  document.getElementById("traceBtn").onclick = async () => {
+    const box = document.getElementById("traceBox");
+    box.style.display = "block"; box.textContent = "Loading…";
+    try {
+      const res = await fetch(r.trace_txt);
+      if (!res.ok) throw new Error(res.status);
+      box.textContent = await res.text();
+    } catch (e) {
+      box.textContent = "Couldn't load the trace. Trace links work when this page is served from /coc/flash5:\n\n" +
+        "  python3 -m http.server 8010 --bind 127.0.0.1 --directory /coc/flash5\n\n" +
+        "then open http://localhost:8010/garavindan3/uncertainty_classifier/viewer/error_viewer.html";
+    }
+  };
+}
+function closeRun() {
+  state.open = null; document.body.classList.remove("drawer-open");
+  document.querySelectorAll("#tbody tr.sel").forEach(tr => tr.classList.remove("sel"));
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeRun(); });
+function attrHtml([, module, type, step, evidence, description, confidence], j) {
+  const where = step === "start" ? "before the first action" : step ?? "";
+  return `<div class="attr" data-j="${j}" title="Click to highlight this step's action">
+    <span class="pill judge">${type ? escapeHtml(`${module} · ${type}`) : NO_CAUSE}</span>
+    <span class="muted">${[where, confidence != null && `confidence ${confidence}`].filter(Boolean).join(" · ")}</span>
+    ${description ? `<div class="ev">${escapeHtml(description)}</div>` : ""}
+    ${evidence ? `<div class="ev muted">Evidence: ${escapeHtml(evidence)}</div>` : ""}</div>`;
+}
+function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+/* ---------- render ---------- */
+function render() {
+  const runs = filtered();
+  buildTop(); buildTiles(runs);
+  const bls = BASELINES.filter(b => state.baseline.has(b));
+  legend("legend0", bls); legend("legend1", bls); legend("legend2", bls); legend("legend4", bls);
+  buildMetricBars(runs);
+  buildBars("failBars", runs, "failure", FAILURES, false);
+  buildSeg("repeatSeg", [["split", "See repeated actions separately"]], () => state.splitBars, () => state.splitBars = !state.splitBars);
+  buildSeg("heatRepeatSeg", [["split", "See repeated actions separately"]], () => state.splitHeat, () => state.splitHeat = !state.splitHeat);
+  buildBars("ineffBars", runs, "inefficiency", ineffCategories(state.splitBars), false);
+  document.getElementById("ineffNote").textContent = state.splitBars ? REPEATS_NOTE : "";
+  document.getElementById("heatNote").textContent = state.splitHeat ? REPEATS_NOTE : "";
+  buildSeg("dimSeg", Object.entries(DIMS).map(([k, d]) => [k, d.name]), k => state.dim === k, k => state.dim = k);
+  buildLabelHeat(runs); buildSuccessHeat(runs); buildJudgeControls(); buildJudgeBars(runs); buildJudgeHeat(runs);
+  buildLabelSel(); renderTable();
+}
+setBatch(0);
+render();
+</script>
+</body>
+</html>

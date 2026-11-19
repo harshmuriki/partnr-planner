@@ -1,0 +1,1227 @@
+run_id,kind,category,label,evidence
+rail-trig/T1-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-trig/T1-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The bedroom lamp_0 can be turned off, but the required full jug is explicitly known to be absent, and no acceptable substitute exists anywhere in the scene. Therefore, the complete task cannot be accomplished.; never attempted: is_powered_off(lamp_0)"
+rail-trig/T1-ACC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-trig/T1-ACC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a3 Explore[kitchen_1]: Successful execution!
+rail-trig/T1-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-trig/T1-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: No jug or acceptable substitute exists in the scene, so a full jug of water cannot be brought to table_0 or table_1. The lamp can be turned off, but the complete requested goal cannot be achieved.; never attempted: is_powered_off(lamp_0)"
+rail-trig/T1-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-trig/T1-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: lamp_0 can be turned off, but no jug or acceptable substitute exists in the scene, so a full jug of water cannot be brought to table_0 or table_1. No available container can be filled at cabinet_5 or cabinet_6.; never attempted: is_powered_off(lamp_0)"
+rail-trig/T1-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-trig/T1-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The bedroom lamp_0 can be turned off, but no jug or acceptable substitute exists anywhere in the scene. Therefore, a full jug of water cannot be brought to table_0 or table_1.; never attempted: is_powered_off(lamp_0)"
+rail-trig/T1-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-trig/T1-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[jug_0, on, floor_kitchen_1, None, None]: Successful execution!"
+rail-trig/T1-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[jug_0, on, table_2, None, None]: Successful execution!"
+rail-trig/T1-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[jug_0, on, table_2, None, None]: Successful execution!"
+rail-trig/T1-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[jug_0, on, table_2, None, None]: Successful execution!"
+rail-trig/T1-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[jug_0, on, table_2, None, None]: Successful execution!"
+rail-trig/T1-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-trig/T1-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-trig/T1-ACC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-trig/T1-ACC-SUB/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-trig/T1-INC-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a2-a3)
+rail-trig/T1-INC-ABS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a2-a3)
+rail-trig/T1-INC-CON/repeat_1,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a3, a4)"
+rail-trig/T1-INC-CON/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: lamp_0 is already powered off, but no jug or other matching water container is known. kitchen_1 was explored twice and living_room_1 was explored once; the remaining object list contains only lamp_0, so a full jug cannot be picked up, filled, or delivered to table_0 or table_1.; never attempted: is_on_top(jug_0, table_0|table_1), is_filled(jug_0)"
+rail-trig/T1-INC-CON/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a3-a4)
+rail-trig/T1-INC-CON/repeat_2,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a3, a4)"
+rail-trig/T1-INC-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a3-a4)
+rail-trig/T1-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-trig/T1-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T1-INC-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a3)
+rail-trig/T1-INC-CON/repeat_5,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a2, a3)"
+rail-trig/T1-INC-CON/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a2-a3)
+rail-trig/T1-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for jug_0 for 1 actions after searching as many places as the ground-truth plan (8) (a28)
+rail-trig/T1-OUT-CON/repeat_1,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a5)
+rail-trig/T1-OUT-CON/repeat_2,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a5)
+rail-trig/T1-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a6)
+rail-trig/T1-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a5)
+rail-trig/T1-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-trig/T1-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a5, a6)"
+rail-trig/T1-OUT-CON/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a5-a6)
+rail-trig/T2-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The boxes can be moved to table_4 in living_room_1, but scissors are explicitly known to be absent and no acceptable substitute exists. Therefore the requirement to place scissors beside the packages cannot be completed; no search was attempted because the world memory already confirms their absence.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-trig/T2-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The scissors are explicitly known to be absent, and no acceptable substitute is available. Therefore the packages can be moved to table_4, but the full request to place scissors beside them cannot be completed.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-trig/T2-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The scissors required to open the packages are explicitly known to be absent, and no acceptable substitute is available. The packages could be moved to table_4, but the full requested goal cannot be completed.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-trig/T2-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The scissors are explicitly known to be absent, and no acceptable substitute exists. Therefore the boxes can be moved to table_4, but the complete request to place scissors beside them cannot be accomplished; no search was attempted because the scissors are confirmed unavailable.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-trig/T2-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: box_0 and box_1 can be moved to table_4 in living_room_1, but scissors are explicitly known absent and no acceptable substitute exists, so the requirement to place scissors beside the packages cannot be completed.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-trig/T2-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[entryway_1]: Successful execution!
+rail-trig/T2-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[entryway_1]: Successful execution!
+rail-trig/T2-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[entryway_1]: Successful execution!
+rail-trig/T2-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors are explicitly known to be absent, and no valid scissors object ID exists in the scene. Therefore the packages cannot be accompanied by scissors for opening. No search was attempted because the world state already confirms that no scissors exist.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-trig/T2-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The full goal cannot be completed because scissors are explicitly known to be absent from the scene. Only knife_0 is available, and substituting it would not satisfy the request to bring the scissors.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-trig/T2-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The required scissors are explicitly known to be absent from the scene, and no available object can satisfy the request to bring scissors beside the packages.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-trig/T2-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors are explicitly known to be absent from the scene, and no scissors object ID is available. Therefore the packages cannot be opened as requested, even though box_0, box_1, and knife_0 are available.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-trig/T2-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-trig/T2-ACC-SUB/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors do not exist in the scene: scissors_0 is explicitly known absent, and the available movable objects are only box_0, box_1, and knife_0. Therefore the requirement to bring scissors beside the packages cannot be completed.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-trig/T2-INC-ABS/repeat_1,failure,Object Not Found,Object Not Found,box_1: never seen on/in floor_entryway_1 in entryway_1 (explored entryway_1 at a2)
+rail-trig/T2-INC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 1 actions after searching as many places as the ground-truth plan (6) (a13)
+rail-trig/T2-INC-ABS/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T2-INC-ABS/repeat_4,failure,Object Not Found,Object Not Found,box_1: never seen on/in floor_entryway_1 in entryway_1 (explored entryway_1 at a0)
+rail-trig/T2-INC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-INC-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[office_1] x2 (a2-a3)
+rail-trig/T2-INC-ABS/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T2-INC-ABS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-ABS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on floor_living_room_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-CON/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-trig/T2-INC-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-trig/T2-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a1)
+rail-trig/T2-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,box_1: never seen on/in floor_entryway_1 in entryway_1 (explored entryway_1 at a0)
+rail-trig/T2-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a0)
+rail-trig/T2-INC-CON/repeat_4,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-trig/T2-INC-CON/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-trig/T2-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"knife_0 ended on table_4 in living_room_1; unmet: is_on_top(knife_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"knife_0 ended on table_4 in living_room_1; unmet: is_on_top(knife_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"knife_0 ended on table_4 in living_room_1; unmet: is_on_top(knife_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-SUB/repeat_4,failure,Incorrect Placement,Incorrect Placement,"knife_0 ended on table_4 in living_room_1; unmet: is_on_top(knife_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-INC-SUB/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-INC-SUB/repeat_5,failure,Incorrect Placement,Incorrect Placement,"knife_0 ended on table_4 in living_room_1; unmet: is_on_top(knife_0, table_2)"
+rail-trig/T2-OUT-ABS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T2-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 1 actions after searching as many places as the ground-truth plan (6) (a17)
+rail-trig/T2-OUT-ABS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-ABS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a0)
+rail-trig/T2-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a1)
+rail-trig/T2-OUT-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T2-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a1)
+rail-trig/T2-OUT-CON/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The two known packages box_0 and box_1 are already on table_2, and box_2 could be moved there, but the required scissors have no valid object ID in the provided list. The attempted name scissors_1 was rejected, and office_1 was explored twice; the latest observations still provide no recognized scissors object. The scissors therefore cannot be picked up or brought beside the packages.; never attempted: is_on_top(scissors_0, table_2)"
+rail-trig/T2-OUT-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[office_1] x2 (a15-a16)
+rail-trig/T2-OUT-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a1)
+rail-trig/T2-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[box_0] x2 (a0-a1)
+rail-trig/T2-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_4 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_4 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_4 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-OUT-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+rail-trig/T2-OUT-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on floor_living_room_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+rail-trig/T2-OUT-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+rail-trig/T2-OUT-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[box_0] x2 (a0-a1)
+rail-trig/T2-OUT-SUB/repeat_1,failure,Object Not Found,Object Not Found,knife_0: never seen on/in chest_of_drawers_2 in entryway_1
+rail-trig/T2-OUT-SUB/repeat_2,failure,Object Not Found,Object Not Found,knife_0: never seen on/in chest_of_drawers_2 in entryway_1
+rail-trig/T2-OUT-SUB/repeat_3,failure,Object Not Found,Object Not Found,knife_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a1)
+rail-trig/T2-OUT-SUB/repeat_4,failure,Object Not Found,Object Not Found,knife_0: never seen on/in chest_of_drawers_2 in entryway_1
+rail-trig/T2-OUT-SUB/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-trig/T3-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-trig/T3-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The goal requires two books, but only book_0 exists in the allowed object list. book_1 is explicitly known absent, with no acceptable substitute available. Therefore two books cannot be placed on table_3, even though laptop_0 could be turned off. No physical search was attempted because the initial world memory explicitly records the second book as absent.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-trig/T3-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-trig/T3-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The scene contains only book_0; book_1 is explicitly known absent and no acceptable substitute exists. Therefore, collecting two green books is impossible, although laptop_0 could be turned off and book_0 could be placed on table_3.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-trig/T3-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-trig/T3-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is available, while book_1 is explicitly known absent and no acceptable substitute exists. Therefore, collecting two books and placing both on table_0 cannot be completed, even though laptop_0 could be turned off.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-trig/T3-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-trig/T3-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is available; book_1 is explicitly known absent, and no acceptable substitute exists. Therefore, collecting two green books is impossible, even though laptop_0 could be turned off.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-trig/T3-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-trig/T3-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: Only one matching book, book_0, is available; the required second green book is explicitly absent. Therefore both books cannot be placed on table_3, even though laptop_0 could be turned off and book_0 could be moved.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-trig/T3-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T3-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-BASE/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T3-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-trig/T3-INC-ABS/repeat_1,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a5)
+rail-trig/T3-INC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is listed and observed on bed_1. The explored rooms—living_room_1, bedroom_1, bedroom_2, and kitchen_1—provided no second book object that can be named or manipulated. laptop_0 is already powered off, but completing the requirement for two books would require inventing an unavailable object ID.; never attempted: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-ABS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-trig/T3-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,"book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a5, a7)"
+rail-trig/T3-INC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: Only one book object, book_0, is present in the allowed object list and observed on bed_1 in bedroom_2; no second book ID exists to collect. Searches were completed in bedroom_1, bedroom_2, living_room_1, and kitchen_1 within the permitted limits. The laptop is already powered off, but the requirement to place two books on table_0 cannot be satisfied.; never attempted: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-ABS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-trig/T3-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-INC-ABS/repeat_3,failure,Object Not Found,Object Not Found,"book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a5, a6)"
+rail-trig/T3-INC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: Only one book object, book_0, is identified, located on bed_1 in bedroom_2. No second book ID exists in the allowed object list, so I cannot legally collect two distinct books without inventing an object. bedroom_2, bedroom_1, and living_room_1 have each been explored twice; the full two-book goal therefore remains impossible, although laptop_0 could be turned off separately.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-trig/T3-INC-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_2] x2 (a5-a6)
+rail-trig/T3-INC-ABS/repeat_4,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a5)
+rail-trig/T3-INC-ABS/repeat_5,failure,Object Not Found,Object Not Found,"book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a4, a6)"
+rail-trig/T3-INC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: Only one movable book, book_0, is known in the world state; no second book ID exists, so the requirement to collect two books cannot be completed without inventing an object. Bedroom_1, bedroom_2, living_room_1, and kitchen_1 were searched within their limits. The laptop is already powered off.; never attempted: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-ABS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] -> Explore[bedroom_2] x2 (a3-a6)
+rail-trig/T3-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-trig/T3-INC-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a3)
+rail-trig/T3-INC-CON/repeat_2,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a3)
+rail-trig/T3-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a3)
+rail-trig/T3-INC-CON/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: Only one book object, book_0, is known. Searches of the usual book locations in living_room_1, bedroom_1, bedroom_2, and kitchen_1 found no second book ID. Therefore two books cannot be placed on table_0, although laptop_0 could be turned off.; never attempted: is_on_top(book_0, table_0), is_on_top(book_1, table_0), is_powered_off(laptop_0)"
+rail-trig/T3-INC-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,"book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a5, a6)"
+rail-trig/T3-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a5, a6)"
+rail-trig/T3-INC-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_2] x2 (a5-a6)
+rail-trig/T3-INC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a4, a6)"
+rail-trig/T3-INC-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-INC-CON/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-trig/T3-INC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-DIS/repeat_2,failure,Wrong Object,Wrong Object,"folder_0 (distractor): Pick, Place; ended on table_3 in living_room_1"
+rail-trig/T3-INC-DIS/repeat_2,failure,Object Not Found,Object Not Found,book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a5)
+rail-trig/T3-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-trig/T3-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a0-a1)
+rail-trig/T3-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a2-a3)
+rail-trig/T3-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[book_0] x2 (a5-a6)
+rail-trig/T3-INC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-INC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+rail-trig/T3-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-OUT-ABS/repeat_1,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a0)
+rail-trig/T3-OUT-ABS/repeat_2,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a75)
+rail-trig/T3-OUT-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is a known movable book; no second book ID exists in the allowed object list. Searches of bedroom_1, bedroom_2, living_room_1, and kitchen_1 found no additional book. Therefore collecting two books is impossible, although book_0 could be placed on table_0 and laptop_1 could be turned off.; never attempted: is_on_top(book_0, table_0)"
+rail-trig/T3-OUT-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a71 Pick[laptop_0]: Successful execution!
+rail-trig/T3-OUT-ABS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[laptop_0] x22 (a3-a57)
+rail-trig/T3-OUT-BASE/repeat_1,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-trig/T3-OUT-BASE/repeat_1,failure,Object Not Found,Object Not Found,"book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a14, a27)"
+rail-trig/T3-OUT-BASE/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is a known movable object; the attempted searches for book_1 and book_2 failed, and both bedroom_1 explorations found no additional books. Therefore, collecting two books cannot be completed without inventing an object ID. The laptop power-off attempts for laptop_1 also repeatedly failed because it was not a valid target.; never attempted: is_powered_off(laptop_0)"
+rail-trig/T3-OUT-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a51-a52)
+rail-trig/T3-OUT-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-OUT-BASE/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a0)
+rail-trig/T3-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-OUT-BASE/repeat_5,failure,Object Not Found,Object Not Found,"book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a0, a17)"
+rail-trig/T3-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,"book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a9, a25)"
+rail-trig/T3-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a9, a25)"
+rail-trig/T3-OUT-CON/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is a valid movable book ID. The attempted names book_1 and book_2 were rejected as nonexistent, so a second book cannot be identified or collected. Searches were performed in living_room_1, kitchen_1, bedroom_1, and bedroom_2, with bedroom_1 and bedroom_2 searched twice. laptop_0 is already powered off, but attempts to power off laptop_1 failed because it is not a valid target.; never attempted: is_on_top(book_0, table_0)"
+rail-trig/T3-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8, a21)"
+rail-trig/T3-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a18)
+rail-trig/T3-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a9)
+rail-trig/T3-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+rail-trig/T3-OUT-DIS/repeat_1,failure,Object Not Found,Object Not Found,"book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a8, a28)"
+rail-trig/T3-OUT-DIS/repeat_2,failure,Action Undone,Action Undone,"is_on_top(book_0, table_0): met at step 1795, not true at the end"
+rail-trig/T3-OUT-DIS/repeat_2,failure,Action Undone,Action Undone,"is_on_top(book_1, table_0): met at step 1947, not true at the end"
+rail-trig/T3-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a43 Pick[book_0]: Successful execution!
+rail-trig/T3-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a47 Pick[book_1]: Successful execution!
+rail-trig/T4-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"apple_1: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in cabinet_1 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"bottle_1: seen on/in cabinet_1 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"orange_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The goal requires three fruits, but only apple_1 and orange_0 are available. apple_0 is explicitly known absent, and no acceptable substitute exists. Therefore, the third fruit cannot be placed in basket_0, even though bottle_0 and bottle_1 could be moved to counter_0.; never attempted: is_inside(apple_1, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-trig/T4-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"apple_1: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in cabinet_1 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"bottle_1: seen on/in cabinet_1 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"orange_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: Only apple_1 and orange_0 are available as fruits. The third fruit is explicitly known to be absent, with no acceptable substitute available, so all 3 fruits cannot be placed in basket_0. No search was attempted because the missing fruit's absence is already explicit.; never attempted: is_inside(apple_1, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-trig/T4-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"apple_1: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in cabinet_1 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"bottle_1: seen on/in cabinet_1 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"orange_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T4-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: Only two fruits are available: apple_1 and orange_0. The third fruit, apple_0, is explicitly known absent, so it is impossible to put all 3 fruits in basket_0. The two bottles can be placed on counter_0, but the complete goal cannot be achieved.; never attempted: is_inside(apple_1, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-trig/T4-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T4-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T4-INC-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-trig/T4-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,apple_1: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T4-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T4-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T4-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,orange_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T4-INC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The kitchen exploration identifies only two fruits, apple_1 and orange_0. No third fruit ID exists in the allowed object list, which contains only basket_0, apple_1, orange_0, bottle_0, and bottle_1. Therefore, the requirement to place all 3 fruits cannot be completed without inventing an object.; never attempted: is_inside(apple_1, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-trig/T4-INC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-trig/T4-INC-ABS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-trig/T4-INC-ABS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-trig/T4-INC-ABS/repeat_5,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 5 actions after searching as many places as the ground-truth plan (2) (a10)
+rail-trig/T4-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,"apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-trig/T4-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,"apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-trig/T4-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,"bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-trig/T4-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,"bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-trig/T4-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,"orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-trig/T4-INC-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a0-a1)
+rail-trig/T4-OUT-ABS/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T4-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 7 actions after searching as many places as the ground-truth plan (2) (a4)
+rail-trig/T4-OUT-ABS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T4-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 1 actions after searching as many places as the ground-truth plan (2) (a11)
+rail-trig/T4-OUT-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a1 Pick[basket_0]: Successful execution!
+rail-trig/T4-OUT-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[bottle_2] x2 (a34-a35)
+rail-trig/T4-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 13 actions after searching as many places as the ground-truth plan (2) (a14)
+rail-trig/T4-OUT-ABS/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T4-OUT-ABS/repeat_4,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 2 actions after searching as many places as the ground-truth plan (2) (a27)
+rail-trig/T4-OUT-ABS/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T4-OUT-ABS/repeat_5,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 12 actions after searching as many places as the ground-truth plan (2) (a7)
+rail-trig/T4-OUT-BASE/repeat_1,failure,Object Not Found,Object Not Found,apple_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T4-OUT-BASE/repeat_1,failure,Object Not Found,Object Not Found,apple_1: never seen on/in counter_0 in kitchen_1
+rail-trig/T4-OUT-BASE/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in cabinet_1 in kitchen_1
+rail-trig/T4-OUT-BASE/repeat_1,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in cabinet_1 in kitchen_1
+rail-trig/T4-OUT-BASE/repeat_1,failure,Object Not Found,Object Not Found,orange_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T4-OUT-BASE/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: Only orange_1 is a valid fruit object. The attempted objects apple_1 and apple_2 are not present in the world graph, and exploration of living_room_1 did not reveal additional fruit objects. I cannot invent valid IDs for the two missing fruits, so the complete goal cannot be achieved.; never attempted: is_inside(apple_0, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-trig/T4-OUT-BASE/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: Only orange_1 is a known fruit object. The other two required fruits have no valid object IDs in the provided world graph after searching living_room_1 and kitchen_1. The known drink containers bottle_1 and bottle_2 and the basket basket_0 are available, but the complete fruit requirement cannot be achieved without inventing object names.; never attempted: is_inside(apple_0, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-trig/T4-OUT-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T4-OUT-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-trig/T4-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T4-OUT-CON/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: Only orange_1 is a known fruit. The other two expected fruits, apple_1 and apple_2, are not present in the world graph, and searches of living_room_1 and kitchen_1 have already been performed. The known bottle_1 and bottle_2 can be moved to counter_0, but the full requirement to place three fruits in basket_0 cannot be completed.; never attempted: is_inside(apple_0, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-trig/T4-OUT-CON/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-trig/T4-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[basket_0] x2 (a6-a7)
+rail-trig/T4-OUT-DIS/repeat_4,failure,Wrong Object,Wrong Object,"toy_fruit_0 (distractor): Pick, Place; ended on counter_0 in kitchen_1"
+rail-trig/T4-OUT-DIS/repeat_4,failure,Object Not Found,Object Not Found,orange_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-trig/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The required white plate is explicitly known to be absent, and no plate or acceptable substitute exists in the scene. It cannot be searched for or placed, so the complete request cannot be fulfilled.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The required white plate is explicitly known to be absent, and no acceptable substitute exists. The glasses, soap dispenser, faucet, and tables are available, but the requested final plate placement cannot be completed.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The required white plate is known to be absent, and no acceptable substitute plate exists. The glasses could be cleaned and filled, but the complete requested goal cannot be achieved.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is impossible to provide: plate_0 is known absent, and no acceptable substitute exists anywhere in the scene.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is unavailable: the world memory explicitly states that plate_0 is absent and that no white plate or acceptable substitute exists anywhere in the scene. Therefore the glasses cannot be presented with the required plate; no search is needed because the absence is explicitly known.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-ACC-BASE/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-ACC-BASE/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T5-ACC-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-ACC-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T5-ACC-BASE/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 423, before is_next_to(soap_dispenser_0, glass_0) at step 436"
+rail-trig/T5-ACC-BASE/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 423, before is_next_to(soap_dispenser_0, glass_0) at step 436"
+rail-trig/T5-ACC-BASE/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 423, before is_next_to(soap_dispenser_0, glass_0) at step 436"
+rail-trig/T5-ACC-CON/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 415, before is_next_to(soap_dispenser_0, glass_0) at step 421"
+rail-trig/T5-ACC-CON/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 415, before is_next_to(soap_dispenser_0, glass_0) at step 421"
+rail-trig/T5-ACC-CON/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 436, before is_next_to(soap_dispenser_0, glass_0) at step 445"
+rail-trig/T5-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T5-ACC-CON/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 754, before is_next_to(soap_dispenser_0, glass_1) at step 843"
+rail-trig/T5-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a27 Pick[soap_dispenser_0]: Successful execution!
+rail-trig/T5-ACC-CON/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-ACC-CON/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T5-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a4 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-ACC-DIS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 537, before is_next_to(soap_dispenser_0, glass_1) at step 544"
+rail-trig/T5-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T5-ACC-DIS/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 231, before is_next_to(soap_dispenser_0, glass_0) at step 267"
+rail-trig/T5-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-ACC-DIS/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 413, before is_next_to(soap_dispenser_0, glass_0) at step 445"
+rail-trig/T5-ACC-DIS/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 549, before is_next_to(soap_dispenser_0, glass_1) at step 559"
+rail-trig/T5-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, table_2, None, None]: Successful execution!"
+rail-trig/T5-ACC-DIS/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 145, before is_next_to(soap_dispenser_0, glass_0) at step 160"
+rail-trig/T5-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-ACC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-ACC-SUB/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 918, before is_next_to(soap_dispenser_0, glass_0) at step 942"
+rail-trig/T5-ACC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-ACC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-ACC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+rail-trig/T5-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T5-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a8 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a20 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is unavailable. The robot memory explicitly states that plate_0 is absent, and the only available plate is plate_black_0, which does not satisfy the white-plate requirement. No valid search can recover an explicitly absent object.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-ACC-SUB/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 535, before is_next_to(soap_dispenser_0, glass_1) at step 542"
+rail-trig/T5-ACC-SUB/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-ACC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-ACC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-ACC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+rail-trig/T5-ACC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is unavailable. The only plate is plate_black_0, which is black, and plate_0 is explicitly known to be absent. Therefore the full goal cannot be completed.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-trig/T5-ACC-SUB/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is unavailable: plate_0 is known absent, and the only available plate is plate_black_0, which is not white. Therefore the complete goal cannot be achieved.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_1,failure,Object Not Found,Object Not Found,"glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0, a3)"
+rail-trig/T5-INC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-INC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate was not observed. kitchen_1 was explored twice, including after cabinet_0 was opened, and living_room_1 was explored once; no permitted object ID corresponds to a plate. Inventing a plate object is prohibited, so the full task cannot be completed.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-INC-ABS/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_3,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_4,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-INC-ABS/repeat_5,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-INC-BASE/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-INC-BASE/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-BASE/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-INC-BASE/repeat_4,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-BASE/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-CON/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 436, before is_next_to(soap_dispenser_0, glass_0) at step 445"
+rail-trig/T5-INC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-CON/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-CON/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-CON/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-CON/repeat_5,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-DIS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 643, before is_next_to(soap_dispenser_0, glass_0) at step 650"
+rail-trig/T5-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-DIS/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-INC-DIS/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 157, before is_next_to(soap_dispenser_0, glass_0) at step 187"
+rail-trig/T5-INC-SUB/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 308, before is_next_to(soap_dispenser_0, glass_0) at step 380"
+rail-trig/T5-INC-SUB/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 308, before is_next_to(soap_dispenser_0, glass_0) at step 386"
+rail-trig/T5-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+rail-trig/T5-INC-SUB/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-INC-SUB/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-INC-SUB/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-INC-SUB/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-INC-SUB/repeat_3,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-SUB/repeat_3,failure,Object Not Found,Object Not Found,plate_black_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-INC-SUB/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 308, before is_next_to(soap_dispenser_0, glass_0) at step 380"
+rail-trig/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-INC-SUB/repeat_5,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-SUB/repeat_5,failure,Object Not Found,Object Not Found,plate_black_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-trig/T5-INC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-INC-SUB/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is not available. Kitchen exploration found only plate_black_0, which is identified as a black plate; no white plate ID exists in the permitted object list. The glasses and soap are available, but the complete request cannot be satisfied.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-OUT-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 4 actions after checking every place in the ground-truth plan (a34)
+rail-trig/T5-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-ABS/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-ABS/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-OUT-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_2] x2 (a4-a5)
+rail-trig/T5-OUT-ABS/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 808, before is_next_to(soap_dispenser_0, glass_1) at step 822"
+rail-trig/T5-OUT-ABS/repeat_4,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-ABS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-ABS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-ABS/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-ABS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-ABS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-BASE/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 1146, before is_next_to(soap_dispenser_0, glass_1) at step 1152"
+rail-trig/T5-OUT-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-trig/T5-OUT-BASE/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 1258, before is_next_to(soap_dispenser_0, glass_0) at step 1262"
+rail-trig/T5-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a9 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[cabinet_0] x2 (a7-a8)
+rail-trig/T5-OUT-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,"a17 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-OUT-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,"a29 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-OUT-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-trig/T5-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-CON/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-trig/T5-OUT-CON/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-CON/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-trig/T5-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_2] x2 (a5-a6)
+rail-trig/T5-OUT-CON/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-CON/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-OUT-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-trig/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a4)
+rail-trig/T5-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a4)
+rail-trig/T5-OUT-CON/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-OUT-CON/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: No soap object has a valid known ID. The attempted soap pickup failed, and bathroom_1 has already been searched twice, so the requested soap-based cleaning cannot be completed.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_0, table_0), is_next_to(plate_0, glass_0), is_next_to(plate_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-trig/T5-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1
+rail-trig/T5-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1
+rail-trig/T5-OUT-CON/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-OUT-DIS/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 445, before is_next_to(soap_dispenser_0, glass_0) at step 470"
+rail-trig/T5-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 445, before is_next_to(soap_dispenser_0, glass_0) at step 470"
+rail-trig/T5-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a11 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a23 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-OUT-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+rail-trig/T5-OUT-SUB/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-trig/T5-OUT-SUB/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-trig/T5-OUT-SUB/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-trig/T5-OUT-SUB/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-trig/T5-OUT-SUB/repeat_2,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1
+rail-trig/T5-OUT-SUB/repeat_2,failure,Object Not Found,Object Not Found,plate_black_0: never seen on/in cabinet_0 in kitchen_1
+rail-trig/T5-OUT-SUB/repeat_2,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-trig/T5-OUT-SUB/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+rail-trig/T5-OUT-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a8 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-trig/T5-OUT-SUB/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[cabinet_0] x2 (a6-a7)
+rail-trig/T5-OUT-SUB/repeat_4,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-trig/T5-OUT-SUB/repeat_4,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-trig/T5-OUT-SUB/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-SUB/repeat_4,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-SUB/repeat_4,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+rail-trig/T5-OUT-SUB/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+rail-trig/T5-OUT-SUB/repeat_5,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+rail-trig/T5-OUT-SUB/repeat_5,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+rail-trig/T5-OUT-SUB/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-trig/T6-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The required clean hand towel is explicitly known to be absent, and no acceptable substitute exists anywhere in the scene. Therefore the complete goal cannot be satisfied.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The required clean hand towel is explicitly known to be absent, and no acceptable substitute exists anywhere in the scene. Therefore it cannot be brought to or placed next to the heated bread; the remaining actions cannot make the full task achievable.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The required clean hand towel is explicitly known to be absent, and no acceptable substitute exists anywhere in the scene. Because the towel cannot be obtained or placed next to the bread, the full goal cannot be completed.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: A clean hand towel is required, but hand_towel_0 is explicitly known to be absent and no acceptable substitute exists. Therefore the bread, water bottle, and towel cannot all be placed next to one another as requested.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: A clean hand towel is required, but the world state explicitly says hand_towel_0 is absent and no acceptable substitute exists. Therefore the bread, bottle, and lighting tasks cannot together satisfy the complete goal.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-BASE/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-BASE/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-BASE/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_9 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_9 in bedroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T6-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a20 Explore[bedroom_1]: Successful execution!
+rail-trig/T6-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a7-a8)
+rail-trig/T6-ACC-BASE/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_9 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-ACC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_9 in bedroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T6-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a25 Explore[bedroom_1]: Successful execution!
+rail-trig/T6-ACC-BASE/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-BASE/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-BASE/repeat_5,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-BASE/repeat_5,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-BASE/repeat_5,failure,Object Untouched,Object Untouched,"hand_towel_0: seen on/in shelves_11 in bathroom_3, never moved"
+rail-trig/T6-ACC-CON/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on floor_bedroom_3 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_5 in bedroom_3; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T6-ACC-CON/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_3]: Successful execution!
+rail-trig/T6-ACC-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_3]: Successful execution!
+rail-trig/T6-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a17-a18)
+rail-trig/T6-ACC-CON/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-CON/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-CON/repeat_4,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in fridge_0 in garage_1, never moved"
+rail-trig/T6-ACC-CON/repeat_4,failure,Object Untouched,Object Untouched,"bread_0: seen on/in cabinet_1 in kitchen_1, never moved"
+rail-trig/T6-ACC-CON/repeat_4,failure,Object Untouched,Object Untouched,"hand_towel_0: seen on/in cabinet_23 in laundryroom_1, never moved"
+rail-trig/T6-ACC-CON/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_3]: Successful execution!
+rail-trig/T6-ACC-DIS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-DIS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_1 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_1 in bedroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T6-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a7-a8)
+rail-trig/T6-ACC-DIS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_5 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_5 in bedroom_3; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-ACC-DIS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_5 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-ACC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_5 in bedroom_3; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-ACC-DIS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_3]: Successful execution!
+rail-trig/T6-ACC-SUB/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-trig/T6-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a1 Explore[bedroom_3]: Successful execution!
+rail-trig/T6-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a14 Explore[garage_1]: Successful execution!
+rail-trig/T6-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a15 Explore[bedroom_3]: Successful execution!
+rail-trig/T6-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"blue_hand_towel_0: seen on/in shelves_11 in bathroom_3, never moved"
+rail-trig/T6-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"cup_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested water bottle has no available object ID and is explicitly known to be absent from the scene. It cannot be brought to the bedroom desk, so the full goal cannot be completed; no search was attempted because the object is already recorded as absent.; never attempted: is_on_top(bread_0, table_11), is_on_top(cup_0, table_11), is_on_top(blue_hand_towel_0, table_11), is_next_to(cup_0, bread_0), is_next_to(blue_hand_towel_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-SUB/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-SUB/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"blue_hand_towel_0: seen on/in shelves_11 in bathroom_3, never moved"
+rail-trig/T6-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"cup_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested water bottle does not exist in the scene, and no permitted water-bottle object is available to bring. The bread, clean blue_hand_towel_0, microwave_0, bedroom_3 furniture, and lamp_living_0 are available, but the complete goal cannot be satisfied without a water bottle.; never attempted: is_on_top(bread_0, table_11), is_on_top(cup_0, table_11), is_on_top(blue_hand_towel_0, table_11), is_next_to(cup_0, bread_0), is_next_to(blue_hand_towel_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"blue_hand_towel_0: seen on/in shelves_11 in bathroom_3, never moved"
+rail-trig/T6-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"cup_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: No water bottle exists in the scene, and no water-bottle object is available in the permitted object list. The bread, clean blue_hand_towel_0, bedroom_3 table_5, microwave_0, and living-room lamp_living_0 are available, but the required water bottle cannot be brought to the desk.; never attempted: is_on_top(bread_0, table_11), is_on_top(cup_0, table_11), is_on_top(blue_hand_towel_0, table_11), is_next_to(cup_0, bread_0), is_next_to(blue_hand_towel_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"blue_hand_towel_0: seen on/in shelves_11 in bathroom_3, never moved"
+rail-trig/T6-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"cup_0: seen on/in table_7 in dining_room_1, never moved"
+rail-trig/T6-ACC-SUB/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The required water bottle is explicitly known to be absent, and no water-bottle object is available in the scene. Therefore it cannot be brought to the bedroom desk; no search is needed because its absence is already recorded.; never attempted: is_on_top(bread_0, table_11), is_on_top(cup_0, table_11), is_on_top(blue_hand_towel_0, table_11), is_next_to(cup_0, bread_0), is_next_to(blue_hand_towel_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-trig/T6-INC-ABS/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-INC-ABS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-INC-ABS/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 6 actions after checking every place in the ground-truth plan (a10)
+rail-trig/T6-INC-ABS/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-INC-ABS/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-INC-BASE/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_5 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_5 in bedroom_3; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-INC-BASE/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-BASE/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a12-a13)
+rail-trig/T6-INC-BASE/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_5 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-INC-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_5 in bedroom_3; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-INC-BASE/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a11-a12)
+rail-trig/T6-INC-CON/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-INC-CON/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a1-a2)
+rail-trig/T6-INC-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-INC-CON/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-trig/T6-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,"bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a1, a2)"
+rail-trig/T6-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-trig/T6-INC-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a1-a2)
+rail-trig/T6-INC-CON/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-INC-CON/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-INC-DIS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-DIS/repeat_1,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_11 in bedroom_3"
+rail-trig/T6-INC-DIS/repeat_1,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-trig/T6-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Navigate[cabinet_15] x2 (a31-a32)
+rail-trig/T6-INC-DIS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on floor_bedroom_3 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_5 in bedroom_3; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-INC-DIS/repeat_2,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Place; ended on counter_0 in kitchen_1"
+rail-trig/T6-INC-DIS/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_9 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_9 in bedroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a12-a13)
+rail-trig/T6-INC-DIS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_9 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-INC-DIS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_9 in bedroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a0-a1)
+rail-trig/T6-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a7-a8)
+rail-trig/T6-INC-DIS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_1 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-INC-DIS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_1 in bedroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-INC-SUB/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-INC-SUB/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-INC-SUB/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-INC-SUB/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-SUB/repeat_3,failure,Object Not Found,Object Not Found,blue_hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-trig/T6-INC-SUB/repeat_3,failure,Object Not Found,Object Not Found,cup_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-INC-SUB/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a7-a8)
+rail-trig/T6-INC-SUB/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-INC-SUB/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-SUB/repeat_4,failure,Object Not Found,Object Not Found,blue_hand_towel_0: never seen on/in shelves_11 in bathroom_3 (explored bathroom_3 at a2)
+rail-trig/T6-INC-SUB/repeat_4,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a1)
+rail-trig/T6-INC-SUB/repeat_4,failure,Object Not Found,Object Not Found,cup_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-INC-SUB/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-INC-SUB/repeat_5,failure,Object Not Found,Object Not Found,blue_hand_towel_0: never seen on/in shelves_11 in bathroom_3 (explored bathroom_3 at a3)
+rail-trig/T6-INC-SUB/repeat_5,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a1)
+rail-trig/T6-INC-SUB/repeat_5,failure,Object Not Found,Object Not Found,cup_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-ABS/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-ABS/repeat_1,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T6-OUT-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-ABS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-ABS/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-ABS/repeat_2,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T6-OUT-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-ABS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-ABS/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-ABS/repeat_3,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T6-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 2 actions after checking every place in the ground-truth plan (a11)
+rail-trig/T6-OUT-ABS/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-OUT-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a0-a1)
+rail-trig/T6-OUT-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a7-a8)
+rail-trig/T6-OUT-ABS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-ABS/repeat_5,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The required clean hand-towel object has no valid movable ID in the provided list. Picking hand_towel_1 failed because it is absent, and exploration of bathroom_1, bathroom_2, bathroom_3, and laundryroom_1 produced no valid hand-towel object. The full task cannot be completed without an identifiable towel.; never attempted: is_on_top(bottle_0, table_11)"
+rail-trig/T6-OUT-BASE/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-OUT-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_9 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-OUT-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a10-a11)
+rail-trig/T6-OUT-BASE/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-BASE/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-BASE/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-BASE/repeat_2,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T6-OUT-BASE/repeat_2,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-trig/T6-OUT-BASE/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-OUT-BASE/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_9 in bedroom_1; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-OUT-BASE/repeat_4,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_9 in bedroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-OUT-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a3-a4)
+rail-trig/T6-OUT-BASE/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-OUT-BASE/repeat_5,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_5 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-OUT-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[bread_1] x2 (a0-a1)
+rail-trig/T6-OUT-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a13-a14)
+rail-trig/T6-OUT-CON/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-CON/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-trig/T6-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a5)
+rail-trig/T6-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-trig/T6-OUT-CON/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-CON/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-trig/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a3)
+rail-trig/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-trig/T6-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-CON/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-trig/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,"bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a3, a4)"
+rail-trig/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-trig/T6-OUT-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a3-a4)
+rail-trig/T6-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-CON/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-trig/T6-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a5)
+rail-trig/T6-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-trig/T6-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-CON/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-trig/T6-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,"bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a3, a4)"
+rail-trig/T6-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-trig/T6-OUT-CON/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a3-a4)
+rail-trig/T6-OUT-DIS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T6-OUT-DIS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-DIS/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-DIS/repeat_1,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T6-OUT-DIS/repeat_1,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-trig/T6-OUT-DIS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"bottle_0 ended on table_5 in bedroom_3; unmet: is_on_top(bottle_0, table_11)"
+rail-trig/T6-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on table_5 in bedroom_3; unmet: is_on_top(hand_towel_0, table_11)"
+rail-trig/T6-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a7-a8)
+rail-trig/T6-OUT-DIS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-DIS/repeat_3,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Place; ended on floor_bedroom_3 in bedroom_3"
+rail-trig/T6-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a2-a3)
+rail-trig/T6-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a9-a10)
+rail-trig/T6-OUT-DIS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-DIS/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-DIS/repeat_4,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T6-OUT-DIS/repeat_4,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-trig/T6-OUT-DIS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-trig/T6-OUT-DIS/repeat_5,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-trig/T6-OUT-DIS/repeat_5,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-trig/T6-OUT-DIS/repeat_5,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-trig/T6-OUT-SUB/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-OUT-SUB/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-OUT-SUB/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a13-a14)
+rail-trig/T6-OUT-SUB/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T6-OUT-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"cup_0 ended on table_5 in bedroom_3; unmet: is_on_top(cup_0, table_11)"
+rail-trig/T6-OUT-SUB/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-OUT-SUB/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a3-a4)
+rail-trig/T6-OUT-SUB/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a10-a11)
+rail-trig/T6-OUT-SUB/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-trig/T6-OUT-SUB/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a12-a13)
+rail-trig/T6-OUT-SUB/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[microwave_0] x2 (a21-a22)
+rail-trig/T7-ACC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a22 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a10-a11)
+rail-trig/T7-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a21-a31)"
+rail-trig/T7-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on shelves_0 in kitchen_1; unmet: is_inside(plate_0, cabinet_0|cabinet_1|cabinet_2|cabinet_3|cabinet_4|cabinet_5|cabinet_6|cabinet_7|cabinet_8)"
+rail-trig/T7-ACC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a35 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a41 Explore[kitchen_1]: Successful execution!
+rail-trig/T7-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a10-a11)
+rail-trig/T7-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a25-a35)"
+rail-trig/T7-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a9 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a10-a11)
+rail-trig/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a22 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a39 Explore[kitchen_1]: Successful execution!
+rail-trig/T7-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a10-a11)
+rail-trig/T7-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a21-a31)"
+rail-trig/T7-ACC-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a8-a9)
+rail-trig/T7-ACC-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[lamp_kitchen_0] x2 (a25-a26)
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a22 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[living_room_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a14 Explore[kitchen_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a21-a31)"
+rail-trig/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Navigate[lamp_kitchen_0] x2 (a43-a44)
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a23 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a44 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a47 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a50 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a53 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a58 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a61 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a64 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a67 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[closet_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a34 Explore[kitchen_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a22-a32)"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_4] -> Place[plate_0, within, cabinet_4, None, None] x4 (a43-a53)"
+rail-trig/T7-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[shelves_0] -> Place[plate_0, within, shelves_0, None, None] x4 (a57-a67)"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a21 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a24 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a27 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a30 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a44 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a47 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a50 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a53 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a58 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a61 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a64 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a67 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a38 Explore[kitchen_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a20-a30)"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_4] -> Place[plate_0, within, cabinet_4, None, None] x4 (a43-a53)"
+rail-trig/T7-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[shelves_0] -> Place[plate_0, within, shelves_0, None, None] x4 (a57-a67)"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a34 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a37 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a43 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a46 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a49 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a52 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a55 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a58 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a61 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a64 Place[plate_0, within, shelves_0, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture shelves_0 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[closet_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a39 Explore[kitchen_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a11-a12)
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a16-a17)
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a27-a37)"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_4] -> Place[plate_0, within, cabinet_4, None, None] x4 (a42-a52)"
+rail-trig/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[shelves_0] -> Place[plate_0, within, shelves_0, None, None] x4 (a54-a64)"
+rail-trig/T7-ACC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a34 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a17 Explore[kitchen_1]: Successful execution!
+rail-trig/T7-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a10-a11)
+rail-trig/T7-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a24-a34)"
+rail-trig/T7-INC-BASE/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a21 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a24 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a27 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a30 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a42 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a45 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a48 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a51 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a58 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a61 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a64 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a67 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a20-a30)"
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_4] -> Place[plate_0, within, cabinet_4, None, None] x4 (a41-a51)"
+rail-trig/T7-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_3] -> Place[plate_0, within, cabinet_3, None, None] x4 (a57-a67)"
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a35 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a42 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a45 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a48 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a51 Place[plate_0, within, cabinet_3, None, None]: Unexpected failure! - No valid placements found for entity cabinet_3."
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_4] -> Place[plate_0, within, cabinet_4, None, None] x4 (a25-a35)"
+rail-trig/T7-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_3] -> Place[plate_0, within, cabinet_3, None, None] x4 (a41-a51)"
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a27 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a30 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a33 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a36 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a42 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a45 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a48 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a51 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a11 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[toy_truck_0] x2 (a9-a10)
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a26-a36)"
+rail-trig/T7-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_4] -> Place[plate_0, within, cabinet_4, None, None] x4 (a41-a51)"
+rail-trig/T7-INC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a10 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a2-a3)
+rail-trig/T7-INC-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[lamp_kitchen_0] x2 (a27-a28)
+rail-trig/T7-INC-BASE/repeat_5,inefficiency,Affordance Error,Affordance Error,"a21 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_5,inefficiency,Affordance Error,Affordance Error,"a24 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_5,inefficiency,Affordance Error,Affordance Error,"a27 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_5,inefficiency,Affordance Error,Affordance Error,"a30 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-BASE/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-INC-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a20-a30)"
+rail-trig/T7-INC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a24 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a27 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a30 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a33 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a23-a33)"
+rail-trig/T7-INC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a34 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a11 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[toy_truck_0] x2 (a9-a10)
+rail-trig/T7-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a24-a34)"
+rail-trig/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a35 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a12 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a13-a14)
+rail-trig/T7-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a25-a35)"
+rail-trig/T7-INC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a22 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a21-a31)"
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a23 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a10 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[stuffed_toy_0] x2 (a2-a3)
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a11-a12)
+rail-trig/T7-INC-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a22-a32)"
+rail-trig/T7-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a9 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a3-a4)
+rail-trig/T7-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a10-a11)
+rail-trig/T7-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a21-a22)
+rail-trig/T7-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[lamp_kitchen_0] x2 (a39-a40)
+rail-trig/T7-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a9 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a10-a11)
+rail-trig/T7-OUT-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-trig/T7-OUT-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-OUT-DIS/repeat_1,failure,Missing Action,Missing Action,is_clean(plate_0): never done
+rail-trig/T7-OUT-DIS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T7-OUT-DIS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_kitchen_0): never done
+rail-trig/T7-OUT-DIS/repeat_1,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_5 in kitchen_1
+rail-trig/T7-OUT-DIS/repeat_1,failure,Object Not Found,Object Not Found,stuffed_toy_0: never seen on/in couch_0 in living_room_1
+rail-trig/T7-OUT-DIS/repeat_1,failure,Object Not Found,Object Not Found,toy_truck_0: never seen on/in floor_living_room_1 in living_room_1
+rail-trig/T7-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[lamp_living_0] x2 (a0-a1)
+rail-trig/T7-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[lamp_kitchen_0] x2 (a3-a4)
+rail-trig/T7-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a6-a7)
+rail-trig/T7-OUT-DIS/repeat_3,failure,Missing Action,Missing Action,is_clean(plate_0): never done
+rail-trig/T7-OUT-DIS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-trig/T7-OUT-DIS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_kitchen_0): never done
+rail-trig/T7-OUT-DIS/repeat_3,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_5 in kitchen_1
+rail-trig/T7-OUT-DIS/repeat_3,failure,Object Not Found,Object Not Found,stuffed_toy_0: never seen on/in couch_0 in living_room_1
+rail-trig/T7-OUT-DIS/repeat_3,failure,Object Not Found,Object Not Found,toy_truck_0: never seen on/in floor_living_room_1 in living_room_1
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a22 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a40 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a43 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a46 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a49 Place[plate_0, within, cabinet_4, None, None]: Unexpected failure! - No valid placements found for entity cabinet_4."
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[wardrobe_2] x2 (a9-a10)
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a21-a31)"
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_4] -> Place[plate_0, within, cabinet_4, None, None] x4 (a39-a49)"
+rail-trig/T7-OUT-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[lamp_kitchen_0] x2 (a70-a71)

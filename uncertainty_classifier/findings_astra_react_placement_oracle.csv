@@ -1,0 +1,116 @@
+run_id,kind,category,label,evidence
+react/T3-INC-ABS/repeat_1,inefficiency,Precondition Error,Precondition Error,a11 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T3-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a17)
+react/T3-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a16)
+react/T3-INC-ABS/repeat_3,inefficiency,Precondition Error,Precondition Error,a11 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T3-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a17)
+react/T3-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a4)
+react/T3-INC-CON/repeat_1,inefficiency,Precondition Error,Precondition Error,a8 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T3-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a5)
+react/T3-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a5)
+react/T3-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a19)
+react/T3-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a19)
+react/T3-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a9)
+react/T3-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8)
+react/T3-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a9)
+react/T5-ACC-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a12 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a12 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a12 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-CON/repeat_1,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_1]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-ACC-CON/repeat_1,inefficiency,Precondition Error,Precondition Error,"a14 Pick[glass_1]: Unexpected failure! - Failed to pick! Object is inside closed cabinet_0, you need to open the furniture first."
+react/T5-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a4 Place[glass_1, within, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a24 Place[glass_0, within, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-CON/repeat_2,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_1]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a4 Place[glass_1, within, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, within, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-CON/repeat_3,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_1]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-ACC-CON/repeat_3,inefficiency,Precondition Error,Precondition Error,"a14 Pick[glass_1]: Unexpected failure! - Failed to pick! Object is inside closed cabinet_0, you need to open the furniture first."
+react/T5-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a4 Place[glass_1, within, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a24 Place[glass_0, within, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-ACC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 11 actions after checking every place in the ground-truth plan (a2)
+react/T5-INC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 11 actions after checking every place in the ground-truth plan (a2)
+react/T5-INC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 7 actions after checking every place in the ground-truth plan (a21)
+react/T5-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a9 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a18 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a11 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a20 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a12 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a21 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a11 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a20 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-INC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a13 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 5 actions after checking every place in the ground-truth plan (a25)
+react/T5-OUT-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a13 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 4 actions after checking every place in the ground-truth plan (a24)
+react/T5-OUT-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a13 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 2 actions after checking every place in the ground-truth plan (a24)
+react/T5-OUT-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-OUT-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a21 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a21 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-OUT-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a21 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a5 Place[glass_0, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"
+react/T5-OUT-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a14 Place[glass_1, on, cabinet_0, next_to, soap_dispenser_0]: Successful execution!"

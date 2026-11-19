@@ -1,0 +1,784 @@
+run_id,kind,category,label,evidence
+rail-oracle-fix/T1-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-oracle-fix/T1-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested full water jug is explicitly known to be absent, and no acceptable substitute exists in the scene. Therefore, the robot cannot bring a full jug of water to either living-room table, even though lamp_0 could be turned off.; never attempted: is_powered_off(lamp_0)"
+rail-oracle-fix/T1-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-oracle-fix/T1-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: lamp_0 can be turned off, but jug_0 is explicitly known absent and no jug or acceptable substitute exists anywhere in the scene. A full jug of water therefore cannot be brought to table_0 or table_1.; never attempted: is_powered_off(lamp_0)"
+rail-oracle-fix/T1-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a3 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a4 Explore[living_room_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a5 Explore[living_room_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a2-a3)
+rail-oracle-fix/T1-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a4-a5)
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a3 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a4 Explore[living_room_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a5 Explore[laundryroom_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a6 Explore[living_room_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a7 Explore[laundryroom_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a8 Explore[bedroom_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a9 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a2-a3)
+rail-oracle-fix/T1-ACC-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] -> Explore[laundryroom_1] x2 (a4-a7)
+rail-oracle-fix/T1-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a1 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a3 Explore[bedroom_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a6 Explore[laundryroom_1]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a7 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T1-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a0-a1)
+rail-oracle-fix/T1-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[jug_0, on, counter_0, None, None]: Successful execution!"
+rail-oracle-fix/T1-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-oracle-fix/T1-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a8 Place[jug_0, on, table_2, None, None]: Successful execution!"
+rail-oracle-fix/T1-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[jug_0, on, table_2, None, None]: Successful execution!"
+rail-oracle-fix/T1-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-oracle-fix/T1-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_1]: Successful execution!
+rail-oracle-fix/T1-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_0): never done
+rail-oracle-fix/T1-INC-CON/repeat_1,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a3)
+rail-oracle-fix/T1-INC-CON/repeat_2,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a2, a4)"
+rail-oracle-fix/T1-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a2, a5)"
+rail-oracle-fix/T1-INC-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a3)
+rail-oracle-fix/T1-INC-CON/repeat_5,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a4)"
+rail-oracle-fix/T1-OUT-ABS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] -> Explore[living_room_1] x2 (a5-a8)
+rail-oracle-fix/T1-OUT-CON/repeat_1,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a6)
+rail-oracle-fix/T1-OUT-CON/repeat_2,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a5, a11)"
+rail-oracle-fix/T1-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a5)
+rail-oracle-fix/T1-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a6)
+rail-oracle-fix/T1-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_filled(jug_0): never done
+rail-oracle-fix/T1-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,"jug_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a6)"
+rail-oracle-fix/T2-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: box_0 and box_1 can be moved to table_2, but scissors_0 is explicitly known to be absent and no acceptable substitute exists, so the requirement to place scissors beside the packages cannot be completed.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-oracle-fix/T2-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The boxes can be moved to table_2, but the required scissors are explicitly known to be absent, and no acceptable substitute exists anywhere in the scene.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-oracle-fix/T2-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The scissors required to open the packages are explicitly known to be absent, and no acceptable substitute is available. The boxes can be moved to table_2, but the complete requested goal cannot be achieved.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-oracle-fix/T2-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: box_0 and box_1 can be placed together on table_2, but the requested scissors are explicitly known to be absent and no acceptable substitute exists. No search was attempted because the world memory marks them unavailable.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-oracle-fix/T2-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: box_0 and box_1 can be moved to table_2, but scissors are explicitly known absent and no acceptable substitute is available. No scissors action target exists, so the packages cannot be opened as requested.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_next_to(box_0, box_1)"
+rail-oracle-fix/T2-ACC-CON/repeat_4,inefficiency,Affordance Error,Affordance Error,"a5 Place[scissors_0, on, floor_entryway_1, next_to, box_0]: Unexpected failure! - No valid placements found for entity floor_entryway_1. It looks like the spatial constraint next_to is not feasible because the reference object box_0 either does not exist or has not yet been placed on the floor_entryway_1. Try placing the grasped object scissors_0 on floor_entryway_1 without the spatial constraint next_to."
+rail-oracle-fix/T2-ACC-CON/repeat_4,inefficiency,Affordance Error,Affordance Error,"a8 Place[scissors_0, on, floor_entryway_1, next_to, box_0]: Unexpected failure! - No valid placements found for entity floor_entryway_1. It looks like the spatial constraint next_to is not feasible because the reference object box_0 either does not exist or has not yet been placed on the floor_entryway_1. Try placing the grasped object scissors_0 on floor_entryway_1 without the spatial constraint next_to."
+rail-oracle-fix/T2-ACC-CON/repeat_4,inefficiency,Affordance Error,Affordance Error,"a11 Place[scissors_0, on, floor_entryway_1, next_to, box_0]: Unexpected failure! - No valid placements found for entity floor_entryway_1. It looks like the spatial constraint next_to is not feasible because the reference object box_0 either does not exist or has not yet been placed on the floor_entryway_1. Try placing the grasped object scissors_0 on floor_entryway_1 without the spatial constraint next_to."
+rail-oracle-fix/T2-ACC-CON/repeat_4,inefficiency,Affordance Error,Affordance Error,"a14 Place[scissors_0, on, floor_entryway_1, next_to, box_0]: Unexpected failure! - No valid placements found for entity floor_entryway_1. It looks like the spatial constraint next_to is not feasible because the reference object box_0 either does not exist or has not yet been placed on the floor_entryway_1. Try placing the grasped object scissors_0 on floor_entryway_1 without the spatial constraint next_to."
+rail-oracle-fix/T2-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[floor_entryway_1] -> Place[scissors_0, on, floor_entryway_1, next_to, box_0] x4 (a4-a14)"
+rail-oracle-fix/T2-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[entryway_1]: Successful execution!
+rail-oracle-fix/T2-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors do not exist in the scene. The world state explicitly records scissors_0 as known absent, and knife_0 cannot substitute for scissors. Therefore the complete goal cannot be satisfied.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-oracle-fix/T2-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors are explicitly known to be absent, and no scissors object ID is available. The boxes and knife could be moved to table_2, but the requirement to bring scissors cannot be fulfilled; no search was attempted because the world state declares them absent.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-oracle-fix/T2-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors are explicitly recorded as absent from the scene, and no scissors object ID is available. Therefore the packages and knife_0 could be moved to table_2, but the complete requested goal cannot be fulfilled.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-oracle-fix/T2-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors are explicitly known to be absent, and no scissors object exists in the scene. knife_0 is available, but it cannot be treated as scissors without changing the request.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-oracle-fix/T2-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"box_1: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"knife_0: seen on/in chest_of_drawers_2 in entryway_1, never moved"
+rail-oracle-fix/T2-ACC-SUB/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested scissors are explicitly known to be absent, and no scissors object is available to place beside the packages. The packages and knife can be moved, but the complete goal cannot be satisfied.; never attempted: is_on_top(box_0, table_2), is_on_top(box_1, table_2), is_on_top(knife_0, table_2), is_next_to(box_0, box_1), is_next_to(knife_0, box_0), is_next_to(knife_0, box_1)"
+rail-oracle-fix/T2-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 2 actions after searching as many places as the ground-truth plan (6) (a13)
+rail-oracle-fix/T2-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 7 actions after searching as many places as the ground-truth plan (6) (a5)
+rail-oracle-fix/T2-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 5 actions after searching as many places as the ground-truth plan (6) (a5)
+rail-oracle-fix/T2-INC-ABS/repeat_5,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 5 actions after searching as many places as the ground-truth plan (6) (a5)
+rail-oracle-fix/T2-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a5)
+rail-oracle-fix/T2-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,box_1: never seen on/in floor_entryway_1 in entryway_1 (explored entryway_1 at a1)
+rail-oracle-fix/T2-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a1)
+rail-oracle-fix/T2-INC-CON/repeat_2,failure,Object Untouched,Object Untouched,"box_0: seen on/in floor_entryway_1 in entryway_1, never moved"
+rail-oracle-fix/T2-INC-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-oracle-fix/T2-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a0)
+rail-oracle-fix/T2-INC-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a1-a2)
+rail-oracle-fix/T2-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1
+rail-oracle-fix/T2-INC-CON/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a0-a1)
+rail-oracle-fix/T2-OUT-ABS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[office_1] x2 (a15-a16)
+rail-oracle-fix/T2-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 2 actions after searching as many places as the ground-truth plan (6) (a19)
+rail-oracle-fix/T2-OUT-ABS/repeat_4,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 2 actions after searching as many places as the ground-truth plan (6) (a19)
+rail-oracle-fix/T2-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a7)
+rail-oracle-fix/T2-OUT-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+rail-oracle-fix/T2-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a7)
+rail-oracle-fix/T2-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a7)
+rail-oracle-fix/T2-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1 (explored entryway_1 at a7)
+rail-oracle-fix/T3-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-oracle-fix/T3-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: Only one available book, book_0, is recorded. The world memory explicitly states that no second book or acceptable substitute exists, so collecting two books is impossible. No search was performed because the second book is explicitly known to be absent.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-oracle-fix/T3-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-oracle-fix/T3-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The goal requires two green books, but only book_0 exists. book_1 is explicitly known absent, and no acceptable substitute is available. Therefore both books cannot be placed on table_0, although book_0 could be moved there and laptop_0 could be turned off.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-oracle-fix/T3-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-oracle-fix/T3-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is available, and book_1 is explicitly known absent with no acceptable substitute anywhere in the scene. Therefore, collecting and placing two books on table_0 is impossible, although laptop_0 could be turned off.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-oracle-fix/T3-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-oracle-fix/T3-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is available. The second required book (book_1) is explicitly known absent, with no acceptable substitute anywhere, so collecting and placing two books is impossible. The laptop can be turned off, but the full requested goal cannot be completed.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-oracle-fix/T3-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"book_0: seen on/in bed_1 in bedroom_2, never moved"
+rail-oracle-fix/T3-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is available; book_1 is explicitly known absent, and no acceptable substitute exists. Therefore, collecting two books is impossible, although laptop_0 could be turned off and book_0 could be placed on table_0.; never attempted: is_on_top(book_0, table_0), is_powered_off(laptop_0)"
+rail-oracle-fix/T3-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T3-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-BASE/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T3-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_2]: Successful execution!
+rail-oracle-fix/T3-INC-ABS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-ABS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_2] x2 (a5-a6)
+rail-oracle-fix/T3-INC-ABS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-oracle-fix/T3-INC-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 4 actions after checking every place in the ground-truth plan (a7)
+rail-oracle-fix/T3-INC-BASE/repeat_1,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2
+rail-oracle-fix/T3-INC-BASE/repeat_1,failure,Object Not Found,Object Not Found,book_1: never seen on/in table_1 in bedroom_2
+rail-oracle-fix/T3-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a0-a1)
+rail-oracle-fix/T3-INC-BASE/repeat_3,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2
+rail-oracle-fix/T3-INC-BASE/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in table_1 in bedroom_2
+rail-oracle-fix/T3-INC-BASE/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: laptop_0 is already powered off, but the two green books have no permitted object IDs or confirmed locations. Searches of bedroom_1 and living_room_1 have each reached the limit of two explorations, so the books cannot be identified, picked up, or placed on table_0.; never attempted: is_on_top(book_0, table_0), is_on_top(book_1, table_0)"
+rail-oracle-fix/T3-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-oracle-fix/T3-INC-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a5)
+rail-oracle-fix/T3-INC-CON/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a5)
+rail-oracle-fix/T3-INC-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-oracle-fix/T3-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a4)
+rail-oracle-fix/T3-INC-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a6, a8)"
+rail-oracle-fix/T3-INC-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a6)
+rail-oracle-fix/T3-INC-CON/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a3-a4)
+rail-oracle-fix/T3-INC-DIS/repeat_3,failure,Wrong Object,Wrong Object,"folder_0 (distractor): Pick, Place; ended on floor_living_room_1 in living_room_1"
+rail-oracle-fix/T3-INC-DIS/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a6)
+rail-oracle-fix/T3-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a0-a1)
+rail-oracle-fix/T3-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a4-a5)
+rail-oracle-fix/T3-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a0-a1)
+rail-oracle-fix/T3-INC-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bedroom_1] x2 (a1-a2)
+rail-oracle-fix/T3-OUT-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-OUT-ABS/repeat_3,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a12)
+rail-oracle-fix/T3-OUT-ABS/repeat_4,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a11)
+rail-oracle-fix/T3-OUT-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is a known movable book, and it must be placed on table_0; no second book ID exists. Attempts to use book_1 and book_2 failed because those objects are not present. laptop_0 is already powered off, but repeated attempts to power off laptop_1 also failed because it is not a valid power target.; never attempted: is_on_top(book_0, table_0)"
+rail-oracle-fix/T3-OUT-ABS/repeat_5,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-OUT-ABS/repeat_5,failure,Object Not Found,Object Not Found,book_0: never seen on/in bed_1 in bedroom_2
+rail-oracle-fix/T3-OUT-BASE/repeat_2,failure,Missing Action,Missing Action,is_powered_off(laptop_0): never done
+rail-oracle-fix/T3-OUT-BASE/repeat_2,failure,Object Not Found,Object Not Found,"book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a0, a13)"
+rail-oracle-fix/T3-OUT-BASE/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: Only one book object, book_0, is known, and it is already on table_0. The attempted book_1 and book_2 objects do not exist in the available object graph, so a second green book cannot be collected or placed. The relevant rooms have already been explored.; never attempted: is_powered_off(laptop_0)"
+rail-oracle-fix/T3-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8, a21)"
+rail-oracle-fix/T3-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8, a21)"
+rail-oracle-fix/T3-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8, a29)"
+rail-oracle-fix/T3-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,"book_0: never seen on/in bed_1 in bedroom_2 (explored bedroom_2 at a8, a24)"
+rail-oracle-fix/T3-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8, a24)"
+rail-oracle-fix/T3-OUT-CON/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: Only book_0 is a valid known book object. Attempts to use book_1 and book_2 failed because those objects do not exist, and the explored rooms revealed no second book. Therefore the requirement to collect two books cannot be completed without inventing an object ID.; never attempted: is_on_top(book_0, table_0)"
+rail-oracle-fix/T3-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,"book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8, a21)"
+rail-oracle-fix/T3-OUT-DIS/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a6)
+rail-oracle-fix/T3-OUT-DIS/repeat_5,failure,Object Not Found,Object Not Found,book_1: never seen on/in table_1 in bedroom_2 (explored bedroom_2 at a0)
+rail-oracle-fix/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is explicitly known to be absent, and no acceptable plate substitute exists in the scene. Therefore the glasses cannot be placed next to a plate, so the full goal cannot be completed.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The required white plate is known to be absent, and no plate or acceptable substitute exists in the scene. The glasses, soap, faucet, and destination table are available, but the complete requested goal cannot be satisfied.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is explicitly known to be absent, and no acceptable substitute exists. Therefore the complete task cannot be finished; no search was attempted because the plate’s absence is already established.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is explicitly known to be absent, and no acceptable substitute or valid plate object ID exists. No searches were attempted because the world-graph memory already establishes its absence.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate cannot be obtained: plate_0 is explicitly known absent, and no acceptable substitute exists. No search was attempted because the world state already confirms that the required plate is unavailable.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-BASE/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 423, before is_next_to(soap_dispenser_0, glass_0) at step 436"
+rail-oracle-fix/T5-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_0, on, cabinet_0, next_to, plate_0]: Successful execution!"
+rail-oracle-fix/T5-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a15 Place[glass_1, on, cabinet_0, next_to, plate_0]: Successful execution!"
+rail-oracle-fix/T5-ACC-BASE/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 423, before is_next_to(soap_dispenser_0, glass_0) at step 436"
+rail-oracle-fix/T5-ACC-BASE/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 423, before is_next_to(soap_dispenser_0, glass_0) at step 436"
+rail-oracle-fix/T5-ACC-BASE/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 423, before is_next_to(soap_dispenser_0, glass_0) at step 436"
+rail-oracle-fix/T5-ACC-CON/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 415, before is_next_to(soap_dispenser_0, glass_0) at step 421"
+rail-oracle-fix/T5-ACC-CON/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 796, before is_next_to(soap_dispenser_0, glass_0) at step 916"
+rail-oracle-fix/T5-ACC-CON/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 1115, before is_next_to(soap_dispenser_0, glass_1) at step 1252"
+rail-oracle-fix/T5-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T5-ACC-CON/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 515, before is_next_to(soap_dispenser_0, glass_0) at step 1308"
+rail-oracle-fix/T5-ACC-CON/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 856, before is_next_to(soap_dispenser_0, glass_1) at step 1308"
+rail-oracle-fix/T5-ACC-CON/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 646, before is_next_to(soap_dispenser_0, glass_1) at step 711"
+rail-oracle-fix/T5-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a29 Pick[soap_dispenser_0]: Successful execution!
+rail-oracle-fix/T5-ACC-DIS/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 145, before is_next_to(soap_dispenser_0, glass_0) at step 160"
+rail-oracle-fix/T5-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T5-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T5-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T5-ACC-DIS/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 418, before is_next_to(soap_dispenser_0, glass_0) at step 444"
+rail-oracle-fix/T5-ACC-DIS/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 193, before is_next_to(soap_dispenser_0, glass_1) at step 200"
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: No white plate exists in the scene: plate_0 is explicitly known absent, and the only available plate is plate_black_0, which is black. Therefore the requirement to place a white plate next to the cleaned, filled glasses cannot be completed.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The goal requires a white plate, but the world state explicitly says that no white plate exists and that plate_0 is absent. The only available plate is plate_black_0, which does not satisfy the white-plate requirement. The glasses and soap could be handled, but the full goal cannot be completed.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate is explicitly known to be absent, and the available plate is plate_black_0, which does not satisfy the white-plate requirement. Therefore the complete task cannot be accomplished.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested white plate does not exist. The only plate available is plate_black_0, and plate_0 is explicitly known absent, so the requirement to place a white plate next to the glasses cannot be fulfilled.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"glass_0: seen on/in table_2 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"plate_black_0: seen on/in cabinet_0 in kitchen_1, never moved"
+rail-oracle-fix/T5-ACC-SUB/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: No white plate exists in the available object list or world state. The only plate is plate_black_0, and plate_0 is explicitly known absent, so the requested white plate cannot be placed next to the glasses.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_black_0, table_0), is_next_to(plate_black_0, glass_0), is_next_to(plate_black_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_1,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a1)
+rail-oracle-fix/T5-INC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-ABS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 275, before is_next_to(soap_dispenser_0, glass_0) at step 882"
+rail-oracle-fix/T5-INC-ABS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 608, before is_next_to(soap_dispenser_0, glass_1) at step 611"
+rail-oracle-fix/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_3,failure,Object Not Found,Object Not Found,"glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0, a4)"
+rail-oracle-fix/T5-INC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: No white plate exists among the known movable objects, and none was found during the two kitchen explorations or the cabinet_0 inspection. The glasses and soap can be handled, but the requested white plate cannot be identified or placed without inventing an object ID.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 1 actions after checking every place in the ground-truth plan (a3)
+rail-oracle-fix/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_4,failure,Object Not Found,Object Not Found,"glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a1, a4)"
+rail-oracle-fix/T5-INC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a7-a8)
+rail-oracle-fix/T5-INC-ABS/repeat_4,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 3 actions after checking every place in the ground-truth plan (a7)
+rail-oracle-fix/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-ABS/repeat_5,failure,Object Not Found,Object Not Found,"glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0, a8)"
+rail-oracle-fix/T5-INC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-ABS/repeat_5,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 3 actions after checking every place in the ground-truth plan (a5)
+rail-oracle-fix/T5-INC-BASE/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 250, before is_next_to(soap_dispenser_0, glass_0) at step 1060"
+rail-oracle-fix/T5-INC-BASE/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 585, before is_next_to(soap_dispenser_0, glass_1) at step 1060"
+rail-oracle-fix/T5-INC-BASE/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 250, before is_next_to(soap_dispenser_0, glass_0) at step 1060"
+rail-oracle-fix/T5-INC-BASE/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 585, before is_next_to(soap_dispenser_0, glass_1) at step 1060"
+rail-oracle-fix/T5-INC-BASE/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 250, before is_next_to(soap_dispenser_0, glass_0) at step 854"
+rail-oracle-fix/T5-INC-BASE/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 585, before is_next_to(soap_dispenser_0, glass_1) at step 854"
+rail-oracle-fix/T5-INC-BASE/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 250, before is_next_to(soap_dispenser_0, glass_0) at step 1060"
+rail-oracle-fix/T5-INC-BASE/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 585, before is_next_to(soap_dispenser_0, glass_1) at step 1060"
+rail-oracle-fix/T5-INC-BASE/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 250, before is_next_to(soap_dispenser_0, glass_0) at step 1060"
+rail-oracle-fix/T5-INC-BASE/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 585, before is_next_to(soap_dispenser_0, glass_1) at step 1060"
+rail-oracle-fix/T5-INC-CON/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_1,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-CON/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_2,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_2,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_2,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-CON/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-CON/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-CON/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-INC-CON/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-oracle-fix/T5-INC-CON/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-oracle-fix/T5-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T5-INC-DIS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 575, before is_next_to(soap_dispenser_0, glass_0) at step 685"
+rail-oracle-fix/T5-INC-DIS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 882, before is_next_to(soap_dispenser_0, glass_1) at step 1046"
+rail-oracle-fix/T5-INC-DIS/repeat_5,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 387, before is_next_to(soap_dispenser_0, glass_0) at step 407"
+rail-oracle-fix/T5-INC-SUB/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 275, before is_next_to(soap_dispenser_0, glass_0) at step 1075"
+rail-oracle-fix/T5-INC-SUB/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 566, before is_next_to(soap_dispenser_0, glass_0) at step 632"
+rail-oracle-fix/T5-INC-SUB/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 961, before is_next_to(soap_dispenser_0, glass_1) at step 1039"
+rail-oracle-fix/T5-INC-SUB/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 275, before is_next_to(soap_dispenser_0, glass_0) at step 1075"
+rail-oracle-fix/T5-INC-SUB/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 661, before is_next_to(soap_dispenser_0, glass_0) at step 676"
+rail-oracle-fix/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-INC-SUB/repeat_5,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-INC-SUB/repeat_5,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1
+rail-oracle-fix/T5-INC-SUB/repeat_5,failure,Object Not Found,Object Not Found,plate_black_0: never seen on/in cabinet_0 in kitchen_1
+rail-oracle-fix/T5-INC-SUB/repeat_5,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-OUT-ABS/repeat_1,failure,Object Not Found,Object Not Found,"glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a3, a6)"
+rail-oracle-fix/T5-OUT-ABS/repeat_1,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-OUT-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The required white plate has no valid object ID in the known object list; plate_1 was rejected as nonexistent. The kitchen was explored twice, cabinet_0 was opened and inspected, and living_room_1 was explored, but no plate was found. The glasses and soap are identifiable, but the complete requested arrangement cannot be achieved without a valid plate object.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-OUT-ABS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 980, before is_next_to(soap_dispenser_0, glass_0) at step 997"
+rail-oracle-fix/T5-OUT-ABS/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 980, before is_next_to(soap_dispenser_0, glass_0) at step 997"
+rail-oracle-fix/T5-OUT-ABS/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 980, before is_next_to(soap_dispenser_0, glass_0) at step 997"
+rail-oracle-fix/T5-OUT-BASE/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 1116, before is_next_to(soap_dispenser_0, glass_0) at step 1276"
+rail-oracle-fix/T5-OUT-BASE/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 1493, before is_next_to(soap_dispenser_0, glass_1) at step 1624"
+rail-oracle-fix/T5-OUT-BASE/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_2] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a19 Place[glass_0, on, cabinet_0, next_to, plate_0]: Successful execution!"
+rail-oracle-fix/T5-OUT-BASE/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 980, before is_next_to(soap_dispenser_0, glass_0) at step 1485"
+rail-oracle-fix/T5-OUT-BASE/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-CON/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-oracle-fix/T5-OUT-CON/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-oracle-fix/T5-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,"plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a5, a25)"
+rail-oracle-fix/T5-OUT-CON/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-CON/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-oracle-fix/T5-OUT-CON/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-oracle-fix/T5-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,"plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a19, a35)"
+rail-oracle-fix/T5-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a3 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-oracle-fix/T5-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a23 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+rail-oracle-fix/T5-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,"glass_0: never seen on/in table_2 in kitchen_1 (explored kitchen_1 at a5, a10)"
+rail-oracle-fix/T5-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,"plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a5, a10)"
+rail-oracle-fix/T5-OUT-CON/repeat_3,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-OUT-CON/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_0): never done
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_0): never done
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_clean(glass_1): never done
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_filled(glass_1): never done
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,glass_0: never seen on/in table_2 in kitchen_1
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_0 in kitchen_1
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Object Untouched,Object Untouched,"glass_1: seen on/in table_3 in living_room_1, never moved"
+rail-oracle-fix/T5-OUT-CON/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The required soap was not found or assigned a valid object ID after two explorations of bathroom_1. The attempted ID soap_dispenser_1 is invalid, and soap_dispenser_0 is not in the allowed object list, so I cannot legally retrieve the soap or complete the requested cleaning task.; never attempted: is_on_top(glass_0, table_0), is_on_top(glass_1, table_0), is_on_top(plate_0, table_0), is_next_to(plate_0, glass_0), is_next_to(plate_0, glass_1), is_clean(glass_0), is_filled(glass_0), is_clean(glass_1), is_filled(glass_1), is_next_to(soap_dispenser_0, glass_0), is_next_to(soap_dispenser_0, glass_1)"
+rail-oracle-fix/T5-OUT-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-CON/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+rail-oracle-fix/T5-OUT-CON/repeat_5,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+rail-oracle-fix/T5-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,"plate_0: never seen on/in cabinet_0 in kitchen_1 (explored kitchen_1 at a20, a36)"
+rail-oracle-fix/T5-OUT-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,"a8 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+rail-oracle-fix/T5-OUT-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,"a24 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+rail-oracle-fix/T5-OUT-CON/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-DIS/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 636, before is_next_to(soap_dispenser_0, glass_0) at step 730"
+rail-oracle-fix/T5-OUT-DIS/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 971, before is_next_to(soap_dispenser_0, glass_1) at step 1053"
+rail-oracle-fix/T5-OUT-DIS/repeat_1,failure,Wrong Object,Wrong Object,"soap_dish_0 (distractor): Pick, Place; ended on cabinet_0 in kitchen_1"
+rail-oracle-fix/T5-OUT-DIS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 445, before is_next_to(soap_dispenser_0, glass_0) at step 470"
+rail-oracle-fix/T5-OUT-DIS/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 445, before is_next_to(soap_dispenser_0, glass_0) at step 470"
+rail-oracle-fix/T5-OUT-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[glass_0, on, cabinet_0, next_to, plate_0]: Successful execution!"
+rail-oracle-fix/T5-OUT-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,"a19 Place[glass_1, on, cabinet_0, next_to, plate_0]: Successful execution!"
+rail-oracle-fix/T5-OUT-SUB/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 620, before is_next_to(soap_dispenser_0, glass_0) at step 647"
+rail-oracle-fix/T5-OUT-SUB/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-SUB/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 1328, before is_next_to(soap_dispenser_0, glass_0) at step 1824"
+rail-oracle-fix/T5-OUT-SUB/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a3-a4)
+rail-oracle-fix/T5-OUT-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a7 Place[glass_1, on, cabinet_0, next_to, plate_black_0]: Successful execution!"
+rail-oracle-fix/T5-OUT-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a22 Place[glass_0, on, cabinet_0, next_to, plate_black_0]: Successful execution!"
+rail-oracle-fix/T5-OUT-SUB/repeat_4,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 985, before is_next_to(soap_dispenser_0, glass_0) at step 1292"
+rail-oracle-fix/T5-OUT-SUB/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,"a10 Place[glass_0, on, cabinet_0, next_to, plate_black_0]: Successful execution!"
+rail-oracle-fix/T5-OUT-SUB/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,"a22 Place[glass_1, on, cabinet_0, next_to, plate_black_0]: Successful execution!"
+rail-oracle-fix/T6-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-ACC-ABS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_1,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The required clean hand towel is explicitly known to be absent, and no acceptable substitute exists anywhere in the scene. Therefore the bread, bottle, and lighting tasks cannot together satisfy the full goal.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-oracle-fix/T6-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-ACC-ABS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_2,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested clean hand towel is unavailable: hand_towel_0 is explicitly known absent, and no acceptable substitute exists anywhere in the scene. Therefore the full goal cannot be completed.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-oracle-fix/T6-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-ACC-ABS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_3,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested hand towel is explicitly known to be absent, and no acceptable substitute exists anywhere in the scene. Therefore the bread, bottle, and lighting actions cannot complete the full goal.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-oracle-fix/T6-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-ACC-ABS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_4,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The goal requires a clean hand towel, but the initial state explicitly confirms that hand_towel_0 and any acceptable substitute are absent. Therefore the towel cannot be obtained or placed next to bread; no search is needed because its absence is already known.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-oracle-fix/T6-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-ACC-ABS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"bottle_0: seen on/in table_7 in dining_room_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_5,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-oracle-fix/T6-ACC-ABS/repeat_5,failure,Task Abandoned,Task Abandoned,"unsolvable: The required clean hand towel is explicitly known to be absent, and no acceptable substitute exists in the scene. Therefore the bread, water bottle, and towel cannot all be placed next to each other as requested.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_next_to(bottle_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-oracle-fix/T6-ACC-BASE/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-BASE/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-BASE/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-BASE/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-BASE/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-BASE/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bathroom_3]: Successful execution!
+rail-oracle-fix/T6-ACC-CON/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[bedroom_3]: Successful execution!
+rail-oracle-fix/T6-ACC-CON/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-CON/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-CON/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-oracle-fix/T6-ACC-CON/repeat_4,failure,Incorrect Placement,Incorrect Placement,"hand_towel_0 ended on floor_laundryroom_1 in laundryroom_1; unmet: is_on_top(hand_towel_0, table_11)"
+rail-oracle-fix/T6-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Navigate[table_11] x2 (a45-a46)
+rail-oracle-fix/T6-ACC-CON/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-CON/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-DIS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-DIS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-DIS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-DIS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-DIS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-SUB/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-SUB/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-SUB/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-ACC-SUB/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"blue_hand_towel_0: seen on/in shelves_11 in bathroom_3, never moved"
+rail-oracle-fix/T6-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+rail-oracle-fix/T6-ACC-SUB/repeat_4,failure,Object Untouched,Object Untouched,"cup_0: seen on/in table_7 in dining_room_1, never moved"
+rail-oracle-fix/T6-ACC-SUB/repeat_4,failure,Task Abandoned,Task Abandoned,"unsolvable: The requested water bottle is impossible to provide: no water-bottle object appears in the allowed object list, and the world memory explicitly states that bottle_0 is absent. No search is needed because its absence is already known.; never attempted: is_on_top(bread_0, table_11), is_on_top(cup_0, table_11), is_on_top(blue_hand_towel_0, table_11), is_next_to(cup_0, bread_0), is_next_to(blue_hand_towel_0, bread_0), is_powered_off(lamp_living_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+rail-oracle-fix/T6-ACC-SUB/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-ACC-SUB/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T6-INC-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-INC-ABS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-ABS/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-ABS/repeat_1,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a1)
+rail-oracle-fix/T6-INC-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-INC-ABS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-ABS/repeat_2,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a1)
+rail-oracle-fix/T6-INC-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-INC-ABS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-ABS/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-ABS/repeat_3,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a1)
+rail-oracle-fix/T6-INC-ABS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_3] x2 (a4-a5)
+rail-oracle-fix/T6-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 7 actions after searching as many places as the ground-truth plan (7) (a8)
+rail-oracle-fix/T6-INC-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-INC-ABS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-ABS/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-ABS/repeat_4,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1 (explored kitchen_1 at a1)
+rail-oracle-fix/T6-INC-ABS/repeat_4,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 7 actions after searching as many places as the ground-truth plan (7) (a7)
+rail-oracle-fix/T6-INC-ABS/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-oracle-fix/T6-INC-ABS/repeat_5,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 7 actions after searching as many places as the ground-truth plan (7) (a8)
+rail-oracle-fix/T6-INC-BASE/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-BASE/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-BASE/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-BASE/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-BASE/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-CON/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-oracle-fix/T6-INC-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-oracle-fix/T6-INC-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-oracle-fix/T6-INC-CON/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-oracle-fix/T6-INC-CON/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-oracle-fix/T6-INC-DIS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-DIS/repeat_1,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_1,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place, Pick, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_1,failure,Wrong Object,Wrong Object,"supplement_bottle_0 (distractor): Pick, Fill, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-DIS/repeat_1,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-INC-DIS/repeat_1,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-INC-DIS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-DIS/repeat_2,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_2,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_2,failure,Wrong Object,Wrong Object,"supplement_bottle_0 (distractor): Pick, Fill, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-DIS/repeat_2,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-INC-DIS/repeat_2,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-INC-DIS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-DIS/repeat_3,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_3,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_3,failure,Wrong Object,Wrong Object,"supplement_bottle_0 (distractor): Pick, Fill, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-DIS/repeat_3,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-INC-DIS/repeat_3,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-INC-DIS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-DIS/repeat_4,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_4,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_4,failure,Wrong Object,Wrong Object,"supplement_bottle_0 (distractor): Pick, Fill, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-DIS/repeat_4,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-INC-DIS/repeat_4,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-INC-DIS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-DIS/repeat_5,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_5,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_5,failure,Wrong Object,Wrong Object,"supplement_bottle_0 (distractor): Pick, Fill, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-INC-DIS/repeat_5,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-INC-DIS/repeat_5,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-INC-DIS/repeat_5,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-INC-SUB/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-oracle-fix/T6-INC-SUB/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-oracle-fix/T6-INC-SUB/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-INC-SUB/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+rail-oracle-fix/T6-INC-SUB/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-ABS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-ABS/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-OUT-ABS/repeat_1,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 5 actions after checking every place in the ground-truth plan (a10)
+rail-oracle-fix/T6-OUT-ABS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-ABS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-ABS/repeat_2,failure,Task Abandoned,Task Abandoned,"unsolvable: The required clean hand towel has no valid object ID in the provided object list. Searches of bathroom_1, bathroom_2, bathroom_3, and laundryroom_1 did not discover one, so it cannot be picked up or placed next to bread_0. The bread_0 and bottle_0 placement is otherwise established.; never attempted: is_powered_off(lamp_living_0)"
+rail-oracle-fix/T6-OUT-ABS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_1] x2 (a29-a30)
+rail-oracle-fix/T6-OUT-ABS/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-ABS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 2 actions after searching as many places as the ground-truth plan (7) (a37)
+rail-oracle-fix/T6-OUT-ABS/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-ABS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-ABS/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-OUT-ABS/repeat_4,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-OUT-ABS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[bathroom_3] x2 (a5-a6)
+rail-oracle-fix/T6-OUT-ABS/repeat_4,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 5 actions after checking every place in the ground-truth plan (a13)
+rail-oracle-fix/T6-OUT-ABS/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-BASE/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-BASE/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-BASE/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-BASE/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-BASE/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-BASE/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-BASE/repeat_5,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-OUT-CON/repeat_1,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-CON/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-oracle-fix/T6-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,"bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a3, a4)"
+rail-oracle-fix/T6-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-oracle-fix/T6-OUT-CON/repeat_1,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a3-a4)
+rail-oracle-fix/T6-OUT-CON/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-CON/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-oracle-fix/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,"bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a3, a4)"
+rail-oracle-fix/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-oracle-fix/T6-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a3-a4)
+rail-oracle-fix/T6-OUT-CON/repeat_3,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-CON/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-oracle-fix/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a3)
+rail-oracle-fix/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-oracle-fix/T6-OUT-CON/repeat_4,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-CON/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-oracle-fix/T6-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a6)
+rail-oracle-fix/T6-OUT-CON/repeat_4,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-oracle-fix/T6-OUT-CON/repeat_5,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-CON/repeat_5,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+rail-oracle-fix/T6-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a6)
+rail-oracle-fix/T6-OUT-CON/repeat_5,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1
+rail-oracle-fix/T6-OUT-DIS/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-oracle-fix/T6-OUT-DIS/repeat_1,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean; ended on None in kitchen_1"
+rail-oracle-fix/T6-OUT-DIS/repeat_1,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_1,failure,Wrong Object,Wrong Object,"supplement_bottle_0 (distractor): Pick, Fill, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T6-OUT-DIS/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-DIS/repeat_2,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place, Pick, Place; ended on table_5 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-OUT-DIS/repeat_2,failure,Object Not Found,Object Not Found,bread_0: never seen on/in counter_0 in kitchen_1
+rail-oracle-fix/T6-OUT-DIS/repeat_2,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-OUT-DIS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-DIS/repeat_3,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_3,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-OUT-DIS/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-DIS/repeat_4,failure,Wrong Object,Wrong Object,"dirty_hand_towel_0 (distractor): Pick, Clean, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_4,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_4,failure,Wrong Object,Wrong Object,"supplement_bottle_0 (distractor): Pick, Fill, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_4,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in table_7 in dining_room_1
+rail-oracle-fix/T6-OUT-DIS/repeat_4,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in shelves_11 in bathroom_3
+rail-oracle-fix/T6-OUT-DIS/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-oracle-fix/T6-OUT-DIS/repeat_5,failure,Action Undone,Action Undone,"is_next_to(bottle_0, bread_0): met at step 3845, not true at the end"
+rail-oracle-fix/T6-OUT-DIS/repeat_5,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+rail-oracle-fix/T6-OUT-DIS/repeat_5,inefficiency,Precondition Error,Precondition Error,"a37 Pick[bread_0]: Unexpected failure! - Failed to pick! Object is inside closed microwave_0, you need to open the furniture first."
+rail-oracle-fix/T6-OUT-DIS/repeat_5,inefficiency,Precondition Error,Precondition Error,"a68 Pick[bread_0]: Unexpected failure! - Failed to pick! Object is inside closed microwave_0, you need to open the furniture first."
+rail-oracle-fix/T6-OUT-DIS/repeat_5,inefficiency,Precondition Error,Precondition Error,"a71 Pick[bread_0]: Unexpected failure! - Failed to pick! Object is inside closed microwave_0, you need to open the furniture first."
+rail-oracle-fix/T6-OUT-DIS/repeat_5,inefficiency,Precondition Error,Precondition Error,"a74 Pick[bread_0]: Unexpected failure! - Failed to pick! Object is inside closed microwave_0, you need to open the furniture first."
+rail-oracle-fix/T6-OUT-DIS/repeat_5,inefficiency,Precondition Error,Precondition Error,"a77 Pick[bread_0]: Unexpected failure! - Failed to pick! Object is inside closed microwave_0, you need to open the furniture first."
+rail-oracle-fix/T6-OUT-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,Navigate[bread_0] -> Pick[bread_0] x4 (a67-a77)
+rail-oracle-fix/T6-OUT-SUB/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-SUB/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-SUB/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-oracle-fix/T6-OUT-SUB/repeat_4,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+rail-oracle-fix/T6-OUT-SUB/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+rail-oracle-fix/T7-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[living_room_1]: Successful execution!
+rail-oracle-fix/T7-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a23 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-BASE/repeat_4,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-BASE/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a22-a32)"
+rail-oracle-fix/T7-ACC-BASE/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a9 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a22 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[closet_1]: Successful execution!
+rail-oracle-fix/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a10 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a21-a31)"
+rail-oracle-fix/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a23 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a22-a32)"
+rail-oracle-fix/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a22 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a25 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a28 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_4,inefficiency,Affordance Error,Affordance Error,"a31 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a8 Explore[living_room_1]: Successful execution!
+rail-oracle-fix/T7-ACC-DIS/repeat_4,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a21-a31)"
+rail-oracle-fix/T7-ACC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a9 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a20 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a23 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a19-a29)"
+rail-oracle-fix/T7-INC-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-BASE/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a12 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a12 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a24 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a27 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a30 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a33 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a12 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a23-a33)"
+rail-oracle-fix/T7-INC-DIS/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a20 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a23 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a26 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_5,inefficiency,Affordance Error,Affordance Error,"a29 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-INC-DIS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-INC-DIS/repeat_5,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a19-a29)"
+rail-oracle-fix/T7-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a22 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a18 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-OUT-BASE/repeat_4,inefficiency,Unnecessary Action,Unnecessary Action,a16 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-OUT-BASE/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a12 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-OUT-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-OUT-DIS/repeat_2,failure,Missing Action,Missing Action,is_clean(plate_0): never done
+rail-oracle-fix/T7-OUT-DIS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_living_0): never done
+rail-oracle-fix/T7-OUT-DIS/repeat_2,failure,Missing Action,Missing Action,is_powered_off(lamp_kitchen_0): never done
+rail-oracle-fix/T7-OUT-DIS/repeat_2,failure,Object Not Found,Object Not Found,plate_0: never seen on/in cabinet_5 in kitchen_1
+rail-oracle-fix/T7-OUT-DIS/repeat_2,failure,Object Not Found,Object Not Found,stuffed_toy_0: never seen on/in couch_0 in living_room_1
+rail-oracle-fix/T7-OUT-DIS/repeat_2,failure,Object Not Found,Object Not Found,toy_truck_0: never seen on/in floor_living_room_1 in living_room_1
+rail-oracle-fix/T7-OUT-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a32 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-OUT-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a35 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-OUT-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a38 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-OUT-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a41 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+rail-oracle-fix/T7-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a22 Pick[toy_truck_0]: Successful execution!
+rail-oracle-fix/T7-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Repeated Action,"Navigate[cabinet_5] -> Place[plate_0, within, cabinet_5, None, None] x4 (a31-a41)"
+rail-oracle-fix/T4-ACC-ABS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-oracle-fix/T4-ACC-ABS/repeat_5,inefficiency,Unnecessary Action,Unnecessary Action,a0 Explore[kitchen_1]: Successful execution!
+rail-oracle-fix/T4-INC-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-oracle-fix/T4-INC-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-oracle-fix/T4-INC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-oracle-fix/T4-INC-ABS/repeat_4,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-oracle-fix/T4-INC-ABS/repeat_5,failure,Incorrect Placement,Incorrect Placement,"apple_1 ended on floor_kitchen_1 in kitchen_1; unmet: is_inside(apple_1, basket_0)"
+rail-oracle-fix/T4-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,"apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-oracle-fix/T4-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,"apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-oracle-fix/T4-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,"bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-oracle-fix/T4-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,"bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-oracle-fix/T4-INC-CON/repeat_4,failure,Object Not Found,Object Not Found,"orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0, a1)"
+rail-oracle-fix/T4-INC-CON/repeat_4,inefficiency,Unnecessary Action,Repeated Action,Explore[kitchen_1] x2 (a0-a1)
+rail-oracle-fix/T4-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-INC-CON/repeat_5,failure,Object Not Found,Object Not Found,orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a0)
+rail-oracle-fix/T4-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 11 actions after searching as many places as the ground-truth plan (2) (a4)
+rail-oracle-fix/T4-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 9 actions after searching as many places as the ground-truth plan (2) (a7)
+rail-oracle-fix/T4-OUT-ABS/repeat_3,failure,Action Undone,Action Undone,"is_inside(apple_1, basket_0): met at step 1588, not true at the end"
+rail-oracle-fix/T4-OUT-ABS/repeat_3,failure,Action Undone,Action Undone,"is_inside(orange_0, basket_0): met at step 1732, not true at the end"
+rail-oracle-fix/T4-OUT-ABS/repeat_3,failure,Action Undone,Action Undone,"is_on_top(basket_0, counter_0): met at step 0, not true at the end"
+rail-oracle-fix/T4-OUT-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a1 Pick[basket_0]: Successful execution!
+rail-oracle-fix/T4-OUT-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a24 Pick[basket_0]: Successful execution!
+rail-oracle-fix/T4-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 2 actions after searching as many places as the ground-truth plan (2) (a40)
+rail-oracle-fix/T4-OUT-ABS/repeat_4,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a7)
+rail-oracle-fix/T4-OUT-ABS/repeat_4,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 9 actions after searching as many places as the ground-truth plan (2) (a7)
+rail-oracle-fix/T4-OUT-ABS/repeat_5,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 2 actions after searching as many places as the ground-truth plan (2) (a29)
+rail-oracle-fix/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a11)
+rail-oracle-fix/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a11)
+rail-oracle-fix/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a11)
+rail-oracle-fix/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a11)
+rail-oracle-fix/T4-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a11)
+rail-oracle-fix/T4-OUT-CON/repeat_1,failure,Task Abandoned,Task Abandoned,"unsolvable: The required three fruits have no valid object IDs in the supplied movable-object list. Searches of living_room_1 (twice) and kitchen_1 found only basket_0, bottle_1, and bottle_2; inventing fruit names is prohibited, so the fruits cannot be picked or placed in basket_0.; never attempted: is_inside(apple_0, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-oracle-fix/T4-OUT-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-oracle-fix/T4-OUT-CON/repeat_2,inefficiency,Unnecessary Action,Repeated Action,Explore[living_room_1] x2 (a6-a7)
+rail-oracle-fix/T4-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,apple_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-oracle-fix/T4-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,apple_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-oracle-fix/T4-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-oracle-fix/T4-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_1: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-oracle-fix/T4-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,orange_0: never seen on/in fridge_0 in kitchen_1 (explored kitchen_1 at a7)
+rail-oracle-fix/T4-OUT-CON/repeat_3,failure,Task Abandoned,Task Abandoned,"unsolvable: Only orange_1 is a known fruit-like movable object. The attempted apple_1 and apple_2 objects do not exist in the world graph, and no other fruit IDs are available in the permitted object list. After exploring living_room_1 and kitchen_1, the three-fruit requirement cannot be completed, although bottle_1 and bottle_2 could be placed on counter_0.; never attempted: is_inside(apple_0, basket_0), is_inside(orange_0, basket_0), is_on_top(bottle_0, counter_0), is_on_top(bottle_1, counter_0)"
+rail-oracle-fix/T4-OUT-CON/repeat_4,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+rail-oracle-fix/T4-OUT-CON/repeat_5,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s

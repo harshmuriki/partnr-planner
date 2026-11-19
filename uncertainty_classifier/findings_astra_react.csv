@@ -1,0 +1,460 @@
+run_id,kind,category,label,evidence
+react/T1-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_1]: Successful execution!
+react/T1-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_1]: Successful execution!
+react/T1-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_1]: Successful execution!
+react/T1-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_1]: Successful execution!
+react/T1-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[bedroom_1]: Successful execution!
+react/T1-INC-ABS/repeat_1,inefficiency,Affordance Error,Affordance Error,a5 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for jug_0 for 7 actions after searching as many places as the ground-truth plan (8) (a22)
+react/T1-INC-ABS/repeat_2,inefficiency,Affordance Error,Affordance Error,a5 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for jug_0 for 8 actions after searching as many places as the ground-truth plan (8) (a22)
+react/T1-INC-ABS/repeat_3,inefficiency,Affordance Error,Affordance Error,a5 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for jug_0 for 8 actions after searching as many places as the ground-truth plan (8) (a22)
+react/T1-INC-CON/repeat_1,inefficiency,Precondition Error,Precondition Error,a7 Open[cabinet_2]: Unexpected failure! - Failed to Open! cabinet_2 is occluded or too far from agent to Open.
+react/T1-INC-CON/repeat_1,inefficiency,Affordance Error,Affordance Error,a4 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-INC-CON/repeat_2,inefficiency,Affordance Error,Affordance Error,a5 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-INC-CON/repeat_3,inefficiency,Affordance Error,Affordance Error,a4 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-OUT-ABS/repeat_1,inefficiency,Precondition Error,Precondition Error,a8 Open[cabinet_2]: Unexpected failure! - Failed to Open! cabinet_2 is occluded or too far from agent to Open.
+react/T1-OUT-ABS/repeat_1,inefficiency,Affordance Error,Affordance Error,a5 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for jug_0 for 2 actions after searching as many places as the ground-truth plan (8) (a20)
+react/T1-OUT-ABS/repeat_2,inefficiency,Affordance Error,Affordance Error,a6 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-OUT-ABS/repeat_3,inefficiency,Affordance Error,Affordance Error,a6 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-OUT-CON/repeat_1,inefficiency,Affordance Error,Affordance Error,a6 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-OUT-CON/repeat_2,inefficiency,Precondition Error,Precondition Error,a6 Open[fridge_0]: Unexpected failure! - Failed to Open! fridge_0 is occluded or too far from agent to Open.
+react/T1-OUT-CON/repeat_2,inefficiency,Affordance Error,Affordance Error,a5 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T1-OUT-CON/repeat_3,inefficiency,Affordance Error,Affordance Error,a6 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is not articulated - and cannot be Opened.
+react/T2-ACC-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+react/T2-ACC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+react/T2-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-ACC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T2-INC-ABS/repeat_1,inefficiency,Precondition Error,Precondition Error,a31 Open[chest_of_drawers_2]: Unexpected failure! - Failed to Open! chest_of_drawers_2 is occluded or too far from agent to Open.
+react/T2-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 9 actions after searching as many places as the ground-truth plan (6) (a28)
+react/T2-INC-ABS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+react/T2-INC-ABS/repeat_2,failure,Action Undone,Action Undone,"is_on_top(box_0, table_2): met at step 579, not true at the end"
+react/T2-INC-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on floor_living_room_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+react/T2-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 8 actions after searching as many places as the ground-truth plan (6) (a19)
+react/T2-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 10 actions after searching as many places as the ground-truth plan (6) (a17)
+react/T2-INC-BASE/repeat_1,inefficiency,Precondition Error,Precondition Error,a27 Open[chest_of_drawers_2]: Unexpected failure! - Failed to Open! chest_of_drawers_2 is occluded or too far from agent to Open.
+react/T2-INC-CON/repeat_3,inefficiency,Precondition Error,Precondition Error,a24 Open[chest_of_drawers_0]: Unexpected failure! - Failed to Open! chest_of_drawers_0 is occluded or too far from agent to Open.
+react/T2-INC-SUB/repeat_2,inefficiency,Precondition Error,Precondition Error,a14 Open[chest_of_drawers_2]: Unexpected failure! - Failed to Open! chest_of_drawers_2 is occluded or too far from agent to Open.
+react/T2-INC-SUB/repeat_3,inefficiency,Precondition Error,Precondition Error,a21 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T2-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 3 actions after searching as many places as the ground-truth plan (6) (a33)
+react/T2-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+react/T2-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+react/T2-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for scissors_0 for 1 actions after searching as many places as the ground-truth plan (6) (a20)
+react/T2-OUT-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+react/T2-OUT-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+react/T2-OUT-ABS/repeat_3,inefficiency,Precondition Error,Precondition Error,a14 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T2-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+react/T2-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+react/T2-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+react/T2-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+react/T2-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+react/T2-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1
+react/T2-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1
+react/T2-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,scissors_0: never seen on/in chest_of_drawers_2 in entryway_1
+react/T2-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_0 ended on table_1 in living_room_1; unmet: is_on_top(box_0, table_2)"
+react/T2-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"box_1 ended on table_1 in living_room_1; unmet: is_on_top(box_1, table_2)"
+react/T2-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"scissors_0 ended on table_1 in living_room_1; unmet: is_on_top(scissors_0, table_2)"
+react/T3-ACC-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T3-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T3-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a2 Explore[living_room_1]: Successful execution!
+react/T3-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 4 actions after searching as many places as the ground-truth plan (9) (a16)
+react/T3-INC-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a16)
+react/T3-INC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 5 actions after searching as many places as the ground-truth plan (9) (a17)
+react/T3-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-INC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-CON/repeat_1,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a5)
+react/T3-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-CON/repeat_2,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8)
+react/T3-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-CON/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a5)
+react/T3-INC-CON/repeat_3,failure,Task Abandoned,Task Abandoned,"Done: I have searched every room and checked inside the kitchen cabinet, but found only one book and no substitute. That book is on the living room side table, the laptop is off, and the cabinet is closed. I should finish because the second book could not be found.; never attempted: is_on_top(book_1, table_0)"
+react/T3-INC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-OUT-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a19)
+react/T3-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a18)
+react/T3-OUT-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for book_1 for 2 actions after searching as many places as the ground-truth plan (9) (a19)
+react/T3-OUT-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-OUT-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-CON/repeat_1,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8)
+react/T3-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8)
+react/T3-OUT-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,book_1: never seen on/in stand_0 in bedroom_2 (explored bedroom_2 at a8)
+react/T3-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T3-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_0 ended on table_3 in living_room_1; unmet: is_on_top(book_0, table_0)"
+react/T3-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"book_1 ended on table_3 in living_room_1; unmet: is_on_top(book_1, table_0)"
+react/T4-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 10 actions after checking every place in the ground-truth plan (a21)
+react/T4-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 10 actions after checking every place in the ground-truth plan (a19)
+react/T4-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 10 actions after checking every place in the ground-truth plan (a15)
+react/T4-INC-CON/repeat_1,inefficiency,Precondition Error,Precondition Error,a1 Open[fridge_0]: Unexpected failure! - Failed to Open! fridge_0 is occluded or too far from agent to Open.
+react/T4-INC-CON/repeat_2,inefficiency,Precondition Error,Precondition Error,a1 Open[fridge_0]: Unexpected failure! - Failed to Open! fridge_0 is occluded or too far from agent to Open.
+react/T4-INC-CON/repeat_3,inefficiency,Precondition Error,Precondition Error,a1 Open[fridge_0]: Unexpected failure! - Failed to Open! fridge_0 is occluded or too far from agent to Open.
+react/T4-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 16 actions after searching as many places as the ground-truth plan (2) (a6)
+react/T4-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 16 actions after searching as many places as the ground-truth plan (2) (a6)
+react/T4-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for apple_0 for 13 actions after searching as many places as the ground-truth plan (2) (a7)
+react/T4-OUT-CON/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+react/T4-OUT-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 600 s
+react/T4-OUT-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 603 s
+react/T4-OUT-DIS/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 601 s
+react/T5-ACC-ABS/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 161, before is_next_to(soap_dispenser_0, glass_0) at step 823"
+react/T5-ACC-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-ABS/repeat_1,inefficiency,Precondition Error,Precondition Error,"a5 Clean[glass_1]: Unexpected failure! - Object 214 requires faucet to clean, but agent is not near faucet."
+react/T5-ACC-ABS/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-ABS/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-BASE/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-BASE/repeat_1,inefficiency,Precondition Error,Precondition Error,"a5 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-ACC-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-BASE/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-CON/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 135, before is_next_to(soap_dispenser_0, glass_1) at step 139"
+react/T5-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a4 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+react/T5-ACC-CON/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+react/T5-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a4 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a16 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+react/T5-ACC-CON/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_1) met at step 135, before is_next_to(soap_dispenser_0, glass_1) at step 418"
+react/T5-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a4 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a20 Place[glass_0, on, cabinet_0, None, None]: Successful execution!"
+react/T5-ACC-DIS/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+react/T5-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-DIS/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+react/T5-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-DIS/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+react/T5-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-ACC-SUB/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-ACC-SUB/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-ACC-SUB/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-ACC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-ACC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-ACC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-INC-ABS/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-ABS/repeat_1,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_0]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-INC-ABS/repeat_1,inefficiency,Precondition Error,Precondition Error,"a9 Clean[glass_1]: Unexpected failure! - Object 214 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a13 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-INC-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 13 actions after checking every place in the ground-truth plan (a2)
+react/T5-INC-ABS/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-ABS/repeat_2,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_0]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-INC-ABS/repeat_2,inefficiency,Precondition Error,Precondition Error,"a9 Clean[glass_1]: Unexpected failure! - Object 214 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a15 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-INC-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 11 actions after checking every place in the ground-truth plan (a2)
+react/T5-INC-ABS/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-ABS/repeat_3,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_0]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-INC-ABS/repeat_3,inefficiency,Precondition Error,Precondition Error,"a9 Clean[glass_1]: Unexpected failure! - Object 214 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a15 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 13 actions after checking every place in the ground-truth plan (a2)
+react/T5-INC-BASE/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-BASE/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-BASE/repeat_1,inefficiency,Precondition Error,Precondition Error,"a7 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,"a13 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-INC-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-BASE/repeat_2,inefficiency,Precondition Error,Precondition Error,"a7 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-BASE/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-BASE/repeat_3,inefficiency,Precondition Error,Precondition Error,"a7 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-CON/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-CON/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-DIS/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 599, before is_next_to(soap_dispenser_0, glass_0) at step 1219"
+react/T5-INC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-DIS/repeat_1,inefficiency,Precondition Error,Precondition Error,"a7 Clean[glass_1]: Unexpected failure! - Object 218 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-DIS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 599, before is_next_to(soap_dispenser_0, glass_0) at step 1304"
+react/T5-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-DIS/repeat_2,inefficiency,Precondition Error,Precondition Error,"a7 Clean[glass_1]: Unexpected failure! - Object 218 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-DIS/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 600, before is_next_to(soap_dispenser_0, glass_0) at step 1220"
+react/T5-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-INC-DIS/repeat_3,inefficiency,Precondition Error,Precondition Error,a4 Clean[glass_0]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-INC-DIS/repeat_3,inefficiency,Precondition Error,Precondition Error,"a8 Clean[glass_1]: Unexpected failure! - Object 218 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-SUB/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 631, before is_next_to(soap_dispenser_0, glass_0) at step 1183"
+react/T5-INC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-INC-SUB/repeat_1,inefficiency,Precondition Error,Precondition Error,"a9 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-SUB/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-INC-SUB/repeat_2,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_0]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-INC-SUB/repeat_2,inefficiency,Precondition Error,Precondition Error,"a9 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-SUB/repeat_2,inefficiency,Precondition Error,Precondition Error,a19 Fill[glass_1]: Unexpected failure! - Agent too far from object to fill: Distance None
+react/T5-INC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,"a13 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-INC-SUB/repeat_3,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-INC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-INC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-INC-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-INC-SUB/repeat_3,inefficiency,Precondition Error,Precondition Error,a5 Clean[glass_0]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-INC-SUB/repeat_3,inefficiency,Precondition Error,Precondition Error,"a9 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-INC-SUB/repeat_3,inefficiency,Precondition Error,Precondition Error,a19 Fill[glass_1]: Unexpected failure! - Agent too far from object to fill: Distance None
+react/T5-INC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,"a13 Place[glass_1, on, cabinet_0, None, None]: Successful execution!"
+react/T5-OUT-ABS/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-OUT-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-ABS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 4 actions after checking every place in the ground-truth plan (a28)
+react/T5-OUT-ABS/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 672, before is_next_to(soap_dispenser_0, glass_0) at step 680"
+react/T5-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-ABS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-ABS/repeat_2,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 1 actions after checking every place in the ground-truth plan (a26)
+react/T5-OUT-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-ABS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for plate_0 for 1 actions after checking every place in the ground-truth plan (a28)
+react/T5-OUT-BASE/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 813, before is_next_to(soap_dispenser_0, glass_0) at step 1444"
+react/T5-OUT-BASE/repeat_1,inefficiency,Precondition Error,Precondition Error,"a11 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-OUT-BASE/repeat_1,inefficiency,Precondition Error,Precondition Error,a13 Clean[glass_1]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-OUT-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-OUT-BASE/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+react/T5-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-BASE/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-OUT-BASE/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 813, before is_next_to(soap_dispenser_0, glass_0) at step 1443"
+react/T5-OUT-BASE/repeat_3,inefficiency,Precondition Error,Precondition Error,"a11 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-OUT-CON/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 632, before is_next_to(soap_dispenser_0, glass_0) at step 638"
+react/T5-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-CON/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-OUT-CON/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 632, before is_next_to(soap_dispenser_0, glass_0) at step 638"
+react/T5-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-CON/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-OUT-CON/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 631, before is_next_to(soap_dispenser_0, glass_0) at step 637"
+react/T5-OUT-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-CON/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-OUT-DIS/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-OUT-DIS/repeat_1,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_1): never done, needed before is_clean(glass_1)"
+react/T5-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-DIS/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-OUT-DIS/repeat_2,failure,Missing Prerequisite,Missing Prerequisite,"is_next_to(soap_dispenser_0, glass_0): never done, needed before is_clean(glass_0)"
+react/T5-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-DIS/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-OUT-DIS/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 728, before is_next_to(soap_dispenser_0, glass_0) at step 1446"
+react/T5-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-DIS/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_0, table_0)"
+react/T5-OUT-DIS/repeat_3,inefficiency,Precondition Error,Precondition Error,"a11 Clean[glass_1]: Unexpected failure! - Object 218 requires faucet to clean, but agent is not near faucet."
+react/T5-OUT-SUB/repeat_1,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 909, before is_next_to(soap_dispenser_0, glass_0) at step 936"
+react/T5-OUT-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-SUB/repeat_1,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-OUT-SUB/repeat_2,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 623, before is_next_to(soap_dispenser_0, glass_0) at step 1215"
+react/T5-OUT-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-SUB/repeat_2,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-OUT-SUB/repeat_2,inefficiency,Precondition Error,Precondition Error,a7 Clean[glass_0]: Unexpected failure! - Agent too far from object to clean: Distance None
+react/T5-OUT-SUB/repeat_2,inefficiency,Precondition Error,Precondition Error,"a11 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T5-OUT-SUB/repeat_3,failure,Wrong Order,Wrong Order,"is_clean(glass_0) met at step 622, before is_next_to(soap_dispenser_0, glass_0) at step 1336"
+react/T5-OUT-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_0 ended on table_3 in living_room_1; unmet: is_on_top(glass_0, table_0)"
+react/T5-OUT-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"glass_1 ended on table_3 in living_room_1; unmet: is_on_top(glass_1, table_0)"
+react/T5-OUT-SUB/repeat_3,failure,Incorrect Placement,Incorrect Placement,"plate_black_0 ended on table_3 in living_room_1; unmet: is_on_top(plate_black_0, table_0)"
+react/T5-OUT-SUB/repeat_3,inefficiency,Precondition Error,Precondition Error,"a10 Clean[glass_1]: Unexpected failure! - Object 215 requires faucet to clean, but agent is not near faucet."
+react/T6-ACC-ABS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-ABS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-ABS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-CON/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-ACC-CON/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a14 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-ACC-CON/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a14 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-ACC-CON/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a14 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-SUB/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-SUB/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-ACC-SUB/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a12 Explore[bedroom_3]: Successful execution!
+react/T6-INC-ABS/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-INC-ABS/repeat_1,inefficiency,Precondition Error,Precondition Error,a2 Open[microwave_0]: Unexpected failure! - Failed to Open! microwave_0 is occluded or too far from agent to Open.
+react/T6-INC-ABS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-INC-ABS/repeat_2,inefficiency,Precondition Error,Precondition Error,a2 Open[microwave_0]: Unexpected failure! - Failed to Open! microwave_0 is occluded or too far from agent to Open.
+react/T6-INC-ABS/repeat_2,inefficiency,Precondition Error,Precondition Error,a16 PowerOff[lamp_living_0]: Unexpected failure! - Agent too far from object to power off: Distance None
+react/T6-INC-ABS/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-INC-ABS/repeat_3,inefficiency,Precondition Error,Precondition Error,a2 Open[microwave_0]: Unexpected failure! - Failed to Open! microwave_0 is occluded or too far from agent to Open.
+react/T6-INC-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 5 actions after searching as many places as the ground-truth plan (7) (a23)
+react/T6-INC-BASE/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-INC-BASE/repeat_1,inefficiency,Precondition Error,Precondition Error,a2 Open[microwave_0]: Unexpected failure! - Failed to Open! microwave_0 is occluded or too far from agent to Open.
+react/T6-INC-BASE/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-INC-BASE/repeat_2,inefficiency,Precondition Error,Precondition Error,a2 Open[microwave_0]: Unexpected failure! - Failed to Open! microwave_0 is occluded or too far from agent to Open.
+react/T6-INC-BASE/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-INC-BASE/repeat_3,failure,Incorrect Placement,Incorrect Placement,"bread_0 ended on table_5 in bedroom_3; unmet: is_on_top(bread_0, table_11)"
+react/T6-INC-CON/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-INC-CON/repeat_1,inefficiency,Precondition Error,Precondition Error,a1 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T6-INC-CON/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-INC-CON/repeat_2,inefficiency,Precondition Error,Precondition Error,a1 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T6-INC-CON/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-INC-CON/repeat_3,inefficiency,Precondition Error,Precondition Error,a1 Open[cabinet_0]: Unexpected failure! - Failed to Open! cabinet_0 is occluded or too far from agent to Open.
+react/T6-INC-DIS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+react/T6-INC-DIS/repeat_1,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+react/T6-INC-DIS/repeat_1,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+react/T6-INC-DIS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-INC-DIS/repeat_2,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+react/T6-INC-DIS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+react/T6-INC-DIS/repeat_3,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+react/T6-INC-DIS/repeat_3,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+react/T6-INC-SUB/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-INC-SUB/repeat_1,inefficiency,Precondition Error,Precondition Error,a2 Open[microwave_0]: Unexpected failure! - Failed to Open! microwave_0 is occluded or too far from agent to Open.
+react/T6-INC-SUB/repeat_1,inefficiency,Precondition Error,Precondition Error,"a14 Place[bread_0, on, table_5, None, None]: Unexpected failure! - Failed to place! Not close enough to table_5 or occluded."
+react/T6-INC-SUB/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1200 s
+react/T6-INC-SUB/repeat_3,inefficiency,Precondition Error,Precondition Error,a6 PowerOn[microwave_0]: Unexpected failure! - Agent too far from object to power on: Distance 1.8385835886001587
+react/T6-INC-SUB/repeat_3,inefficiency,Precondition Error,Precondition Error,a18 Open[fridge_0]: Unexpected failure! - Failed to Open! fridge_0 is occluded or too far from agent to Open.
+react/T6-OUT-ABS/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-OUT-ABS/repeat_1,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 2 actions after searching as many places as the ground-truth plan (7) (a35)
+react/T6-OUT-ABS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-OUT-ABS/repeat_3,inefficiency,Excess Search,Excess Search,kept searching for hand_towel_0 for 3 actions after searching as many places as the ground-truth plan (7) (a35)
+react/T6-OUT-BASE/repeat_3,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-OUT-CON/repeat_1,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-OUT-CON/repeat_2,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+react/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+react/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a2)
+react/T6-OUT-CON/repeat_2,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1 (explored laundryroom_1 at a12)
+react/T6-OUT-CON/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+react/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,bottle_0: never seen on/in fridge_0 in garage_1
+react/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,bread_0: never seen on/in cabinet_1 in kitchen_1 (explored kitchen_1 at a2)
+react/T6-OUT-CON/repeat_3,failure,Object Not Found,Object Not Found,hand_towel_0: never seen on/in cabinet_23 in laundryroom_1 (explored laundryroom_1 at a14)
+react/T6-OUT-CON/repeat_3,failure,Task Abandoned,Task Abandoned,"Done: The bread, bottle, and towel were missing, and searches of usual locations found no substitutes. The living-room light is off and all cabinets I opened are closed. I cannot complete the remaining arrangements with the available objects.; never attempted: is_on_top(bread_0, table_11), is_on_top(bottle_0, table_11), is_on_top(hand_towel_0, table_11), is_next_to(bottle_0, bread_0), is_next_to(hand_towel_0, bread_0), is_inside(bread_0, microwave_0), is_waited_inside(bread_0, microwave_0)"
+react/T6-OUT-DIS/repeat_1,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+react/T6-OUT-DIS/repeat_1,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+react/T6-OUT-DIS/repeat_1,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+react/T6-OUT-DIS/repeat_2,failure,Time Limit Reached,Time Limit Reached,Stopped after 1201 s
+react/T6-OUT-DIS/repeat_2,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+react/T6-OUT-DIS/repeat_3,failure,Missing Action,Missing Action,"is_waited_inside(bread_0, microwave_0): never done"
+react/T6-OUT-DIS/repeat_3,failure,Wrong Object,Wrong Object,"bread_25_0 (distractor): Pick, Place, Pick, Place; ended on table_11 in bedroom_3"
+react/T6-OUT-DIS/repeat_3,failure,Object Untouched,Object Untouched,"bread_0: seen on/in counter_0 in kitchen_1, never moved"
+react/T7-ACC-BASE/repeat_1,inefficiency,Affordance Error,Affordance Error,"a18 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-ACC-BASE/repeat_2,inefficiency,Affordance Error,Affordance Error,"a18 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-ACC-BASE/repeat_3,inefficiency,Affordance Error,Affordance Error,"a18 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-ACC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a18 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-ACC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a18 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-ACC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a18 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-INC-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-INC-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-INC-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-INC-DIS/repeat_1,inefficiency,Affordance Error,Affordance Error,"a20 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-INC-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-INC-DIS/repeat_2,inefficiency,Affordance Error,Affordance Error,"a19 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-INC-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-INC-DIS/repeat_3,inefficiency,Affordance Error,Affordance Error,"a20 Place[plate_0, within, cabinet_5, None, None]: Unexpected failure! - No valid placements found for entity due to Furniture cabinet_5 has no receptacle for proposition within"
+react/T7-INC-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-OUT-BASE/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-OUT-BASE/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-OUT-BASE/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-OUT-DIS/repeat_1,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-OUT-DIS/repeat_2,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
+react/T7-OUT-DIS/repeat_3,inefficiency,Unnecessary Action,Unnecessary Action,a8 Pick[toy_truck_0]: Successful execution!
