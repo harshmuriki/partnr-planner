@@ -1,0 +1,788 @@
+"""RailPlanner: VLM-TAMP prompting with per-subgoal expanders instead of PDDL.
+
+Everything except subgoal planning (VLM turns, branches, replanning, explore,
+logging) is inherited from VlmTampPddlPlanner, so the two are directly
+comparable. Each symbolic subgoal is expanded into oracle skills by
+habitat_llm.rail_planner.subgoal_expanders rather than solved with
+PDDLStream / Fast Downward.
+
+plan_config.replan_trigger additionally re-queries the VLM after a skill
+finishes (see habitat_llm.rail_planner.replan_trigger).
+
+waited_in(<movable>, <container>) puts an object inside an appliance and runs
+the Wait skill (e.g. heating bread in a microwave), which PDDL has no action for.
+
+plan_config.placement_oracle feeds privileged placement goals to the VLM prompt
+and/or the Place calls (see habitat_llm.rail_planner.placement_oracle).
+
+plan_config.two_phase (default false) adds a VLM mode selector at every replan
+point: explore runs a ReAct exploration phase (react_explorer.py, search-only
+skills) and interact runs the loop above without explore(<room>) subgoals
+(see habitat_llm.rail_planner.mode_selector). With the flag off none of this runs.
+"""
+
+import os
+
+from habitat.sims.habitat_simulator import sim_utilities as sutils
+
+from habitat_llm.llm.instruct.utils import get_world_descr
+from habitat_llm.planner.vlm_tamp_pddl_planner import VlmTampPddlPlanner
+from habitat_llm.rail_planner import placement_oracle
+from habitat_llm.rail_planner.mode_selector import build_selector_prompt, parse_selector_response
+from habitat_llm.utils.llm_usage import snapshot_from_llm
+from habitat_llm.rail_planner.replan_trigger import (
+    END_OF_PLAN_CHECKS,
+    TRIGGERS,
+    action_entities,
+    compute_delta,
+    goal_entities,
+    gt_goal_status,
+    should_replan,
+    take_snapshot,
+    unmet_goal_feedback,
+)
+from habitat_llm.rail_planner.subgoal_expanders import (
+    WAITED_IN_PREDS,
+    SubgoalPlanError,
+    build_scene_state,
+    expand_subgoal,
+)
+from habitat_llm.utils.movable_containers import container_bounds
+from habitat_llm.utils.sim import is_open as sim_is_open
+
+
+class RailPlanner(VlmTampPddlPlanner):
+    # Appended to the VLM's predicate list (Turn 2).
+    EXTRA_SUBGOALS = (
+        "\n'waited_in(<movable>, <container_furniture>)': the result of putting <movable> inside "
+        "<container_furniture> (closed and switched on if it is an appliance) and waiting there, e.g. to heat, "
+        "warm or cook <movable>; it contains two arguments. Take <movable> out afterwards with a separate subgoal."
+    )
+
+    def reset(self):
+        super().reset()
+        self.replan_trigger = str(self.plan_config.get("replan_trigger", "failure"))
+        if self.replan_trigger not in TRIGGERS:
+            raise ValueError(f"replan_trigger must be one of {TRIGGERS}, got {self.replan_trigger!r}")
+        self.max_proactive_replans = int(self.plan_config.get("max_proactive_replans", 30))
+        self._trigger_prev_snapshot = None
+        self._trigger_seen = set()
+        self._goal_entities = None
+        self._proactive_replans = 0
+        self._replan_pending = False
+        self.end_of_plan_check = str(self.plan_config.get("end_of_plan_check", "none"))
+        if self.end_of_plan_check not in END_OF_PLAN_CHECKS:
+            raise ValueError(
+                f"end_of_plan_check must be one of {END_OF_PLAN_CHECKS}, got {self.end_of_plan_check!r}"
+            )
+        self.max_end_of_plan_replans = int(self.plan_config.get("max_end_of_plan_replans", 3))
+        self._end_of_plan_replans = 0
+        self._end_replan_pending = False
+        self._end_feedback = []
+        self._world_graph = None
+        self.placement_oracle_mode = str(self.plan_config.get("placement_oracle", "none"))
+        if self.placement_oracle_mode not in placement_oracle.MODES:
+            raise ValueError(
+                f"placement_oracle must be one of {placement_oracle.MODES}, got {self.placement_oracle_mode!r}"
+            )
+        self._placement_goals = None
+        self._placed_order = []
+        self._container_cache = {}
+        self._waited = set()
+        # two_phase: VLM mode selector + ReAct exploration phases. Nothing below is used when it is off.
+        self.two_phase = bool(self.plan_config.get("two_phase", False))
+        self.max_explore_phases = int(self.plan_config.get("max_explore_phases", 6))
+        self.explore_phase_max_skills = int(self.plan_config.get("explore_phase_max_skills", 10))
+        self._mode = "interact"
+        self._explore_phases = 0
+        self._explore_summaries = []
+        self._phase = None
+        self._two_phase_started = False
+        self._explorer = getattr(self, "_explorer", None)
+        if self._explorer is not None:
+            self._explorer.reset()
+
+    def get_next_action(self, instruction, observations, world_graphs):
+        agent_uid = self._agents[0].uid if self._agents else 0
+        world_graph = world_graphs[agent_uid]
+        self._world_graph = world_graph
+
+        if getattr(self, "two_phase", False) and not self.is_done:
+            if self._mode == "explore":
+                return self._explore_step(instruction, observations, world_graphs, agent_uid)
+            if not self.branches and not self._two_phase_started:
+                # First decision of the episode. The base Phase 1 would abort on an explore choice
+                # (no branches), so make it here.
+                self._two_phase_started = True
+                if not self.trace:
+                    self._trace_append(f"Task: {instruction}")
+                self._generate_subgoals(instruction, world_graph, observations, append=False)
+                if self._mode == "explore":
+                    return self._explore_step(instruction, observations, world_graphs, agent_uid)
+
+        reason = (
+            "new_observation" if self._replan_pending
+            else "plan_finished" if self._end_replan_pending
+            else None
+        )
+        if reason and not self.last_high_level_actions and not self.is_done:
+            # Same prompt for every trigger: the robot's own observations only.
+            self._replan_pending = self._end_replan_pending = False
+            self._vprint_header(f"REPLANNING ({reason})", "yellow")
+            if reason == "plan_finished" and self._end_feedback:
+                self._replan_with_feedback(instruction, observations, world_graph)
+            else:
+                self._observe_and_continue(instruction, observations, world_graph, reason)
+            self._trigger_prev_snapshot = self._trigger_snapshot(world_graph, agent_uid)
+            info = self._planner_info(agent_uid, hl_override={}, replanned={agent_uid: True})
+            if self.is_done:
+                info["is_done"] = {agent_uid: True}
+            return {}, info, self.is_done
+
+        hl_before = dict(self.last_high_level_actions)
+        out = super().get_next_action(instruction, observations, world_graphs)
+        if self._end_replan_pending:
+            # _finish_planning refused plan_completed: keep the episode running.
+            return {}, self._planner_info(agent_uid, hl_override={}), False
+        if self.replan_trigger != "failure" and not self.is_done and getattr(self, "_mode", "") != "explore":
+            self._check_replan_trigger(out[1], hl_before.get(agent_uid), world_graph, agent_uid)
+        return out
+
+    # ------------------------------------------------------------------
+    # two_phase: mode selector + ReAct exploration phases
+    # ------------------------------------------------------------------
+
+    def _get_explorer(self):
+        if self._explorer is None:
+            from habitat_llm.rail_planner.react_explorer import ExploreReactPlanner
+
+            cfg = self.plan_config.get("explore_react")
+            if cfg is None:
+                raise ValueError("two_phase=true needs plan_config.explore_react (see conf/planner/rail_planner.yaml)")
+            explorer = ExploreReactPlanner(cfg, self.env_interface)
+            # Share the agent (tools, world graph) without LLMPlanner.agents' setter, which would hand the
+            # ReAct LLM to the agent's tools.
+            explorer._agents = self._agents
+            explorer.set_image_save_dir(os.path.join(self._get_log_dir(), "explore_react_images"))
+            self._explorer = explorer
+        return self._explorer
+
+    @staticmethod
+    def _selector_reason(kwargs) -> str:
+        reason = kwargs.get("observation_reason")
+        if reason == "explore_phase_done":
+            return "an exploration phase just finished"
+        if reason == "plan_finished":
+            return "the plan finished but the task is not complete yet"
+        if reason == "new_observation":
+            return "the robot observed a change relevant to the plan"
+        if kwargs.get("refresh_failure_observation"):
+            return "a planned subgoal or action failed"
+        if reason:
+            return str(reason)
+        return "start of the task" if not kwargs.get("append") else "replanning"
+
+    def _choose_mode(self, instruction, world_graph, observations, kwargs) -> str:
+        reason = self._selector_reason(kwargs)
+        left = self.max_explore_phases - self._explore_phases
+        if left <= 0:
+            self._log_event({"event": "mode_selection", "reason": reason, "mode": "interact", "forced": True,
+                             "explore_phases": self._explore_phases})
+            return "interact"
+        agent_uid = self._agents[0].uid if self._agents else 0
+        # Same memory text the VLM sees; do not consume the one-time initial-location line.
+        scene = get_world_descr(
+            world_graph, agent_uid=agent_uid, include_room_name=True, add_state_info=True, centralized=False,
+            include_initial_agent_location=not getattr(self, "_initial_agent_location_sent", False),
+        )
+        prompt = build_selector_prompt(instruction, scene, reason, self.history, self._explore_summaries, left)
+        urls = []
+        if self.use_images:
+            fresh = self._observe_failure_state(observations, reason="mode_selection")
+            urls = self._get_annotated_vlm_image_urls(fresh, world_graph, annotate=False)
+            if urls:
+                prompt = "The attached image is the robot's current third-person view.\n\n" + prompt
+        self._vprint_header("MODE SELECTOR", "magenta")
+        self.vlm.new_session()
+        self._append_vlm_prompt(prompt_kind="mode_selection", prompt_text=prompt, image_count=len(urls))
+        response = self._ask_vlm(
+            prompt,
+            image_data_urls=urls or None,
+            max_completion_tokens=self.vlm_max_tokens,
+            temperature=self.vlm_temperature,
+            reasoning_effort=self.vlm_reasoning_effort,
+        )
+        mode, why, goal, parsed = parse_selector_response(response)
+        self._log_event({
+            "event": "mode_selection", "reason": reason, "mode": mode, "selector_reason": why,
+            "explore_goal": goal, "parsed": parsed, "forced": False, "explore_phases": self._explore_phases,
+            "image_count": len(urls), "prompt": prompt, "response": response,
+            "api_response": self.vlm.get_last_response_metadata(),
+        })
+        self._vprint(f"  [mode] {mode}: {why}" + (f" | goal: {goal}" if goal else ""), "magenta")
+        self._trace_append(f"Mode selector ({reason}): {mode}. {why}" + (f" Explore goal: {goal}" if goal else ""))
+        if mode == "explore":
+            self._begin_explore_phase(goal, why, source="selector")
+        return mode
+
+    def _begin_explore_phase(self, goal: str, reason: str, source: str) -> None:
+        self._explore_phases += 1
+        self._mode = "explore"
+        explorer = self._get_explorer()
+        explorer.start_phase(goal, self._explore_summaries)
+        world_graph = self._world_graph
+        self._phase = {
+            "index": self._explore_phases, "goal": explorer.phase_goal, "reason": reason, "source": source,
+            "skills": 0, "llm_calls": 0, "actions": [],
+            "start_memory": self._memory_snapshot(world_graph) if world_graph is not None else {},
+        }
+        self.current_plan = []
+        self.current_action_idx = 0
+        self.last_high_level_actions = {}
+        self._subgoal_retry_count = 0
+        self._replan_pending = self._end_replan_pending = False
+        self._log_event({"event": "explore_phase_start", "phase": self._explore_phases, "goal": explorer.phase_goal,
+                         "reason": reason, "source": source})
+        self._vprint_header(f"EXPLORATION PHASE {self._explore_phases}: {explorer.phase_goal}", "cyan")
+        self._trace_append(f"Exploration phase {self._explore_phases} ({source}): {explorer.phase_goal}")
+
+    def _explore_step(self, instruction, observations, world_graphs, agent_uid):
+        """One tick of the ReAct exploration phase; ends the phase and replans when it is over."""
+        explorer, phase = self._explorer, self._phase
+        world_graph = world_graphs[agent_uid]
+        if explorer.replan_required and not explorer.is_done:
+            # The ReAct LLM is about to choose a new action.
+            if phase["skills"] >= self.explore_phase_max_skills:
+                return self._end_explore_phase("skill_cap", instruction, observations, world_graph, agent_uid)
+            if phase["llm_calls"] >= 2 * self.explore_phase_max_skills:
+                return self._end_explore_phase("llm_call_cap", instruction, observations, world_graph, agent_uid)
+            if self._action_cap_reached():
+                return {}, self._planner_info(agent_uid, hl_override={}, is_done={agent_uid: True}), True
+        asked = explorer.replan_required
+        explorer.rejected = False
+        low, info, done = explorer.get_next_action(
+            explorer.phase_instruction(instruction), observations, world_graphs
+        )
+        if asked:
+            phase["llm_calls"] += 1
+        replanned = bool((info.get("replanned") or {}).get(agent_uid))
+        hl = (info.get("high_level_actions") or {}).get(agent_uid)
+        thought = (info.get("thought") or {}).get(agent_uid)
+        responses = dict(info.get("responses") or {})
+        if done:
+            return self._end_explore_phase(
+                "done" if not explorer._termination else str(explorer._termination.get("reason", "terminated")),
+                instruction, observations, world_graph, agent_uid,
+            )
+        if replanned and explorer.rejected:
+            self._log_event({"event": "explore_phase_step", "phase": phase["index"], "thought": thought,
+                             "action": list(hl[:2]) if hl else None, "rejected": True,
+                             "result": responses.get(agent_uid)})
+            self._trace_append(f"[explore {phase['index']}] rejected {hl[0] if hl else hl}: not an exploration action")
+            # Nothing was dispatched: do not log or count an action.
+            return {}, self._planner_info(agent_uid, hl_override={}, replanned={agent_uid: False}), False
+        if replanned and hl:
+            self._num_actions += 1
+            phase["skills"] += 1
+            phase["actions"].append(f"{hl[0]}[{hl[1]}]")
+            self._log_event({"event": "explore_phase_step", "phase": phase["index"], "thought": thought,
+                             "action": list(hl[:2]), "rejected": False, "skill": phase["skills"]})
+            self._trace_append(f"[explore {phase['index']}] Thought: {thought}\nAction: {hl[0]}[{hl[1]}]")
+        result = responses.get(agent_uid)
+        if result:
+            phase["actions"][-1:] = [f"{a} -> {str(result)[:120]}" for a in phase["actions"][-1:]]
+            self._log_event({"event": "explore_phase_result", "phase": phase["index"],
+                             "action": list(hl[:2]) if hl else None, "result": result})
+            self._trace_append(f"[explore {phase['index']}] Result: {result}")
+        out = self._planner_info(
+            agent_uid, hl_override={agent_uid: hl} if hl else {}, responses=responses,
+            replanned={agent_uid: replanned}, thought={agent_uid: thought},
+        )
+        if info.get("action_image"):
+            out["action_image"] = info["action_image"]
+        return low, out, False
+
+    def _end_explore_phase(self, why, instruction, observations, world_graph, agent_uid):
+        phase, explorer = self._phase, self._explorer
+        after = self._memory_snapshot(world_graph)
+        before = phase["start_memory"]
+        new = sorted(set(after) - set(before))
+        moved = sorted(k for k in after if k in before and after[k] != before[k])
+        summary = (
+            f"phase {phase['index']} (goal: {phase['goal']}): {phase['skills']} actions"
+            f" [{'; '.join(phase['actions']) or 'none'}]; newly found: {', '.join(new) or 'nothing'}"
+            + (f"; changed: {', '.join(moved)}" if moved else "") + f"; ended: {why}"
+        )
+        self._explore_summaries.append(summary)
+        self.history.append(f"Exploration {summary}")
+        self._log_event({"event": "explore_phase_end", "phase": phase["index"], "why": why, "skills": phase["skills"],
+                         "llm_calls": phase["llm_calls"], "actions": phase["actions"], "new_objects": new,
+                         "changed_objects": moved})
+        try:
+            path = os.path.join(self._get_log_dir(), f"explore_phase_{phase['index']:02d}.txt")
+            with open(path, "w") as f:
+                f.write(explorer.curr_prompt)
+        except Exception:
+            pass
+        self._trace_append(f"Exploration phase {phase['index']} ended ({why}). Newly found: {', '.join(new) or 'nothing'}")
+        self._vprint_header(f"EXPLORATION PHASE {phase['index']} ENDED ({why})", "cyan")
+        self._mode, self._phase = "interact", None
+        explorer.last_high_level_actions = {}
+
+        # Replan with the updated memory; the selector may start another phase.
+        fresh = self._observe_failure_state(observations, reason="explore_phase_done")
+        self._reprompt_round += 1
+        self._log_event({"event": "reprompt_started", "reason": "explore_phase_done", "branch": self.branch_idx,
+                         "subgoal_idx": self.subgoal_idx, "reprompt_round": self._reprompt_round})
+        self.current_plan = []
+        self.current_action_idx = 0
+        self.last_high_level_actions = {}
+        self._subgoal_retry_count = 0
+        history = (
+            "Replanning reason: an exploration phase just finished.\n"
+            f"Exploration goal: {phase['goal']}\n"
+            f"Exploration actions: {'; '.join(phase['actions']) or 'none'}\n"
+            f"Newly found objects: {', '.join(new) or 'none'}\n"
+            f"Previously achieved subgoals: {self._already_succeeded_subgoals}.\n"
+            "Plan for the ORIGINAL task using the updated memory."
+        )
+        self._generate_subgoals(instruction, world_graph, fresh, history_str=history, append=True,
+                                observation_reason="explore_phase_done")
+        info = self._planner_info(agent_uid, hl_override={}, replanned={agent_uid: True})
+        if self.is_done:
+            info["is_done"] = {agent_uid: True}
+        return {}, info, self.is_done
+
+    def _handle_turn1_decision(self, decision: dict) -> bool:
+        if self.two_phase and decision.get("decision") == "explore":
+            if self._explore_phases >= self.max_explore_phases:
+                self._finish_planning("budget_exhausted", "exploration requested with no exploration phases left")
+                return True
+            self._log_event({"event": "mode_selection", "reason": "interaction VLM requested exploration",
+                             "mode": "explore", "explore_goal": str(decision.get("reason", "")), "forced": False,
+                             "source": "interaction_vlm", "explore_phases": self._explore_phases})
+            self._begin_explore_phase(str(decision.get("reason", "")), "interaction VLM requested exploration",
+                                      source="interaction_vlm")
+            return True
+        return super()._handle_turn1_decision(decision)
+
+    def _build_english_prompt(self, **kwargs) -> str:
+        if self.two_phase:
+            kwargs["allow_explore"] = False
+        return super()._build_english_prompt(**kwargs)
+
+    def _build_predicate_prompt(self, *args, **kwargs) -> str:
+        if self.two_phase:
+            kwargs["allow_explore"] = False
+        return super()._build_predicate_prompt(*args, **kwargs)
+
+    def _planner_info(self, agent_uid, **kwargs):
+        out = super()._planner_info(agent_uid, **kwargs)
+        explorer = getattr(self, "_explorer", None)
+        if not getattr(self, "two_phase", False) or explorer is None:
+            return out
+        # One episode budget: add the ReAct phase's LLM time, calls and tokens to the planner's own.
+        cost = dict(out.get("cost_metrics") or {})
+        cost["llm_planning_time_s"] = cost.get("llm_planning_time_s", 0.0) + explorer.llm_planning_time_s
+        cost["llm_requests"] = cost.get("llm_requests", 0) + explorer.replanning_count
+        cost["explore_phase_llm_time_s"] = explorer.llm_planning_time_s
+        cost["explore_phase_llm_requests"] = explorer.replanning_count
+        cost["explore_phases"] = self._explore_phases
+        usage = snapshot_from_llm(explorer.llm)
+        for key in ("prompt_tokens", "completion_tokens", "cached_tokens", "total_tokens", "llm_calls_with_usage"):
+            if usage.get(key) is not None:
+                cost[key] = (cost.get(key) or 0) + usage[key]
+        if usage.get("llm_usd") is not None:
+            cost["llm_usd"] = (cost.get("llm_usd") or 0.0) + usage["llm_usd"]
+        out["cost_metrics"] = cost
+        return out
+
+    def _finish_planning(self, reason, evidence=""):
+        """With an oracle end_of_plan_check, refuse plan_completed while the goal is unmet.
+
+        The base planner stops as soon as the active branch runs out of
+        subgoals, without checking the goal. Only plan_completed is checked;
+        the VLM's own terminal decisions and budget limits still end the episode.
+        oracle_feedback also records what is unmet for the replanning prompt.
+        """
+        if (
+            reason == "plan_completed"
+            and self.end_of_plan_check != "none"
+            and self._end_of_plan_replans < self.max_end_of_plan_replans
+        ):
+            satisfied, percent = gt_goal_status(self.env_interface)
+            replan = satisfied is False
+            self._end_feedback = []
+            if replan:
+                self._end_of_plan_replans += 1
+                self._end_replan_pending = True
+                if self.end_of_plan_check == "oracle_feedback" and self._world_graph is not None:
+                    known = {o.name for o in self._world_graph.get_all_objects()}
+                    self._end_feedback = unmet_goal_feedback(self.env_interface, known)
+                self._trace_append(f"End-of-plan check ({self.end_of_plan_check}): goal not met; replanning")
+            self._log_event({
+                "event": "end_of_plan_check",
+                "check": self.end_of_plan_check,
+                "goal_satisfied": satisfied,
+                "percent_complete": percent,
+                "replan": replan,
+                "feedback": list(self._end_feedback),
+                "end_of_plan_replans": self._end_of_plan_replans,
+            })
+            if replan:
+                return
+        super()._finish_planning(reason, evidence)
+
+    def _replan_with_feedback(self, instruction, observations, world_graph) -> None:
+        """Like _observe_and_continue, but tells the VLM what is still wrong."""
+        fresh = self._observe_failure_state(observations, reason="plan_finished")
+        self._reprompt_round += 1
+        self._log_event({"event": "reprompt_started", "reason": "plan_finished",
+                         "feedback": list(self._end_feedback), "branch": self.branch_idx,
+                         "subgoal_idx": self.subgoal_idx, "reprompt_round": self._reprompt_round})
+        self.current_plan = []
+        self.current_action_idx = 0
+        self.last_high_level_actions = {}
+        self._subgoal_retry_count = 0
+        history = (
+            "Replanning reason: the plan finished, but the task is NOT complete yet.\n"
+            + "".join(f"- {line}\n" for line in self._end_feedback)
+            + f"Previously achieved subgoals: {self._already_succeeded_subgoals}.\n"
+            "Replan for the ORIGINAL task and fix the problems above before declaring it complete."
+        )
+        self._generate_subgoals(instruction, world_graph, fresh, history_str=history,
+                                append=True, observation_reason="plan_finished")
+
+    def _trigger_snapshot(self, world_graph, agent_uid: int):
+        # The world graph's held object goes stale after Place; trust the gripper.
+        return take_snapshot(
+            world_graph,
+            agent_uid,
+            lambda state: self._sync_holding_with_gripper(state, world_graph, agent_uid),
+        )
+
+    def _check_replan_trigger(self, info, hl_action, world_graph, agent_uid: int) -> None:
+        """After a completed non-Explore skill, decide whether to replan next call."""
+        if self._trigger_prev_snapshot is None or "replanned" in info:
+            # First plan or the base just replanned: measure deltas from here.
+            self._trigger_prev_snapshot = self._trigger_snapshot(world_graph, agent_uid)
+            return
+        responses = info.get("responses") or {}
+        response = next((r for r in responses.values() if r), None)
+        if not hl_action or response is None or self.last_high_level_actions:
+            return  # skill still running, or a failure retry already issued the next one
+        if hl_action[0] == "Explore" or self._response_failed(response):
+            # The base replans after Explore and handles failures itself.
+            self._trigger_prev_snapshot = self._trigger_snapshot(world_graph, agent_uid)
+            return
+
+        cur = self._trigger_snapshot(world_graph, agent_uid)
+        delta = compute_delta(self._trigger_prev_snapshot, cur, action_entities(hl_action))
+        self._trigger_prev_snapshot = cur
+        goal, plan = set(), set()
+        if self.replan_trigger == "oracle":
+            if self._goal_entities is None:
+                self._goal_entities = goal_entities(self.env_interface)
+            goal = self._goal_entities
+            for sg in self._active_subgoals[self.subgoal_idx:]:
+                plan.update(self._parse_subgoal(sg)[1])
+        fire, rule = should_replan(self.replan_trigger, delta, goal, plan, self._trigger_seen)
+        capped = fire and self._proactive_replans >= self.max_proactive_replans
+        if fire and not capped:
+            self._replan_pending = True
+            self._proactive_replans += 1
+            self._trace_append(f"Replan trigger ({self.replan_trigger}) fired: {rule}")
+        self._log_event({
+            "event": "replan_trigger",
+            "trigger": self.replan_trigger,
+            "action": list(hl_action[:2]),
+            "delta": [list(c) for c in delta],
+            "rule": rule,
+            "fired": bool(fire and not capped),
+            "capped": capped,
+            "proactive_replans": self._proactive_replans,
+        })
+
+    def _plan_for_subgoal(self, subgoal: str, world_graph, agent_uid: int):
+        """Same contract as the PDDL version: (plan, name_map, reverse_map, state_facts).
+
+        plan is None on failure and [] if already satisfied. Entity names are
+        used verbatim, so both name maps are empty.
+        """
+        state = build_scene_state(world_graph, agent_uid)
+        self._sync_holding_with_gripper(state, world_graph, agent_uid)
+        self._sync_open_with_sim(state, world_graph)
+        self._sync_containers_with_sim(state, world_graph)
+        state.waited |= self._waited
+        facts = state.facts()
+
+        hdr = f"SUBGOAL PLANNER  Branch {self.branch_idx} | Subgoal {self.subgoal_idx}: {subgoal}"
+        self._subgoal_exec_log_begin_subgoal()
+        self._vprint_header(hdr, "blue")
+        self._subgoal_exec_log_append(f"══ {hdr} ══")
+        held = f"holding {state.holding}" if state.holding else "hand empty"
+        self._vprint(f"  State: agent in {state.room(state.agent)}, {held}", "gray")
+        self._subgoal_exec_log_append(f"  State: agent in {state.room(state.agent)}, {held}")
+
+        pred, args = self._parse_subgoal(subgoal)
+        try:
+            if not pred:
+                raise SubgoalPlanError("could not parse subgoal")
+            plan = expand_subgoal(state, pred, args)
+        except SubgoalPlanError as e:
+            self._log_subgoal_state(subgoal, facts, f"failed: {e}")
+            self._trace_append(f"Subgoal: {subgoal}")
+            self._trace_append(f"PDDL plan: None ({e})")
+            self._vprint(f"  [FAIL] {e}", "red")
+            self._subgoal_exec_log_append(f"  [FAIL] {e}")
+            # The base class follows this with "Failed to plan for subgoal: ...";
+            # the reason lands just before it in the history sent on replanning.
+            self.history.append(f"Cannot plan {subgoal}: {e}")
+            return None, {}, {}, facts
+
+        self._log_subgoal_state(subgoal, facts, f"plan: {plan}")
+        if not plan:
+            self._vprint("  [already satisfied — skipping]", "green")
+            self._subgoal_exec_log_append("  [already satisfied — skipping]")
+            self._trace_append(f"Subgoal already satisfied: {subgoal}")
+            return [], {}, {}, facts
+
+        self._trace_append(f"Subgoal: {subgoal}")
+        self._trace_append(f"PDDL plan: {plan}")
+        self._vprint(f"  Plan ({len(plan)} steps):", "white")
+        self._subgoal_exec_log_append(f"  Plan ({len(plan)} steps):")
+        for i, step in enumerate(plan):
+            line = f"    {i + 1}. {step[0]}({', '.join(str(a) for a in step[1])})"
+            self._vprint(line, "gray")
+            self._subgoal_exec_log_append(line)
+        return plan, {}, {}, facts
+
+    def _sync_holding_with_gripper(self, state, world_graph, agent_uid: int) -> None:
+        """Trust the robot's own gripper over the world graph's last_held_object.
+
+        The world graph sets last_held_object when a Pick is issued, so a pick
+        that silently fails leaves it stale; every replan would then emit the
+        same doomed Place until the episode times out. It can also name a
+        different object than the one actually grasped, which would emit a
+        Place for the wrong object.
+        """
+        try:
+            sim = self.env_interface.sim
+            grasp_mgr = sim.agents_mgr[agent_uid].grasp_mgr
+        except Exception:
+            return
+        if not grasp_mgr.is_grasped:
+            if state.holding is not None:
+                self._vprint(
+                    f"  [SYNC] gripper is empty; world graph said holding {state.holding}",
+                    "yellow",
+                )
+                state.holding = None
+                agent_node = world_graph.get_node_from_name(state.agent)
+                agent_node.properties.pop("last_held_object", None)
+            return
+        try:
+            handle = sim.get_rigid_object_manager().get_object_handle_by_id(
+                grasp_mgr.snap_idx
+            )
+            name = self.env_interface.full_world_graph.get_node_from_sim_handle(
+                handle
+            ).name
+        except Exception:
+            return
+        if name not in state.objects or name == state.holding:
+            return
+        if state.holding is not None:
+            self._vprint(
+                f"  [SYNC] gripper holds {name}; world graph said holding {state.holding}",
+                "yellow",
+            )
+            world_graph.get_node_from_name(state.agent).properties[
+                "last_held_object"
+            ] = world_graph.get_node_from_name(name)
+        state.holding = name
+        state.placement.pop(name, None)
+
+    def _sync_open_with_sim(self, state, world_graph) -> None:
+        """Read articulated open/closed from the sim; the robot's world graph never
+        updates is_open after Open/Close, so it would re-open forever and treat
+        closed(x) as satisfied while x is still open.
+        """
+        for name in state.articulated:
+            try:
+                is_open_now = sim_is_open(
+                    world_graph.get_node_from_name(name), self.env_interface
+                )
+            except Exception:
+                continue
+            if is_open_now:
+                state.open.add(name)
+                state.known_closed.discard(name)
+            else:
+                state.open.discard(name)
+                state.known_closed.add(name)
+
+    def _sim_object(self, world_graph, name):
+        try:
+            handle = world_graph.get_node_from_name(name).sim_handle
+            return self.env_interface.sim.get_rigid_object_manager().get_object_by_handle(handle)
+        except Exception:
+            return None
+
+    def _movable_containers(self, world_graph, names) -> set:
+        """Known objects with an annotated interior (habitat_llm/utils/movable_containers),
+        i.e. the ones OraclePlaceSkill accepts with ``within``. Cached per episode."""
+        cache = self.__dict__.setdefault("_container_cache", {})
+        for name in names:
+            if name not in cache:
+                obj = self._sim_object(world_graph, name)
+                cache[name] = obj is not None and container_bounds(obj) is not None
+        return {n for n in names if cache[n]}
+
+    def _sync_containers_with_sim(self, state, world_graph) -> None:
+        """Record movable containers and their contents. The world graph keeps
+        a basket as an Object, so the furniture-only state would never see an
+        object inside it."""
+        state.object_containers = self._movable_containers(world_graph, state.objects)
+        if not state.object_containers:
+            return
+        ids = {}
+        for name in state.object_containers:
+            obj = self._sim_object(world_graph, name)
+            if obj is not None:
+                ids[obj.object_id] = name
+        for name in state.objects - state.object_containers:
+            obj = self._sim_object(world_graph, name)
+            if obj is None or name == state.holding:
+                continue
+            try:
+                parents = sutils.within(self.env_interface.sim, obj)
+            except Exception:
+                continue
+            for parent_id in parents:
+                if parent_id in ids:
+                    state.contained_in[name] = ids[parent_id]
+                    break
+
+    def _build_objects_by_type(self, world_graph, visible_object_names=None):
+        # The predicate prompt defines in(<movable>, <container_furniture>), so list
+        # movable containers there too (they stay movable) or the VLM drops in(x, basket).
+        out = super()._build_objects_by_type(world_graph, visible_object_names=visible_object_names)
+        boxes = self._movable_containers(world_graph, out.get("movable", []))
+        if boxes:
+            out["container_furniture"] = sorted(set(out.get("container_furniture", [])) | boxes)
+        return out
+
+    def _validate_subgoal(self, subgoal: str) -> bool:
+        # The base check rejects in(x, y) whenever y is movable; annotated movable
+        # containers are valid destinations here (expand_in handles them).
+        pred, args = self._parse_subgoal(subgoal)
+        if getattr(self, "two_phase", False) and pred in ("explore", "searched-room", "search-room"):
+            self._vprint(f"  [SKIP] {subgoal!r}: two_phase explores in a separate phase.", "red")
+            return False
+        if pred in WAITED_IN_PREDS:
+            ok = (
+                len(args) >= 2
+                and args[0] in self._objects_by_type.get("movable", [])
+                and args[1] in self._objects_by_type.get("container_furniture", [])
+            )
+            if not ok:
+                self._vprint(
+                    f"  [SKIP] {subgoal!r}: needs a movable and a name from the container_furniture list.",
+                    "red",
+                )
+            return ok
+        if pred in ("in", "inside", "within") and len(args) >= 2:
+            movables = set(self._objects_by_type.get("movable", []))
+            world_graph = getattr(self, "_world_graph", None)
+            if (
+                args[0] in movables
+                and args[1] in movables
+                and args[0] != args[1]
+                and world_graph is not None
+                and self._movable_containers(world_graph, [args[1]])
+            ):
+                return True
+        return super()._validate_subgoal(subgoal)
+
+    def _action_to_tool(self, action, next_action=None):
+        # Expanders put the real navigation target in args[1]; the base class
+        # instead infers it from the next action because PDDL picks it arbitrarily.
+        name = action[0].lower()
+        if name == "navigate":
+            return "Navigate", self._restore_name(action[1][1])
+        if name in ("place_on", "place_in"):
+            return self._place_tool(name, action[1])
+        if name == "wait":
+            return "Wait", ""
+        return super()._action_to_tool(action, next_action=next_action)
+
+    def _on_skill_succeeded(self, action) -> None:
+        # waited_in(obj, appliance) holds once its Wait step has finished.
+        if action[0].lower() == "wait":
+            self._waited.add((action[1][1], action[1][2]))
+
+    # ------------------------------------------------------------------
+    # Placement oracle (privileged)
+    # ------------------------------------------------------------------
+
+    def _get_placement_goals(self):
+        if self._placement_goals is None:
+            self._placement_goals = placement_oracle.placement_goals(self.env_interface)
+        return self._placement_goals
+
+    def _generate_subgoals(self, instruction, world_graph, observations, history_str="", **kwargs):
+        if getattr(self, "two_phase", False) and self._mode != "explore":
+            # Every replan point goes through here: let the selector choose explore or interact first.
+            self._world_graph = world_graph
+            if self._choose_mode(instruction, world_graph, observations, kwargs) == "explore":
+                return None
+            if self._explore_phases >= self.max_explore_phases:
+                history_str = (history_str or "") + (
+                    "\nNo exploration phases are left: plan with the known objects, or return the unsolvable decision.\n"
+                )
+        if getattr(self, "placement_oracle_mode", "none") in ("hint", "full"):
+            known = {o.name for o in world_graph.get_all_objects()}
+            hint = placement_oracle.format_hint(self._get_placement_goals(), known)
+            if hint:
+                history_str = (history_str or "") + hint
+                self._trace_append(hint.strip())
+            self._log_event({"event": "placement_oracle_hint", "hint": hint})
+        return super()._generate_subgoals(
+            instruction, world_graph, observations, history_str=history_str, **kwargs
+        )
+
+    def _place_tool(self, name: str, args):
+        obj = self._restore_name(args[1])
+        furn = self._restore_name(args[2])
+        relation = "within" if name == "place_in" else "on"
+        if getattr(self, "placement_oracle_mode", "none") not in ("place", "full"):
+            return "Place", f"{obj}, {relation}, {furn}, None, None"
+        agent_uid = self._agents[0].uid if self._agents else 0
+        state = build_scene_state(self.env_interface.world_graph[agent_uid], agent_uid)
+        on_furn = [o for o, (f, _) in state.placement.items() if f == furn and o != obj]
+        goal = self._get_placement_goals().get(obj)
+        partner = placement_oracle.place_constraint(goal, on_furn, self._placed_order)
+        self._log_event({
+            "event": "placement_oracle_place",
+            "object": obj,
+            "furniture": furn,
+            "next_to": partner,
+            "goal_next_to": sorted(goal.next_to) if goal else [],
+        })
+        self._placed_order = [o for o in self._placed_order if o != obj] + [obj]
+        if partner:
+            return "Place", f"{obj}, {relation}, {furn}, next_to, {partner}"
+        return "Place", f"{obj}, {relation}, {furn}, None, None"
+
+    def _log_subgoal_state(self, subgoal: str, state_facts, outcome: str) -> None:
+        dump_dir = os.path.join(self._get_log_dir(), "subgoal_states")
+        os.makedirs(dump_dir, exist_ok=True)
+        path = os.path.join(dump_dir, f"b{self.branch_idx:02d}_s{self.subgoal_idx:02d}.txt")
+        with open(path, "w") as f:
+            f.write(f"branch: {self.branch_idx}, subgoal_idx: {self.subgoal_idx}\n")
+            f.write(f"subgoal: {subgoal}\n")
+            f.write("state:\n")
+            for fact in state_facts:
+                f.write(f"  {fact}\n")
+            f.write(f"outcome: {outcome}\n")

@@ -1,0 +1,15 @@
+# @package _global_
+
+# RailPlanner with the privileged placement oracle (upper bound on placement
+# grounding). Logs go to a separate dir so results never mix with real runs.
+defaults:
+  - single_agent_rail_planner
+  - _self_
+
+evaluation:
+  agents:
+    agent_0:
+      planner:
+        plan_config:
+          placement_oracle: full
+          log_dir: "rail_planner_placement_oracle"

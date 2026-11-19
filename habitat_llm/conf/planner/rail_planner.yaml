@@ -1,0 +1,53 @@
+# RailPlanner: VLM-TAMP prompting/replanning with per-subgoal skill expanders
+# instead of PDDLStream (habitat_llm/rail_planner). Same plan_config as VLM-TAMP.
+defaults:
+  - vlm_tamp_pddl_planner
+  # ReAct LLM + prompt for the two_phase exploration phase (only instantiated when two_phase=true).
+  - /llm@plan_config.explore_react.llm: openai_chat
+  - /instruct@plan_config.explore_react.instruct: zero_shot_prompt
+  - _self_
+
+_target_: 'habitat_llm.rail_planner.RailPlanner'
+
+plan_config:
+  # When to re-query the VLM after a skill finishes, besides on failure/Explore:
+  #   failure (default: no extra replans) | every_step | any_change | oracle
+  # oracle uses privileged GT relevance rules (an upper bound, not deployable).
+  # Proactive replans count toward max_vlm_cycles (default 20); raise it for
+  # every_step / any_change runs.
+  replan_trigger: failure
+  max_proactive_replans: 30
+  # Privileged placement oracle (an upper bound, not deployable): reads the
+  # episode's is_on_top / is_inside / is_next_to goals.
+  #   none | hint (destinations in the VLM prompt) | place (next_to in Place calls) | full
+  placement_oracle: none
+  # What to do when the active branch runs out of subgoals:
+  #   none (default: stop, as in VLM-TAMP) | oracle (replan instead while the
+  #   simulator's goal check is unmet; privileged upper bound, not deployable)
+  #   | oracle_feedback (same, and tell the VLM which required objects it has
+  #   not found and which known objects are not placed correctly / in state).
+  end_of_plan_check: none
+  max_end_of_plan_replans: 3
+  # Two-phase mode (deployable, no privileged information). Off by default; when false nothing below is used.
+  # A VLM mode selector runs at every replan point (start, failure, plan finished, end of an exploration
+  # phase) and picks explore (a ReAct phase with Explore/Navigate/Open/Close + Done[]) or interact (the loop
+  # above, without explore(<room>) subgoals; it can ask for exploration with {"decision": "explore"}).
+  two_phase: false
+  max_explore_phases: 6          # after this the selector is skipped and interact is forced
+  explore_phase_max_skills: 10   # ReAct skills per exploration phase (each counts toward max_actions)
+  explore_react:                 # plan_config of the embedded ZeroShotReactPlanner
+    llm:
+      generation_params:
+        model: gpt-5.6-luna
+        reasoning_effort: high
+    send_action_image: true
+    objects_response: true
+    objects_response_include_states: true
+    planning_mode: cot
+    constrained_generation: false
+    replanning_threshold: 200    # cumulative ReAct LLM calls over all phases; phases are capped above
+    placement_oracle: none
+    centralized: false
+    fast_explore: false
+    enable_rag: false
+    example_type: react

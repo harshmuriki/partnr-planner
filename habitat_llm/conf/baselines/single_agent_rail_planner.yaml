@@ -1,0 +1,15 @@
+# @package _global_
+
+# Identical to single_agent_vlm_tamp_pddl (model, prompts, budgets, explore) except
+# that subgoals are expanded by habitat_llm/rail_planner instead of PDDLStream.
+defaults:
+  - single_agent_vlm_tamp_pddl
+  - override /planner@evaluation.agents.agent_0.planner: rail_planner
+  - _self_
+
+evaluation:
+  agents:
+    agent_0:
+      planner:
+        plan_config:
+          log_dir: "rail_planner"

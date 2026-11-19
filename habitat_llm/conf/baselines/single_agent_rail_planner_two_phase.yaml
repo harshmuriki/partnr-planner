@@ -1,0 +1,14 @@
+# @package _global_
+
+# RailPlanner with the two-phase mode: a VLM mode selector picks a ReAct exploration phase or the
+# RailPlanner interaction loop at every replan point (habitat_llm/rail_planner/mode_selector.py).
+defaults:
+  - single_agent_rail_planner
+  - _self_
+
+evaluation:
+  agents:
+    agent_0:
+      planner:
+        plan_config:
+          two_phase: true
