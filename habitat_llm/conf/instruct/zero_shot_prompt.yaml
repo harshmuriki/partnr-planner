@@ -6,13 +6,15 @@ prompt: |-
 
         But objects may be inside of articulate furniture (anything that can be opened or closed).
 
+        Close every door or drawer you open, including fridge and cabinet doors, once you have finished accessing that furniture. Use Close[<furniture_name>] with the same furniture name used for Open.
+
         If you don't find a specific object but find something that might satisfy the goal, you should use that object as a substitute for the specific object.
 
         {agent_role_description}
 
         Many calls to the same action in a row are a sign that something has gone wrong and you should try a different action.{eot_tag}{rag_examples}{user_tag}Task: {input}
 
-        This world_description is your initial state of the world. You should use it to plan your actions. It can have accurate, missing or outdated information. {world_description}
+        This world_description is your initial state of the world. You should use it to plan your actions. {world_description}
 
         Possible Actions:
         {tool_descriptions}

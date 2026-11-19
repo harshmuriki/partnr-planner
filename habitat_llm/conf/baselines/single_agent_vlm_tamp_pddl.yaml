@@ -6,7 +6,7 @@ defaults:
   - /instruct@evaluation.agents.agent_0.planner.plan_config.instruct: vlm_tamp_pddl_prompt
   - override /evaluation: decentralized_evaluation_runner_single_agent
   - override /planner@evaluation.agents.agent_0.planner: vlm_tamp_pddl_planner
-  - override /agent@evaluation.agents.agent_0.config: oracle_rearrange_object_states_agent_motortoolsonly
+  - override /agent@evaluation.agents.agent_0.config: oracle_object_states_agent_motortoolsonly
   - override /world_model@world_model: gt_graph
   - _self_
 
@@ -17,8 +17,9 @@ world_model:
   use_gt_static_structure: True
 
 evaluation:
-  # The 600-second budget counts VLM calls and non-Explore action simulation time.
-  exclude_explore_from_time_budget: True
+  # Count VLM calls and all action simulation time, including normal Explore.
+  # The parallel launcher separately enforces 600 seconds of total wall time.
+  exclude_explore_from_time_budget: False
   use_rgb: True
   # When true: expandable trace HTML (click each row for logs and images); false = legacy index.html.
   pddl_baseline: True
@@ -31,6 +32,7 @@ evaluation:
           max_reprompts: 50 # This is total reprompts in the whole episode; Setting the same as partnr-planner=50 (total replans tho)  # From VLM-TAMP paper=2 for every parent
           max_vlm_cycles: 20 # Includes initial planning and Explore/open/failure replanning.
           max_searches_per_target: 2
+          max_actions: 50 # Executed skills (Navigate/Pick/Place/Open/Explore...), same cap as ReAct/Tru-POMDP; 0 disables
           ntamp_max_pddl_replan_retries: 3 # PDDL-only replans per subgoal before branch/VLM escalation
           enable_partial_obs_explore: True # CG memory-driven Explore[room] before PDDL if required objects are missing/unlocated
           explore_on_missing_required_objects: True
@@ -46,6 +48,6 @@ evaluation:
             max_completion_tokens: 16384
             temperature: 0.2
             reasoning_effort: high
-            use_images: True
+            use_images: True # Attach scene/exploration images to VLM planning requests; False sends text only.
             cache_path: null
             gt_bbox_image_panels: 2

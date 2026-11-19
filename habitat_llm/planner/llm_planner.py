@@ -5,6 +5,8 @@
 # LICENSE file in the root directory of this source tree
 
 import os
+
+from habitat_llm.action_result import robot_scene_graph_marker, SG_POLICY_MARKER
 import re
 import time
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union
@@ -117,6 +119,8 @@ class LLMPlanner(Planner):
         self.replan_required: bool = True
         self.replanning_count: int = 0
         self.is_done: bool = False
+        self._termination = {}
+        self._initial_agent_location_sent = False
 
         # save agent observations to get feedback on skill execution
         self.latest_agent_response: Dict[int, str] = {}
@@ -412,8 +416,10 @@ class LLMPlanner(Planner):
                 add_state_info=self.planner_config.objects_response_include_states,
                 include_room_name=True,
                 centralized=self.planner_config.centralized,
+                include_initial_agent_location=not self._initial_agent_location_sent,
             )
             params["world_description"] = world_description
+            self._initial_agent_location_sent = True
 
         if "should_format" in kwargs and not kwargs["should_format"]:
             # In some cases a subclass may want to fill the extra arguments here, so we don't format
@@ -941,6 +947,29 @@ class LLMPlanner(Planner):
             "yellow",
         )
 
+    def _check_termination(self, llm_response: str) -> bool:
+        if getattr(self.llm, "budget_exhausted", False):
+            from habitat_llm.termination import cost_cap_notice
+
+            self._termination = cost_cap_notice(
+                float(self.llm.llm_conf.max_cost_usd), self.llm.token_usage.usd)
+            message = self._termination["message"]
+            print(message, flush=True)
+            self.trace += f"\nTermination: {message}\n"
+            return True
+        if self.check_if_agent_done(llm_response):
+            return True
+        limit = self.planner_config.replanning_threshold
+        if self.replanning_count >= limit:
+            from habitat_llm.termination import action_limit_notice
+
+            self._termination = action_limit_notice(limit, self.replanning_count, "replanning_threshold")
+            message = self._termination["message"]
+            print(message, flush=True)
+            self.trace += f"\nTermination: {message}\n"
+            return True
+        return False
+
     def _cost_metrics(self) -> Dict[str, Any]:
         # Nested dict so DecentralizedEvaluationRunner can merge planner_info
         # (it only accepts dict or str values at the top level).
@@ -955,7 +984,10 @@ class LLMPlanner(Planner):
         metrics.update(snapshot_from_llm(self.llm))
         if self.explore_walk_ratio is not None:
             metrics["explore_walk_ratio"] = self.explore_walk_ratio
-        return {"cost_metrics": metrics}
+        info = {"cost_metrics": metrics}
+        if getattr(self, "_termination", None):
+            info["termination"] = dict(self._termination)
+        return info
 
     def _try_fast_explore_actions(
         self,
@@ -1054,7 +1086,7 @@ class LLMPlanner(Planner):
             # Eg: [(ball on table_0 in living room), (chair on table_0 in living room), ...]
 
         if self.trace == "":
-            self.trace += f"Task: {instruction}\nThought: "
+            self.trace += f"Task: {instruction}\n{SG_POLICY_MARKER}\nThought: "
 
         print_str = ""
         self.is_done = False
@@ -1109,6 +1141,8 @@ class LLMPlanner(Planner):
             # This prevents "Thought:" from being concatenated to the end of Objects section
             if not self.trace.endswith('\n') and llm_response.strip().startswith('Thought:'):
                 self.trace += '\n'
+            # Capture robot knowledge before any skill can mutate the graph.
+            self.trace += "\n" + robot_scene_graph_marker(world_graph[self._agents[0].uid])
             self.trace += prompt_addition
             # Trace: 'Task: Place the candle and candle holder on the white table in the living room. Move the plant to the same table.
             # \nThought: Thought: Since there are no objects found yet, I should explore the living room first,
@@ -1118,9 +1152,7 @@ class LLMPlanner(Planner):
             # Stop if the replanning count exceed a certain threshold
             # or end expression is found in llm response
             # This is helpful to break infinite planning loop.
-            self.is_done = (self.check_if_agent_done(llm_response)) or (
-                self.replanning_count == self.planner_config.replanning_threshold
-            )
+            self.is_done = self._check_termination(llm_response)
             # Increment the llm call counter on every replan
             # doesn't get incremented before comparison as first "replan" is technically
             # the first required plan

@@ -802,3 +802,113 @@ class TestDomainRegressions:
                 node.properties["states"]["is_clean"] = True
         _, init, _, _ = build_pddlstream_problem(wg, 0, ("cleaned", "bottle"))
         assert ("cleaned", "bottle") in init
+
+
+# ---------------------------------------------------------------------------
+# Movable containers (e.g. the T4 fruit basket, an Object with an interior)
+# ---------------------------------------------------------------------------
+
+def _make_basket_graph():
+    """Living room (table + basket on it) and kitchen (counter + apple)."""
+    wg = WorldGraph()
+    living = Room("living_room", {"type": "room"})
+    kitchen = Room("kitchen", {"type": "room"})
+    table = Furniture("table", {"type": "table", "is_articulated": False})
+    counter = Furniture("counter", {"type": "counter", "is_articulated": False})
+    basket = Object("basket", {"type": "basket", "states": {}})
+    apple = Object("apple", {"type": "apple", "states": {}})
+    agent = SpotRobot("agent_0", {"type": "agent"})
+    for node in [living, kitchen, table, counter, basket, apple, agent]:
+        wg.add_node(node)
+    wg.add_edge(table, living, "inside", "contains")
+    wg.add_edge(counter, kitchen, "inside", "contains")
+    wg.add_edge(basket, table, "on", "supports")
+    wg.add_edge(apple, counter, "on", "supports")
+    wg.add_edge(agent, living, "inside", "contains")
+    return wg
+
+
+class TestMovableContainers:
+    def _problem(self, goal, contained_in=None, boxes=frozenset({"basket"})):
+        wg = _make_basket_graph()
+        scope = extract_scope_names(wg, 0, goal)
+        return build_pddlstream_problem(
+            wg, 0, goal, scope_names=scope, movable_containers=set(boxes), contained_in=contained_in
+        )
+
+    def test_basket_is_a_container_object(self):
+        _, init, _, _ = self._problem(("in", "apple", "basket"))
+        assert ("container", "basket") in init
+        assert ("object", "basket") in init
+        assert ("furniture", "basket") not in init
+
+    def test_contained_in_emits_in_fact(self):
+        _, init, _, _ = self._problem(("in", "apple", "basket"), contained_in={"apple": "basket"})
+        assert ("in", "apple", "basket") in init
+
+    def test_place_in_object_plan(self):
+        from habitat_llm.pddlstream.solve import solve_pddlstream_problem
+
+        problem, _, _, _ = self._problem(("in", "apple", "basket"))
+        plan, _, _ = solve_pddlstream_problem(problem)
+        assert [a.name for a in plan] == ["navigate", "pick", "navigate", "place_in_object"]
+        assert plan[-1].args[1:3] == ("apple", "basket")
+
+    def test_no_plan_without_container_fact(self):
+        """The furniture-only domain (movable_containers off) cannot place into a basket."""
+        from habitat_llm.pddlstream.solve import solve_pddlstream_problem
+
+        problem, _, _, _ = self._problem(("in", "apple", "basket"), boxes=frozenset())
+        plan, _, _ = solve_pddlstream_problem(problem)
+        assert plan is None
+
+    def test_place_in_object_dispatch(self):
+        p = _make_planner_stub()
+        nav = ("navigate", ["agent_0", "table", "living_room"])
+        nxt = ("place_in_object", ["agent_0", "apple", "basket", "living_room"])
+        assert p._action_to_tool(nav, nxt) == ("Navigate", "basket")
+        assert p._action_to_tool(nxt) == ("Place", "apple, within, basket, None, None")
+
+    def test_in_movable_container_subgoal_is_valid(self):
+        p = _make_planner_stub()
+        p._vprint = lambda *a, **k: None
+        p._objects_by_type = {"movable": ["apple", "basket"], "container_furniture": ["basket"]}
+        p._movable_container_names = {"basket"}
+        assert p._validate_subgoal("in(apple, basket)")
+        assert not p._validate_subgoal("in(basket, basket)")
+        p._movable_container_names = set()
+        assert not p._validate_subgoal("in(apple, basket)")
+
+
+class TestHeldObjectInContainer:
+    def _setup(self, is_grasped):
+        from types import SimpleNamespace
+
+        wg = _make_basket_graph()
+        agent = wg.get_node_from_name("agent_0")
+        agent.properties["last_held_object"] = wg.get_node_from_name("apple")
+        p = _make_planner_stub()
+        p._vprint = lambda *a, **k: None
+        grasp = SimpleNamespace(is_grasped=is_grasped)
+        p.env_interface = SimpleNamespace(sim=SimpleNamespace(agents_mgr={0: SimpleNamespace(grasp_mgr=grasp)}))
+        return p, wg, agent
+
+    def test_placed_in_basket_clears_held(self):
+        p, wg, agent = self._setup(is_grasped=False)
+        p._clear_held_if_in_container(wg, 0, {"apple": "basket"})
+        assert "last_held_object" not in agent.properties
+        _, init, _, _ = build_pddlstream_problem(
+            wg, 0, ("in", "apple", "basket"), movable_containers={"basket"}, contained_in={"apple": "basket"}
+        )
+        assert ("handempty", "agent_0") in init
+        assert ("in", "apple", "basket") in init
+
+    def test_still_grasped_keeps_held(self):
+        p, wg, agent = self._setup(is_grasped=True)
+        p._clear_held_if_in_container(wg, 0, {"apple": "basket"})
+        assert agent.properties["last_held_object"].name == "apple"
+
+    def test_not_in_container_keeps_held(self):
+        p, wg, agent = self._setup(is_grasped=False)
+        p._clear_held_if_in_container(wg, 0, {})
+        assert agent.properties["last_held_object"].name == "apple"

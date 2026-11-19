@@ -13,12 +13,12 @@ import magnum as mn
 from omegaconf import DictConfig
 
 from habitat_llm.planner.planner import Planner
+from habitat_llm.termination import action_limit_notice
+from habitat_llm.utils.movable_containers import container_bounds
 from habitat_llm.utils.llm_usage import snapshot_from_llm
 from habitat_llm.world_model.entities.floor import Floor
 from habitat_llm.world_model.entity import Object, Receptacle
 from habitat_llm.llm.instruct.utils import get_world_descr, pil_image_to_data_url
-from habitat_llm.pddlstream.problem import build_pddlstream_problem, extract_scope_names
-from habitat_llm.pddlstream.solve import solve_pddlstream_problem
 from habitat_llm.vlm_tamp import (
     GPT4vApi,
     Claude3Api,
@@ -448,6 +448,12 @@ class VlmTampPddlPlanner(Planner):
         self.explore_image_interval = max(1, int(self.plan_config.get("explore_image_interval", 30)))
         self.max_vlm_cycles = max(1, int(self.plan_config.get("max_vlm_cycles", 20)))
         self.max_searches_per_target = max(1, int(self.plan_config.get("max_searches_per_target", 2)))
+        # Cap on skills actually dispatched to the simulator (not PDDL steps that
+        # never run); 0 or null disables it.
+        self.max_actions = int(self.plan_config.get("max_actions", 0) or 0)
+        # Treat movable objects with an annotated interior (e.g. a fruit basket) as
+        # containers: listed for in(x, <container>) and planned with place_in_object.
+        self.movable_containers = bool(self.plan_config.get("movable_containers", True))
         # evaluation.pddl_baseline (baseline yaml) or plan_config.pddl_baseline
         self.pddl_baseline_html = self._read_pddl_baseline_flag()
 
@@ -527,6 +533,8 @@ class VlmTampPddlPlanner(Planner):
         self._subgoal_exec_log_lines = []
 
     def reset(self):
+        self._container_cache: Dict[str, bool] = {}
+        self._movable_container_names: Set[str] = set()
         # Plan tree: list of branches; each branch is a list of subgoal strings
         self.branches: List[List[str]] = []
         self._branch_origin_round: List[int] = []
@@ -558,7 +566,10 @@ class VlmTampPddlPlanner(Planner):
         self._vlm_calls = 0
         self._search_counts = {}
         self._last_memory_snapshot = {}
+        self._initial_agent_location_sent = False
         self._stop_reason = ""
+        self._num_actions = 0
+        self._termination: Dict[str, Any] = {}
         # Reprompt bookkeeping (kitchen-worlds-style)
         self._reprompt_round: int = 0
         self._already_succeeded_subgoals: List[str] = []
@@ -893,6 +904,13 @@ class VlmTampPddlPlanner(Planner):
             "room": rooms,
             "joint": joints,
         }
+        if getattr(self, "movable_containers", False):
+            # The world graph keeps a basket as an Object; list it as a container
+            # destination too (it stays movable), or in(x, basket) is rejected.
+            boxes = self._movable_containers(world_graph, movables)
+            self._movable_container_names = boxes
+            if boxes:
+                obt["container_furniture"] = sorted(set(container_furniture) | boxes)
 
         self._vprint_header("SCENE OBSERVATION", "cyan")
         for label, names in [
@@ -938,10 +956,15 @@ class VlmTampPddlPlanner(Planner):
         Visibility is used only for the requested image annotations, not to
         supply extra simulator-derived state claims in the text prompt.
         """
-        return get_world_descr(
+        description = get_world_descr(
             world_graph, agent_uid=agent_uid, include_room_name=True,
             add_state_info=True, centralized=False,
+            include_initial_agent_location=not getattr(
+                self, "_initial_agent_location_sent", False
+            ),
         )
+        self._initial_agent_location_sent = True
+        return description
 
     @staticmethod
     def _memory_snapshot(world_graph):
@@ -968,6 +991,24 @@ class VlmTampPddlPlanner(Planner):
         self._log_event({"event": "planner_decision", "decision": reason, "evidence": evidence,
                          "evaluator_success": "not consulted"})
         self._trace_append(f"Planner decision: {reason}. {evidence}")
+
+    def _action_cap_reached(self) -> bool:
+        """Finish the episode before dispatching action max_actions + 1."""
+        if self.max_actions <= 0 or self._num_actions < self.max_actions:
+            return False
+        self._termination = action_limit_notice(self.max_actions, self._num_actions, "max_actions")
+        message = self._termination["message"]
+        self._vprint_header(message, "red")
+        print(message, flush=True)
+        self._finish_planning("budget_exhausted", message)
+        self._trace_append(f"Termination: {message}")
+        return True
+
+    def _start_action(self, hl_action, observations):
+        """Dispatch a new high-level skill; continuation ticks do not come through here."""
+        self._num_actions += 1
+        self.last_high_level_actions = hl_action
+        return self.process_high_level_actions(hl_action, observations)
 
     def _observe_and_continue(self, instruction, observations, world_graph, reason, target=None):
         """Continue from the graph already updated by the shared env.step path."""
@@ -1324,7 +1365,7 @@ class VlmTampPddlPlanner(Planner):
         self.vlm.new_session()
 
         # ── Turn 1: English subgoals ────────────────────────────────────
-        english_prompt = build_english_subgoal_prompt(
+        english_prompt = self._build_english_prompt(
             goal=instruction,
             objects_by_type=self._objects_by_type,
             scene_description=scene_desc,
@@ -1410,8 +1451,7 @@ class VlmTampPddlPlanner(Planner):
             decision = json.loads(str(english_response).strip().removeprefix("```json").removesuffix("```").strip())
         except (ValueError, TypeError):
             decision = None
-        if isinstance(decision, dict) and decision.get("decision") in ("complete", "unsolvable"):
-            self._finish_planning(decision["decision"], str(decision.get("reason", "")))
+        if isinstance(decision, dict) and self._handle_turn1_decision(decision):
             return
         if not str(english_response).strip():
             self._finish_planning("invalid_response", "Empty VLM plan; inspect completion token limit")
@@ -1422,10 +1462,13 @@ class VlmTampPddlPlanner(Planner):
         self._trace_append(f"VLM English plan:\n{english_response}")
 
         # ── Turn 2: translate to predicates + request N branches ────────
-        predicate_prompt = build_predicate_translation_prompt(
+        # Planners with extra subgoal types (RailPlanner) list them via EXTRA_SUBGOALS.
+        extra = {"extra_subgoals": self.EXTRA_SUBGOALS} if getattr(self, "EXTRA_SUBGOALS", "") else {}
+        predicate_prompt = self._build_predicate_prompt(
             self._objects_by_type,
             num_branches=self.num_branches,
             after_explore=after_explore,
+            **extra,
         )
 
         self._vprint_header(f"VLM TURN 2: PDDL Predicates ({self.num_branches} branches)", "magenta")
@@ -1571,6 +1614,21 @@ class VlmTampPddlPlanner(Planner):
 
         self._log_plan_tree()
         return seen
+
+    # Subclass hooks (RailPlanner two_phase). The builders are looked up as module globals at call time,
+    # so CustomApproachPlanner's swap of them still applies.
+    def _build_english_prompt(self, **kwargs) -> str:
+        return build_english_subgoal_prompt(**kwargs)
+
+    def _build_predicate_prompt(self, *args, **kwargs) -> str:
+        return build_predicate_translation_prompt(*args, **kwargs)
+
+    def _handle_turn1_decision(self, decision: dict) -> bool:
+        """Turn-1 JSON decision; True means it was handled and Turn 2 is skipped."""
+        if decision.get("decision") in ("complete", "unsolvable"):
+            self._finish_planning(decision["decision"], str(decision.get("reason", "")))
+            return True
+        return False
 
     @property
     def _active_subgoals(self) -> List[str]:
@@ -1814,7 +1872,13 @@ class VlmTampPddlPlanner(Planner):
                     "red",
                 )
                 return False
-        if pred in ("on", "in") and len(args) >= 2 and args[1] in movables:
+        into_box = (
+            pred in ("in", "inside", "within")
+            and len(args) >= 2
+            and args[0] != args[1]
+            and args[1] in getattr(self, "_movable_container_names", set())
+        )
+        if pred in ("on", "in") and len(args) >= 2 and args[1] in movables and not into_box:
             self._vprint(
                 f"  [SKIP] {subgoal!r}: '{args[1]}' is a movable, not a surface/space", "red"
             )
@@ -1916,10 +1980,19 @@ class VlmTampPddlPlanner(Planner):
         return None
 
     def _plan_for_subgoal(self, subgoal: str, world_graph, agent_uid: int):
+        # Imported lazily so subclasses that replace PDDL (RailPlanner) don't need
+        # PDDLStream / Fast Downward installed.
+        from habitat_llm.pddlstream.problem import build_pddlstream_problem, extract_scope_names
+        from habitat_llm.pddlstream.solve import solve_pddlstream_problem
+
+        boxes, contained_in = self._container_facts(world_graph)
+        self._clear_held_if_in_container(world_graph, agent_uid, contained_in)
+
         # First pass: unscoped problem just to get the name maps for goal parsing
         dummy_goal = ("handempty", f"agent_{agent_uid}")
         _problem, _init, name_map, reverse_map = build_pddlstream_problem(
-            world_graph, agent_uid, dummy_goal
+            world_graph, agent_uid, dummy_goal,
+            movable_containers=boxes, contained_in=contained_in,
         )
         agent_name = name_map.get(f"agent_{agent_uid}", f"agent_{agent_uid}")
         goal_literal = self._subgoal_to_goal_literal(subgoal, agent_name, name_map)
@@ -1935,7 +2008,8 @@ class VlmTampPddlPlanner(Planner):
         # This prevents grounding explosion (e.g. place_on with 60 furniture × 8 objects).
         scope = extract_scope_names(world_graph, agent_uid, goal_literal)
         problem, init, name_map, reverse_map = build_pddlstream_problem(
-            world_graph, agent_uid, goal_literal, scope_names=scope
+            world_graph, agent_uid, goal_literal, scope_names=scope,
+            movable_containers=boxes, contained_in=contained_in,
         )
         self._log_pddl_problem(problem, subgoal, init)
 
@@ -1977,12 +2051,90 @@ class VlmTampPddlPlanner(Planner):
 
         return plan, name_map, reverse_map, init
 
+    def _sim_object(self, world_graph, name):
+        try:
+            handle = world_graph.get_node_from_name(name).sim_handle
+            return self.env_interface.sim.get_rigid_object_manager().get_object_by_handle(handle)
+        except Exception:
+            return None
+
+    def _movable_containers(self, world_graph, names) -> set:
+        """Known objects with an annotated interior (habitat_llm/utils/movable_containers),
+        i.e. the ones OraclePlaceSkill accepts with ``within``. Cached per episode."""
+        cache = self.__dict__.setdefault("_container_cache", {})
+        for name in names:
+            if name not in cache:
+                obj = self._sim_object(world_graph, name)
+                cache[name] = obj is not None and container_bounds(obj) is not None
+        return {n for n in names if cache[n]}
+
+    def _container_facts(self, world_graph) -> Tuple[Set[str], Dict[str, str]]:
+        """Movable containers and object -> the movable container it is inside.
+
+        The world graph has no edge for an object inside a basket, so the
+        simulator's containment check supplies the in(x, basket) facts.
+        """
+        if not getattr(self, "movable_containers", False):
+            return set(), {}
+        from habitat.sims.habitat_simulator import sim_utilities as sutils
+
+        names = {o.name for o in world_graph.get_all_objects()}
+        boxes = self._movable_containers(world_graph, names)
+        if not boxes:
+            return boxes, {}
+        ids = {}
+        for name in boxes:
+            obj = self._sim_object(world_graph, name)
+            if obj is not None:
+                ids[obj.object_id] = name
+        contained_in: Dict[str, str] = {}
+        for name in names - boxes:
+            obj = self._sim_object(world_graph, name)
+            if obj is None:
+                continue
+            try:
+                parents = sutils.within(self.env_interface.sim, obj)
+            except Exception:
+                continue
+            for parent_id in parents:
+                if parent_id in ids:
+                    contained_in[name] = ids[parent_id]
+                    break
+        return boxes, contained_in
+
+    def _clear_held_if_in_container(self, world_graph, agent_uid: int, contained_in: Dict[str, str]) -> None:
+        """Drop a stale held object that now sits inside a movable container.
+
+        The world graph clears last_held_object when it sees the placed object on
+        furniture; it has no object-in-object edge, so after Place(x, within,
+        basket) it keeps reporting x as held and every replan re-emits that Place.
+        Only this case is corrected: the gripper must be empty and the simulator
+        must report x inside a movable container.
+        """
+        if not contained_in:
+            return
+        agent = next((a for a in world_graph.get_agents() if a.name == f"agent_{agent_uid}"), None)
+        held = agent.properties.get("last_held_object") if agent is not None else None
+        name = getattr(held, "name", held)
+        if name not in contained_in:
+            return
+        try:
+            if self.env_interface.sim.agents_mgr[agent_uid].grasp_mgr.is_grasped:
+                return
+        except Exception:
+            return
+        agent.properties.pop("last_held_object", None)
+        self._vprint(f"  [SYNC] {name} is inside {contained_in[name]}; no longer held", "yellow")
+
     # ------------------------------------------------------------------
     # Action execution helpers
     # ------------------------------------------------------------------
 
     def _restore_name(self, name: str) -> str:
         return self._reverse_name_map.get(name, name)
+
+    def _on_skill_succeeded(self, action) -> None:
+        """Hook: ``action`` (a plan step) just finished successfully."""
 
     def _action_to_tool(self, action, next_action=None):
         name, args = action
@@ -1996,7 +2148,7 @@ class VlmTampPddlPlanner(Planner):
                 if nname == "pick":
                     # Navigate to the object itself; oracle_nav handles objects.
                     return "Navigate", self._restore_name(nargs[1])
-                if nname in ("place_on", "place_in"):
+                if nname in ("place_on", "place_in", "place_in_object"):
                     # Navigate to the destination furniture.
                     return "Navigate", self._restore_name(nargs[2])
                 if nname in ("open", "close", "power_on", "power_off", "power_on_object", "power_off_object", "clean_furniture"):
@@ -2015,7 +2167,7 @@ class VlmTampPddlPlanner(Planner):
             obj = self._restore_name(args[1])
             furn = self._restore_name(args[2])
             return "Place", f"{obj}, on, {furn}, None, None"
-        if name == "place_in":
+        if name in ("place_in", "place_in_object"):
             obj = self._restore_name(args[1])
             furn = self._restore_name(args[2])
             return "Place", f"{obj}, within, {furn}, None, None"
@@ -2075,7 +2227,10 @@ class VlmTampPddlPlanner(Planner):
         out.update(kwargs)
         out["cost_metrics"] = {"llm_planning_time_s": getattr(self, "_vlm_wall_s", 0.0),
                                "llm_requests": getattr(self, "_vlm_calls", 0),
+                               "actions_dispatched": getattr(self, "_num_actions", 0),
                                "physical_explore": not self.explore_fast}
+        if getattr(self, "_termination", None):
+            out["termination"] = dict(self._termination)
         usage = snapshot_from_llm(self.vlm)
         if usage:
             cost = dict(out.get("cost_metrics") or {})
@@ -2130,6 +2285,10 @@ class VlmTampPddlPlanner(Planner):
                     room_name, trigger_obj = self._select_explore_room_for_objects(
                         world_graph, targets
                     )
+                    if room_name and self._action_cap_reached():
+                        return {}, self._planner_info(
+                            agent_uid, hl_override={}, is_done={agent_uid: True}
+                        ), True
                     if room_name:
                         reason = (
                             "missing"
@@ -2172,10 +2331,7 @@ class VlmTampPddlPlanner(Planner):
                         self._pending_replan_after_explore = True
                         self._begin_explore_images(observations, world_graph, room_name)
                         hl_action = {agent_uid: ("Explore", room_name, None)}
-                        self.last_high_level_actions = hl_action
-                        low_level_actions, responses = self.process_high_level_actions(
-                            hl_action, observations
-                        )
+                        low_level_actions, responses = self._start_action(hl_action, observations)
                         return (
                             low_level_actions,
                             self._planner_info(agent_uid, responses=responses),
@@ -2212,6 +2368,10 @@ class VlmTampPddlPlanner(Planner):
                 and len(args) >= 1
             ):
                 room_name = args[0]
+                if not self.explore_fast and self._action_cap_reached():
+                    return {}, self._planner_info(
+                        agent_uid, hl_override={}, is_done={agent_uid: True}
+                    ), True
                 self._subgoal_exec_log_begin_subgoal()
                 self._vprint_header(
                     f"HIGH-LEVEL EXPLORE  Branch {self.branch_idx} | Subgoal {self.subgoal_idx}: {subgoal}",
@@ -2283,10 +2443,7 @@ class VlmTampPddlPlanner(Planner):
                 self._pending_replan_after_explore = True
                 self._begin_explore_images(observations, world_graph, room_name)
                 hl_action = {agent_uid: ("Explore", room_name, None)}
-                self.last_high_level_actions = hl_action
-                low_level_actions, responses = self.process_high_level_actions(
-                    hl_action, observations
-                )
+                low_level_actions, responses = self._start_action(hl_action, observations)
                 return (
                     low_level_actions,
                     self._planner_info(agent_uid, responses=responses),
@@ -2534,21 +2691,11 @@ class VlmTampPddlPlanner(Planner):
                 else:
                     if _active_action == "Open":
                         target = hl_snapshot[agent_uid][1]
-                        active = subgoals[self.subgoal_idx]
-                        if self.current_action_idx + 1 >= len(self.current_plan):
-                            self._log_subgoal_status("solved", active)
-                            self._emit_subgoal_execution("solved", active)
-                            self._subgoals_completed += 1
-                            if active not in self._already_succeeded_subgoals:
-                                self._already_succeeded_subgoals.append(active)
-                        else:
-                            self._emit_subgoal_execution("observation_boundary", active)
                         self._search_counts = getattr(self, "_search_counts", {})
                         key = "inspect:" + str(target)
                         self._search_counts[key] = self._search_counts.get(key, 0) + 1
                         self.history.append(f"opened({target})")
-                        self._observe_and_continue(instruction, observations, world_graph, "opened_furniture", target)
-                        return low_level_actions, self._planner_info(agent_uid, hl_override=hl_snapshot, responses=responses), self.is_done
+                    self._on_skill_succeeded(self.current_plan[self.current_action_idx])
                     self.current_action_idx += 1
                     # Check if subgoal's plan is now fully executed
                     if self.current_action_idx >= len(self.current_plan):
@@ -2692,6 +2839,9 @@ class VlmTampPddlPlanner(Planner):
             self.current_action_idx = 0
             return {}, self._planner_info(agent_uid, hl_override={}, replanned={agent_uid: True}), False
 
+        if self._action_cap_reached():
+            return {}, self._planner_info(agent_uid, hl_override={}, is_done={agent_uid: True}), True
+
         step_num = self.current_action_idx + 1
         total = len(self.current_plan)
         self._vprint(f"\n  ▶ [{step_num}/{total}]  {tool_name}[{tool_args}]", "cyan")
@@ -2701,8 +2851,7 @@ class VlmTampPddlPlanner(Planner):
         self._trace_append(f"Action: {tool_name}[{tool_args}]")
 
         hl_action = {agent_uid: (tool_name, tool_args, None)}
-        self.last_high_level_actions = hl_action
-        low_level_actions, responses = self.process_high_level_actions(hl_action, observations)
+        low_level_actions, responses = self._start_action(hl_action, observations)
         return (
             low_level_actions,
             self._planner_info(agent_uid, responses=responses),

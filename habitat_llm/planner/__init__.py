@@ -19,6 +19,20 @@ from habitat_llm.planner.zero_shot_react_vlm_planner import (  # noqa: F401
     ZeroShotReactVLMPlanner,
 )
 
-from habitat_llm.planner.vlm_tamp_pddl_planner import VlmTampPddlPlanner  # noqa: F401
-from habitat_llm.planner.custom_approach_planner import CustomApproachPlanner  # noqa: F401
 from habitat_llm.planner.tru_pomdp.planner import TruPOMDPPlanner  # noqa: F401
+
+
+def __getattr__(name):
+    # PDDLStream checks for a compiled Fast Downward at import time. Keep that
+    # requirement scoped to the planners that use it, including Hydra targets.
+    optional_planners = {
+        "VlmTampPddlPlanner": "habitat_llm.planner.vlm_tamp_pddl_planner",
+        "CustomApproachPlanner": "habitat_llm.planner.custom_approach_planner",
+    }
+    if name not in optional_planners:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+    from importlib import import_module
+
+    planner = getattr(import_module(optional_planners[name]), name)
+    globals()[name] = planner
+    return planner

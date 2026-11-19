@@ -13,7 +13,8 @@ plan_config:
     constrained_generation: False
     objects_response: True
     objects_response_include_states: True
-    send_action_image: True
+    send_action_image: True # Attach a current camera image at each replan; False sends text only.
+    placement_oracle: none # hint: privileged ablation, tells the planner where known goal objects go (react_placement_oracle.py)
     centralized: False
     enable_rag: False # If we want to use RAG or not
     rag_dataset_dir: "" # The path to the rag_data_source_name folder

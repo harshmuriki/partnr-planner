@@ -170,8 +170,9 @@ class TwoDoors(SymbolicDomain):
 def exact_value(domain, scenarios, depth, discount=0.95):
     if depth == 0:
         return 0.0
-    values = [0.0]
-    for action in domain.legal_actions(s.state for s in scenarios):
+    values = []
+    actions = set(domain.legal_actions(s.state for s in scenarios)) | {NULL_ACTION}
+    for action in actions:
         total = 0.0
         groups = {}
         for scenario in scenarios:
@@ -538,7 +539,7 @@ def test_root_can_choose_default_policy_over_expanded_actions():
     assert action == default
 
 
-def test_repeated_subgoal_rewards_stay_below_upper_bound():
+def test_undoing_and_redoing_subgoals_loses_reward_and_respects_upper_bound():
     domain = SymbolicDomain(furniture_room={"table": "room", "other": "room"})
     p = Particle(
         SceneState(
@@ -558,8 +559,86 @@ def test_repeated_subgoal_rewards_stay_below_upper_bound():
         p, reward, terminal = domain.step(p, action)
         total += 0.95**i * reward
         assert not terminal
-    assert total > 400.0  # The old one-time remaining-subgoals bound was unsound.
+    assert total < 0.0  # Undoing progress must not create a profitable reward cycle.
     assert total <= bound
+
+
+@pytest.fixture
+def pending_cup():
+    domain = SymbolicDomain(furniture_room={"source": "room", "target": "room"})
+    particle = Particle(
+        SceneState(
+            object_parent={"cup": "source"},
+            inspected_areas={"source", "target"},
+            robot_area="source",
+        ),
+        (GoalAtom("cup", "target"),),
+    )
+    return domain, particle
+
+
+def test_search_prefers_costly_progress_to_penalized_null(pending_cup):
+    domain, particle = pending_cup
+    solver = DespotSolver(
+        domain, DespotConfig(max_search_depth=1, rollout_depth=1, num_trials=1)
+    )
+    action, stats = solver.plan([particle])
+    assert action == Action(ActionType.PICK, area="source", obj="cup")
+    optimum = exact_value(domain, [Scenario(particle, 1.0)], 1)
+    assert stats.root_lower == pytest.approx(optimum)
+    assert optimum == -5.0
+
+
+def test_truncated_rollout_includes_null_cost_until_search_horizon(pending_cup):
+    domain, particle = pending_cup
+    solver = DespotSolver(
+        domain, DespotConfig(max_search_depth=2, rollout_depth=1)
+    )
+    scenarios = [Scenario(particle, 1.0)]
+    root = VNode(scenarios, 1.0, 0)
+    solver._init_bounds(root)
+    assert root.lower == pytest.approx(-5.0 - 0.95 * 100.0)
+    assert root.default_action.action_type is ActionType.PICK
+    assert solver.rollout.value(particle)[0] == pytest.approx(root.lower)
+    optimum = exact_value(domain, scenarios, 2)
+    assert root.lower <= optimum <= root.upper
+
+
+@pytest.mark.parametrize("discount", [0.95, 1.0])
+def test_null_only_belief_charges_nonterminal_mass_through_horizon(discount):
+    domain = SymbolicDomain(furniture_room={"table": "room"})
+    goals = (GoalAtom("cup", "table"),)
+    pending = Particle(SceneState(), goals)
+    complete = Particle(SceneState(object_parent={"cup": "table"}), goals)
+    solver = DespotSolver(
+        domain,
+        DespotConfig(
+            max_search_depth=3, rollout_depth=0, discount=discount, num_trials=3
+        ),
+    )
+    solver.sample_scenarios = lambda belief: [
+        Scenario(pending, 0.75),
+        Scenario(complete, 0.25, terminal=True),
+    ]
+    action, stats = solver.plan([])
+    null_return = -100.0 * sum(discount**i for i in range(3))
+    assert action == NULL_ACTION
+    assert stats.root_lower == pytest.approx(0.75 * null_return)
+    assert stats.root_upper >= stats.root_lower
+    assert solver.rollout.value(pending)[0] == pytest.approx(null_return)
+    assert solver.rollout.value(complete)[0] == 0.0
+
+
+def test_excluding_default_action_does_not_restore_free_null(pending_cup):
+    domain, particle = pending_cup
+    solver = DespotSolver(
+        domain, DespotConfig(max_search_depth=1, rollout_depth=1, num_trials=1)
+    )
+    pick = Action(ActionType.PICK, area="source", obj="cup")
+    action, stats = solver.plan([particle], excluded_actions=[pick])
+    assert action == NULL_ACTION
+    assert stats.num_actions == 0
+    assert stats.root_lower == pytest.approx(-100.0)
 
 
 def test_physical_exploration_is_charged_using_actual_steps():
@@ -568,6 +647,9 @@ def test_physical_exploration_is_charged_using_actual_steps():
     planner = make_planner()
     metrics = planner._planner_info({}, False)["cost_metrics"]
     assert metrics["physical_explore"] is True
+    assert metrics["toh_llm_time_s"] == 0.0
+    assert metrics["toh_process_time_s"] == 0.0
+    assert metrics["planner_overhead_time_s"] == 0.0
     budget = combined_time_breakdown(
         physical_explore=metrics["physical_explore"],
         action_sim_steps={"Explore": 240, "Pick": 120},

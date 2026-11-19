@@ -180,6 +180,40 @@ def test_domain_is_built_from_the_world_graph():
     assert domain.state_affordances == {"lamp_0": {"is_powered_on"}}
 
 
+def test_initial_agent_location_only_in_first_prompt_even_after_domain_rebuild():
+    planner = make_planner()
+    graph = make_world_graph()
+    graph.get_spot_robot().properties["initial_room"] = "bedroom_3"
+    memory = "Initial robot memory: jug_0 known absent; pitcher_0 on counter_0.\n"
+    graph.initial_robot_memory_prompt = memory
+    planner._sync_domain(graph)
+    planner.toh.query_levels_1_2("Move bread", "Current observation")
+    assert planner.llm.prompts[-1].count("agent_0: bedroom_3") == 1
+    assert memory in planner.llm.prompts[-1]
+    planner.toh.query_levels_1_2("Move bread", "Updated observation")
+    assert "agent_0:" not in planner.llm.prompts[-1]
+    assert memory not in planner.llm.prompts[-1]
+    assert memory in planner._planner_info({}, False)["prompts"][0]
+
+    # Discovering furniture rebuilds TOH without starting a new episode.
+    table = Furniture("table_new", {"type": "table", "translation": [1, 0, 0]})
+    graph.add_node(table)
+    graph.add_edge(table, "kitchen_1", "inside", "contains")
+    planner._sync_domain(graph)
+    planner.toh.query_levels_1_2("Move bread", "Updated observation")
+    assert "agent_0:" not in planner.llm.prompts[-1]
+    assert memory not in planner.llm.prompts[-1]
+    assert planner._planner_info({}, False)["prompts"][0].count(memory) == 1
+
+    planner.reset()
+    assert planner._planner_info({}, False)["prompts"][0] == ""
+    graph.get_spot_robot().properties["initial_room"] = "kitchen_1"
+    planner._sync_domain(graph)
+    planner.toh.query_levels_1_2("Move bread", "Current observation")
+    assert planner.llm.prompts[-1].count("agent_0: kitchen_1") == 1
+    assert memory in planner.llm.prompts[-1]
+
+
 def test_observation_matches_the_domain_observation_contract():
     planner = make_planner()
     graph = make_world_graph()

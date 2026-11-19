@@ -14,6 +14,9 @@ plan_config:
   # NTAMP: max consecutive execution failures on the same subgoal before branch/VLM
   # escalation; each retry re-solves PDDL from the current world graph (no VLM).
   ntamp_max_pddl_replan_retries: 1
+  # Max skills actually dispatched to the simulator (PDDL steps never run do not
+  # count; a skill counts once, not per env tick). 0 or null disables.
+  max_actions: 0
   # Save annotated views during physical Explore; send first/middle/last at replanning.
   explore_image_interval: 30
   # Partial-observability mode: if required objects are missing/unlocated in
@@ -24,6 +27,10 @@ plan_config:
   # as a planner special-case (without modeling explore in PDDL domain).
   enable_vlm_explore_subgoal: True
   max_room_explore_passes_per_object: 1
+  # Movable objects with an annotated interior (habitat_llm/utils/movable_containers,
+  # only the T4 fruit basket in baseline_evaluation_v3) are in(x, <container>)
+  # destinations, planned with place_in_object. False restores the furniture-only domain.
+  movable_containers: True
   # Print step-by-step pipeline output to the terminal while running.
   verbose: True
   log_dir: "vlm_tamp_pddl"
@@ -32,7 +39,7 @@ plan_config:
     model_name: gpt-4o-mini
     max_completion_tokens: 1200
     temperature: 0.2
-    use_images: True
+    use_images: True # Attach images to VLM planning requests; False sends text only.
     # Draw GT 3D bounding boxes (projected to 2D) on the scene image sent to the VLM.
     use_gt_bboxes: True
     # 1 = single annotated image; 2 = split labels across two images (same view) when crowded.

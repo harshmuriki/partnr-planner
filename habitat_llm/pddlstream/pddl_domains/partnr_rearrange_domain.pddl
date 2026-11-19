@@ -67,6 +67,20 @@
                  (not (near ?a ?f)))
   )
 
+  ;; Place inside a movable container object (e.g. a fruit basket); the
+  ;; problem marks such objects (container ?c). Maps to Place(o, within, c).
+  (:action place_in_object
+    :parameters (?a ?o ?c ?r)
+    :precondition (and (agent ?a) (object ?o) (object ?c) (room ?r)
+                       (container ?c) (not (= ?o ?c))
+                       (holding ?a ?o) (at ?a ?r) (inroom ?c ?r)
+                       (reachable ?a ?c) (near ?a ?c))
+    :effect (and (in ?o ?c)
+                 (handempty ?a)
+                 (not (holding ?a ?o))
+                 (not (near ?a ?c)))
+  )
+
   (:action open
     :parameters (?a ?j ?r)
     :precondition (and (agent ?a) (joint ?j) (room ?r)

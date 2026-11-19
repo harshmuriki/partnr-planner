@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Dict
 
 from habitat_llm.llm.instruct.utils import get_objects_descr
 from habitat_llm.planner import LLMPlanner
+from habitat_llm.planner.react_placement_oracle import MODES, ReactPlacementOracle
 from habitat_llm.utils.grammar import FREE_TEXT
 
 if TYPE_CHECKING:
@@ -30,6 +31,31 @@ class ZeroShotReactPlanner(LLMPlanner):
         :param env_interface: The environment interface.
         """
         super().__init__(plan_config, env_interface)
+        # plan_config.placement_oracle=hint: privileged ablation that tells the
+        # planner where known goal objects must be placed (react_placement_oracle).
+        mode = str(plan_config.get("placement_oracle", "none"))
+        if mode not in MODES:
+            raise ValueError(f"placement_oracle must be one of {MODES}, got {mode!r}")
+        self.placement_oracle = (
+            ReactPlacementOracle(env_interface) if mode == "hint" else None
+        )
+
+    def reset(self):
+        super().reset()
+        if getattr(self, "placement_oracle", None) is not None:
+            self.placement_oracle.reset()
+
+    def _placement_hint(self, world_graph: "WorldGraph") -> str:
+        if getattr(self, "placement_oracle", None) is None:
+            return ""
+        hint = self.placement_oracle.new_hint(world_graph)
+        if hint:
+            print(f"[placement_oracle]{hint}")
+        return hint
+
+    def prepare_prompt(self, input_instruction: str, world_graph: "WorldGraph", **kwargs):
+        hint = self._placement_hint(world_graph)
+        return super().prepare_prompt(input_instruction + hint, world_graph, **kwargs)
 
     def build_response_grammar(self, world_graph: "WorldGraph") -> str:
         """
@@ -71,7 +97,7 @@ class ZeroShotReactPlanner(LLMPlanner):
                 )
                 result = response_format.format(
                     result=responses[agent.uid],
-                    objects=objects,
+                    objects=objects + self._placement_hint(world_graph),
                     user_tag=self.planner_config.llm.user_tag,
                     eot_tag=self.planner_config.llm.eot_tag,
                 )

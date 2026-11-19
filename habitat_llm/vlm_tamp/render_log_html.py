@@ -351,7 +351,9 @@ function toggleText(id) {{
 </html>
 """
 
+    from habitat_llm.vlm_tamp.simple_tree import add_simple_tree
+
     with open(out_path, "w", encoding="utf-8") as f:
-        f.write(html_doc)
+        f.write(add_simple_tree(html_doc, events))
 
     return out_path

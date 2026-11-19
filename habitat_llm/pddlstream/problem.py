@@ -230,6 +230,8 @@ def build_pddlstream_problem(
     agent_uid: int,
     goal_literal: Tuple,
     scope_names: Optional[Set[str]] = None,
+    movable_containers: Optional[Set[str]] = None,
+    contained_in: Optional[Dict[str, str]] = None,
 ):
     """Build a PDDLStream problem from the WorldGraph.
 
@@ -237,6 +239,11 @@ def build_pddlstream_problem(
     set (plus the agent) are registered. This scopes the grounding to only the
     relevant objects/furniture/rooms for the current subgoal, preventing the
     grounding explosion that occurs with 200+ entities.
+
+    movable_containers: objects with an annotated interior (e.g. a fruit basket);
+    they get (container ?o) so place_in_object can target them. contained_in maps
+    an object to the movable container it is inside (from the simulator, since
+    the world graph has no such edge).
     """
     domain_pddl = read(_DOMAIN_PATH)
     stream_pddl = read(_STREAM_PATH)
@@ -284,7 +291,9 @@ def build_pddlstream_problem(
     # Objects
     for obj in world_graph.get_all_objects():
         if in_scope(obj.name):
-            register(obj.name, "object")
+            pddl_obj = register(obj.name, "object")
+            if obj.name in (movable_containers or ()):
+                init.append(("container", pddl_obj))
 
     # Agent (always included)
     agent_node = _resolve_agent_node(world_graph, agent_uid)
@@ -362,6 +371,14 @@ def build_pddlstream_problem(
                         break
                 except Exception:
                     continue
+
+    # Objects inside movable containers (both ends registered)
+    for obj_name, box_name in (contained_in or {}).items():
+        if obj_name == held_name:
+            continue
+        obj_pddl, box_pddl = _sanitize(obj_name), _sanitize(box_name)
+        if obj_pddl in registered_pddl and box_pddl in registered_pddl:
+            init.append(("in", obj_pddl, box_pddl))
 
     # Articulated joint states (only registered joints)
     for furn in world_graph.get_all_furnitures():

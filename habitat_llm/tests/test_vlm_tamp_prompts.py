@@ -67,7 +67,7 @@ def test_prompt_builders_include_room_grouped_surface_format():
     assert expected_surface in english_prompt
     assert expected_surface in predicate_prompt
     assert (
-        "It can have accurate, missing or outdated information." in english_prompt
+        "It can have accurate, missing or outdated information." not in english_prompt
     )
 
 
@@ -104,7 +104,7 @@ def test_openai_empty_response_records_finish_and_reasoning_tokens(monkeypatch):
                 "usage": {
                     "prompt_tokens": 500,
                     "completion_tokens": 1200,
-                    "prompt_tokens_details": {"cached_tokens": 100},
+                    "prompt_tokens_details": {"cached_tokens": 100, "cache_write_tokens": 300},
                     "completion_tokens_details": {"reasoning_tokens": 1200},
                 },
             }
@@ -127,6 +127,11 @@ def test_openai_empty_response_records_finish_and_reasoning_tokens(monkeypatch):
     assert response == ""
     assert metadata["status"] == "ok"
     assert metadata["finish_reasons"] == ["length"]
+    assert metadata["cache_write_tokens"] == 300
+    usage = api.token_usage.snapshot()
+    assert usage["cache_write_tokens"] == 300
+    assert abs(usage["llm_usd"] - 0.001537) < 1e-12
+    assert usage["llm_usd_is_estimate"] is False
     assert metadata["completion_tokens"] == 1200
     assert metadata["reasoning_tokens"] == 1200
     assert metadata["empty_response"] is True

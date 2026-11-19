@@ -11,6 +11,9 @@ from pprint import pprint
 import dotenv
 
 from habitat_llm.utils.llm_usage import TokenUsageTracker
+from habitat_llm.utils.llm_cost_report import (
+    record_api_response, record_local_cache_hit, track_model_call,
+)
 
 dotenv.load_dotenv()
 
@@ -118,6 +121,7 @@ class VLMApi:
             key = self._cache_key(prompt, urls)
             if key in self._cache:
                 cached = self._cache[key]
+                record_local_cache_hit(self.model_name)
                 self.last_response_metadata = {
                     "provider": self.name,
                     "model": self.model_name,
@@ -129,7 +133,9 @@ class VLMApi:
                 self.context.append({"role": "assistant", "content": str(cached)})
                 return cached
 
-        result = self._ask(prompt, image_data_urls=urls, **kwargs)
+        provider = "anthropic" if self.name == "Claude-3" else "openai"
+        with track_model_call(self.model_name, provider=provider, source=self.name):
+            result = self._ask(prompt, image_data_urls=urls, **kwargs)
         if not self.last_response_metadata:
             self.last_response_metadata = {
                 "provider": self.name,
@@ -287,6 +293,9 @@ class GPT4vApi(VLMApi):
             print("\033[31m[VLM API ERROR] GPT4v response JSON was not an object\033[0m")
             return ""
 
+        # Charge all returned usage, including empty or malformed generations.
+        record_api_response(response, http_status, request_id)
+        self.token_usage.record_openai(response, model=response.get("model") or self.model_name)
         usage = response.get("usage") or {}
         prompt_details = usage.get("prompt_tokens_details") or {}
         completion_details = usage.get("completion_tokens_details") or {}
@@ -305,6 +314,7 @@ class GPT4vApi(VLMApi):
             ],
             "prompt_tokens": usage.get("prompt_tokens"),
             "cached_tokens": prompt_details.get("cached_tokens"),
+            "cache_write_tokens": prompt_details.get("cache_write_tokens"),
             "completion_tokens": usage.get("completion_tokens"),
             "reasoning_tokens": completion_details.get("reasoning_tokens"),
             "accepted_prediction_tokens": completion_details.get(
@@ -344,7 +354,6 @@ class GPT4vApi(VLMApi):
             print("\033[31m[VLM API ERROR] GPT4v choices were malformed\033[0m")
             return ""
 
-        self.token_usage.record_openai(response, model=self.model_name)
         answers = [ans["message"] for ans in choices]
         self.context.append({"role": "user", "content": prompt})
         self.context.extend(answers)
@@ -428,6 +437,7 @@ class Claude3Api(VLMApi):
             temperature=temperature,
             messages=self.messages,
         )
+        record_api_response(message)
         self.messages.append({"role": "assistant", "content": message.content})
         usage = getattr(message, "usage", None)
         self.token_usage.record(

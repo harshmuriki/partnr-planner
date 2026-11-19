@@ -330,20 +330,24 @@ class A2RolloutPolicy:
 
     def value(self, state: Particle) -> Tuple[float, Action]:
         """
-        Simulate the policy for ``rollout_depth`` steps and return the discounted
-        return together with the first action it chose.
+        Simulate through the search horizon, following the heuristic for
+        ``rollout_depth`` steps and then NULL, including its cost.
         """
         discount = self.config.discount
         total = 0.0
         gamma = 1.0
         current = state
         first_action = NULL_ACTION
-        for step_index in range(self.config.rollout_depth):
-            action = self.next_action(current)
+        if self.domain.goal_satisfied(state.scene, state.goal_atoms):
+            return total, first_action
+        for step_index in range(self.config.max_search_depth):
+            action = (
+                self.next_action(current)
+                if step_index < self.config.rollout_depth
+                else NULL_ACTION
+            )
             if step_index == 0:
                 first_action = action
-            if action.action_type is ActionType.NULL:
-                break
             current, reward, terminal = self.domain.step(current, action)
             total += gamma * reward
             gamma *= discount
@@ -424,7 +428,10 @@ class DespotSolver:
             return
         remaining = max(0, self.config.max_search_depth - node.depth)
         node.lower, node.default_action = self._rollout_belief(
-            node.scenarios, min(self.config.rollout_depth, remaining), node.weight
+            node.scenarios,
+            min(self.config.rollout_depth, remaining),
+            node.weight,
+            remaining,
         )
         node.default_value = node.lower
         node.upper = (
@@ -436,10 +443,28 @@ class DespotSolver:
             / node.weight
         )
 
-    def _rollout_belief(self, scenarios, depth, weight):
+    def _null_policy_value(self, scenarios, horizon, weight):
+        """Value of the stationary no-op policy over the remaining search horizon."""
+        if horizon <= 0 or not scenarios or weight <= 0:
+            return 0.0
+        discount = self.config.discount
+        series = horizon if discount == 1 else (1 - discount**horizon) / (1 - discount)
+        total = 0.0
+        for scenario in scenarios:
+            if scenario.terminal:
+                continue
+            # NULL leaves the state unchanged. A terminal result has no future cost.
+            _, reward, terminal = self.domain.step(scenario.state, NULL_ACTION)
+            total += scenario.weight * reward * (1 if terminal else series)
+        return total / weight
+
+    def _rollout_belief(self, scenarios, depth, weight, horizon):
         """One policy action for indistinguishable scenarios; branch only on observations."""
-        if depth <= 0 or not scenarios or weight <= 0:
+        if horizon <= 0 or not scenarios or weight <= 0:
             return 0.0, NULL_ACTION
+        null_value = self._null_policy_value(scenarios, horizon, weight)
+        if depth <= 0:
+            return null_value, NULL_ACTION
         legal = set(self.domain.legal_actions(s.state for s in scenarios))
         votes = {}
         for scenario in scenarios:
@@ -448,7 +473,7 @@ class DespotSolver:
                 votes[action] = votes.get(action, 0.0) + scenario.weight
         action = max(votes, key=votes.get) if votes else NULL_ACTION
         if action == NULL_ACTION:
-            return 0.0, action
+            return null_value, action
         total = 0.0
         groups = {}
         for scenario in scenarios:
@@ -459,10 +484,14 @@ class DespotSolver:
                 groups.setdefault(key, []).append(Scenario(nxt, scenario.weight))
         for group in groups.values():
             mass = sum(s.weight for s in group)
-            value, _ = self._rollout_belief(group, depth - 1, mass)
+            value, _ = self._rollout_belief(group, depth - 1, mass, horizon - 1)
             total += self.config.discount * mass * value
-        # NULL forever is a feasible zero-return policy, also after the rollout horizon.
-        return (total / weight, action) if total > 0 else (0.0, NULL_ACTION)
+        # Compare two executable policies; a negative return is not a free stop.
+        return (
+            (total / weight, action)
+            if total / weight > null_value
+            else (null_value, NULL_ACTION)
+        )
 
     # -- expansion -----------------------------------------------------------
 
@@ -621,7 +650,9 @@ class DespotSolver:
         self._init_bounds(root)
         if root.default_action in excluded_actions:
             root.default_action = NULL_ACTION
-            root.default_value = root.lower = 0.0
+            root.default_value = root.lower = self._null_policy_value(
+                root.scenarios, self.config.max_search_depth, root.weight
+            )
         self._excluded_actions = set(excluded_actions)
         if root.is_terminal:
             stats.elapsed_s = time.monotonic() - start

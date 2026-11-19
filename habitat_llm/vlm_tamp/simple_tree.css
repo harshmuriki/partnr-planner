@@ -1,0 +1,23 @@
+#vt-view-switch { display: flex; gap: 6px; align-items: center; padding: 10px 16px; background: #fff; border-bottom: 1px solid #ddd; color: #334155; font: 13px system-ui, sans-serif; }
+#vt-view-switch span { margin-right: 8px; font-weight: 600; }
+#vt-view-switch button, #vt-tree button { padding: 6px 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: white; color: #334155; cursor: pointer; font: inherit; }
+#vt-view-switch button[aria-pressed="true"] { background: #334155; color: white; border-color: #334155; }
+#vt-current[hidden], #vt-tree[hidden] { display: none !important; }
+#vt-tree { background: #f8fafc; color: #1e293b; padding: 18px; font: 14px system-ui, sans-serif; }
+#vt-tree header h1 { font-size: 20px; margin: 0 0 6px; }
+#vt-tree header p { margin: 0; color: #64748b; max-width: 850px; line-height: 1.5; }
+#vt-tree .vt-controls, #vt-tree .vt-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+#vt-tree .vt-controls label { display: flex; align-items: center; gap: 6px; }
+#vt-tree .vt-legend { font-size: 12px; color: #475569; gap: 18px; }
+#vt-tree .vt-workspace { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 14px; }
+#vt-canvas { overflow: auto; height: 72vh; min-height: 350px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
+#vt-canvas svg { display: block; max-width: none; margin: 0 auto; background: white; border: 0; font-family: system-ui, sans-serif; }
+#vt-canvas .vt-node { cursor: pointer; outline: none; }
+#vt-canvas .vt-node:hover rect, #vt-canvas .vt-node:focus rect, #vt-canvas .vt-node[aria-pressed="true"] rect { stroke-width: 3; filter: brightness(.96); }
+#vt-detail { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; max-height: 72vh; overflow: auto; overflow-wrap: anywhere; }
+#vt-detail h2 { font-size: 16px; margin: 0 0 12px; }
+#vt-detail p { margin: 8px 0; line-height: 1.5; }
+#vt-detail pre { font-size: 11px; white-space: pre-wrap; overflow-wrap: anywhere; }
+#vt-detail img { max-width: 100%; height: auto; }
+#vt-detail .step-expand { display: block; padding: 0; }
+@media (max-width: 850px) { #vt-tree .vt-workspace { grid-template-columns: minmax(0, 1fr); } #vt-detail { max-height: 45vh; } }

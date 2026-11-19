@@ -48,14 +48,18 @@ def _default_interactive_pddl_html_basename(log_dir: str) -> str:
     """
     Default output filename: {run_id}_pddl.html
 
-    Expects log_dir like: .../<task_name>/<run_id>/vlm_tamp_pddl/
+    Expects log_dir like: .../<task_name>/<run_id>/vlm_tamp_pddl/ (or rail_planner/)
     Also accepts legacy episode subdirectories.
     where run_id is typically like Task_3_Obj_1.
     """
     try:
         log_dir = os.path.normpath(os.path.abspath(log_dir))
         vlm_sub = os.path.dirname(log_dir)
-        run_dir = vlm_sub if os.path.basename(log_dir) == "vlm_tamp_pddl" else os.path.dirname(vlm_sub)
+        run_dir = (
+            vlm_sub
+            if os.path.basename(log_dir) in ("vlm_tamp_pddl", "rail_planner")
+            else os.path.dirname(vlm_sub)
+        )
         run_name = os.path.basename(run_dir)
         if not run_name:
             return "index.html"

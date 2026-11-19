@@ -167,9 +167,15 @@ class Planner:
                 hl_action_input = hl_actions[agent_uid][1]
                 hl_error_message = hl_actions[agent_uid][2]
 
+                progress = getattr(self.env_interface, "_episode_progress", None)
+                if progress is not None:
+                    progress.start_action(agent_uid, hl_action_name, hl_action_input)
+
                 # Handle error message
                 if hl_error_message:
                     responses[agent_uid] = hl_error_message
+                    if progress is not None:
+                        progress.finish_action(agent_uid, hl_error_message)
                     continue
 
                 # Fetch agent specific observations
@@ -178,6 +184,9 @@ class Planner:
                 low_level_action, response = agent.process_high_level_action(
                     hl_action_name, hl_action_input, filtered_observations
                 )
+
+                if progress is not None:
+                    progress.finish_action(agent_uid, response)
 
                 # Insert to the output
                 if low_level_action is not None:

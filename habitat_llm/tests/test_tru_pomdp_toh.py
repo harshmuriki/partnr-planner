@@ -75,6 +75,7 @@ def make_domain() -> SymbolicDomain:
 def make_observation(**kwargs) -> Observation:
     defaults = {
         "object_parent": {"plate_2": "counter_24"},
+        "object_placement": {"plate_2": "on"},
         "furniture_open": {"fridge_0": False, "cabinet_3": False},
         "inspected_areas": {"counter_24"},
         "fully_inspected_areas": {"counter_24"},
@@ -138,7 +139,7 @@ def test_observation_text_carries_the_regeneration_context():
     )
     assert "The closed areas are: cabinet_3, fridge_0," in text
     assert "counter_24" in text
-    assert "plate_2 is in counter_24" in text
+    assert "plate_2 is on counter_24" in text
     assert "The wrong goal states are:" in text
     assert "cup_0 on table_10" in text
     assert "Pick[cup_0] -> Unexpected failure" in text

@@ -47,6 +47,9 @@ HELD = "__held__"
 MANIPULATION_COST = 5.0
 NAV_COST_MAX = 27.0
 INFEASIBLE_COST = 100.0
+# Match the official implementation's ACTION_NONE and lost-progress penalties.
+NULL_COST = 100.0
+SUBGOAL_REGRESSION_COST = 250.0
 SUBGOAL_REWARD = 200.0
 COMPLETION_REWARD = 200.0
 
@@ -743,7 +746,7 @@ class SymbolicDomain:
 
     def step(self, state: Particle, action: Action) -> Tuple[Particle, float, bool]:
         """
-        Deterministic transition with the paper's planning reward.
+        Deterministic transition with the paper's reward and official penalties.
 
         :return: (next state, reward, terminal). Infeasible actions are mapped to
             NULL and charged INFEASIBLE_COST, as in the paper.
@@ -754,7 +757,7 @@ class SymbolicDomain:
         was_terminal = already_satisfied == len(goal)
 
         if action.action_type is ActionType.NULL:
-            return state.copy(), 0.0, was_terminal
+            return state.copy(), -NULL_COST, was_terminal
 
         ok, _reason = self.feasible(scene, action)
         if not ok:
@@ -776,6 +779,9 @@ class SymbolicDomain:
         now_satisfied = self._satisfied_count(next_scene, goal)
         if now_satisfied > already_satisfied:
             reward += SUBGOAL_REWARD * (now_satisfied - already_satisfied)
+        elif now_satisfied < already_satisfied:
+            # The reference charges once per regressive action, not per lost atom.
+            reward -= SUBGOAL_REGRESSION_COST
         terminal = now_satisfied == len(goal)
         if terminal and not was_terminal:
             reward += COMPLETION_REWARD

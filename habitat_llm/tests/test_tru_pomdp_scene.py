@@ -12,6 +12,8 @@ from habitat_llm.planner.tru_pomdp.scene import (
     INFEASIBLE_COST,
     MANIPULATION_COST,
     NAV_COST_MAX,
+    NULL_COST,
+    SUBGOAL_REGRESSION_COST,
     SUBGOAL_REWARD,
     Action,
     ActionType,
@@ -359,11 +361,48 @@ def test_a_disturbed_goal_atom_becomes_unsatisfied_again():
     )
     particle = Particle(scene, (atom,))
     assert domain.goal_satisfied(scene, particle.goal_atoms)
-    nxt, _, _ = domain.step(
+    nxt, reward, terminal = domain.step(
         particle, Action(ActionType.PICK, area="table_10", obj="cup_0")
     )
     assert nxt.goal_atoms == (atom,)
     assert not domain.goal_satisfied(nxt.scene, nxt.goal_atoms)
+    assert not terminal
+    assert reward == -SUBGOAL_REGRESSION_COST - MANIPULATION_COST
+
+
+def test_regression_penalty_is_charged_once_when_multiple_atoms_are_lost():
+    domain = make_domain()
+    scene = make_scene(
+        object_parent={"cup_0": "table_10", "plate_0": "counter_24"},
+        inspected={"table_10"},
+        robot_area="table_10",
+        object_states={"cup_0": {"is_clean": True}},
+    )
+    goals = (
+        GoalAtom("cup_0", "table_10"),
+        GoalAtom("cup_0", "table_10", states=("is_clean",)),
+        GoalAtom("plate_0", "table_10"),
+    )
+    nxt, reward, terminal = domain.step(
+        Particle(scene, goals),
+        Action(ActionType.PICK, area="table_10", obj="cup_0"),
+    )
+    assert len(domain.unsatisfied_atoms(nxt.scene, goals)) == 3
+    assert reward == -250.0 - MANIPULATION_COST
+    assert not terminal
+
+
+def test_null_is_penalized_without_changing_the_scene():
+    domain = make_domain()
+    particle = Particle(
+        make_scene(object_parent={"cup_0": "counter_24"}),
+        (GoalAtom("cup_0", "table_10"),),
+    )
+    nxt, reward, terminal = domain.step(particle, Action(ActionType.NULL))
+    assert nxt.scene == particle.scene
+    assert nxt.goal_atoms == particle.goal_atoms
+    assert reward == -NULL_COST == -100.0
+    assert not terminal
 
 
 # ---------------------------------------------------------------------------

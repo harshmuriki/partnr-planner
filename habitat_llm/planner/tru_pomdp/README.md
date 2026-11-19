@@ -5,6 +5,12 @@ not a reproduction of the paper's RoboCasa benchmark. The public entry point rem
 `TruPOMDPPlanner`; the shared simulator, other planners, datasets, and ground-truth records
 are not changed by this baseline.
 
+We reimplement Tru-POMDP (Tang et al., 2025) on PARTNR: the same Tree of Hypotheses,
+hybrid particle update, and online DESPOT loop, with the published Appendix A.5 widths
+and the published A.2 rollout. The observation model grants absence evidence only after
+Open, and the action space adds PARTNR’s Explore and object-state skills. We use our
+Python DESPOT, not the authors’ C++ solver, so we do not claim their RoboCasa results.
+
 ## Paper components and implementation
 
 | Component | Implementation | Contract |
@@ -54,7 +60,14 @@ Values are conditional expected returns. Weighted excess uncertainty is therefor
 `xi` is an uncertainty-reduction target, **not** a policy-size penalty. This implementation
 uses zero policy-size regularization; it does not implement positive-penalty blocker pruning.
 The final root choice includes the default rollout policy. Both bounds respect the configured
-search horizon; rollout truncation is followed by a feasible zero-return NULL policy.
+search horizon; rollout truncation is followed by a NULL policy charged 100 per
+remaining step. Negative rollout returns are retained instead of replaced with
+a fictitious free stop. Terminal scenarios have no future cost.
+
+The reward model includes the official implementation's 250 penalty when an action
+reduces the number of satisfied goal atoms, charged once per action, in addition to
+movement/manipulation costs. NULL incurs a 100 penalty. Existing rewards of 200 per
+newly satisfied atom and an additional 200 for completion remain in place.
 
 The optimistic bound allows repeated subgoal rewards after a previously satisfied goal is
 disturbed. It is deliberately loose. Runtime is checked between trials, so an individual

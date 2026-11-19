@@ -13,8 +13,8 @@ Three levels, structurally unchanged from the paper:
 * L2: a placement goal per set.
 * L3: candidate current locations for every target object that is not observed.
 
-The prompts below are the Appendix A.1 prompts with terminology substitutions
-only: the paper's AREA nodes become PARTNR furniture ids, the kitchen becomes a
+The prompts below adapt the Appendix A.1 prompts with terminology substitutions
+and household execution guidance: AREA nodes become PARTNR furniture ids, the kitchen becomes a
 multi-room house, the "closed areas" rule in L3 becomes "closed containers or
 furniture that has not been inspected yet" (PARTNR does not make open areas
 fully visible), and L2 gains the optional ``relation``/``next_to``/``states``
@@ -27,9 +27,10 @@ path, normalised over the belief.
 
 import itertools
 import json
-import re
 import math
 import random
+import re
+import time
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
@@ -55,7 +56,11 @@ You are an assistant to solve an object rearrangement task in a household enviro
 An AREA is a furniture node of the house, identified by an id such as table_0, counter_24,
 fridge_0 or chest_of_drawers_2. Every AREA belongs to a room such as kitchen_1 or
 living_room_1. A robot carries out the task using these skills: Navigate, Explore, Open,
-Close, Pick, Place, Rearrange, PowerOn, PowerOff, Fill, Clean, Pour.
+Close, Pick, Place, PowerOn, PowerOff, Fill, Clean, Pour.
+
+Household execution rule: close every door or drawer the robot opens, including fridge
+and cabinet doors, once it has finished accessing that furniture and before completing
+the task. Keep the required hypothesis JSON schema unchanged.
 
 You'll receive:
 
@@ -109,6 +114,10 @@ fits the instruction rather than naming the room.
 3. Add "states" only when the instruction requires a state change of the object. Allowed state literals are: is_powered_on, is_powered_off, is_filled, is_empty, is_clean, is_dirty.
 
 4. A goal may require only a state change and no relocation. In that case set "target_area" to null and give the required "states".
+
+5. If you have to fill a container, you must take it next to a faucet and use the fill action. Represent that goal with the state is_filled. Do not name the faucet as the target_area unless the instruction says the container should stay there.
+
+6. If you have to clean an object, pick it up, take it to a faucet, and use the clean action (similar to filling). For furniture surfaces, navigate to the furniture and use the clean action directly. Represent that goal with the state is_clean.
 
 ## For objects already in target areas:
 
@@ -332,6 +341,12 @@ You are an expert assistant specialized in object relocation within household en
 An AREA is a furniture node of the house, identified by an id such as table_0, counter_24,
 fridge_0 or chest_of_drawers_2.
 
+When reasoning about searches inside furniture, remember that every door or drawer
+opened by the robot must be closed after the last access and before task completion,
+unless the task explicitly requires it to remain open. This also applies to openings
+from earlier observations or replanning. Keep the required location-hypothesis JSON
+schema unchanged.
+
 You'll receive:
 
 1. the language instruction of the task.
@@ -470,8 +485,11 @@ def build_observation_text(
     placements = []
     for obj in sorted(observation.object_parent):
         parent = observation.object_parent[obj]
-        where = "the robot's hand" if parent == HELD else parent
-        placements.append(f"{obj} is in {where}")
+        if parent == HELD:
+            placements.append(f"{obj} is held by the robot")
+        else:
+            relation = observation.object_placement.get(obj) or "at"
+            placements.append(f"{obj} is {relation} {parent}")
     lines.append(
         f"The observed objects and their initial areas are: {_format_list(placements)}"
     )
@@ -581,23 +599,31 @@ class TreeOfHypotheses:
         domain: SymbolicDomain,
         config: Optional[TohConfig] = None,
         verbose: bool = False,
+        initial_agent_location: str = "",
+        initial_robot_memory: str = "",
     ) -> None:
         self.llm = llm
         self.domain = domain
         self.config = config or TohConfig()
         self.verbose = verbose
+        self.initial_agent_location = initial_agent_location
+        self.initial_robot_memory = initial_robot_memory
         self.rng = random.Random(self.config.seed)
         self.rejected_hypotheses = 0
         self.last_prompts: List[str] = []
         self.last_responses: List[str] = []
+        self.llm_time_s = 0.0
+        self.process_time_s = 0.0
 
     # -- LLM plumbing --------------------------------------------------------
 
     def _query(self, prompt: str) -> str:
         self.last_prompts.append(prompt)
+        started = time.perf_counter()
         response = self.llm.generate(
             prompt, stop=None, max_length=self.config.max_tokens
         )
+        self.llm_time_s += time.perf_counter() - started
         if not isinstance(response, str):
             response = str(response)
         self.last_responses.append(response)
@@ -610,6 +636,8 @@ class TreeOfHypotheses:
     def query_levels_1_2(
         self, instruction: str, observation_text: str
     ) -> List[Tuple[List[GoalAtom], float]]:
+        if not self.last_prompts:
+            observation_text = self.initial_agent_location + self.initial_robot_memory + observation_text
         prompt = (
             TOH_LEVEL12_SYSTEM_PROMPT.format(
                 k=self.config.c1,
@@ -775,6 +803,32 @@ class TreeOfHypotheses:
         Each root-to-leaf path becomes one particle whose weight is the product of
         the confidences along the path; the belief is then normalised.
         """
+        started = time.perf_counter()
+        llm_before = self.llm_time_s
+        try:
+            return self._generate_belief(
+                instruction,
+                observation,
+                wrong_goal_states,
+                satisfied_objects,
+                failed_attempts,
+                memory,
+                history,
+            )
+        finally:
+            elapsed = time.perf_counter() - started
+            self.process_time_s += max(0.0, elapsed - (self.llm_time_s - llm_before))
+
+    def _generate_belief(
+        self,
+        instruction: str,
+        observation: Observation,
+        wrong_goal_states: Sequence[Sequence[GoalAtom]] = (),
+        satisfied_objects: Sequence[str] = (),
+        failed_attempts: Sequence[str] = (),
+        memory: Optional[Dict[str, str]] = None,
+        history: Sequence[str] = (),
+    ) -> Belief:
         observation_text = build_observation_text(
             observation,
             self.domain,

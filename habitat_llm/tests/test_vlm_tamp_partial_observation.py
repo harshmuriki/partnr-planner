@@ -101,11 +101,11 @@ def test_scene_description_matches_partnr_and_does_not_filter_memory():
                               add_state_info=True, centralized=False)
     assert p._build_scene_description(graph, 0, set()) == expected
     assert p._build_scene_description(graph, 0, {'cup'}) == expected
-    assert 'cup: table in kitchen' in expected
+    assert 'cup: on table in kitchen' in expected
     assert 'clean: True' in expected
 
 
-def test_internal_open_replans_without_claiming_parent_subgoal_complete():
+def test_internal_open_continues_the_remaining_plan():
     p=VlmTampPddlPlanner.__new__(VlmTampPddlPlanner)
     p.is_done=False;p._agents=[];p.trace='task';p._episode_banner_printed=True
     p.branches=[['picked(scissors)']];p.branch_idx=0;p.subgoal_idx=0
@@ -121,9 +121,11 @@ def test_internal_open_replans_without_claiming_parent_subgoal_complete():
     statuses=[];p._emit_subgoal_execution=lambda *a:statuses.append(a)
     calls=[];p._observe_and_continue=lambda *a:calls.append(a)
     p.get_next_action('pick scissors', {}, {0:object()})
-    assert statuses==[('observation_boundary','picked(scissors)')]
+    assert statuses==[]
     assert not p._already_succeeded_subgoals
-    assert calls[0][-2:]==('opened_furniture','drawer')
+    assert calls==[]
+    assert p.current_action_idx==1
+    assert p.history==['opened(drawer)']
     assert p._search_counts=={'inspect:drawer':1}
 
 

@@ -21,6 +21,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Tuple
 import numpy as np
 from hydra.utils import instantiate
 
+from habitat_llm.llm.instruct.utils import get_initial_agent_descr
 from habitat_llm.planner.planner import Planner
 from habitat_llm.planner.tru_pomdp.belief import (
     Belief,
@@ -152,11 +153,13 @@ class TruPOMDPPlanner(Planner):
 
         self.domain = None
         self.toh = None
+        self._toh_prompt_history: List[str] = []
         self.updater = None
         self.solver = None
         self.belief = None
 
         self._observed_locations = {}
+        self._observed_placements = {}
         self._observed_flags = {}
         self._observed_relations = {}
         self._memory = {}
@@ -167,6 +170,7 @@ class TruPOMDPPlanner(Planner):
         self._failed_contexts = set()
         self._action_context = None
         self._termination_reason = None
+        self._termination = {}
         self._memory_revisions = 0
         self._last_belief_update = {}
         self._instruction = ""
@@ -181,6 +185,7 @@ class TruPOMDPPlanner(Planner):
         self._trace = ""
         self._search_time_s = 0.0
         self._llm_time_s = 0.0
+        self._overhead_time_s = 0.0
         self._last_search_stats: Dict[str, Any] = {}
 
     @property
@@ -236,8 +241,24 @@ class TruPOMDPPlanner(Planner):
             ],
             faucet_clean_objects=self._faucet_clean_objects(world_graph),
         )
+        # A rebuilt domain must not reintroduce the episode's initial location.
+        initial_agent_location = ""
+        initial_robot_memory = ""
+        if self.toh is None:
+            initial_agent_location = get_initial_agent_descr(world_graph)
+            initial_robot_memory = getattr(world_graph, "initial_robot_memory_prompt", "")
+        elif not self.toh.last_prompts:
+            initial_agent_location = self.toh.initial_agent_location
+            initial_robot_memory = self.toh.initial_robot_memory
+        if self.toh is not None:
+            self._toh_prompt_history.extend(self.toh.last_prompts)
         self.toh = TreeOfHypotheses(
-            self.llm, self.domain, self.toh_config, verbose=self.verbose
+            self.llm,
+            self.domain,
+            self.toh_config,
+            verbose=self.verbose,
+            initial_agent_location=initial_agent_location,
+            initial_robot_memory=initial_robot_memory,
         )
         self.updater = HybridBeliefUpdater(
             self.domain, self.toh, self.replenish_threshold
@@ -310,6 +331,7 @@ class TruPOMDPPlanner(Planner):
                 for anchors in self._observed_relations.values():
                     anchors.discard(obj.name)
             self._observed_locations[obj.name] = parent
+            self._observed_placements[obj.name] = graph.get_object_furniture_relation(obj)
             self._observed_flags.setdefault(obj.name, {}).update(
                 {
                     k: bool(v)
@@ -367,42 +389,31 @@ class TruPOMDPPlanner(Planner):
 
         data_path = self.env_interface.conf.habitat.dataset.data_path
         records = load_remembered_object_records(data_path)
-        from habitat_llm.utils.initial_robot_memory import (
-            load_scene_info,
-            resolve_placement_node,
-        )
+        from habitat_llm.utils.initial_robot_memory import load_scene_info, resolve_placement_node
 
         scene_info = load_scene_info(data_path)
         objects = graph.get_all_objects()
         for record in records:
             if record.outdated_location:
-                placement = resolve_placement_node(
-                    graph, record.outdated_location, scene_info
-                )
+                placement = resolve_placement_node(graph, record.outdated_location, scene_info)
                 if placement is not None:
                     self._memory[record.entity] = placement.name
-            else:
-                obj = next(
-                    (
-                        o
-                        for o in objects
-                        if o.sim_handle == record.sim_handle and record.sim_handle
-                    ),
-                    None,
-                )
-                if obj is None:
-                    obj = next((o for o in objects if o.name == record.entity), None)
-                parent = (
-                    graph.find_furniture_for_object(obj) if obj is not None else None
-                )
-                if parent is not None:
-                    self._memory[obj.name] = parent.name
+                continue
+            # Copy the selected objects seeded from startup GT by the environment.
+            obj = next((o for o in objects if record.sim_handle and
+                        o.sim_handle == record.sim_handle), None)
+            if obj is None:
+                obj = next((o for o in objects if o.name == record.entity), None)
+            parent = graph.find_furniture_for_object(obj) if obj is not None else None
+            if parent is not None:
+                self._memory[obj.name] = parent.name
 
     @staticmethod
     def _observation_signature(observation):
         return json.dumps(
             {
                 "parents": observation.object_parent,
+                "placements": observation.object_placement,
                 "robot_area": observation.robot_area,
                 "states": observation.object_states,
                 "open": observation.furniture_open,
@@ -446,6 +457,7 @@ class TruPOMDPPlanner(Planner):
                 furniture_open[name] = is_open
 
         object_parent: Dict[str, str] = {}
+        object_placement: Dict[str, Optional[str]] = {}
         object_states: Dict[str, Dict[str, bool]] = {}
         observed_graph = (
             self._fresh_graph if self._fresh_graph is not None else world_graph
@@ -469,6 +481,7 @@ class TruPOMDPPlanner(Planner):
                 if furniture is None:
                     continue
                 object_parent[obj.name] = furniture.name
+            object_placement[obj.name] = observed_graph.get_object_furniture_relation(obj)
             states = obj.properties.get("states", {}) or {}
             flags = {
                 flag: bool(value)
@@ -498,6 +511,7 @@ class TruPOMDPPlanner(Planner):
         # Positive sensor evidence persists in this static-world model; current
         # FOV absence alone never deletes it. Skill transitions update it below.
         self._observed_locations.update(object_parent)
+        self._observed_placements.update(object_placement)
         for obj, flags in object_states.items():
             self._observed_flags.setdefault(obj, {}).update(flags)
         self._observed_relations.update(relations)
@@ -514,6 +528,7 @@ class TruPOMDPPlanner(Planner):
 
         return Observation(
             object_parent=object_parent,
+            object_placement=dict(self._observed_placements),
             furniture_open=furniture_open,
             object_states=object_states,
             spatial_relations=relations,
@@ -622,6 +637,39 @@ class TruPOMDPPlanner(Planner):
         non-empty response the skill has finished and the hybrid belief update
         runs on the next call.
         """
+        started = time.perf_counter()
+        llm_before = self._llm_time_s
+        search_before = self._search_time_s
+        result = None
+        try:
+            result = self._get_next_action_body(
+                instruction, observations, world_graph, verbose
+            )
+            return result
+        finally:
+            elapsed = time.perf_counter() - started
+            accounted = (self._llm_time_s - llm_before) + (
+                self._search_time_s - search_before
+            )
+            self._overhead_time_s += max(0.0, elapsed - accounted)
+            if result is not None:
+                info = result[1]
+                for bucket in (info.get("cost_metrics"), info.get("tru_pomdp")):
+                    if isinstance(bucket, dict):
+                        bucket["planner_overhead_time_s"] = self._overhead_time_s
+
+    def _toh_accounted_s(self) -> float:
+        if self.toh is None:
+            return 0.0
+        return self.toh.llm_time_s + self.toh.process_time_s
+
+    def _get_next_action_body(
+        self,
+        instruction: str,
+        observations: Dict[str, Any],
+        world_graph: Dict[int, "WorldGraph"],
+        verbose: bool = False,
+    ) -> Tuple[Dict[int, Any], Dict[str, Any], bool]:
         agent_uid = self._agent_uid
         self._instruction = instruction or self._instruction
         graph = world_graph[agent_uid]
@@ -686,6 +734,12 @@ class TruPOMDPPlanner(Planner):
         assert self.domain is not None and self.solver is not None
         if self._num_decisions >= self.max_decisions:
             self._termination_reason = "budget_exhaustion"
+            from habitat_llm.termination import action_limit_notice
+
+            self._termination = action_limit_notice(self.max_decisions, self._num_decisions, "max_decisions")
+            message = self._termination["message"]
+            print(message, flush=True)
+            self._trace += f"\nTermination: {message}\n"
             return False
 
         observation = self._build_observation(world_graph)
@@ -784,6 +838,7 @@ class TruPOMDPPlanner(Planner):
             action = self._symbolic_action
             if action.action_type is ActionType.PICK and action.obj:
                 self._observed_locations[action.obj] = HELD
+                self._observed_placements[action.obj] = None
                 self._observed_relations.pop(action.obj, None)
                 for anchors in self._observed_relations.values():
                     anchors.discard(action.obj)
@@ -798,6 +853,9 @@ class TruPOMDPPlanner(Planner):
                 )
                 if held:
                     self._observed_locations[held] = action.area
+                    self._observed_placements[held] = (
+                        "inside" if action.relation in {"in", "inside", "within"} else "on"
+                    )
                     self._observed_relations[held] = (
                         {action.next_to} if action.next_to else set()
                     )
@@ -840,7 +898,7 @@ class TruPOMDPPlanner(Planner):
             f"{self._symbolic_action}: success={success}, navigated={self._navigated}, "
             f"response={response}; observation={self._observation_signature(observation)}"
         )
-        start = time.time()
+        toh_before = self._toh_accounted_s()
         self.belief, info = self.updater.update(
             self.belief,
             outcome,
@@ -857,7 +915,7 @@ class TruPOMDPPlanner(Planner):
         self._last_belief_update = info
         self._record_belief("updated")
         if info.get("replenished") or info.get("replenishment_failed"):
-            self._llm_time_s += time.time() - start
+            self._llm_time_s += self._toh_accounted_s() - toh_before
         if len(self.belief) == 0:
             self._termination_reason = "empty_belief"
             self.is_done = True
@@ -924,10 +982,9 @@ class TruPOMDPPlanner(Planner):
             # runner with an empty dict on the step that produced the response.
             "high_level_actions": self._issued_high_level_actions,
             "prompts": {
-                agent.uid: (
-                    self.toh.last_prompts[-1]
-                    if self.toh and self.toh.last_prompts
-                    else ""
+                agent.uid: "\n\n".join(
+                    self._toh_prompt_history
+                    + (self.toh.last_prompts if self.toh else [])
                 )
                 for agent in agents
             },
@@ -941,6 +998,9 @@ class TruPOMDPPlanner(Planner):
                 "llm_planning_time_s": self._llm_time_s,
                 "llm_call_count": len(self.toh.last_responses) if self.toh else 0,
                 "despot_search_time_s": self._search_time_s,
+                "toh_llm_time_s": self.toh.llm_time_s if self.toh else 0.0,
+                "toh_process_time_s": self.toh.process_time_s if self.toh else 0.0,
+                "planner_overhead_time_s": self._overhead_time_s,
             },
             "tru_pomdp": {
                 "belief": belief_summary,
@@ -952,6 +1012,9 @@ class TruPOMDPPlanner(Planner):
                 "num_decisions": self._num_decisions,
                 "search_time_s": self._search_time_s,
                 "llm_time_s": self._llm_time_s,
+                "toh_llm_time_s": self.toh.llm_time_s if self.toh else 0.0,
+                "toh_process_time_s": self.toh.process_time_s if self.toh else 0.0,
+                "planner_overhead_time_s": self._overhead_time_s,
                 "failed_attempts": len(self._failed_attempts),
                 "inspected_areas": len(self._deliberately_inspected),
                 **self._last_search_stats,
@@ -959,4 +1022,6 @@ class TruPOMDPPlanner(Planner):
         }
         if replanned or self.is_done:
             info["print"] = self._trace
+        if self._termination:
+            info["termination"] = dict(self._termination)
         return info

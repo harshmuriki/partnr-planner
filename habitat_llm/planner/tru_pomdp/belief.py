@@ -77,6 +77,8 @@ class Observation:
     inspected_areas: Set[str] = field(default_factory=set)
     fully_inspected_areas: Set[str] = field(default_factory=set)
     known_furniture: Set[str] = field(default_factory=set)
+    # Prompt context only: absent/unknown placement must not imply containment.
+    object_placement: Dict[str, Optional[str]] = field(default_factory=dict)
 
 
 @dataclass

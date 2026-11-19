@@ -5,7 +5,7 @@ defaults:
   - override /evaluation: decentralized_evaluation_runner_single_agent
   - override /planner@evaluation.agents.agent_0.planner: llm_zero_shot_react_planner
   - override /instruct@evaluation.agents.agent_0.planner.plan_config.instruct: zero_shot_prompt
-  - override /agent@evaluation.agents.agent_0.config: oracle_rearrange_object_states_agent_motortoolsonly
+  - override /agent@evaluation.agents.agent_0.config: oracle_object_states_agent_motortoolsonly
   - override /llm@evaluation.agents.agent_0.planner.plan_config.llm: openai_chat
   - override /world_model@world_model: gt_graph
   - _self_
@@ -25,8 +25,8 @@ evaluation:
           constrained_generation: True
           objects_response: True
           objects_response_include_states: True
-          send_action_image: True
-          fast_explore: True
+          send_action_image: True # Attach current camera image at each LLM replan; False sends text only.
+          fast_explore: False # Use normal physical Explore, including its time in the task budget.
           replanning_threshold: 50
           llm:
             inference_mode: "rlm"
