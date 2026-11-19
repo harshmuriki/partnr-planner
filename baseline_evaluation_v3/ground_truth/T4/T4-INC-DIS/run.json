@@ -5730,7 +5730,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "apple_0,within,basket_0,none,none",
-            "video_time": 23.033333,
+            "video_time": null,
             "simulator_step": 692
           }
         ],
@@ -5748,7 +5748,7 @@
             "sequence": 9,
             "skill": "Place",
             "target": "apple_1,within,basket_0,none,none",
-            "video_time": 31.366667,
+            "video_time": null,
             "simulator_step": 942
           }
         ],
@@ -5766,7 +5766,7 @@
             "sequence": 13,
             "skill": "Place",
             "target": "orange_0,within,basket_0,none,none",
-            "video_time": 35.4,
+            "video_time": null,
             "simulator_step": 1063
           }
         ],
@@ -5793,7 +5793,7 @@
             "sequence": 17,
             "skill": "Place",
             "target": "bottle_0,on,counter_0,none,none",
-            "video_time": 37.933333,
+            "video_time": null,
             "simulator_step": 1139
           }
         ],
@@ -5811,7 +5811,7 @@
             "sequence": 21,
             "skill": "Place",
             "target": "bottle_1,on,counter_0,none,none",
-            "video_time": 41.466667,
+            "video_time": null,
             "simulator_step": 1245
           }
         ],
@@ -5829,7 +5829,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "apple_0,within,basket_0,none,none",
-            "video_time": 23.033333,
+            "video_time": null,
             "simulator_step": 692
           },
           {
@@ -5837,7 +5837,7 @@
             "sequence": 9,
             "skill": "Place",
             "target": "apple_1,within,basket_0,none,none",
-            "video_time": 31.366667,
+            "video_time": null,
             "simulator_step": 942
           },
           {
@@ -5845,7 +5845,7 @@
             "sequence": 13,
             "skill": "Place",
             "target": "orange_0,within,basket_0,none,none",
-            "video_time": 35.4,
+            "video_time": null,
             "simulator_step": 1063
           },
           {
@@ -5853,7 +5853,7 @@
             "sequence": 17,
             "skill": "Place",
             "target": "bottle_0,on,counter_0,none,none",
-            "video_time": 37.933333,
+            "video_time": null,
             "simulator_step": 1139
           },
           {
@@ -5861,7 +5861,7 @@
             "sequence": 21,
             "skill": "Place",
             "target": "bottle_1,on,counter_0,none,none",
-            "video_time": 41.466667,
+            "video_time": null,
             "simulator_step": 1245
           }
         ],

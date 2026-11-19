@@ -9120,7 +9120,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 6.2,
+            "video_time": null,
             "simulator_step": 187
           }
         ],
@@ -9138,7 +9138,7 @@
             "sequence": 11,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 15.866667,
+            "video_time": null,
             "simulator_step": 477
           }
         ],
@@ -9156,7 +9156,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 6.2,
+            "video_time": null,
             "simulator_step": 187
           },
           {
@@ -9164,7 +9164,7 @@
             "sequence": 11,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 15.866667,
+            "video_time": null,
             "simulator_step": 477
           }
         ],
@@ -9179,7 +9179,7 @@
             "sequence": 15,
             "skill": "Place",
             "target": "cup_0,on,table_11,next_to,bread_0",
-            "video_time": 35.666667,
+            "video_time": null,
             "simulator_step": 1071
           }
         ],
@@ -9197,7 +9197,7 @@
             "sequence": 19,
             "skill": "Place",
             "target": "blue_hand_towel_0,on,table_11,next_to,bread_0",
-            "video_time": 45.866667,
+            "video_time": null,
             "simulator_step": 1377
           }
         ],
@@ -9215,7 +9215,7 @@
             "sequence": 14,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 35.2,
+            "video_time": null,
             "simulator_step": 1057
           }
         ],
@@ -9233,7 +9233,7 @@
             "sequence": 18,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 45.733333,
+            "video_time": null,
             "simulator_step": 1373
           }
         ],
@@ -9269,7 +9269,7 @@
             "sequence": 21,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 56.8,
+            "video_time": null,
             "simulator_step": 1705
           }
         ],
@@ -9287,7 +9287,7 @@
             "sequence": 11,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 15.866667,
+            "video_time": null,
             "simulator_step": 477
           },
           {
@@ -9295,7 +9295,7 @@
             "sequence": 15,
             "skill": "Place",
             "target": "cup_0,on,table_11,next_to,bread_0",
-            "video_time": 35.666667,
+            "video_time": null,
             "simulator_step": 1071
           },
           {
@@ -9303,7 +9303,7 @@
             "sequence": 19,
             "skill": "Place",
             "target": "blue_hand_towel_0,on,table_11,next_to,bread_0",
-            "video_time": 45.866667,
+            "video_time": null,
             "simulator_step": 1377
           },
           {
@@ -9311,7 +9311,7 @@
             "sequence": 14,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 35.2,
+            "video_time": null,
             "simulator_step": 1057
           },
           {
@@ -9319,7 +9319,7 @@
             "sequence": 18,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 45.733333,
+            "video_time": null,
             "simulator_step": 1373
           },
           {
@@ -9327,7 +9327,7 @@
             "sequence": 21,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 56.8,
+            "video_time": null,
             "simulator_step": 1705
           },
           {
@@ -9335,7 +9335,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 6.2,
+            "video_time": null,
             "simulator_step": 187
           }
         ],
@@ -9350,7 +9350,7 @@
             "sequence": 11,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 15.866667,
+            "video_time": null,
             "simulator_step": 477
           },
           {
@@ -9358,7 +9358,7 @@
             "sequence": 15,
             "skill": "Place",
             "target": "cup_0,on,table_11,next_to,bread_0",
-            "video_time": 35.666667,
+            "video_time": null,
             "simulator_step": 1071
           },
           {
@@ -9366,7 +9366,7 @@
             "sequence": 19,
             "skill": "Place",
             "target": "blue_hand_towel_0,on,table_11,next_to,bread_0",
-            "video_time": 45.866667,
+            "video_time": null,
             "simulator_step": 1377
           },
           {
@@ -9374,7 +9374,7 @@
             "sequence": 14,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 35.2,
+            "video_time": null,
             "simulator_step": 1057
           },
           {
@@ -9382,7 +9382,7 @@
             "sequence": 18,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 45.733333,
+            "video_time": null,
             "simulator_step": 1373
           },
           {
@@ -9390,7 +9390,7 @@
             "sequence": 21,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 56.8,
+            "video_time": null,
             "simulator_step": 1705
           },
           {
@@ -9398,7 +9398,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 6.2,
+            "video_time": null,
             "simulator_step": 187
           }
         ],

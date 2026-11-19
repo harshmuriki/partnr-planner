@@ -9595,7 +9595,7 @@
             "sequence": 7,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 44.566667,
+            "video_time": null,
             "simulator_step": 1338
           }
         ],
@@ -9613,7 +9613,7 @@
             "sequence": 13,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 55.933333,
+            "video_time": null,
             "simulator_step": 1679
           }
         ],
@@ -9631,7 +9631,7 @@
             "sequence": 7,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 44.566667,
+            "video_time": null,
             "simulator_step": 1338
           },
           {
@@ -9639,7 +9639,7 @@
             "sequence": 13,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 55.933333,
+            "video_time": null,
             "simulator_step": 1679
           }
         ],
@@ -9654,7 +9654,7 @@
             "sequence": 17,
             "skill": "Place",
             "target": "bottle_0,on,table_11,next_to,bread_0",
-            "video_time": 75.966667,
+            "video_time": null,
             "simulator_step": 2280
           }
         ],
@@ -9672,7 +9672,7 @@
             "sequence": 24,
             "skill": "Place",
             "target": "hand_towel_0,on,table_11,next_to,bread_0",
-            "video_time": 106.633333,
+            "video_time": null,
             "simulator_step": 3200
           }
         ],
@@ -9690,7 +9690,7 @@
             "sequence": 16,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 75.533333,
+            "video_time": null,
             "simulator_step": 2267
           }
         ],
@@ -9708,7 +9708,7 @@
             "sequence": 23,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 106.133333,
+            "video_time": null,
             "simulator_step": 3185
           }
         ],
@@ -9744,7 +9744,7 @@
             "sequence": 26,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 117.866667,
+            "video_time": null,
             "simulator_step": 3537
           }
         ],
@@ -9762,7 +9762,7 @@
             "sequence": 13,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 55.933333,
+            "video_time": null,
             "simulator_step": 1679
           },
           {
@@ -9770,7 +9770,7 @@
             "sequence": 17,
             "skill": "Place",
             "target": "bottle_0,on,table_11,next_to,bread_0",
-            "video_time": 75.966667,
+            "video_time": null,
             "simulator_step": 2280
           },
           {
@@ -9778,7 +9778,7 @@
             "sequence": 24,
             "skill": "Place",
             "target": "hand_towel_0,on,table_11,next_to,bread_0",
-            "video_time": 106.633333,
+            "video_time": null,
             "simulator_step": 3200
           },
           {
@@ -9786,7 +9786,7 @@
             "sequence": 16,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 75.533333,
+            "video_time": null,
             "simulator_step": 2267
           },
           {
@@ -9794,7 +9794,7 @@
             "sequence": 23,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 106.133333,
+            "video_time": null,
             "simulator_step": 3185
           },
           {
@@ -9802,7 +9802,7 @@
             "sequence": 26,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 117.866667,
+            "video_time": null,
             "simulator_step": 3537
           },
           {
@@ -9810,7 +9810,7 @@
             "sequence": 7,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 44.566667,
+            "video_time": null,
             "simulator_step": 1338
           }
         ],

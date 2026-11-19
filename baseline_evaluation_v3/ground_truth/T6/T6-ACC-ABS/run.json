@@ -8812,7 +8812,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 6.933333,
+            "video_time": null,
             "simulator_step": 209
           }
         ],
@@ -8830,7 +8830,7 @@
             "sequence": 11,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 17.766667,
+            "video_time": null,
             "simulator_step": 534
           }
         ],
@@ -8848,7 +8848,7 @@
             "sequence": 5,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 6.933333,
+            "video_time": null,
             "simulator_step": 209
           },
           {
@@ -8856,7 +8856,7 @@
             "sequence": 11,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 17.766667,
+            "video_time": null,
             "simulator_step": 534
           }
         ],
@@ -8871,7 +8871,7 @@
             "sequence": 15,
             "skill": "Place",
             "target": "bottle_0,on,table_11,next_to,bread_0",
-            "video_time": 38.5,
+            "video_time": null,
             "simulator_step": 1156
           }
         ],
@@ -8889,7 +8889,7 @@
             "sequence": 15,
             "skill": "Place",
             "target": "bottle_0,on,table_11,next_to,bread_0",
-            "video_time": 38.5,
+            "video_time": null,
             "simulator_step": 1156
           }
         ],
@@ -8916,7 +8916,7 @@
             "sequence": 18,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 49.433333,
+            "video_time": null,
             "simulator_step": 1484
           }
         ],
@@ -8934,7 +8934,7 @@
             "sequence": 16,
             "skill": "ReportAbsence",
             "target": "- The hand_towel (hand_towel_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
-            "video_time": 38.566667,
+            "video_time": null,
             "simulator_step": null
           }
         ],

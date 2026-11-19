@@ -117,13 +117,29 @@ if (typeof document !== 'undefined') {
       if (!Array.isArray(index.ground_truths)) throw new Error('Invalid ground-truth index');
       const timingCSV = await get('../ground_truth_timing/current_recordings.csv');
       const timing = new Map(parseCSV(timingCSV).map(r => [r.variant, r]));
-      const signature = JSON.stringify(index.ground_truths) + timingCSV;
+      const replay = await get('../ground_truth_timing/replay_measurements.json', true);
+      const signature = JSON.stringify(index.ground_truths) + timingCSV + JSON.stringify(replay);
       if (!force && signature === archiveSignature) { $('status').hidden = true; return; }
       const csv = await get('../variant_object_assets.csv');
       const ids = [...new Set(parseCSV(csv).map(r => r.Variant_ID.trim()).filter(id => /^T[1-7]-(ACC|INC|OUT)-(BASE|ABS|SUB|CON|DIS)$/.test(id)))];
       const runs = new Map(index.ground_truths.map(r => [r.variant,r]));
       runs.forEach(run => Object.assign(run, recordingTiming(run, timing.get(run.variant))));
-      const next = ids.map(id => { const [task,mem,axis] = id.split('-'); return {id,task,mem,axis,run:runs.get(id)}; });
+      const next = ids.map(id => { const [task,mem,axis] = id.split('-'); return {id,task,mem,axis,run:runs.get(id), replay:replay[id]}; });
+      next.forEach(row => {
+        const measured = row.replay;
+        if (!row.run || !measured || measured.status !== 'replayed') return;
+        // Human sequence replay. Skill time only: no model calls, no scene load.
+        Object.assign(row.run, {
+          execution_elapsed_seconds: measured.execution_elapsed_seconds,
+          action_wall_seconds: measured.action_wall_seconds,
+          sim_steps: measured.sim_steps,
+          action_count: measured.action_count,
+          steps_complete: 1,
+          timing_status: 'measured_skynet',
+          interval_definition: 'first_action_submit_to_final_action_return_headless',
+          timing_source: measured.source,
+        });
+      });
       // Bound concurrent reads so recording traffic stays responsive.
       let cursor = 0;
       await Promise.all(Array.from({length:4}, async () => {
@@ -134,7 +150,8 @@ if (typeof document !== 'undefined') {
             if (actions.length !== row.run.action_count || actions.some(a => !a.skill)) throw new Error('Archive updating');
             if (MEASURED[row.run.timing_status]) {
               const detail = await get(`../ground_truth_timing/${row.run.timing_source}`, true);
-              if (detail.run_id !== row.run.id || !['saved', 'replayed'].includes(detail.status)) throw new Error('Timing evidence updating');
+              const sameRun = detail.run_id === row.run.id || detail.variant === row.id;
+              if (!sameRun || !['saved', 'replayed'].includes(detail.status)) throw new Error('Timing evidence updating');
               row.timing = detail;
             }
             row.skills = {};

@@ -1,0 +1,72 @@
+74/90 variants replayed successfully
+
+T1   timed  3/15 mean     89.7s  median    108.5s  max    146.8s
+T2   timed 14/15 mean     92.6s  median     74.9s  max    183.0s
+T3   timed 12/12 mean     49.1s  median     50.8s  max     83.1s
+T4   timed 11/12 mean     70.2s  median     73.7s  max     99.8s
+T5   timed 15/15 mean     41.9s  median     42.0s  max     67.3s
+T6   timed 15/15 mean    521.5s  median    542.9s  max    790.2s
+T7   timed  4/6  mean    239.7s  median    248.3s  max    293.5s
+ALL  timed 74/90 mean    166.7s  median     70.5s  max    790.2s
+
+Not replayed:
+  T1-ACC-BASE: failed Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-ACC-CON: failed Action 6 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-ACC-DIS: failed Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-ACC-SUB: failed Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-INC-BASE: failed Action 4 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-INC-CON: failed Action 7 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-INC-DIS: failed Action 4 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-INC-SUB: failed Action 12 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-OUT-BASE: failed Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-OUT-CON: failed Action 8 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-OUT-DIS: failed Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T1-OUT-SUB: failed Action 13 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+  T2-ACC-DIS: failed Final evaluation failed
+  T4-ACC-ABS: failed Final evaluation failed
+  T7-OUT-BASE: failed Furniture name collides with graph node: toilet_1
+Traceback (most recent call last):
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py", line 257, in _worker_loop
+    result = self._do_load(**kwargs)
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py", line 513, in _do_load
+    env_interface.reset_environment()
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py", line 413, in reset_environment
+    self.initialize_perception_and_world_graph()
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py", line 162, in initialize_perception_and_world_graph
+    self.perception = PerceptionSim(
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py", line 108, in __init__
+    self.add_furniture_and_receptacles_to_gt_graph()
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py", line 358, in add_furniture_and_receptacles_to_gt_graph
+    raise ValueError(
+ValueError: Furniture name collides with graph node: toilet_1
+
+  T7-OUT-DIS: failed Furniture name collides with graph node: toilet_1
+Traceback (most recent call last):
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py", line 257, in _worker_loop
+    result = self._do_load(**kwargs)
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py", line 513, in _do_load
+    env_interface.reset_environment()
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py", line 413, in reset_environment
+    self.initialize_perception_and_world_graph()
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py", line 162, in initialize_perception_and_world_graph
+    self.perception = PerceptionSim(
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py", line 108, in __init__
+    self.add_furniture_and_receptacles_to_gt_graph()
+  File "/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py", line 358, in add_furniture_and_receptacles_to_gt_graph
+    raise ValueError(
+ValueError: Furniture name collides with graph node: toilet_1
+
+
+Slowest actions:
+   165.5s  T6-INC-DIS   #1   Explore kitchen_0  (sim_steps 1070, env.step 149.3s, cpu 180.3s)
+   163.4s  T6-INC-BASE  #1   Explore kitchen_0  (sim_steps 1070, env.step 147.5s, cpu 178.2s)
+   130.3s  T6-INC-SUB   #1   Explore kitchen_0  (sim_steps 1070, env.step 116.5s, cpu 145.0s)
+   130.2s  T6-INC-CON   #1   Explore kitchen_0  (sim_steps 1070, env.step 115.8s, cpu 145.2s)
+   128.9s  T6-INC-ABS   #1   Explore kitchen_0  (sim_steps 1070, env.step 114.9s, cpu 143.4s)
+   122.5s  T6-OUT-DIS   #2   Explore kitchen_0  (sim_steps 802, env.step 109.9s, cpu 133.6s)
+   121.2s  T6-OUT-ABS   #2   Explore kitchen_0  (sim_steps 802, env.step 108.8s, cpu 132.9s)
+   118.1s  T7-INC-DIS   #1   Explore living_room_0  (sim_steps 1295, env.step 101.3s, cpu 136.6s)
+   112.5s  T7-INC-BASE  #1   Explore living_room_0  (sim_steps 1295, env.step 95.4s, cpu 131.0s)
+   109.2s  T6-OUT-ABS   #21  Explore laundryroom/mudroom_0  (sim_steps 716, env.step 98.8s, cpu 119.6s)
+
+Tables: /coc/flash5/vmuriki3/tamp/partnr-planner/baseline_evaluation_v3/ground_truth_timing/skynet_20261001_202425/summary_*.csv, summary_slowest_actions.txt

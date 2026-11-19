@@ -1,0 +1,6 @@
+task,timed,saved,mean_elapsed_s,median_elapsed_s,max_elapsed_s,mean_active_skill_s
+T1,12,12,81.3,71.4,180.8,80.7
+T2,0,1,,,,
+T4,0,1,,,,
+T7,2,2,417.6,417.6,422.7,416.0
+ALL,14,16,129.3,73.1,422.7,128.6

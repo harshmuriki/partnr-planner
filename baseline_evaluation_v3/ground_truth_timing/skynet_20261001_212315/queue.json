@@ -1,0 +1,1061 @@
+{
+  "created_at": "2026-10-02T01:23:16.428965+00:00",
+  "repeats": 1,
+  "smoke": false,
+  "plans": [
+    {
+      "variant": "T1-ACC-BASE",
+      "run_id": "5df990062d8b43f3b05c09484cb26e43",
+      "spec_hash": "4f8156e740a02c42f8bdb12ac9c34be13c6383b1336287c8e9f5e640f35b0328",
+      "dataset_hash": "34aa805467747fcbe25d220ed7d114fe792d830cbb69ec55f01f4cf47e9465c3",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-acc-base/dataset.json.gz",
+      "episode_id": "T1-ACC-BASE",
+      "saved_sim_steps": 672,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,None,None"
+        }
+      ]
+    },
+    {
+      "variant": "T1-ACC-CON",
+      "run_id": "e6288a72c8d34df5a41f9002684470a4",
+      "spec_hash": "89f94044bd1b8aa8e28e4c004da0398cea2010e06068765d7f1aa1930396d806",
+      "dataset_hash": "31eaccf4668b04242883a79de89e317d67cd18885af9fd9e1d60d369989ee8f8",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-acc-con/dataset.json.gz",
+      "episode_id": "T1-ACC-CON",
+      "saved_sim_steps": 698,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Open",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,none,none"
+        }
+      ]
+    },
+    {
+      "variant": "T1-ACC-DIS",
+      "run_id": "0bef48960614444f8b9700a7394a8ac0",
+      "spec_hash": "e0131bbfcd62bddf7f00b79a69058b1322530ea00c3736eb8073c8bb9896912a",
+      "dataset_hash": "01303016be74a656a0a326bd49b3e9672c20e49b00de65ab0dbd0b1dfcf4259f",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-acc-dis/dataset.json.gz",
+      "episode_id": "T1-ACC-DIS",
+      "saved_sim_steps": 734,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,None,None"
+        }
+      ]
+    },
+    {
+      "variant": "T1-ACC-SUB",
+      "run_id": "72fc628f5e4f45619372850e9253fb43",
+      "spec_hash": "9df055e18f3d2840dc84f0af1f4b0f118c43b935d2a65d8e8c594e7c073c9056",
+      "dataset_hash": "f85a92c990ceb75ed29f282e3d05878a431d2164f9cd2cbe68a3903b7b23039a",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-acc-sub/dataset.json.gz",
+      "episode_id": "T1-ACC-SUB",
+      "saved_sim_steps": 736,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "pitcher_0,on,table_0,none,none"
+        }
+      ]
+    },
+    {
+      "variant": "T1-INC-BASE",
+      "run_id": "f320dabfb5f54190a33c229a40694372",
+      "spec_hash": "8d16bcdcaed792ab80600b94f74c0dcc8e1dd4d6eaa11ab9ceffd72425353643",
+      "dataset_hash": "d3f8365593e1ea57f068bb6eaff1a72e29c42ef8a2e4167376d2e495eecb8d19",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-inc-base/dataset.json.gz",
+      "episode_id": "T1-INC-BASE",
+      "saved_sim_steps": 1109,
+      "steps": [
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        }
+      ]
+    },
+    {
+      "variant": "T1-INC-CON",
+      "run_id": "9a918f1e54b44ccbb6fde74634fc4189",
+      "spec_hash": "8cb7f88a99dfc664103bd5d4e677082df2fbd1512d9f329cda30fd70c2844a98",
+      "dataset_hash": "202616b5988ed0393779926a78f4f82bcd8942cf4dc5e6c57129178f883b5148",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-inc-con/dataset.json.gz",
+      "episode_id": "T1-INC-CON",
+      "saved_sim_steps": 1258,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Open",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,none,none"
+        }
+      ]
+    },
+    {
+      "variant": "T1-INC-DIS",
+      "run_id": "f1523d6001e244208b16ea2db558c729",
+      "spec_hash": "6a02bf7a804f23c204b0264856add6ba9467031d5ed4b49ee59a4df327de2252",
+      "dataset_hash": "8488fd68669d077ca72ec03a2cc2052fd8d9fa247b43e6c43df4cc63cfdf0a32",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-inc-dis/dataset.json.gz",
+      "episode_id": "T1-INC-DIS",
+      "saved_sim_steps": 1167,
+      "steps": [
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        }
+      ]
+    },
+    {
+      "variant": "T1-INC-SUB",
+      "run_id": "aa6b52f7648b448491a030d759f1079e",
+      "spec_hash": "2e60a3ef0b8be5c112b5dfaa1b98081cf25d01fa3d5d48233de6bff624d31a40",
+      "dataset_hash": "fdfa4981c3a792d1a24c24598d8bd1e01393e66f878b746da0bcfc03664ba674",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-inc-sub/dataset.json.gz",
+      "episode_id": "T1-INC-SUB",
+      "saved_sim_steps": 2860,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Open",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Close",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "living_room_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "bedroom_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "bedroom_1"
+        },
+        {
+          "skill": "Navigate",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "pitcher_0,on,table_0,none,none"
+        }
+      ]
+    },
+    {
+      "variant": "T1-OUT-BASE",
+      "run_id": "10048728ff7849828ebe502e7c1954ee",
+      "spec_hash": "52adc6fa2ef0a754e5aa8187c244a94d001eac53416afd828081e9c9c11a20b6",
+      "dataset_hash": "e86427399beae0cb3d0625e25815ad862937884aeb8b1c6317c46fbb130c8164",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-out-base/dataset.json.gz",
+      "episode_id": "T1-OUT-BASE",
+      "saved_sim_steps": 1137,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "table_2"
+        },
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        }
+      ]
+    },
+    {
+      "variant": "T1-OUT-CON",
+      "run_id": "fa3235842aeb492e8e67be232dcfc417",
+      "spec_hash": "880b819a7fd9f392a0ae24ff9d39c17b62fd57c96ee2109abc4c0494830d7e3c",
+      "dataset_hash": "f8bb50af312abe84968ff5be0c169c3bc523e1fb13853f334282cbac61dab138",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-out-con/dataset.json.gz",
+      "episode_id": "T1-OUT-CON",
+      "saved_sim_steps": 1305,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_2"
+        },
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Open",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,none,none"
+        }
+      ]
+    },
+    {
+      "variant": "T1-OUT-DIS",
+      "run_id": "b86a1312476e4bf2998f6cf6f4a2690e",
+      "spec_hash": "edcd364e0a689bf7b9da87201f1c65b34fdfb4cc9413d141e14b93f6f07688fe",
+      "dataset_hash": "89d7a99eabadbff04a5e40ca69479c87fb9c84f9f897b4a86cd545874a73bbee",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-out-dis/dataset.json.gz",
+      "episode_id": "T1-OUT-DIS",
+      "saved_sim_steps": 1136,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "table_2"
+        },
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "jug_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "jug_0,on,table_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        }
+      ]
+    },
+    {
+      "variant": "T1-OUT-SUB",
+      "run_id": "94d95e422e6f4ad4bd538b425c5cf627",
+      "spec_hash": "f32de7e04515d34de243028c97cd682161ca6afeebe04af31f83bbfe2a6946b6",
+      "dataset_hash": "b7073ea09f9dab282b7aff97985ef02a5c62ca2ca8fc7b94c6667427e4d9cfcb",
+      "dataset": "baseline_evaluation_v3/episodes/task_1/t1-out-sub/dataset.json.gz",
+      "episode_id": "T1-OUT-SUB",
+      "saved_sim_steps": 2901,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_2"
+        },
+        {
+          "skill": "Explore",
+          "target": "kitchen_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Open",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Close",
+          "target": "fridge_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "living_room_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "bedroom_0"
+        },
+        {
+          "skill": "Explore",
+          "target": "bedroom_1"
+        },
+        {
+          "skill": "Navigate",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_34"
+        },
+        {
+          "skill": "Fill",
+          "target": "pitcher_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Place",
+          "target": "pitcher_0,on,table_0,none,none"
+        }
+      ]
+    },
+    {
+      "variant": "T2-ACC-DIS",
+      "run_id": "9c14b7dcc2774a98ba5c405c4ff54d60",
+      "spec_hash": "1d9e5e1bd9f5d793bc23ad83e170cbc6a189dfedbe2a6541c54fc95ad966a258",
+      "dataset_hash": "df725ab4c088fbdf8370d9d100000da3ff52de3ae3999f45e44debce51ecf803",
+      "dataset": "baseline_evaluation_v3/episodes/task_2/t2-acc-dis/dataset.json.gz",
+      "episode_id": "T2-ACC-DIS",
+      "saved_sim_steps": 604,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "box_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "box_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_16"
+        },
+        {
+          "skill": "Place",
+          "target": "box_0,on,table_16,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "box_1"
+        },
+        {
+          "skill": "Pick",
+          "target": "box_1"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_16"
+        },
+        {
+          "skill": "Place",
+          "target": "box_1,on,table_16,next_to,box_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "scissors_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "scissors_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_16"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_16"
+        },
+        {
+          "skill": "Place",
+          "target": "scissors_0,on,table_16,next_to,box_1"
+        }
+      ]
+    },
+    {
+      "variant": "T4-ACC-ABS",
+      "run_id": "40be23547fdc4498affb2cdc1ab5a98c",
+      "spec_hash": "0efe3756c6173bf27c487897f0e81d332ec3a402a531883afbbd6105c630668a",
+      "dataset_hash": "00f07d997663df875b654cce37a9d93d2867f5048b52839eca59c8a3b510ed4a",
+      "dataset": "baseline_evaluation_v3/episodes/task_4/t4-acc-abs/dataset.json.gz",
+      "episode_id": "T4-ACC-ABS",
+      "saved_sim_steps": 394,
+      "steps": [
+        {
+          "skill": "ReportAbsence",
+          "target": "- The apple (apple_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected."
+        },
+        {
+          "skill": "Navigate",
+          "target": "apple_1"
+        },
+        {
+          "skill": "Pick",
+          "target": "apple_1"
+        },
+        {
+          "skill": "Navigate",
+          "target": "basket_0"
+        },
+        {
+          "skill": "Place",
+          "target": "apple_1,within,basket_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "orange_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "orange_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "basket_0"
+        },
+        {
+          "skill": "Place",
+          "target": "orange_0,within,basket_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "bottle_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "bottle_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "counter_0"
+        },
+        {
+          "skill": "Place",
+          "target": "bottle_0,on,counter_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "bottle_1"
+        },
+        {
+          "skill": "Pick",
+          "target": "bottle_1"
+        },
+        {
+          "skill": "Navigate",
+          "target": "counter_0"
+        },
+        {
+          "skill": "Place",
+          "target": "bottle_1,on,counter_0,none,none"
+        }
+      ]
+    },
+    {
+      "variant": "T7-OUT-BASE",
+      "run_id": "b9a8c4d92aa84d2c8a52abeb83e3dc27",
+      "spec_hash": "09f94616641bcf4f56923e2a1d942b5268a3453b5cf58cf8ea58edaae75842f7",
+      "dataset_hash": "34caa2cd49bc530796d4b512902aef92450a8b917e88e647a8722781511e8b2d",
+      "dataset": "baseline_evaluation_v3/episodes/task_7/t7-out-base/dataset.json.gz",
+      "episode_id": "T7-OUT-BASE",
+      "saved_sim_steps": 3985,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "table_8"
+        },
+        {
+          "skill": "Explore",
+          "target": "living_room_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "toy_truck_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "toy_truck_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Open",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Place",
+          "target": "toy_truck_0,within,wardrobe_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "stuffed_toy_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "stuffed_toy_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Place",
+          "target": "stuffed_toy_0,within,wardrobe_0,next_to,toy_truck_0"
+        },
+        {
+          "skill": "Close",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_5"
+        },
+        {
+          "skill": "Clean",
+          "target": "plate_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "plate_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_7"
+        },
+        {
+          "skill": "Open",
+          "target": "cabinet_7"
+        },
+        {
+          "skill": "Place",
+          "target": "plate_0,within,cabinet_7,none,none"
+        },
+        {
+          "skill": "Close",
+          "target": "cabinet_7"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_living_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_living_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_kitchen_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_kitchen_0"
+        }
+      ]
+    },
+    {
+      "variant": "T7-OUT-DIS",
+      "run_id": "956bc965fbdc4914994c516239c9e320",
+      "spec_hash": "9f80ce8447afa481a2b45b205a2efdf54be73ac9075a2db1a656b943652b3d25",
+      "dataset_hash": "55da9c144d48cbac399aba3533eb22ca1d9333af11a7a4744cf0ca4fd84b717d",
+      "dataset": "baseline_evaluation_v3/episodes/task_7/t7-out-dis/dataset.json.gz",
+      "episode_id": "T7-OUT-DIS",
+      "saved_sim_steps": 3911,
+      "steps": [
+        {
+          "skill": "Navigate",
+          "target": "table_8"
+        },
+        {
+          "skill": "Explore",
+          "target": "living_room_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "toy_truck_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "toy_truck_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Open",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Place",
+          "target": "toy_truck_0,within,wardrobe_0,none,none"
+        },
+        {
+          "skill": "Navigate",
+          "target": "stuffed_toy_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "stuffed_toy_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Place",
+          "target": "stuffed_toy_0,within,wardrobe_0,next_to,toy_truck_0"
+        },
+        {
+          "skill": "Close",
+          "target": "wardrobe_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "table_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_5"
+        },
+        {
+          "skill": "Clean",
+          "target": "plate_0"
+        },
+        {
+          "skill": "Pick",
+          "target": "plate_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "cabinet_7"
+        },
+        {
+          "skill": "Open",
+          "target": "cabinet_7"
+        },
+        {
+          "skill": "Place",
+          "target": "plate_0,within,cabinet_7,none,none"
+        },
+        {
+          "skill": "Close",
+          "target": "cabinet_7"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_living_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_living_0"
+        },
+        {
+          "skill": "Navigate",
+          "target": "lamp_kitchen_0"
+        },
+        {
+          "skill": "PowerOff",
+          "target": "lamp_kitchen_0"
+        }
+      ]
+    }
+  ],
+  "shards": [
+    [
+      {
+        "variant": "T7-OUT-BASE",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-OUT-BASE",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-ACC-DIS",
+        "attempt": 1
+      },
+      {
+        "variant": "T4-ACC-ABS",
+        "attempt": 1
+      }
+    ],
+    [
+      {
+        "variant": "T7-OUT-DIS",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-INC-DIS",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-ACC-SUB",
+        "attempt": 1
+      },
+      {
+        "variant": "T2-ACC-DIS",
+        "attempt": 1
+      }
+    ],
+    [
+      {
+        "variant": "T1-OUT-SUB",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-INC-CON",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-OUT-DIS",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-ACC-BASE",
+        "attempt": 1
+      }
+    ],
+    [
+      {
+        "variant": "T1-INC-SUB",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-OUT-CON",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-INC-BASE",
+        "attempt": 1
+      },
+      {
+        "variant": "T1-ACC-CON",
+        "attempt": 1
+      }
+    ]
+  ]
+}

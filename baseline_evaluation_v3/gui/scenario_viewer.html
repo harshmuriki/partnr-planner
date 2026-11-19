@@ -656,17 +656,35 @@ async function loadCsv() {
   }
 }
 
-let videoTimes = new Map(), videoTimesState = "Reading video times…";
+let videoTimes = new Map(), skillRuns = new Map(), videoTimesState = "Reading skill times…";
+function skillClock(seconds) {
+  if (typeof seconds !== "number" || !Number.isFinite(seconds)) return "—";
+  const tenths = Math.round(seconds * 10);
+  const minutes = Math.floor(tenths / 600), rest = (tenths % 600) / 10;
+  return minutes ? `${minutes}m ${rest.toFixed(1)}s` : `${rest.toFixed(1)}s`;
+}
+function skillLabel(run) {
+  if (!run) return "no skill time";
+  return `${skillClock(run.execution_elapsed_seconds)} · ${run.sim_steps} steps · ${run.action_count} actions`;
+}
 async function loadVideoTimes() {
   try {
     const response = await fetch("../ground_truth/index.json", {cache: "no-store"});
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const runs = (await response.json()).ground_truths || [];
     videoTimes = await window.groundTruthVideoDurations("../ground_truth/", runs);
-    const missing = runs.filter(run => !videoTimes.has(run.variant)).length;
-    videoTimesState = `Time taken = length of each variant's saved ground-truth video (${videoTimes.size} videos${missing ? `, ${missing} unreadable` : ""}).`;
   } catch (error) {
-    videoTimesState = `Video times unavailable (${error.message}).`;
+    videoTimes = new Map();
+  }
+  try {
+    const response = await fetch("../ground_truth_timing/replay_measurements.json", {cache: "no-store"});
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const measured = await response.json();
+    skillRuns = new Map(Object.entries(measured));
+    videoTimesState = `Skill time, simulator steps, and actions from replaying the human ground-truth sequence (${skillRuns.size} variants). No model calls. Scene loading is excluded.`;
+  } catch (error) {
+    skillRuns = new Map();
+    videoTimesState = `Skill times unavailable (${error.message}).`;
   }
   if (window.applyVideoDurations) window.applyVideoDurations(videoTimes);
   if (tasks.length) { renderMatrix(); updateHumanReviews(); updateTimePill(); }
@@ -674,8 +692,9 @@ async function loadVideoTimes() {
 function updateTimePill() {
   const pill = document.getElementById("timePill");
   if (!pill) return;
-  pill.hidden = !videoTimes.has(currentVariantId);
-  pill.textContent = pill.hidden ? "" : `Time ${window.formatVideoTime(videoTimes.get(currentVariantId))}`;
+  const run = skillRuns.get(currentVariantId);
+  pill.hidden = !run;
+  pill.textContent = pill.hidden ? "" : skillLabel(run);
 }
 function renderTabs() {
   const wrap = document.getElementById("taskTabs");
@@ -741,11 +760,11 @@ function renderMatrix() {
       } else {
         const btn = document.createElement("button");
         btn.className = "cell-btn" + (c.axis === "BASE" ? " is-base" : "") + (vid === currentVariantId ? " selected" : "");
-        const time = videoTimes.get(vid);
-        const timeLabel = time === undefined ? "no video" : window.formatVideoTime(time);
-        btn.innerHTML = `${esc(c.axis)}<span class="n">${v.objects.length} obj</span><span class="n">${esc(timeLabel)}</span>`;
+        const run = skillRuns.get(vid);
+        const timeLabel = skillLabel(run);
+        btn.innerHTML = `${esc(c.axis)}<span class="n">${esc(timeLabel)}</span>`;
         btn.dataset.vid = vid;
-        btn.dataset.baseTitle = btn.title = `${vid} · ${v.objects.length} objects · ${timeLabel}`;
+        btn.dataset.baseTitle = btn.title = `${vid} · ${timeLabel}`;
         btn.onclick = () => { currentVariantId = vid; renderAll(); };
         td.appendChild(btn);
       }
@@ -839,7 +858,8 @@ async function renderSummary(v) {
   const success = specItems(specSection(md, "Success criteria"));
   const criterion = s => s.startsWith("order: ")
     ? `<li class="summary-order"><b>Order:</b> ${inlineMd(s.slice(7).replace(" before ", " must happen before "))}</li>`
-    : `<li>${inlineMd(s)}</li>`;
+    : `<li>${inlineMd(s)}${/^is_(?:on_top|inside)\([^,]+, \w+(?: or \w+)+\)$/.test(s)
+      ? '<br><small>Either listed destination is accepted; only one is required.</small>' : ''}</li>`;
   box.innerHTML =
     `<div class="summary-box summary-instruction"><h3>Instruction</h3><q>${esc(instruction)}</q></div>` +
     `<div class="summary-box"><h3>Success criteria</h3><ul>${success.map(criterion).join("")}</ul></div>` +

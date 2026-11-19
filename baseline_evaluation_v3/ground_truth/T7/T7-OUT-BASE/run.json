@@ -7173,7 +7173,7 @@
             "sequence": 7,
             "skill": "Place",
             "target": "toy_truck_0,within,wardrobe_0,none,none",
-            "video_time": 80.366667,
+            "video_time": null,
             "simulator_step": 2412
           }
         ],
@@ -7191,7 +7191,7 @@
             "sequence": 11,
             "skill": "Place",
             "target": "stuffed_toy_0,within,wardrobe_0,next_to,toy_truck_0",
-            "video_time": 104.366667,
+            "video_time": null,
             "simulator_step": 3132
           }
         ],
@@ -7209,7 +7209,7 @@
             "sequence": 19,
             "skill": "Place",
             "target": "plate_0,within,cabinet_7,none,none",
-            "video_time": 119.2,
+            "video_time": null,
             "simulator_step": 3577
           }
         ],
@@ -7227,7 +7227,7 @@
             "sequence": 15,
             "skill": "Clean",
             "target": "plate_0",
-            "video_time": 117.733333,
+            "video_time": null,
             "simulator_step": 3533
           }
         ],
@@ -7245,7 +7245,7 @@
             "sequence": 22,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 125.433333,
+            "video_time": null,
             "simulator_step": 3764
           }
         ],
@@ -7263,7 +7263,7 @@
             "sequence": 24,
             "skill": "PowerOff",
             "target": "lamp_kitchen_0",
-            "video_time": 132.766667,
+            "video_time": null,
             "simulator_step": 3984
           }
         ],

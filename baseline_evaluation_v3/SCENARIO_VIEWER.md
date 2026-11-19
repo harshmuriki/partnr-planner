@@ -75,6 +75,22 @@ T1 to T7 across the top. Click to switch task.
 
 ### Generated episode
 
+All Task 7 variants use this instruction:
+
+> Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.
+
+Both toys must finish inside `wardrobe_2` in runtime room `closet_1`
+(`closet_0` in generation metadata). The evaluator accepts only that wardrobe's
+simulator handle; placing either toy in another wardrobe does not satisfy this goal.
+
+For Task 1, a full jug (or the substitute pitcher in SUB variants) may finish on
+either living-room table: `table_0` (Tulip Table) or `table_1` (Lincoln Marble
+3 In 1 Pack Tables). The bedroom light must still be off. The instruction,
+success criteria, object-card goal, and generated episode's expected destination
+show this choice. `is_on_top(jug_0, table_0 or table_1)` is one placement goal;
+placing the object on either table satisfies it. ABS variants retain their
+absent-object behavior.
+
 The saved episode for the variant, rendered from its actual saved placements.
 
 - `Generated` and `Runtime verified` badges show the episode's status.
@@ -212,6 +228,11 @@ The selected variant is kept in the URL hash, so links such as
 ## After changing data
 
 - **Edited the CSV or a spec**: reload the page.
+- **Changed an evaluation goal**: keep the spec and episode `spec.md`,
+  `dataset.json` and `dataset.json.gz`, `review.json`, and spec hashes in
+  `generation/audit.json` and `generation/episodes.json` synchronized. Update
+  `docs/task_success_criteria.md` and the legacy `gui/scenario_viewer_data.json`
+  export as well. The live viewer reads specs/reviews, not that legacy export.
 - **Regenerated episodes**: reload the page; the generator writes new images to
   `episode_views/` and updates `episodes.json`.
 - **Replaced preview GIFs**: change `GIF_VERSION` near the top of the script in

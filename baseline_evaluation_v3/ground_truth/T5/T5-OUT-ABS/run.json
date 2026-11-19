@@ -2892,7 +2892,7 @@
             "sequence": 25,
             "skill": "Place",
             "target": "glass_0,on,table_0,next_to,glass_1",
-            "video_time": 35.8,
+            "video_time": null,
             "simulator_step": 1075
           }
         ],
@@ -2910,7 +2910,7 @@
             "sequence": 16,
             "skill": "Place",
             "target": "glass_1,on,table_0,none,none",
-            "video_time": 28.733333,
+            "video_time": null,
             "simulator_step": 863
           }
         ],
@@ -2928,7 +2928,7 @@
             "sequence": 20,
             "skill": "Place",
             "target": "glass_0,on,cabinet_0,next_to,soap_dispenser_0",
-            "video_time": 33.066667,
+            "video_time": null,
             "simulator_step": 993
           }
         ],
@@ -2946,7 +2946,7 @@
             "sequence": 21,
             "skill": "Clean",
             "target": "glass_0",
-            "video_time": 33.133333,
+            "video_time": null,
             "simulator_step": 995
           }
         ],
@@ -2964,7 +2964,7 @@
             "sequence": 20,
             "skill": "Place",
             "target": "glass_0,on,cabinet_0,next_to,soap_dispenser_0",
-            "video_time": 33.066667,
+            "video_time": null,
             "simulator_step": 993
           },
           {
@@ -2972,7 +2972,7 @@
             "sequence": 21,
             "skill": "Clean",
             "target": "glass_0",
-            "video_time": 33.133333,
+            "video_time": null,
             "simulator_step": 995
           }
         ],
@@ -2987,7 +2987,7 @@
             "sequence": 22,
             "skill": "Fill",
             "target": "glass_0",
-            "video_time": 33.2,
+            "video_time": null,
             "simulator_step": 997
           }
         ],
@@ -3005,7 +3005,7 @@
             "sequence": 10,
             "skill": "Navigate",
             "target": "cabinet_0",
-            "video_time": 25.766667,
+            "video_time": null,
             "simulator_step": 774
           }
         ],
@@ -3023,7 +3023,7 @@
             "sequence": 12,
             "skill": "Clean",
             "target": "glass_1",
-            "video_time": 26.066667,
+            "video_time": null,
             "simulator_step": 783
           }
         ],
@@ -3041,7 +3041,7 @@
             "sequence": 10,
             "skill": "Navigate",
             "target": "cabinet_0",
-            "video_time": 25.766667,
+            "video_time": null,
             "simulator_step": 774
           },
           {
@@ -3049,7 +3049,7 @@
             "sequence": 12,
             "skill": "Clean",
             "target": "glass_1",
-            "video_time": 26.066667,
+            "video_time": null,
             "simulator_step": 783
           }
         ],
@@ -3064,7 +3064,7 @@
             "sequence": 13,
             "skill": "Fill",
             "target": "glass_1",
-            "video_time": 26.133333,
+            "video_time": null,
             "simulator_step": 785
           }
         ],
@@ -3082,7 +3082,7 @@
             "sequence": 7,
             "skill": "ReportAbsence",
             "target": "- The plate (plate_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
-            "video_time": 19.7,
+            "video_time": null,
             "simulator_step": null
           }
         ],

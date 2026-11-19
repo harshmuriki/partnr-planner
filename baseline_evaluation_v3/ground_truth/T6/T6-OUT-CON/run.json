@@ -9571,7 +9571,7 @@
             "sequence": 9,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 40.566667,
+            "video_time": null,
             "simulator_step": 1218
           }
         ],
@@ -9589,7 +9589,7 @@
             "sequence": 15,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 51.233333,
+            "video_time": null,
             "simulator_step": 1538
           }
         ],
@@ -9607,7 +9607,7 @@
             "sequence": 9,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 40.566667,
+            "video_time": null,
             "simulator_step": 1218
           },
           {
@@ -9615,7 +9615,7 @@
             "sequence": 15,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 51.233333,
+            "video_time": null,
             "simulator_step": 1538
           }
         ],
@@ -9630,7 +9630,7 @@
             "sequence": 24,
             "skill": "Place",
             "target": "bottle_0,on,table_11,next_to,bread_0",
-            "video_time": 119.133333,
+            "video_time": null,
             "simulator_step": 3575
           }
         ],
@@ -9648,7 +9648,7 @@
             "sequence": 37,
             "skill": "Place",
             "target": "hand_towel_0,on,table_11,next_to,bread_0",
-            "video_time": 188.1,
+            "video_time": null,
             "simulator_step": 5644
           }
         ],
@@ -9666,7 +9666,7 @@
             "sequence": 23,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 118.766667,
+            "video_time": null,
             "simulator_step": 3564
           }
         ],
@@ -9684,7 +9684,7 @@
             "sequence": 36,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 187.666667,
+            "video_time": null,
             "simulator_step": 5631
           }
         ],
@@ -9720,7 +9720,7 @@
             "sequence": 39,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 199.1,
+            "video_time": null,
             "simulator_step": 5974
           }
         ],

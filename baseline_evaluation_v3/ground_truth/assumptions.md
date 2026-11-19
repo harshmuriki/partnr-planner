@@ -22,4 +22,4 @@ Written in the scenario viewer. A task note (e.g. T4) applies to every variant o
 
 ## T7 (every variant)
 
-- Although kitchen_0 is the most likely room for the plate (when location unknown), since the instructions for this task stated "put away the dirty dishes from sink," GT is able to make an educated guess and navigate directly to the sink first instead of exploring the kitchen.
+- Although kitchen_0 is the most likely room for the plate (when location unknown), since the instructions for this task stated "put away the dirty dishes from sink inside," GT is able to make an educated guess and navigate directly to the sink first instead of exploring the kitchen.

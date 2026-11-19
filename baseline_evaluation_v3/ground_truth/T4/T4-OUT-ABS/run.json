@@ -5433,7 +5433,7 @@
             "sequence": 10,
             "skill": "Place",
             "target": "apple_1,within,basket_0,none,none",
-            "video_time": 27.3,
+            "video_time": null,
             "simulator_step": 820
           }
         ],
@@ -5451,7 +5451,7 @@
             "sequence": 14,
             "skill": "Place",
             "target": "orange_0,within,basket_0,none,none",
-            "video_time": 31.633333,
+            "video_time": null,
             "simulator_step": 950
           }
         ],
@@ -5478,7 +5478,7 @@
             "sequence": 18,
             "skill": "Place",
             "target": "bottle_0,on,counter_0,none,none",
-            "video_time": 34.566667,
+            "video_time": null,
             "simulator_step": 1038
           }
         ],
@@ -5496,7 +5496,7 @@
             "sequence": 22,
             "skill": "Place",
             "target": "bottle_1,on,counter_0,none,none",
-            "video_time": 37.133333,
+            "video_time": null,
             "simulator_step": 1115
           }
         ],
@@ -5514,7 +5514,7 @@
             "sequence": 6,
             "skill": "ReportAbsence",
             "target": "- The apple (apple_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
-            "video_time": 25.533333,
+            "video_time": null,
             "simulator_step": null
           }
         ],

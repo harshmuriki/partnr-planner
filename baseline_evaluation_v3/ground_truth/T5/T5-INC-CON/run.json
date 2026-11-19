@@ -3169,7 +3169,7 @@
             "sequence": 26,
             "skill": "Navigate",
             "target": "table_0",
-            "video_time": 30.5,
+            "video_time": null,
             "simulator_step": 916
           }
         ],
@@ -3187,7 +3187,7 @@
             "sequence": 18,
             "skill": "Place",
             "target": "glass_1,on,table_0,next_to,plate_0",
-            "video_time": 22.9,
+            "video_time": null,
             "simulator_step": 688
           }
         ],
@@ -3205,7 +3205,7 @@
             "sequence": 9,
             "skill": "Place",
             "target": "plate_0,on,table_0,none,none",
-            "video_time": 13.066667,
+            "video_time": null,
             "simulator_step": 393
           }
         ],
@@ -3223,7 +3223,7 @@
             "sequence": 27,
             "skill": "Place",
             "target": "glass_0,on,table_0,next_to,plate_0",
-            "video_time": 30.6,
+            "video_time": null,
             "simulator_step": 919
           }
         ],
@@ -3241,7 +3241,7 @@
             "sequence": 18,
             "skill": "Place",
             "target": "glass_1,on,table_0,next_to,plate_0",
-            "video_time": 22.9,
+            "video_time": null,
             "simulator_step": 688
           }
         ],
@@ -3259,7 +3259,7 @@
             "sequence": 22,
             "skill": "Place",
             "target": "glass_0,on,cabinet_0,next_to,soap_dispenser_0",
-            "video_time": 27.066667,
+            "video_time": null,
             "simulator_step": 813
           }
         ],
@@ -3277,7 +3277,7 @@
             "sequence": 23,
             "skill": "Clean",
             "target": "glass_0",
-            "video_time": 27.133333,
+            "video_time": null,
             "simulator_step": 815
           }
         ],
@@ -3295,7 +3295,7 @@
             "sequence": 22,
             "skill": "Place",
             "target": "glass_0,on,cabinet_0,next_to,soap_dispenser_0",
-            "video_time": 27.066667,
+            "video_time": null,
             "simulator_step": 813
           },
           {
@@ -3303,7 +3303,7 @@
             "sequence": 23,
             "skill": "Clean",
             "target": "glass_0",
-            "video_time": 27.133333,
+            "video_time": null,
             "simulator_step": 815
           }
         ],
@@ -3318,7 +3318,7 @@
             "sequence": 24,
             "skill": "Fill",
             "target": "glass_0",
-            "video_time": 27.2,
+            "video_time": null,
             "simulator_step": 817
           }
         ],
@@ -3336,7 +3336,7 @@
             "sequence": 12,
             "skill": "Navigate",
             "target": "cabinet_0",
-            "video_time": 18.933333,
+            "video_time": null,
             "simulator_step": 569
           }
         ],
@@ -3354,7 +3354,7 @@
             "sequence": 14,
             "skill": "Clean",
             "target": "glass_1",
-            "video_time": 20.166667,
+            "video_time": null,
             "simulator_step": 606
           }
         ],
@@ -3372,7 +3372,7 @@
             "sequence": 12,
             "skill": "Navigate",
             "target": "cabinet_0",
-            "video_time": 18.933333,
+            "video_time": null,
             "simulator_step": 569
           },
           {
@@ -3380,7 +3380,7 @@
             "sequence": 14,
             "skill": "Clean",
             "target": "glass_1",
-            "video_time": 20.166667,
+            "video_time": null,
             "simulator_step": 606
           }
         ],
@@ -3395,7 +3395,7 @@
             "sequence": 15,
             "skill": "Fill",
             "target": "glass_1",
-            "video_time": 20.233333,
+            "video_time": null,
             "simulator_step": 608
           }
         ],

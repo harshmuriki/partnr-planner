@@ -1,0 +1,25 @@
+14/16 variants replayed successfully
+
+T1   timed 12/12 mean     81.3s  median     71.4s  max    180.8s
+T2   timed  0/1  mean         s  median         s  max         s
+T4   timed  0/1  mean         s  median         s  max         s
+T7   timed  2/2  mean    417.6s  median    417.6s  max    422.7s
+ALL  timed 14/16 mean    129.3s  median     73.1s  max    422.7s
+
+Not replayed:
+  T2-ACC-DIS: failed Final evaluation failed
+  T4-ACC-ABS: failed Final evaluation failed
+
+Slowest actions:
+   169.3s  T7-OUT-DIS   #2   Explore living_room_0  (sim_steps 1663, env.step 146.7s, cpu 193.5s)
+   165.2s  T7-OUT-BASE  #2   Explore living_room_0  (sim_steps 1663, env.step 141.8s, cpu 189.8s)
+    47.8s  T1-INC-SUB   #3   Explore kitchen_0  (sim_steps 833, env.step 36.6s, cpu 59.6s)
+    43.2s  T1-INC-BASE  #1   Explore kitchen_0  (sim_steps 722, env.step 32.7s, cpu 53.0s)
+    43.2s  T7-OUT-DIS   #10  Navigate wardrobe_0  (sim_steps 402, env.step 37.4s, cpu 48.7s)
+    42.9s  T1-INC-CON   #3   Explore kitchen_0  (sim_steps 754, env.step 32.8s, cpu 53.5s)
+    42.8s  T1-INC-DIS   #1   Explore kitchen_0  (sim_steps 722, env.step 32.5s, cpu 52.9s)
+    42.2s  T7-OUT-BASE  #10  Navigate wardrobe_0  (sim_steps 399, env.step 36.4s, cpu 47.9s)
+    40.0s  T7-OUT-DIS   #5   Navigate wardrobe_0  (sim_steps 328, env.step 35.2s, cpu 44.4s)
+    39.4s  T7-OUT-BASE  #5   Navigate wardrobe_0  (sim_steps 328, env.step 34.5s, cpu 44.2s)
+
+Tables: /coc/flash5/vmuriki3/tamp/partnr-planner/baseline_evaluation_v3/ground_truth_timing/skynet_20261001_212315/summary_*.csv, summary_slowest_actions.txt

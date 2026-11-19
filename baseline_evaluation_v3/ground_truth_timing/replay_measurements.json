@@ -1,0 +1,706 @@
+{
+  "T1-ACC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 13.643,
+    "action_wall_seconds": 13.553,
+    "sim_steps": 215,
+    "action_count": 3,
+    "source": "skynet_20261001_202425/results/T1-ACC-ABS.r1.json"
+  },
+  "T1-ACC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 44.374,
+    "action_wall_seconds": 43.919,
+    "sim_steps": 708,
+    "action_count": 8,
+    "source": "skynet_20261001_212315/results/T1-ACC-BASE.r1.json"
+  },
+  "T1-ACC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 44.124,
+    "action_wall_seconds": 43.673,
+    "sim_steps": 688,
+    "action_count": 9,
+    "source": "skynet_20261001_212315/results/T1-ACC-CON.r1.json"
+  },
+  "T1-ACC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 47.059,
+    "action_wall_seconds": 46.524,
+    "sim_steps": 741,
+    "action_count": 8,
+    "source": "skynet_20261001_212315/results/T1-ACC-DIS.r1.json"
+  },
+  "T1-ACC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 42.361,
+    "action_wall_seconds": 41.866,
+    "sim_steps": 673,
+    "action_count": 8,
+    "source": "skynet_20261001_212315/results/T1-ACC-SUB.r1.json"
+  },
+  "T1-INC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 146.778,
+    "action_wall_seconds": 146.411,
+    "sim_steps": 2559,
+    "action_count": 10,
+    "source": "skynet_20261001_202425/results/T1-INC-ABS.r1.json"
+  },
+  "T1-INC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 70.21,
+    "action_wall_seconds": 69.645,
+    "sim_steps": 1126,
+    "action_count": 9,
+    "source": "skynet_20261001_212315/results/T1-INC-BASE.r1.json"
+  },
+  "T1-INC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 76.114,
+    "action_wall_seconds": 75.623,
+    "sim_steps": 1253,
+    "action_count": 10,
+    "source": "skynet_20261001_212315/results/T1-INC-CON.r1.json"
+  },
+  "T1-INC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 70.504,
+    "action_wall_seconds": 69.964,
+    "sim_steps": 1142,
+    "action_count": 9,
+    "source": "skynet_20261001_212315/results/T1-INC-DIS.r1.json"
+  },
+  "T1-INC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 180.828,
+    "action_wall_seconds": 180.002,
+    "sim_steps": 3040,
+    "action_count": 15,
+    "source": "skynet_20261001_212315/results/T1-INC-SUB.r1.json"
+  },
+  "T1-OUT-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 108.538,
+    "action_wall_seconds": 107.852,
+    "sim_steps": 2365,
+    "action_count": 11,
+    "source": "skynet_20261001_202425/results/T1-OUT-ABS.r1.json"
+  },
+  "T1-OUT-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 72.322,
+    "action_wall_seconds": 71.68,
+    "sim_steps": 1166,
+    "action_count": 10,
+    "source": "skynet_20261001_212315/results/T1-OUT-BASE.r1.json"
+  },
+  "T1-OUT-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 79.555,
+    "action_wall_seconds": 78.795,
+    "sim_steps": 1276,
+    "action_count": 11,
+    "source": "skynet_20261001_212315/results/T1-OUT-CON.r1.json"
+  },
+  "T1-OUT-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 73.812,
+    "action_wall_seconds": 73.142,
+    "sim_steps": 1185,
+    "action_count": 10,
+    "source": "skynet_20261001_212315/results/T1-OUT-DIS.r1.json"
+  },
+  "T1-OUT-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 174.2,
+    "action_wall_seconds": 173.198,
+    "sim_steps": 2955,
+    "action_count": 16,
+    "source": "skynet_20261001_212315/results/T1-OUT-SUB.r1.json"
+  },
+  "T2-ACC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 27.24,
+    "action_wall_seconds": 26.886,
+    "sim_steps": 387,
+    "action_count": 9,
+    "source": "skynet_20261001_202425/results/T2-ACC-ABS.r1.json"
+  },
+  "T2-ACC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 45.99,
+    "action_wall_seconds": 45.162,
+    "sim_steps": 554,
+    "action_count": 12,
+    "source": "skynet_20261001_202425/results/T2-ACC-BASE.r1.json"
+  },
+  "T2-ACC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 47.949,
+    "action_wall_seconds": 46.853,
+    "sim_steps": 565,
+    "action_count": 14,
+    "source": "skynet_20261001_202425/results/T2-ACC-CON.r1.json"
+  },
+  "T2-ACC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 46.435,
+    "action_wall_seconds": 45.778,
+    "sim_steps": 554,
+    "action_count": 12,
+    "source": "skynet_20261001_202425/results/T2-ACC-SUB.r1.json"
+  },
+  "T2-INC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 117.869,
+    "action_wall_seconds": 116.541,
+    "sim_steps": 1859,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T2-INC-ABS.r1.json"
+  },
+  "T2-INC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 70.697,
+    "action_wall_seconds": 69.848,
+    "sim_steps": 875,
+    "action_count": 15,
+    "source": "skynet_20261001_202425/results/T2-INC-BASE.r1.json"
+  },
+  "T2-INC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 131.835,
+    "action_wall_seconds": 130.249,
+    "sim_steps": 2021,
+    "action_count": 24,
+    "source": "skynet_20261001_202425/results/T2-INC-CON.r1.json"
+  },
+  "T2-INC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 70.4,
+    "action_wall_seconds": 69.556,
+    "sim_steps": 873,
+    "action_count": 14,
+    "source": "skynet_20261001_202425/results/T2-INC-DIS.r1.json"
+  },
+  "T2-INC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 131.607,
+    "action_wall_seconds": 129.961,
+    "sim_steps": 2003,
+    "action_count": 24,
+    "source": "skynet_20261001_202425/results/T2-INC-SUB.r1.json"
+  },
+  "T2-OUT-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 145.153,
+    "action_wall_seconds": 143.837,
+    "sim_steps": 2304,
+    "action_count": 23,
+    "source": "skynet_20261001_202425/results/T2-OUT-ABS.r1.json"
+  },
+  "T2-OUT-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 60.275,
+    "action_wall_seconds": 59.521,
+    "sim_steps": 888,
+    "action_count": 15,
+    "source": "skynet_20261001_202425/results/T2-OUT-BASE.r1.json"
+  },
+  "T2-OUT-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 139.194,
+    "action_wall_seconds": 137.71,
+    "sim_steps": 2123,
+    "action_count": 26,
+    "source": "skynet_20261001_202425/results/T2-OUT-CON.r1.json"
+  },
+  "T2-OUT-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 79.152,
+    "action_wall_seconds": 78.217,
+    "sim_steps": 981,
+    "action_count": 15,
+    "source": "skynet_20261001_202425/results/T2-OUT-DIS.r1.json"
+  },
+  "T2-OUT-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 182.973,
+    "action_wall_seconds": 181.407,
+    "sim_steps": 2387,
+    "action_count": 26,
+    "source": "skynet_20261001_202425/results/T2-OUT-SUB.r1.json"
+  },
+  "T3-ACC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 14.023,
+    "action_wall_seconds": 13.766,
+    "sim_steps": 336,
+    "action_count": 7,
+    "source": "skynet_20261001_202425/results/T3-ACC-ABS.r1.json"
+  },
+  "T3-ACC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 26.154,
+    "action_wall_seconds": 25.496,
+    "sim_steps": 614,
+    "action_count": 10,
+    "source": "skynet_20261001_202425/results/T3-ACC-BASE.r1.json"
+  },
+  "T3-ACC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 23.022,
+    "action_wall_seconds": 22.489,
+    "sim_steps": 538,
+    "action_count": 12,
+    "source": "skynet_20261001_202425/results/T3-ACC-CON.r1.json"
+  },
+  "T3-ACC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 24.344,
+    "action_wall_seconds": 23.904,
+    "sim_steps": 564,
+    "action_count": 10,
+    "source": "skynet_20261001_202425/results/T3-ACC-DIS.r1.json"
+  },
+  "T3-INC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 53.651,
+    "action_wall_seconds": 52.959,
+    "sim_steps": 1395,
+    "action_count": 13,
+    "source": "skynet_20261001_202425/results/T3-INC-ABS.r1.json"
+  },
+  "T3-INC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 54.376,
+    "action_wall_seconds": 53.785,
+    "sim_steps": 1159,
+    "action_count": 12,
+    "source": "skynet_20261001_202425/results/T3-INC-BASE.r1.json"
+  },
+  "T3-INC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 47.966,
+    "action_wall_seconds": 47.115,
+    "sim_steps": 1224,
+    "action_count": 14,
+    "source": "skynet_20261001_202425/results/T3-INC-CON.r1.json"
+  },
+  "T3-INC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 47.354,
+    "action_wall_seconds": 46.643,
+    "sim_steps": 1164,
+    "action_count": 12,
+    "source": "skynet_20261001_202425/results/T3-INC-DIS.r1.json"
+  },
+  "T3-OUT-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 64.756,
+    "action_wall_seconds": 63.949,
+    "sim_steps": 1711,
+    "action_count": 15,
+    "source": "skynet_20261001_202425/results/T3-OUT-ABS.r1.json"
+  },
+  "T3-OUT-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 83.146,
+    "action_wall_seconds": 82.103,
+    "sim_steps": 1788,
+    "action_count": 15,
+    "source": "skynet_20261001_202425/results/T3-OUT-BASE.r1.json"
+  },
+  "T3-OUT-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 70.119,
+    "action_wall_seconds": 69.299,
+    "sim_steps": 1931,
+    "action_count": 17,
+    "source": "skynet_20261001_202425/results/T3-OUT-CON.r1.json"
+  },
+  "T3-OUT-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 80.396,
+    "action_wall_seconds": 79.389,
+    "sim_steps": 1762,
+    "action_count": 15,
+    "source": "skynet_20261001_202425/results/T3-OUT-DIS.r1.json"
+  },
+  "T4-ACC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 35.318,
+    "action_wall_seconds": 34.014,
+    "sim_steps": 526,
+    "action_count": 20,
+    "source": "skynet_20261001_202425/results/T4-ACC-BASE.r1.json"
+  },
+  "T4-ACC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 54.793,
+    "action_wall_seconds": 53.3,
+    "sim_steps": 843,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T4-ACC-CON.r1.json"
+  },
+  "T4-ACC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 53.557,
+    "action_wall_seconds": 52.345,
+    "sim_steps": 679,
+    "action_count": 20,
+    "source": "skynet_20261001_202425/results/T4-ACC-DIS.r1.json"
+  },
+  "T4-INC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 74.132,
+    "action_wall_seconds": 72.931,
+    "sim_steps": 1099,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T4-INC-ABS.r1.json"
+  },
+  "T4-INC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 67.466,
+    "action_wall_seconds": 66.023,
+    "sim_steps": 1108,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T4-INC-BASE.r1.json"
+  },
+  "T4-INC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 73.67,
+    "action_wall_seconds": 72.169,
+    "sim_steps": 1150,
+    "action_count": 23,
+    "source": "skynet_20261001_202425/results/T4-INC-CON.r1.json"
+  },
+  "T4-INC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 88.881,
+    "action_wall_seconds": 87.397,
+    "sim_steps": 1188,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T4-INC-DIS.r1.json"
+  },
+  "T4-OUT-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 67.06,
+    "action_wall_seconds": 65.793,
+    "sim_steps": 1192,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T4-OUT-ABS.r1.json"
+  },
+  "T4-OUT-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 77.129,
+    "action_wall_seconds": 75.701,
+    "sim_steps": 1267,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T4-OUT-BASE.r1.json"
+  },
+  "T4-OUT-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 99.755,
+    "action_wall_seconds": 98.2,
+    "sim_steps": 1332,
+    "action_count": 24,
+    "source": "skynet_20261001_202425/results/T4-OUT-CON.r1.json"
+  },
+  "T4-OUT-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 80.014,
+    "action_wall_seconds": 78.39,
+    "sim_steps": 1278,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T4-OUT-DIS.r1.json"
+  },
+  "T5-ACC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 20.136,
+    "action_wall_seconds": 19.185,
+    "sim_steps": 396,
+    "action_count": 19,
+    "source": "skynet_20261001_202425/results/T5-ACC-ABS.r1.json"
+  },
+  "T5-ACC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 40.066,
+    "action_wall_seconds": 38.48,
+    "sim_steps": 710,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T5-ACC-BASE.r1.json"
+  },
+  "T5-ACC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 35.184,
+    "action_wall_seconds": 33.958,
+    "sim_steps": 724,
+    "action_count": 26,
+    "source": "skynet_20261001_202425/results/T5-ACC-CON.r1.json"
+  },
+  "T5-ACC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 35.407,
+    "action_wall_seconds": 34.416,
+    "sim_steps": 740,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T5-ACC-DIS.r1.json"
+  },
+  "T5-ACC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 42.413,
+    "action_wall_seconds": 40.932,
+    "sim_steps": 751,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T5-ACC-SUB.r1.json"
+  },
+  "T5-INC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 42.349,
+    "action_wall_seconds": 41.257,
+    "sim_steps": 988,
+    "action_count": 24,
+    "source": "skynet_20261001_202425/results/T5-INC-ABS.r1.json"
+  },
+  "T5-INC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 37.492,
+    "action_wall_seconds": 36.418,
+    "sim_steps": 825,
+    "action_count": 23,
+    "source": "skynet_20261001_202425/results/T5-INC-BASE.r1.json"
+  },
+  "T5-INC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 44.621,
+    "action_wall_seconds": 42.587,
+    "sim_steps": 780,
+    "action_count": 27,
+    "source": "skynet_20261001_202425/results/T5-INC-CON.r1.json"
+  },
+  "T5-INC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 36.227,
+    "action_wall_seconds": 35.15,
+    "sim_steps": 768,
+    "action_count": 23,
+    "source": "skynet_20261001_202425/results/T5-INC-DIS.r1.json"
+  },
+  "T5-INC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 55.301,
+    "action_wall_seconds": 53.796,
+    "sim_steps": 1263,
+    "action_count": 27,
+    "source": "skynet_20261001_202425/results/T5-INC-SUB.r1.json"
+  },
+  "T5-OUT-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 48.609,
+    "action_wall_seconds": 47.264,
+    "sim_steps": 1087,
+    "action_count": 25,
+    "source": "skynet_20261001_202425/results/T5-OUT-ABS.r1.json"
+  },
+  "T5-OUT-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 42.146,
+    "action_wall_seconds": 41.12,
+    "sim_steps": 907,
+    "action_count": 24,
+    "source": "skynet_20261001_202425/results/T5-OUT-BASE.r1.json"
+  },
+  "T5-OUT-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 41.959,
+    "action_wall_seconds": 40.604,
+    "sim_steps": 871,
+    "action_count": 28,
+    "source": "skynet_20261001_202425/results/T5-OUT-CON.r1.json"
+  },
+  "T5-OUT-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 39.98,
+    "action_wall_seconds": 38.717,
+    "sim_steps": 847,
+    "action_count": 24,
+    "source": "skynet_20261001_202425/results/T5-OUT-DIS.r1.json"
+  },
+  "T5-OUT-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 67.282,
+    "action_wall_seconds": 65.429,
+    "sim_steps": 1257,
+    "action_count": 28,
+    "source": "skynet_20261001_202425/results/T5-OUT-SUB.r1.json"
+  },
+  "T6-ACC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 256.678,
+    "action_wall_seconds": 255.4,
+    "sim_steps": 1628,
+    "action_count": 18,
+    "source": "skynet_20261001_202425/results/T6-ACC-ABS.r1.json"
+  },
+  "T6-ACC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 326.881,
+    "action_wall_seconds": 325.201,
+    "sim_steps": 2028,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T6-ACC-BASE.r1.json"
+  },
+  "T6-ACC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 402.851,
+    "action_wall_seconds": 401.135,
+    "sim_steps": 3194,
+    "action_count": 27,
+    "source": "skynet_20261001_202425/results/T6-ACC-CON.r1.json"
+  },
+  "T6-ACC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 245.801,
+    "action_wall_seconds": 244.797,
+    "sim_steps": 1935,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T6-ACC-DIS.r1.json"
+  },
+  "T6-ACC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 250.87,
+    "action_wall_seconds": 249.521,
+    "sim_steps": 1930,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T6-ACC-SUB.r1.json"
+  },
+  "T6-INC-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 513.901,
+    "action_wall_seconds": 512.328,
+    "sim_steps": 4145,
+    "action_count": 29,
+    "source": "skynet_20261001_202425/results/T6-INC-ABS.r1.json"
+  },
+  "T6-INC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 613.881,
+    "action_wall_seconds": 612.362,
+    "sim_steps": 3885,
+    "action_count": 25,
+    "source": "skynet_20261001_202425/results/T6-INC-BASE.r1.json"
+  },
+  "T6-INC-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 718.614,
+    "action_wall_seconds": 716.247,
+    "sim_steps": 5719,
+    "action_count": 36,
+    "source": "skynet_20261001_202425/results/T6-INC-CON.r1.json"
+  },
+  "T6-INC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 608.948,
+    "action_wall_seconds": 607.459,
+    "sim_steps": 3836,
+    "action_count": 25,
+    "source": "skynet_20261001_202425/results/T6-INC-DIS.r1.json"
+  },
+  "T6-INC-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 777.266,
+    "action_wall_seconds": 774.951,
+    "sim_steps": 6195,
+    "action_count": 36,
+    "source": "skynet_20261001_202425/results/T6-INC-SUB.r1.json"
+  },
+  "T6-OUT-ABS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 602.442,
+    "action_wall_seconds": 600.435,
+    "sim_steps": 3841,
+    "action_count": 30,
+    "source": "skynet_20261001_202425/results/T6-OUT-ABS.r1.json"
+  },
+  "T6-OUT-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 417.626,
+    "action_wall_seconds": 416.036,
+    "sim_steps": 3353,
+    "action_count": 26,
+    "source": "skynet_20261001_202425/results/T6-OUT-BASE.r1.json"
+  },
+  "T6-OUT-CON": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 752.914,
+    "action_wall_seconds": 750.547,
+    "sim_steps": 6005,
+    "action_count": 39,
+    "source": "skynet_20261001_202425/results/T6-OUT-CON.r1.json"
+  },
+  "T6-OUT-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 542.901,
+    "action_wall_seconds": 540.884,
+    "sim_steps": 3403,
+    "action_count": 26,
+    "source": "skynet_20261001_202425/results/T6-OUT-DIS.r1.json"
+  },
+  "T6-OUT-SUB": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 790.202,
+    "action_wall_seconds": 788.104,
+    "sim_steps": 6313,
+    "action_count": 39,
+    "source": "skynet_20261001_202425/results/T6-OUT-SUB.r1.json"
+  },
+  "T7-ACC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 168.635,
+    "action_wall_seconds": 167.283,
+    "sim_steps": 1891,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T7-ACC-BASE.r1.json"
+  },
+  "T7-ACC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 226.293,
+    "action_wall_seconds": 224.941,
+    "sim_steps": 2008,
+    "action_count": 21,
+    "source": "skynet_20261001_202425/results/T7-ACC-DIS.r1.json"
+  },
+  "T7-INC-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 293.546,
+    "action_wall_seconds": 292.11,
+    "sim_steps": 3383,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T7-INC-BASE.r1.json"
+  },
+  "T7-INC-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 270.258,
+    "action_wall_seconds": 269.025,
+    "sim_steps": 2935,
+    "action_count": 22,
+    "source": "skynet_20261001_202425/results/T7-INC-DIS.r1.json"
+  },
+  "T7-OUT-BASE": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 412.614,
+    "action_wall_seconds": 410.997,
+    "sim_steps": 4001,
+    "action_count": 24,
+    "source": "skynet_20261001_212315/results/T7-OUT-BASE.r1.json"
+  },
+  "T7-OUT-DIS": {
+    "status": "replayed",
+    "execution_elapsed_seconds": 422.664,
+    "action_wall_seconds": 421.017,
+    "sim_steps": 4025,
+    "action_count": 24,
+    "source": "skynet_20261001_212315/results/T7-OUT-DIS.r1.json"
+  }
+}

@@ -5577,7 +5577,7 @@
             "sequence": 6,
             "skill": "Place",
             "target": "apple_0,within,basket_0,none,none",
-            "video_time": 31.733333,
+            "video_time": null,
             "simulator_step": 953
           }
         ],
@@ -5595,7 +5595,7 @@
             "sequence": 10,
             "skill": "Place",
             "target": "apple_1,within,basket_0,none,none",
-            "video_time": 34.633333,
+            "video_time": null,
             "simulator_step": 1040
           }
         ],
@@ -5613,7 +5613,7 @@
             "sequence": 14,
             "skill": "Place",
             "target": "orange_0,within,basket_0,none,none",
-            "video_time": 38.666667,
+            "video_time": null,
             "simulator_step": 1161
           }
         ],
@@ -5640,7 +5640,7 @@
             "sequence": 18,
             "skill": "Place",
             "target": "bottle_0,on,counter_0,none,none",
-            "video_time": 43.633333,
+            "video_time": null,
             "simulator_step": 1310
           }
         ],
@@ -5658,7 +5658,7 @@
             "sequence": 22,
             "skill": "Place",
             "target": "bottle_1,on,counter_0,none,none",
-            "video_time": 46.3,
+            "video_time": null,
             "simulator_step": 1390
           }
         ],

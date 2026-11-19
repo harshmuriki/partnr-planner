@@ -1,0 +1,17 @@
+variant,task,status,actions,attempts_ok,elapsed_s,elapsed_min_max_s,active_skill_s,env_step_s,frame_callback_s,worker_cpu_s,load_s,sim_steps,saved_sim_steps,host,error
+T1-ACC-BASE,T1,replayed,8,1,44.374,44.4 / 44.4,43.919,31.812,2.947,52.0,31.578,708,672,crushinator.cc.gatech.edu,
+T1-ACC-CON,T1,replayed,9,1,44.124,44.1 / 44.1,43.673,31.476,2.943,51.69,25.893,688,698,chappie.cc.gatech.edu,
+T1-ACC-DIS,T1,replayed,8,1,47.059,47.1 / 47.1,46.524,33.955,3.064,54.99,31.474,741,734,heistotron.cc.gatech.edu,
+T1-ACC-SUB,T1,replayed,8,1,42.361,42.4 / 42.4,41.866,30.303,2.823,49.63,28.168,673,736,heistotron.cc.gatech.edu,
+T1-INC-BASE,T1,replayed,9,1,70.21,70.2 / 70.2,69.645,51.114,4.344,83.73,26.598,1126,1109,chappie.cc.gatech.edu,
+T1-INC-CON,T1,replayed,10,1,76.114,76.1 / 76.1,75.623,56.015,4.701,91.31,31.379,1253,1258,crushinator.cc.gatech.edu,
+T1-INC-DIS,T1,replayed,9,1,70.504,70.5 / 70.5,69.964,51.642,4.448,84.13,18.348,1142,1167,heistotron.cc.gatech.edu,
+T1-INC-SUB,T1,replayed,15,1,180.828,180.8 / 180.8,180.002,133.995,11.517,220.24,44.103,3040,2860,chappie.cc.gatech.edu,
+T1-OUT-BASE,T1,replayed,10,1,72.322,72.3 / 72.3,71.68,52.368,4.615,86.04,27.565,1166,1137,heistotron.cc.gatech.edu,
+T1-OUT-CON,T1,replayed,11,1,79.555,79.6 / 79.6,78.795,57.308,5.23,95.31,28.495,1276,1305,chappie.cc.gatech.edu,
+T1-OUT-DIS,T1,replayed,10,1,73.812,73.8 / 73.8,73.142,53.829,4.585,87.38,31.196,1185,1136,crushinator.cc.gatech.edu,
+T1-OUT-SUB,T1,replayed,16,1,174.2,174.2 / 174.2,173.198,129.192,10.598,211.57,41.103,2955,2901,crushinator.cc.gatech.edu,
+T2-ACC-DIS,T2,failed,13,0,,,,,,,,,604,,Final evaluation failed
+T4-ACC-ABS,T4,failed,17,0,,,,,,,,,394,,Final evaluation failed
+T7-OUT-BASE,T7,replayed,24,1,412.614,412.6 / 412.6,410.997,346.009,15.933,466.11,30.177,4001,3985,heistotron.cc.gatech.edu,
+T7-OUT-DIS,T7,replayed,24,1,422.664,422.7 / 422.7,421.017,356.568,15.835,474.27,30.171,4025,3911,heistotron.cc.gatech.edu,

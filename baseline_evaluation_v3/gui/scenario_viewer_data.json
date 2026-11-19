@@ -4,7 +4,7 @@
     "task": "T1",
     "mem": "ACC",
     "axis": "BASE",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -27,18 +27,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Correctly knows jug on kitchen counter.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-base_20260913_182631/dataset.json.gz",
-    "episode_id": "3"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-acc-base/dataset.json.gz",
+    "episode_id": "T1-ACC-BASE"
   },
   {
     "variant_id": "T1-INC-BASE",
     "task": "T1",
     "mem": "INC",
     "axis": "BASE",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -61,18 +61,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Jug absent from memory entirely.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-base_20260913_182729/dataset.json.gz",
-    "episode_id": "11"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-inc-base/dataset.json.gz",
+    "episode_id": "T1-INC-BASE"
   },
   {
     "variant_id": "T1-OUT-BASE",
     "task": "T1",
     "mem": "OUT",
     "axis": "BASE",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -95,18 +95,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Remembers jug on the dining table (stale); actually on kitchen counter.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-base_20260913_182811/dataset.json.gz",
-    "episode_id": "17"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-out-base/dataset.json.gz",
+    "episode_id": "T1-OUT-BASE"
   },
   {
     "variant_id": "T1-ACC-SUB",
     "task": "T1",
     "mem": "ACC",
     "axis": "SUB",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "pitcher_0",
@@ -129,18 +129,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Correctly represents the pitcher.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-sub_20260913_182710/dataset.json.gz",
-    "episode_id": "8"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-acc-sub/dataset.json.gz",
+    "episode_id": "T1-ACC-SUB"
   },
   {
     "variant_id": "T1-INC-SUB",
     "task": "T1",
     "mem": "INC",
     "axis": "SUB",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "pitcher_0",
@@ -163,18 +163,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Jug and substitute pitcher both absent from memory.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-sub_20260913_182753/dataset.json.gz",
-    "episode_id": "14"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-inc-sub/dataset.json.gz",
+    "episode_id": "T1-INC-SUB"
   },
   {
     "variant_id": "T1-OUT-SUB",
     "task": "T1",
     "mem": "OUT",
     "axis": "SUB",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "pitcher_0",
@@ -197,18 +197,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Retains stale jug@dining-table belief despite pitcher being the real substitute.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-sub_20260913_182836/dataset.json.gz",
-    "episode_id": "20"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-out-sub/dataset.json.gz",
+    "episode_id": "T1-OUT-SUB"
   },
   {
     "variant_id": "T1-ACC-ABS",
     "task": "T1",
     "mem": "ACC",
     "axis": "ABS",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "lamp_0",
@@ -221,18 +221,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Correctly knows no acceptable water container exists.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-abs_20260913_182614/dataset.json.gz",
-    "episode_id": "1"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-acc-abs/dataset.json.gz",
+    "episode_id": "T1-ACC-ABS"
   },
   {
     "variant_id": "T1-INC-ABS",
     "task": "T1",
     "mem": "INC",
     "axis": "ABS",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "lamp_0",
@@ -245,18 +245,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Lacks info to know no container is available.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-abs_20260913_182715/dataset.json.gz",
-    "episode_id": "9"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-inc-abs/dataset.json.gz",
+    "episode_id": "T1-INC-ABS"
   },
   {
     "variant_id": "T1-OUT-ABS",
     "task": "T1",
     "mem": "OUT",
     "axis": "ABS",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "lamp_0",
@@ -269,18 +269,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Incorrectly believes a jug exists on the dining table; none actually available.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-abs_20260913_182758/dataset.json.gz",
-    "episode_id": "15"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-out-abs/dataset.json.gz",
+    "episode_id": "T1-OUT-ABS"
   },
   {
     "variant_id": "T1-ACC-CON",
     "task": "T1",
     "mem": "ACC",
     "axis": "CON",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -303,18 +303,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Correctly knows jug is in the fridge.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-con_20260913_182645/dataset.json.gz",
-    "episode_id": "5"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-acc-con/dataset.json.gz",
+    "episode_id": "T1-ACC-CON"
   },
   {
     "variant_id": "T1-INC-CON",
     "task": "T1",
     "mem": "INC",
     "axis": "CON",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -337,18 +337,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Jug and its containment info absent from memory.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-con_20260913_182736/dataset.json.gz",
-    "episode_id": "12"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-inc-con/dataset.json.gz",
+    "episode_id": "T1-INC-CON"
   },
   {
     "variant_id": "T1-OUT-CON",
     "task": "T1",
     "mem": "OUT",
     "axis": "CON",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -371,18 +371,18 @@
         "tags": "tan, wood, fabric, spherical, tabletop, lighting"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Remembers jug on dining table though it's actually in the fridge.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-con_20260913_182817/dataset.json.gz",
-    "episode_id": "18"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-out-con/dataset.json.gz",
+    "episode_id": "T1-OUT-CON"
   },
   {
     "variant_id": "T1-ACC-DIS",
     "task": "T1",
     "mem": "ACC",
     "axis": "DIS",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -425,18 +425,18 @@
         "tags": "gray, plastic, translucent, trigger, cleaning"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Correctly represents target jug and all distractors.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-acc-dis_20260913_182654/dataset.json.gz",
-    "episode_id": "6"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-acc-dis/dataset.json.gz",
+    "episode_id": "T1-ACC-DIS"
   },
   {
     "variant_id": "T1-INC-DIS",
     "task": "T1",
     "mem": "INC",
     "axis": "DIS",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -479,18 +479,18 @@
         "tags": "gray, plastic, translucent, trigger, cleaning"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Target jug absent from memory (distractors are still physically present).",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-inc-dis_20260913_182745/dataset.json.gz",
-    "episode_id": "13"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-inc-dis/dataset.json.gz",
+    "episode_id": "T1-INC-DIS"
   },
   {
     "variant_id": "T1-OUT-DIS",
     "task": "T1",
     "mem": "OUT",
     "axis": "DIS",
-    "scene_id": "107734176_176000019",
+    "scene_id": "103997895_171031182",
     "objects": [
       {
         "entity_id": "jug_0",
@@ -533,11 +533,11 @@
         "tags": "gray, plastic, translucent, trigger, cleaning"
       }
     ],
-    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
-    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.",
+    "task_goal": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
+    "instruction": "Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.",
     "memory_note": "Incorrectly remembers target jug on the dining table.",
-    "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_1/t1-out-dis_20260913_182827/dataset.json.gz",
-    "episode_id": "19"
+    "episode_dataset_path": "baseline_evaluation_v3/episodes/task_1/t1-out-dis/dataset.json.gz",
+    "episode_id": "T1-OUT-DIS"
   },
   {
     "variant_id": "T2-ACC-BASE",
@@ -1297,8 +1297,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Correctly knows one book on the bed, one on the bedroom table.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-base_20260913_183438/dataset.json.gz",
     "episode_id": "43"
@@ -1341,8 +1341,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Both books absent from memory (laptop info unchanged).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-base_20260913_183530/dataset.json.gz",
     "episode_id": "49"
@@ -1385,8 +1385,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Remembers both books at incorrect (stale) furniture; laptop stale too.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-base_20260913_183608/dataset.json.gz",
     "episode_id": "53"
@@ -1419,8 +1419,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Correctly knows one required book is unavailable; knows the remaining book's location.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-abs_20260913_183423/dataset.json.gz",
     "episode_id": "41"
@@ -1453,8 +1453,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Both books absent from memory; doesn't know one is unavailable.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-abs_20260913_183516/dataset.json.gz",
     "episode_id": "47"
@@ -1487,8 +1487,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Incorrectly believes the missing book is still available at a stale location.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-abs_20260913_183553/dataset.json.gz",
     "episode_id": "51"
@@ -1531,8 +1531,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Correctly knows one book is in the closed bedroom cabinet.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-con_20260913_183750/dataset.json.gz",
     "episode_id": "55"
@@ -1575,8 +1575,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Both books and their containment info absent from memory.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-con_20260913_183757/dataset.json.gz",
     "episode_id": "56"
@@ -1619,8 +1619,8 @@
         "tags": "black, plastic, portable, clamshell, keyboard"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Stores incorrect stale furniture for both books.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-con_20260913_183803/dataset.json.gz",
     "episode_id": "57"
@@ -1683,8 +1683,8 @@
         "tags": "black, cream, rectangular, electronic, handheld"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Correctly represents both books/laptop and the distractors.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-acc-dis_20260913_183501/dataset.json.gz",
     "episode_id": "45"
@@ -1747,8 +1747,8 @@
         "tags": "black, cream, rectangular, electronic, handheld"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Both books absent from memory (laptop info unchanged).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-inc-dis_20260913_183546/dataset.json.gz",
     "episode_id": "50"
@@ -1811,8 +1811,8 @@
         "tags": "black, cream, rectangular, electronic, handheld"
       }
     ],
-    "task_goal": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
-    "instruction": "Collect the 2 green books & place them on the living room table and turn off the laptop as well.",
+    "task_goal": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
+    "instruction": "Collect the 2 green books & place them on the living room side table and turn off the laptop as well.",
     "memory_note": "Stores outdated locations for both books (laptop/distractors unaffected).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_3/t3-out-dis_20260913_183624/dataset.json.gz",
     "episode_id": "54"
@@ -2783,8 +2783,8 @@
         "tags": "white, ceramic, round, shallow, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Correctly knows soap by sink, bottle_0 on dining table, plate on kitchen counter.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-base_20260913_184113/dataset.json.gz",
     "episode_id": "77"
@@ -2837,8 +2837,8 @@
         "tags": "white, ceramic, round, shallow, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Soap dispenser, bottle_0, and plate absent from memory.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-base_20260913_184234/dataset.json.gz",
     "episode_id": "85"
@@ -2891,8 +2891,8 @@
         "tags": "white, ceramic, round, shallow, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Remembers soap in bathroom, bottle_0 on kitchen counter, plate on dining table (all stale).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-base_20260913_184339/dataset.json.gz",
     "episode_id": "91"
@@ -2945,8 +2945,8 @@
         "tags": "black, ceramic, round, flat, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Correctly represents the black plate substitute.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-sub_20260913_184208/dataset.json.gz",
     "episode_id": "82"
@@ -2999,8 +2999,8 @@
         "tags": "black, ceramic, round, flat, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Soap dispenser, bottle_0, and substitute plate absent from memory.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-sub_20260913_184310/dataset.json.gz",
     "episode_id": "88"
@@ -3053,8 +3053,8 @@
         "tags": "black, ceramic, round, flat, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Same stale beliefs, with black plate as the real substitute.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-sub_20260913_184414/dataset.json.gz",
     "episode_id": "94"
@@ -3097,8 +3097,8 @@
         "tags": "gray, glass, cylindrical, tumbler, drinkware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Correctly knows no suitable plate is available.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-abs_20260913_184051/dataset.json.gz",
     "episode_id": "75"
@@ -3141,8 +3141,8 @@
         "tags": "gray, glass, cylindrical, tumbler, drinkware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Soap dispenser and bottle_0 absent from memory; doesn't know no plate is available.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-abs_20260913_184216/dataset.json.gz",
     "episode_id": "83"
@@ -3185,8 +3185,8 @@
         "tags": "gray, glass, cylindrical, tumbler, drinkware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Same stale beliefs; no suitable plate actually exists.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-abs_20260913_184319/dataset.json.gz",
     "episode_id": "89"
@@ -3239,8 +3239,8 @@
         "tags": "white, ceramic, round, shallow, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Correctly knows soap/plate are in their closed cabinets.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-con_20260913_184133/dataset.json.gz",
     "episode_id": "79"
@@ -3293,8 +3293,8 @@
         "tags": "white, ceramic, round, shallow, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Soap, plate, and their containment info absent from memory; bottle_0 absent too.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-con_20260913_184245/dataset.json.gz",
     "episode_id": "86"
@@ -3347,8 +3347,8 @@
         "tags": "white, ceramic, round, shallow, tableware"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Same stale beliefs; soap/plate actually in their closed cabinets.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-con_20260913_184349/dataset.json.gz",
     "episode_id": "92"
@@ -3431,8 +3431,8 @@
         "tags": "brown, plastic, round, shallow, plant"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Correctly represents targets and all distractors.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-acc-dis_20260913_184147/dataset.json.gz",
     "episode_id": "80"
@@ -3515,8 +3515,8 @@
         "tags": "brown, plastic, round, shallow, plant"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Soap dispenser, bottle_0, plate absent from memory (distractors still present).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-inc-dis_20260913_184300/dataset.json.gz",
     "episode_id": "87"
@@ -3599,8 +3599,8 @@
         "tags": "brown, plastic, round, shallow, plant"
       }
     ],
-    "task_goal": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
-    "instruction": "Get soap to clean both bottles, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.",
+    "task_goal": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
+    "instruction": "Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.",
     "memory_note": "Same stale beliefs (distractors still physically present).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_5/t5-out-dis_20260913_184404/dataset.json.gz",
     "episode_id": "93"
@@ -3653,8 +3653,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Correctly knows bread on counter, bottle on dining table, towel on bathroom shelf.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-base_20260913_184457/dataset.json.gz",
     "episode_id": "97"
@@ -3707,8 +3707,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Bread, bottle, and towel all absent from memory.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-base_20260913_184615/dataset.json.gz",
     "episode_id": "104"
@@ -3761,8 +3761,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Remembers bread on dining table, bottle in bedroom, towel on a bedroom chair (all stale).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-base_20260913_184715/dataset.json.gz",
     "episode_id": "109"
@@ -3815,8 +3815,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Correctly represents the cup and blue towel substitutes.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-sub_20260913_184548/dataset.json.gz",
     "episode_id": "101"
@@ -3869,8 +3869,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Bread and both substitutes (cup, blue towel) absent from memory.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-sub_20260913_184648/dataset.json.gz",
     "episode_id": "106"
@@ -3923,8 +3923,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Same stale beliefs, with cup/blue towel as the real substitutes.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-sub_20260913_184747/dataset.json.gz",
     "episode_id": "111"
@@ -3967,8 +3967,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Correctly knows no suitable towel (or substitute) is available.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-abs_20260913_184436/dataset.json.gz",
     "episode_id": "95"
@@ -4011,8 +4011,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Bread and bottle absent from memory; doesn't know no towel is available.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-abs_20260913_184555/dataset.json.gz",
     "episode_id": "102"
@@ -4055,8 +4055,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Same stale beliefs; no suitable towel actually exists.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-abs_20260913_184656/dataset.json.gz",
     "episode_id": "107"
@@ -4109,8 +4109,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Correctly knows all three are in their closed receptacles.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-con_20260913_192018/dataset.json.gz",
     "episode_id": "118"
@@ -4163,8 +4163,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Bread, bottle, towel, and their containment info absent from memory.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-con_20260913_192028/dataset.json.gz",
     "episode_id": "119"
@@ -4217,8 +4217,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Same stale beliefs; all three actually in their closed receptacles.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-con_20260913_192123/dataset.json.gz",
     "episode_id": "120"
@@ -4301,8 +4301,8 @@
         "tags": "blue, plastic, cylindrical, bottle, supplement"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Correctly represents targets and all distractors, including cleanliness.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-acc-dis_20260913_184529/dataset.json.gz",
     "episode_id": "99"
@@ -4385,8 +4385,8 @@
         "tags": "blue, plastic, cylindrical, bottle, supplement"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Bread, bottle, towel absent from memory (distractors still present).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-inc-dis_20260913_184639/dataset.json.gz",
     "episode_id": "105"
@@ -4469,8 +4469,8 @@
         "tags": "blue, plastic, cylindrical, bottle, supplement"
       }
     ],
-    "task_goal": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
-    "instruction": "Heat up the bread, bring it to the master-bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "task_goal": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
+    "instruction": "Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.",
     "memory_note": "Same stale beliefs (distractors still physically present).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_6/t6-out-dis_20260913_184738/dataset.json.gz",
     "episode_id": "110"
@@ -4533,8 +4533,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
-    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "task_goal": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
     "memory_note": "Correctly knows truck on living-room floor, stuffed toy on sofa, dirty plate at kitchen sink.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-acc-base_20260913_192719/dataset.json.gz",
     "episode_id": "133"
@@ -4597,8 +4597,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
-    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "task_goal": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
     "memory_note": "Truck, stuffed toy, and selected dirty plate absent from memory.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-inc-base_20260913_192814/dataset.json.gz",
     "episode_id": "138"
@@ -4661,8 +4661,8 @@
         "tags": "brass, black, metal, slender, lighting"
       }
     ],
-    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
-    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "task_goal": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
     "memory_note": "Remembers selected toys in the bedroom and dirty plate on the dining table (stale); actually living room/kitchen sink.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-out-base_20260913_192847/dataset.json.gz",
     "episode_id": "141"
@@ -4745,8 +4745,8 @@
         "tags": "brown, fabric, rounded, soft, seating"
       }
     ],
-    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
-    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "task_goal": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
     "memory_note": "Correctly represents targets and distractors, including plate cleanliness.",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-acc-dis_20260913_192741/dataset.json.gz",
     "episode_id": "135"
@@ -4829,8 +4829,8 @@
         "tags": "brown, fabric, rounded, soft, seating"
       }
     ],
-    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
-    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "task_goal": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
     "memory_note": "Truck, stuffed toy, plate absent from memory (distractors still physically present).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-inc-dis_20260913_192827/dataset.json.gz",
     "episode_id": "139"
@@ -4913,8 +4913,8 @@
         "tags": "brown, fabric, rounded, soft, seating"
       }
     ],
-    "task_goal": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
-    "instruction": "Put away all toys from the living room into the wardrobe, wash and put away the dirty dishes from the sink, and turn off the living-room and kitchen lights.",
+    "task_goal": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
+    "instruction": "Put away all toys from the living room into the closet's wardrobe, wash and put away the dirty dishes from sink inside, and turn off the living-room and kitchen lights.",
     "memory_note": "Same stale beliefs (distractors still physically present).",
     "episode_dataset_path": "baseline_evaluation_v3/.archive/episodes/task_7/t7-out-dis_20260913_192900/dataset.json.gz",
     "episode_id": "142"

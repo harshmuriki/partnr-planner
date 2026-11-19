@@ -1,0 +1,121 @@
+variant,task,status,actions,attempts_ok,elapsed_s,elapsed_min_max_s,active_skill_s,env_step_s,frame_callback_s,worker_cpu_s,load_s,sim_steps,saved_sim_steps,host,error
+T1-ACC-ABS,T1,replayed,3,1,13.643,13.6 / 13.6,13.553,9.878,0.857,16.01,22.962,215,239,heistotron.cc.gatech.edu,
+T1-ACC-BASE,T1,failed,8,0,,,,,,,,,672,,Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-ACC-CON,T1,failed,9,0,,,,,,,,,698,,Action 6 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-ACC-DIS,T1,failed,8,0,,,,,,,,,734,,Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-ACC-SUB,T1,failed,8,0,,,,,,,,,736,,Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-INC-ABS,T1,replayed,10,1,146.778,146.8 / 146.8,146.411,109.502,8.969,181.32,26.067,2559,2592,heistotron.cc.gatech.edu,
+T1-INC-BASE,T1,failed,9,0,,,,,,,,,1109,,Action 4 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-INC-CON,T1,failed,10,0,,,,,,,,,1258,,Action 7 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-INC-DIS,T1,failed,9,0,,,,,,,,,1167,,Action 4 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-INC-SUB,T1,failed,15,0,,,,,,,,,2860,,Action 12 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-OUT-ABS,T1,replayed,11,1,108.538,108.5 / 108.5,107.852,76.19,7.214,139.31,15.84,2365,2481,conroy.cc.gatech.edu,
+T1-OUT-BASE,T1,failed,10,0,,,,,,,,,1137,,Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-OUT-CON,T1,failed,11,0,,,,,,,,,1305,,Action 8 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-OUT-DIS,T1,failed,10,0,,,,,,,,,1136,,Action 5 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T1-OUT-SUB,T1,failed,16,0,,,,,,,,,2901,,Action 13 failed: No low level actions returned. Response: dict_values(['Node with name cabinet_34 not present in the graph. Use the appropriate tool to get a valid name.'])
+T2-ACC-ABS,T2,replayed,9,1,27.24,27.2 / 27.2,26.886,19.078,1.764,30.27,18.745,387,354,conroy.cc.gatech.edu,
+T2-ACC-BASE,T2,replayed,12,1,45.99,46.0 / 46.0,45.162,32.459,3.057,49.55,22.858,554,561,heistotron.cc.gatech.edu,
+T2-ACC-CON,T2,replayed,14,1,47.949,47.9 / 47.9,46.853,33.08,3.51,51.04,21.253,565,552,heistotron.cc.gatech.edu,
+T2-ACC-DIS,T2,failed,13,0,,,,,,,,,604,,Final evaluation failed
+T2-ACC-SUB,T2,replayed,12,1,46.435,46.4 / 46.4,45.778,32.704,3.12,50.18,22.451,554,561,heistotron.cc.gatech.edu,
+T2-INC-ABS,T2,replayed,21,1,117.869,117.9 / 117.9,116.541,86.144,7.288,137.52,18.246,1859,1849,conroy.cc.gatech.edu,
+T2-INC-BASE,T2,replayed,15,1,70.697,70.7 / 70.7,69.848,50.817,4.609,77.77,22.555,875,776,heistotron.cc.gatech.edu,
+T2-INC-CON,T2,replayed,24,1,131.835,131.8 / 131.8,130.249,96.402,8.04,153.33,17.849,2021,1972,conroy.cc.gatech.edu,
+T2-INC-DIS,T2,replayed,14,1,70.4,70.4 / 70.4,69.556,51.012,4.376,77.54,21.457,873,804,heistotron.cc.gatech.edu,
+T2-INC-SUB,T2,replayed,24,1,131.607,131.6 / 131.6,129.961,96.426,7.935,152.66,24.265,2003,1962,conroy.cc.gatech.edu,
+T2-OUT-ABS,T2,replayed,23,1,145.153,145.2 / 145.2,143.837,106.765,8.818,169.93,17.951,2304,2389,conroy.cc.gatech.edu,
+T2-OUT-BASE,T2,replayed,15,1,60.275,60.3 / 60.3,59.521,42.849,3.817,67.62,18.446,888,913,conroy.cc.gatech.edu,
+T2-OUT-CON,T2,replayed,26,1,139.194,139.2 / 139.2,137.71,101.586,8.482,162.49,22.757,2123,2250,conroy.cc.gatech.edu,
+T2-OUT-DIS,T2,replayed,15,1,79.152,79.2 / 79.2,78.217,57.325,5.013,87.14,20.357,981,964,heistotron.cc.gatech.edu,
+T2-OUT-SUB,T2,replayed,26,1,182.973,183.0 / 183.0,181.407,135.619,11.511,206.59,23.16,2387,2517,heistotron.cc.gatech.edu,
+T3-ACC-ABS,T3,replayed,7,1,14.023,14.0 / 14.0,13.766,7.998,1.266,17.08,16.037,336,347,conroy.cc.gatech.edu,
+T3-ACC-BASE,T3,replayed,10,1,26.154,26.2 / 26.2,25.496,15.345,2.323,32.04,16.444,614,549,conroy.cc.gatech.edu,
+T3-ACC-CON,T3,replayed,12,1,23.022,23.0 / 23.0,22.489,12.985,2.123,27.52,16.34,538,558,conroy.cc.gatech.edu,
+T3-ACC-DIS,T3,replayed,10,1,24.344,24.3 / 24.3,23.904,14.382,2.195,29.63,16.242,564,580,conroy.cc.gatech.edu,
+T3-INC-ABS,T3,replayed,13,1,53.651,53.7 / 53.7,52.959,33.014,4.522,69.55,15.537,1395,1342,conroy.cc.gatech.edu,
+T3-INC-BASE,T3,replayed,12,1,54.376,54.4 / 54.4,53.785,33.812,4.741,66.39,17.574,1159,1157,heistotron.cc.gatech.edu,
+T3-INC-CON,T3,replayed,14,1,47.966,48.0 / 48.0,47.115,28.588,4.323,61.21,16.237,1224,1050,conroy.cc.gatech.edu,
+T3-INC-DIS,T3,replayed,12,1,47.354,47.4 / 47.4,46.643,28.66,4.086,60.7,16.538,1164,1171,conroy.cc.gatech.edu,
+T3-OUT-ABS,T3,replayed,15,1,64.756,64.8 / 64.8,63.949,39.482,5.552,85.67,15.138,1711,1890,conroy.cc.gatech.edu,
+T3-OUT-BASE,T3,replayed,15,1,83.146,83.1 / 83.1,82.103,51.897,7.396,102.46,23.357,1788,1877,heistotron.cc.gatech.edu,
+T3-OUT-CON,T3,replayed,17,1,70.119,70.1 / 70.1,69.299,41.251,6.363,93.37,15.437,1931,1875,conroy.cc.gatech.edu,
+T3-OUT-DIS,T3,replayed,15,1,80.396,80.4 / 80.4,79.389,50.773,6.907,99.36,24.864,1762,1952,heistotron.cc.gatech.edu,
+T4-ACC-ABS,T4,failed,17,0,,,,,,,,,394,,Final evaluation failed
+T4-ACC-BASE,T4,replayed,20,1,35.318,35.3 / 35.3,34.014,21.497,2.721,36.58,18.447,526,590,conroy.cc.gatech.edu,
+T4-ACC-CON,T4,replayed,22,1,54.793,54.8 / 54.8,53.3,36.219,3.911,60.73,18.044,843,615,conroy.cc.gatech.edu,
+T4-ACC-DIS,T4,replayed,20,1,53.557,53.6 / 53.6,52.345,35.712,3.884,56.44,22.556,679,694,heistotron.cc.gatech.edu,
+T4-INC-ABS,T4,replayed,21,1,74.132,74.1 / 74.1,72.931,49.426,5.463,81.92,23.26,1099,1009,heistotron.cc.gatech.edu,
+T4-INC-BASE,T4,replayed,21,1,67.466,67.5 / 67.5,66.023,45.849,4.526,76.46,19.451,1108,1237,conroy.cc.gatech.edu,
+T4-INC-CON,T4,replayed,23,1,73.67,73.7 / 73.7,72.169,51.062,4.845,83.06,17.745,1150,1230,conroy.cc.gatech.edu,
+T4-INC-DIS,T4,replayed,21,1,88.881,88.9 / 88.9,87.397,62.973,5.782,98.44,19.848,1188,1246,heistotron.cc.gatech.edu,
+T4-OUT-ABS,T4,replayed,22,1,67.06,67.1 / 67.1,65.793,44.932,4.747,77.78,17.745,1192,1116,conroy.cc.gatech.edu,
+T4-OUT-BASE,T4,replayed,22,1,77.129,77.1 / 77.1,75.701,53.175,5.103,88.88,19.745,1267,1391,conroy.cc.gatech.edu,
+T4-OUT-CON,T4,replayed,24,1,99.755,99.8 / 99.8,98.2,70.608,6.669,110.86,19.751,1332,1446,heistotron.cc.gatech.edu,
+T4-OUT-DIS,T4,replayed,22,1,80.014,80.0 / 80.0,78.39,56.121,5.209,92.13,17.75,1278,1339,conroy.cc.gatech.edu,
+T5-ACC-ABS,T5,replayed,19,1,20.136,20.1 / 20.1,19.185,9.926,2.138,21.22,18.444,396,433,conroy.cc.gatech.edu,
+T5-ACC-BASE,T5,replayed,22,1,40.066,40.1 / 40.1,38.48,21.936,4.307,43.57,19.341,710,715,heistotron.cc.gatech.edu,
+T5-ACC-CON,T5,replayed,26,1,35.184,35.2 / 35.2,33.958,19.002,3.548,39.48,15.938,724,758,conroy.cc.gatech.edu,
+T5-ACC-DIS,T5,replayed,22,1,35.407,35.4 / 35.4,34.416,19.601,3.544,40.27,17.246,740,747,conroy.cc.gatech.edu,
+T5-ACC-SUB,T5,replayed,22,1,42.413,42.4 / 42.4,40.932,23.698,4.337,46.31,17.454,751,783,heistotron.cc.gatech.edu,
+T5-INC-ABS,T5,replayed,24,1,42.349,42.3 / 42.3,41.257,23.783,4.02,50.51,16.334,988,1169,conroy.cc.gatech.edu,
+T5-INC-BASE,T5,replayed,23,1,37.492,37.5 / 37.5,36.418,20.898,3.558,43.8,16.342,825,928,conroy.cc.gatech.edu,
+T5-INC-CON,T5,replayed,27,1,44.621,44.6 / 44.6,42.587,24.03,4.792,47.84,20.141,780,920,heistotron.cc.gatech.edu,
+T5-INC-DIS,T5,replayed,23,1,36.227,36.2 / 36.2,35.15,19.899,3.603,41.07,17.946,768,861,conroy.cc.gatech.edu,
+T5-INC-SUB,T5,replayed,27,1,55.301,55.3 / 55.3,53.796,31.91,5.061,66.15,15.839,1263,1339,conroy.cc.gatech.edu,
+T5-OUT-ABS,T5,replayed,25,1,48.609,48.6 / 48.6,47.264,27.639,4.528,58.31,16.639,1087,1076,conroy.cc.gatech.edu,
+T5-OUT-BASE,T5,replayed,24,1,42.146,42.1 / 42.1,41.12,23.806,4.043,49.24,15.939,907,900,conroy.cc.gatech.edu,
+T5-OUT-CON,T5,replayed,28,1,41.959,42.0 / 42.0,40.604,23.003,4.041,47.47,15.937,871,834,conroy.cc.gatech.edu,
+T5-OUT-DIS,T5,replayed,24,1,39.98,40.0 / 40.0,38.717,22.428,3.854,46.16,16.545,847,841,conroy.cc.gatech.edu,
+T5-OUT-SUB,T5,replayed,28,1,67.282,67.3 / 67.3,65.429,38.225,6.53,75.3,23.174,1257,1337,heistotron.cc.gatech.edu,
+T6-ACC-ABS,T6,replayed,18,1,256.678,256.7 / 256.7,255.4,223.99,7.242,276.11,23.262,1628,1485,heistotron.cc.gatech.edu,
+T6-ACC-BASE,T6,replayed,21,1,326.881,326.9 / 326.9,325.201,284.944,9.063,350.2,23.161,2028,1785,heistotron.cc.gatech.edu,
+T6-ACC-CON,T6,replayed,27,1,402.851,402.9 / 402.9,401.135,351.443,11.122,440.34,20.652,3194,2991,conroy.cc.gatech.edu,
+T6-ACC-DIS,T6,replayed,21,1,245.801,245.8 / 245.8,244.797,211.178,7.369,268.39,20.551,1935,1840,conroy.cc.gatech.edu,
+T6-ACC-SUB,T6,replayed,21,1,250.87,250.9 / 250.9,249.521,216.633,6.969,273.07,22.149,1930,1706,conroy.cc.gatech.edu,
+T6-INC-ABS,T6,replayed,29,1,513.901,513.9 / 513.9,512.328,450.659,13.807,565.3,32.867,4145,4228,conroy.cc.gatech.edu,
+T6-INC-BASE,T6,replayed,25,1,613.881,613.9 / 613.9,612.362,544.103,15.965,662.47,24.857,3885,3601,heistotron.cc.gatech.edu,
+T6-INC-CON,T6,replayed,36,1,718.614,718.6 / 718.6,716.247,630.625,19.604,791.49,32.873,5719,5745,conroy.cc.gatech.edu,
+T6-INC-DIS,T6,replayed,25,1,608.948,608.9 / 608.9,607.459,540.753,15.508,657.71,28.874,3836,3519,heistotron.cc.gatech.edu,
+T6-INC-SUB,T6,replayed,36,1,777.266,777.3 / 777.3,774.951,684.972,19.996,855.31,32.867,6195,5919,conroy.cc.gatech.edu,
+T6-OUT-ABS,T6,replayed,30,1,602.442,602.4 / 602.4,600.435,531.173,16.463,650.83,31.686,3841,3916,heistotron.cc.gatech.edu,
+T6-OUT-BASE,T6,replayed,26,1,417.626,417.6 / 417.6,416.036,363.541,11.269,458.52,25.971,3353,3413,conroy.cc.gatech.edu,
+T6-OUT-CON,T6,replayed,39,1,752.914,752.9 / 752.9,750.547,659.945,20.155,825.43,32.869,6005,5975,conroy.cc.gatech.edu,
+T6-OUT-DIS,T6,replayed,26,1,542.901,542.9 / 542.9,540.884,475.41,14.914,582.72,23.86,3403,3538,heistotron.cc.gatech.edu,
+T6-OUT-SUB,T6,replayed,39,1,790.202,790.2 / 790.2,788.104,694.811,20.842,871.11,32.872,6313,6247,conroy.cc.gatech.edu,
+T7-ACC-BASE,T7,replayed,21,1,168.635,168.6 / 168.6,167.283,136.384,7.107,190.39,20.949,1891,1856,conroy.cc.gatech.edu,
+T7-ACC-DIS,T7,replayed,21,1,226.293,226.3 / 226.3,224.941,186.171,9.313,247.96,31.085,2008,1953,heistotron.cc.gatech.edu,
+T7-INC-BASE,T7,replayed,22,1,293.546,293.5 / 293.5,292.11,242.251,11.773,337.11,25.764,3383,3366,conroy.cc.gatech.edu,
+T7-INC-DIS,T7,replayed,22,1,270.258,270.3 / 270.3,269.025,224.387,10.358,306.6,18.85,2935,3218,conroy.cc.gatech.edu,
+T7-OUT-BASE,T7,failed,24,0,,,,,,,,,3985,,"Furniture name collides with graph node: toilet_1
+Traceback (most recent call last):
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py"", line 257, in _worker_loop
+    result = self._do_load(**kwargs)
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py"", line 513, in _do_load
+    env_interface.reset_environment()
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py"", line 413, in reset_environment
+    self.initialize_perception_and_world_graph()
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py"", line 162, in initialize_perception_and_world_graph
+    self.perception = PerceptionSim(
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py"", line 108, in __init__
+    self.add_furniture_and_receptacles_to_gt_graph()
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py"", line 358, in add_furniture_and_receptacles_to_gt_graph
+    raise ValueError(
+ValueError: Furniture name collides with graph node: toilet_1
+"
+T7-OUT-DIS,T7,failed,24,0,,,,,,,,,3911,,"Furniture name collides with graph node: toilet_1
+Traceback (most recent call last):
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py"", line 257, in _worker_loop
+    result = self._do_load(**kwargs)
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/scripts/skill_runner_gui/session.py"", line 513, in _do_load
+    env_interface.reset_environment()
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py"", line 413, in reset_environment
+    self.initialize_perception_and_world_graph()
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/agent/env/environment_interface.py"", line 162, in initialize_perception_and_world_graph
+    self.perception = PerceptionSim(
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py"", line 108, in __init__
+    self.add_furniture_and_receptacles_to_gt_graph()
+  File ""/coc/flash5/vmuriki3/tamp/partnr-planner/habitat_llm/perception/perception_sim.py"", line 358, in add_furniture_and_receptacles_to_gt_graph
+    raise ValueError(
+ValueError: Furniture name collides with graph node: toilet_1
+"

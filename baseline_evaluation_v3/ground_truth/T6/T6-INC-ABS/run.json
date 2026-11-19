@@ -9131,7 +9131,7 @@
             "sequence": 6,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 37.333333,
+            "video_time": null,
             "simulator_step": 1121
           }
         ],
@@ -9149,7 +9149,7 @@
             "sequence": 12,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 48.6,
+            "video_time": null,
             "simulator_step": 1459
           }
         ],
@@ -9167,7 +9167,7 @@
             "sequence": 6,
             "skill": "Place",
             "target": "bread_0,within,microwave_0,none,none",
-            "video_time": 37.333333,
+            "video_time": null,
             "simulator_step": 1121
           },
           {
@@ -9175,7 +9175,7 @@
             "sequence": 12,
             "skill": "Place",
             "target": "bread_0,on,table_11,none,none",
-            "video_time": 48.6,
+            "video_time": null,
             "simulator_step": 1459
           }
         ],
@@ -9190,7 +9190,7 @@
             "sequence": 17,
             "skill": "Place",
             "target": "bottle_0,on,table_11,next_to,bread_0",
-            "video_time": 80.666667,
+            "video_time": null,
             "simulator_step": 2421
           }
         ],
@@ -9208,7 +9208,7 @@
             "sequence": 16,
             "skill": "Navigate",
             "target": "table_11",
-            "video_time": 80.3,
+            "video_time": null,
             "simulator_step": 2410
           }
         ],
@@ -9235,7 +9235,7 @@
             "sequence": 29,
             "skill": "PowerOff",
             "target": "lamp_living_0",
-            "video_time": 140.866667,
+            "video_time": null,
             "simulator_step": 4227
           }
         ],
@@ -9253,7 +9253,7 @@
             "sequence": 27,
             "skill": "ReportAbsence",
             "target": "- The hand_towel (hand_towel_0) and any acceptable substitute are absent: the planner should report that no suitable object exists and give up on that subgoal, without inventing an object. The remaining propositions above are still expected.",
-            "video_time": 132.166667,
+            "video_time": null,
             "simulator_step": null
           }
         ],
