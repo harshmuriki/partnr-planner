@@ -4,11 +4,13 @@ Taken from `## Success criteria` in `baseline_evaluation_v3/specs/`. Within a ta
 
 ## T1
 
-Turn off all the lights in the bedroom and bring a full jug of water to the living-room table.
+Turn off all the lights in the bedroom and bring a full jug of water to either of the two living-room tables.
+
+Either living-room table is accepted: `table_0` (Tulip Table) or `table_1` (Lincoln Marble 3 In 1 Pack Tables). This is one placement predicate with two allowed receptacle handles, not two required placements.
 
 BASE, CON (`T1-ACC-BASE`, `T1-ACC-CON`, `T1-INC-BASE`, `T1-INC-CON`, `T1-OUT-BASE`, `T1-OUT-CON`):
 
-- `is_on_top(jug_0, table_0)`
+- `is_on_top(jug_0, table_0 or table_1)`
 - `is_filled(jug_0)`
 - `is_powered_off(lamp_0)`
 
@@ -19,14 +21,14 @@ ABS (`T1-ACC-ABS`, `T1-INC-ABS`, `T1-OUT-ABS`):
 
 SUB (`T1-ACC-SUB`, `T1-INC-SUB`, `T1-OUT-SUB`):
 
-- `is_on_top(pitcher_0, table_0)`
+- `is_on_top(pitcher_0, table_0 or table_1)`
 - `is_filled(pitcher_0)`
 - `is_powered_off(lamp_0)`
 - Using `pitcher_0` in place of the missing `jug_0` counts as success; do not require or invent a jug.
 
 DIS (`T1-ACC-DIS`, `T1-INC-DIS`, `T1-OUT-DIS`):
 
-- `is_on_top(jug_0, table_0)`
+- `is_on_top(jug_0, table_0 or table_1)`
 - `is_filled(jug_0)`
 - `is_powered_off(lamp_0)`
 - Distractors (`vase_0`, `spray_bottle_0`) must not be used in place of the task objects; they have no placement goals.
@@ -73,7 +75,7 @@ DIS (`T2-ACC-DIS`, `T2-INC-DIS`, `T2-OUT-DIS`):
 
 ## T3
 
-Collect the 2 green books and place them on the living room table and turn off the laptop as well.
+Collect the 2 green books & place them on the living room side table and turn off the laptop as well.
 
 BASE, CON (`T3-ACC-BASE`, `T3-ACC-CON`, `T3-INC-BASE`, `T3-INC-CON`, `T3-OUT-BASE`, `T3-OUT-CON`):
 
@@ -132,7 +134,7 @@ T4 has no SUB variants.
 
 ## T5
 
-Get soap to clean both glasses, fill them, and place them on the living-room table for our guests to drink. Get a white plate and place it next to them.
+Get soap to clean both glasses, fill them, and place them on the living-room side table for our guests to drink. Get a white plate and place it next to them.
 
 BASE, CON (`T5-ACC-BASE`, `T5-ACC-CON`, `T5-INC-BASE`, `T5-INC-CON`, `T5-OUT-BASE`, `T5-OUT-CON`):
 
@@ -200,7 +202,7 @@ DIS (`T5-ACC-DIS`, `T5-INC-DIS`, `T5-OUT-DIS`):
 
 ## T6
 
-Heat up the bread, bring it to the bedroom desk, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.
+Heat up the bread, bring it to the desk in the bedroom the robot was initially at, bring a water bottle and a clean hand towel and place them next to the bread. Turn off the living-room lights.
 
 BASE, CON (`T6-ACC-BASE`, `T6-ACC-CON`, `T6-INC-BASE`, `T6-INC-CON`, `T6-OUT-BASE`, `T6-OUT-CON`):
 

@@ -3,6 +3,8 @@
 For transferring local code/data and launching parallel evaluations, follow
 [Server setup and parallel runs](docs/SERVER_SETUP.md). The package versions below
 are the repository's recorded environment; verify them against your server hardware.
+For the tested A40 server repair and single-episode ReAct command, see
+[Sonny setup and validation](docs/SONNY_SETUP.md).
 
 ### Requirements:
 - Conda or Mamba

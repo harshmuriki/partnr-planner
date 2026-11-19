@@ -89,6 +89,10 @@ rendering, API access, and planner execution.
 
 ## Parallel workers
 
+For the tested single-node queue supporting five, six, or CPU-capacity workers,
+see [Parallel PARTNR launcher](PARALLEL_RUNS.md). It creates isolated worker
+copies, enforces wall-clock timeouts, and collects per-run task metrics.
+
 Use separate working copies so PDDLStream's relative `temp/` files and other
 working-directory artifacts cannot collide. Distinct output directories also
 keep experiment summaries and copied traces separate.
