@@ -25,9 +25,17 @@ plan_config:
   #   none (default: stop, as in VLM-TAMP) | oracle (replan instead while the
   #   simulator's goal check is unmet; privileged upper bound, not deployable)
   #   | oracle_feedback (same, and tell the VLM which required objects it has
-  #   not found and which known objects are not placed correctly / in state).
+  #   not found and which known objects are not placed correctly / in state)
+  #   | verify_symbolic (deployable: at plan end the VLM writes the final conditions the instruction
+  #   requires from the instruction + robot memory, they are checked against the robot's scene state,
+  #   and unmet or unconfirmable ones are fed back; habitat_llm/rail_planner/goal_verifier.py. Uses the
+  #   same sim-synced open/closed and container-contents state as subgoal planning. One extra VLM call
+  #   per check, not counted toward max_vlm_cycles.)
   end_of_plan_check: none
   max_end_of_plan_replans: 3
+  # verify_symbolic only: also log the simulator's goal status and oracle feedback lines in each
+  # end_of_plan_check event (*_shadow keys) to measure verifier precision/recall. Never shown to the planner.
+  log_gt_shadow: true
   # Two-phase mode (deployable, no privileged information). Off by default; when false nothing below is used.
   # A VLM mode selector runs at every replan point (start, failure, plan finished, end of an exploration
   # phase) and picks explore (a ReAct phase with Explore/Navigate/Open/Close + Done[]) or interact (the loop

@@ -36,6 +36,7 @@ from habitat_llm.planner.vlm_tamp_pddl_planner import VlmTampPddlPlanner
 from habitat_llm.llm.instruct.utils import pil_image_to_data_url
 from habitat_llm.rail_planner import overhead_map as omap_lib
 from habitat_llm.rail_planner import placement_oracle
+from habitat_llm.rail_planner.goal_verifier import build_ledger_prompt, check_ledger, parse_ledger
 from habitat_llm.rail_planner.mode_selector import build_selector_prompt, parse_selector_response
 from habitat_llm.utils.llm_usage import snapshot_from_llm
 from habitat_llm.rail_planner.replan_trigger import (
@@ -88,6 +89,13 @@ class RailPlanner(VlmTampPddlPlanner):
         self._end_replan_pending = False
         self._end_feedback = []
         self._world_graph = None
+        # verify_symbolic: goal ledger written by the VLM at plan end (goal_verifier.py).
+        self.log_gt_shadow = bool(self.plan_config.get("log_gt_shadow", True))
+        self._instruction = ""
+        self._ledger_cache = {}
+        self._verifier_soft_seen = set()
+        self._verifier_calls = 0
+        self._verifier_wall_s = 0.0
         self.placement_oracle_mode = str(self.plan_config.get("placement_oracle", "none"))
         if self.placement_oracle_mode not in placement_oracle.MODES:
             raise ValueError(
@@ -138,6 +146,7 @@ class RailPlanner(VlmTampPddlPlanner):
         agent_uid = self._agents[0].uid if self._agents else 0
         world_graph = world_graphs[agent_uid]
         self._world_graph = world_graph
+        self._instruction = instruction
         self._omap_observe(observations, world_graph, agent_uid)
 
         if getattr(self, "two_phase", False) and not self.is_done:
@@ -174,6 +183,7 @@ class RailPlanner(VlmTampPddlPlanner):
 
         hl_before = dict(self.last_high_level_actions)
         out = super().get_next_action(instruction, observations, world_graphs)
+        self._note_explored(hl_before.get(agent_uid), (out[1].get("responses") or {}).get(agent_uid))
         if self._end_replan_pending:
             # _finish_planning refused plan_completed: keep the episode running.
             return {}, self._planner_info(agent_uid, hl_override={}), False
@@ -333,6 +343,7 @@ class RailPlanner(VlmTampPddlPlanner):
                              "action": list(hl[:2]), "rejected": False, "skill": phase["skills"]})
             self._trace_append(f"[explore {phase['index']}] Thought: {thought}\nAction: {hl[0]}[{hl[1]}]")
         result = responses.get(agent_uid)
+        self._note_explored(hl, result)
         if result:
             phase["actions"][-1:] = [f"{a} -> {str(result)[:120]}" for a in phase["actions"][-1:]]
             self._log_event({"event": "explore_phase_result", "phase": phase["index"],
@@ -425,6 +436,12 @@ class RailPlanner(VlmTampPddlPlanner):
 
     def _planner_info(self, agent_uid, **kwargs):
         out = super()._planner_info(agent_uid, **kwargs)
+        if getattr(self, "end_of_plan_check", "none") == "verify_symbolic":
+            # Ledger calls are already in llm_requests / tokens / USD; report them separately too.
+            cost = dict(out.get("cost_metrics") or {})
+            cost["verifier_llm_requests"] = getattr(self, "_verifier_calls", 0)
+            cost["verifier_llm_time_s"] = getattr(self, "_verifier_wall_s", 0.0)
+            out["cost_metrics"] = cost
         explorer = getattr(self, "_explorer", None)
         if not getattr(self, "two_phase", False) or explorer is None:
             return out
@@ -445,19 +462,39 @@ class RailPlanner(VlmTampPddlPlanner):
         return out
 
     def _finish_planning(self, reason, evidence=""):
-        """With an oracle end_of_plan_check, refuse plan_completed while the goal is unmet.
+        """With an end_of_plan_check, refuse plan_completed while the goal is unmet.
 
         The base planner stops as soon as the active branch runs out of
         subgoals, without checking the goal. Only plan_completed is checked;
         the VLM's own terminal decisions and budget limits still end the episode.
+        oracle / oracle_feedback read the simulator's goal check (privileged);
         oracle_feedback also records what is unmet for the replanning prompt.
+        verify_symbolic uses the robot's own goal ledger instead (_verify_goal).
         """
         if (
             reason == "plan_completed"
             and self.end_of_plan_check != "none"
             and self._end_of_plan_replans < self.max_end_of_plan_replans
         ):
-            satisfied, percent = gt_goal_status(self.env_interface)
+            extra = {}
+            feedback = []
+            if self.end_of_plan_check == "verify_symbolic":
+                satisfied, feedback, extra = self._verify_goal()
+                percent = None
+                if getattr(self, "log_gt_shadow", True):
+                    # Evaluation only (verifier precision/recall): never reaches the planner.
+                    gt_ok, gt_percent = gt_goal_status(self.env_interface)
+                    known = (
+                        {o.name for o in self._world_graph.get_all_objects()}
+                        if self._world_graph is not None else set()
+                    )
+                    extra.update(
+                        gt_goal_satisfied_shadow=gt_ok,
+                        gt_percent_shadow=gt_percent,
+                        gt_feedback_shadow=unmet_goal_feedback(self.env_interface, known),
+                    )
+            else:
+                satisfied, percent = gt_goal_status(self.env_interface)
             replan = satisfied is False
             self._end_feedback = []
             if replan:
@@ -466,19 +503,90 @@ class RailPlanner(VlmTampPddlPlanner):
                 if self.end_of_plan_check == "oracle_feedback" and self._world_graph is not None:
                     known = {o.name for o in self._world_graph.get_all_objects()}
                     self._end_feedback = unmet_goal_feedback(self.env_interface, known)
+                elif self.end_of_plan_check == "verify_symbolic":
+                    self._end_feedback = list(feedback)
                 self._trace_append(f"End-of-plan check ({self.end_of_plan_check}): goal not met; replanning")
             self._log_event({
                 "event": "end_of_plan_check",
                 "check": self.end_of_plan_check,
+                # verify_symbolic: the verifier's verdict; ground truth is only in the *_shadow keys.
                 "goal_satisfied": satisfied,
                 "percent_complete": percent,
                 "replan": replan,
                 "feedback": list(self._end_feedback),
                 "end_of_plan_replans": self._end_of_plan_replans,
+                **extra,
             })
             if replan:
                 return
         super()._finish_planning(reason, evidence)
+
+    def _note_explored(self, hl_action, response) -> None:
+        """Remember rooms a physical Explore skill finished in (the base only tracks fast explore)."""
+        if hl_action and hl_action[0] == "Explore" and response and not self._response_failed(response):
+            self.__dict__.setdefault("_explored_rooms", set()).add(str(hl_action[1]).strip())
+
+    def _verify_goal(self):
+        """Deployable end-of-plan check: (satisfied, feedback lines, log detail).
+
+        The VLM writes the goal ledger from the instruction and the robot's
+        memory text only (not the plan), in a fresh session; it is cached while
+        the set of known objects is unchanged. The ledger is evaluated against
+        the same synced scene state the subgoal expanders plan from. satisfied
+        is None (plan accepted) when no usable ledger could be obtained.
+        """
+        world_graph = self._world_graph
+        if world_graph is None:
+            return None, [], {"verifier_error": "no world graph"}
+        agent_uid = self._agents[0].uid if self._agents else 0
+        extra = {}
+        try:
+            state = self._synced_scene_state(world_graph, agent_uid)
+            key = frozenset(state.objects)
+            ledger = self._ledger_cache.get(key)
+            cached = ledger is not None
+            if not cached:
+                scene = get_world_descr(
+                    world_graph, agent_uid=agent_uid, include_room_name=True, add_state_info=True, centralized=False
+                )
+                prompt = build_ledger_prompt(self._instruction, scene)
+                self._vprint_header("GOAL LEDGER (end-of-plan verifier)", "magenta")
+                self.vlm.new_session()
+                self._append_vlm_prompt(prompt_kind="goal_ledger", prompt_text=prompt, image_count=0)
+                started = time.monotonic()
+                try:
+                    response = self._ask_vlm(
+                        prompt,
+                        max_completion_tokens=self.vlm_max_tokens,
+                        temperature=self.vlm_temperature,
+                        reasoning_effort=self.vlm_reasoning_effort,
+                    )
+                finally:
+                    self._verifier_calls += 1
+                    self._verifier_wall_s += time.monotonic() - started
+                conditions, missing, dropped = parse_ledger(response)
+                ledger = {"conditions": conditions, "missing": missing, "dropped": dropped}
+                self._log_event({
+                    "event": "goal_ledger", "prompt": prompt, "response": response, **ledger,
+                    "api_response": self.vlm.get_last_response_metadata(),
+                })
+                if conditions or missing:
+                    self._ledger_cache[key] = ledger
+            extra = {"ledger": ledger["conditions"], "ledger_missing": ledger["missing"],
+                     "dropped": ledger["dropped"], "ledger_cached": cached}
+            if not ledger["conditions"] and not ledger["missing"]:
+                return None, [], {**extra, "verifier_error": "empty or unparsable ledger"}
+            unexplored = sorted(state.rooms - set(getattr(self, "_explored_rooms", ())))
+            unmet, soft, detail = check_ledger(
+                state, ledger["conditions"], ledger["missing"], unexplored, self._verifier_soft_seen
+            )
+        except Exception as exc:
+            self._vprint(f"  [WARN] goal verifier failed; accepting the plan: {exc}", "red")
+            return None, [], {**extra, "verifier_error": repr(exc)}
+        extra.update(unmet=unmet, soft=soft, conditions=detail, unexplored_rooms=unexplored)
+        for line in unmet + soft:
+            self._vprint(f"  [verify] {line}", "yellow")
+        return not (unmet or soft), unmet + soft, extra
 
     def _replan_with_feedback(self, instruction, observations, world_graph) -> None:
         """Like _observe_and_continue, but tells the VLM what is still wrong."""
@@ -491,6 +599,9 @@ class RailPlanner(VlmTampPddlPlanner):
         self.current_action_idx = 0
         self.last_high_level_actions = {}
         self._subgoal_retry_count = 0
+        if self.end_of_plan_check == "verify_symbolic":
+            # self.history is what the two_phase mode selector reads: let it see e.g. "Not found yet".
+            self.history.append("End-of-plan check: " + " ".join(self._end_feedback))
         history = (
             "Replanning reason: the plan finished, but the task is NOT complete yet.\n"
             + "".join(f"- {line}\n" for line in self._end_feedback)
@@ -556,11 +667,7 @@ class RailPlanner(VlmTampPddlPlanner):
         plan is None on failure and [] if already satisfied. Entity names are
         used verbatim, so both name maps are empty.
         """
-        state = build_scene_state(world_graph, agent_uid)
-        self._sync_holding_with_gripper(state, world_graph, agent_uid)
-        self._sync_open_with_sim(state, world_graph)
-        self._sync_containers_with_sim(state, world_graph)
-        state.waited |= self._waited
+        state = self._synced_scene_state(world_graph, agent_uid)
         facts = state.facts()
 
         hdr = f"SUBGOAL PLANNER  Branch {self.branch_idx} | Subgoal {self.subgoal_idx}: {subgoal}"
@@ -603,6 +710,16 @@ class RailPlanner(VlmTampPddlPlanner):
             self._vprint(line, "gray")
             self._subgoal_exec_log_append(line)
         return plan, {}, {}, facts
+
+    def _synced_scene_state(self, world_graph, agent_uid: int):
+        """The robot's scene state with stale world-graph facts corrected: held object from the
+        gripper, open/closed and movable-container contents from the sim, and finished waits."""
+        state = build_scene_state(world_graph, agent_uid)
+        self._sync_holding_with_gripper(state, world_graph, agent_uid)
+        self._sync_open_with_sim(state, world_graph)
+        self._sync_containers_with_sim(state, world_graph)
+        state.waited |= self._waited
+        return state
 
     def _sync_holding_with_gripper(self, state, world_graph, agent_uid: int) -> None:
         """Trust the robot's own gripper over the world graph's last_held_object.

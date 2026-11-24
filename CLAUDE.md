@@ -58,7 +58,7 @@ Fork-specific planners (single-agent):
 - `rail_planner/` (`RailPlanner`): our method. Subclasses `VlmTampPddlPlanner`, keeping its VLM turns, branches, replanning, explore and logging, but expands each symbolic subgoal into oracle skills with hand-written expanders (`subgoal_expanders.py`) instead of PDDLStream, so it needs no `temp/` dir. Adds a `waited_in(obj, appliance)` subgoal (Wait skill). Configs: `baselines/single_agent_rail_planner.yaml`, `baselines/single_agent_rail_planner_placement_oracle.yaml`; options in `conf/planner/rail_planner.yaml`:
   - `replan_trigger` (`replan_trigger.py`): `failure` (default) | `every_step` | `any_change` | `oracle`. Proactive replans count toward `max_vlm_cycles`.
   - `placement_oracle` (`placement_oracle.py`): `none` | `hint` | `place` | `full`. Reads the episode's placement goals.
-  - `end_of_plan_check`: `none` | `oracle` | `oracle_feedback` (replan while the sim goal check is unmet, up to `max_end_of_plan_replans`).
+  - `end_of_plan_check`: `none` | `oracle` | `oracle_feedback` (replan while the sim goal check is unmet, up to `max_end_of_plan_replans`) | `verify_symbolic` (deployable; `goal_verifier.py`: at plan end the VLM writes a goal ledger from instruction + robot memory, checked against the sim-synced scene state used for subgoal planning; `log_gt_shadow` logs ground truth next to each verdict for evaluation only).
   - All `oracle*` options and any `placement_oracle` other than `none` use privileged ground truth: upper bounds, not deployable.
 - `planner/zero_shot_react_planner.py` is the ReAct baseline used for comparisons (`planner/react_placement_oracle.py` adds a privileged placement-hint ablation via `plan_config.placement_oracle=hint`).
 

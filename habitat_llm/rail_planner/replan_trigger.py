@@ -13,6 +13,10 @@ End-of-plan checks (when the active branch runs out of subgoals):
   oracle_feedback  same, and tell the VLM which required objects it has not
                    found and which known objects are not placed correctly or
                    not in the required state (never where they should go)
+  verify_symbolic  deployable (no privileged input): the VLM writes the final
+                   conditions the instruction requires, they are checked
+                   against the robot's own scene state, and unmet ones are
+                   fed back (habitat_llm.rail_planner.goal_verifier)
 
 Both oracles are upper bounds, not deployable: they read the episode's
 evaluation propositions or the simulator's goal check. Only a replan/no-replan
@@ -34,7 +38,7 @@ from habitat_llm.rail_planner.placement_oracle import (
 from habitat_llm.rail_planner.subgoal_expanders import build_scene_state
 
 TRIGGERS = ("failure", "every_step", "any_change", "oracle")
-END_OF_PLAN_CHECKS = ("none", "oracle", "oracle_feedback")
+END_OF_PLAN_CHECKS = ("none", "oracle", "oracle_feedback", "verify_symbolic")
 
 # kind: new_object | moved | vanished | state
 Change = namedtuple("Change", ["kind", "entity", "before", "after"])
