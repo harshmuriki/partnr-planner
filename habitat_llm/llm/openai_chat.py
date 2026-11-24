@@ -38,6 +38,7 @@ def chat_create_kwargs(params) -> dict:
 
 def generate_message(multimodal_prompt, image_detail="auto"):
     # Converts the multimodal prompt to the OpenAI format.
+    # ("image_high_detail", url) sends that one image at detail=high (e.g. RailPlanner's labelled map).
     content = []
     for prompt_type, prompt_value in multimodal_prompt:
         if prompt_type == "text":
@@ -47,7 +48,7 @@ def generate_message(multimodal_prompt, image_detail="auto"):
                 "type": "image_url",
                 "image_url": {
                     "url": prompt_value,
-                    "detail": image_detail,
+                    "detail": "high" if prompt_type == "image_high_detail" else image_detail,
                 },
             }
         content.append(message_item)

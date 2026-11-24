@@ -61,6 +61,16 @@ class ExploreReactPlanner(ZeroShotReactPlanner):
             prompt = self.prompt.format(**params)
         return prompt, params
 
+    def _llm_prompt_with_action_image(self, observations: Dict[str, Any]):
+        """ReAct prompt (+ camera frame), plus RailPlanner's overhead map when plan_config.overhead_map is on."""
+        prompt = super()._llm_prompt_with_action_image(observations)
+        provider = getattr(self, "overhead_map_provider", None)
+        extra = provider() if provider is not None else None
+        if not extra:
+            return prompt
+        parts = [("text", prompt)] if isinstance(prompt, str) else list(prompt)
+        return parts + list(extra)
+
     def process_high_level_actions(self, high_level_actions: Dict[int, Any], observations):
         # Reject manipulation without dispatching it; the message goes back to the LLM as the action result.
         bad = {

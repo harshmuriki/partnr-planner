@@ -27,6 +27,7 @@ from habitat_llm.vlm_tamp import (
     build_failure_history,
     parse_branch_response,
 )
+from habitat_llm.vlm_tamp.vlm_api import image_label
 
 # ANSI color codes (avoids importing habitat_llm.utils to keep this file self-contained)
 _COLORS = {
@@ -966,6 +967,10 @@ class VlmTampPddlPlanner(Planner):
         self._initial_agent_location_sent = True
         return description
 
+    def _extra_vlm_images(self, world_graph, kind: str):
+        """Extra (data URLs, captions) appended after the camera images of a VLM call. None by default."""
+        return [], []
+
     @staticmethod
     def _memory_snapshot(world_graph):
         return {
@@ -1419,6 +1424,15 @@ class VlmTampPddlPlanner(Planner):
         elif image_urls:
             self._vprint("  [image]  annotated scene image attached", "gray")
 
+        # Extra images from subclasses (RailPlanner's overhead map), each sent after its own caption.
+        extra_kwargs = {}
+        extra_urls, extra_labels = self._extra_vlm_images(world_graph, "turn1")
+        if extra_urls:
+            extra_kwargs["image_labels"] = (
+                [image_label(None, i) for i in range(len(image_urls))] + list(extra_labels)
+            )
+            image_urls = list(image_urls) + list(extra_urls)
+
         self._append_vlm_prompt(
             prompt_kind="english_subgoals",
             prompt_text=english_prompt_send,
@@ -1430,6 +1444,7 @@ class VlmTampPddlPlanner(Planner):
             max_completion_tokens=self.vlm_max_tokens,
             temperature=self.vlm_temperature,
             reasoning_effort=self.vlm_reasoning_effort,
+            **extra_kwargs,
         )
         self._log_event({
             "event": "vlm_english_subgoals",

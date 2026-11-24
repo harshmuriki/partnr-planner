@@ -19,14 +19,22 @@ plan_config.two_phase (default false) adds a VLM mode selector at every replan
 point: explore runs a ReAct exploration phase (react_explorer.py, search-only
 skills) and interact runs the loop above without explore(<room>) subgoals
 (see habitat_llm.rail_planner.mode_selector). With the flag off none of this runs.
+
+plan_config.overhead_map (default none) adds a top-down map of the house to the Turn-1, mode-selector and
+explorer prompts (image and/or metric text; see habitat_llm.rail_planner.overhead_map). Ground truth is used
+for scene structure only (floor, rooms, furniture footprints); objects come from the robot's world graph.
 """
 
+import json
 import os
+import time
 
 from habitat.sims.habitat_simulator import sim_utilities as sutils
 
 from habitat_llm.llm.instruct.utils import get_world_descr
 from habitat_llm.planner.vlm_tamp_pddl_planner import VlmTampPddlPlanner
+from habitat_llm.llm.instruct.utils import pil_image_to_data_url
+from habitat_llm.rail_planner import overhead_map as omap_lib
 from habitat_llm.rail_planner import placement_oracle
 from habitat_llm.rail_planner.mode_selector import build_selector_prompt, parse_selector_response
 from habitat_llm.utils.llm_usage import snapshot_from_llm
@@ -101,11 +109,36 @@ class RailPlanner(VlmTampPddlPlanner):
         self._explorer = getattr(self, "_explorer", None)
         if self._explorer is not None:
             self._explorer.reset()
+        # overhead_map: top-down map in the prompts. Nothing below is used when it is none.
+        self.overhead_map_level = str(self.plan_config.get("overhead_map", "none"))
+        if self.overhead_map_level not in omap_lib.LEVELS:
+            raise ValueError(f"overhead_map must be one of {omap_lib.LEVELS}, got {self.overhead_map_level!r}")
+        self.overhead_map_format = str(self.plan_config.get("overhead_map_format", "both"))
+        if self.overhead_map_format not in omap_lib.FORMATS:
+            raise ValueError(
+                f"overhead_map_format must be one of {omap_lib.FORMATS}, got {self.overhead_map_format!r}"
+            )
+        cfg = self.plan_config.get("overhead_map_cfg") or {}
+        try:
+            from omegaconf import OmegaConf
+
+            if OmegaConf.is_config(cfg):
+                cfg = OmegaConf.to_container(cfg, resolve=True)
+        except ImportError:
+            pass
+        self.overhead_map_cfg = {**omap_lib.DEFAULT_CFG, **dict(cfg)}
+        bad = set(self.overhead_map_cfg["attach_to"]) - set(omap_lib.ATTACH_POINTS)
+        if bad:
+            raise ValueError(f"overhead_map_cfg.attach_to: unknown {sorted(bad)}; use {omap_lib.ATTACH_POINTS}")
+        self._omap = None
+        self._omap_failed = False
+        self._omap_index = 0
 
     def get_next_action(self, instruction, observations, world_graphs):
         agent_uid = self._agents[0].uid if self._agents else 0
         world_graph = world_graphs[agent_uid]
         self._world_graph = world_graph
+        self._omap_observe(observations, world_graph, agent_uid)
 
         if getattr(self, "two_phase", False) and not self.is_done:
             if self._mode == "explore":
@@ -164,6 +197,8 @@ class RailPlanner(VlmTampPddlPlanner):
             # ReAct LLM to the agent's tools.
             explorer._agents = self._agents
             explorer.set_image_save_dir(os.path.join(self._get_log_dir(), "explore_react_images"))
+            if self._omap_attached("explorer"):
+                explorer.overhead_map_provider = self._omap_explorer_parts
             self._explorer = explorer
         return self._explorer
 
@@ -195,6 +230,8 @@ class RailPlanner(VlmTampPddlPlanner):
             world_graph, agent_uid=agent_uid, include_room_name=True, add_state_info=True, centralized=False,
             include_initial_agent_location=not getattr(self, "_initial_agent_location_sent", False),
         )
+        if self._omap_attached("selector") and self.overhead_map_format in ("text", "both"):
+            scene = scene + "\n\n" + self._omap.to_text(world_graph)
         prompt = build_selector_prompt(instruction, scene, reason, self.history, self._explore_summaries, left)
         urls = []
         if self.use_images:
@@ -202,6 +239,11 @@ class RailPlanner(VlmTampPddlPlanner):
             urls = self._get_annotated_vlm_image_urls(fresh, world_graph, annotate=False)
             if urls:
                 prompt = "The attached image is the robot's current third-person view.\n\n" + prompt
+        extra_kwargs = {}
+        map_urls, map_labels = self._extra_vlm_images(world_graph, "selector")
+        if map_urls:
+            extra_kwargs["image_labels"] = [None] * len(urls) + list(map_labels)
+            urls = list(urls) + list(map_urls)
         self._vprint_header("MODE SELECTOR", "magenta")
         self.vlm.new_session()
         self._append_vlm_prompt(prompt_kind="mode_selection", prompt_text=prompt, image_count=len(urls))
@@ -211,12 +253,14 @@ class RailPlanner(VlmTampPddlPlanner):
             max_completion_tokens=self.vlm_max_tokens,
             temperature=self.vlm_temperature,
             reasoning_effort=self.vlm_reasoning_effort,
+            **extra_kwargs,
         )
         mode, why, goal, parsed = parse_selector_response(response)
         self._log_event({
             "event": "mode_selection", "reason": reason, "mode": mode, "selector_reason": why,
             "explore_goal": goal, "parsed": parsed, "forced": False, "explore_phases": self._explore_phases,
-            "image_count": len(urls), "prompt": prompt, "response": response,
+            "image_count": len(urls), "image_paths": self._omap_last_paths() if map_urls else [],
+            "prompt": prompt, "response": response,
             "api_response": self.vlm.get_last_response_metadata(),
         })
         self._vprint(f"  [mode] {mode}: {why}" + (f" | goal: {goal}" if goal else ""), "magenta")
@@ -369,7 +413,10 @@ class RailPlanner(VlmTampPddlPlanner):
     def _build_english_prompt(self, **kwargs) -> str:
         if self.two_phase:
             kwargs["allow_explore"] = False
-        return super()._build_english_prompt(**kwargs)
+        prompt = super()._build_english_prompt(**kwargs)
+        if self._omap_attached("turn1") and self.overhead_map_format in ("text", "both"):
+            prompt = prompt + "\n\n" + self._omap.to_text(self._world_graph)
+        return prompt
 
     def _build_predicate_prompt(self, *args, **kwargs) -> str:
         if self.two_phase:
@@ -721,6 +768,95 @@ class RailPlanner(VlmTampPddlPlanner):
         # waited_in(obj, appliance) holds once its Wait step has finished.
         if action[0].lower() == "wait":
             self._waited.add((action[1][1], action[1][2]))
+
+    # ------------------------------------------------------------------
+    # overhead_map: top-down map (scene structure from the sim, objects from the world graph only)
+    # ------------------------------------------------------------------
+
+    def _omap_attached(self, point: str) -> bool:
+        return (
+            getattr(self, "overhead_map_level", "none") != "none"
+            and getattr(self, "_omap", None) is not None
+            and point in self.overhead_map_cfg.get("attach_to", ())
+        )
+
+    def _omap_observe(self, observations, world_graph, agent_uid: int) -> None:
+        """Build the map on the first call, then track the robot pose (and depth for the explored level)."""
+        if getattr(self, "overhead_map_level", "none") == "none" or self._omap_failed:
+            return
+        try:
+            pose = omap_lib.read_robot_pose(self.env_interface, agent_uid)
+            if self._omap is None:
+                t0 = time.perf_counter()
+                static = omap_lib.build_static_map(self.env_interface, world_graph, agent_uid, self.overhead_map_cfg)
+                self._omap = omap_lib.OverheadMap(static, self.overhead_map_level, self.overhead_map_cfg)
+                try:
+                    start_room = world_graph.get_spot_robot().properties.get("initial_room")
+                except Exception:
+                    start_room = None
+                if start_room not in static.rooms:
+                    start_room = None
+                self._omap.set_start(*pose, room=start_room)
+                self._log_event({
+                    "event": "overhead_map_built", "level": self.overhead_map_level,
+                    "format": self.overhead_map_format, "rooms": sorted(static.rooms),
+                    "furniture": len(static.furniture),
+                    "labelled_furniture": sum(f.labelled for f in static.furniture.values()),
+                    "grid_shape": list(static.nav.shape), "start_room": self._omap.start_room,
+                    "build_s": round(time.perf_counter() - t0, 4),
+                })
+            else:
+                self._omap.observe_pose(*pose)
+            if self._omap.wants_depth():
+                frame = omap_lib.read_jaw_depth(self.env_interface, observations, agent_uid)
+                if frame is not None:
+                    self._omap.observe_depth(*frame)
+        except Exception as exc:
+            import traceback
+
+            self._omap_failed = True
+            self._omap = None
+            self._log_event({"event": "overhead_map_error", "error": repr(exc),
+                             "traceback": traceback.format_exc()})
+            self._vprint(f"  [WARN] overhead map disabled for this episode: {exc}", "red")
+
+    def _omap_render(self, world_graph, tag: str):
+        """Render + save the map; returns (data URL, caption, relative png path)."""
+        img = self._omap.render(world_graph)
+        text = self._omap.to_text(world_graph)
+        out_dir = os.path.join(self._get_log_dir(), "overhead_map")
+        png, _txt = omap_lib.save_map(img, text, out_dir, self._omap_index, tag)
+        self._omap_index += 1
+        rel = os.path.relpath(png, self._get_log_dir())
+        self._omap_last_rel = rel
+        with open(os.path.join(out_dir, "summary.json"), "w", encoding="utf-8") as f:
+            json.dump(self._omap.summary(), f, indent=2)
+        self._log_event({"event": "overhead_map", "kind": tag, "path": rel, **self._omap.summary()})
+        return pil_image_to_data_url(img), self._omap.image_caption(), rel
+
+    def _omap_last_paths(self):
+        rel = getattr(self, "_omap_last_rel", None)
+        return [rel] if rel else []
+
+    def _extra_vlm_images(self, world_graph, kind: str):
+        if not self._omap_attached(kind) or self.overhead_map_format not in ("image", "both"):
+            return [], []
+        url, caption, rel = self._omap_render(world_graph, kind)
+        if kind == "turn1":
+            self._last_vlm_image_paths = list(getattr(self, "_last_vlm_image_paths", []) or []) + [rel]
+        return [url], [caption]
+
+    def _omap_explorer_parts(self):
+        """Prompt parts appended to every ReAct explorer call (list of (type, value)), or None."""
+        if not self._omap_attached("explorer") or self._world_graph is None:
+            return None
+        parts = []
+        if self.overhead_map_format in ("text", "both"):
+            parts.append(("text", "\n" + self._omap.to_text(self._world_graph) + "\n"))
+        if self.overhead_map_format in ("image", "both"):
+            url, caption, _rel = self._omap_render(self._world_graph, "explorer")
+            parts += [("text", caption), ("image_high_detail", url)]
+        return parts
 
     # ------------------------------------------------------------------
     # Placement oracle (privileged)

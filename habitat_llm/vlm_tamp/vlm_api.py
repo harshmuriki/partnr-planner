@@ -41,6 +41,16 @@ def encode_image(image_path):
         return base64.b64encode(f.read()).decode("utf-8")
 
 
+DEFAULT_EXTRA_IMAGE_LABEL = "[Scene view 2 — remaining object labels]"
+
+
+def image_label(image_labels, i):
+    """Text sent right before image i. Without image_labels: none for the first, the scene-view-2 label after."""
+    if image_labels is not None and i < len(image_labels):
+        return image_labels[i]
+    return DEFAULT_EXTRA_IMAGE_LABEL if i > 0 else None
+
+
 class VLMApi:
     name = "VLM API"
     api_key = None
@@ -179,6 +189,7 @@ class GPT4vApi(VLMApi):
         temperature=0.2,
         n=1,
         reasoning_effort=None,
+        image_labels=None,
         **kwargs,
     ):
         headers = {
@@ -189,11 +200,9 @@ class GPT4vApi(VLMApi):
         urls = list(image_data_urls) if image_data_urls else []
         content: list = [{"type": "text", "text": prompt}]
         for i, url in enumerate(urls):
-            if i > 0:
-                content.append({
-                    "type": "text",
-                    "text": "[Scene view 2 — remaining object labels]",
-                })
+            label = image_label(image_labels, i)
+            if label:
+                content.append({"type": "text", "text": label})
             content.append({
                 "type": "image_url",
                 "image_url": {"url": url},
@@ -397,6 +406,7 @@ class Claude3Api(VLMApi):
         image_data_urls=None,
         max_completion_tokens=800,
         temperature=0.2,
+        image_labels=None,
         **kwargs,
     ):
         try:
@@ -414,11 +424,9 @@ class Claude3Api(VLMApi):
         else:
             content = []
             for i, image_data_url in enumerate(urls):
-                if i > 0:
-                    content.append({
-                        "type": "text",
-                        "text": "[Scene view 2 — remaining object labels]",
-                    })
+                label = image_label(image_labels, i)
+                if label:
+                    content.append({"type": "text", "text": label})
                 content.append({
                     "type": "image",
                     "source": {

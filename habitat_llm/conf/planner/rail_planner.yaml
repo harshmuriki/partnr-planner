@@ -32,6 +32,21 @@ plan_config:
   # A VLM mode selector runs at every replan point (start, failure, plan finished, end of an exploration
   # phase) and picks explore (a ReAct phase with Explore/Navigate/Open/Close + Done[]) or interact (the loop
   # above, without explore(<room>) subgoals; it can ask for exploration with {"decision": "explore"}).
+  # Top-down map of the house in the prompts (habitat_llm/rail_planner/overhead_map.py). Off by default.
+  # Simulator ground truth is used for scene structure only (navmesh floor, room polygons, furniture
+  # footprints); objects come from the robot's own world graph, drawn at the furniture/room it remembers.
+  #   none | furniture (floor plan + furniture + robot/START/trail) | observed (+ remembered objects)
+  #   | explored (+ unseen floor shaded, from the robot's own depth camera)
+  overhead_map: none
+  overhead_map_format: both      # image | text | both (metric text block: rooms, furniture size/height/walls)
+  overhead_map_cfg:
+    meters_per_pixel: 0.05
+    max_side_px: 1024
+    label: receptacles           # receptacles (furniture with placement surfaces) | all
+    explored_every: 10           # sim steps between depth projections (explored only)
+    max_depth_m: 6.0
+    max_text_chars: 12000
+    attach_to: [turn1, selector, explorer]   # selector/explorer only matter with two_phase=true
   two_phase: false
   max_explore_phases: 6          # after this the selector is skipped and interact is forced
   explore_phase_max_skills: 10   # ReAct skills per exploration phase (each counts toward max_actions)
