@@ -27,6 +27,7 @@ from habitat_llm.vlm_tamp import (
     build_failure_history,
     parse_branch_response,
 )
+from habitat_llm.vlm_tamp.prompts_vlm_tamp import NEXT_TO_PREDS, NEXT_TO_SUBGOAL
 from habitat_llm.vlm_tamp.vlm_api import image_label
 
 # ANSI color codes (avoids importing habitat_llm.utils to keep this file self-contained)
@@ -455,6 +456,8 @@ class VlmTampPddlPlanner(Planner):
         # Treat movable objects with an annotated interior (e.g. a fruit basket) as
         # containers: listed for in(x, <container>) and planned with place_in_object.
         self.movable_containers = bool(self.plan_config.get("movable_containers", True))
+        # next_to(<movable>, <reference_movable>, <surface_furniture>) subgoal; off = prompt and plans unchanged.
+        self.next_to_subgoal = bool(self.plan_config.get("next_to_subgoal", False))
         # evaluation.pddl_baseline (baseline yaml) or plan_config.pddl_baseline
         self.pddl_baseline_html = self._read_pddl_baseline_flag()
 
@@ -1636,6 +1639,8 @@ class VlmTampPddlPlanner(Planner):
         return build_english_subgoal_prompt(**kwargs)
 
     def _build_predicate_prompt(self, *args, **kwargs) -> str:
+        if getattr(self, "next_to_subgoal", False):
+            kwargs["extra_subgoals"] = (kwargs.get("extra_subgoals") or "") + NEXT_TO_SUBGOAL
         return build_predicate_translation_prompt(*args, **kwargs)
 
     def _handle_turn1_decision(self, decision: dict) -> bool:
@@ -1870,6 +1875,23 @@ class VlmTampPddlPlanner(Planner):
                 self._log_event({"event": "search_limit", "subgoal": subgoal, "target": key})
                 return False
         movables = set(self._objects_by_type.get("movable", []))
+        if pred in NEXT_TO_PREDS:
+            surface_furniture = set(self._objects_by_type.get("surface_furniture", []))
+            ok = (
+                getattr(self, "next_to_subgoal", False)
+                and len(args) >= 3
+                and args[0] in movables
+                and args[1] in movables
+                and args[0] != args[1]
+                and args[2] in surface_furniture
+            )
+            if not ok:
+                self._vprint(
+                    f"  [SKIP] {subgoal!r}: next_to needs two different movables and a surface_furniture name"
+                    + ("" if getattr(self, "next_to_subgoal", False) else " (next_to_subgoal is off)") + ".",
+                    "red",
+                )
+            return ok
         if pred in ("picked", "pick", "holding") and len(args) >= 1:
             obj_arg = args[1] if len(args) >= 2 else args[0]
             if obj_arg not in movables:
@@ -1966,6 +1988,9 @@ class VlmTampPddlPlanner(Planner):
             obj = resolve(args[0])
             furn = resolve(args[1])
             return ("in", obj, furn) if obj and furn else None
+        if pred in NEXT_TO_PREDS and len(args) >= 3 and getattr(self, "next_to_subgoal", False):
+            obj, ref, furn = resolve(args[0]), resolve(args[1]), resolve(args[2])
+            return ("next_to", obj, ref, furn) if obj and ref and furn else None
         if pred in ("opened-door", "opened-drawer", "open", "opened") and len(args) >= 1:
             j = resolve(args[0])
             return ("open", j) if j else None
@@ -2166,6 +2191,9 @@ class VlmTampPddlPlanner(Planner):
                 if nname in ("place_on", "place_in", "place_in_object"):
                     # Navigate to the destination furniture.
                     return "Navigate", self._restore_name(nargs[2])
+                if nname == "place_on_next_to":
+                    # place_on_next_to(?a, ?o, ?p, ?f, ?r): the furniture is the 4th argument.
+                    return "Navigate", self._restore_name(nargs[3])
                 if nname in ("open", "close", "power_on", "power_off", "power_on_object", "power_off_object", "clean_furniture"):
                     return "Navigate", self._restore_name(nargs[1])
                 if nname == "clean_object":
@@ -2186,6 +2214,9 @@ class VlmTampPddlPlanner(Planner):
             obj = self._restore_name(args[1])
             furn = self._restore_name(args[2])
             return "Place", f"{obj}, within, {furn}, None, None"
+        if name == "place_on_next_to":
+            obj, ref, furn = (self._restore_name(a) for a in args[1:4])
+            return "Place", f"{obj}, on, {furn}, next_to, {ref}"
         if name == "open":
             return "Open", self._restore_name(args[1])
         if name == "close":

@@ -55,6 +55,13 @@ plan_config:
     max_depth_m: 6.0
     max_text_chars: 12000
     attach_to: [turn1, selector, explorer]   # selector/explorer only matter with two_phase=true
+  # Object-centric subgoals (deployable, no privileged information). Off by default (flat = unchanged).
+  # object_centric: the VLM first lists abstract object tasks (one per object or object group, with the
+  # conditions it must end in, no IDs); each is then grounded with the usual Turn 1/Turn 2 + expanders and
+  # executed in turn, using the memory at that moment; a final review confirms completion or adds tasks.
+  subgoal_mode: flat             # flat | object_centric
+  object_task_max_regrounds: 4   # failure re-groundings of one object task before it is skipped
+  object_task_max_reviews: 2     # final reviews that may add object tasks
   two_phase: false
   max_explore_phases: 6          # after this the selector is skipped and interact is forced
   explore_phase_max_skills: 10   # ReAct skills per exploration phase (each counts toward max_actions)

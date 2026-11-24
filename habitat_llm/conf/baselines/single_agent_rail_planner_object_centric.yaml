@@ -1,0 +1,14 @@
+# @package _global_
+
+# RailPlanner with object-centric subgoals: the VLM first lists abstract object tasks, then each is grounded and
+# executed one at a time with the current memory (habitat_llm/rail_planner/object_centric.py).
+defaults:
+  - single_agent_rail_planner
+  - _self_
+
+evaluation:
+  agents:
+    agent_0:
+      planner:
+        plan_config:
+          subgoal_mode: object_centric

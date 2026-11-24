@@ -25,6 +25,8 @@
     (powered_off ?o)
     (filled ?o)
     (cleaned ?x)
+    (next_to ?o ?p ?f)
+    (nextto_enabled)
   )
 
   (:action navigate
@@ -62,6 +64,23 @@
                        (holding ?a ?o) (at ?a ?r) (inroom ?f ?r)
                        (reachable ?a ?f) (near ?a ?f))
     :effect (and (in ?o ?f)
+                 (handempty ?a)
+                 (not (holding ?a ?o))
+                 (not (near ?a ?f)))
+  )
+
+  ;; Place ?o on ?f next to ?p, which is already on ?f; maps to Place(o, on, f, next_to, p).
+  ;; (nextto_enabled) is only in init when the subgoal is next_to (plan_config.next_to_subgoal),
+  ;; so plans for every other subgoal are unchanged.
+  (:action place_on_next_to
+    :parameters (?a ?o ?p ?f ?r)
+    :precondition (and (nextto_enabled) (agent ?a) (object ?o) (object ?p) (furniture ?f) (room ?r)
+                       (not (= ?o ?p)) (on ?p ?f)
+                       (holding ?a ?o) (at ?a ?r) (inroom ?f ?r)
+                       (reachable ?a ?f) (near ?a ?f)
+                       (not (has_faucet ?f)))
+    :effect (and (on ?o ?f)
+                 (next_to ?o ?p ?f)
                  (handempty ?a)
                  (not (holding ?a ?o))
                  (not (near ?a ?f)))

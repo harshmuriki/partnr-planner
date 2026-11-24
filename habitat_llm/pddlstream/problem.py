@@ -426,6 +426,10 @@ def build_pddlstream_problem(
         if states.get("is_clean", False):
             init.append(("cleaned", furn_name))
 
+    # place_on_next_to is only usable for a next_to goal (see the domain).
+    if goal_literal and goal_literal[0] == "next_to":
+        init.append(("nextto_enabled",))
+
     stream_map = make_stream_map(name_to_entity)
     goal = And(goal_literal)
 

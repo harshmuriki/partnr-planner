@@ -23,6 +23,11 @@ skills) and interact runs the loop above without explore(<room>) subgoals
 plan_config.overhead_map (default none) adds a top-down map of the house to the Turn-1, mode-selector and
 explorer prompts (image and/or metric text; see habitat_llm.rail_planner.overhead_map). Ground truth is used
 for scene structure only (floor, rooms, furniture footprints); objects come from the robot's world graph.
+
+plan_config.subgoal_mode (default flat) = object_centric first asks the VLM for abstract object tasks (one per
+object or object group, with the conditions it must end in, no IDs), then grounds and executes them one at a time
+with the usual Turn 1/Turn 2 + expanders, and finishes with one review call (see
+habitat_llm.rail_planner.object_centric). With flat none of this runs.
 """
 
 import json
@@ -34,6 +39,7 @@ from habitat.sims.habitat_simulator import sim_utilities as sutils
 from habitat_llm.llm.instruct.utils import get_world_descr
 from habitat_llm.planner.vlm_tamp_pddl_planner import VlmTampPddlPlanner
 from habitat_llm.llm.instruct.utils import pil_image_to_data_url
+from habitat_llm.rail_planner import object_centric as oc
 from habitat_llm.rail_planner import overhead_map as omap_lib
 from habitat_llm.rail_planner import placement_oracle
 from habitat_llm.rail_planner.goal_verifier import build_ledger_prompt, check_ledger, parse_ledger
@@ -141,6 +147,16 @@ class RailPlanner(VlmTampPddlPlanner):
         self._omap = None
         self._omap_failed = False
         self._omap_index = 0
+        # subgoal_mode=object_centric: abstract object tasks, grounded one at a time. Unused when flat.
+        self.subgoal_mode = str(self.plan_config.get("subgoal_mode", "flat"))
+        if self.subgoal_mode not in oc.SUBGOAL_MODES:
+            raise ValueError(f"subgoal_mode must be one of {oc.SUBGOAL_MODES}, got {self.subgoal_mode!r}")
+        self.object_task_max_regrounds = int(self.plan_config.get("object_task_max_regrounds", 4))
+        self.object_task_max_reviews = int(self.plan_config.get("object_task_max_reviews", 2))
+        self._tasks = None
+        self._task_advance_pending = False
+        self._task_reviews = 0
+        self._oc_final = False
 
     def get_next_action(self, instruction, observations, world_graphs):
         agent_uid = self._agents[0].uid if self._agents else 0
@@ -165,13 +181,16 @@ class RailPlanner(VlmTampPddlPlanner):
         reason = (
             "new_observation" if self._replan_pending
             else "plan_finished" if self._end_replan_pending
+            else "object_task_done" if getattr(self, "_task_advance_pending", False)
             else None
         )
         if reason and not self.last_high_level_actions and not self.is_done:
             # Same prompt for every trigger: the robot's own observations only.
-            self._replan_pending = self._end_replan_pending = False
+            self._replan_pending = self._end_replan_pending = self._task_advance_pending = False
             self._vprint_header(f"REPLANNING ({reason})", "yellow")
-            if reason == "plan_finished" and self._end_feedback:
+            if reason == "object_task_done":
+                self._advance_object_task(instruction, observations, world_graph)
+            elif reason == "plan_finished" and self._end_feedback:
                 self._replan_with_feedback(instruction, observations, world_graph)
             else:
                 self._observe_and_continue(instruction, observations, world_graph, reason)
@@ -184,8 +203,8 @@ class RailPlanner(VlmTampPddlPlanner):
         hl_before = dict(self.last_high_level_actions)
         out = super().get_next_action(instruction, observations, world_graphs)
         self._note_explored(hl_before.get(agent_uid), (out[1].get("responses") or {}).get(agent_uid))
-        if self._end_replan_pending:
-            # _finish_planning refused plan_completed: keep the episode running.
+        if self._end_replan_pending or getattr(self, "_task_advance_pending", False):
+            # _finish_planning refused plan_completed (end-of-plan check, or the next object task): keep going.
             return {}, self._planner_info(agent_uid, hl_override={}), False
         if self.replan_trigger != "failure" and not self.is_done and getattr(self, "_mode", "") != "explore":
             self._check_replan_trigger(out[1], hl_before.get(agent_uid), world_graph, agent_uid)
@@ -409,7 +428,13 @@ class RailPlanner(VlmTampPddlPlanner):
         return {}, info, self.is_done
 
     def _handle_turn1_decision(self, decision: dict) -> bool:
-        if self.two_phase and decision.get("decision") == "explore":
+        cur = self._current_task() if self._object_centric_on() else None
+        if cur is not None and decision.get("decision") in oc.TERMINAL:
+            # Grounding a single object task: complete/unsolvable end that task, not the episode.
+            status = "done" if decision["decision"] == "complete" else "failed"
+            self._end_task(cur, status, f"VLM: {decision['decision']}: {decision.get('reason', '')}")
+            return True
+        if getattr(self, "two_phase", False) and decision.get("decision") == "explore":
             if self._explore_phases >= self.max_explore_phases:
                 self._finish_planning("budget_exhausted", "exploration requested with no exploration phases left")
                 return True
@@ -436,6 +461,14 @@ class RailPlanner(VlmTampPddlPlanner):
 
     def _planner_info(self, agent_uid, **kwargs):
         out = super()._planner_info(agent_uid, **kwargs)
+        tasks = getattr(self, "_tasks", None)
+        if self._object_centric_on() and tasks is not None:
+            cost = dict(out.get("cost_metrics") or {})
+            cost["object_tasks"] = len(tasks)
+            cost["object_tasks_done"] = sum(t.status == "done" for t in tasks)
+            cost["object_tasks_failed"] = sum(t.status == "failed" for t in tasks)
+            cost["object_task_reviews"] = self._task_reviews
+            out["cost_metrics"] = cost
         if getattr(self, "end_of_plan_check", "none") == "verify_symbolic":
             # Ledger calls are already in llm_requests / tokens / USD; report them separately too.
             cost = dict(out.get("cost_metrics") or {})
@@ -470,7 +503,17 @@ class RailPlanner(VlmTampPddlPlanner):
         oracle / oracle_feedback read the simulator's goal check (privileged);
         oracle_feedback also records what is unmet for the replanning prompt.
         verify_symbolic uses the robot's own goal ledger instead (_verify_goal).
+        With subgoal_mode=object_centric, plan_completed first only closes the
+        current object task; the end-of-plan check runs when the review says the
+        whole task is complete.
         """
+        if self._object_centric_on() and reason == "plan_completed" and not self._oc_final:
+            cur = self._current_task()
+            if cur is not None:
+                self._end_task(cur, "done", "its subgoals finished")
+                self._task_advance_pending = True
+                return
+        self._oc_final = False
         if (
             reason == "plan_completed"
             and self.end_of_plan_check != "none"
@@ -877,6 +920,10 @@ class RailPlanner(VlmTampPddlPlanner):
             return "Navigate", self._restore_name(action[1][1])
         if name in ("place_on", "place_in"):
             return self._place_tool(name, action[1])
+        if name == "place_next_to":
+            # (agent, obj, furn, room, ref): the VLM's own next_to subgoal (plan_config.next_to_subgoal).
+            obj, furn, ref = (self._restore_name(action[1][i]) for i in (1, 2, 4))
+            return "Place", f"{obj}, on, {furn}, next_to, {ref}"
         if name == "wait":
             return "Wait", ""
         return super()._action_to_tool(action, next_action=next_action)
@@ -985,6 +1032,168 @@ class RailPlanner(VlmTampPddlPlanner):
         return self._placement_goals
 
     def _generate_subgoals(self, instruction, world_graph, observations, history_str="", **kwargs):
+        if self._object_centric_on():
+            return self._object_centric_generate(instruction, world_graph, observations, history_str, kwargs)
+        return self._rail_generate_subgoals(instruction, world_graph, observations, history_str=history_str, **kwargs)
+
+    # ------------------------------------------------------------------
+    # subgoal_mode=object_centric: abstract object tasks, grounded and executed one at a time
+    # ------------------------------------------------------------------
+
+    def _object_centric_on(self) -> bool:
+        return getattr(self, "subgoal_mode", "flat") == "object_centric"
+
+    def _current_task(self):
+        return next((t for t in (getattr(self, "_tasks", None) or []) if t.status == "active"), None)
+
+    def _start_next_task(self):
+        task = next((t for t in self._tasks if t.status == "pending"), None)
+        if task is not None:
+            task.status = "active"
+            self._log_event({"event": "object_task_start", "task": task.as_dict()})
+            self._trace_append(f"Object task {task.idx + 1}/{len(self._tasks)} started: {task.describe()}")
+            self._vprint_header(f"OBJECT TASK {task.idx + 1}/{len(self._tasks)}: {task.describe()}", "cyan")
+        return task
+
+    def _end_task(self, task, status: str, note: str = "") -> None:
+        task.status, task.note = status, note
+        self._log_event({"event": f"object_task_{'done' if status == 'done' else 'failed'}", "task": task.as_dict()})
+        line = f"Object task {task.idx + 1} {'done' if status == 'done' else 'skipped'}: {task.describe()} ({note})"
+        self.history.append(line)
+        self._trace_append(line)
+        self._vprint(f"  [object task] {line}", "cyan")
+
+    def _oc_vlm_call(self, kind: str, prompt: str, observations, world_graph):
+        """One VLM call outside Turn 1/2 (decompose / review); counts toward max_vlm_cycles. None = over budget."""
+        self._vlm_cycles = getattr(self, "_vlm_cycles", 0) + 1
+        if self._vlm_cycles > getattr(self, "max_vlm_cycles", 20):
+            self._finish_planning("budget_exhausted", "VLM cycle limit reached")
+            return None, 0
+        urls = []
+        if self.use_images:
+            fresh = self._observe_failure_state(observations, reason=kind)
+            urls = list(self._get_annotated_vlm_image_urls(fresh, world_graph, annotate=False) or [])
+            if urls:
+                prompt = "The attached image is the robot's current third-person view.\n\n" + prompt
+        self._vprint_header(kind.replace("_", " ").upper(), "magenta")
+        self.vlm.new_session()
+        self._append_vlm_prompt(prompt_kind=kind, prompt_text=prompt, image_count=len(urls))
+        response = self._ask_vlm(
+            prompt,
+            image_data_urls=urls or None,
+            max_completion_tokens=self.vlm_max_tokens,
+            temperature=self.vlm_temperature,
+            reasoning_effort=self.vlm_reasoning_effort,
+        )
+        return response, len(urls)
+
+    def _oc_scene(self, world_graph) -> str:
+        # Always include the start room, without consuming the one-time line the Turn-1 prompt uses.
+        agent_uid = self._agents[0].uid if self._agents else 0
+        return get_world_descr(world_graph, agent_uid=agent_uid, include_room_name=True, add_state_info=True,
+                               centralized=False, include_initial_agent_location=True)
+
+    def _decompose_tasks(self, instruction, world_graph, observations) -> bool:
+        """Stage 1. False if the episode ended (terminal decision or budget)."""
+        prompt = oc.build_decompose_prompt(instruction, self._oc_scene(world_graph), self.history)
+        response, n_images = self._oc_vlm_call("object_task_decompose", prompt, observations, world_graph)
+        if self.is_done:
+            return False
+        tasks, decision, reason, parsed = oc.parse_task_list(response)
+        if not decision and not tasks:
+            tasks = [oc.fallback_task(instruction)]
+        self._tasks = tasks
+        self._log_event({"event": "object_tasks_defined", "tasks": [t.as_dict() for t in tasks],
+                         "decision": decision, "reason": reason, "parsed": parsed, "image_count": n_images,
+                         "prompt": prompt, "response": response,
+                         "api_response": self.vlm.get_last_response_metadata()})
+        self._trace_append("Object tasks:\n" + (oc.format_task_list(tasks) or f"(none; decision: {decision})"))
+        if decision:
+            self._finish_planning(decision, reason)
+            return False
+        return True
+
+    def _review_tasks(self, instruction, world_graph, observations, history_str: str, eop_driven: bool) -> bool:
+        """All object tasks are closed: True if the review added tasks, False if the episode is finishing."""
+        if not eop_driven:
+            self._task_reviews += 1
+        if self._task_reviews > self.object_task_max_reviews:
+            self._log_event({"event": "object_task_review", "skipped": "review limit reached",
+                             "tasks": [t.as_dict() for t in self._tasks]})
+            self._oc_final = True
+            self._finish_planning("plan_completed", "All object tasks are closed (object-task review limit reached).")
+            return False
+        prompt = oc.build_review_prompt(instruction, self._tasks, self._oc_scene(world_graph), self.history,
+                                        extra=history_str)
+        response, n_images = self._oc_vlm_call("object_task_review", prompt, observations, world_graph)
+        if self.is_done:
+            return False
+        tasks, decision, reason, parsed = oc.parse_task_list(response, start_idx=len(self._tasks))
+        self._log_event({"event": "object_task_review", "review": self._task_reviews, "decision": decision,
+                         "reason": reason, "new_tasks": [t.as_dict() for t in tasks], "parsed": parsed,
+                         "image_count": n_images, "prompt": prompt, "response": response,
+                         "api_response": self.vlm.get_last_response_metadata()})
+        if tasks:
+            self._tasks.extend(tasks)
+            self._trace_append("Object-task review added:\n" + oc.format_task_list(tasks))
+            return True
+        self._trace_append(f"Object-task review: {decision or 'unparsable, treated as complete'}. {reason}")
+        if decision == "unsolvable":
+            self._finish_planning("unsolvable", reason)
+            return False
+        self._oc_final = True
+        self._finish_planning("plan_completed", reason or "Object-task review: every object task is done.")
+        return False
+
+    def _object_centric_generate(self, instruction, world_graph, observations, history_str, kwargs):
+        """Every replan point lands here: ground the current object task (or the next one, or review)."""
+        self._world_graph = world_graph
+        if self._tasks is None and not self._decompose_tasks(instruction, world_graph, observations):
+            return None
+        cur = self._current_task()
+        if cur is not None and kwargs.get("refresh_failure_observation"):
+            cur.regrounds += 1
+            if cur.regrounds > self.object_task_max_regrounds:
+                self._end_task(cur, "failed", f"still failing after {cur.regrounds - 1} re-groundings")
+        eop_driven = kwargs.get("observation_reason") == "plan_finished"
+        result = None
+        for _ in range(4 * (len(self._tasks) + self.object_task_max_reviews) + 8):
+            if self.is_done or getattr(self, "_mode", "") == "explore" or getattr(self, "_end_replan_pending", False):
+                return result
+            cur = self._current_task() or self._start_next_task()
+            if cur is None:
+                if not self._review_tasks(instruction, world_graph, observations, history_str, eop_driven):
+                    return None
+                eop_driven = False
+                continue
+            goal = oc.task_goal_text(instruction, self._tasks, cur)
+            result = self._rail_generate_subgoals(goal, world_graph, observations, history_str=history_str, **kwargs)
+            if cur.status == "active":
+                return result
+            # The Turn-1 decision closed this task without subgoals: ground the next one in this same call.
+            kwargs = {**kwargs, "append": True, "refresh_failure_observation": False, "after_explore": False,
+                      "explored_room": None, "observation_reason": "object_task_done"}
+            history_str = f"Previously achieved subgoals: {self._already_succeeded_subgoals}.\n"
+        return result
+
+    def _advance_object_task(self, instruction, observations, world_graph) -> None:
+        """The current object task's subgoals finished: ground the next task (or review)."""
+        fresh = self._observe_failure_state(observations, reason="object_task_done")
+        self._reprompt_round += 1
+        self._log_event({"event": "reprompt_started", "reason": "object_task_done", "branch": self.branch_idx,
+                         "subgoal_idx": self.subgoal_idx, "reprompt_round": self._reprompt_round})
+        self.current_plan = []
+        self.current_action_idx = 0
+        self.last_high_level_actions = {}
+        self._subgoal_retry_count = 0
+        history = (
+            "Replanning reason: the previous object task's subgoals finished.\n"
+            f"Previously achieved subgoals: {self._already_succeeded_subgoals}.\n"
+        )
+        self._generate_subgoals(instruction, world_graph, fresh, history_str=history, append=True,
+                                observation_reason="object_task_done")
+
+    def _rail_generate_subgoals(self, instruction, world_graph, observations, history_str="", **kwargs):
         if getattr(self, "two_phase", False) and self._mode != "explore":
             # Every replan point goes through here: let the selector choose explore or interact first.
             self._world_graph = world_graph

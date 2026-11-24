@@ -300,6 +300,24 @@ def expand_on(s: SceneState, obj: str, furn: str) -> List[Action]:
     return _expand_place(s, obj, furn, "on")
 
 
+def expand_next_to(s: SceneState, obj: str, ref: str, furn: str) -> List[Action]:
+    """Place ``obj`` on ``furn`` next to ``ref``, which must already be on ``furn`` (the Place skill requires it).
+
+    Never treated as already satisfied: memory has no object-to-object distances, so it always re-places.
+    """
+    _require_object(s, obj)
+    _require_object(s, ref)
+    _require_furniture(s, furn)
+    if obj == ref:
+        raise SubgoalPlanError(f"'{obj}' cannot be placed next to itself")
+    if s.holding == ref or s.placement.get(ref) != (furn, "on"):
+        raise SubgoalPlanError(
+            f"'{ref}' is not on '{furn}'; put it there first with on({ref}, {furn}), then next_to({obj}, {ref}, {furn})"
+        )
+    steps = _acquire(s, obj, drop_at=furn)
+    return steps + [_navigate(s, furn), Action("place_next_to", (s.agent, obj, furn, s.room(furn), ref))]
+
+
 def _expand_into_object(s: SceneState, obj: str, box: str) -> List[Action]:
     """Put ``obj`` inside a movable container object; the place skill samples its interior."""
     _require_object(s, obj)
@@ -436,6 +454,7 @@ def expand_at(s: SceneState, room: str) -> List[Action]:
     return [_navigate(s, furn_in_room[0])]
 
 
+NEXT_TO_PREDS = ("next_to", "next-to", "placed-next-to", "place-next-to")
 WAITED_IN_PREDS = ("waited_in", "waited-in", "waited_inside", "heated_in", "heated-in")
 
 # Subgoal predicate (and accepted aliases) -> (expander, number of entity args).
@@ -458,6 +477,7 @@ _register(("filled", "fill", "is_filled"), expand_filled, 1)
 _register(("poured_into", "poured-into", "pour"), expand_poured_into, 1)
 _register(("cleaned", "clean", "is_clean"), expand_cleaned, 1)
 _register(WAITED_IN_PREDS, expand_waited_in, 2)
+_register(NEXT_TO_PREDS, expand_next_to, 3)
 _register(("handempty",), expand_handempty, 0)
 _register(("at",), expand_at, 1)
 

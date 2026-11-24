@@ -31,6 +31,10 @@ plan_config:
   # only the T4 fruit basket in baseline_evaluation_v3) are in(x, <container>)
   # destinations, planned with place_in_object. False restores the furniture-only domain.
   movable_containers: True
+  # next_to(<movable>, <reference_movable>, <surface_furniture>) subgoal: place an object on a furniture next to
+  # a reference object already on it (Place[..., next_to, <ref>], as ReAct's Place tool allows). Off by default
+  # (no prompt or domain change); used by VLM-TAMP (PDDL place_on_next_to) and RailPlanner (expand_next_to).
+  next_to_subgoal: false
   # Print step-by-step pipeline output to the terminal while running.
   verbose: True
   log_dir: "vlm_tamp_pddl"

@@ -115,6 +115,16 @@ Never invent object names (e.g., package_1, item_0). If a required object name i
 If one intermediate goal cannot be translated into a sub-goal, skip that step.
 """
 
+# Listed in Turn 2 only when plan_config.next_to_subgoal is true (appended to extra_subgoals).
+NEXT_TO_SUBGOAL = (
+    "\n'next_to(<movable>, <reference_movable>, <surface_furniture>)': the result of picking up <movable> and "
+    "placing it on <surface_furniture> next to <reference_movable>, it contains three arguments. "
+    "<reference_movable> must already be on <surface_furniture>: put it there first with "
+    "on(<reference_movable>, <surface_furniture>). Use next_to instead of on() when the goal asks for objects "
+    "next to, beside or near each other."
+)
+NEXT_TO_PREDS = ("next_to", "next-to", "placed-next-to", "place-next-to")
+
 # Removed this type rule (tpp strict for task 5 or 6): - in(<movable>, <container_furniture>): the second argument MUST be a name from the container_furniture list. NEVER use a movable object or receptacle id as the second argument of in().
 # If you can think of {num_branches} alternative orderings or plans, return them as a Python list of lists (one inner list per alternative plan). Make each alternative genuinely different in subgoal choice or ordering, not just a copy of the first.
 
