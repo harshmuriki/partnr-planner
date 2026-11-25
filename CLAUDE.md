@@ -59,6 +59,7 @@ Fork-specific planners (single-agent):
   - `replan_trigger` (`replan_trigger.py`): `failure` (default) | `every_step` | `any_change` | `oracle`. Proactive replans count toward `max_vlm_cycles`.
   - `placement_oracle` (`placement_oracle.py`): `none` | `hint` | `place` | `full`. Reads the episode's placement goals.
   - `end_of_plan_check`: `none` | `oracle` | `oracle_feedback` (replan while the sim goal check is unmet, up to `max_end_of_plan_replans`) | `verify_symbolic` (deployable; `goal_verifier.py`: at plan end the VLM writes a goal ledger from instruction + robot memory, checked against the sim-synced scene state used for subgoal planning; `log_gt_shadow` logs ground truth next to each verdict for evaluation only).
+  - `two_phase` (default `false`; config `baselines/single_agent_rail_planner_two_phase.yaml`): at each replan point a VLM selector (`mode_selector.py`) picks explore or interact. Explore runs a search-only ReAct phase (`react_explorer.py`: Explore/Navigate/Open/Close + Done[], capped by `explore_phase_max_skills`, at most `max_explore_phases`); interact is the normal loop without `explore()`. Deployable (no privileged info).
   - All `oracle*` options and any `placement_oracle` other than `none` use privileged ground truth: upper bounds, not deployable.
 - `planner/zero_shot_react_planner.py` is the ReAct baseline used for comparisons (`planner/react_placement_oracle.py` adds a privileged placement-hint ablation via `plan_config.placement_oracle=hint`).
 

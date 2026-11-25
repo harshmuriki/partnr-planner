@@ -1,6 +1,21 @@
 (() => {
   'use strict';
   const rows = JSON.parse(document.getElementById('vt-tree-data').textContent);
+  const mapSource = document.getElementById('vt-map-data');
+  const rounds = mapSource ? JSON.parse(mapSource.textContent) : [];
+  const roundById = new Map(rounds.map(r => [r.round, r]));
+  function roundCaption(r) {
+    const branches = r.branches.length ? ' → ' + r.branches.map(b => `B${b}`).join(', ') : ' (no branches)';
+    return `Round ${r.round} · ${r.reason || 'replan'}${branches}`;
+  }
+  function mapFigure(r, caption) {
+    const figure = document.createElement('figure');
+    const link = document.createElement('a'); link.href = r.url; link.target = '_blank'; link.rel = 'noopener';
+    const img = document.createElement('img'); img.src = r.url; img.loading = 'lazy'; img.alt = caption;
+    link.append(img); figure.append(link);
+    const cap = document.createElement('figcaption'); cap.textContent = caption; figure.append(cap);
+    return figure;
+  }
   const canvas = document.getElementById('vt-canvas');
   const detail = document.getElementById('vt-detail');
   const tree = document.getElementById('vt-tree');
@@ -43,6 +58,13 @@
     const title = document.createElement('h2'); title.textContent = node.goal === 'start' ? 'Start' : node.goal; detail.append(title);
     paragraph((styles[node.status] || styles.pending)[2]);
     if (node.refs.length) paragraph(node.refs.join(' · '));
+    const round = roundById.get(node.map_round);
+    if (round) {
+      const box = document.createElement('div'); box.className = 'vt-map';
+      box.append(mapFigure(round, `Overhead map the VLM saw when planning this branch (${roundCaption(round)}). Select to open full size.`));
+      detail.append(box);
+    }
+    document.querySelectorAll('#vt-maps figure').forEach(f => f.setAttribute('aria-pressed', String(Number(f.dataset.round) === node.map_round)));
     // Reuse the current report's full details, including local images and prompts.
     const step = [...current.querySelectorAll('details.step[data-node]')].find(el => node.refs.includes(el.dataset.node));
     if (step) {
@@ -104,11 +126,36 @@
       const lines = label.match(/.{1,29}(?:\s|$)|.{1,29}/g) || [label];
       lines.slice(0, 2).forEach((line, i) => group.append(element('text', {x: 12, y: 38 + i * 16, 'font-size': 12, fill: '#1e293b'}, line.trim() + (i === 1 && lines.length > 2 ? '…' : ''))));
       group.append(element('text', {x: 12, y: 72, 'font-size': 10, fill: stroke}, status));
+      if (n.map_start) {
+        group.append(element('text', {x: 208, y: 19, 'font-size': 11, fill: '#334155', 'text-anchor': 'end'}, `▦ map ${n.map_round}`));
+      }
       group.addEventListener('click', () => select(n));
       group.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(n); } });
       svg.append(group);
     });
     canvas.append(svg); scale(zoom);
+  }
+  function drawMaps() {
+    const box = document.getElementById('vt-maps');
+    if (!box || !rounds.length) return;
+    const strip = box.querySelector('.vt-map-strip');
+    rounds.forEach(r => {
+      const figure = mapFigure(r, roundCaption(r));
+      figure.dataset.round = r.round; figure.tabIndex = 0; figure.setAttribute('role', 'button');
+      const link = figure.querySelector('a'); link.removeAttribute('href');  // the strip selects; the detail panel links
+      const go = () => {
+        const target = rows.find(n => n.map_start && n.map_round === r.round) || rows.find(n => n.map_round === r.round);
+        if (target) {
+          select(target);
+          const el = canvas.querySelector(`.vt-node[data-id="${CSS.escape(target.id)}"]`);
+          if (el) el.scrollIntoView({block: 'center', inline: 'center'});
+        }
+      };
+      figure.addEventListener('click', go);
+      figure.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+      strip.append(figure);
+    });
+    box.hidden = false;
   }
   function setView(view) {
     const isTree = view === 'tree'; current.hidden = isTree; tree.hidden = !isTree;
@@ -122,5 +169,9 @@
   document.getElementById('vt-plus').onclick = () => scale(zoom * 1.2);
   document.getElementById('vt-minus').onclick = () => scale(zoom / 1.2);
   document.getElementById('vt-skipped').onchange = draw;
-  try { if (localStorage.getItem('vlm-tamp-report-view') === 'tree') setView('tree'); } catch (_) {}
+  drawMaps();
+  // The simple tree is the default; reopen the current view only if the viewer chose it last time.
+  let saved = null;
+  try { saved = localStorage.getItem('vlm-tamp-report-view'); } catch (_) {}
+  setView(saved === 'current' ? 'current' : 'tree');
 })();

@@ -604,6 +604,10 @@ class OverheadMap:
             if fp.labelled:
                 place(fp.name, *px(*fp.center), font, (0, 0, 0))
 
+        # Object dots last, so no label (room names may overlap markers) hides one.
+        for _name, X, Y in obj_points:
+            d.ellipse([X - 5, Y - 5, X + 5, Y + 5], fill=(220, 20, 60), outline=(0, 0, 0))
+
         # 2 m scale bar.
         bar = 2.0 * scale
         d.rectangle([10, H - 22, 10 + bar, H - 16], fill=(0, 0, 0))

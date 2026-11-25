@@ -127,7 +127,7 @@ class RailPlanner(VlmTampPddlPlanner):
         self.overhead_map_level = str(self.plan_config.get("overhead_map", "none"))
         if self.overhead_map_level not in omap_lib.LEVELS:
             raise ValueError(f"overhead_map must be one of {omap_lib.LEVELS}, got {self.overhead_map_level!r}")
-        self.overhead_map_format = str(self.plan_config.get("overhead_map_format", "both"))
+        self.overhead_map_format = str(self.plan_config.get("overhead_map_format", "image"))
         if self.overhead_map_format not in omap_lib.FORMATS:
             raise ValueError(
                 f"overhead_map_format must be one of {omap_lib.FORMATS}, got {self.overhead_map_format!r}"

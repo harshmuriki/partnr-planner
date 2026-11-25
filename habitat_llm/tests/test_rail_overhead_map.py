@@ -4,6 +4,7 @@
 # image captions, and that overhead_map=none changes nothing. No sim, GPU or API.
 
 import math
+import os
 from types import SimpleNamespace
 
 import numpy as np
@@ -232,7 +233,7 @@ def test_image_labels_default_unchanged():
     assert [image_label(labels, i) for i in range(3)] == labels
 
 
-def test_gpt4v_sends_map_caption_before_map(monkeypatch):
+def test_gpt4v_sends_map_caption_before_map(monkeypatch, tmp_path):
     from habitat_llm.vlm_tamp import vlm_api
 
     sent = {}
@@ -248,6 +249,7 @@ def test_gpt4v_sends_map_caption_before_map(monkeypatch):
         return Resp()
 
     monkeypatch.setenv("OPENAI_API_KEY", "x")
+    monkeypatch.setenv("VLM_API_PROMPT_LOG_PATH", str(tmp_path / "vlm_api_prompts.txt"))
     monkeypatch.setattr(vlm_api.requests, "post", fake_post)
     api = vlm_api.GPT4vApi(model_name="gpt-4o")
     try:
@@ -328,3 +330,47 @@ def test_explorer_appends_map_parts():
     assert e._llm_prompt_with_action_image({}) == "PROMPT"
     e.overhead_map_provider = lambda: [("text", "MAP"), ("image_high_detail", "url")]
     assert e._llm_prompt_with_action_image({}) == [("text", "PROMPT"), ("text", "MAP"), ("image_high_detail", "url")]
+
+
+def _rail_with_map(tmp_path, fmt, attach=("turn1", "selector", "explorer")):
+    from habitat_llm.rail_planner import RailPlanner
+
+    p = RailPlanner.__new__(RailPlanner)
+    p.overhead_map_level, p.overhead_map_format, p._omap_failed, p._omap_index = "observed", fmt, False, 0
+    p.overhead_map_cfg = {**om.DEFAULT_CFG, "attach_to": list(attach)}
+    p._omap = _map("observed")
+    p._world_graph = _graph()
+    p.two_phase = False
+    p._get_log_dir = lambda: str(tmp_path)
+    p._log_event = lambda e: None
+    p._last_vlm_image_paths = []
+    return p
+
+
+def test_image_format_is_the_default():
+    import yaml
+
+    from habitat_llm.rail_planner import planner as rail_module
+
+    conf = yaml.safe_load(open(os.path.join(os.path.dirname(rail_module.__file__),
+                                            "../conf/planner/rail_planner.yaml")))
+    assert conf["plan_config"]["overhead_map_format"] == "image"
+    assert 'get("overhead_map_format", "image")' in open(rail_module.__file__).read()
+
+
+def test_image_format_sends_no_map_text(tmp_path, monkeypatch):
+    from habitat_llm.planner.vlm_tamp_pddl_planner import VlmTampPddlPlanner
+
+    monkeypatch.setattr(VlmTampPddlPlanner, "_build_english_prompt", lambda self, **kw: "BASE PROMPT")
+    p = _rail_with_map(tmp_path, "image")
+    assert p._build_english_prompt(goal="g") == "BASE PROMPT"  # Turn 1 text untouched
+    urls, labels = p._extra_vlm_images(_graph(), "turn1")
+    assert len(urls) == 1 and urls[0].startswith("data:image")
+    assert "Top-down map" in labels[0] and "Furniture (room" not in labels[0]
+    parts = p._omap_explorer_parts()
+    assert [t for t, _ in parts] == ["text", "image_high_detail"]  # caption + image, no metric block
+    assert "Furniture (room" not in parts[0][1]
+    # Text and both still append the metric block (opt-in).
+    for fmt in ("text", "both"):
+        q = _rail_with_map(tmp_path, fmt)
+        assert "Top-down map (metres" in q._build_english_prompt(goal="g")

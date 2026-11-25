@@ -257,7 +257,7 @@ def render_trace_html(log_dir, out_path=None, episode_runtime_sec=None, episode_
     # A browser refresh should see either the previous page or the complete new page.
     from habitat_llm.vlm_tamp.simple_tree import add_simple_tree
 
-    document = add_simple_tree(''.join(parts), events)
+    document = add_simple_tree(''.join(parts), events, url_for=local_url)
     with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', dir=destination.parent,
                                      prefix='.trace-', suffix='.html', delete=False) as stream:
         stream.write(document)

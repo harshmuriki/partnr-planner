@@ -107,12 +107,13 @@ def main():
     p.add_argument("--match-baseline-budget", action="store_true",
                    help="also pass evaluation.max_combined_time_s=<timeout> and exclude_explore_from_time_budget=False"
                         " per run, as the all_baselines_5reps batch did")
+    p.add_argument("--root", type=Path, default=REPO / "results", help="parent dir of the batch")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--no-submit", action="store_true",
                    help="write snapshot, shard.sh and submit.sh but do not sbatch; run submit.sh later")
     a = p.parse_args()
 
-    batch = REPO / "results" / a.name
+    batch = a.root.resolve() / a.name
     shards = [(t, m) for t in a.tasks for m in a.memories]
     variants = sum(len(list((REPO / f"baseline_evaluation_v3/episodes/task_{t}").glob(f"t{t}-{m}-*"))) for t, m in shards)
     print(f"batch {batch}\n{len(shards)} shards, {variants} variants x {a.reps} reps = {variants * a.reps} runs (paid API calls)")

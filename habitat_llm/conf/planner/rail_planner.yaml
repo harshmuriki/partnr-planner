@@ -46,7 +46,8 @@ plan_config:
   #   none | furniture (floor plan + furniture + robot/START/trail) | observed (+ remembered objects)
   #   | explored (+ unseen floor shaded, from the robot's own depth camera)
   overhead_map: none
-  overhead_map_format: both      # image | text | both (metric text block: rooms, furniture size/height/walls)
+  overhead_map_format: image     # image (default: only the map image) | text | both (adds a metric text block:
+                                 # rooms, furniture size/height/walls, start room)
   overhead_map_cfg:
     meters_per_pixel: 0.05
     max_side_px: 1024
@@ -62,6 +63,9 @@ plan_config:
   subgoal_mode: flat             # flat | object_centric
   object_task_max_regrounds: 4   # failure re-groundings of one object task before it is skipped
   object_task_max_reviews: 2     # final reviews that may add object tasks
+  # next_to(obj, ref, furniture) subgoal (defined in vlm_tamp_pddl_planner.yaml, off there). On for RailPlanner;
+  # VLM-TAMP keeps its own default.
+  next_to_subgoal: true
   two_phase: false
   max_explore_phases: 6          # after this the selector is skipped and interact is forced
   explore_phase_max_skills: 10   # ReAct skills per exploration phase (each counts toward max_actions)
